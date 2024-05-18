@@ -8,6 +8,8 @@ class HomeController extends GetxController {
   final BottomBarController notificationController =
       Get.put(BottomBarController());
   final RxInt expandedIndex = (-1).obs;
+  var mostRecentNewJob = Rx<Home?>(null);
+  var mostRecentCompleteJob = Rx<Home?>(null);
 
   @override
   void onInit() {
@@ -19,7 +21,7 @@ class HomeController extends GetxController {
           ticketid: '123456',
           problem:
               'Machine doesn’t work at all. Petrol is leaking from the machine.',
-          date: '12 March 2024',
+          date: DateTime.parse('2024-03-13T14:30:00'),
           location: 'Bangkok Thailand',
           status: 'New'),
       Home(
@@ -27,7 +29,7 @@ class HomeController extends GetxController {
           detail: 'Replace Spare Part',
           ticketid: '234595',
           problem: 'Car fixing.',
-          date: '16 March 2024',
+          date: DateTime.parse('2024-03-12T14:30:00'),
           location: 'Bangkok Thailand',
           status: 'New'),
       Home(
@@ -35,10 +37,28 @@ class HomeController extends GetxController {
           detail: 'Replace Spare Part',
           ticketid: '234595',
           problem: 'Car fixing.',
-          date: '16 March 2024',
+          date: DateTime.parse('2024-03-12T14:30:00'),
           location: 'Bangkok Thailand',
           status: 'Completed'),
     ]);
+    _findMostRecentNewJob();
+    _findMostRecentCompleteJob();
+  }
+
+  void _findMostRecentNewJob() {
+    var newJobs = jobList.where((job) => job.status == 'New').toList();
+    if (newJobs.isNotEmpty) {
+      mostRecentNewJob.value =
+          newJobs.reduce((a, b) => a.date.isAfter(b.date) ? a : b);
+    }
+  }
+
+  void _findMostRecentCompleteJob() {
+    var newJobs = jobList.where((job) => job.status == 'Completed').toList();
+    if (newJobs.isNotEmpty) {
+      mostRecentCompleteJob.value =
+          newJobs.reduce((a, b) => a.date.isAfter(b.date) ? a : b);
+    }
   }
 
   void notification() async {

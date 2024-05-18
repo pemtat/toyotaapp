@@ -134,148 +134,146 @@ class AllTicketView extends StatelessWidget {
                 child: Obx(() {
                   final filteredJobs = jobController.jobList
                       .where((job) =>
-                          job.jobid.contains(searchQuery.value) ||
-                          job.detail.contains(searchQuery.value))
+                          job.status == 'New' &&
+                          (job.jobid.contains(searchQuery.value) ||
+                              job.detail.contains(searchQuery.value)))
                       .toList();
-
+                  if (filteredJobs.isEmpty) {
+                    return Center(child: Text('No new jobs available.'));
+                  }
                   return ListView.builder(
                     itemCount: filteredJobs.length,
                     itemBuilder: (context, index) {
                       Home job = filteredJobs[index];
-                      if (job.status == 'New') {
-                        return InkWell(
-                          onTap: () {
-                            Get.to(() => TicketDetailPage());
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            padding: EdgeInsets.all(10),
-                            decoration: CustomBoxDecoration(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      'JobID : ${job.jobid}',
-                                      style: TextStyleList.detail1,
+                      return InkWell(
+                        onTap: () {
+                          Get.to(() => TicketDetailPage());
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.all(10),
+                          decoration: CustomBoxDecoration(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    'JobID : ${job.jobid}',
+                                    style: TextStyleList.detail1,
+                                  ),
+                                  10.wH,
+                                  StatusNewButton(),
+                                  Spacer(),
+                                  Obx(
+                                    () => IconButton(
+                                      icon: expandedIndex.value == index
+                                          ? Image.asset('assets/arrowup.png')
+                                          : Image.asset('assets/arrowdown.png'),
+                                      onPressed: () {
+                                        if (expandedIndex.value == index) {
+                                          expandedIndex.value = -1;
+                                        } else {
+                                          expandedIndex.value = index;
+                                        }
+                                      },
                                     ),
-                                    10.wH,
-                                    StatusNewButton(),
-                                    Spacer(),
-                                    Obx(
-                                      () => IconButton(
-                                        icon: expandedIndex.value == index
-                                            ? Image.asset('assets/arrowup.png')
-                                            : Image.asset(
-                                                'assets/arrowdown.png'),
-                                        onPressed: () {
-                                          if (expandedIndex.value == index) {
-                                            expandedIndex.value = -1;
-                                          } else {
-                                            expandedIndex.value = index;
-                                          }
-                                        },
+                                  )
+                                ],
+                              ),
+                              Text(
+                                job.detail,
+                                style: TextStyleList.detail2,
+                              ),
+                              SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Icon(Icons.calendar_month_outlined),
+                                  5.wH,
+                                  Text(
+                                    job.getFormattedDate(),
+                                    style: TextStyleList.detail3,
+                                  ),
+                                ],
+                              ),
+                              5.kH,
+                              Row(
+                                children: [
+                                  Icon(Icons.location_on_outlined),
+                                  5.wH,
+                                  Text(
+                                    job.location,
+                                    style: TextStyleList.detail3,
+                                  ),
+                                  5.wH,
+                                  Row(
+                                    children: [
+                                      GoogleMapButton(
+                                        onTap: () {},
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              10.kH,
+                              Obx(() => expandedIndex.value == index
+                                  ? Padding(
+                                      padding: EdgeInsets.only(top: 10.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height: 0.5,
+                                            color: Color(0xFFEAEAEA),
+                                          ),
+                                          10.kH,
+                                          Text(
+                                            'Ticket ID #${job.ticketid}',
+                                            style: TextStyleList.detail1,
+                                          ),
+                                          5.kH,
+                                          Text(
+                                            job.problem,
+                                            style: TextStyleList.detail2,
+                                          ),
+                                          5.kH,
+                                          Container(
+                                            padding: EdgeInsets.all(10),
+                                            decoration: Decoration2(),
+                                            child: Column(
+                                              children: [
+                                                WarrantyInfo(
+                                                  title: "Name/Model",
+                                                  value: "UBRE200H2-TH-7500",
+                                                ),
+                                                3.kH,
+                                                WarrantyInfo(
+                                                  title: "Serial Number",
+                                                  value: "6963131",
+                                                ),
+                                                3.kH,
+                                                WarrantyInfo(
+                                                  title: "Warranty Status",
+                                                  value: '',
+                                                  trailing: CheckStatus(
+                                                    imagePath:
+                                                        'assets/pass.png',
+                                                    text: 'Active',
+                                                    textColor: pass,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     )
-                                  ],
-                                ),
-                                Text(
-                                  job.detail,
-                                  style: TextStyleList.detail2,
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Icon(Icons.calendar_month_outlined),
-                                    5.wH,
-                                    Text(
-                                      job.date,
-                                      style: TextStyleList.detail3,
-                                    ),
-                                  ],
-                                ),
-                                5.kH,
-                                Row(
-                                  children: [
-                                    Icon(Icons.location_on_outlined),
-                                    5.wH,
-                                    Text(
-                                      job.location,
-                                      style: TextStyleList.detail3,
-                                    ),
-                                    5.wH,
-                                    Row(
-                                      children: [
-                                        GoogleMapButton(
-                                          onTap: () {},
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                10.kH,
-                                Obx(() => expandedIndex.value == index
-                                    ? Padding(
-                                        padding: EdgeInsets.only(top: 10.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              height: 0.5,
-                                              color: Color(0xFFEAEAEA),
-                                            ),
-                                            10.kH,
-                                            Text(
-                                              'Ticket ID #${job.ticketid}',
-                                              style: TextStyleList.detail1,
-                                            ),
-                                            5.kH,
-                                            Text(
-                                              job.problem,
-                                              style: TextStyleList.detail2,
-                                            ),
-                                            5.kH,
-                                            Container(
-                                              padding: EdgeInsets.all(10),
-                                              decoration: Decoration2(),
-                                              child: Column(
-                                                children: [
-                                                  WarrantyInfo(
-                                                    title: "Name/Model",
-                                                    value: "UBRE200H2-TH-7500",
-                                                  ),
-                                                  3.kH,
-                                                  WarrantyInfo(
-                                                    title: "Serial Number",
-                                                    value: "6963131",
-                                                  ),
-                                                  3.kH,
-                                                  WarrantyInfo(
-                                                    title: "Warranty Status",
-                                                    value: '',
-                                                    trailing: CheckStatus(
-                                                      imagePath:
-                                                          'assets/pass.png',
-                                                      text: 'Active',
-                                                      textColor: pass,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : Container())
-                              ],
-                            ),
+                                  : Container())
+                            ],
                           ),
-                        );
-                      } else {
-                        return Container();
-                      }
+                        ),
+                      );
                     },
                   );
                 }),
