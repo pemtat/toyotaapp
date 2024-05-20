@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Screen/Fillform/adddetail/rcode_controller.dart';
+import 'package:toyotamobile/Screen/Fillform/adddetail/repairproc_controller.dart';
+import 'package:toyotamobile/Screen/Fillform/adddetail/wcode_controller.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 
@@ -16,9 +21,13 @@ class FillFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RcodeController rcodeController = Get.put(RcodeController());
+    final WcodeController wcodeController = Get.put(WcodeController());
+    final RepairProcControllerController rPController =
+        Get.put(RepairProcControllerController());
+
+    final FillformController fillFormController = Get.put(FillformController());
 
     int space = 8;
-    int space2 = 20;
 
     return Scaffold(
       backgroundColor: backgroundapp,
@@ -40,50 +49,59 @@ class FillFormView extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleApp(text: 'Field Service Report'),
-                space.kH,
-                FillFormCheckbox(text: "Inspection"),
-                space.kH,
-                FillFormCheckbox(text: "Repairing"),
-                space.kH,
-                FillFormCheckbox(text: "Re-repairing"),
-                space.kH,
-                FillFormCheckbox(text: "Comission"),
-                space.kH,
-                FillFormCheckbox(text: "Other"),
-                space.kH,
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: fillFormController.fieldServiceReportList.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: CheckBoxWidget(
+                          text:
+                              fillFormController.fieldServiceReportList[index],
+                          listItem: fillFormController.fieldServiceReport,
+                          itemSet: (label) =>
+                              fillFormController.fieldService(label)),
+                    );
+                  },
+                ),
               ],
             ),
             14.kH,
             BoxContainer(
               children: [
-                CustomTextField(text: 'Fault'),
-                space2.kH,
-                CustomTextField(text: 'Error Code'),
-                space2.kH,
-                CustomTextField(text: 'Work Order Number(Order No.)')
+                TextFieldWidget(
+                    text: 'Fault', textSet: fillFormController.fault.value),
+                20.kH,
+                TextFieldWidget(
+                    text: 'Error Code',
+                    textSet: fillFormController.errorCode.value),
+                20.kH,
+                TextFieldWidget(
+                    text: 'Work Order Number(Order No.)',
+                    textSet: fillFormController.workorderNumber.value)
               ],
             ),
             14.kH,
             BoxContainer(
               children: [
-                TitleWithButton(
-                  titleText: 'R Code',
-                  button: AddButton(
-                    onTap: () {
-                      rcodeController.rCodeModal(context);
-                    },
-                  ),
+                Obx(
+                  () => AddEditBox(
+                      titleText: 'R Code',
+                      list: rcodeController.rCode,
+                      onTap: () => rcodeController.rCodeModal(context),
+                      moreText: rcodeController.getDisplayString()),
                 ),
               ],
             ),
             space.kH,
             BoxContainer(
               children: [
-                TitleWithButton(
-                  titleText: 'W Code',
-                  button: AddButton(
-                    onTap: () {},
-                  ),
+                Obx(
+                  () => AddEditBox(
+                      titleText: 'W Code',
+                      list: wcodeController.wCode,
+                      onTap: () => wcodeController.wCodeModal(context),
+                      moreText: wcodeController.getDisplayString()),
                 ),
               ],
             ),
@@ -93,7 +111,9 @@ class FillFormView extends StatelessWidget {
                 TitleWithButton(
                   titleText: 'Repair prodecure',
                   button: AddButton(
-                    onTap: () {},
+                    onTap: () {
+                      rPController.rPModal(context);
+                    },
                   ),
                 ),
               ],
@@ -164,85 +184,6 @@ class FillFormView extends StatelessWidget {
             ])
           ],
         ),
-      ),
-    );
-  }
-}
-
-class FillFormCheckbox extends StatelessWidget {
-  final String text;
-  final FillformController controller = Get.put(FillformController());
-
-  FillFormCheckbox({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: () {
-            controller.fieldService(text);
-          },
-          child: Obx(
-            () => Container(
-              width: 18,
-              height: 18,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: !controller.fieldServiceReport.contains(text)
-                    ? Border.all(color: Colors.grey)
-                    : Border.all(color: Colors.transparent),
-                color: controller.fieldServiceReport.contains(text)
-                    ? Colors.red
-                    : Colors.transparent,
-              ),
-              child: Center(
-                child: controller.fieldServiceReport.contains(text)
-                    ? Icon(Icons.check, color: Colors.white, size: 16)
-                    : SizedBox(),
-              ),
-            ),
-          ),
-        ),
-        8.wH,
-        Expanded(
-          child: Text(text, style: TextStyleList.subdetail),
-        ),
-      ],
-    );
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  final String text;
-  final FillformController controller = Get.put(FillformController());
-
-  CustomTextField({required this.text});
-  @override
-  Widget build(BuildContext context) {
-    final TextEditingController? textFieldController =
-        controller.getTextFieldController(text);
-    return TextField(
-      controller: textFieldController,
-      decoration: InputDecoration(
-        hintText: text,
-        hintStyle: TextStyleList.texttitle,
-        filled: true,
-        fillColor: search,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(
-            color: border2,
-            width: 1.5,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(
-            color: Colors.blue,
-          ),
-        ),
-        contentPadding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 19.0),
       ),
     );
   }

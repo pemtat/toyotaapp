@@ -46,6 +46,7 @@ dependencies:
   permission_handler: ^11.3.1
   intl: ^0.19.0
   change_app_package_name: ^1.1.0
+  get: ^4.6.6
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -68,6 +69,7 @@ flutter:
     - assets/propjob.png
     - assets/pass.png
     - assets/sliders.png
+    - assets/edit.png
     - assets/send.png
     - assets/arrowup.png
     - assets/x.png

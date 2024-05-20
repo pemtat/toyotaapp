@@ -1,7 +1,4 @@
-import 'package:toyotamobile/Calender/calender_controller.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Screen/Notification/notification_view.dart';
-import 'package:toyotamobile/Screen/Home/home_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomBarController extends GetxController {

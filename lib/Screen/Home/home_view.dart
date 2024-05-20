@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:toyotamobile/Screen/Allticket/CompleteJobs/completejobs_view.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
-import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Allticket/NewJobs/newjobs_view.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/margin.dart';

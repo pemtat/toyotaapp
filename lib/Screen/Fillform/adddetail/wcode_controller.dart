@@ -1,36 +1,34 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodel_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class RcodeController extends GetxController {
-  var rCode = <String>[].obs;
-  var rCodeChoose = <String>[].obs;
-  List<String> rCodeList = [
-    'Broken',
-    'No grease',
-    'No oil',
-    'Dirty',
-    'Eroded',
-    'Short circuit',
-    'Disintegrated',
-    'Loose',
-    'Usually loud noise',
-    'Wrong equipment installed',
-    'Overheating',
-    'Other'
+class WcodeController extends GetxController {
+  var wCode = <String>[].obs;
+  var wCodeChoose = <String>[].obs;
+  List<String> wCodeList = [
+    'CM Repair works when the repair is first reported',
+    'CMC Repair/part replacement work',
+    'Inspection repair work that is in the conditions',
+    'AC repair work result from an accident',
+    'FF in-depth  problem anaylsis work',
+    'SOT helps other people or other team',
+    'MO Modification work, editing',
+    'SB waiting/ standby',
+    'CO assembly/installation work, dismantling',
   ];
-  void rCodeModal(BuildContext context) {
+
+  void wCodeModal(BuildContext context) {
     ShowModalWidget(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "R Code",
+              "W Code",
               style: TextStyleList.headmodal,
             ),
             InkWell(
@@ -43,22 +41,22 @@ class RcodeController extends GetxController {
         8.kH,
         ListView.builder(
           shrinkWrap: true,
-          itemCount: rCodeList.length,
+          itemCount: wCodeList.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: CheckBoxWidget(
-                  text: rCodeList[index],
-                  listItem: rCodeChoose,
-                  itemSet: rCodes),
+                  text: wCodeList[index],
+                  listItem: wCodeChoose,
+                  itemSet: wCodes),
             );
           },
         ),
         8.kH,
         EndButton(
             onPressed: () {
-              rCode.clear();
-              rCode.addAll(rCodeChoose);
+              wCode.clear();
+              wCode.addAll(wCodeChoose);
 
               Navigator.pop(context);
             },
@@ -69,20 +67,20 @@ class RcodeController extends GetxController {
 
   String getDisplayString() {
     int displayCount = 3;
-    if (rCode.length <= displayCount) {
-      return rCode.join(', ');
+    if (wCode.length <= displayCount) {
+      return wCode.join(', ');
     } else {
-      String displayedItems = rCode.sublist(0, displayCount).join(', ');
-      int remainingCount = rCode.length - displayCount;
+      String displayedItems = wCode.sublist(0, displayCount).join(', ');
+      int remainingCount = wCode.length - displayCount;
       return '$displayedItems +$remainingCount more';
     }
   }
 
-  void rCodes(String label) {
-    if (rCodeChoose.contains(label)) {
-      rCodeChoose.remove(label);
+  void wCodes(String label) {
+    if (wCodeChoose.contains(label)) {
+      wCodeChoose.remove(label);
     } else {
-      rCodeChoose.add(label);
+      wCodeChoose.add(label);
     }
   }
 }

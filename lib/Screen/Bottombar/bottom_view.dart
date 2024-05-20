@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Screen/Home/home_view.dart';
 import 'package:toyotamobile/Screen/Notification/notification_view.dart';
-import 'package:toyotamobile/main.dart';
 
 class BottomBarView extends StatelessWidget {
   final PageController _pageController = PageController();

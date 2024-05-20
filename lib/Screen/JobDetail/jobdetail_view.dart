@@ -12,6 +12,7 @@ import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/imgcontainer.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/statusbutton_widget.dart';
+import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
@@ -268,35 +269,9 @@ class TicketDetailPage extends StatelessWidget {
                           18.kH,
                           AppDivider(),
                           18.kH,
-                          TextField(
-                            maxLines: 3,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: border2,
-                                  width: 1.0,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: border2,
-                                  width: 1.0,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: border2,
-                                  width: 1.0,
-                                ),
-                              ),
-                              hintText: 'Add notes',
-                              hintStyle: TextStyleList.texttitle,
-                              contentPadding: EdgeInsets.only(
-                                  left: 12.0,
-                                  top: 0.0,
-                                  right: 12.0,
-                                  bottom: 20.0),
-                            ),
+                          TextFieldType(
+                            hintText: 'Add Notes',
+                            textSet: jobcontroller.notes.value,
                           ),
                           8.kH,
                           Row(
