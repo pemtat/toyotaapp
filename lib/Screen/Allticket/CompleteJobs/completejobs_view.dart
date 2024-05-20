@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
 
-class AllTicketView extends StatelessWidget {
+class CompleteJobsView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
   final BottomBarController bottomController = Get.put(BottomBarController());
   final RxInt expandedIndex = (-1).obs;
@@ -124,7 +124,7 @@ class AllTicketView extends StatelessWidget {
             ),
             10.kH,
             JobTitle(
-              headerText: 'Incoming Jobs',
+              headerText: 'Complete Jobs',
               buttonText: '',
               buttonOnPressed: () {},
             ),
@@ -134,7 +134,7 @@ class AllTicketView extends StatelessWidget {
                 child: Obx(() {
                   final filteredJobs = jobController.jobList
                       .where((job) =>
-                          job.status == 'New' &&
+                          job.status == 'Completed' &&
                           (job.jobid.contains(searchQuery.value) ||
                               job.detail.contains(searchQuery.value)))
                       .toList();
@@ -163,7 +163,7 @@ class AllTicketView extends StatelessWidget {
                                     style: TextStyleList.detail1,
                                   ),
                                   10.wH,
-                                  StatusNewButton(),
+                                  StatusCompletedButton(),
                                   Spacer(),
                                   Obx(
                                     () => IconButton(

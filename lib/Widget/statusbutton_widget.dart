@@ -32,10 +32,10 @@ class StatusCompletedButton extends StatelessWidget {
       ),
       child: Text(
         "Completed",
-        style: TextStyle(
+        style: GoogleFonts.kanit(
             color: Color(0xff656565),
-            fontSize: 17,
-            fontWeight: FontWeight.w500),
+            fontSize: 14,
+            fontWeight: FontWeight.w400),
       ),
     );
   }
@@ -52,10 +52,10 @@ class StatusMaintenanceButton extends StatelessWidget {
       ),
       child: Text(
         "Maintenance",
-        style: TextStyle(
+        style: GoogleFonts.kanit(
             color: Color(0xff656565),
-            fontSize: 17,
-            fontWeight: FontWeight.w500),
+            fontSize: 14,
+            fontWeight: FontWeight.w400),
       ),
     );
   }

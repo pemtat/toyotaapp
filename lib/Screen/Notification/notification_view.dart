@@ -9,19 +9,13 @@ class NotificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BottomBarController controller = Get.put(BottomBarController());
-
+    BottomBarView();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('แจ้งเตือน'),
       ),
       body: Container(),
-      bottomNavigationBar: BottomBarView(
-        currentIndex: 3,
-        onTap: (index) {
-          controller.handleTap(index);
-        },
-      ),
     );
   }
 }

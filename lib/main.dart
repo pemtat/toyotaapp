@@ -1,3 +1,4 @@
+import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_view.dart';
 import 'package:toyotamobile/Service/notification.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ void main() async {
 
 Future<Widget> getHomeWidget(SharedPreferences prefs) async {
   String? getStr = prefs.getString('user_id');
-  return getStr != "" ? HomeView() : LoginView();
+  return getStr != "" ? BottomBarView() : LoginView();
 }
 
 class MyApp extends StatelessWidget {

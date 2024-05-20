@@ -16,6 +16,7 @@ class ShowModalWidget extends StatelessWidget {
       padding: EdgeInsets.all(paddingCustom ?? 16),
       color: Colors.white,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: children ?? [],
       ),
     );
@@ -24,7 +25,7 @@ class ShowModalWidget extends StatelessWidget {
   void showModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (context) => this, // Return the widget directly
+      builder: (context) => this,
     );
   }
 }

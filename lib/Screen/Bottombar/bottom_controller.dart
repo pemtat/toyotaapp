@@ -8,22 +8,6 @@ class BottomBarController extends GetxController {
   var currentIndex = 0.obs;
   var hasNotification = false.obs;
 
-  Future<void> handleTap(int index) async {
-    switch (index) {
-      case 0:
-        Get.offAll(() => HomeView());
-        break;
-      case 3:
-        Get.offAll(() => NotificationView());
-        await clearNotification();
-        break;
-      case 2:
-        Get.offAll(() => CalenderView());
-        break;
-    }
-    currentIndex.value = index;
-  }
-
   Future<bool> checkNotification() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? notification = prefs.getString('notification');

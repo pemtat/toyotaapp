@@ -50,7 +50,7 @@ class RcodeController extends GetxController {
             );
           },
         ),
-        Spacer(),
+        8.kH,
         EndButton(onPressed: () {}, text: 'Confirm')
       ],
     ).showModal(context);

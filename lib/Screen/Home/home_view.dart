@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:toyotamobile/Screen/Allticket/CompleteJobs/completejobs_view.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
-import 'package:toyotamobile/Screen/Allticket/allticket_view.dart';
+import 'package:toyotamobile/Screen/Allticket/NewJobs/newjobs_view.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -82,7 +83,7 @@ class HomeView extends StatelessWidget {
                 headerText: 'Incoming Jobs',
                 buttonText: 'View All',
                 buttonOnPressed: () {
-                  Get.to(() => AllTicketView());
+                  Get.to(() => NewJobsView());
                 },
               ),
               Padding(
@@ -223,7 +224,9 @@ class HomeView extends StatelessWidget {
               JobTitle(
                 headerText: 'Completed Jobs',
                 buttonText: 'View All',
-                buttonOnPressed: () {},
+                buttonOnPressed: () {
+                  Get.to(() => CompleteJobsView());
+                },
               ),
               Padding(
                 padding: EdgeInsets.all(PaddingApp),
@@ -249,7 +252,7 @@ class HomeView extends StatelessWidget {
                               style: TextStyleList.detail1,
                             ),
                             10.wH,
-                            StatusNewButton(),
+                            StatusCompletedButton(),
                             Spacer(),
                             Obx(
                               () => IconButton(
@@ -362,12 +365,6 @@ class HomeView extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        bottomNavigationBar: BottomBarView(
-          currentIndex: 0,
-          onTap: (index) {
-            bottomController.handleTap(index);
-          },
         ),
       ),
     );
