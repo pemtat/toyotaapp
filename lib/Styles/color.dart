@@ -13,3 +13,6 @@ const Color backgroundapp = Color.fromARGB(255, 249, 247, 247);
 const Color buttonsave = Color.fromARGB(51, 29, 27, 32);
 const Color buttontextcolor2 = Color.fromARGB(117, 29, 27, 32);
 const Color textmodal = Color(0xff434343);
+const Color buttonbackground = Color(0xffF1F1F1);
+const Color boxtextfield = Color(0xffEAEAEA);
+const Color textinbox = Color(0xff323232);

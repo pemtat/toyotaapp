@@ -79,9 +79,12 @@ flutter:
     - assets/pdf.png
     - assets/arrowright.png
     - assets/ticketblock.png
+    - assets/boxedit.png
     - assets/link.png
     - assets/smartphone.png
     - assets/checkbox.png
+    - assets/plusint.png
+    - assets/minus.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

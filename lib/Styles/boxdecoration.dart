@@ -48,3 +48,20 @@ class BoxDetail extends BoxDecoration {
           ),
         );
 }
+
+class BoxText extends BoxDecoration {
+  BoxText({
+    Color borderColor = boxtextfield,
+    double width = 1,
+    Color backgroundColor = buttontextcolor,
+  }) : super(
+          borderRadius: BorderRadius.circular(6),
+          color: backgroundColor,
+          border: Border(
+            left: BorderSide(width: width, color: borderColor),
+            right: BorderSide(width: width, color: borderColor),
+            bottom: BorderSide(width: width, color: borderColor),
+            top: BorderSide(width: width, color: borderColor),
+          ),
+        );
+}

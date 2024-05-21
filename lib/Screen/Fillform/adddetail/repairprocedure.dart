@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
-import 'package:toyotamobile/Widget/showmodel_widget.dart';
+import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
-class RepairProcControllerController extends GetxController {
+class RepairProcedure extends GetxController {
   var rP = <String>[].obs;
   var rPChoose = <String>[].obs;
   final repairProcedure = TextEditingController().obs;

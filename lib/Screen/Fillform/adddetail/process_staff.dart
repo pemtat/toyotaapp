@@ -3,32 +3,28 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
-import 'package:toyotamobile/Widget/showmodel_widget.dart';
+import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class WcodeController extends GetxController {
-  var wCode = <String>[].obs;
-  var wCodeChoose = <String>[].obs;
-  List<String> wCodeList = [
-    'CM Repair works when the repair is first reported',
-    'CMC Repair/part replacement work',
-    'Inspection repair work that is in the conditions',
-    'AC repair work result from an accident',
-    'FF in-depth  problem anaylsis work',
-    'SOT helps other people or other team',
-    'MO Modification work, editing',
-    'SB waiting/ standby',
-    'CO assembly/installation work, dismantling',
+class RepairStaff extends GetxController {
+  var repairStaff = <String>[].obs;
+  var repairStaffChoose = <String>[].obs;
+  List<String> repairStaffList = [
+    'Quotation',
+    'Claim',
+    'Close Job',
+    'Repair',
+    'Follow',
   ];
 
-  void wCodeModal(BuildContext context) {
+  void repairStaffModal(BuildContext context) {
     ShowModalWidget(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "W Code",
+              "Process",
               style: TextStyleList.headmodal,
             ),
             InkWell(
@@ -41,22 +37,22 @@ class WcodeController extends GetxController {
         8.kH,
         ListView.builder(
           shrinkWrap: true,
-          itemCount: wCodeList.length,
+          itemCount: repairStaffList.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: CheckBoxWidget(
-                  text: wCodeList[index],
-                  listItem: wCodeChoose,
-                  itemSet: wCodes),
+                  text: repairStaffList[index],
+                  listItem: repairStaffChoose,
+                  itemSet: repairStaffs),
             );
           },
         ),
         8.kH,
         EndButton(
             onPressed: () {
-              wCode.clear();
-              wCode.addAll(wCodeChoose);
+              repairStaff.clear();
+              repairStaff.addAll(repairStaffChoose);
 
               Navigator.pop(context);
             },
@@ -67,20 +63,20 @@ class WcodeController extends GetxController {
 
   String getDisplayString() {
     int displayCount = 3;
-    if (wCode.length <= displayCount) {
-      return wCode.join(', ');
+    if (repairStaff.length <= displayCount) {
+      return repairStaff.join(', ');
     } else {
-      String displayedItems = wCode.sublist(0, displayCount).join(', ');
-      int remainingCount = wCode.length - displayCount;
+      String displayedItems = repairStaff.sublist(0, displayCount).join(', ');
+      int remainingCount = repairStaff.length - displayCount;
       return '$displayedItems +$remainingCount more';
     }
   }
 
-  void wCodes(String label) {
-    if (wCodeChoose.contains(label)) {
-      wCodeChoose.remove(label);
+  void repairStaffs(String label) {
+    if (repairStaffChoose.contains(label)) {
+      repairStaffChoose.remove(label);
     } else {
-      wCodeChoose.add(label);
+      repairStaffChoose.add(label);
     }
   }
 }
