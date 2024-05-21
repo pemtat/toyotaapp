@@ -94,6 +94,37 @@ class EditButton extends StatelessWidget {
   }
 }
 
+class EditButton2 extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const EditButton2({
+    Key? key,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            'assets/profileedit.png',
+            width: 12.0,
+            height: 12.0,
+          ),
+          SizedBox(width: 4.0),
+          Text(
+            'Edit Profile',
+            style: TextStyleList.textbutton,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class CustomElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;

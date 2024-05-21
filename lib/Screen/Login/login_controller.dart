@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'package:toyotamobile/Models/login_model.dart';
 import 'package:toyotamobile/Data/user.dart';
+import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Screen/Home/home_view.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toyotamobile/Service/api.dart';
 
 class LoginController extends GetxController {
   final LoginModel _loginModel = LoginModel();
@@ -20,29 +23,30 @@ class LoginController extends GetxController {
     _loginModel.password.value = "";
   }
 
-  void login() async {
+  Future<void> login() async {
     try {
-      bool isValidUser = sampleUsers.any((user) =>
-          user.email == _loginModel.email.value &&
-          user.password == _loginModel.password.value);
+      final response = await http.post(
+        Uri.parse(loginUrl),
+        headers: {
+          'User': _loginModel.email.value,
+          'Password': _loginModel.password.value,
+        },
+      );
 
-      if (isValidUser) {
-        String userId = sampleUsers
-            .firstWhere((user) =>
-                user.email == _loginModel.email.value &&
-                user.password == _loginModel.password.value)
-            .id;
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        final accessToken = responseData['access_token'] as String;
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('user_id', userId);
+        prefs.setString('access_token', accessToken);
 
         Get.offAll(() => HomeView());
+        Get.snackbar('Login Succesful', 'Welcome to T-Service');
       } else {
-        Get.snackbar('เข้าสู่ระบบ', 'ชื่อผู้ใช้หรือรหัสผ่านผิดพลาด');
+        Get.snackbar('Login Failed', 'Invalid username or password');
       }
     } catch (e) {
       print('Error: $e');
-      Get.snackbar('Error', 'An error occurred during login $e');
     }
   }
 }

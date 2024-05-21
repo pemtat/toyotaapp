@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   local_auth: ^2.2.0
   flutter_local_notifications: ^17.1.2
+  http: ^1.2.1
   get_storage: ^2.1.1
   pin_code_fields: ^8.0.1
   shared_preferences: ^2.2.3
@@ -76,7 +77,9 @@ flutter:
     - assets/arrowdown.png
     - assets/plus.png
     - assets/arrowleft.png
+    - assets/profileedit.png
     - assets/pdf.png
+    - assets/man.jpg
     - assets/arrowright.png
     - assets/ticketblock.png
     - assets/boxedit.png

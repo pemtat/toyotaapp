@@ -1,4 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
+import 'package:toyotamobile/Screen/Account/account_view.dart';
 import 'package:toyotamobile/Screen/Allticket/NewJobs/newjobs_view.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,12 @@ import 'package:toyotamobile/Screen/Notification/notification_view.dart';
 
 class BottomBarView extends StatelessWidget {
   final PageController _pageController = PageController();
-  final List<Widget> _pages = [HomeView(), NewJobsView(), NotificationView()];
+  final List<Widget> _pages = [
+    HomeView(),
+    NewJobsView(),
+    NotificationView(),
+    AccountView()
+  ];
 
   @override
   Widget build(BuildContext context) {

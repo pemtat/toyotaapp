@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:toyotamobile/Styles/text.dart';
 
 //Using [ Login ]
 class TextFieldLogin extends StatelessWidget {
@@ -21,13 +22,17 @@ class TextFieldLogin extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.grey),
       ),
-      child: TextField(
-        obscureText: hidetext,
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          labelText: '$label',
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8),
+        child: TextField(
+          obscureText: hidetext,
+          style: TextStyleList.texttitle,
+          onChanged: onChanged,
+          decoration: InputDecoration(
+            labelText: '$label',
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          ),
         ),
       ),
     );
@@ -49,7 +54,7 @@ class LoginButton extends StatelessWidget {
             onPressed: onPressed,
             child: Text(
               'Login',
-              style: TextStyle(color: Colors.white),
+              style: TextStyleList.dialogbutton2,
             ),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -75,19 +80,11 @@ class Footer extends StatelessWidget {
     return Text.rich(
       TextSpan(
         text: 'By using T-Service Connect, you agree and consent to our ',
-        style: TextStyle(
-          fontSize: 14,
-          color: const Color.fromARGB(255, 18, 18, 18),
-        ),
+        style: TextStyleList.fileattacth,
         children: [
           TextSpan(
             text: 'Terms and Condition, Privacy Policy.',
-            style: TextStyle(
-              fontSize: 14,
-              color: const Color.fromARGB(255, 33, 32, 32),
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.underline,
-            ),
+            style: TextStyleList.footer,
             recognizer: TapGestureRecognizer()..onTap = onTap,
           ),
         ],

@@ -11,7 +11,6 @@ import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
 class AdditSparepartList extends GetxController {
   var quantity = 1.obs;
-
   var additSparePartList = <SparePartModel>[].obs;
   var additSparePartListChoose = <String>[].obs;
   final cCodePage = TextEditingController().obs;
@@ -279,6 +278,7 @@ class AdditSparepartList extends GetxController {
         EndButton(
             onPressed: () {
               additSparePartUpdate(part);
+              additSparePartList.refresh();
               additSparePartClear();
               Navigator.pop(context);
             },

@@ -26,7 +26,7 @@ class LoginView extends StatelessWidget {
                   style: GoogleFonts.kanit(
                       fontSize: 25, fontWeight: FontWeight.w500),
                 )),
-                25.kH,
+                40.kH,
                 TextFieldLogin(
                   label: 'Email',
                   onChanged: controller.setEmail,

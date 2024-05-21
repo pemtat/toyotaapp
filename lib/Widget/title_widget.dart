@@ -35,3 +35,31 @@ class TitleWithButton extends StatelessWidget {
     );
   }
 }
+
+class TitleWithButton2 extends StatelessWidget {
+  final String titleText;
+  final VoidCallback onTap;
+  final bool button;
+  final TextStyle? font;
+
+  const TitleWithButton2({
+    required this.titleText,
+    required this.button,
+    required this.onTap,
+    this.font,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+        onTap: onTap,
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(
+            titleText,
+            style: font ?? TextStyleList.subdetail,
+          ),
+          button ? Image.asset('assets/arrowright.png') : SizedBox()
+        ]));
+  }
+}

@@ -279,6 +279,7 @@ class SparepartList extends GetxController {
         EndButton(
             onPressed: () {
               sparePartUpdate(part);
+              sparePartList.refresh();
               sparePartClear();
               Navigator.pop(context);
             },

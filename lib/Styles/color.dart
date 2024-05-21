@@ -16,3 +16,4 @@ const Color textmodal = Color(0xff434343);
 const Color buttonbackground = Color(0xffF1F1F1);
 const Color boxtextfield = Color(0xffEAEAEA);
 const Color textinbox = Color(0xff323232);
+const Color logintext = Color(0xfF5A5A5A);

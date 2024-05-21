@@ -14,7 +14,7 @@ void main() async {
 }
 
 Future<Widget> getHomeWidget(SharedPreferences prefs) async {
-  String? getStr = prefs.getString('user_id');
+  String? getStr = prefs.getString('access_token');
   return getStr != "" ? BottomBarView() : LoginView();
 }
 

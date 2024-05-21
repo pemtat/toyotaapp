@@ -77,6 +77,12 @@ class TextStyleList {
     fontWeight: FontWeight.w400,
     color: Color(0xff000000),
   );
+  static final TextStyle footer = GoogleFonts.kanit(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: Color(0xff000000),
+    decoration: TextDecoration.underline,
+  );
   static final TextStyle intructionDetail = GoogleFonts.kanit(
     fontSize: 12,
     fontWeight: FontWeight.w400,
