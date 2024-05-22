@@ -6,7 +6,8 @@ class TextFieldWidget extends StatelessWidget {
   final String text;
   final TextEditingController textSet;
 
-  TextFieldWidget({
+  const TextFieldWidget({
+    super.key,
     required this.text,
     required this.textSet,
   });
@@ -22,18 +23,19 @@ class TextFieldWidget extends StatelessWidget {
         fillColor: search,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: border2,
             width: 1.5,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: Colors.blue,
           ),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 19.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 14.0, horizontal: 19.0),
       ),
     );
   }
@@ -42,7 +44,8 @@ class TextFieldWidget extends StatelessWidget {
 class TextFieldEditWidget extends StatelessWidget {
   final String text;
   final TextEditingController textSet;
-  TextFieldEditWidget({
+  const TextFieldEditWidget({
+    super.key,
     required this.text,
     required this.textSet,
   });
@@ -58,18 +61,19 @@ class TextFieldEditWidget extends StatelessWidget {
         fillColor: search,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: border2,
             width: 1.5,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: Colors.blue,
           ),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 19.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 14.0, horizontal: 19.0),
       ),
     );
   }

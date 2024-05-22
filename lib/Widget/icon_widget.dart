@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class BackIcon extends StatelessWidget {
   final VoidCallback? onPressed;
 
-  const BackIcon({Key? key, this.onPressed}) : super(key: key);
+  const BackIcon({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: ImageIcon(
+      icon: const ImageIcon(
         AssetImage('assets/arrowleft.png'),
       ),
       onPressed: onPressed ?? () => Navigator.pop(context),
@@ -19,12 +19,12 @@ class BackIcon extends StatelessWidget {
 class CloseIcon extends StatelessWidget {
   final VoidCallback? onPressed;
 
-  const CloseIcon({Key? key, this.onPressed}) : super(key: key);
+  const CloseIcon({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: ImageIcon(
+      icon: const ImageIcon(
         AssetImage('assets/x.png'),
       ),
       onPressed: onPressed ?? () => Navigator.pop(context),

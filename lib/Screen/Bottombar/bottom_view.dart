@@ -6,15 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Screen/Home/home_view.dart';
 import 'package:toyotamobile/Screen/Notification/notification_view.dart';
+import 'package:toyotamobile/Styles/color.dart';
 
 class BottomBarView extends StatelessWidget {
   final PageController _pageController = PageController();
   final List<Widget> _pages = [
     HomeView(),
     NewJobsView(),
-    NotificationView(),
-    AccountView()
+    const NotificationView(),
+    const AccountView()
   ];
+
+  BottomBarView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,66 +30,120 @@ class BottomBarView extends StatelessWidget {
           controller.currentIndex.value = index;
         },
       ),
-      bottomNavigationBar: Obx(() => BottomNavigationBar(
-            currentIndex: controller.currentIndex.value,
-            onTap: (index) {
-              _pageController.animateToPage(
-                index,
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-              controller.currentIndex.value = index;
-            },
-            type: BottomNavigationBarType.fixed,
-            selectedFontSize: 12,
-            unselectedFontSize: 12,
-            selectedLabelStyle: GoogleFonts.kanit(fontWeight: FontWeight.w400),
-            unselectedLabelStyle:
-                GoogleFonts.kanit(fontWeight: FontWeight.w400),
-            selectedItemColor: Colors.red,
-            unselectedItemColor: Colors.grey,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard),
-                label: 'My Job',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.airplane_ticket),
-                label: 'Ticket',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today_outlined),
-                label: 'Calendar',
-              ),
-              BottomNavigationBarItem(
-                icon: Stack(
-                  children: [
-                    Icon(Icons.notifications_none),
-                    if (controller.hasNotification.value)
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Container(
-                          padding: EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                          ),
-                          constraints: BoxConstraints(
-                            minWidth: 10,
-                            minHeight: 10,
+      bottomNavigationBar: Obx(() => Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 1,
+                  blurRadius: 2,
+                  offset: const Offset(0, 0),
+                ),
+              ],
+            ),
+            child: BottomNavigationBar(
+              currentIndex: controller.currentIndex.value,
+              onTap: (index) {
+                _pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+                controller.currentIndex.value = index;
+              },
+              type: BottomNavigationBarType.fixed,
+              selectedFontSize: 12,
+              unselectedFontSize: 12,
+              backgroundColor: buttontextcolor,
+              selectedLabelStyle:
+                  GoogleFonts.kanit(fontWeight: FontWeight.w400),
+              unselectedLabelStyle:
+                  GoogleFonts.kanit(fontWeight: FontWeight.w400),
+              selectedItemColor: bottombar,
+              unselectedItemColor: bottombarlabel,
+              items: [
+                BottomNavigationBarItem(
+                  icon: ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      controller.currentIndex.value == 0
+                          ? bottombar
+                          : bottombarlabel,
+                      BlendMode.srcIn,
+                    ),
+                    child: Image.asset('assets/home.png'),
+                  ),
+                  label: 'My Job',
+                ),
+                BottomNavigationBarItem(
+                  icon: ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      controller.currentIndex.value == 1
+                          ? bottombar
+                          : bottombarlabel,
+                      BlendMode.srcIn,
+                    ),
+                    child: Image.asset('assets/ticket.png'),
+                  ),
+                  label: 'Ticket',
+                ),
+                BottomNavigationBarItem(
+                  icon: ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      controller.currentIndex.value == 2
+                          ? bottombar
+                          : bottombarlabel,
+                      BlendMode.srcIn,
+                    ),
+                    child: Image.asset('assets/calendar.png'),
+                  ),
+                  label: 'Calendar',
+                ),
+                BottomNavigationBarItem(
+                  icon: Stack(
+                    children: [
+                      ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          controller.currentIndex.value == 3
+                              ? bottombar
+                              : bottombarlabel,
+                          BlendMode.srcIn,
+                        ),
+                        child: Image.asset('assets/bell.png'),
+                      ),
+                      if (controller.hasNotification.value)
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: const BoxDecoration(
+                              color: bottombar,
+                              shape: BoxShape.circle,
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 10,
+                              minHeight: 10,
+                            ),
                           ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
+                  label: 'Notification',
                 ),
-                label: 'Notification',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline),
-                label: 'Account',
-              ),
-            ],
+                BottomNavigationBarItem(
+                  icon: ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      controller.currentIndex.value == 4
+                          ? bottombar
+                          : bottombarlabel,
+                      BlendMode.srcIn,
+                    ),
+                    child: Image.asset('assets/account.png'),
+                  ),
+                  label: 'Account',
+                ),
+              ],
+            ),
           )),
     );
   }

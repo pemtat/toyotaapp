@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:toyotamobile/Screen/Account/account_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
@@ -11,10 +13,11 @@ class AccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AccountController accountController = Get.put(AccountController());
     return Scaffold(
         backgroundColor: backgroundapp,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
+          preferredSize: const Size.fromHeight(60.0),
           child: Column(
             children: [
               AppBar(
@@ -35,7 +38,7 @@ class AccountView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(right: 16),
+                          padding: const EdgeInsets.only(right: 16),
                           child: CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 27,
@@ -70,7 +73,7 @@ class AccountView extends StatelessWidget {
                   ],
                 ),
                 Positioned(
-                  right: 10.0,
+                  right: 16.0,
                   top: -40,
                   bottom: 0,
                   child: Center(
@@ -98,7 +101,12 @@ class AccountView extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton2(
-                    titleText: 'Logout', onTap: () {}, button: false)
+                    titleText: 'Logout',
+                    onTap: () {
+                      accountController.showLogoutDialog(context,
+                          'Are you sure to logout?', 'Cancel', 'Yes,Log out');
+                    },
+                    button: false)
               ],
             ),
             BoxContainer(

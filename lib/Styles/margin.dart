@@ -1,1 +1,1 @@
-final double PaddingApp = 16;
+const double paddingApp = 16;

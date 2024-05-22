@@ -88,6 +88,16 @@ flutter:
     - assets/checkbox.png
     - assets/plusint.png
     - assets/minus.png
+    - assets/home.png
+    - assets/ticket.png
+    - assets/account.png
+    - assets/home_red.png
+    - assets/ticket_red.png
+    - assets/account_red.png
+    - assets/calendar.png
+    - assets/bell.png
+    - assets/calendar_red.png
+    - assets/bell_red.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -6,7 +6,8 @@ class TextFieldType extends StatelessWidget {
   final String hintText;
   final TextEditingController textSet;
 
-  TextFieldType({required this.hintText, required this.textSet});
+  const TextFieldType(
+      {super.key, required this.hintText, required this.textSet});
 
   @override
   Widget build(BuildContext context) {
@@ -14,19 +15,19 @@ class TextFieldType extends StatelessWidget {
       controller: textSet,
       maxLines: 3,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderSide: BorderSide(
             color: border2,
             width: 1.0,
           ),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: border2,
             width: 1.0,
           ),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: border2,
             width: 1.0,
@@ -34,7 +35,7 @@ class TextFieldType extends StatelessWidget {
         ),
         hintText: hintText,
         hintStyle: TextStyleList.texttitle,
-        contentPadding: EdgeInsets.only(
+        contentPadding: const EdgeInsets.only(
           left: 12.0,
           top: 0.0,
           right: 12.0,
@@ -49,7 +50,8 @@ class TextFieldEditType extends StatelessWidget {
   final String hintText;
   final TextEditingController textSet;
 
-  TextFieldEditType({
+  const TextFieldEditType({
+    super.key,
     required this.hintText,
     required this.textSet,
   });
@@ -60,19 +62,19 @@ class TextFieldEditType extends StatelessWidget {
       controller: textSet,
       maxLines: 3,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderSide: BorderSide(
             color: border2,
             width: 1.0,
           ),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: border2,
             width: 1.0,
           ),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: border2,
             width: 1.0,
@@ -80,7 +82,7 @@ class TextFieldEditType extends StatelessWidget {
         ),
         hintText: hintText,
         hintStyle: TextStyleList.texttitle,
-        contentPadding: EdgeInsets.only(
+        contentPadding: const EdgeInsets.only(
           left: 12.0,
           top: 0.0,
           right: 12.0,

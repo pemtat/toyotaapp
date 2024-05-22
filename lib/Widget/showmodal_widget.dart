@@ -5,10 +5,10 @@ class ShowModalWidget extends StatelessWidget {
   final double? paddingCustom;
 
   const ShowModalWidget({
-    Key? key,
+    super.key,
     this.children,
     this.paddingCustom,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

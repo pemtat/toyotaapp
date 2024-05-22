@@ -12,7 +12,7 @@ class JobStatusItem extends StatelessWidget {
   final bool? center;
 
   const JobStatusItem({
-    Key? key,
+    super.key,
     required this.count,
     required this.title,
     required this.countColor,
@@ -21,14 +21,14 @@ class JobStatusItem extends StatelessWidget {
     this.imagePath,
     required this.flexValue,
     this.center,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       flex: flexValue,
       child: Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           image: imagePath != null
               ? DecorationImage(

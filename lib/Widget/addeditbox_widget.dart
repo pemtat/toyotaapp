@@ -10,7 +10,8 @@ class AddEditBox extends StatelessWidget {
   final VoidCallback onTap;
   final String moreText;
 
-  AddEditBox({
+  const AddEditBox({
+    super.key,
     required this.titleText,
     required this.list,
     required this.onTap,
@@ -39,7 +40,7 @@ class AddEditBox extends StatelessWidget {
               style: TextStyleList.buttontext,
             );
           } else {
-            return SizedBox();
+            return const SizedBox();
           }
         })
       ],

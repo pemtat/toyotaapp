@@ -2,7 +2,7 @@ import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:flutter/material.dart';
 
 class NotificationView extends StatelessWidget {
-  const NotificationView({Key? key}) : super(key: key);
+  const NotificationView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class NotificationView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('แจ้งเตือน'),
+        title: const Text('แจ้งเตือน'),
       ),
       body: Container(),
     );

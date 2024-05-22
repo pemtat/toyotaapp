@@ -4,9 +4,9 @@ class ImageRow extends StatelessWidget {
   final List<String> imageUrls;
 
   const ImageRow({
-    Key? key,
+    super.key,
     required this.imageUrls,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class ImageRow extends StatelessWidget {
       children: [
         for (int i = 0; i < imageUrls.length; i++)
           Padding(
-            padding: EdgeInsets.only(right: 5),
+            padding: const EdgeInsets.only(right: 5),
             child: Column(
               children: [
                 _buildImageWidget(imageUrls[i]),
@@ -26,7 +26,7 @@ class ImageRow extends StatelessWidget {
   }
 
   Widget _buildImageWidget(String url) {
-    return Container(
+    return SizedBox(
       width: 58.0,
       height: 58.0,
       child: Image.asset(

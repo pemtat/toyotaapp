@@ -56,24 +56,19 @@ class SparepartList extends GetxController {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Quantity"),
+            const Text("Quantity"),
             4.kH,
             Row(
               children: [
                 Expanded(
                   flex: 3,
-                  child: Container(
+                  child: SizedBox(
                     height: 40,
                     child: ElevatedButton(
                       onPressed: decrement,
-                      child: Image.asset(
-                        'assets/minus.png',
-                        width: 24,
-                        height: 24,
-                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: buttonbackground,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                             bottomLeft: Radius.circular(10),
@@ -81,6 +76,11 @@ class SparepartList extends GetxController {
                             bottomRight: Radius.circular(0),
                           ),
                         ),
+                      ),
+                      child: Image.asset(
+                        'assets/minus.png',
+                        width: 24,
+                        height: 24,
                       ),
                     ),
                   ),
@@ -97,25 +97,20 @@ class SparepartList extends GetxController {
                     ),
                     alignment: Alignment.center,
                     child: Obx(() => Text(
-                          '${quantity}',
+                          '$quantity',
                           style: TextStyleList.texttitle,
                         )),
                   ),
                 ),
                 Expanded(
                   flex: 3,
-                  child: Container(
+                  child: SizedBox(
                     height: 40,
                     child: ElevatedButton(
                       onPressed: increment,
-                      child: Image.asset(
-                        'assets/plusint.png',
-                        width: 24,
-                        height: 24,
-                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: buttonbackground,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(0),
                             bottomLeft: Radius.circular(0),
@@ -123,6 +118,11 @@ class SparepartList extends GetxController {
                             bottomRight: Radius.circular(10),
                           ),
                         ),
+                      ),
+                      child: Image.asset(
+                        'assets/plusint.png',
+                        width: 24,
+                        height: 24,
                       ),
                     ),
                   ),
@@ -190,24 +190,19 @@ class SparepartList extends GetxController {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Quantity"),
+            const Text("Quantity"),
             4.kH,
             Row(
               children: [
                 Expanded(
                   flex: 3,
-                  child: Container(
+                  child: SizedBox(
                     height: 40,
                     child: ElevatedButton(
                       onPressed: decrement,
-                      child: Image.asset(
-                        'assets/minus.png',
-                        width: 24,
-                        height: 24,
-                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: buttonbackground,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                             bottomLeft: Radius.circular(10),
@@ -215,6 +210,11 @@ class SparepartList extends GetxController {
                             bottomRight: Radius.circular(0),
                           ),
                         ),
+                      ),
+                      child: Image.asset(
+                        'assets/minus.png',
+                        width: 24,
+                        height: 24,
                       ),
                     ),
                   ),
@@ -231,25 +231,20 @@ class SparepartList extends GetxController {
                     ),
                     alignment: Alignment.center,
                     child: Obx(() => Text(
-                          '${quantity}',
+                          '$quantity',
                           style: TextStyleList.texttitle,
                         )),
                   ),
                 ),
                 Expanded(
                   flex: 3,
-                  child: Container(
+                  child: SizedBox(
                     height: 40,
                     child: ElevatedButton(
                       onPressed: increment,
-                      child: Image.asset(
-                        'assets/plusint.png',
-                        width: 24,
-                        height: 24,
-                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: buttonbackground,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(0),
                             bottomLeft: Radius.circular(0),
@@ -257,6 +252,11 @@ class SparepartList extends GetxController {
                             bottomRight: Radius.circular(10),
                           ),
                         ),
+                      ),
+                      child: Image.asset(
+                        'assets/plusint.png',
+                        width: 24,
+                        height: 24,
                       ),
                     ),
                   ),

@@ -8,11 +8,11 @@ class CheckStatus extends StatelessWidget {
   final Color textColor;
 
   const CheckStatus({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.text,
     required this.textColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

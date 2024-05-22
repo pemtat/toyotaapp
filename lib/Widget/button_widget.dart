@@ -5,9 +5,9 @@ class GoogleMapButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const GoogleMapButton({
-    Key? key,
+    super.key,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class GoogleMapButton extends StatelessWidget {
           width: 12.0,
           height: 12.0,
         ),
-        SizedBox(width: 4.0),
+        const SizedBox(width: 4.0),
         InkWell(
           onTap: onTap,
           child: Text(
@@ -36,9 +36,9 @@ class AddButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const AddButton({
-    Key? key,
+    super.key,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class AddButton extends StatelessWidget {
             width: 20.0,
             height: 20.0,
           ),
-          SizedBox(width: 4.0),
+          const SizedBox(width: 4.0),
           Text(
             'Add',
             style: TextStyleList.textbutton,
@@ -67,9 +67,9 @@ class EditButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const EditButton({
-    Key? key,
+    super.key,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class EditButton extends StatelessWidget {
             width: 20.0,
             height: 20.0,
           ),
-          SizedBox(width: 4.0),
+          const SizedBox(width: 4.0),
           Text(
             'Edit',
             style: TextStyleList.textbutton,
@@ -98,9 +98,9 @@ class EditButton2 extends StatelessWidget {
   final VoidCallback onTap;
 
   const EditButton2({
-    Key? key,
+    super.key,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +114,7 @@ class EditButton2 extends StatelessWidget {
             width: 12.0,
             height: 12.0,
           ),
-          SizedBox(width: 4.0),
+          const SizedBox(width: 4.0),
           Text(
             'Edit Profile',
             style: TextStyleList.textbutton,
@@ -130,18 +130,18 @@ class CustomElevatedButton extends StatelessWidget {
   final String text;
 
   const CustomElevatedButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.text,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xffFFFFFF),
-        side: BorderSide(color: const Color.fromARGB(112, 158, 158, 158)),
+        backgroundColor: const Color(0xffFFFFFF),
+        side: const BorderSide(color: Color.fromARGB(112, 158, 158, 158)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0), // Adjust border radius here
         ),
@@ -155,14 +155,15 @@ class EndButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
 
-  EndButton({
+  const EndButton({
+    super.key,
     required this.onPressed,
     required this.text,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: TextButton(
         onPressed: onPressed,

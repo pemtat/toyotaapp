@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:toyotamobile/Models/login_model.dart';
-import 'package:toyotamobile/Data/user.dart';
 import 'package:http/http.dart' as http;
-import 'package:toyotamobile/Screen/Home/home_view.dart';
+import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toyotamobile/Service/api.dart';
@@ -40,12 +39,13 @@ class LoginController extends GetxController {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('access_token', accessToken);
 
-        Get.offAll(() => HomeView());
+        Get.offAll(() => BottomBarView());
         Get.snackbar('Login Succesful', 'Welcome to T-Service');
       } else {
         Get.snackbar('Login Failed', 'Invalid username or password');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error: $e');
     }
   }

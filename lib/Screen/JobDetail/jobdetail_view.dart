@@ -18,13 +18,14 @@ import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
 import 'package:get/get.dart';
 
+// ignore: use_key_in_widget_constructors
 class TicketDetailPage extends StatelessWidget {
   final JobdetailController jobcontroller = Get.put(JobdetailController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(57.5),
+          preferredSize: const Size.fromHeight(57.5),
           child: Column(
             children: [
               Stack(
@@ -39,9 +40,9 @@ class TicketDetailPage extends StatelessWidget {
                         Text('JobID: 0001', style: TextStyleList.detail1),
                       ],
                     ),
-                    leading: BackIcon(),
+                    leading: const BackIcon(),
                   ),
-                  Positioned(
+                  const Positioned(
                     right: 15.0,
                     top: 15,
                     bottom: 0,
@@ -60,14 +61,14 @@ class TicketDetailPage extends StatelessWidget {
               color: backgroundapp,
               width: MediaQuery.of(context).size.width,
               child: Column(children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BoxContainer(
                         children: [
-                          TitleApp(text: 'Intruction'),
+                          const TitleApp(text: 'Intruction'),
                           Row(
                             children: [
                               Text(
@@ -94,15 +95,13 @@ class TicketDetailPage extends StatelessWidget {
                                       text: ' (Location: Onnut, Bangkok)   ',
                                       style: TextStyleList.intructionDetail),
                                   WidgetSpan(
-                                    child: Container(
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          GoogleMapButton(
-                                            onTap: () {},
-                                          )
-                                        ],
-                                      ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        GoogleMapButton(
+                                          onTap: () {},
+                                        )
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -127,10 +126,10 @@ class TicketDetailPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              TitleApp(text: 'Repair Report*'),
+                              const TitleApp(text: 'Repair Report*'),
                               AddButton(
                                 onTap: () {
-                                  Get.to(() => FillFormView());
+                                  Get.to(() => const FillFormView());
                                 },
                               ),
                             ],
@@ -158,7 +157,7 @@ class TicketDetailPage extends StatelessWidget {
                           ],
                         ),
                         8.kH,
-                        ImageRow(
+                        const ImageRow(
                           imageUrls: [
                             'assets/smartphone.png',
                             'assets/smartphone.png',
@@ -181,19 +180,19 @@ class TicketDetailPage extends StatelessWidget {
                       8.kH,
                       BoxContainer(
                         children: [
-                          TitleApp(text: "Machine Detail"),
+                          const TitleApp(text: "Machine Detail"),
                           8.kH,
-                          WarrantyInfo(
+                          const WarrantyInfo(
                             title: "Name/Model",
                             value: "UBRE200H2-TH-7500",
                           ),
                           3.kH,
-                          WarrantyInfo(
+                          const WarrantyInfo(
                             title: "Serial Number",
                             value: "6963131",
                           ),
                           3.kH,
-                          WarrantyInfo(
+                          const WarrantyInfo(
                             title: "Warranty Status",
                             value: '',
                             trailing: CheckStatus(
@@ -205,17 +204,17 @@ class TicketDetailPage extends StatelessWidget {
                           5.kH,
                           Row(
                             children: [
-                              AttachmentFile(name: 'Q1.pdf'),
+                              const AttachmentFile(name: 'Q1.pdf'),
                               7.wH,
-                              AttachmentFile(name: 'Q2.pdf'),
+                              const AttachmentFile(name: 'Q2.pdf'),
                               7.wH,
-                              AttachmentFile(name: 'Q3.pdf'),
+                              const AttachmentFile(name: 'Q3.pdf'),
                             ],
                           ),
                         ],
                       ),
                       8.kH,
-                      BoxContainer(children: [
+                      const BoxContainer(children: [
                         TicketInfo(
                           ticketId: '123456',
                           dateTime: '12 March 2024, 08:15 PM',
@@ -225,49 +224,46 @@ class TicketDetailPage extends StatelessWidget {
                       8.kH,
                       BoxContainer(
                         children: [
-                          TitleApp(text: 'Notes'),
+                          const TitleApp(text: 'Notes'),
                           8.kH,
-                          Container(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.grey,
-                                    radius: 12,
-                                    child: Text('A',
-                                        style: TextStyleList.buttontext2),
-                                  ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.grey,
+                                  radius: 12,
+                                  child: Text('A',
+                                      style: TextStyleList.buttontext2),
                                 ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text('Admin (Backoffice)',
-                                              style: TextStyleList.namenote),
-                                          3.wH,
-                                          Text(
-                                            '13 March 2024, 11:39 AM',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        'Don\'t be late be late',
-                                        style: TextStyleList.intructionDetail,
-                                      ),
-                                    ],
-                                  ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text('Admin (Backoffice)',
+                                            style: TextStyleList.namenote),
+                                        3.wH,
+                                        Text(
+                                          '13 March 2024, 11:39 AM',
+                                          style: TextStyleList.detail3,
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      'Don\'t be late be late',
+                                      style: TextStyleList.intructionDetail,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                           18.kH,
-                          AppDivider(),
+                          const AppDivider(),
                           18.kH,
                           TextFieldType(
                             hintText: 'Add Notes',
@@ -299,7 +295,11 @@ class TicketDetailPage extends StatelessWidget {
                       BoxContainer(paddingCustom: 10, children: [
                         EndButton(
                             onPressed: () {
-                              jobcontroller.showCustomDialog(context);
+                              jobcontroller.showCompletedDialog(
+                                  context,
+                                  'Successfully finished job on investigating!',
+                                  'Not yet',
+                                  'Yes, Completed');
                             },
                             text: 'Complete Investigating'),
                       ])

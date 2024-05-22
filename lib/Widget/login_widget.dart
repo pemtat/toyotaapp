@@ -9,11 +9,11 @@ class TextFieldLogin extends StatelessWidget {
   final bool hidetext;
 
   const TextFieldLogin({
-    Key? key,
+    super.key,
     required this.label,
     required this.onChanged,
     this.hidetext = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,10 @@ class TextFieldLogin extends StatelessWidget {
           style: TextStyleList.texttitle,
           onChanged: onChanged,
           decoration: InputDecoration(
-            labelText: '$label',
+            labelText: label,
             border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           ),
         ),
       ),
@@ -43,7 +44,7 @@ class TextFieldLogin extends StatelessWidget {
 class LoginButton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const LoginButton({Key? key, required this.onPressed}) : super(key: key);
+  const LoginButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -52,15 +53,15 @@ class LoginButton extends StatelessWidget {
         Expanded(
           child: ElevatedButton(
             onPressed: onPressed,
-            child: Text(
-              'Login',
-              style: TextStyleList.dialogbutton2,
-            ),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
               backgroundColor: const Color.fromARGB(255, 53, 53, 53),
+            ),
+            child: Text(
+              'Login',
+              style: TextStyleList.dialogbutton2,
             ),
           ),
         ),
@@ -73,7 +74,7 @@ class LoginButton extends StatelessWidget {
 class Footer extends StatelessWidget {
   final VoidCallback onTap;
 
-  const Footer({Key? key, required this.onTap}) : super(key: key);
+  const Footer({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

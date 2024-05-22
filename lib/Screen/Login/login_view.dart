@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'login_controller.dart';
 
+// ignore: use_key_in_widget_constructors
 class LoginView extends StatelessWidget {
   final LoginController controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -19,7 +21,7 @@ class LoginView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(),
+                const Spacer(),
                 Center(
                     child: Text(
                   "T-Service Connect",
@@ -41,7 +43,7 @@ class LoginView extends StatelessWidget {
                 LoginButton(
                   onPressed: controller.login,
                 ),
-                Spacer(),
+                const Spacer(),
                 Footer(onTap: () {})
               ],
             ),

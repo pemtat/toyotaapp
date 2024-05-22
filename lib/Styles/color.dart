@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color border = Color(0xFFEAEAEA);
-const Color sideborder = Colors.orange;
+const Color sideborder = Color(0xffF55C02);
 const Color link = Color(0xff2E7CF6);
 const Color border2 = Color(0xffD3D3D3);
 const Color warranty = Color.fromARGB(255, 94, 94, 94);
@@ -17,3 +17,5 @@ const Color buttonbackground = Color(0xffF1F1F1);
 const Color boxtextfield = Color(0xffEAEAEA);
 const Color textinbox = Color(0xff323232);
 const Color logintext = Color(0xfF5A5A5A);
+const Color bottombar = Color(0xfFEB0A1E);
+const Color bottombarlabel = Color(0xff707070);

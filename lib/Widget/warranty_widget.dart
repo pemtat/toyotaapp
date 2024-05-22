@@ -7,11 +7,11 @@ class WarrantyInfo extends StatelessWidget {
   final Widget? trailing;
 
   const WarrantyInfo({
-    Key? key,
+    super.key,
     required this.title,
     required this.value,
     this.trailing,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

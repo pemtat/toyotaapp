@@ -6,7 +6,8 @@ class CheckBoxWidget extends StatelessWidget {
   final String text;
   final RxList<String> listItem;
   final Function(String) itemSet;
-  CheckBoxWidget({
+  const CheckBoxWidget({
+    super.key,
     required this.text,
     required this.listItem,
     required this.itemSet,
@@ -34,13 +35,13 @@ class CheckBoxWidget extends StatelessWidget {
               ),
               child: Center(
                 child: listItem.contains(text)
-                    ? Icon(Icons.check, color: Colors.white, size: 16)
-                    : SizedBox(),
+                    ? const Icon(Icons.check, color: Colors.white, size: 16)
+                    : const SizedBox(),
               ),
             ),
           ),
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Expanded(
           child: Text(text, style: TextStyleList.subdetail),
         ),

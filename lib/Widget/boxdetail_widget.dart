@@ -8,16 +8,16 @@ class BoxContainer extends StatelessWidget {
   final double? paddingCustom;
 
   const BoxContainer({
-    Key? key,
+    super.key,
     this.children,
     this.child,
     this.paddingCustom,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(paddingCustom ?? PaddingApp),
+      padding: EdgeInsets.all(paddingCustom ?? paddingApp),
       decoration: BoxDetail(),
       width: MediaQuery.of(context).size.width,
       child: child ??

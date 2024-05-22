@@ -20,7 +20,7 @@ Future<Widget> getHomeWidget(SharedPreferences prefs) async {
 
 class MyApp extends StatelessWidget {
   final Widget? home;
-  MyApp({this.home});
+  const MyApp({super.key, this.home});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: buttontextcolor,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: buttontextcolor,
         ),
       ),

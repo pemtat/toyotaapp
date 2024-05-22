@@ -9,11 +9,11 @@ class TicketInfo extends StatelessWidget {
   final String reporter;
 
   const TicketInfo({
-    Key? key,
+    super.key,
     required this.ticketId,
     required this.dateTime,
     required this.reporter,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class TicketInfo extends StatelessWidget {
                 Image.asset('assets/ticketblock.png'),
               ],
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               '$dateTime\nReported by $reporter',
               style: TextStyleList.detail3,

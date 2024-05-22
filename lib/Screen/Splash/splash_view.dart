@@ -4,15 +4,19 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatelessWidget {
+  const SplashView({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: SplashScreenView(),
     );
   }
 }
 
 class SplashScreenView extends StatelessWidget {
+  const SplashScreenView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +25,7 @@ class SplashScreenView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SplashImage(),
+            const SplashImage(),
             20.kH,
             Text('Welcome to ', style: TextStyleList.headline),
             Text('Business point', style: TextStyleList.headline),

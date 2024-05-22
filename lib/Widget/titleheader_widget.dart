@@ -8,23 +8,23 @@ class JobTitle extends StatelessWidget {
   final Function()? buttonOnPressed;
 
   const JobTitle({
-    Key? key,
+    super.key,
     required this.headerText,
     required this.buttonText,
     this.buttonOnPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: PaddingApp, right: PaddingApp),
+      padding: const EdgeInsets.only(left: paddingApp, right: paddingApp),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             headerText,
             style: GoogleFonts.kanit(
-              color: Color(0xFF272727),
+              color: const Color(0xFF272727),
               fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
@@ -34,7 +34,7 @@ class JobTitle extends StatelessWidget {
             child: Text(
               buttonText,
               style: GoogleFonts.kanit(
-                color: Color(0xFF5A5A5A),
+                color: const Color(0xFF5A5A5A),
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
               ),

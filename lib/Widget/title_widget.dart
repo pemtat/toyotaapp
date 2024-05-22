@@ -4,7 +4,7 @@ import 'package:toyotamobile/Styles/text.dart';
 class TitleApp extends StatelessWidget {
   final String text;
 
-  const TitleApp({Key? key, required this.text}) : super(key: key);
+  const TitleApp({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +20,7 @@ class TitleWithButton extends StatelessWidget {
   final Widget button;
 
   const TitleWithButton({
+    super.key,
     required this.titleText,
     required this.button,
   });
@@ -43,6 +44,7 @@ class TitleWithButton2 extends StatelessWidget {
   final TextStyle? font;
 
   const TitleWithButton2({
+    super.key,
     required this.titleText,
     required this.button,
     required this.onTap,
@@ -59,7 +61,7 @@ class TitleWithButton2 extends StatelessWidget {
             titleText,
             style: font ?? TextStyleList.subdetail,
           ),
-          button ? Image.asset('assets/arrowright.png') : SizedBox()
+          button ? Image.asset('assets/arrowright.png') : const SizedBox()
         ]));
   }
 }

@@ -6,7 +6,7 @@ class Appbar extends StatelessWidget {
   final String title;
   final LogoutController controller = Get.put(LogoutController());
 
-  Appbar({required this.title});
+  Appbar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

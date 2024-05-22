@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Screen/Fillform/adddetail/additional_spare.dart';
-import 'package:toyotamobile/Screen/Fillform/adddetail/process_staff.dart';
-import 'package:toyotamobile/Screen/Fillform/adddetail/rcode.dart';
-import 'package:toyotamobile/Screen/Fillform/adddetail/repairprocedure.dart';
-import 'package:toyotamobile/Screen/Fillform/adddetail/repairresult.dart';
-import 'package:toyotamobile/Screen/Fillform/adddetail/sparepartlist.dart';
-import 'package:toyotamobile/Screen/Fillform/adddetail/wcode.dart';
-import 'package:toyotamobile/Screen/Fillform/fillform_controller.dart';
-import 'package:toyotamobile/Styles/boxdecoration.dart';
+import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
+import 'package:toyotamobile/Screen/FillForm/adddetail/process_staff.dart';
+import 'package:toyotamobile/Screen/FillForm/adddetail/rcode.dart';
+import 'package:toyotamobile/Screen/FillForm/adddetail/repairprocedure.dart';
+import 'package:toyotamobile/Screen/FillForm/adddetail/repairresult.dart';
+import 'package:toyotamobile/Screen/FillForm/adddetail/sparepartlist.dart';
+import 'package:toyotamobile/Screen/FillForm/adddetail/wcode.dart';
+import 'package:toyotamobile/Screen/FillForm/fillform_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/FillForm_widget/Sparepart_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -40,13 +40,13 @@ class FillFormView extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundapp,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
+        preferredSize: const Size.fromHeight(60.0),
         child: Column(
           children: [
             AppBar(
                 backgroundColor: buttontextcolor,
                 title: Text('Repair Report', style: TextStyleList.topbar),
-                leading: CloseIcon()),
+                leading: const CloseIcon()),
           ],
         ),
       ),
@@ -56,7 +56,7 @@ class FillFormView extends StatelessWidget {
             6.kH,
             BoxContainer(
               children: [
-                TitleApp(text: 'Field Service Report'),
+                const TitleApp(text: 'Field Service Report'),
                 ListView.builder(
                   shrinkWrap: true,
                   itemCount: fillFormController.fieldServiceReportList.length,
@@ -145,122 +145,18 @@ class FillFormView extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final part =
                                   sparePartListController.sparePartList[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 8.0, top: 8.0),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      padding: EdgeInsets.all(16),
-                                      decoration: BoxText(),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'C-Code/Page',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            part.cCodePage,
-                                            style: TextStyleList.detail2,
-                                          ),
-                                          Text(
-                                            'Part Name',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            part.partNumber,
-                                            style: TextStyleList.detail2,
-                                          ),
-                                          Text(
-                                            'Part Details(Description)',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            part.partDetails,
-                                            style: TextStyleList.detail2,
-                                          ),
-                                          Text(
-                                            'Quantity',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            "${part.quantity}",
-                                            style: TextStyleList.detail2,
-                                          ),
-                                          Text(
-                                            'Change Now',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            part.changeNow,
-                                            style: TextStyleList.detail2,
-                                          ),
-                                          Text(
-                                            'Change on Pm',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            part.changeOnPM,
-                                            style: TextStyleList.detail2,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 16,
-                                      right: 16,
-                                      child: Theme(
-                                        data: Theme.of(context).copyWith(
-                                          popupMenuTheme: PopupMenuThemeData(
-                                            color: buttontextcolor,
-                                          ),
-                                        ),
-                                        child: PopupMenuButton(
-                                          offset: Offset(0, 30),
-                                          itemBuilder: (BuildContext context) =>
-                                              <PopupMenuEntry>[
-                                            PopupMenuItem(
-                                              value: 'edit',
-                                              child: Text(
-                                                'Edit',
-                                                style: TextStyleList.subdetail,
-                                              ),
-                                            ),
-                                            PopupMenuItem(
-                                              value: 'delete',
-                                              child: Text('Delete',
-                                                  style:
-                                                      TextStyleList.subdetail),
-                                            ),
-                                          ],
-                                          child: Image.asset(
-                                            'assets/boxedit.png',
-                                            width: 24,
-                                            height: 24,
-                                          ),
-                                          onSelected: (value) {
-                                            if (value == 'edit') {
-                                              sparePartListController
-                                                  .sparePartListEditModal(
-                                                      context, part);
-                                            } else if (value == 'delete') {
-                                              sparePartListController
-                                                  .sparePartList
-                                                  .removeAt(index);
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
+                              return PartDetailWidget(
+                                part: part,
+                                index: index,
+                                sparePartListController:
+                                    sparePartListController,
+                                additSparePartListController:
+                                    additSparePartListController,
+                                additional: false,
                               );
                             },
                           )
-                        : SizedBox()
+                        : const SizedBox()
                   ],
                 )),
             space.kH,
@@ -283,122 +179,18 @@ class FillFormView extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final part = additSparePartListController
                                   .additSparePartList[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 8.0, top: 8.0),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      padding: EdgeInsets.all(16),
-                                      decoration: BoxText(),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'C-Code/Page',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            part.cCodePage,
-                                            style: TextStyleList.detail2,
-                                          ),
-                                          Text(
-                                            'Part Name',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            part.partNumber,
-                                            style: TextStyleList.detail2,
-                                          ),
-                                          Text(
-                                            'Part Details(Description)',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            part.partDetails,
-                                            style: TextStyleList.detail2,
-                                          ),
-                                          Text(
-                                            'Quantity',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            "${part.quantity}",
-                                            style: TextStyleList.detail2,
-                                          ),
-                                          Text(
-                                            'Change Now',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            part.changeNow,
-                                            style: TextStyleList.detail2,
-                                          ),
-                                          Text(
-                                            'Change on Pm',
-                                            style: TextStyleList.detail3,
-                                          ),
-                                          Text(
-                                            part.changeOnPM,
-                                            style: TextStyleList.detail2,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 16,
-                                      right: 16,
-                                      child: Theme(
-                                        data: Theme.of(context).copyWith(
-                                          popupMenuTheme: PopupMenuThemeData(
-                                            color: buttontextcolor,
-                                          ),
-                                        ),
-                                        child: PopupMenuButton(
-                                          offset: Offset(0, 30),
-                                          itemBuilder: (BuildContext context) =>
-                                              <PopupMenuEntry>[
-                                            PopupMenuItem(
-                                              value: 'edit',
-                                              child: Text(
-                                                'Edit',
-                                                style: TextStyleList.subdetail,
-                                              ),
-                                            ),
-                                            PopupMenuItem(
-                                              value: 'delete',
-                                              child: Text('Delete',
-                                                  style:
-                                                      TextStyleList.subdetail),
-                                            ),
-                                          ],
-                                          child: Image.asset(
-                                            'assets/boxedit.png',
-                                            width: 24,
-                                            height: 24,
-                                          ),
-                                          onSelected: (value) {
-                                            if (value == 'edit') {
-                                              additSparePartListController
-                                                  .additSparePartListEditModal(
-                                                      context, part);
-                                            } else if (value == 'delete') {
-                                              additSparePartListController
-                                                  .additSparePartList
-                                                  .removeAt(index);
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
+                              return PartDetailWidget(
+                                part: part,
+                                index: index,
+                                sparePartListController:
+                                    sparePartListController,
+                                additSparePartListController:
+                                    additSparePartListController,
+                                additional: true,
                               );
                             },
                           )
-                        : SizedBox()
+                        : const SizedBox()
                   ],
                 )),
             space.kH,
@@ -429,7 +221,7 @@ class FillFormView extends StatelessWidget {
             ),
             130.kH,
             BoxContainer(paddingCustom: 10, children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {},
