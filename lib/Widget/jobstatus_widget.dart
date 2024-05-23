@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class JobStatusItem extends StatelessWidget {
-  final String count;
+  final RxInt count;
   final String title;
   final Color countColor;
   final Color titleColor;
@@ -44,21 +45,23 @@ class JobStatusItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             center == false
-                ? Text(
-                    count,
-                    style: GoogleFonts.kanit(
-                      color: countColor,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                : Center(
-                    child: Text(
-                      count,
+                ? Obx(() => Text(
+                      '${count.value}',
                       style: GoogleFonts.kanit(
                         color: countColor,
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
+                      ),
+                    ))
+                : Obx(
+                    () => Center(
+                      child: Text(
+                        '${count.value}',
+                        style: GoogleFonts.kanit(
+                          color: countColor,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),

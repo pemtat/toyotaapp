@@ -15,6 +15,7 @@ class JobItemWidget extends StatelessWidget {
   final RxInt expandedIndex;
   final HomeController jobController;
   final Widget statusButton;
+  final Color sidebar;
 
   const JobItemWidget({
     super.key,
@@ -22,6 +23,7 @@ class JobItemWidget extends StatelessWidget {
     required this.expandedIndex,
     required this.jobController,
     required this.statusButton,
+    required this.sidebar,
   });
 
   @override
@@ -29,7 +31,7 @@ class JobItemWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(10),
-      decoration: CustomBoxDecoration(),
+      decoration: CustomBoxDecoration(sideBorderColor: sidebar),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -51,7 +53,7 @@ class JobItemWidget extends StatelessWidget {
                   onPressed: () {
                     if (expandedIndex.value ==
                         jobController.jobList.indexOf(job)) {
-                      expandedIndex.value = -1;
+                      expandedIndex.value = 0;
                     } else {
                       expandedIndex.value = jobController.jobList.indexOf(job);
                     }
@@ -61,7 +63,7 @@ class JobItemWidget extends StatelessWidget {
             ],
           ),
           Text(
-            job.detail,
+            job.summary,
             style: TextStyleList.detail2,
           ),
           const SizedBox(height: 2),
@@ -110,7 +112,7 @@ class JobItemWidget extends StatelessWidget {
                           style: TextStyleList.detail1),
                       const SizedBox(height: 4),
                       Text(
-                        job.problem,
+                        job.description,
                         style: TextStyleList.detail2,
                       ),
                       const SizedBox(height: 4),

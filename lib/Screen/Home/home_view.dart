@@ -18,7 +18,8 @@ import 'home_controller.dart';
 class HomeView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
   final BottomBarController bottomController = Get.put(BottomBarController());
-  final RxInt expandedIndex = (-1).obs;
+  final RxInt expandedIndex = 0.obs;
+  final RxInt expandedIndex2 = 0.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -49,23 +50,23 @@ class HomeView extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const JobStatusItem(
-                      count: '2',
+                    JobStatusItem(
+                      count: jobController.jobListLength,
                       title: 'Incoming Jobs',
-                      countColor: Color(0xffEB0A1E),
-                      titleColor: Color(0xff434343),
-                      containerColor: Color.fromARGB(255, 242, 194, 198),
+                      countColor: const Color(0xffEB0A1E),
+                      titleColor: const Color(0xff434343),
+                      containerColor: const Color.fromARGB(255, 242, 194, 198),
                       imagePath: 'assets/propjob.png',
                       flexValue: 6,
                       center: false,
                     ),
                     10.wH,
-                    const JobStatusItem(
-                      count: '1',
+                    JobStatusItem(
+                      count: jobController.jobListCloseLength,
                       title: 'Completed Jobs',
-                      countColor: Color(0xff323232),
-                      titleColor: Color(0xff434343),
-                      containerColor: Color(0xffEAEAEA),
+                      countColor: const Color(0xff323232),
+                      titleColor: const Color(0xff434343),
+                      containerColor: const Color(0xffEAEAEA),
                       flexValue: 4,
                       center: true,
                     ),
@@ -98,6 +99,7 @@ class HomeView extends StatelessWidget {
                     expandedIndex: expandedIndex,
                     jobController: jobController,
                     statusButton: const StatusNewButton(),
+                    sidebar: sideborder,
                   );
                 }),
               ),
@@ -120,9 +122,10 @@ class HomeView extends StatelessWidget {
 
                   return JobItemWidget(
                     job: job,
-                    expandedIndex: expandedIndex,
+                    expandedIndex: expandedIndex2,
                     jobController: jobController,
                     statusButton: const StatusCompletedButton(),
+                    sidebar: bottombarlabel,
                   );
                 }),
               ),

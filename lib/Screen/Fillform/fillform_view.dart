@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/process_staff.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/rcode.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/repairprocedure.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/repairresult.dart';
+import 'package:toyotamobile/Screen/FillForm/adddetail/repair_procedure.dart';
+import 'package:toyotamobile/Screen/FillForm/adddetail/repair_result.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/wcode.dart';
 import 'package:toyotamobile/Screen/FillForm/fillform_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/FillForm_widget/Sparepart_widget.dart';
+import 'package:toyotamobile/Widget/FillForm_widget/repairprodecure_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -114,17 +115,34 @@ class FillFormView extends StatelessWidget {
               ],
             ),
             space.kH,
-            BoxContainer(
-              children: [
-                TitleWithButton(
-                  titleText: 'Repair prodecure',
-                  button: AddButton(
-                    onTap: () {
-                      rPController.rPModal(context);
-                    },
+            Obx(
+              () => BoxContainer(
+                children: [
+                  TitleWithButton(
+                    titleText: 'Repair prodecure',
+                    button: AddButton(
+                      onTap: () {
+                        rPController.rPModal(context);
+                      },
+                    ),
                   ),
-                ),
-              ],
+                  rPController.repairProcedureList.isNotEmpty
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: rPController.repairProcedureList.length,
+                          itemBuilder: (context, index) {
+                            final part =
+                                rPController.repairProcedureList[index];
+                            return RepairProdecureWidget(
+                              part: part,
+                              index: index,
+                              repairProcedureController: rPController,
+                            );
+                          },
+                        )
+                      : const SizedBox()
+                ],
+              ),
             ),
             space.kH,
             Obx(() => BoxContainer(

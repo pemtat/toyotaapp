@@ -3,7 +3,7 @@ import 'package:toyotamobile/Styles/color.dart';
 
 class CustomBoxDecoration extends BoxDecoration {
   CustomBoxDecoration(
-      {Color sideBorderColor = sideborder,
+      {required Color sideBorderColor,
       Color borderColor = border,
       double width = 1})
       : super(

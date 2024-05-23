@@ -30,6 +30,7 @@ class TextFieldLogin extends StatelessWidget {
           onChanged: onChanged,
           decoration: InputDecoration(
             labelText: label,
+            floatingLabelStyle: const TextStyle(color: Colors.black),
             border: InputBorder.none,
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 5, horizontal: 10),

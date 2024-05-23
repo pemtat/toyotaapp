@@ -136,9 +136,9 @@ class NewJobsView extends StatelessWidget {
                 child: Obx(() {
                   final filteredJobs = jobController.jobList
                       .where((job) =>
-                          job.status == 'New' &&
+                          job.status == 'assigned' &&
                           (job.jobid.contains(searchQuery.value) ||
-                              job.detail.contains(searchQuery.value)))
+                              job.description.contains(searchQuery.value)))
                       .toList();
                   if (filteredJobs.isEmpty) {
                     return const Center(child: Text('No new jobs available.'));
@@ -148,14 +148,17 @@ class NewJobsView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       Home job = filteredJobs[index];
                       return InkWell(
-                          onTap: () {
-                            Get.to(() => TicketDetailPage());
-                          },
-                          child: JobItemWidget(
-                              job: job,
-                              expandedIndex: expandedIndex,
-                              jobController: jobController,
-                              statusButton: const StatusNewButton()));
+                        onTap: () {
+                          Get.to(() => TicketDetailPage());
+                        },
+                        child: JobItemWidget(
+                          job: job,
+                          expandedIndex: expandedIndex,
+                          jobController: jobController,
+                          statusButton: const StatusNewButton(),
+                          sidebar: sideborder,
+                        ),
+                      );
                     },
                   );
                 }),
