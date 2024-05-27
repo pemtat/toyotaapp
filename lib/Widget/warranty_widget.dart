@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/text.dart';
 
-class WarrantyInfo extends StatelessWidget {
+class BoxInfo extends StatelessWidget {
   final String title;
   final String value;
   final Widget? trailing;
 
-  const WarrantyInfo({
+  const BoxInfo({
     super.key,
     required this.title,
     required this.value,

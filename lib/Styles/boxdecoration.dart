@@ -33,6 +33,28 @@ class Decoration2 extends BoxDecoration {
         );
 }
 
+class Decoration3 extends BoxDecoration {
+  Decoration3({
+    Color borderColor = white5,
+    double width = 1,
+    Color backgroundColor = white3,
+  }) : super(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(0),
+            bottomLeft: Radius.circular(10),
+            topRight: Radius.circular(0),
+            bottomRight: Radius.circular(10),
+          ),
+          color: backgroundColor,
+          border: Border(
+            left: BorderSide(width: width, color: borderColor),
+            right: BorderSide(width: width, color: borderColor),
+            bottom: BorderSide(width: width, color: borderColor),
+            top: BorderSide(width: width, color: borderColor),
+          ),
+        );
+}
+
 class BoxDetail extends BoxDecoration {
   BoxDetail({
     Color borderColor = white2,

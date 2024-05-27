@@ -31,6 +31,7 @@ class AccountController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('access_token', "");
     prefs.setString('token_response', "");
+    prefs.setString('token', "");
     controller.currentIndex.value = 0;
     jobController.mostRecentNewJob.value = null;
     jobController.mostRecentCompleteJob.value = null;

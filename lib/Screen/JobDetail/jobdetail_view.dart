@@ -182,17 +182,17 @@ class TicketDetailPage extends StatelessWidget {
                         children: [
                           const TitleApp(text: "Machine Detail"),
                           8.kH,
-                          const WarrantyInfo(
+                          const BoxInfo(
                             title: "Name/Model",
                             value: "UBRE200H2-TH-7500",
                           ),
                           3.kH,
-                          const WarrantyInfo(
+                          const BoxInfo(
                             title: "Serial Number",
                             value: "6963131",
                           ),
                           3.kH,
-                          const WarrantyInfo(
+                          const BoxInfo(
                             title: "Warranty Status",
                             value: '',
                             trailing: CheckStatus(

@@ -1,12 +1,11 @@
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
-import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
+import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/margin.dart';
-import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
-
+import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
 import 'package:toyotamobile/Widget/statusbutton_widget.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
@@ -150,14 +149,13 @@ class TicketView extends StatelessWidget {
                       Home job = filteredJobs[index];
                       return InkWell(
                         onTap: () {
-                          Get.to(() => TicketDetailPage());
+                          Get.to(() => PendingTaskView(ticketId: job.jobid));
                         },
-                        child: JobItemWidget(
+                        child: JobItemTicket(
                           job: job,
                           expandedIndex: expandedIndex,
                           jobController: jobController,
                           statusButton: const StatusNewButton(),
-                          sidebar: orange1,
                         ),
                       );
                     },

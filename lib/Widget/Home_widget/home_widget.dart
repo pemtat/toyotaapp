@@ -121,17 +121,17 @@ class JobItemWidget extends StatelessWidget {
                           decoration: Decoration2(),
                           child: const Column(
                             children: [
-                              WarrantyInfo(
+                              BoxInfo(
                                 title: "Name/Model",
                                 value: "UBRE200H2-TH-7500",
                               ),
                               SizedBox(height: 3),
-                              WarrantyInfo(
+                              BoxInfo(
                                 title: "Serial Number",
                                 value: "6963131",
                               ),
                               SizedBox(height: 3),
-                              WarrantyInfo(
+                              BoxInfo(
                                 title: "Warranty Status",
                                 value: '',
                                 trailing: CheckStatus(

@@ -63,6 +63,9 @@ class LoginController extends GetxController {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('access_token', accessToken);
         prefs.setString('token_response', json.encode(tokenResponseData));
+        String? tokenResponse = prefs.getString('token_response');
+        Map<String, dynamic> tokenData = json.decode(tokenResponse ?? '');
+        prefs.setString('token', tokenData['token']);
         jobController.fetchDataFromAssignJob();
 
         Get.offAll(() => BottomBarView());
