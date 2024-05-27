@@ -27,7 +27,7 @@ class SparepartList extends GetxController {
           children: [
             Text(
               "Spare part list",
-              style: TextStyleList.headmodal,
+              style: TextStyleList.subheading,
             ),
             InkWell(
                 onTap: () {
@@ -66,7 +66,7 @@ class SparepartList extends GetxController {
                     child: ElevatedButton(
                       onPressed: decrement,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonbackground,
+                        backgroundColor: white5,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
@@ -90,14 +90,14 @@ class SparepartList extends GetxController {
                     height: 40,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: buttonbackground,
+                        color: white5,
                         width: 1,
                       ),
                     ),
                     alignment: Alignment.center,
                     child: Obx(() => Text(
                           '$quantity',
-                          style: TextStyleList.texttitle,
+                          style: TextStyleList.text12,
                         )),
                   ),
                 ),
@@ -108,7 +108,7 @@ class SparepartList extends GetxController {
                     child: ElevatedButton(
                       onPressed: increment,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonbackground,
+                        backgroundColor: white5,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(0),
@@ -161,7 +161,7 @@ class SparepartList extends GetxController {
           children: [
             Text(
               "Spare part list",
-              style: TextStyleList.headmodal,
+              style: TextStyleList.subheading,
             ),
             InkWell(
                 onTap: () {
@@ -200,7 +200,7 @@ class SparepartList extends GetxController {
                     child: ElevatedButton(
                       onPressed: decrement,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonbackground,
+                        backgroundColor: white5,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
@@ -224,14 +224,14 @@ class SparepartList extends GetxController {
                     height: 40,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: buttonbackground,
+                        color: white5,
                         width: 1,
                       ),
                     ),
                     alignment: Alignment.center,
                     child: Obx(() => Text(
                           '$quantity',
-                          style: TextStyleList.texttitle,
+                          style: TextStyleList.text12,
                         )),
                   ),
                 ),
@@ -242,7 +242,7 @@ class SparepartList extends GetxController {
                     child: ElevatedButton(
                       onPressed: increment,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonbackground,
+                        backgroundColor: white5,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(0),

@@ -26,7 +26,7 @@ class TextFieldLogin extends StatelessWidget {
         padding: const EdgeInsets.only(left: 8),
         child: TextField(
           obscureText: hidetext,
-          style: TextStyleList.texttitle,
+          style: TextStyleList.text11,
           onChanged: onChanged,
           decoration: InputDecoration(
             labelText: label,
@@ -62,7 +62,7 @@ class LoginButton extends StatelessWidget {
             ),
             child: Text(
               'Login',
-              style: TextStyleList.dialogbutton2,
+              style: TextStyleList.text7,
             ),
           ),
         ),
@@ -82,11 +82,11 @@ class Footer extends StatelessWidget {
     return Text.rich(
       TextSpan(
         text: 'By using T-Service Connect, you agree and consent to our ',
-        style: TextStyleList.fileattacth,
+        style: TextStyleList.text1,
         children: [
           TextSpan(
             text: 'Terms and Condition, Privacy Policy.',
-            style: TextStyleList.footer,
+            style: TextStyleList.text14,
             recognizer: TapGestureRecognizer()..onTap = onTap,
           ),
         ],

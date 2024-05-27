@@ -29,7 +29,7 @@ class DialogAlert extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: TextStyleList.detail2,
+              style: TextStyleList.text15,
             ),
           ),
           20.kH,
@@ -41,8 +41,8 @@ class DialogAlert extends StatelessWidget {
                   context,
                   leftButton,
                   Colors.white,
-                  TextStyleList.dialogbutton,
-                  dialogbuttoncolor,
+                  TextStyleList.text6,
+                  black2,
                   const Color(0xff000000),
                   () {
                     Navigator.of(context).pop();
@@ -55,8 +55,8 @@ class DialogAlert extends StatelessWidget {
                   context,
                   rightButton,
                   Colors.black,
-                  TextStyleList.dialogbutton2,
-                  buttontextcolor,
+                  TextStyleList.text7,
+                  white3,
                   Colors.transparent,
                   () {
                     Navigator.of(context).pop();

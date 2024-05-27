@@ -6,8 +6,7 @@ import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
-import 'package:toyotamobile/Widget/icon_widget.dart';
-import 'package:toyotamobile/Widget/titleheader_widget.dart';
+
 import 'package:toyotamobile/Widget/statusbutton_widget.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
@@ -15,14 +14,14 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class NewJobsView extends StatelessWidget {
+class TicketView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
   final BottomBarController bottomController = Get.put(BottomBarController());
   final RxInt expandedIndex = (-1).obs;
   final TextEditingController searchController = TextEditingController();
   final RxString searchQuery = ''.obs;
 
-  NewJobsView({super.key});
+  TicketView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +36,7 @@ class NewJobsView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('My Jobs', style: TextStyleList.title1),
-                leading: const BackIcon(),
+                title: Text('Incoming Ticket', style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,
@@ -48,6 +46,7 @@ class NewJobsView extends StatelessWidget {
           ),
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             15.kH,
             Container(
@@ -125,10 +124,12 @@ class NewJobsView extends StatelessWidget {
               ),
             ),
             10.kH,
-            JobTitle(
-              headerText: 'Incoming Jobs',
-              buttonText: '',
-              buttonOnPressed: () {},
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Text(
+                'Today',
+                style: TextStyleList.subtext4,
+              ),
             ),
             Expanded(
               child: Padding(

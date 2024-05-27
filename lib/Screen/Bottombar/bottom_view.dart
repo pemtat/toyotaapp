@@ -1,18 +1,18 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:toyotamobile/Screen/Account/account_view.dart';
-import 'package:toyotamobile/Screen/Allticket/NewJobs/newjobs_view.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Screen/Home/home_view.dart';
 import 'package:toyotamobile/Screen/Notification/notification_view.dart';
+import 'package:toyotamobile/Screen/Ticket/ticket_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 
 class BottomBarView extends StatelessWidget {
   final PageController _pageController = PageController();
   final List<Widget> _pages = [
     HomeView(),
-    NewJobsView(),
+    TicketView(),
     const NotificationView(),
     const AccountView()
   ];
@@ -54,20 +54,18 @@ class BottomBarView extends StatelessWidget {
               type: BottomNavigationBarType.fixed,
               selectedFontSize: 12,
               unselectedFontSize: 12,
-              backgroundColor: buttontextcolor,
+              backgroundColor: white3,
               selectedLabelStyle:
                   GoogleFonts.kanit(fontWeight: FontWeight.w400),
               unselectedLabelStyle:
                   GoogleFonts.kanit(fontWeight: FontWeight.w400),
-              selectedItemColor: bottombar,
-              unselectedItemColor: bottombarlabel,
+              selectedItemColor: red1,
+              unselectedItemColor: black6,
               items: [
                 BottomNavigationBarItem(
                   icon: ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                      controller.currentIndex.value == 0
-                          ? bottombar
-                          : bottombarlabel,
+                      controller.currentIndex.value == 0 ? red1 : black6,
                       BlendMode.srcIn,
                     ),
                     child: Image.asset('assets/home.png'),
@@ -77,9 +75,7 @@ class BottomBarView extends StatelessWidget {
                 BottomNavigationBarItem(
                   icon: ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                      controller.currentIndex.value == 1
-                          ? bottombar
-                          : bottombarlabel,
+                      controller.currentIndex.value == 1 ? red1 : black6,
                       BlendMode.srcIn,
                     ),
                     child: Image.asset('assets/ticket.png'),
@@ -89,9 +85,7 @@ class BottomBarView extends StatelessWidget {
                 BottomNavigationBarItem(
                   icon: ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                      controller.currentIndex.value == 2
-                          ? bottombar
-                          : bottombarlabel,
+                      controller.currentIndex.value == 2 ? red1 : black6,
                       BlendMode.srcIn,
                     ),
                     child: Image.asset('assets/calendar.png'),
@@ -103,9 +97,7 @@ class BottomBarView extends StatelessWidget {
                     children: [
                       ColorFiltered(
                         colorFilter: ColorFilter.mode(
-                          controller.currentIndex.value == 3
-                              ? bottombar
-                              : bottombarlabel,
+                          controller.currentIndex.value == 3 ? red1 : black6,
                           BlendMode.srcIn,
                         ),
                         child: Image.asset('assets/bell.png'),
@@ -117,7 +109,7 @@ class BottomBarView extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(2),
                             decoration: const BoxDecoration(
-                              color: bottombar,
+                              color: red1,
                               shape: BoxShape.circle,
                             ),
                             constraints: const BoxConstraints(
@@ -133,9 +125,7 @@ class BottomBarView extends StatelessWidget {
                 BottomNavigationBarItem(
                   icon: ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                      controller.currentIndex.value == 4
-                          ? bottombar
-                          : bottombarlabel,
+                      controller.currentIndex.value == 4 ? red1 : black6,
                       BlendMode.srcIn,
                     ),
                     child: Image.asset('assets/account.png'),

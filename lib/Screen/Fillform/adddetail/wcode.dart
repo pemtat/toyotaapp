@@ -29,7 +29,7 @@ class Wcode extends GetxController {
           children: [
             Text(
               "W Code",
-              style: TextStyleList.headmodal,
+              style: TextStyleList.subheading,
             ),
             InkWell(
                 onTap: () {

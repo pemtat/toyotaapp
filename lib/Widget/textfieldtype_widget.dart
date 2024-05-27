@@ -17,24 +17,24 @@ class TextFieldType extends StatelessWidget {
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: border2,
+            color: white2,
             width: 1.0,
           ),
         ),
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: border2,
+            color: white2,
             width: 1.0,
           ),
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: border2,
+            color: white2,
             width: 1.0,
           ),
         ),
         hintText: hintText,
-        hintStyle: TextStyleList.texttitle,
+        hintStyle: TextStyleList.text12,
         contentPadding: const EdgeInsets.only(
           left: 12.0,
           top: 0.0,
@@ -64,24 +64,24 @@ class TextFieldEditType extends StatelessWidget {
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: border2,
+            color: white2,
             width: 1.0,
           ),
         ),
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: border2,
+            color: white2,
             width: 1.0,
           ),
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: border2,
+            color: white2,
             width: 1.0,
           ),
         ),
         hintText: hintText,
-        hintStyle: TextStyleList.texttitle,
+        hintStyle: TextStyleList.text12,
         contentPadding: const EdgeInsets.only(
           left: 12.0,
           top: 0.0,

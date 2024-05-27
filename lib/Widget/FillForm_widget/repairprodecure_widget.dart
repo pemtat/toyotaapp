@@ -44,20 +44,20 @@ class RepairProdecureWidget extends StatelessWidget {
               children: [
                 Text(
                   'Repair Procedure',
-                  style: TextStyleList.detail3,
+                  style: TextStyleList.subtext1,
                 ),
                 Text(
                   part.repairProcedure,
-                  style: TextStyleList.detail2,
+                  style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Part Name',
-                  style: TextStyleList.detail3,
+                  style: TextStyleList.subtext1,
                 ),
                 Text(
                   part.causeProblem,
-                  style: TextStyleList.detail2,
+                  style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
               ],
@@ -69,7 +69,7 @@ class RepairProdecureWidget extends StatelessWidget {
             child: Theme(
               data: Theme.of(context).copyWith(
                 popupMenuTheme: const PopupMenuThemeData(
-                  color: buttontextcolor,
+                  color: white3,
                 ),
               ),
               child: PopupMenuButton(
@@ -79,12 +79,12 @@ class RepairProdecureWidget extends StatelessWidget {
                     value: 'edit',
                     child: Text(
                       'Edit',
-                      style: TextStyleList.subdetail,
+                      style: TextStyleList.text9,
                     ),
                   ),
                   PopupMenuItem(
                     value: 'delete',
-                    child: Text('Delete', style: TextStyleList.subdetail),
+                    child: Text('Delete', style: TextStyleList.text9),
                   ),
                 ],
                 child: Image.asset(

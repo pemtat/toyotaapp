@@ -20,14 +20,14 @@ class FillFormView2 extends StatelessWidget {
     int space = 8;
 
     return Scaffold(
-      backgroundColor: backgroundapp,
+      backgroundColor: white4,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
         child: Column(
           children: [
             AppBar(
-                backgroundColor: buttontextcolor,
-                title: Text('Battery Information', style: TextStyleList.topbar),
+                backgroundColor: white3,
+                title: Text('Battery Information', style: TextStyleList.title1),
                 leading: const CloseIcon()),
           ],
         ),

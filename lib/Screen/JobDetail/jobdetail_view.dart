@@ -31,13 +31,13 @@ class TicketDetailPage extends StatelessWidget {
               Stack(
                 children: [
                   AppBar(
-                    backgroundColor: buttontextcolor,
+                    backgroundColor: white3,
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Investigate machine',
-                            style: TextStyleList.topbar),
-                        Text('JobID: 0001', style: TextStyleList.detail1),
+                            style: TextStyleList.title1),
+                        Text('JobID: 0001', style: TextStyleList.text16),
                       ],
                     ),
                     leading: const BackIcon(),
@@ -58,7 +58,7 @@ class TicketDetailPage extends StatelessWidget {
         body: SingleChildScrollView(
             child: Column(children: [
           Container(
-              color: backgroundapp,
+              color: white4,
               width: MediaQuery.of(context).size.width,
               child: Column(children: [
                 SizedBox(
@@ -73,11 +73,11 @@ class TicketDetailPage extends StatelessWidget {
                             children: [
                               Text(
                                 'Step 1: Contact reporter',
-                                style: TextStyleList.intruction,
+                                style: TextStyleList.text4,
                               ),
                               3.wH,
                               Text('(Phone number: 0823424234)',
-                                  style: TextStyleList.intructionDetail),
+                                  style: TextStyleList.subtext3),
                             ],
                           ),
                           3.kH,
@@ -86,14 +86,14 @@ class TicketDetailPage extends StatelessWidget {
                               RichText(
                                   text: TextSpan(
                                 text: 'Step 2 ',
-                                style: TextStyleList.intruction,
+                                style: TextStyleList.text4,
                                 children: [
                                   TextSpan(
                                       text: 'Go to the machine',
-                                      style: TextStyleList.intruction),
+                                      style: TextStyleList.text4),
                                   TextSpan(
                                       text: ' (Location: Onnut, Bangkok)   ',
-                                      style: TextStyleList.intructionDetail),
+                                      style: TextStyleList.subtext3),
                                   WidgetSpan(
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -111,12 +111,12 @@ class TicketDetailPage extends StatelessWidget {
                           3.kH,
                           Text(
                             'Step 3: Report to admin about machine',
-                            style: TextStyleList.intruction,
+                            style: TextStyleList.text4,
                           ),
                           3.kH,
                           Text(
                             'Step 4: Complete investigation',
-                            style: TextStyleList.intruction,
+                            style: TextStyleList.text4,
                           ),
                         ],
                       ),
@@ -136,7 +136,7 @@ class TicketDetailPage extends StatelessWidget {
                           ),
                           Text(
                             'Please fill the field service report',
-                            style: TextStyleList.detail1,
+                            style: TextStyleList.text16,
                           )
                         ],
                       ),
@@ -144,14 +144,14 @@ class TicketDetailPage extends StatelessWidget {
                       BoxContainer(children: [
                         Text(
                           'Summary of issue',
-                          style: TextStyleList.detail1,
+                          style: TextStyleList.text16,
                         ),
                         Row(
                           children: [
                             Flexible(
                               child: Text(
                                 'Machine doesn\'t work at all and petrol is leaking since last week',
-                                style: TextStyleList.subdetail,
+                                style: TextStyleList.text9,
                               ),
                             ),
                           ],
@@ -171,7 +171,7 @@ class TicketDetailPage extends StatelessWidget {
                           children: [
                             Text(
                               'More Detail',
-                              style: TextStyleList.detail1,
+                              style: TextStyleList.text16,
                             ),
                             Image.asset('assets/arrowdown.png')
                           ],
@@ -198,7 +198,7 @@ class TicketDetailPage extends StatelessWidget {
                             trailing: CheckStatus(
                               imagePath: 'assets/pass.png',
                               text: 'Active',
-                              textColor: pass,
+                              textColor: green1,
                             ),
                           ),
                           5.kH,
@@ -234,8 +234,7 @@ class TicketDetailPage extends StatelessWidget {
                                 child: CircleAvatar(
                                   backgroundColor: Colors.grey,
                                   radius: 12,
-                                  child: Text('A',
-                                      style: TextStyleList.buttontext2),
+                                  child: Text('A', style: TextStyleList.text13),
                                 ),
                               ),
                               Expanded(
@@ -245,17 +244,17 @@ class TicketDetailPage extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text('Admin (Backoffice)',
-                                            style: TextStyleList.namenote),
+                                            style: TextStyleList.text10),
                                         3.wH,
                                         Text(
                                           '13 March 2024, 11:39 AM',
-                                          style: TextStyleList.detail3,
+                                          style: TextStyleList.subtext1,
                                         ),
                                       ],
                                     ),
                                     Text(
                                       'Don\'t be late be late',
-                                      style: TextStyleList.intructionDetail,
+                                      style: TextStyleList.subtext3,
                                     ),
                                   ],
                                 ),
@@ -279,7 +278,7 @@ class TicketDetailPage extends StatelessWidget {
                                   4.wH,
                                   Text(
                                     'Attach file',
-                                    style: TextStyleList.fileattacth,
+                                    style: TextStyleList.text1,
                                   ),
                                 ],
                               ),

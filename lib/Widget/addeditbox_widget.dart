@@ -37,7 +37,7 @@ class AddEditBox extends StatelessWidget {
           if (list.isNotEmpty) {
             return Text(
               moreText,
-              style: TextStyleList.buttontext,
+              style: TextStyleList.text12,
             );
           } else {
             return const SizedBox();

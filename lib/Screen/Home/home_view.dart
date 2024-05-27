@@ -32,12 +32,12 @@ class HomeView extends StatelessWidget {
           child: Column(
             children: [
               AppBar(
-                backgroundColor: buttontextcolor,
-                title: Text('My Jobs', style: TextStyleList.topbar),
+                backgroundColor: white3,
+                title: Text('My Jobs', style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,
-                color: border,
+                color: white1,
               ),
             ],
           ),
@@ -99,7 +99,7 @@ class HomeView extends StatelessWidget {
                     expandedIndex: expandedIndex,
                     jobController: jobController,
                     statusButton: const StatusNewButton(),
-                    sidebar: sideborder,
+                    sidebar: orange1,
                   );
                 }),
               ),
@@ -125,7 +125,7 @@ class HomeView extends StatelessWidget {
                     expandedIndex: expandedIndex2,
                     jobController: jobController,
                     statusButton: const StatusCompletedButton(),
-                    sidebar: bottombarlabel,
+                    sidebar: black6,
                   );
                 }),
               ),

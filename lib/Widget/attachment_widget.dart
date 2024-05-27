@@ -12,7 +12,7 @@ class AttachmentFile extends StatelessWidget {
       children: [
         Image.asset('assets/pdf.png'),
         const SizedBox(height: 4),
-        Text(name, style: TextStyleList.intructionDetail),
+        Text(name, style: TextStyleList.subtext3),
       ],
     );
   }

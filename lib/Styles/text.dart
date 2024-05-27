@@ -1,146 +1,118 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:toyotamobile/Styles/color.dart'; // Assuming this file defines the 'link' and 'warranty' colors
+import 'package:toyotamobile/Styles/color.dart';
 
+// 40px line height / 25px font size = 1.6
+//25
 class TextStyleList {
-  static final TextStyle headline = GoogleFonts.kanit(
-    fontSize: 20,
+  static final TextStyle heading = GoogleFonts.kanit(
+    fontSize: 25,
     fontWeight: FontWeight.bold,
-    color: Colors.black,
+    color: black2,
+    height: 1.6,
   );
 
-  static final TextStyle topbar = GoogleFonts.kanit(
-    fontSize: 18,
+  //22
+  static final TextStyle subheading = GoogleFonts.kanit(
+    fontSize: 22,
     fontWeight: FontWeight.w500,
-    color: Colors.black,
+    color: black8,
   );
-  static final TextStyle titlebar = GoogleFonts.kanit(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff707070),
-  );
+
+//18
+  static final TextStyle title1 = GoogleFonts.kanit(
+      fontSize: 18, fontWeight: FontWeight.w500, color: black);
+
+//16
+  static final TextStyle subtitle1 = GoogleFonts.kanit(
+      fontSize: 16, fontWeight: FontWeight.w500, color: black4);
+
+//15
   static final TextStyle detail1 = GoogleFonts.kanit(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff545454),
-  );
-
-  static final TextStyle detail2 = GoogleFonts.kanit(
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    color: const Color(0xff323232),
-  );
-
-  static final TextStyle detail3 = GoogleFonts.kanit(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff707070),
-  );
-  static final TextStyle fileattacth = GoogleFonts.kanit(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff707070),
-  );
-
-  static final TextStyle detail5 = GoogleFonts.kanit(
     fontSize: 15,
     fontWeight: FontWeight.w500,
     color: const Color.fromARGB(140, 112, 112, 112),
   );
 
-  static final TextStyle detail4 = GoogleFonts.kanit(
-    color: link,
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    decoration: TextDecoration.underline,
-    decorationColor: link,
-  );
-
-  static final TextStyle warrantytitle = GoogleFonts.kanit(
-    color: warranty,
+//14
+  static final TextStyle text1 = GoogleFonts.kanit(
+      fontSize: 14, fontWeight: FontWeight.w400, color: black6);
+  static final TextStyle text2 = GoogleFonts.kanit(
+    color: black,
     fontSize: 14,
     fontWeight: FontWeight.w400,
   );
-
-  static final TextStyle warrantytitle2 = GoogleFonts.kanit(
-    color: Colors.black,
+  static final TextStyle text3 = GoogleFonts.kanit(
+    color: black9,
     fontSize: 14,
     fontWeight: FontWeight.w400,
   );
-  static final TextStyle searchtext = GoogleFonts.kanit(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff545454),
-  );
-  static final TextStyle intruction = GoogleFonts.kanit(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff000000),
-  );
-  static final TextStyle footer = GoogleFonts.kanit(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff000000),
-    decoration: TextDecoration.underline,
-  );
-  static final TextStyle intructionDetail = GoogleFonts.kanit(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff545454),
-  );
-  static final TextStyle title = GoogleFonts.kanit(
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    color: const Color(0xff323232),
-  );
-  static final TextStyle textbutton = GoogleFonts.kanit(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xffEB0A1E),
-  );
-  static final TextStyle subdetail = GoogleFonts.kanit(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff323232),
-  );
-  static final TextStyle namenote = GoogleFonts.kanit(
+  static final TextStyle text4 = GoogleFonts.kanit(
+      fontSize: 14, fontWeight: FontWeight.w400, color: black10);
+  static final TextStyle text5 = GoogleFonts.kanit(
     fontSize: 14,
     fontWeight: FontWeight.w500,
-    color: const Color(0xff272727),
+    color: black1,
   );
-  static final TextStyle texttitle = GoogleFonts.kanit(
+  static final TextStyle text6 = GoogleFonts.kanit(
     fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff5A5A5A),
+    fontWeight: FontWeight.w500,
+    color: black2,
   );
-  static final TextStyle buttontext = GoogleFonts.kanit(
+  static final TextStyle text7 = GoogleFonts.kanit(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: white3,
+  );
+  static final TextStyle text8 =
+      GoogleFonts.kanit(fontSize: 14, fontWeight: FontWeight.w400, color: red1);
+  static final TextStyle text9 = GoogleFonts.kanit(
+      fontSize: 14, fontWeight: FontWeight.w400, color: black4);
+  static final TextStyle text10 = GoogleFonts.kanit(
+      fontSize: 14, fontWeight: FontWeight.w500, color: black11);
+  static final TextStyle text11 = GoogleFonts.kanit(
+      fontSize: 14, fontWeight: FontWeight.w400, color: black7);
+  static final TextStyle text12 = GoogleFonts.kanit(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: const Color.fromARGB(124, 29, 27, 32),
   );
-  static final TextStyle buttontext2 = GoogleFonts.kanit(
+  static final TextStyle text13 = GoogleFonts.kanit(
     fontSize: 14,
     fontWeight: FontWeight.w500,
-    color: buttontextcolor,
+    color: white3,
   );
-  static final TextStyle buttontext3 = GoogleFonts.kanit(
+  static final TextStyle text14 = GoogleFonts.kanit(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: black12,
+    decoration: TextDecoration.underline,
+  );
+  static final TextStyle text15 = GoogleFonts.kanit(
     fontSize: 14,
     fontWeight: FontWeight.w500,
-    color: buttontextcolor2,
+    color: black4,
   );
-  static final TextStyle dialogbutton = GoogleFonts.kanit(
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    color: dialogbuttoncolor,
+  static final TextStyle text16 = GoogleFonts.kanit(
+      fontSize: 14, fontWeight: FontWeight.w400, color: black13);
+  static final TextStyle subtext1 = GoogleFonts.kanit(
+
+//12
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      color: black6);
+  static final TextStyle subtext2 = GoogleFonts.kanit(
+    color: blue1,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    decoration: TextDecoration.underline,
+    decorationColor: blue1,
   );
-  static final TextStyle dialogbutton2 = GoogleFonts.kanit(
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    color: buttontextcolor,
-  );
-  static final TextStyle headmodal = GoogleFonts.kanit(
-    fontSize: 22,
-    fontWeight: FontWeight.w500,
-    color: textmodal,
+  static final TextStyle subtext3 = GoogleFonts.kanit(
+      fontSize: 12, fontWeight: FontWeight.w400, color: black13);
+  static final TextStyle subtext4 = GoogleFonts.kanit(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: black7,
   );
 }

@@ -24,7 +24,7 @@ class GoogleMapButton extends StatelessWidget {
           onTap: onTap,
           child: Text(
             'Google Map',
-            style: TextStyleList.detail4,
+            style: TextStyleList.subtext2,
           ),
         ),
       ],
@@ -55,7 +55,7 @@ class AddButton extends StatelessWidget {
           const SizedBox(width: 4.0),
           Text(
             'Add',
-            style: TextStyleList.textbutton,
+            style: TextStyleList.text8,
           ),
         ],
       ),
@@ -86,7 +86,7 @@ class EditButton extends StatelessWidget {
           const SizedBox(width: 4.0),
           Text(
             'Edit',
-            style: TextStyleList.textbutton,
+            style: TextStyleList.text8,
           ),
         ],
       ),
@@ -117,7 +117,7 @@ class EditButton2 extends StatelessWidget {
           const SizedBox(width: 4.0),
           Text(
             'Edit Profile',
-            style: TextStyleList.textbutton,
+            style: TextStyleList.text8,
           ),
         ],
       ),
@@ -146,7 +146,7 @@ class CustomElevatedButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0), // Adjust border radius here
         ),
       ),
-      child: Text(text, style: TextStyleList.buttontext),
+      child: Text(text, style: TextStyleList.text12),
     );
   }
 }
@@ -176,7 +176,7 @@ class EndButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: TextStyleList.buttontext2,
+          style: TextStyleList.text13,
         ),
       ),
     );

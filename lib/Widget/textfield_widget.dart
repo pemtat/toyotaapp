@@ -18,13 +18,13 @@ class TextFieldWidget extends StatelessWidget {
       controller: textSet,
       decoration: InputDecoration(
         hintText: text,
-        hintStyle: TextStyleList.texttitle,
+        hintStyle: TextStyleList.text11,
         filled: true,
-        fillColor: search,
+        fillColor: black5,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
           borderSide: const BorderSide(
-            color: border2,
+            color: white2,
             width: 1.5,
           ),
         ),
@@ -56,13 +56,13 @@ class TextFieldEditWidget extends StatelessWidget {
       controller: textSet,
       decoration: InputDecoration(
         hintText: text,
-        hintStyle: TextStyleList.texttitle,
+        hintStyle: TextStyleList.text11,
         filled: true,
-        fillColor: search,
+        fillColor: black5,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
           borderSide: const BorderSide(
-            color: border2,
+            color: white2,
             width: 1.5,
           ),
         ),

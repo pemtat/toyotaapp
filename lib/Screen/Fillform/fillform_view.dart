@@ -39,14 +39,14 @@ class FillFormView extends StatelessWidget {
     int space = 8;
 
     return Scaffold(
-      backgroundColor: backgroundapp,
+      backgroundColor: white4,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
         child: Column(
           children: [
             AppBar(
-                backgroundColor: buttontextcolor,
-                title: Text('Repair Report', style: TextStyleList.topbar),
+                backgroundColor: white3,
+                title: Text('Repair Report', style: TextStyleList.title1),
                 leading: const CloseIcon()),
           ],
         ),
@@ -244,7 +244,7 @@ class FillFormView extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {},
                   style: TextButton.styleFrom(
-                    backgroundColor: buttonsave,
+                    backgroundColor: black3,
                     foregroundColor: Colors.black12,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
@@ -252,7 +252,7 @@ class FillFormView extends StatelessWidget {
                   ),
                   child: Text(
                     'Save',
-                    style: TextStyleList.buttontext3,
+                    style: TextStyleList.text5,
                   ),
                 ),
               ),

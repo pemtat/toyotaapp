@@ -43,7 +43,7 @@ class CheckBoxWidget extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: Text(text, style: TextStyleList.subdetail),
+          child: Text(text, style: TextStyleList.text9),
         ),
       ],
     );

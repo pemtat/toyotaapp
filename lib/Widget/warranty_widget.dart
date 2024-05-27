@@ -20,12 +20,12 @@ class WarrantyInfo extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyleList.warrantytitle,
+          style: TextStyleList.text3,
         ),
         trailing ??
             Text(
               value,
-              style: TextStyleList.warrantytitle2,
+              style: TextStyleList.text2,
             ),
       ],
     );

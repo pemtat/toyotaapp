@@ -34,13 +34,13 @@ class CompleteJobsView extends StatelessWidget {
           child: Column(
             children: [
               AppBar(
-                backgroundColor: buttontextcolor,
-                title: Text('My Jobs', style: TextStyleList.topbar),
+                backgroundColor: white3,
+                title: Text('My Jobs', style: TextStyleList.title1),
                 leading: const BackIcon(),
               ),
               Container(
                 height: 0.5,
-                color: border,
+                color: white1,
               ),
             ],
           ),
@@ -57,14 +57,14 @@ class CompleteJobsView extends StatelessWidget {
                       controller: searchController,
                       decoration: InputDecoration(
                         hintText: 'Search by job ID or title',
-                        hintStyle: TextStyleList.detail5,
+                        hintStyle: TextStyleList.detail1,
                         filled: true,
-                        fillColor: search,
+                        fillColor: black5,
                         prefixIcon: const Icon(Icons.search),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: const BorderSide(
-                            color: border2,
+                            color: white2,
                             width: 1.5,
                           ),
                         ),
@@ -154,7 +154,7 @@ class CompleteJobsView extends StatelessWidget {
                             expandedIndex: expandedIndex,
                             jobController: jobController,
                             statusButton: const StatusCompletedButton(),
-                            sidebar: bottombarlabel,
+                            sidebar: black6,
                           ));
                     },
                   );

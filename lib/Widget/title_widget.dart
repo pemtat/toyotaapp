@@ -10,7 +10,7 @@ class TitleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyleList.title,
+      style: TextStyleList.subtitle1,
     );
   }
 }
@@ -59,7 +59,7 @@ class TitleWithButton2 extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text(
             titleText,
-            style: font ?? TextStyleList.subdetail,
+            style: font ?? TextStyleList.text9,
           ),
           button ? Image.asset('assets/arrowright.png') : const SizedBox()
         ]));

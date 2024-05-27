@@ -25,7 +25,7 @@ class RepairStaff extends GetxController {
           children: [
             Text(
               "Process",
-              style: TextStyleList.headmodal,
+              style: TextStyleList.subheading,
             ),
             InkWell(
                 onTap: () {

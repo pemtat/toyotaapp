@@ -27,8 +27,8 @@ class SplashScreenView extends StatelessWidget {
           children: <Widget>[
             const SplashImage(),
             20.kH,
-            Text('Welcome to ', style: TextStyleList.headline),
-            Text('Business point', style: TextStyleList.headline),
+            Text('Welcome to ', style: TextStyleList.heading),
+            Text('Business point', style: TextStyleList.heading),
           ],
         ),
       ),

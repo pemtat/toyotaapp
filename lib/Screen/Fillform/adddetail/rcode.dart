@@ -31,7 +31,7 @@ class Rcode extends GetxController {
           children: [
             Text(
               "R Code",
-              style: TextStyleList.headmodal,
+              style: TextStyleList.subheading,
             ),
             InkWell(
                 onTap: () {

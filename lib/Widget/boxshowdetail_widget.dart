@@ -43,12 +43,12 @@ class BoxShowDetail extends StatelessWidget {
                   children: [
                     Text(
                       item,
-                      style: TextStyleList.detail3,
+                      style: TextStyleList.subtext1,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       partValue,
-                      style: TextStyleList.detail2,
+                      style: TextStyleList.text15,
                     ),
                     const SizedBox(height: 8),
                   ],
@@ -62,7 +62,7 @@ class BoxShowDetail extends StatelessWidget {
             child: Theme(
               data: Theme.of(context).copyWith(
                 popupMenuTheme: const PopupMenuThemeData(
-                  color: buttontextcolor,
+                  color: white3,
                 ),
               ),
               child: PopupMenuButton(
@@ -72,12 +72,12 @@ class BoxShowDetail extends StatelessWidget {
                     value: 'edit',
                     child: Text(
                       'Edit',
-                      style: TextStyleList.subdetail,
+                      style: TextStyleList.text9,
                     ),
                   ),
                   PopupMenuItem(
                     value: 'delete',
-                    child: Text('Delete', style: TextStyleList.subdetail),
+                    child: Text('Delete', style: TextStyleList.text9),
                   ),
                 ],
                 child: Image.asset(

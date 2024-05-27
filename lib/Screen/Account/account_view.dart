@@ -15,14 +15,14 @@ class AccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     AccountController accountController = Get.put(AccountController());
     return Scaffold(
-        backgroundColor: backgroundapp,
+        backgroundColor: white4,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
           child: Column(
             children: [
               AppBar(
-                backgroundColor: buttontextcolor,
-                title: Text('Account', style: TextStyleList.topbar),
+                backgroundColor: white3,
+                title: Text('Account', style: TextStyleList.title1),
               ),
             ],
           ),
@@ -58,11 +58,11 @@ class AccountView extends StatelessWidget {
                           children: [
                             Text(
                               'Chalermchai',
-                              style: TextStyleList.title,
+                              style: TextStyleList.subtitle1,
                             ),
                             Text(
                               'Joined on March 12, 2018',
-                              style: TextStyleList.detail3,
+                              style: TextStyleList.subtext1,
                             ),
                             6.kH,
                             EditButton2(onTap: () {}),
@@ -115,7 +115,7 @@ class AccountView extends StatelessWidget {
                     titleText: 'Delete Account',
                     onTap: () {},
                     button: false,
-                    font: TextStyleList.textbutton)
+                    font: TextStyleList.text9)
               ],
             ),
           ],

@@ -22,7 +22,7 @@ class RepairProcedure extends GetxController {
           children: [
             Text(
               "Repair Procedure",
-              style: TextStyleList.headmodal,
+              style: TextStyleList.subheading,
             ),
             InkWell(
                 onTap: () {
@@ -62,7 +62,7 @@ class RepairProcedure extends GetxController {
           children: [
             Text(
               "Spare part list",
-              style: TextStyleList.headmodal,
+              style: TextStyleList.subheading,
             ),
             InkWell(
                 onTap: () {

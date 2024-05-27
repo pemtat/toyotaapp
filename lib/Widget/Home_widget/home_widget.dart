@@ -31,7 +31,7 @@ class JobItemWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(10),
-      decoration: CustomBoxDecoration(sideBorderColor: sidebar),
+      decoration: Decoration1(sideBorderColor: sidebar),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,7 +39,7 @@ class JobItemWidget extends StatelessWidget {
             children: [
               Text(
                 'JobID : ${job.jobid}',
-                style: TextStyleList.detail1,
+                style: TextStyleList.text16,
               ),
               const SizedBox(width: 10),
               statusButton,
@@ -64,7 +64,7 @@ class JobItemWidget extends StatelessWidget {
           ),
           Text(
             job.summary,
-            style: TextStyleList.detail2,
+            style: TextStyleList.text15,
           ),
           const SizedBox(height: 2),
           Row(
@@ -73,7 +73,7 @@ class JobItemWidget extends StatelessWidget {
               const SizedBox(width: 5),
               Text(
                 job.getFormattedDate(),
-                style: TextStyleList.detail3,
+                style: TextStyleList.subtext1,
               ),
             ],
           ),
@@ -84,7 +84,7 @@ class JobItemWidget extends StatelessWidget {
               const SizedBox(width: 5),
               Text(
                 job.location,
-                style: TextStyleList.detail3,
+                style: TextStyleList.subtext1,
               ),
               const SizedBox(width: 5),
               Row(
@@ -109,11 +109,11 @@ class JobItemWidget extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text('Ticket ID #${job.ticketid}',
-                          style: TextStyleList.detail1),
+                          style: TextStyleList.text16),
                       const SizedBox(height: 4),
                       Text(
                         job.description,
-                        style: TextStyleList.detail2,
+                        style: TextStyleList.text15,
                       ),
                       const SizedBox(height: 4),
                       Container(
@@ -137,7 +137,7 @@ class JobItemWidget extends StatelessWidget {
                                 trailing: CheckStatus(
                                   imagePath: 'assets/pass.png',
                                   text: 'Active',
-                                  textColor: pass,
+                                  textColor: green1,
                                 ),
                               ),
                             ],

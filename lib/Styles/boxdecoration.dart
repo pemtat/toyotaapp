@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/color.dart';
 
-class CustomBoxDecoration extends BoxDecoration {
-  CustomBoxDecoration(
+class Decoration1 extends BoxDecoration {
+  Decoration1(
       {required Color sideBorderColor,
-      Color borderColor = border,
+      Color borderColor = white1,
       double width = 1})
       : super(
           border: Border(
@@ -18,9 +18,9 @@ class CustomBoxDecoration extends BoxDecoration {
 
 class Decoration2 extends BoxDecoration {
   Decoration2({
-    Color borderColor = border2,
+    Color borderColor = white2,
     double width = 2,
-    Color backgroundColor = search,
+    Color backgroundColor = black5,
   }) : super(
           borderRadius: BorderRadius.circular(10),
           color: backgroundColor,
@@ -35,9 +35,9 @@ class Decoration2 extends BoxDecoration {
 
 class BoxDetail extends BoxDecoration {
   BoxDetail({
-    Color borderColor = border2,
+    Color borderColor = white2,
     double width = 0,
-    Color backgroundColor = buttontextcolor,
+    Color backgroundColor = white3,
   }) : super(
           color: backgroundColor,
           border: Border(
@@ -51,9 +51,9 @@ class BoxDetail extends BoxDecoration {
 
 class BoxText extends BoxDecoration {
   BoxText({
-    Color borderColor = boxtextfield,
+    Color borderColor = white6,
     double width = 1,
-    Color backgroundColor = buttontextcolor,
+    Color backgroundColor = white3,
   }) : super(
           borderRadius: BorderRadius.circular(6),
           color: backgroundColor,

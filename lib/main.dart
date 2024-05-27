@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
       title: 'Login',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: buttontextcolor,
+        scaffoldBackgroundColor: white3,
         appBarTheme: const AppBarTheme(
-          backgroundColor: buttontextcolor,
+          backgroundColor: white3,
         ),
       ),
       home: home,

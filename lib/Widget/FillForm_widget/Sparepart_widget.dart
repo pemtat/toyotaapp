@@ -48,56 +48,56 @@ class PartDetailWidget extends StatelessWidget {
               children: [
                 Text(
                   'C-Code/Page',
-                  style: TextStyleList.detail3,
+                  style: TextStyleList.subtext1,
                 ),
                 Text(
                   part.cCodePage,
-                  style: TextStyleList.detail2,
+                  style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Part Name',
-                  style: TextStyleList.detail3,
+                  style: TextStyleList.subtext1,
                 ),
                 Text(
                   part.partNumber,
-                  style: TextStyleList.detail2,
+                  style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Part Details (Description)',
-                  style: TextStyleList.detail3,
+                  style: TextStyleList.subtext1,
                 ),
                 Text(
                   part.partDetails,
-                  style: TextStyleList.detail2,
+                  style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Quantity',
-                  style: TextStyleList.detail3,
+                  style: TextStyleList.subtext1,
                 ),
                 Text(
                   "${part.quantity}",
-                  style: TextStyleList.detail2,
+                  style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Change Now',
-                  style: TextStyleList.detail3,
+                  style: TextStyleList.subtext1,
                 ),
                 Text(
                   part.changeNow,
-                  style: TextStyleList.detail2,
+                  style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Change on PM',
-                  style: TextStyleList.detail3,
+                  style: TextStyleList.subtext1,
                 ),
                 Text(
                   part.changeOnPM,
-                  style: TextStyleList.detail2,
+                  style: TextStyleList.text15,
                 ),
               ],
             ),
@@ -108,7 +108,7 @@ class PartDetailWidget extends StatelessWidget {
             child: Theme(
               data: Theme.of(context).copyWith(
                 popupMenuTheme: const PopupMenuThemeData(
-                  color: buttontextcolor,
+                  color: white3,
                 ),
               ),
               child: PopupMenuButton(
@@ -118,12 +118,12 @@ class PartDetailWidget extends StatelessWidget {
                     value: 'edit',
                     child: Text(
                       'Edit',
-                      style: TextStyleList.subdetail,
+                      style: TextStyleList.text9,
                     ),
                   ),
                   PopupMenuItem(
                     value: 'delete',
-                    child: Text('Delete', style: TextStyleList.subdetail),
+                    child: Text('Delete', style: TextStyleList.text9),
                   ),
                 ],
                 child: Image.asset(

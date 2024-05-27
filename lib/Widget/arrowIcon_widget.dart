@@ -9,7 +9,7 @@ class ArrowRight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColorFiltered(
-      colorFilter: const ColorFilter.mode(logintext, BlendMode.srcIn),
+      colorFilter: const ColorFilter.mode(black7, BlendMode.srcIn),
       child: Image.asset(
         'assets/arrowright.png',
         width: 24,
@@ -25,7 +25,7 @@ class ArrowLeft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColorFiltered(
-      colorFilter: const ColorFilter.mode(logintext, BlendMode.srcIn),
+      colorFilter: const ColorFilter.mode(black7, BlendMode.srcIn),
       child: Image.asset(
         'assets/arrowleft.png',
         width: 24,
@@ -41,7 +41,7 @@ class ArrowDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColorFiltered(
-      colorFilter: const ColorFilter.mode(logintext, BlendMode.srcIn),
+      colorFilter: const ColorFilter.mode(black7, BlendMode.srcIn),
       child: Image.asset(
         'assets/arrowdown.png',
         width: 24,
@@ -57,7 +57,7 @@ class ArrowUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColorFiltered(
-      colorFilter: const ColorFilter.mode(logintext, BlendMode.srcIn),
+      colorFilter: const ColorFilter.mode(black7, BlendMode.srcIn),
       child: Image.asset(
         'assets/arrowup.png',
         width: 24,
