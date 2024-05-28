@@ -1,5 +1,5 @@
 import 'package:toyotamobile/Models/home_model.dart';
-import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
+import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -15,14 +15,12 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class NewJobsView extends StatelessWidget {
+class AssignedjobsNew extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
-  final BottomBarController bottomController = Get.put(BottomBarController());
-  final RxInt expandedIndex = (-1).obs;
-  final TextEditingController searchController = TextEditingController();
-  final RxString searchQuery = ''.obs;
+  final AssignedjobsController assignedController =
+      Get.put(AssignedjobsController());
 
-  NewJobsView({super.key});
+  AssignedjobsNew({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +54,7 @@ class NewJobsView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: searchController,
+                      controller: assignedController.searchController,
                       decoration: InputDecoration(
                         hintText: 'Search by job ID or title',
                         hintStyle: TextStyleList.detail1,
@@ -80,7 +78,7 @@ class NewJobsView extends StatelessWidget {
                             vertical: 14.0, horizontal: 19.0),
                       ),
                       onChanged: (value) {
-                        searchQuery.value = value;
+                        assignedController.searchQuery.value = value;
                       },
                     ),
                   ),
@@ -137,8 +135,10 @@ class NewJobsView extends StatelessWidget {
                   final filteredJobs = jobController.jobList
                       .where((job) =>
                           job.status == 'assigned' &&
-                          (job.jobid.contains(searchQuery.value) ||
-                              job.description.contains(searchQuery.value)))
+                          (job.jobid.contains(
+                                  assignedController.searchQuery.value) ||
+                              job.description.contains(
+                                  assignedController.searchQuery.value)))
                       .toList();
                   if (filteredJobs.isEmpty) {
                     return const Center(child: Text('No new jobs available.'));
@@ -153,9 +153,9 @@ class NewJobsView extends StatelessWidget {
                         },
                         child: JobItemWidget(
                           job: job,
-                          expandedIndex: expandedIndex,
+                          expandedIndex: assignedController.expandedIndex,
                           jobController: jobController,
-                          statusButton: const StatusNewButton(),
+                          statusButton: const StatusAssignedButton(),
                           sidebar: orange1,
                         ),
                       );

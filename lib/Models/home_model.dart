@@ -29,7 +29,7 @@ class Home {
         jobid: json['id'].toString(),
         summary: json['summary'] ?? '',
         ticketid:
-            json['id'] != null ? json['id'].toString().padLeft(6, '0') : '',
+            json['id'] != null ? json['id'].toString().padLeft(7, '0') : '',
         description: json['description'] ?? '',
         date: json['due_date'] != null
             ? DateTime.parse(json['due_date'])

@@ -1,6 +1,5 @@
 import 'package:toyotamobile/Screen/Allticket/CompleteJobs/completejobs_view.dart';
-import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
-import 'package:toyotamobile/Screen/Allticket/NewJobs/newjobs_view.dart';
+import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_view.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
 import 'package:toyotamobile/Widget/titleheader_widget.dart';
@@ -17,9 +16,6 @@ import 'home_controller.dart';
 // ignore: use_key_in_widget_constructors
 class HomeView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
-  final BottomBarController bottomController = Get.put(BottomBarController());
-  final RxInt expandedIndex = 0.obs;
-  final RxInt expandedIndex2 = 0.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +77,7 @@ class HomeView extends StatelessWidget {
                 headerText: 'Incoming Jobs',
                 buttonText: 'View All',
                 buttonOnPressed: () {
-                  Get.to(() => NewJobsView());
+                  Get.to(() => AssignedjobsNew());
                 },
               ),
               Padding(
@@ -96,9 +92,9 @@ class HomeView extends StatelessWidget {
 
                   return JobItemWidget(
                     job: job,
-                    expandedIndex: expandedIndex,
+                    expandedIndex: jobController.expandedIndex,
                     jobController: jobController,
-                    statusButton: const StatusNewButton(),
+                    statusButton: const StatusAssignedButton(),
                     sidebar: orange1,
                   );
                 }),
@@ -122,7 +118,7 @@ class HomeView extends StatelessWidget {
 
                   return JobItemWidget(
                     job: job,
-                    expandedIndex: expandedIndex2,
+                    expandedIndex: jobController.expandedIndex2,
                     jobController: jobController,
                     statusButton: const StatusCompletedButton(),
                     sidebar: black6,

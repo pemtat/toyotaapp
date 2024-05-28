@@ -66,7 +66,8 @@ class TicketInfoStatus extends StatelessWidget {
           children: [
             Row(
               children: [
-                TitleApp(text: 'Ticket ID: #$ticketId'),
+                TitleApp(
+                    text: 'Ticket ID: #${ticketId.toString().padLeft(7, '0')}'),
                 5.wH,
                 Image.asset('assets/ticketblock.png'),
               ],

@@ -12,10 +12,10 @@ class HomeController extends GetxController {
   final RxInt jobListCloseLength = 0.obs;
   final BottomBarController notificationController =
       Get.put(BottomBarController());
-  final RxInt expandedIndex = (-1).obs;
   final mostRecentNewJob = Rx<Home?>(null);
   final mostRecentCompleteJob = Rx<Home?>(null);
-
+  final RxInt expandedIndex = 0.obs;
+  final RxInt expandedIndex2 = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -44,7 +44,6 @@ class HomeController extends GetxController {
         List<dynamic> issues = responseData['issues'];
         jobList.assignAll(issues.map((data) => Home.fromJson(data)).toList());
         findMostRecentNewJob();
-        jobListLength.value = jobList.length;
       } else {}
       final response2 = await http.get(
         Uri.parse(getAllJob),
@@ -74,11 +73,13 @@ class HomeController extends GetxController {
   }
 
   void findMostRecentNewJob() {
-    var newJobs = jobList.where((job) => job.status == 'assigned').toList();
-    if (newJobs.isNotEmpty) {
+    var assignedJobs =
+        jobList.where((job) => job.status == 'assigned').toList();
+    if (assignedJobs.isNotEmpty) {
       mostRecentNewJob.value =
-          newJobs.reduce((a, b) => a.date.isAfter(b.date) ? a : b);
+          assignedJobs.reduce((a, b) => a.date.isAfter(b.date) ? a : b);
     }
+    jobListLength.value = assignedJobs.length;
   }
 
   void findMostRecentCompleteJob() {

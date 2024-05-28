@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:toyotamobile/Screen/PendingTask/peddingtask_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/attachment_widget.dart';
+import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
-import 'package:toyotamobile/Widget/imgcontainer.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
@@ -49,9 +48,13 @@ class PendingTaskView extends StatelessWidget {
       ),
       body: Obx(() {
         if (penddingTaskController.issueData.isEmpty) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else {
+          var file = penddingTaskController.attatchments.isNotEmpty
+              ? penddingTaskController.attatchments
+              : null;
           var issue = penddingTaskController.issueData.first;
+
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -92,15 +95,15 @@ class PendingTaskView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                8.kH,
-                                const ImageRow(
-                                  imageUrls: [
-                                    'assets/smartphone.png',
-                                    'assets/smartphone.png',
-                                    'assets/smartphone.png',
-                                  ],
-                                ),
-                                8.kH,
+                                file != null
+                                    ? Column(
+                                        children: [
+                                          8.kH,
+                                          AttachmentsListWidget(file),
+                                          8.kH,
+                                        ],
+                                      )
+                                    : Container(),
                                 Obx(
                                   () => !penddingTaskController.moreDetail.value
                                       ? Container()
@@ -231,12 +234,7 @@ class PendingTaskView extends StatelessWidget {
                                   children: [
                                     const Spacer(),
                                     GoogleMapButton(
-                                      onTap: () {
-                                        print(penddingTaskController
-                                            .moreDetail.value);
-                                        penddingTaskController
-                                            .fetchData(ticketId);
-                                      },
+                                      onTap: () {},
                                     ),
                                   ],
                                 ),
@@ -261,9 +259,9 @@ class PendingTaskView extends StatelessWidget {
             onPressed: () {
               penddingTaskController.showAcceptDialog(
                 context,
-                'Successfully finished job on investigating!',
-                'Not yet',
-                'Yes, Completed',
+                'Do you confirm you will accept this job?',
+                'No',
+                'Yes',
               );
             },
             text: 'Accept Ticket',

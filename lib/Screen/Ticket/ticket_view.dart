@@ -136,7 +136,7 @@ class TicketView extends StatelessWidget {
                 child: Obx(() {
                   final filteredJobs = jobController.jobList
                       .where((job) =>
-                          job.status == 'assigned' &&
+                          job.status == 'new' &&
                           (job.jobid.contains(searchQuery.value) ||
                               job.description.contains(searchQuery.value)))
                       .toList();
