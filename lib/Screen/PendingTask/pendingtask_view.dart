@@ -50,8 +50,8 @@ class PendingTaskView extends StatelessWidget {
         if (penddingTaskController.issueData.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         } else {
-          var file = penddingTaskController.attatchments.isNotEmpty
-              ? penddingTaskController.attatchments
+          var file = penddingTaskController.attachments.isNotEmpty
+              ? penddingTaskController.attachments
               : null;
           var issue = penddingTaskController.issueData.first;
 
@@ -75,6 +75,7 @@ class PendingTaskView extends StatelessWidget {
                                   dateTime: penddingTaskController
                                       .formatDateTime(issue['created_at']),
                                   reporter: issue['reporter'],
+                                  status: issue['status'],
                                 ),
                               ],
                             ),

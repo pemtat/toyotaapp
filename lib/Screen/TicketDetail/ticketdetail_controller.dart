@@ -1,27 +1,48 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
-import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toyotamobile/Models/jobprogress_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
-class PeddingtaskController extends GetxController {
+class TicketDetailController extends GetxController {
+  final notes = TextEditingController().obs;
   var issueData = [].obs;
-  var attachments = <Map<String, dynamic>>[].obs;
+  var attatchments = <Map<String, dynamic>>[].obs;
+  var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
   var issueId;
-  final BottomBarController bottomController = Get.put(BottomBarController());
+  final List<JobItemData> jobTimeLineItems = [
+    JobItemData(
+        imagePath: 'assets/search.png',
+        title: 'Job ID: 0001',
+        description: 'Investigation issue ',
+        datetime: '28 January 2024 at 08:15 PM',
+        status: 'done'),
+    JobItemData(
+        imagePath: 'assets/briefcase.png',
+        title: 'JobID: 0002',
+        description: 'Replace spare parts',
+        datetime: '28 January 2024 at 08:15 PM',
+        status: 'pending'),
+    JobItemData(
+        imagePath: 'assets/briefcase.png',
+        title: 'JobID: 0002',
+        description: 'Replace spare parts',
+        datetime: '28 January 2024 at 08:15 PM',
+        status: 'pending'),
+  ];
+
   final HomeController jobController = Get.put(HomeController());
   void fetchData(String ticketId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String apiUrl = '$getTicketbyId$ticketId';
-
     String? token = prefs.getString('token');
 
     final response = await http.get(
@@ -51,8 +72,10 @@ class PeddingtaskController extends GetxController {
         return {
           'id': issue['id'],
           'summary': issue['summary'],
+          'description': issue['description'],
           'created_at': issue['created_at'],
           'reporter': issue['reporter']['name'],
+          'status': issue['status']['name'],
           'email': issue['reporter']['email'],
           'category': issue['category']['name'],
           'severity': issue['severity']['name'],
@@ -81,7 +104,7 @@ class PeddingtaskController extends GetxController {
               'content': file['content'],
             };
           }).toList();
-          attachments.addAll(fileData);
+          attatchments.addAll(fileData);
         } else {}
       }
 
@@ -91,36 +114,42 @@ class PeddingtaskController extends GetxController {
     }
   }
 
-  void acceptTicket() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String updateStatus = '$updateIssueStatusById/$issueId';
+  Future<void> pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null && result.files.isNotEmpty) {
+      String? filePath = result.files.single.path;
+      String fileName = result.files.single.name;
 
-    String? token = prefs.getString('token');
-    Map<String, dynamic> body = {
-      "status": {"name": "assigned"}
-    };
-
-    final response = await http.patch(
-      Uri.parse(updateStatus),
-      headers: {
-        'Authorization': '$token',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(body),
-    );
-    if (response.statusCode == 200) {
-      jobController.fetchDataFromAssignJob();
-      bottomController.currentIndex.value = 0;
-      Get.offAll(() => BottomBarView());
+      if (filePath != null) {
+        File file = File(filePath);
+        List<int> fileBytes = await file.readAsBytes();
+        String base64Content = base64Encode(fileBytes);
+        addAttachment({
+          'name': fileName,
+          'path': filePath,
+          'base64': base64Content,
+        });
+      } else {
+        print('File path is null');
+      }
+    } else {
+      print('No file picked');
     }
   }
 
-  String formatDateTime(String dateTime) {
-    DateTime parsedDate = DateTime.parse(dateTime);
-    return DateFormat('dd MMMM yyyy, HH:mm').format(parsedDate);
+  void addAttachment(Map<String, String> file) {
+    addAttatchments.add(file);
   }
 
-  void showAcceptDialog(
+  void submitNote() {
+    if (addAttatchments.isNotEmpty) {
+      var file = addAttatchments.first;
+      String name = file['name'];
+      String content = file['base64'];
+    }
+  }
+
+  void showCompletedDialog(
       BuildContext context, String title, String left, String right) {
     showDialog(
       context: context,
@@ -129,9 +158,11 @@ class PeddingtaskController extends GetxController {
           title: title,
           leftButton: left,
           rightButton: right,
-          onRightButtonPressed: acceptTicket,
+          onRightButtonPressed: complete,
         );
       },
     );
   }
+
+  void complete() {}
 }

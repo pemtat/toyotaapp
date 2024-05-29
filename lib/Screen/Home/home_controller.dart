@@ -14,8 +14,8 @@ class HomeController extends GetxController {
       Get.put(BottomBarController());
   final mostRecentNewJob = Rx<Home?>(null);
   final mostRecentCompleteJob = Rx<Home?>(null);
-  final RxInt expandedIndex = 0.obs;
-  final RxInt expandedIndex2 = 0.obs;
+  final RxInt expandedIndex = (0).obs;
+  final RxInt expandedIndex2 = (-1).obs;
   @override
   void onInit() {
     super.onInit();
@@ -60,7 +60,6 @@ class HomeController extends GetxController {
         jobList.assignAll(
             filteredIssues.map((data) => Home.fromJson(data)).toList());
         findMostRecentCompleteJob();
-        print(jobList.length);
 
         // print('จำนวนข้อมูลที่เพิ่มเข้าไปใน jobList: ${jobList.length}');
         // for (var home in jobList) {

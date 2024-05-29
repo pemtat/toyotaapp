@@ -20,7 +20,7 @@ class Home {
   });
 
   String getFormattedDate() {
-    final DateFormat formatter = DateFormat('dd MMMM yyyy HH:mm');
+    final DateFormat formatter = DateFormat('dd MMMM yyyy hh:mm a');
     return formatter.format(date);
   }
 

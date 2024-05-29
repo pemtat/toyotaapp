@@ -95,12 +95,11 @@ class TextStyleList {
   );
   static final TextStyle text16 = GoogleFonts.kanit(
       fontSize: 14, fontWeight: FontWeight.w400, color: black13);
+  static final TextStyle text17 =
+      GoogleFonts.kanit(fontSize: 14, fontWeight: FontWeight.w400, color: red1);
+  //12
   static final TextStyle subtext1 = GoogleFonts.kanit(
-
-//12
-      fontSize: 12,
-      fontWeight: FontWeight.w400,
-      color: black6);
+      fontSize: 12, fontWeight: FontWeight.w400, color: black6);
   static final TextStyle subtext2 = GoogleFonts.kanit(
     color: blue1,
     fontSize: 12,
@@ -114,5 +113,17 @@ class TextStyleList {
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: black7,
+  );
+  static final TextStyle subtext5 = GoogleFonts.kanit(
+    color: black11,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    decoration: TextDecoration.underline,
+    decorationColor: black11,
+  );
+  static final TextStyle subtext6 = GoogleFonts.kanit(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: red2,
   );
 }

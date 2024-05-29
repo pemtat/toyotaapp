@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color red1 = Color(0xfFEB0A1E);
+const Color red2 = Color(0xffF55C02);
 const Color orange1 = Color(0xffF55C02);
 
 const Color white1 = Color(0xFFEAEAEA);
@@ -11,6 +12,8 @@ const Color white5 = Color(0xffF1F1F1);
 const Color white6 = Color(0xffEAEAEA);
 
 const Color green1 = Color(0xff0FAF27);
+const Color green2 = Color.fromARGB(34, 34, 132, 62);
+const Color green3 = Color(0xff22843E);
 
 const Color blue1 = Color(0xff2E7CF6);
 

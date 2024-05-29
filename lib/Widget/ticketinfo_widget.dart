@@ -4,9 +4,11 @@ import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/statusbutton_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class TicketInfo extends StatelessWidget {
-  final String ticketId;
+  final int ticketId;
   final String dateTime;
   final String reporter;
 
@@ -27,9 +29,20 @@ class TicketInfo extends StatelessWidget {
           children: [
             Row(
               children: [
-                TitleApp(text: 'Ticket ID: #$ticketId'),
+                TitleApp(
+                    text: 'Ticket ID: #${ticketId.toString().padLeft(7, '0')}'),
                 5.wH,
-                Image.asset('assets/ticketblock.png'),
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: ticketId.toString()));
+                    Fluttertoast.showToast(
+                        msg: "คัดลอกข้อความ",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        fontSize: 12.0);
+                  },
+                  child: Image.asset('assets/ticketblock.png'),
+                )
               ],
             ),
             const SizedBox(height: 4),
@@ -49,16 +62,32 @@ class TicketInfoStatus extends StatelessWidget {
   final int ticketId;
   final String dateTime;
   final String reporter;
+  final String status;
 
   const TicketInfoStatus({
     super.key,
     required this.ticketId,
     required this.dateTime,
     required this.reporter,
+    required this.status,
   });
 
   @override
   Widget build(BuildContext context) {
+    Widget statusButton() {
+      if (status == 'new') {
+        return const StatusNewButton();
+      } else if (status == 'assigned') {
+        return const StatusAssignedButton();
+      } else if (status == 'closed') {
+        return const StatusCompletedButton();
+      } else if (status == 'confirmed') {
+        return const StatusOnprocessButton();
+      } else {
+        return const SizedBox();
+      }
+    }
+
     return Stack(
       children: [
         Column(
@@ -69,7 +98,17 @@ class TicketInfoStatus extends StatelessWidget {
                 TitleApp(
                     text: 'Ticket ID: #${ticketId.toString().padLeft(7, '0')}'),
                 5.wH,
-                Image.asset('assets/ticketblock.png'),
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: ticketId.toString()));
+                    Fluttertoast.showToast(
+                        msg: "คัดลอกข้อความ",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        fontSize: 12.0);
+                  },
+                  child: Image.asset('assets/ticketblock.png'),
+                )
               ],
             ),
             const SizedBox(height: 4),
@@ -79,7 +118,10 @@ class TicketInfoStatus extends StatelessWidget {
             ),
           ],
         ),
-        const Positioned(right: 0, child: StatusNewButton())
+        Positioned(
+          right: 0,
+          child: statusButton(),
+        ),
       ],
     );
   }

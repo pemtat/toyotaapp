@@ -37,21 +37,21 @@ class AccountView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            radius: 27,
-                            child: ClipOval(
-                              child: Image.asset(
-                                'assets/man.jpg',
-                                fit: BoxFit.cover,
-                                width: 54,
-                                height: 54,
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(right: 16),
+                        //   child: CircleAvatar(
+                        //     backgroundColor: Colors.grey,
+                        //     radius: 27,
+                        //     child: ClipOval(
+                        //       child: Image.asset(
+                        //         'assets/man.jpg',
+                        //         fit: BoxFit.cover,
+                        //         width: 54,
+                        //         height: 54,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Expanded(
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +115,7 @@ class AccountView extends StatelessWidget {
                     titleText: 'Delete Account',
                     onTap: () {},
                     button: false,
-                    font: TextStyleList.text9)
+                    font: TextStyleList.text17)
               ],
             ),
           ],

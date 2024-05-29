@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
-import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
-import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
+import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/attachment_widget.dart';
@@ -10,22 +9,21 @@ import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
-import 'package:toyotamobile/Widget/divider_widget.dart';
+import 'package:toyotamobile/Widget/progressbar_widget.dart.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
-import 'package:toyotamobile/Widget/statusbutton_widget.dart';
-import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
 import 'package:get/get.dart';
 
 // ignore: use_key_in_widget_constructors
-class JobDetailView extends StatelessWidget {
+class TicketDetailView extends StatelessWidget {
   final String ticketId;
-  final JobDetailController jobController = Get.put(JobDetailController());
+  final TicketDetailController ticketController =
+      Get.put(TicketDetailController());
 
-  JobDetailView({super.key, required this.ticketId}) {
-    jobController.fetchData(ticketId);
+  TicketDetailView({super.key, required this.ticketId}) {
+    ticketController.fetchData(ticketId);
   }
 
   @override
@@ -35,56 +33,29 @@ class JobDetailView extends StatelessWidget {
         preferredSize: const Size.fromHeight(57.5),
         child: Column(
           children: [
-            Stack(
-              children: [
-                AppBar(
-                  backgroundColor: white3,
-                  title: Obx(() {
-                    if (jobController.issueData.isEmpty) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Loading...', style: TextStyleList.title1),
-                          Text('Loading...', style: TextStyleList.text16),
-                        ],
-                      );
-                    } else {
-                      var job = jobController.issueData.first;
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('${job['summary']}',
-                              style: TextStyleList.title1),
-                          Text('JobID: ${job['id']}',
-                              style: TextStyleList.text16),
-                        ],
-                      );
-                    }
-                  }),
-                  leading: const BackIcon(),
-                ),
-                const Positioned(
-                  right: 15.0,
-                  top: 15,
-                  bottom: 0,
-                  child: Center(
-                    child: StatusAssignedButton(),
-                  ),
-                ),
-              ],
+            AppBar(
+              centerTitle: true,
+              backgroundColor: white3,
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Ticket Detail', style: TextStyleList.title1),
+                ],
+              ),
+              leading: const BackIcon(),
             ),
           ],
         ),
       ),
       body: Obx(
         () {
-          if (jobController.issueData.isEmpty) {
+          if (ticketController.issueData.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            var file = jobController.attatchments.isNotEmpty
-                ? jobController.attatchments
+            var file = ticketController.attatchments.isNotEmpty
+                ? ticketController.attatchments
                 : null;
-            var issue = jobController.issueData.first;
+            var issue = ticketController.issueData.first;
 
             return SingleChildScrollView(
               child: Column(
@@ -99,80 +70,49 @@ class JobDetailView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              BoxContainer(
-                                children: [
-                                  const TitleApp(text: 'Intruction'),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Step 1: Contact reporter',
-                                        style: TextStyleList.text4,
-                                      ),
-                                      3.wH,
-                                      Text('(Phone number: 0823424234)',
-                                          style: TextStyleList.subtext3),
-                                    ],
-                                  ),
-                                  3.kH,
-                                  Wrap(
-                                    children: [
-                                      RichText(
-                                          text: TextSpan(
-                                        text: 'Step 2 ',
-                                        style: TextStyleList.text4,
-                                        children: [
-                                          TextSpan(
-                                              text: 'Go to the machine',
-                                              style: TextStyleList.text4),
-                                          TextSpan(
-                                              text:
-                                                  ' (Location: Onnut, Bangkok)   ',
-                                              style: TextStyleList.subtext3),
-                                          WidgetSpan(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                GoogleMapButton(
-                                                  onTap: () {},
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                    ],
-                                  ),
-                                  3.kH,
-                                  Text(
-                                    'Step 3: Report to admin about machine',
-                                    style: TextStyleList.text4,
-                                  ),
-                                  3.kH,
-                                  Text(
-                                    'Step 4: Complete investigation',
-                                    style: TextStyleList.text4,
-                                  ),
-                                ],
-                              ),
+                              BoxContainer(children: [
+                                TicketInfoStatus(
+                                  ticketId: issue['id'],
+                                  dateTime: formatDateTime(issue['created_at']),
+                                  reporter: issue['reporter'],
+                                  status: issue['status'],
+                                ),
+                              ]),
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const TitleApp(text: 'Repair Report*'),
-                                      AddButton(
-                                        onTap: () {
-                                          Get.to(() => const FillFormView());
-                                        },
-                                      ),
-                                    ],
+                                  const TitleApp(text: 'Job Progress'),
+                                  8.kH,
+                                  Column(
+                                    children: List.generate(
+                                        ticketController
+                                            .jobTimeLineItems.length, (index) {
+                                      return Column(
+                                        children: [
+                                          TimeLineItem(
+                                            imagePath: ticketController
+                                                .jobTimeLineItems[index]
+                                                .imagePath,
+                                            title: ticketController
+                                                .jobTimeLineItems[index].title,
+                                            description: ticketController
+                                                .jobTimeLineItems[index]
+                                                .description,
+                                            dateTime: ticketController
+                                                .jobTimeLineItems[index]
+                                                .datetime,
+                                            status: ticketController
+                                                .jobTimeLineItems[index].status,
+                                            isLast: index ==
+                                                ticketController
+                                                        .jobTimeLineItems
+                                                        .length -
+                                                    1,
+                                          ),
+                                        ],
+                                      );
+                                    }),
                                   ),
-                                  Text(
-                                    'Please fill the field service report',
-                                    style: TextStyleList.text16,
-                                  )
                                 ],
                               ),
                               8.kH,
@@ -202,7 +142,7 @@ class JobDetailView extends StatelessWidget {
                                         )
                                       : Container(),
                                   Obx(
-                                    () => !jobController.moreDetail.value
+                                    () => !ticketController.moreDetail.value
                                         ? Container()
                                         : Column(
                                             children: [
@@ -225,11 +165,11 @@ class JobDetailView extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  jobController.moreDetail.value =
-                                      !jobController.moreDetail.value;
+                                  ticketController.moreDetail.value =
+                                      !ticketController.moreDetail.value;
                                 },
                                 child: Obx(
-                                  () => !jobController.moreDetail.value
+                                  () => !ticketController.moreDetail.value
                                       ? BoxContainer(
                                           children: [
                                             Row(
@@ -303,13 +243,39 @@ class JobDetailView extends StatelessWidget {
                                 ],
                               ),
                               8.kH,
-                              BoxContainer(children: [
-                                TicketInfo(
-                                  ticketId: issue['id'],
-                                  dateTime: formatDateTime(issue['created_at']),
-                                  reporter: issue['reporter'],
-                                ),
-                              ]),
+                              BoxContainer(
+                                children: [
+                                  const TitleApp(text: "Customer Information"),
+                                  8.kH,
+                                  BoxInfo(
+                                    title: "Contact name",
+                                    value: issue['reporter'],
+                                  ),
+                                  3.kH,
+                                  BoxInfo(
+                                    title: "Email",
+                                    value: issue['email'],
+                                  ),
+                                  3.kH,
+                                  const BoxInfo(
+                                    title: "Phone number",
+                                    value: "0828203345",
+                                  ),
+                                  const BoxInfo(
+                                    title: "Location",
+                                    value: "Onnut, Bangkok, Thailand",
+                                  ),
+                                  5.kH,
+                                  Row(
+                                    children: [
+                                      const Spacer(),
+                                      GoogleMapButton(
+                                        onTap: () {},
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                               8.kH,
                               BoxContainer(
                                 children: [
@@ -355,72 +321,8 @@ class JobDetailView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  18.kH,
-                                  const AppDivider(),
-                                  18.kH,
-                                  TextFieldType(
-                                    hintText: 'Add Notes',
-                                    textSet: jobController.notes.value,
-                                  ),
-                                  8.kH,
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: jobController.pickFile,
-                                        child: Row(
-                                          children: [
-                                            Image.asset('assets/link.png'),
-                                            4.wH,
-                                            Text(
-                                              'Attach file',
-                                              style: TextStyleList.text1,
-                                            ),
-                                            Obx(() {
-                                              if (jobController
-                                                  .addAttatchments.isNotEmpty) {
-                                                return Row(
-                                                  children: [
-                                                    4.wH,
-                                                    Text(
-                                                      jobController
-                                                          .addAttatchments
-                                                          .first['name'],
-                                                      style:
-                                                          TextStyleList.text1,
-                                                    ),
-                                                  ],
-                                                );
-                                              } else {
-                                                return Container();
-                                              }
-                                            }),
-                                          ],
-                                        ),
-                                      ),
-                                      CustomElevatedButton(
-                                        onPressed: () {
-                                          jobController.submitNote();
-                                        },
-                                        text: 'Submit',
-                                      ),
-                                    ],
-                                  ),
                                 ],
                               ),
-                              16.kH,
-                              BoxContainer(paddingCustom: 10, children: [
-                                EndButton(
-                                    onPressed: () {
-                                      jobController.showCompletedDialog(
-                                          context,
-                                          'Successfully finished job on investigating!',
-                                          'Not yet',
-                                          'Yes, Completed');
-                                    },
-                                    text: 'Complete Investigating'),
-                              ])
                             ],
                           ),
                         ),

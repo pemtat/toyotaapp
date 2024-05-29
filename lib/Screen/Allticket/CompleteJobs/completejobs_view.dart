@@ -1,7 +1,7 @@
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
-import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
+import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
@@ -147,7 +147,9 @@ class CompleteJobsView extends StatelessWidget {
                       Home job = filteredJobs[index];
                       return InkWell(
                           onTap: () {
-                            Get.to(() => TicketDetailPage());
+                            Get.to(() => TicketDetailView(
+                                  ticketId: job.jobid,
+                                ));
                           },
                           child: JobItemWidget(
                             job: job,

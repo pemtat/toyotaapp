@@ -51,9 +51,10 @@ class JobItemWidget extends StatelessWidget {
                           ? const ArrowUp()
                           : const ArrowDown(),
                   onPressed: () {
+                    print(expandedIndex.value);
                     if (expandedIndex.value ==
                         jobController.jobList.indexOf(job)) {
-                      expandedIndex.value = 0;
+                      expandedIndex.value = (-2);
                     } else {
                       expandedIndex.value = jobController.jobList.indexOf(job);
                     }
