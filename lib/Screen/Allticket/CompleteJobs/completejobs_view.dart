@@ -155,7 +155,6 @@ class CompleteJobsView extends StatelessWidget {
                             job: job,
                             expandedIndex: expandedIndex,
                             jobController: jobController,
-                            statusButton: const StatusCompletedButton(),
                             sidebar: black6,
                           ));
                     },

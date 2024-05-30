@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
+import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
-import 'package:toyotamobile/Widget/statusbutton_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -75,20 +75,6 @@ class TicketInfoStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget statusButton() {
-      if (status == 'new') {
-        return const StatusNewButton();
-      } else if (status == 'assigned') {
-        return const StatusAssignedButton();
-      } else if (status == 'closed') {
-        return const StatusCompletedButton();
-      } else if (status == 'confirmed') {
-        return const StatusOnprocessButton();
-      } else {
-        return const SizedBox();
-      }
-    }
-
     return Stack(
       children: [
         Column(
@@ -117,7 +103,9 @@ class TicketInfoStatus extends StatelessWidget {
         ),
         Positioned(
           right: 0,
-          child: statusButton(),
+          child: StatusButton(
+            status: status,
+          ),
         ),
       ],
     );

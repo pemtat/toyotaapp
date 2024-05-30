@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -7,13 +8,13 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/attachment_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
+import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/noteItem_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
-import 'package:toyotamobile/Widget/statusbutton_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
@@ -23,9 +24,10 @@ import 'package:get/get.dart';
 // ignore: use_key_in_widget_constructors
 class JobDetailView extends StatelessWidget {
   final String ticketId;
+  final String? status;
   final JobDetailController jobController = Get.put(JobDetailController());
 
-  JobDetailView({super.key, required this.ticketId}) {
+  JobDetailView({super.key, required this.ticketId, this.status}) {
     jobController.fetchData(ticketId);
   }
 
@@ -65,13 +67,11 @@ class JobDetailView extends StatelessWidget {
                   }),
                   leading: const BackIcon(),
                 ),
-                const Positioned(
+                Positioned(
                   right: 15.0,
                   top: 15,
                   bottom: 0,
-                  child: Center(
-                    child: StatusAssignedButton(),
-                  ),
+                  child: Center(child: StatusButton(status: status ?? '')),
                 ),
               ],
             ),
@@ -269,40 +269,51 @@ class JobDetailView extends StatelessWidget {
                                 ),
                               ),
                               8.kH,
-                              BoxContainer(
-                                children: [
-                                  const TitleApp(text: "Machine Detail"),
-                                  8.kH,
-                                  const BoxInfo(
-                                    title: "Name/Model",
-                                    value: "UBRE200H2-TH-7500",
-                                  ),
-                                  3.kH,
-                                  const BoxInfo(
-                                    title: "Serial Number",
-                                    value: "6963131",
-                                  ),
-                                  3.kH,
-                                  const BoxInfo(
-                                    title: "Warranty Status",
-                                    value: '',
-                                    trailing: CheckStatus(
-                                      imagePath: 'assets/pass.png',
-                                      text: 'Active',
-                                      textColor: green1,
-                                    ),
-                                  ),
-                                  5.kH,
-                                  Row(
-                                    children: [
-                                      const AttachmentFile(name: 'Q1.pdf'),
-                                      7.wH,
-                                      const AttachmentFile(name: 'Q2.pdf'),
-                                      7.wH,
-                                      const AttachmentFile(name: 'Q3.pdf'),
-                                    ],
-                                  ),
-                                ],
+                              Obx(
+                                () {
+                                  if (jobController.warrantyInfoList.isEmpty) {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else {
+                                    WarrantyInfo warrantyInfo =
+                                        jobController.warrantyInfoList.first;
+                                    return BoxContainer(
+                                      children: [
+                                        const TitleApp(text: "Machine Detail"),
+                                        8.kH,
+                                        BoxInfo(
+                                          title: "Name/Model",
+                                          value: warrantyInfo.model,
+                                        ),
+                                        3.kH,
+                                        BoxInfo(
+                                          title: "Serial Number",
+                                          value: warrantyInfo.serial,
+                                        ),
+                                        3.kH,
+                                        BoxInfo(
+                                          title: "Warranty Status",
+                                          value: warrantyInfo.warrantyStatus
+                                              .toString(),
+                                          trailing: CheckStatus(
+                                            status: warrantyInfo.warrantyStatus,
+                                          ),
+                                        ),
+                                        5.kH,
+                                        Row(
+                                          children: const [
+                                            AttachmentFile(name: 'Q1.pdf'),
+                                            SizedBox(width: 7),
+                                            AttachmentFile(name: 'Q2.pdf'),
+                                            SizedBox(width: 7),
+                                            AttachmentFile(name: 'Q3.pdf'),
+                                          ],
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                },
                               ),
                               8.kH,
                               BoxContainer(children: [

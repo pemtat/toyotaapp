@@ -226,9 +226,7 @@ class TicketDetailView extends StatelessWidget {
                                     title: "Warranty",
                                     value: '',
                                     trailing: CheckStatus(
-                                      imagePath: 'assets/pass.png',
-                                      text: 'Active',
-                                      textColor: green1,
+                                      status: 1,
                                     ),
                                   ),
                                   3.kH,

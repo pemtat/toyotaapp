@@ -94,13 +94,15 @@ class HomeView extends StatelessWidget {
 
                   return InkWell(
                     onTap: () {
-                      Get.to(() => JobDetailView(ticketId: job.jobid));
+                      Get.to(() => JobDetailView(
+                            ticketId: job.jobid,
+                            status: job.status,
+                          ));
                     },
                     child: JobItemWidget(
                       job: job,
                       expandedIndex: jobController.expandedIndex,
                       jobController: jobController,
-                      statusButton: const StatusAssignedButton(),
                       sidebar: orange1,
                     ),
                   );
@@ -131,7 +133,6 @@ class HomeView extends StatelessWidget {
                       job: job,
                       expandedIndex: jobController.expandedIndex2,
                       jobController: jobController,
-                      statusButton: const StatusCompletedButton(),
                       sidebar: black6,
                     ),
                   );

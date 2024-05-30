@@ -72,6 +72,7 @@ flutter:
     - assets/chevron.png
     - assets/propjob.png
     - assets/pass.png
+    - assets/notpass.png
     - assets/sliders.png
     - assets/edit.png
     - assets/send.png

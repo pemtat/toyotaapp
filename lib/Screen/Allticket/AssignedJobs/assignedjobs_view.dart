@@ -149,13 +149,13 @@ class AssignedjobsNew extends StatelessWidget {
                       onTap: () {
                         Get.to(() => JobDetailView(
                               ticketId: job.jobid,
+                              status: job.status,
                             ));
                       },
                       child: JobItemWidget(
                         job: job,
                         expandedIndex: assignedController.expandedIndex,
                         jobController: jobController,
-                        statusButton: const StatusAssignedButton(),
                         sidebar: orange1,
                       ),
                     );

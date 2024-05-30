@@ -185,9 +185,7 @@ class PendingTaskView extends StatelessWidget {
                                   title: "Warranty Status",
                                   value: '',
                                   trailing: CheckStatus(
-                                    imagePath: 'assets/pass.png',
-                                    text: 'Active',
-                                    textColor: green1,
+                                    status: 1,
                                   ),
                                 ),
                                 3.kH,

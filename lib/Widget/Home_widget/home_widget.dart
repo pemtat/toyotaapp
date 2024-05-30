@@ -7,6 +7,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
+import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
 
 class JobItemWidget extends StatelessWidget {
@@ -14,7 +15,6 @@ class JobItemWidget extends StatelessWidget {
   final job;
   final RxInt expandedIndex;
   final HomeController jobController;
-  final Widget statusButton;
   final Color sidebar;
 
   const JobItemWidget({
@@ -22,7 +22,6 @@ class JobItemWidget extends StatelessWidget {
     required this.job,
     required this.expandedIndex,
     required this.jobController,
-    required this.statusButton,
     required this.sidebar,
   });
 
@@ -42,7 +41,7 @@ class JobItemWidget extends StatelessWidget {
                 style: TextStyleList.text16,
               ),
               const SizedBox(width: 10),
-              statusButton,
+              StatusButton(status: job.status),
               const Spacer(),
               Obx(
                 () => IconButton(
@@ -136,9 +135,7 @@ class JobItemWidget extends StatelessWidget {
                                 title: "Warranty Status",
                                 value: '',
                                 trailing: CheckStatus(
-                                  imagePath: 'assets/pass.png',
-                                  text: 'Active',
-                                  textColor: green1,
+                                  status: 1,
                                 ),
                               ),
                             ],

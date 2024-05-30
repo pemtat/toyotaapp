@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 
@@ -19,7 +20,7 @@ class NoteItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: CircleAvatar(
-                backgroundColor: Colors.grey,
+                backgroundColor: red3,
                 radius: 12,
                 child: FutureBuilder<String>(
                   future: checkLevel(note['reporter']['id']),
