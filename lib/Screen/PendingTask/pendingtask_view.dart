@@ -27,7 +27,7 @@ class PendingTaskView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 251, 250, 250),
+      backgroundColor: white7,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: Column(

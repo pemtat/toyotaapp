@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Models/jobprogress_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
@@ -12,6 +12,8 @@ import 'package:http/http.dart' as http;
 
 class TicketDetailController extends GetxController {
   final notes = TextEditingController().obs;
+  var notesFiles = <dynamic>[].obs;
+
   var issueData = [].obs;
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
@@ -21,19 +23,19 @@ class TicketDetailController extends GetxController {
   final List<JobItemData> jobTimeLineItems = [
     JobItemData(
         imagePath: 'assets/search.png',
-        title: 'Job ID: 0001',
+        jobid: '0001',
         description: 'Investigation issue ',
         datetime: '28 January 2024 at 08:15 PM',
         status: 'done'),
     JobItemData(
         imagePath: 'assets/briefcase.png',
-        title: 'JobID: 0002',
+        jobid: '0002',
         description: 'Replace spare parts',
         datetime: '28 January 2024 at 08:15 PM',
         status: 'pending'),
     JobItemData(
         imagePath: 'assets/briefcase.png',
-        title: 'JobID: 0002',
+        jobid: '0002',
         description: 'Replace spare parts',
         datetime: '28 January 2024 at 08:15 PM',
         status: 'pending'),
@@ -41,9 +43,8 @@ class TicketDetailController extends GetxController {
 
   final HomeController jobController = Get.put(HomeController());
   void fetchData(String ticketId) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String apiUrl = '$getTicketbyId$ticketId';
-    String? token = prefs.getString('token');
+    final String apiUrl = getTicketbyId(ticketId);
+    String? token = await getToken();
 
     final response = await http.get(
       Uri.parse(apiUrl),
@@ -68,6 +69,11 @@ class TicketDetailController extends GetxController {
           }
         }
         issueId = issue['id'];
+        if (issue['notes'] != null) {
+          var issueNotes = issue['notes'] as List<dynamic>;
+          notesFiles.assignAll(issueNotes);
+          print(notesFiles);
+        }
 
         return {
           'id': issue['id'],
@@ -85,8 +91,7 @@ class TicketDetailController extends GetxController {
 
       for (var attachment in attachmentsData) {
         int attachmentId = attachment['id'];
-        final String getFileUrl =
-            '$getAttachmentFileById/$issueId/files/$attachmentId';
+        final String getFileUrl = getAttachmentFileById(issueId, attachmentId);
 
         final response2 = await http.get(
           Uri.parse(getFileUrl),
@@ -139,14 +144,6 @@ class TicketDetailController extends GetxController {
 
   void addAttachment(Map<String, String> file) {
     addAttatchments.add(file);
-  }
-
-  void submitNote() {
-    if (addAttatchments.isNotEmpty) {
-      var file = addAttatchments.first;
-      String name = file['name'];
-      String content = file['base64'];
-    }
   }
 
   void showCompletedDialog(

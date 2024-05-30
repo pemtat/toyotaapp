@@ -4,7 +4,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class TimeLineItem extends StatelessWidget {
   final String imagePath;
-  final String title;
+  final String jobid;
   final String dateTime;
   final String description;
   final bool? isLast;
@@ -13,7 +13,7 @@ class TimeLineItem extends StatelessWidget {
   const TimeLineItem({
     Key? key,
     required this.imagePath,
-    required this.title,
+    required this.jobid,
     required this.description,
     required this.dateTime,
     required this.status,
@@ -22,55 +22,58 @@ class TimeLineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          children: [
-            Image.asset(
-              imagePath,
-              width: 16.0,
-              height: 16.0,
-            ),
-            if (isLast != true)
-              CustomPaint(
-                size: Size(2, 50),
-                painter: DashedLinePainter(),
-              ),
-          ],
-        ),
-        16.wH,
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {},
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
             children: [
-              Row(
-                children: [
-                  Text(title, style: TextStyleList.subtext5),
-                  3.wH,
-                  Text(
-                    dateTime,
-                    style: TextStyleList.subtext4,
-                  ),
-                  Spacer(),
-                  if (status == 'pending') ...[
-                    Text(
-                      'Pending',
-                      style: TextStyleList.subtext6,
-                    )
-                  ] else if (status == 'done') ...[
-                    Text('Done', style: TextStyleList.subtext4)
-                  ],
-                ],
+              Image.asset(
+                imagePath,
+                width: 16.0,
+                height: 16.0,
               ),
-              Text(
-                description,
-                style: TextStyleList.text10,
-              ),
+              if (isLast != true)
+                CustomPaint(
+                  size: const Size(2, 50),
+                  painter: DashedLinePainter(),
+                ),
             ],
           ),
-        ),
-      ],
+          16.wH,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text('Job ID: $jobid', style: TextStyleList.subtext5),
+                    3.wH,
+                    Text(
+                      '($dateTime)',
+                      style: TextStyleList.subtext4,
+                    ),
+                    const Spacer(),
+                    if (status == 'pending') ...[
+                      Text(
+                        'Pending',
+                        style: TextStyleList.subtext6,
+                      )
+                    ] else if (status == 'done') ...[
+                      Text('Done', style: TextStyleList.subtext4)
+                    ],
+                  ],
+                ),
+                Text(
+                  description,
+                  style: TextStyleList.text10,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

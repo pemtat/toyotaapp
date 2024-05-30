@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
+import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/statusbutton_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
@@ -101,11 +102,7 @@ class TicketInfoStatus extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: ticketId.toString()));
-                    Fluttertoast.showToast(
-                        msg: "คัดลอกข้อความ",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        fontSize: 12.0);
+                    showMessage('คัดลอกข้อความ');
                   },
                   child: Image.asset('assets/ticketblock.png'),
                 )

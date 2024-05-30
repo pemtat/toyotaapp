@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 class CompleteJobsView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
   final BottomBarController bottomController = Get.put(BottomBarController());
-  final RxInt expandedIndex = (-1).obs;
+  final RxInt expandedIndex = (-2).obs;
   final TextEditingController searchController = TextEditingController();
   final RxString searchQuery = ''.obs;
 

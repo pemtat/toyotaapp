@@ -10,6 +10,7 @@ const Color white3 = Color(0xffFFFFFF);
 const Color white4 = Color.fromARGB(255, 249, 247, 247);
 const Color white5 = Color(0xffF1F1F1);
 const Color white6 = Color(0xffEAEAEA);
+const Color white7 = Color.fromARGB(255, 251, 250, 250);
 
 const Color green1 = Color(0xff0FAF27);
 const Color green2 = Color.fromARGB(34, 34, 132, 62);

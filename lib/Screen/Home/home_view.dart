@@ -1,5 +1,7 @@
 import 'package:toyotamobile/Screen/Allticket/CompleteJobs/completejobs_view.dart';
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_view.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
+import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
 import 'package:toyotamobile/Widget/titleheader_widget.dart';
@@ -90,12 +92,17 @@ class HomeView extends StatelessWidget {
                     );
                   }
 
-                  return JobItemWidget(
-                    job: job,
-                    expandedIndex: jobController.expandedIndex,
-                    jobController: jobController,
-                    statusButton: const StatusAssignedButton(),
-                    sidebar: orange1,
+                  return InkWell(
+                    onTap: () {
+                      Get.to(() => JobDetailView(ticketId: job.jobid));
+                    },
+                    child: JobItemWidget(
+                      job: job,
+                      expandedIndex: jobController.expandedIndex,
+                      jobController: jobController,
+                      statusButton: const StatusAssignedButton(),
+                      sidebar: orange1,
+                    ),
                   );
                 }),
               ),
@@ -116,12 +123,17 @@ class HomeView extends StatelessWidget {
                     );
                   }
 
-                  return JobItemWidget(
-                    job: job,
-                    expandedIndex: jobController.expandedIndex2,
-                    jobController: jobController,
-                    statusButton: const StatusCompletedButton(),
-                    sidebar: black6,
+                  return InkWell(
+                    onTap: () {
+                      Get.to(() => TicketDetailView(ticketId: job.jobid));
+                    },
+                    child: JobItemWidget(
+                      job: job,
+                      expandedIndex: jobController.expandedIndex2,
+                      jobController: jobController,
+                      statusButton: const StatusCompletedButton(),
+                      sidebar: black6,
+                    ),
                   );
                 }),
               ),

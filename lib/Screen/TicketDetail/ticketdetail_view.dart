@@ -9,6 +9,7 @@ import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
+import 'package:toyotamobile/Widget/noteItem_widget.dart';
 import 'package:toyotamobile/Widget/progressbar_widget.dart.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
@@ -93,8 +94,8 @@ class TicketDetailView extends StatelessWidget {
                                             imagePath: ticketController
                                                 .jobTimeLineItems[index]
                                                 .imagePath,
-                                            title: ticketController
-                                                .jobTimeLineItems[index].title,
+                                            jobid: ticketController
+                                                .jobTimeLineItems[index].jobid,
                                             description: ticketController
                                                 .jobTimeLineItems[index]
                                                 .description,
@@ -222,13 +223,18 @@ class TicketDetailView extends StatelessWidget {
                                   ),
                                   3.kH,
                                   const BoxInfo(
-                                    title: "Warranty Status",
+                                    title: "Warranty",
                                     value: '',
                                     trailing: CheckStatus(
                                       imagePath: 'assets/pass.png',
                                       text: 'Active',
                                       textColor: green1,
                                     ),
+                                  ),
+                                  3.kH,
+                                  const BoxInfo(
+                                    title: "Attachment File",
+                                    value: '',
                                   ),
                                   5.kH,
                                   Row(
@@ -279,48 +285,31 @@ class TicketDetailView extends StatelessWidget {
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  const TitleApp(text: 'Notes'),
-                                  8.kH,
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10),
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.grey,
-                                          radius: 12,
-                                          child: Text('A',
-                                              style: TextStyleList.text13),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text('Admin (Backoffice)',
-                                                    style:
-                                                        TextStyleList.text10),
-                                                3.wH,
-                                                Text(
-                                                  '13 March 2024, 11:39 AM',
-                                                  style: TextStyleList.subtext1,
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              'Don\'t be late be late',
-                                              style: TextStyleList.subtext3,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  Obx(() {
+                                    if (ticketController.notesFiles.isEmpty) {
+                                      return Center(child: Container());
+                                    } else {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TitleApp(text: 'Notes'),
+                                          8.kH,
+                                          ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: ticketController
+                                                .notesFiles.length,
+                                            itemBuilder: (context, index) {
+                                              final note = ticketController
+                                                  .notesFiles[index];
+                                              return NoteItem(note: note);
+                                            },
+                                          ),
+                                          18.kH,
+                                        ],
+                                      );
+                                    }
+                                  }),
                                 ],
                               ),
                             ],

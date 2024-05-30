@@ -132,7 +132,7 @@ class AssignedjobsNew extends StatelessWidget {
               child: Obx(() {
                 final filteredJobs = jobController.jobList
                     .where((job) =>
-                        job.status == 'assigned' &&
+                        job.status != 'closed' &&
                         (job.jobid.contains(
                                 assignedController.searchQuery.value) ||
                             job.description.contains(

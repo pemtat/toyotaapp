@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
+import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/attachment_widget.dart';
@@ -10,7 +11,7 @@ import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
-import 'package:toyotamobile/Widget/divider_widget.dart';
+import 'package:toyotamobile/Widget/noteItem_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/statusbutton_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
@@ -31,6 +32,7 @@ class JobDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white7,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(57.5),
         child: Column(
@@ -313,51 +315,31 @@ class JobDetailView extends StatelessWidget {
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  const TitleApp(text: 'Notes'),
-                                  8.kH,
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10),
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.grey,
-                                          radius: 12,
-                                          child: Text('A',
-                                              style: TextStyleList.text13),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text('Admin (Backoffice)',
-                                                    style:
-                                                        TextStyleList.text10),
-                                                3.wH,
-                                                Text(
-                                                  '13 March 2024, 11:39 AM',
-                                                  style: TextStyleList.subtext1,
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              'Don\'t be late be late',
-                                              style: TextStyleList.subtext3,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  18.kH,
-                                  const AppDivider(),
-                                  18.kH,
+                                  Obx(() {
+                                    if (jobController.notesFiles.isEmpty) {
+                                      return Center(child: Container());
+                                    } else {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TitleApp(text: 'Notes'),
+                                          8.kH,
+                                          ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount:
+                                                jobController.notesFiles.length,
+                                            itemBuilder: (context, index) {
+                                              final note = jobController
+                                                  .notesFiles[index];
+                                              return NoteItem(note: note);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                  }),
+                                  12.kH,
                                   TextFieldType(
                                     hintText: 'Add Notes',
                                     textSet: jobController.notes.value,
@@ -401,7 +383,8 @@ class JobDetailView extends StatelessWidget {
                                       ),
                                       CustomElevatedButton(
                                         onPressed: () {
-                                          jobController.submitNote();
+                                          jobController
+                                              .addNote(jobController.notes);
                                         },
                                         text: 'Submit',
                                       ),
@@ -409,18 +392,6 @@ class JobDetailView extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              16.kH,
-                              BoxContainer(paddingCustom: 10, children: [
-                                EndButton(
-                                    onPressed: () {
-                                      jobController.showCompletedDialog(
-                                          context,
-                                          'Successfully finished job on investigating!',
-                                          'Not yet',
-                                          'Yes, Completed');
-                                    },
-                                    text: 'Complete Investigating'),
-                              ])
                             ],
                           ),
                         ),
@@ -432,6 +403,21 @@ class JobDetailView extends StatelessWidget {
             );
           }
         },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: white3,
+        child: Container(
+          decoration: Decoration2(),
+          child: EndButton(
+              onPressed: () {
+                jobController.showCompletedDialog(
+                    context,
+                    'Successfully finished job on investigating!',
+                    'Not yet',
+                    'Yes, Completed');
+              },
+              text: 'Complete Investigating'),
+        ),
       ),
     );
   }

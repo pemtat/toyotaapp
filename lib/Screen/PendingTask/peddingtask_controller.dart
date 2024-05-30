@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PeddingtaskController extends GetxController {
   var issueData = [].obs;
@@ -19,10 +19,9 @@ class PeddingtaskController extends GetxController {
   final BottomBarController bottomController = Get.put(BottomBarController());
   final HomeController jobController = Get.put(HomeController());
   void fetchData(String ticketId) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String apiUrl = '$getTicketbyId$ticketId';
+    final String apiUrl = getTicketbyId(ticketId);
 
-    String? token = prefs.getString('token');
+    String? token = await getToken();
 
     final response = await http.get(
       Uri.parse(apiUrl),
@@ -53,6 +52,7 @@ class PeddingtaskController extends GetxController {
           'summary': issue['summary'],
           'created_at': issue['created_at'],
           'reporter': issue['reporter']['name'],
+          'status': issue['status']['name'],
           'email': issue['reporter']['email'],
           'category': issue['category']['name'],
           'severity': issue['severity']['name'],
@@ -62,8 +62,7 @@ class PeddingtaskController extends GetxController {
 
       for (var attachment in attachmentsData) {
         int attachmentId = attachment['id'];
-        final String getFileUrl =
-            '$getAttachmentFileById/$issueId/files/$attachmentId';
+        final String getFileUrl = getAttachmentFileById(issueId, attachmentId);
 
         final response2 = await http.get(
           Uri.parse(getFileUrl),
@@ -92,10 +91,9 @@ class PeddingtaskController extends GetxController {
   }
 
   void acceptTicket() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String updateStatus = '$updateIssueStatusById/$issueId';
+    final String updateStatus = updateIssueStatusById(issueId);
 
-    String? token = prefs.getString('token');
+    String? token = await getToken();
     Map<String, dynamic> body = {
       "status": {"name": "assigned"}
     };
