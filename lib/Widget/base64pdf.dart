@@ -29,7 +29,7 @@ class AttachmentsListPdfWidget extends StatelessWidget {
               },
               child: Column(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 46,
                     height: 46,
                     child: ClipRRect(

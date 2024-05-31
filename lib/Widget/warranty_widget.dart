@@ -46,7 +46,7 @@ class WarrantyBox extends StatelessWidget {
         if (filePdf != null)
           Column(
             children: [
-              BoxInfo(
+              const BoxInfo(
                 title: "Attachment File",
                 value: '',
               ),

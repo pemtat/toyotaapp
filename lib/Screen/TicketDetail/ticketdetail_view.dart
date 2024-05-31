@@ -3,12 +3,10 @@ import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/attachment_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
-import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/noteItem_widget.dart';
 import 'package:toyotamobile/Widget/progressbar_widget.dart.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
@@ -216,7 +214,7 @@ class TicketDetailView extends StatelessWidget {
                                 () {
                                   if (ticketController
                                       .warrantyInfoList.isEmpty) {
-                                    return Center(
+                                    return const Center(
                                       child: Text('No Data'),
                                     );
                                   } else {

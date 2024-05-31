@@ -4,7 +4,7 @@ import 'package:toyotamobile/Widget/statusbutton_widget.dart';
 class StatusButton extends StatelessWidget {
   final String status;
 
-  const StatusButton({Key? key, required this.status}) : super(key: key);
+  const StatusButton({super.key, required this.status});
 
   @override
   Widget build(BuildContext context) {
