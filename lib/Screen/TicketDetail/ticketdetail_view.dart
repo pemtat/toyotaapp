@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
+import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
@@ -30,7 +31,7 @@ class TicketDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(57.5),
+        preferredSize: const Size.fromHeight(preferredSize - 2.5),
         child: Column(
           children: [
             AppBar(
@@ -256,7 +257,9 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       const Spacer(),
                                       GoogleMapButton(
-                                        onTap: () {},
+                                        onTap: () {
+                                          //TODO handle
+                                        },
                                       ),
                                     ],
                                   ),

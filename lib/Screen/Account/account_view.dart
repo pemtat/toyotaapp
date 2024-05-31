@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Screen/Account/account_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
+import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -17,7 +18,7 @@ class AccountView extends StatelessWidget {
     return Scaffold(
         backgroundColor: white4,
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60.0),
+          preferredSize: const Size.fromHeight(preferredSize),
           child: Column(
             children: [
               AppBar(
@@ -37,21 +38,21 @@ class AccountView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        // Padding(
-                        //   padding: const EdgeInsets.only(right: 16),
-                        //   child: CircleAvatar(
-                        //     backgroundColor: Colors.grey,
-                        //     radius: 27,
-                        //     child: ClipOval(
-                        //       child: Image.asset(
-                        //         'assets/man.jpg',
-                        //         fit: BoxFit.cover,
-                        //         width: 54,
-                        //         height: 54,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 27,
+                            child: ClipOval(
+                              child: Image.asset(
+                                'assets/man.jpg',
+                                fit: BoxFit.cover,
+                                width: 54,
+                                height: 54,
+                              ),
+                            ),
+                          ),
+                        ),
                         Expanded(
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

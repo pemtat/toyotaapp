@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60.0),
+          preferredSize: const Size.fromHeight(preferredSize),
           child: Column(
             children: [
               AppBar(

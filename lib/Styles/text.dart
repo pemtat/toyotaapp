@@ -22,10 +22,13 @@ class TextStyleList {
 //18
   static final TextStyle title1 = GoogleFonts.kanit(
       fontSize: 18, fontWeight: FontWeight.w500, color: black);
-
+  static final TextStyle title2 = GoogleFonts.kanit(
+      fontSize: 18, fontWeight: FontWeight.w500, color: black4);
 //16
   static final TextStyle subtitle1 = GoogleFonts.kanit(
       fontSize: 16, fontWeight: FontWeight.w500, color: black4);
+  static final TextStyle subtitle2 = GoogleFonts.kanit(
+      fontSize: 16, fontWeight: FontWeight.w400, color: black7);
 
 //15
   static final TextStyle detail1 = GoogleFonts.kanit(
@@ -125,5 +128,10 @@ class TextStyleList {
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: red2,
+  );
+  static final TextStyle subdetail = GoogleFonts.kanit(
+    fontSize: 10,
+    fontWeight: FontWeight.w400,
+    color: black6,
   );
 }

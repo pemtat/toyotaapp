@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Screen/FillForm2/fillform2_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
+import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/boxshowdetail_widget.dart';
@@ -22,7 +23,7 @@ class FillFormView2 extends StatelessWidget {
     return Scaffold(
       backgroundColor: white4,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
+        preferredSize: const Size.fromHeight(preferredSize),
         child: Column(
           children: [
             AppBar(

@@ -1,6 +1,5 @@
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_controller.dart';
-import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -23,11 +22,10 @@ class AssignedjobsNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BottomBarView();
     // ignore: deprecated_member_use
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
+        preferredSize: const Size.fromHeight(preferredSize),
         child: Column(
           children: [
             AppBar(

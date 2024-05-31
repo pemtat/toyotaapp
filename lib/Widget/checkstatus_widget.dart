@@ -19,6 +19,10 @@ class StatusButton extends StatelessWidget {
         return const StatusOnprocessButton();
       case 'feedback':
         return const StatusFeedBackButton();
+      case 'pending':
+        return const StatusPendingButton();
+      case 'ongoing':
+        return const StatusOngoingButton();
       default:
         return const SizedBox();
     }

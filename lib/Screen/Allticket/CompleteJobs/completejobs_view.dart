@@ -1,5 +1,5 @@
 import 'package:toyotamobile/Models/home_model.dart';
-import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
+import 'package:toyotamobile/Screen/Allticket/CompleteJobs/completejobs_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -15,10 +15,8 @@ import 'package:get/get.dart';
 
 class CompleteJobsView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
-  final BottomBarController bottomController = Get.put(BottomBarController());
-  final RxInt expandedIndex = (-2).obs;
-  final TextEditingController searchController = TextEditingController();
-  final RxString searchQuery = ''.obs;
+  final CompleteJobsController completeJobsController =
+      Get.put(CompleteJobsController());
 
   CompleteJobsView({super.key});
 
@@ -29,7 +27,7 @@ class CompleteJobsView extends StatelessWidget {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60.0),
+          preferredSize: const Size.fromHeight(preferredSize),
           child: Column(
             children: [
               AppBar(
@@ -53,7 +51,7 @@ class CompleteJobsView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: searchController,
+                      controller: completeJobsController.searchController,
                       decoration: InputDecoration(
                         hintText: 'Search by job ID or title',
                         hintStyle: TextStyleList.detail1,
@@ -77,7 +75,7 @@ class CompleteJobsView extends StatelessWidget {
                             vertical: 14.0, horizontal: 19.0),
                       ),
                       onChanged: (value) {
-                        searchQuery.value = value;
+                        completeJobsController.searchQuery.value = value;
                       },
                     ),
                   ),
@@ -134,8 +132,10 @@ class CompleteJobsView extends StatelessWidget {
                   final filteredJobs = jobController.jobList
                       .where((job) =>
                           job.status == 'closed' &&
-                          (job.jobid.contains(searchQuery.value) ||
-                              job.description.contains(searchQuery.value)))
+                          (job.jobid.contains(
+                                  completeJobsController.searchQuery.value) ||
+                              job.description.contains(
+                                  completeJobsController.searchQuery.value)))
                       .toList();
                   if (filteredJobs.isEmpty) {
                     return const Center(child: Text('No new jobs available.'));
@@ -152,7 +152,7 @@ class CompleteJobsView extends StatelessWidget {
                           },
                           child: JobItemWidget(
                             job: job,
-                            expandedIndex: expandedIndex,
+                            expandedIndex: completeJobsController.expandedIndex,
                             jobController: jobController,
                             sidebar: black6,
                           ));

@@ -8,6 +8,7 @@ import 'package:toyotamobile/Screen/FillForm/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/wcode.dart';
 import 'package:toyotamobile/Screen/FillForm/fillform_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
+import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/FillForm_widget/Sparepart_widget.dart';
 import 'package:toyotamobile/Widget/FillForm_widget/repairprodecure_widget.dart';
@@ -41,7 +42,7 @@ class FillFormView extends StatelessWidget {
     return Scaffold(
       backgroundColor: white4,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
+        preferredSize: const Size.fromHeight(preferredSize),
         child: Column(
           children: [
             AppBar(

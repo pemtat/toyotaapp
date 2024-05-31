@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Screen/PendingTask/peddingtask_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
+import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
@@ -28,7 +29,7 @@ class PendingTaskView extends StatelessWidget {
     return Scaffold(
       backgroundColor: white7,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
+        preferredSize: const Size.fromHeight(preferredSize),
         child: Column(
           children: [
             AppBar(
