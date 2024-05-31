@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -14,8 +16,11 @@ class PeddingtaskController extends GetxController {
   var issueData = [].obs;
   var attachments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
+  var addAttatchments = <Map<String, dynamic>>[].obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
   var issueId;
+  RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
+
   final BottomBarController bottomController = Get.put(BottomBarController());
   final HomeController jobController = Get.put(HomeController());
   void fetchData(String ticketId) async {
@@ -47,17 +52,21 @@ class PeddingtaskController extends GetxController {
         }
         issueId = issue['id'];
 
-        return {
+        var issueDetails = {
           'id': issue['id'],
           'summary': issue['summary'],
           'created_at': issue['created_at'],
           'reporter': issue['reporter']['name'],
           'status': issue['status']['name'],
+          'serialNumber': 'CE429423',
           'email': issue['reporter']['email'],
           'category': issue['category']['name'],
           'severity': issue['severity']['name'],
           'relations': '-',
         };
+        checkWarranty(issueDetails['serialNumber'], warrantyInfoList);
+
+        return issueDetails;
       }).toList();
 
       for (var attachment in attachmentsData) {

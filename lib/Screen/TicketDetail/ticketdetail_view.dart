@@ -14,8 +14,9 @@ import 'package:toyotamobile/Widget/progressbar_widget.dart.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
-import 'package:toyotamobile/Widget/warranty_widget.dart';
+import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Widget/warranty_widget.dart';
 
 // ignore: use_key_in_widget_constructors
 class TicketDetailView extends StatelessWidget {
@@ -55,6 +56,9 @@ class TicketDetailView extends StatelessWidget {
           } else {
             var file = ticketController.attatchments.isNotEmpty
                 ? ticketController.attatchments
+                : null;
+            var filePdf = ticketController.addAttatchments.isNotEmpty
+                ? ticketController.addAttatchments
                 : null;
             var issue = ticketController.issueData.first;
 
@@ -208,43 +212,23 @@ class TicketDetailView extends StatelessWidget {
                                 ),
                               ),
                               8.kH,
-                              BoxContainer(
-                                children: [
-                                  const TitleApp(text: "Machine Detail"),
-                                  8.kH,
-                                  const BoxInfo(
-                                    title: "Name/Model",
-                                    value: "UBRE200H2-TH-7500",
-                                  ),
-                                  3.kH,
-                                  const BoxInfo(
-                                    title: "Serial Number",
-                                    value: "6963131",
-                                  ),
-                                  3.kH,
-                                  const BoxInfo(
-                                    title: "Warranty",
-                                    value: '',
-                                    trailing: CheckStatus(
-                                      status: 1,
-                                    ),
-                                  ),
-                                  3.kH,
-                                  const BoxInfo(
-                                    title: "Attachment File",
-                                    value: '',
-                                  ),
-                                  5.kH,
-                                  Row(
-                                    children: [
-                                      const AttachmentFile(name: 'Q1.pdf'),
-                                      7.wH,
-                                      const AttachmentFile(name: 'Q2.pdf'),
-                                      7.wH,
-                                      const AttachmentFile(name: 'Q3.pdf'),
-                                    ],
-                                  ),
-                                ],
+                              Obx(
+                                () {
+                                  if (ticketController
+                                      .warrantyInfoList.isEmpty) {
+                                    return Center(
+                                      child: Text('No Data'),
+                                    );
+                                  } else {
+                                    var warrantyInfo =
+                                        ticketController.warrantyInfoList.first;
+                                    return WarrantyBox(
+                                        model: warrantyInfo.model,
+                                        serial: warrantyInfo.serial,
+                                        status: warrantyInfo.warrantyStatus,
+                                        filePdf: filePdf);
+                                  }
+                                },
                               ),
                               8.kH,
                               BoxContainer(

@@ -7,6 +7,8 @@ class Home {
   final String description;
   final DateTime date;
   final String location;
+  final String serialnumber;
+
   final String status;
 
   Home({
@@ -17,6 +19,7 @@ class Home {
     required this.date,
     required this.location,
     required this.status,
+    required this.serialnumber,
   });
 
   String getFormattedDate() {
@@ -35,6 +38,7 @@ class Home {
             ? DateTime.parse(json['due_date'])
             : DateTime.now(),
         location: 'Bangkok',
+        serialnumber: 'CE429423',
         status: json['status'] != null ? json['status']['name'] : 'Unknown');
   }
 }

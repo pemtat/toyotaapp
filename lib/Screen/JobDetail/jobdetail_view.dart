@@ -8,6 +8,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/attachment_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
+import 'package:toyotamobile/Widget/base64pdf.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
@@ -18,8 +19,9 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
-import 'package:toyotamobile/Widget/warranty_widget.dart';
+import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Widget/warranty_widget.dart';
 
 // ignore: use_key_in_widget_constructors
 class JobDetailView extends StatelessWidget {
@@ -85,6 +87,9 @@ class JobDetailView extends StatelessWidget {
           } else {
             var file = jobController.attatchments.isNotEmpty
                 ? jobController.attatchments
+                : null;
+            var filePdf = jobController.addAttatchments.isNotEmpty
+                ? jobController.addAttatchments
                 : null;
             var issue = jobController.issueData.first;
 
@@ -273,45 +278,16 @@ class JobDetailView extends StatelessWidget {
                                 () {
                                   if (jobController.warrantyInfoList.isEmpty) {
                                     return Center(
-                                      child: CircularProgressIndicator(),
+                                      child: Text('No Data'),
                                     );
                                   } else {
-                                    WarrantyInfo warrantyInfo =
+                                    var warrantyInfo =
                                         jobController.warrantyInfoList.first;
-                                    return BoxContainer(
-                                      children: [
-                                        const TitleApp(text: "Machine Detail"),
-                                        8.kH,
-                                        BoxInfo(
-                                          title: "Name/Model",
-                                          value: warrantyInfo.model,
-                                        ),
-                                        3.kH,
-                                        BoxInfo(
-                                          title: "Serial Number",
-                                          value: warrantyInfo.serial,
-                                        ),
-                                        3.kH,
-                                        BoxInfo(
-                                          title: "Warranty Status",
-                                          value: warrantyInfo.warrantyStatus
-                                              .toString(),
-                                          trailing: CheckStatus(
-                                            status: warrantyInfo.warrantyStatus,
-                                          ),
-                                        ),
-                                        5.kH,
-                                        Row(
-                                          children: const [
-                                            AttachmentFile(name: 'Q1.pdf'),
-                                            SizedBox(width: 7),
-                                            AttachmentFile(name: 'Q2.pdf'),
-                                            SizedBox(width: 7),
-                                            AttachmentFile(name: 'Q3.pdf'),
-                                          ],
-                                        ),
-                                      ],
-                                    );
+                                    return WarrantyBox(
+                                        model: warrantyInfo.model,
+                                        serial: warrantyInfo.serial,
+                                        status: warrantyInfo.warrantyStatus,
+                                        filePdf: filePdf);
                                   }
                                 },
                               ),

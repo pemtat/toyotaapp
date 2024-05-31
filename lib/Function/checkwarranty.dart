@@ -10,7 +10,7 @@ checkWarranty(
   String password = passwordProduct;
 
   String basicAuth =
-      'Basic ' + base64Encode(utf8.encode('$username:$password'));
+      'Basic ${base64Encode(utf8.encode('$username:$password'))}';
 
   final String checkWarranty = checkWarrantyBySerial(serialNumber);
   final response = await http.get(

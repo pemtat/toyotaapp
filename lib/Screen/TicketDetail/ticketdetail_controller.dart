@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Models/jobprogress_model.dart';
+import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
@@ -20,6 +22,8 @@ class TicketDetailController extends GetxController {
   var moreDetail = false.obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
   var issueId;
+  RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
+
   final List<JobItemData> jobTimeLineItems = [
     JobItemData(
         imagePath: 'assets/search.png',
@@ -75,18 +79,22 @@ class TicketDetailController extends GetxController {
           print(notesFiles);
         }
 
-        return {
+        var issueDetails = {
           'id': issue['id'],
           'summary': issue['summary'],
           'description': issue['description'],
           'created_at': issue['created_at'],
           'reporter': issue['reporter']['name'],
           'status': issue['status']['name'],
+          'serialNumber': 'CE429423',
           'email': issue['reporter']['email'],
           'category': issue['category']['name'],
           'severity': issue['severity']['name'],
           'relations': '-',
         };
+        checkWarranty(issueDetails['serialNumber'], warrantyInfoList);
+
+        return issueDetails;
       }).toList();
 
       for (var attachment in attachmentsData) {
