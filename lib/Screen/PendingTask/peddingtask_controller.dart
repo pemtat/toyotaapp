@@ -95,9 +95,7 @@ class PeddingtaskController extends GetxController {
       }
 
       issueData.value = extractedData;
-    } else {
-      print('Failed to load data. Error ${response.statusCode}');
-    }
+    } else {}
   }
 
   void acceptTicket() async {
@@ -105,7 +103,7 @@ class PeddingtaskController extends GetxController {
 
     String? token = await getToken();
     Map<String, dynamic> body = {
-      "status": {"name": "assigned"}
+      "status": {"name": "confirm"}
     };
 
     final response = await http.patch(

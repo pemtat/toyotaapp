@@ -135,10 +135,8 @@ class TicketView extends StatelessWidget {
                 padding: const EdgeInsets.all(paddingApp),
                 child: Obx(() {
                   final filteredJobs = jobController.jobList
-                      .where((job) =>
-                          job.status == 'new' &&
-                          (job.jobid.contains(searchQuery.value) ||
-                              job.description.contains(searchQuery.value)))
+                      .where((job) => (job.jobid.contains(searchQuery.value) ||
+                          job.description.contains(searchQuery.value)))
                       .toList();
                   if (filteredJobs.isEmpty) {
                     return Center(
@@ -159,7 +157,7 @@ class TicketView extends StatelessWidget {
                           job: job,
                           expandedIndex: expandedIndex,
                           jobController: jobController,
-                          statusButton: const StatusNewButton(),
+                          status: job.status,
                         ),
                       );
                     },

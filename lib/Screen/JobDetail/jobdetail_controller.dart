@@ -105,9 +105,7 @@ class JobDetailController extends GetxController {
       }
 
       issueData.value = extractedData;
-    } else {
-      print('Failed to load data. Error ${response.statusCode}');
-    }
+    } else {}
   }
 
   Future<void> pickFile() async {
@@ -129,14 +127,8 @@ class JobDetailController extends GetxController {
             'path': filePath,
             'base64': base64Content,
           });
-        } else {
-          print('File path is null');
-        }
-      } else {
-        print('No file picked');
-      }
-    } catch (e) {
-      print('File picking failed: $e');
+        } else {}
+      } else {}
     } finally {
       isPicking.value = false;
     }

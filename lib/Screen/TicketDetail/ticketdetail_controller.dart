@@ -77,7 +77,6 @@ class TicketDetailController extends GetxController {
         if (issue['notes'] != null) {
           var issueNotes = issue['notes'] as List<dynamic>;
           notesFiles.assignAll(issueNotes);
-          print(notesFiles);
         }
 
         var issueDetails = {
@@ -123,9 +122,7 @@ class TicketDetailController extends GetxController {
       }
 
       issueData.value = extractedData;
-    } else {
-      print('Failed to load data. Error ${response.statusCode}');
-    }
+    } else {}
   }
 
   Future<void> pickFile() async {
@@ -143,12 +140,8 @@ class TicketDetailController extends GetxController {
           'path': filePath,
           'base64': base64Content,
         });
-      } else {
-        print('File path is null');
-      }
-    } else {
-      print('No file picked');
-    }
+      } else {}
+    } else {}
   }
 
   void addAttachment(Map<String, String> file) {

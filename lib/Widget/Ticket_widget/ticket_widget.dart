@@ -5,20 +5,21 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 
 class JobItemTicket extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
   final job;
   final RxInt expandedIndex;
   final HomeController jobController;
-  final Widget statusButton;
+  final String status;
 
   const JobItemTicket({
     super.key,
     required this.job,
     required this.expandedIndex,
     required this.jobController,
-    required this.statusButton,
+    required this.status,
   });
 
   @override
@@ -44,7 +45,7 @@ class JobItemTicket extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               const Spacer(),
-              statusButton,
+              StatusButton(status: status)
             ],
           ),
         ),

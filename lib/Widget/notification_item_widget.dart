@@ -6,8 +6,7 @@ import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 class NotificationItem extends StatelessWidget {
   final NotificationModel notification;
 
-  const NotificationItem({Key? key, required this.notification})
-      : super(key: key);
+  const NotificationItem({super.key, required this.notification});
 
   @override
   Widget build(BuildContext context) {

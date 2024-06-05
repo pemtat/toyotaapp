@@ -1,4 +1,3 @@
-import 'package:toyotamobile/Function/tokencreate.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Service/notification.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,6 @@ void main() async {
 
 Future<Widget> getHomeWidget(SharedPreferences prefs) async {
   String? getStr = prefs.getString('access_token');
-  tokenCreate();
   return getStr != "" ? BottomBarView() : LoginView();
 }
 

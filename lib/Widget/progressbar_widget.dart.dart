@@ -11,14 +11,14 @@ class TimeLineItem extends StatelessWidget {
   final String status;
 
   const TimeLineItem({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.jobid,
     required this.description,
     required this.dateTime,
     required this.status,
     this.isLast,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -160,48 +160,13 @@ class JobDetailView extends StatelessWidget {
                                 ],
                               ),
                               8.kH,
-                              BoxContainer(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const TitleApp(text: 'Repair Report*'),
-                                      AddButton(
-                                        onTap: () {
-                                          Get.to(() => const FillFormView());
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    'Please fill the field service report',
-                                    style: TextStyleList.text16,
-                                  )
-                                ],
-                              ),
-                              8.kH,
-                              BoxContainer(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const TitleApp(
-                                          text: 'Battery Maintenance Report*'),
-                                      AddButton(
-                                        onTap: () {
-                                          Get.to(() => const FillFormView2());
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    'Please fill the field service report',
-                                    style: TextStyleList.text16,
-                                  )
-                                ],
-                              ),
+                              BoxContainer(children: [
+                                TicketInfo(
+                                  ticketId: issue['id'],
+                                  dateTime: formatDateTime(issue['created_at']),
+                                  reporter: issue['reporter'],
+                                ),
+                              ]),
                               8.kH,
                               BoxContainer(
                                 children: [
@@ -312,14 +277,6 @@ class JobDetailView extends StatelessWidget {
                                 },
                               ),
                               8.kH,
-                              BoxContainer(children: [
-                                TicketInfo(
-                                  ticketId: issue['id'],
-                                  dateTime: formatDateTime(issue['created_at']),
-                                  reporter: issue['reporter'],
-                                ),
-                              ]),
-                              8.kH,
                               BoxContainer(
                                 children: [
                                   Obx(() {
@@ -399,6 +356,26 @@ class JobDetailView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
+                                ],
+                              ),
+                              BoxContainer(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleApp(text: 'Repair Report*'),
+                                      AddButton(
+                                        onTap: () {
+                                          Get.to(() => const FillFormView());
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    'Please fill the field service report',
+                                    style: TextStyleList.text16,
+                                  )
                                 ],
                               ),
                             ],

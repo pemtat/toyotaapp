@@ -39,12 +39,12 @@ class AppIcon extends StatelessWidget {
   final Color backgroundColor;
 
   const AppIcon({
-    Key? key,
+    super.key,
     required this.assetPath,
     this.size = 24.0,
     this.color = Colors.black,
     this.backgroundColor = Colors.white,
-  }) : super(key: key);
+  });
 
   factory AppIcon.block({
     double size = 24.0,
