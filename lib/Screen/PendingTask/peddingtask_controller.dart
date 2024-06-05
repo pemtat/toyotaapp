@@ -18,6 +18,7 @@ class PeddingtaskController extends GetxController {
   var moreDetail = false.obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
+  // ignore: prefer_typing_uninitialized_variables
   var issueId;
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
 

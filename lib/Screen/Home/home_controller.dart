@@ -63,9 +63,8 @@ class HomeController extends GetxController {
         findMostRecentNewJob();
         findMostRecentCompleteJob();
       }
-    } catch (e) {
-      print('Error fetching and parsing data: $e');
-    }
+      // ignore: empty_catches
+    } catch (e) {}
   }
 
   void findMostRecentNewJob() {

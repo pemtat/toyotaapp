@@ -7,16 +7,6 @@ import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class RepairStaff extends GetxController {
-  var repairStaff = <String>[].obs;
-  var repairStaffChoose = <String>[].obs;
-  List<String> repairStaffList = [
-    'Quotation',
-    'Claim',
-    'Close Job',
-    'Repair',
-    'Follow',
-  ];
-
   void repairStaffModal(BuildContext context) {
     ShowModalWidget(
       children: [
@@ -44,7 +34,7 @@ class RepairStaff extends GetxController {
               child: CheckBoxWidget(
                   text: repairStaffList[index],
                   listItem: repairStaffChoose,
-                  itemSet: repairStaffs),
+                  itemSet: repairStaffChoose),
             );
           },
         ),
@@ -61,22 +51,13 @@ class RepairStaff extends GetxController {
     ).showModal(context);
   }
 
-  String getDisplayString() {
-    int displayCount = 3;
-    if (repairStaff.length <= displayCount) {
-      return repairStaff.join(', ');
-    } else {
-      String displayedItems = repairStaff.sublist(0, displayCount).join(', ');
-      int remainingCount = repairStaff.length - displayCount;
-      return '$displayedItems +$remainingCount more';
-    }
-  }
-
-  void repairStaffs(String label) {
-    if (repairStaffChoose.contains(label)) {
-      repairStaffChoose.remove(label);
-    } else {
-      repairStaffChoose.add(label);
-    }
-  }
+  var repairStaff = <String>[].obs;
+  var repairStaffChoose = <String>[].obs;
+  List<String> repairStaffList = [
+    'Quotation',
+    'Claim',
+    'Close Job',
+    'Repair',
+    'Follow',
+  ];
 }

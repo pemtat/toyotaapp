@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Styles/text.dart';
 
 class CheckBoxWidget extends StatelessWidget {
   final String text;
   final RxList<String> listItem;
-  final Function(String) itemSet;
+  final RxList<String> itemSet;
   const CheckBoxWidget({
     super.key,
     required this.text,
@@ -19,7 +20,7 @@ class CheckBoxWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            itemSet(text);
+            updateCheckbox(text, itemSet);
           },
           child: Obx(
             () => Container(

@@ -7,16 +7,6 @@ import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class RepairResult extends GetxController {
-  var repairResult = <String>[].obs;
-  var repairResultChoose = <String>[].obs;
-  List<String> repairResultList = [
-    'Run',
-    'Temporary',
-    'Stop',
-    'H',
-    'M',
-  ];
-
   void repairResultModal(BuildContext context) {
     ShowModalWidget(
       children: [
@@ -44,7 +34,7 @@ class RepairResult extends GetxController {
               child: CheckBoxWidget(
                   text: repairResultList[index],
                   listItem: repairResultChoose,
-                  itemSet: repairResults),
+                  itemSet: repairResultChoose),
             );
           },
         ),
@@ -61,22 +51,13 @@ class RepairResult extends GetxController {
     ).showModal(context);
   }
 
-  String getDisplayString() {
-    int displayCount = 3;
-    if (repairResult.length <= displayCount) {
-      return repairResult.join(', ');
-    } else {
-      String displayedItems = repairResult.sublist(0, displayCount).join(', ');
-      int remainingCount = repairResult.length - displayCount;
-      return '$displayedItems +$remainingCount more';
-    }
-  }
-
-  void repairResults(String label) {
-    if (repairResultChoose.contains(label)) {
-      repairResultChoose.remove(label);
-    } else {
-      repairResultChoose.add(label);
-    }
-  }
+  var repairResult = <String>[].obs;
+  var repairResultChoose = <String>[].obs;
+  List<String> repairResultList = [
+    'Run',
+    'Temporary',
+    'Stop',
+    'H',
+    'M',
+  ];
 }

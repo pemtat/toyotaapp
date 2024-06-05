@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 
 class GoogleMapButton extends StatelessWidget {
@@ -177,6 +178,38 @@ class EndButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyleList.text13,
+        ),
+      ),
+    );
+  }
+}
+
+class EndButton2 extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String text;
+
+  const EndButton2({
+    super.key,
+    required this.onPressed,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          backgroundColor: black3,
+          foregroundColor: black12,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        child: Text(
+          text,
+          style: TextStyleList.text5,
         ),
       ),
     );

@@ -13,6 +13,7 @@ import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
+// ignore: use_key_in_widget_constructors
 class CalendarView extends StatelessWidget {
   final CalendarController calendarController = Get.put(CalendarController());
 
@@ -39,8 +40,8 @@ class CalendarView extends StatelessWidget {
           Obx(() {
             return TableCalendar(
               daysOfWeekStyle: DaysOfWeekStyle(
-                  weekdayStyle: TextStyleList.subdetail,
-                  weekendStyle: TextStyleList.subdetail),
+                  weekdayStyle: TextStyleList.subdetail1,
+                  weekendStyle: TextStyleList.subdetail1),
               headerStyle: HeaderStyle(
                   formatButtonTextStyle: TextStyleList.text9,
                   titleTextStyle: TextStyleList.title2,
@@ -54,15 +55,15 @@ class CalendarView extends StatelessWidget {
               },
               calendarStyle: CalendarStyle(
                 defaultTextStyle: TextStyleList.subtitle2,
-                todayDecoration: BoxDecoration(
+                todayDecoration: const BoxDecoration(
                   color: Colors.blue,
                   shape: BoxShape.circle,
                 ),
-                selectedDecoration: BoxDecoration(
+                selectedDecoration: const BoxDecoration(
                   color: Colors.orange,
                   shape: BoxShape.circle,
                 ),
-                markerDecoration: BoxDecoration(
+                markerDecoration: const BoxDecoration(
                   color: Colors.red,
                   shape: BoxShape.circle,
                 ),
@@ -76,7 +77,7 @@ class CalendarView extends StatelessWidget {
                       child: Container(
                         width: 7,
                         height: 7,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.red,
                           shape: BoxShape.circle,
                         ),
@@ -117,7 +118,7 @@ class CalendarView extends StatelessWidget {
                 children: [
                   Container(
                       width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(color: white5),
+                      decoration: const BoxDecoration(color: white5),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 16),
@@ -142,7 +143,7 @@ class CalendarView extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 final event = events[index];
                                 return Container(
-                                  margin: EdgeInsets.only(bottom: 10),
+                                  margin: const EdgeInsets.only(bottom: 10),
                                   decoration: Decoration1(
                                     sideBorderColor:
                                         event['status'] == 'Pending'
@@ -171,8 +172,9 @@ class CalendarView extends StatelessWidget {
                                       Expanded(
                                         flex: 7,
                                         child: Container(
-                                          padding: EdgeInsets.only(left: 10),
-                                          decoration: BoxDecoration(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          decoration: const BoxDecoration(
                                             border: Border(
                                               left: BorderSide(
                                                   width: 1, color: white1),

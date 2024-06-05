@@ -141,7 +141,11 @@ class TicketView extends StatelessWidget {
                               job.description.contains(searchQuery.value)))
                       .toList();
                   if (filteredJobs.isEmpty) {
-                    return const Center(child: Text('No new jobs available.'));
+                    return Center(
+                        child: Text(
+                      'No new jobs available.',
+                      style: TextStyleList.subtitle2,
+                    ));
                   }
                   return ListView.builder(
                     itemCount: filteredJobs.length,

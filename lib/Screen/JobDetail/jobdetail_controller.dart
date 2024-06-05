@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
+import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
+import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
@@ -22,10 +24,12 @@ class JobDetailController extends GetxController {
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
+  // ignore: prefer_typing_uninitialized_variables
   var issueId;
   var status = RxString('');
   final HomeController jobController = Get.put(HomeController());
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
+  final BottomBarController bottomController = Get.put(BottomBarController());
 
   void fetchData(String ticketId) async {
     final String apiUrl = getTicketbyId(ticketId);
@@ -138,6 +142,29 @@ class JobDetailController extends GetxController {
     }
   }
 
+  void completeJob() async {
+    final String updateStatus = updateIssueStatusById(issueId);
+
+    String? token = await getToken();
+    Map<String, dynamic> body = {
+      "status": {"name": "closed"}
+    };
+
+    final response = await http.patch(
+      Uri.parse(updateStatus),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+    if (response.statusCode == 200) {
+      jobController.fetchDataFromAssignJob();
+      bottomController.currentIndex.value = 0;
+      Get.offAll(() => BottomBarView());
+    }
+  }
+
   void addNote(Rx<TextEditingController> textControllerRx) async {
     final String addNoteUrl = createNoteById(issueId);
 
@@ -205,11 +232,9 @@ class JobDetailController extends GetxController {
           title: title,
           leftButton: left,
           rightButton: right,
-          onRightButtonPressed: complete,
+          onRightButtonPressed: completeJob,
         );
       },
     );
   }
-
-  void complete() {}
 }

@@ -55,6 +55,23 @@ class Decoration3 extends BoxDecoration {
         );
 }
 
+class Decoration4 extends BoxDecoration {
+  Decoration4({
+    Color borderColor = white2,
+    double width = 2,
+    Color backgroundColor = black3,
+  }) : super(
+          borderRadius: BorderRadius.circular(10),
+          color: backgroundColor,
+          border: Border(
+            left: BorderSide(width: width, color: borderColor),
+            right: BorderSide(width: width, color: borderColor),
+            bottom: BorderSide(width: width, color: borderColor),
+            top: BorderSide(width: width, color: borderColor),
+          ),
+        );
+}
+
 class BoxDetail extends BoxDecoration {
   BoxDetail({
     Color borderColor = white2,

@@ -9,9 +9,6 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
 class RepairProcedure extends GetxController {
-  var repairProcedureList = <RepairProcedureModel>[].obs;
-  final repairProcedure = TextEditingController().obs;
-  final causeProblem = TextEditingController().obs;
   int space = 24;
 
   void rPModal(BuildContext context) {
@@ -93,6 +90,10 @@ class RepairProcedure extends GetxController {
       ],
     ).showModal(context);
   }
+
+  var repairProcedureList = <RepairProcedureModel>[].obs;
+  final repairProcedure = TextEditingController().obs;
+  final causeProblem = TextEditingController().obs;
 
   void rPWrite() {
     String repairProcedureValue =

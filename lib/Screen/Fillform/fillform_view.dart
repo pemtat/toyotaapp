@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/process_staff.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/rcode.dart';
@@ -69,8 +70,7 @@ class FillFormView extends StatelessWidget {
                           text:
                               fillFormController.fieldServiceReportList[index],
                           listItem: fillFormController.fieldServiceReport,
-                          itemSet: (label) =>
-                              fillFormController.fieldService(label)),
+                          itemSet: fillFormController.fieldServiceReport),
                     );
                   },
                 ),
@@ -99,7 +99,7 @@ class FillFormView extends StatelessWidget {
                       titleText: 'R Code',
                       list: rcodeController.rCode,
                       onTap: () => rcodeController.rCodeModal(context),
-                      moreText: rcodeController.getDisplayString()),
+                      moreText: getDisplayString(rcodeController.rCode)),
                 ),
               ],
             ),
@@ -111,7 +111,7 @@ class FillFormView extends StatelessWidget {
                       titleText: 'W Code',
                       list: wcodeController.wCode,
                       onTap: () => wcodeController.wCodeModal(context),
-                      moreText: wcodeController.getDisplayString()),
+                      moreText: getDisplayString(wcodeController.wCode)),
                 ),
               ],
             ),
@@ -129,6 +129,7 @@ class FillFormView extends StatelessWidget {
                   ),
                   rPController.repairProcedureList.isNotEmpty
                       ? ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: rPController.repairProcedureList.length,
                           itemBuilder: (context, index) {
@@ -158,6 +159,7 @@ class FillFormView extends StatelessWidget {
                     ),
                     sparePartListController.sparePartList.isNotEmpty
                         ? ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount:
                                 sparePartListController.sparePartList.length,
@@ -192,6 +194,7 @@ class FillFormView extends StatelessWidget {
                     ),
                     additSparePartListController.additSparePartList.isNotEmpty
                         ? ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: additSparePartListController
                                 .additSparePartList.length,
@@ -221,7 +224,8 @@ class FillFormView extends StatelessWidget {
                       list: repairResultController.repairResult,
                       onTap: () =>
                           repairResultController.repairResultModal(context),
-                      moreText: repairResultController.getDisplayString()),
+                      moreText: getDisplayString(
+                          repairResultController.repairResult)),
                 ),
               ],
             ),
@@ -234,7 +238,8 @@ class FillFormView extends StatelessWidget {
                       list: repairStaffController.repairStaff,
                       onTap: () =>
                           repairStaffController.repairStaffModal(context),
-                      moreText: repairStaffController.getDisplayString()),
+                      moreText:
+                          getDisplayString(repairStaffController.repairStaff)),
                 ),
               ],
             ),

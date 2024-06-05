@@ -15,7 +15,7 @@ class BottomBarView extends StatelessWidget {
     HomeView(),
     TicketView(),
     CalendarView(),
-    const NotificationView(),
+    NotificationView(),
     const AccountView()
   ];
 
@@ -48,7 +48,7 @@ class BottomBarView extends StatelessWidget {
               onTap: (index) {
                 _pageController.animateToPage(
                   index,
-                  duration: const Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 10),
                   curve: Curves.easeInOut,
                 );
                 controller.currentIndex.value = index;
@@ -61,8 +61,8 @@ class BottomBarView extends StatelessWidget {
                   GoogleFonts.kanit(fontWeight: FontWeight.w400),
               unselectedLabelStyle:
                   GoogleFonts.kanit(fontWeight: FontWeight.w400),
-              selectedItemColor: red1,
               unselectedItemColor: black6,
+              selectedItemColor: red1,
               items: [
                 BottomNavigationBarItem(
                   icon: ColorFiltered(
@@ -70,39 +70,29 @@ class BottomBarView extends StatelessWidget {
                       controller.currentIndex.value == 0 ? red1 : black6,
                       BlendMode.srcIn,
                     ),
-                    child: Image.asset('assets/home.png'),
+                    child: const ImageIcon(
+                      AssetImage('assets/home.png'),
+                    ),
                   ),
                   label: 'My Job',
                 ),
-                BottomNavigationBarItem(
-                  icon: ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      controller.currentIndex.value == 1 ? red1 : black6,
-                      BlendMode.srcIn,
-                    ),
-                    child: Image.asset('assets/ticket.png'),
+                const BottomNavigationBarItem(
+                  icon: ImageIcon(
+                    AssetImage('assets/ticket.png'),
                   ),
                   label: 'Ticket',
                 ),
-                BottomNavigationBarItem(
-                  icon: ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      controller.currentIndex.value == 2 ? red1 : black6,
-                      BlendMode.srcIn,
-                    ),
-                    child: Image.asset('assets/calendar.png'),
+                const BottomNavigationBarItem(
+                  icon: ImageIcon(
+                    AssetImage('assets/calendar.png'),
                   ),
                   label: 'Calendar',
                 ),
                 BottomNavigationBarItem(
                   icon: Stack(
                     children: [
-                      ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                          controller.currentIndex.value == 3 ? red1 : black6,
-                          BlendMode.srcIn,
-                        ),
-                        child: Image.asset('assets/bell.png'),
+                      const ImageIcon(
+                        AssetImage('assets/bell.png'),
                       ),
                       if (controller.hasNotification.value)
                         Positioned(
@@ -124,13 +114,9 @@ class BottomBarView extends StatelessWidget {
                   ),
                   label: 'Notification',
                 ),
-                BottomNavigationBarItem(
-                  icon: ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      controller.currentIndex.value == 4 ? red1 : black6,
-                      BlendMode.srcIn,
-                    ),
-                    child: Image.asset('assets/account.png'),
+                const BottomNavigationBarItem(
+                  icon: ImageIcon(
+                    AssetImage('assets/account.png'),
                   ),
                   label: 'Account',
                 ),

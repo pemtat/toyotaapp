@@ -1,15 +1,16 @@
 import 'package:google_fonts/google_fonts.dart';
-import 'package:toyotamobile/Screen/ForgetPassword/forgetpassword_view.dart';
+import 'package:toyotamobile/Screen/ForgetPassword/forgetpassword_controller.dart';
+import 'package:toyotamobile/Screen/Login/login_view.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/login_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'login_controller.dart';
 
 // ignore: use_key_in_widget_constructors
-class LoginView extends StatelessWidget {
-  final LoginController controller = Get.put(LoginController());
+class ForgetPasswordView extends StatelessWidget {
+  final ForgetPasswordController controller =
+      Get.put(ForgetPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,44 +22,41 @@ class LoginView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Spacer(),
-                Center(
-                    child: Text(
-                  "T-Service Connect",
+                Text(
+                  "Forget Password?",
                   style: GoogleFonts.kanit(
                       fontSize: 25, fontWeight: FontWeight.w500),
-                )),
-                40.kH,
+                ),
+                16.kH,
                 TextFieldLogin(
                   label: 'Email',
                   onChanged: controller.setEmail,
                 ),
-                20.kH,
-                TextFieldLogin(
-                  label: 'Password',
-                  onChanged: controller.setPassword,
-                  hidetext: true,
-                ),
-                20.kH,
+                10.kH,
                 AppButton(
-                  title: 'Login',
-                  onPressed: controller.login,
+                  title: 'Send',
+                  onPressed: controller.sendEmail,
                 ),
                 10.kH,
-                InkWell(
-                  onTap: () {
-                    Get.to(() => ForgetPasswordView());
-                  },
-                  child: Text(
-                    'Forget Password',
-                    style: TextStyleList.text9,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => LoginView());
+                      },
+                      child: Text(
+                        'Cancel',
+                        style: TextStyleList.text9,
+                      ),
+                    ),
+                  ],
                 ),
                 20.kH,
                 const Spacer(),
-                Footer(onTap: () {})
               ],
             ),
           ),

@@ -257,9 +257,7 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       const Spacer(),
                                       GoogleMapButton(
-                                        onTap: () {
-                                          //TODO handle
-                                        },
+                                        onTap: () {},
                                       ),
                                     ],
                                   ),
@@ -279,6 +277,8 @@ class TicketDetailView extends StatelessWidget {
                                           const TitleApp(text: 'Notes'),
                                           8.kH,
                                           ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
                                             itemCount: ticketController
                                                 .notesFiles.length,

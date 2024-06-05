@@ -42,10 +42,10 @@ class TextFieldLogin extends StatelessWidget {
 }
 
 //Using [ Login ]
-class LoginButton extends StatelessWidget {
+class AppButton extends StatelessWidget {
   final VoidCallback onPressed;
-
-  const LoginButton({super.key, required this.onPressed});
+  final String title;
+  const AppButton({super.key, required this.onPressed, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class LoginButton extends StatelessWidget {
               backgroundColor: const Color.fromARGB(255, 53, 53, 53),
             ),
             child: Text(
-              'Login',
+              title,
               style: TextStyleList.text7,
             ),
           ),

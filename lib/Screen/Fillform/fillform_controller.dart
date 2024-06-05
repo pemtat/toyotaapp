@@ -15,11 +15,4 @@ class FillformController extends GetxController {
 
   var fieldServiceReport = <String>[].obs;
   var detail = <String>[].obs;
-  void fieldService(String label) {
-    if (fieldServiceReport.contains(label)) {
-      fieldServiceReport.remove(label);
-    } else {
-      fieldServiceReport.add(label);
-    }
-  }
 }

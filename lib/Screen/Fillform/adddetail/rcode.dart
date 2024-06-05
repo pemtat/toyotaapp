@@ -7,22 +7,6 @@ import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class Rcode extends GetxController {
-  var rCode = <String>[].obs;
-  var rCodeChoose = <String>[].obs;
-  List<String> rCodeList = [
-    'Broken',
-    'No grease',
-    'No oil',
-    'Dirty',
-    'Eroded',
-    'Short circuit',
-    'Disintegrated',
-    'Loose',
-    'Usually loud noise',
-    'Wrong equipment installed',
-    'Overheating',
-    'Other'
-  ];
   void rCodeModal(BuildContext context) {
     ShowModalWidget(
       children: [
@@ -50,7 +34,7 @@ class Rcode extends GetxController {
               child: CheckBoxWidget(
                   text: rCodeList[index],
                   listItem: rCodeChoose,
-                  itemSet: rCodes),
+                  itemSet: rCodeChoose),
             );
           },
         ),
@@ -67,22 +51,20 @@ class Rcode extends GetxController {
     ).showModal(context);
   }
 
-  String getDisplayString() {
-    int displayCount = 3;
-    if (rCode.length <= displayCount) {
-      return rCode.join(', ');
-    } else {
-      String displayedItems = rCode.sublist(0, displayCount).join(', ');
-      int remainingCount = rCode.length - displayCount;
-      return '$displayedItems +$remainingCount more';
-    }
-  }
-
-  void rCodes(String label) {
-    if (rCodeChoose.contains(label)) {
-      rCodeChoose.remove(label);
-    } else {
-      rCodeChoose.add(label);
-    }
-  }
+  var rCode = <String>[].obs;
+  var rCodeChoose = <String>[].obs;
+  List<String> rCodeList = [
+    'Broken',
+    'No grease',
+    'No oil',
+    'Dirty',
+    'Eroded',
+    'Short circuit',
+    'Disintegrated',
+    'Loose',
+    'Usually loud noise',
+    'Wrong equipment installed',
+    'Overheating',
+    'Other'
+  ];
 }

@@ -10,14 +10,6 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
 class AdditSparepartList extends GetxController {
-  var quantity = 1.obs;
-  var additSparePartList = <SparePartModel>[].obs;
-  var additSparePartListChoose = <String>[].obs;
-  final cCodePage = TextEditingController().obs;
-  final partNumber = TextEditingController().obs;
-  final partDetails = TextEditingController().obs;
-  final changeNow = TextEditingController().obs;
-  final changeonPM = TextEditingController().obs;
   int space = 24;
   void additSparePartListModal(BuildContext context) {
     ShowModalWidget(
@@ -287,6 +279,13 @@ class AdditSparepartList extends GetxController {
     ).showModal(context);
   }
 
+  var quantity = 1.obs;
+  var additSparePartList = <SparePartModel>[].obs;
+  final cCodePage = TextEditingController().obs;
+  final partNumber = TextEditingController().obs;
+  final partDetails = TextEditingController().obs;
+  final changeNow = TextEditingController().obs;
+  final changeonPM = TextEditingController().obs;
   void increment() {
     quantity++;
   }
@@ -294,26 +293,6 @@ class AdditSparepartList extends GetxController {
   void decrement() {
     if (quantity > 1) {
       quantity--;
-    }
-  }
-
-  String getDisplayString() {
-    int displayCount = 3;
-    if (additSparePartList.length <= displayCount) {
-      return additSparePartList.join(', ');
-    } else {
-      String displayedItems =
-          additSparePartList.sublist(0, displayCount).join(', ');
-      int remainingCount = additSparePartList.length - displayCount;
-      return '$displayedItems +$remainingCount more';
-    }
-  }
-
-  void additSparePartLists(String label) {
-    if (additSparePartListChoose.contains(label)) {
-      additSparePartListChoose.remove(label);
-    } else {
-      additSparePartListChoose.add(label);
     }
   }
 

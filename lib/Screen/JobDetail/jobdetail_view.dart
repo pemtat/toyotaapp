@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -182,6 +183,28 @@ class JobDetailView extends StatelessWidget {
                               8.kH,
                               BoxContainer(
                                 children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleApp(
+                                          text: 'Battery Maintenance Report*'),
+                                      AddButton(
+                                        onTap: () {
+                                          Get.to(() => const FillFormView2());
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    'Please fill the field service report',
+                                    style: TextStyleList.text16,
+                                  )
+                                ],
+                              ),
+                              8.kH,
+                              BoxContainer(
+                                children: [
                                   Text(
                                     'Summary of issue',
                                     style: TextStyleList.text16,
@@ -310,6 +333,8 @@ class JobDetailView extends StatelessWidget {
                                           const TitleApp(text: 'Notes'),
                                           8.kH,
                                           ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
                                             itemCount:
                                                 jobController.notesFiles.length,
