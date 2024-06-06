@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
-import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -19,15 +18,17 @@ import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Widget/uploadimage_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
 
 // ignore: use_key_in_widget_constructors
 class JobDetailView extends StatelessWidget {
   final String ticketId;
+  final String? jobId;
   final String? status;
   final JobDetailController jobController = Get.put(JobDetailController());
 
-  JobDetailView({super.key, required this.ticketId, this.status}) {
+  JobDetailView({super.key, required this.ticketId, this.jobId, this.status}) {
     jobController.fetchData(ticketId);
   }
 
@@ -160,204 +161,341 @@ class JobDetailView extends StatelessWidget {
                                 ],
                               ),
                               8.kH,
-                              BoxContainer(children: [
-                                TicketInfo(
-                                  ticketId: issue['id'],
-                                  dateTime: formatDateTime(issue['created_at']),
-                                  reporter: issue['reporter'],
-                                ),
-                              ]),
-                              8.kH,
-                              BoxContainer(
-                                children: [
-                                  Text(
-                                    'Summary of issue',
-                                    style: TextStyleList.text16,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          issue['description'],
-                                          style: TextStyleList.text9,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  file != null
-                                      ? Column(
-                                          children: [
-                                            8.kH,
-                                            AttachmentsListWidget(file),
-                                            8.kH,
-                                          ],
-                                        )
-                                      : Container(),
-                                  Obx(
-                                    () => !jobController.moreDetail.value
-                                        ? Container()
-                                        : Column(
-                                            children: [
-                                              BoxInfo(
-                                                title: "Category",
-                                                value: issue['category'],
-                                              ),
-                                              BoxInfo(
-                                                title: "Severity",
-                                                value: issue['severity'],
-                                              ),
-                                              BoxInfo(
-                                                title: "Relations",
-                                                value: issue['relations'],
-                                              ),
-                                            ],
-                                          ),
-                                  ),
-                                ],
-                              ),
                               InkWell(
                                 onTap: () {
-                                  jobController.moreDetail.value =
-                                      !jobController.moreDetail.value;
+                                  jobController.moreTicketDetail.value =
+                                      !jobController.moreTicketDetail.value;
                                 },
-                                child: Obx(
-                                  () => !jobController.moreDetail.value
-                                      ? BoxContainer(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'More details',
-                                                  style: TextStyleList.text16,
-                                                ),
-                                                Image.asset(
-                                                    'assets/arrowdown.png')
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                      : BoxContainer(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Less details',
-                                                  style: TextStyleList.text16,
-                                                ),
-                                                Image.asset(
-                                                    'assets/arrowup.png')
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                child: BoxContainer(
+                                  children: [
+                                    TicketInfo(
+                                      ticketId: issue['id'],
+                                      dateTime:
+                                          formatDateTime(issue['created_at']),
+                                      reporter: issue['reporter'],
+                                      more:
+                                          jobController.moreTicketDetail.value,
+                                    ),
+                                  ],
                                 ),
                               ),
                               8.kH,
                               Obx(
-                                () {
-                                  if (jobController.warrantyInfoList.isEmpty) {
-                                    return const Center(
-                                      child: Text('No Data'),
-                                    );
-                                  } else {
-                                    var warrantyInfo =
-                                        jobController.warrantyInfoList.first;
-                                    return WarrantyBox(
-                                        model: warrantyInfo.model,
-                                        serial: warrantyInfo.serial,
-                                        status: warrantyInfo.warrantyStatus,
-                                        filePdf: filePdf);
-                                  }
-                                },
+                                () => jobController.moreTicketDetail.value
+                                    ? Column(
+                                        children: [
+                                          BoxContainer(
+                                            children: [
+                                              Text(
+                                                'Summary of issue',
+                                                style: TextStyleList.text16,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Flexible(
+                                                    child: Text(
+                                                      issue['description'],
+                                                      style:
+                                                          TextStyleList.text9,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              file != null
+                                                  ? Column(
+                                                      children: [
+                                                        8.kH,
+                                                        AttachmentsListWidget(
+                                                            file, false),
+                                                        8.kH,
+                                                      ],
+                                                    )
+                                                  : Container(),
+                                              Obx(
+                                                () => !jobController
+                                                        .moreDetail.value
+                                                    ? Container()
+                                                    : Column(
+                                                        children: [
+                                                          BoxInfo(
+                                                            title: "Category",
+                                                            value: issue[
+                                                                'category'],
+                                                          ),
+                                                          BoxInfo(
+                                                            title: "Severity",
+                                                            value: issue[
+                                                                'severity'],
+                                                          ),
+                                                          BoxInfo(
+                                                            title: "Relations",
+                                                            value: issue[
+                                                                'relations'],
+                                                          ),
+                                                        ],
+                                                      ),
+                                              ),
+                                            ],
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              jobController.moreDetail.value =
+                                                  !jobController
+                                                      .moreDetail.value;
+                                            },
+                                            child: Obx(
+                                              () => !jobController
+                                                      .moreDetail.value
+                                                  ? BoxContainer(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              'More details',
+                                                              style:
+                                                                  TextStyleList
+                                                                      .text16,
+                                                            ),
+                                                            Image.asset(
+                                                                'assets/arrowdown.png')
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    )
+                                                  : BoxContainer(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              'Less details',
+                                                              style:
+                                                                  TextStyleList
+                                                                      .text16,
+                                                            ),
+                                                            Image.asset(
+                                                                'assets/arrowup.png')
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                            ),
+                                          ),
+                                          8.kH,
+                                          Obx(
+                                            () {
+                                              if (jobController
+                                                  .warrantyInfoList.isEmpty) {
+                                                return const Center(
+                                                  child: Text('No Data'),
+                                                );
+                                              } else {
+                                                var warrantyInfo = jobController
+                                                    .warrantyInfoList.first;
+                                                return WarrantyBox(
+                                                    model: warrantyInfo.model,
+                                                    serial: warrantyInfo.serial,
+                                                    status: warrantyInfo
+                                                        .warrantyStatus,
+                                                    filePdf: filePdf);
+                                              }
+                                            },
+                                          ),
+                                          8.kH,
+                                          BoxContainer(
+                                            children: [
+                                              Obx(() {
+                                                if (jobController
+                                                    .notesFiles.isEmpty) {
+                                                  return Center(
+                                                      child: Container());
+                                                } else {
+                                                  return Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const TitleApp(
+                                                          text: 'Notes'),
+                                                      8.kH,
+                                                      ListView.builder(
+                                                        physics:
+                                                            const NeverScrollableScrollPhysics(),
+                                                        shrinkWrap: true,
+                                                        itemCount: jobController
+                                                            .notesFiles.length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          final note =
+                                                              jobController
+                                                                      .notesFiles[
+                                                                  index];
+                                                          return NoteItem(
+                                                              note: note);
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                }
+                                              }),
+                                              12.kH,
+                                              TextFieldType(
+                                                hintText: 'Add Notes',
+                                                textSet:
+                                                    jobController.notes.value,
+                                              ),
+                                              8.kH,
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap:
+                                                        jobController.pickFile,
+                                                    child: Row(
+                                                      children: [
+                                                        Image.asset(
+                                                            'assets/link.png'),
+                                                        4.wH,
+                                                        Text(
+                                                          'Attach file',
+                                                          style: TextStyleList
+                                                              .text1,
+                                                        ),
+                                                        Obx(() {
+                                                          if (jobController
+                                                              .addAttatchments
+                                                              .isNotEmpty) {
+                                                            return Row(
+                                                              children: [
+                                                                4.wH,
+                                                                Text(
+                                                                  jobController
+                                                                      .addAttatchments
+                                                                      .first['name'],
+                                                                  style:
+                                                                      TextStyleList
+                                                                          .text1,
+                                                                ),
+                                                              ],
+                                                            );
+                                                          } else {
+                                                            return Container();
+                                                          }
+                                                        }),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  CustomElevatedButton(
+                                                    onPressed: () {
+                                                      jobController.addNote(
+                                                          jobController.notes);
+                                                    },
+                                                    text: 'Submit',
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                              ),
+                              const BoxContainer(
+                                children: [
+                                  JobInfo(
+                                      jobId: 20,
+                                      dateTime: '12 June 2024 00:25 AM',
+                                      reporter: 'Alex')
+                                ],
                               ),
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  Obx(() {
-                                    if (jobController.notesFiles.isEmpty) {
-                                      return Center(child: Container());
-                                    } else {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const TitleApp(text: 'Notes'),
-                                          8.kH,
-                                          ListView.builder(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemCount:
-                                                jobController.notesFiles.length,
-                                            itemBuilder: (context, index) {
-                                              final note = jobController
-                                                  .notesFiles[index];
-                                              return NoteItem(note: note);
-                                            },
+                                  Obx(
+                                    () => jobController
+                                                .savedDateStartTime.value ==
+                                            ''
+                                        ? ButtonTime(
+                                            saveTime: jobController
+                                                .saveCurrentDateTime,
+                                            time: jobController
+                                                .savedDateStartTime,
+                                            title: 'Start')
+                                        : Text(
+                                            "Start Time : ${jobController.savedDateStartTime.value}",
+                                            style: TextStyleList.text6,
                                           ),
-                                        ],
-                                      );
-                                    }
-                                  }),
-                                  12.kH,
-                                  TextFieldType(
-                                    hintText: 'Add Notes',
-                                    textSet: jobController.notes.value,
                                   ),
-                                  8.kH,
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: jobController.pickFile,
-                                        child: Row(
+                                  10.kH,
+                                  Text(
+                                    'ภาพก่อนการเเก้ไข',
+                                    style: TextStyleList.text11,
+                                  ),
+                                  6.kH,
+                                  Obx(() =>
+                                      jobController.imagesBefore.isNotEmpty
+                                          ? AttachmentsListWidget(
+                                              jobController.imagesBefore, true)
+                                          : Container()),
+                                  10.kH,
+                                  UploadImageWidget(
+                                    pickImage: () => jobController
+                                        .pickImage(jobController.imagesBefore),
+                                  ),
+                                  16.kH,
+                                  Obx(() => jobController
+                                              .savedDateStartTime.value !=
+                                          ''
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Image.asset('assets/link.png'),
-                                            4.wH,
+                                            Obx(() => jobController
+                                                        .savedDateEndTime
+                                                        .value ==
+                                                    ''
+                                                ? ButtonTime(
+                                                    saveTime: jobController
+                                                        .saveCurrentDateTime,
+                                                    time: jobController
+                                                        .savedDateEndTime,
+                                                    title: 'End Time')
+                                                : Text(
+                                                    "End Time : ${jobController.savedDateEndTime.value}",
+                                                    style: TextStyleList.text6,
+                                                  )),
+                                            10.kH,
                                             Text(
-                                              'Attach file',
-                                              style: TextStyleList.text1,
+                                              'ภาพหลังการเเก้ไข',
+                                              style: TextStyleList.text11,
                                             ),
-                                            Obx(() {
-                                              if (jobController
-                                                  .addAttatchments.isNotEmpty) {
-                                                return Row(
-                                                  children: [
-                                                    4.wH,
-                                                    Text(
-                                                      jobController
-                                                          .addAttatchments
-                                                          .first['name'],
-                                                      style:
-                                                          TextStyleList.text1,
-                                                    ),
-                                                  ],
-                                                );
-                                              } else {
-                                                return Container();
-                                              }
-                                            }),
+                                            6.kH,
+                                            Obx(() => jobController
+                                                    .imagesAfter.isNotEmpty
+                                                ? AttachmentsListWidget(
+                                                    jobController.imagesAfter,
+                                                    true)
+                                                : Container()),
+                                            10.kH,
+                                            UploadImageWidget(
+                                              pickImage: () => jobController
+                                                  .pickImage(jobController
+                                                      .imagesAfter),
+                                            ),
                                           ],
-                                        ),
-                                      ),
-                                      CustomElevatedButton(
-                                        onPressed: () {
-                                          jobController
-                                              .addNote(jobController.notes);
-                                        },
-                                        text: 'Submit',
-                                      ),
-                                    ],
-                                  ),
+                                        )
+                                      : Container()),
+                                  8.kH,
                                 ],
                               ),
+                              8.kH,
                               BoxContainer(
                                 children: [
                                   Row(

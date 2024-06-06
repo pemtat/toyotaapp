@@ -140,7 +140,7 @@ class TicketDetailView extends StatelessWidget {
                                       ? Column(
                                           children: [
                                             8.kH,
-                                            AttachmentsListWidget(file),
+                                            AttachmentsListWidget(file, false),
                                             8.kH,
                                           ],
                                         )

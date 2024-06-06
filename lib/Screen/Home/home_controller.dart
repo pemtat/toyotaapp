@@ -28,7 +28,6 @@ class HomeController extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? tokenResponse = prefs.getString('token_response');
       Map<String, dynamic> tokenData = json.decode(tokenResponse ?? '');
-
       String? accessToken = tokenData['token'];
       int handlerId = tokenData['user']['id'];
 

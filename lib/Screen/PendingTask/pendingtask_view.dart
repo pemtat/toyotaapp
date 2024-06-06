@@ -19,8 +19,8 @@ class PendingTaskView extends StatelessWidget {
   final PeddingtaskController penddingTaskController =
       Get.put(PeddingtaskController());
   final String ticketId;
-
-  PendingTaskView({super.key, required this.ticketId}) {
+  final String jobId;
+  PendingTaskView({super.key, required this.ticketId, required this.jobId}) {
     penddingTaskController.fetchData(ticketId);
   }
 
@@ -103,7 +103,7 @@ class PendingTaskView extends StatelessWidget {
                                     ? Column(
                                         children: [
                                           8.kH,
-                                          AttachmentsListWidget(file),
+                                          AttachmentsListWidget(file, false),
                                           8.kH,
                                         ],
                                       )
@@ -221,6 +221,15 @@ class PendingTaskView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                              ],
+                            ),
+                            8.kH,
+                            const BoxContainer(
+                              children: [
+                                JobInfo(
+                                    jobId: 20,
+                                    dateTime: '12 June 2024 00:25 AM',
+                                    reporter: 'Alex')
                               ],
                             ),
                           ],

@@ -32,10 +32,8 @@ class StatusCompletedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: const Color(0xffF1F1F1),
-      ),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: white9),
       child: Text(
         "Completed",
         style: GoogleFonts.kanit(
@@ -54,10 +52,8 @@ class StatusMaintenanceButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: const Color(0xffF1F1F1),
-      ),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: white9),
       child: Text(
         "Maintenance",
         style: GoogleFonts.kanit(
@@ -76,10 +72,8 @@ class StatusAssignedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: const Color(0xffF1F1F1),
-      ),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: white9),
       child: Text(
         "Assigned",
         style: GoogleFonts.kanit(

@@ -4,22 +4,50 @@ import 'package:flutter/material.dart';
 
 class AttachmentsListWidget extends StatelessWidget {
   final List<Map<String, dynamic>> attachments;
+  final bool edit;
 
-  const AttachmentsListWidget(this.attachments, {super.key});
+  AttachmentsListWidget(this.attachments, this.edit, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: attachments.map((attachment) {
+        children: attachments.asMap().entries.map((entry) {
+          int index = entry.key;
+          Map<String, dynamic> attachment = entry.value;
           return Padding(
             padding: const EdgeInsets.only(right: 4.0),
-            child: GestureDetector(
-              onTap: () {
-                _showImageDialog(context, attachment['content']);
-              },
-              child: Base64ImageWidget(attachment['content']),
+            child: Stack(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    _showImageDialog(context, attachment['content']);
+                  },
+                  child: Base64ImageWidget(attachment['content']),
+                ),
+                if (edit == true)
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        attachments.removeAt(index);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             ),
           );
         }).toList(),

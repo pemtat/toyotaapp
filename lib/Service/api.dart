@@ -40,5 +40,9 @@ String checkWarrantyBySerial(String serialId) {
   return '$searchProductUrl/$serialId';
 }
 
+String getAllSubJob() {
+  return '$url/api/rest/jobs';
+}
+
 String usernameProduct = 'VanSale-Dev';
 String passwordProduct = 'c8doEpdFC0CFkUWHUEXv';

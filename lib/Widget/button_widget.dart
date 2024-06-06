@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 
@@ -212,6 +213,44 @@ class EndButton2 extends StatelessWidget {
           style: TextStyleList.text5,
         ),
       ),
+    );
+  }
+}
+
+class ButtonTime extends StatelessWidget {
+  final void Function(Rx<String>) saveTime;
+  final Rx<String> time;
+  final title;
+  const ButtonTime(
+      {super.key,
+      required this.saveTime,
+      required this.time,
+      required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () {
+              saveTime(time);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            ),
+            child: Text(
+              title,
+              style: TextStyleList.text7.copyWith(color: Colors.white),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

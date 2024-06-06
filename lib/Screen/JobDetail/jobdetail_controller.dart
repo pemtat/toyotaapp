@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
@@ -13,20 +14,26 @@ import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
+import 'package:intl/intl.dart';
 
 class JobDetailController extends GetxController {
   final notes = TextEditingController().obs;
   var notesFiles = <dynamic>[].obs;
-
   var isPicking = false.obs;
   var issueData = [].obs;
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
+  var moreTicketDetail = false.obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
   var status = RxString('');
+  var imagesBefore = <Map<String, String>>[].obs;
+  var imagesAfter = <Map<String, String>>[].obs;
+  var savedDateStartTime = ''.obs;
+  var savedDateEndTime = ''.obs;
+
   final HomeController jobController = Get.put(HomeController());
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
   final BottomBarController bottomController = Get.put(BottomBarController());
@@ -108,6 +115,26 @@ class JobDetailController extends GetxController {
     } else {}
   }
 
+  Future<void> pickImage(RxList<Map<String, String>> file) async {
+    if (isPicking.value) return;
+    isPicking.value = true;
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        File imageFile = File(pickedFile.path);
+        String fileName = pickedFile.name;
+        String base64Content = base64Encode(await imageFile.readAsBytes());
+        file.add({
+          'filename': fileName,
+          'content': base64Content,
+        });
+      }
+    } finally {
+      isPicking.value = false;
+    }
+  }
+
   Future<void> pickFile() async {
     if (isPicking.value) return;
 
@@ -155,6 +182,11 @@ class JobDetailController extends GetxController {
       bottomController.currentIndex.value = 0;
       Get.offAll(() => BottomBarView());
     }
+  }
+
+  void saveCurrentDateTime(Rx<String> datetime) {
+    DateTime now = DateTime.now();
+    datetime.value = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
   }
 
   void addNote(Rx<TextEditingController> textControllerRx) async {
