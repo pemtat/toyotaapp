@@ -5,6 +5,7 @@ import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
+import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/titleheader_widget.dart';
 import 'package:toyotamobile/Widget/jobstatus_widget.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -103,19 +104,18 @@ class HomeView extends StatelessWidget {
                         }
 
                         return InkWell(
-                          onTap: () {
-                            Get.to(() => JobDetailView(
-                                  ticketId: job.jobid,
-                                  status: job.status,
-                                ));
-                          },
-                          child: JobItemWidget(
-                            job: job,
-                            expandedIndex: jobController.expandedIndex,
-                            jobController: jobController,
-                            sidebar: orange1,
-                          ),
-                        );
+                            onTap: () {
+                              Get.to(() => JobDetailView(
+                                    ticketId: job.jobid,
+                                    status: job.status,
+                                  ));
+                            },
+                            child: JobItemWidget(
+                              job: job,
+                              expandedIndex: jobController.expandedIndex,
+                              jobController: jobController,
+                              sidebar: SidebarColor.getColor((job.status)),
+                            ));
                       }),
                     ),
                     JobTitle(
@@ -143,7 +143,7 @@ class HomeView extends StatelessWidget {
                             job: job,
                             expandedIndex: jobController.expandedIndex2,
                             jobController: jobController,
-                            sidebar: black6,
+                            sidebar: SidebarColor.getColor(job.status),
                           ),
                         );
                       }),

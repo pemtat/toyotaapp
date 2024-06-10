@@ -57,7 +57,10 @@ class ArrowUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColorFiltered(
-      colorFilter: const ColorFilter.mode(black7, BlendMode.srcIn),
+      colorFilter: const ColorFilter.mode(
+        black7,
+        BlendMode.srcIn,
+      ),
       child: Image.asset(
         'assets/arrowup.png',
         width: 24,

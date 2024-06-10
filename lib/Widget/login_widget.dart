@@ -3,12 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:toyotamobile/Styles/text.dart';
 
 //Using [ Login ]
-class TextFieldLogin extends StatelessWidget {
+class TextFieldBar extends StatelessWidget {
   final String label;
   final Function(String) onChanged;
   final bool hidetext;
 
-  const TextFieldLogin({
+  const TextFieldBar({
     super.key,
     required this.label,
     required this.onChanged,

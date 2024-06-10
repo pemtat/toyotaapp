@@ -40,7 +40,7 @@ class SubJobsTicket extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'TicketID: #${job.jobId}',
+                'JobID: #${job.jobId.toString().padLeft(4, '0')}',
                 style: TextStyleList.subtitle1,
               ),
               const SizedBox(width: 10),

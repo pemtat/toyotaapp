@@ -11,25 +11,25 @@ class NotificationController extends GetxController {
 
     notifications.addAll([
       NotificationModel(
-        jobId: '123456',
-        ticketId: '1213456',
+        jobId: '0001',
+        ticketId: '00000098',
         summary: 'Customer wrote a note!',
         description: 'Water is also leaking and we don’t know how to do it...',
-        date: DateTime.parse('2024-06-04T13:00:00'),
+        date: DateTime.parse('2024-06-07T13:00:00'),
       ),
       NotificationModel(
-        jobId: '123457',
-        ticketId: '1213457',
+        jobId: '00002',
+        ticketId: '00000098',
         summary: 'New Job Assigned',
         description: 'Please check the new job assigned to you.',
-        date: DateTime.parse('2024-06-04T13:00:00'),
+        date: DateTime.parse('2024-06-07T13:00:00'),
       ),
       NotificationModel(
-        jobId: '123458',
-        ticketId: '1213458',
+        jobId: '00003',
+        ticketId: '00000099',
         summary: 'Reminder: Job Deadline Approaching',
         description: 'Your job deadline is approaching soon.',
-        date: DateTime.parse('2024-06-03T13:00:00'),
+        date: DateTime.parse('2024-06-06T13:00:00'),
       ),
     ]);
 

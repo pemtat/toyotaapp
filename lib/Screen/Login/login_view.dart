@@ -31,12 +31,12 @@ class LoginView extends StatelessWidget {
                       fontSize: 25, fontWeight: FontWeight.w500),
                 )),
                 40.kH,
-                TextFieldLogin(
+                TextFieldBar(
                   label: 'Email',
                   onChanged: controller.setEmail,
                 ),
                 20.kH,
-                TextFieldLogin(
+                TextFieldBar(
                   label: 'Password',
                   onChanged: controller.setPassword,
                   hidetext: true,

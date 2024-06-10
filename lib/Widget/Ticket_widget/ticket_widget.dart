@@ -1,100 +1,138 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/checkwarranty.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
+import 'package:toyotamobile/Screen/Ticket/ticket_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
-import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
+import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 
-class JobItemTicket extends StatelessWidget {
+class PmItemWidget extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
   final job;
   final RxInt expandedIndex;
   final HomeController jobController;
-  final String status;
+  final TicketController ticketController;
+  final Color sidebar;
 
-  const JobItemTicket({
+  const PmItemWidget({
     super.key,
     required this.job,
     required this.expandedIndex,
     required this.jobController,
-    required this.status,
+    required this.ticketController,
+    required this.sidebar,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              bottomLeft: Radius.circular(0),
-              topRight: Radius.circular(10),
-              bottomRight: Radius.circular(0),
-            ),
-            color: white5,
-          ),
-          child: Row(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(10),
+      decoration: Decoration1(sideBorderColor: sidebar),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
               Text(
-                'TicketID: #${job.ticketid}',
-                style: TextStyleList.subtitle1,
+                'JobID : ${job.jobId.toString().padLeft(2, '0')}',
+                style: TextStyleList.text16,
               ),
               const SizedBox(width: 10),
+              StatusButton(status: job.status),
               const Spacer(),
-              StatusButton(status: status)
+              Obx(
+                () => IconButton(
+                  icon: expandedIndex.value ==
+                          jobController.serviceItems.indexOf(job)
+                      ? const ArrowUp()
+                      : const ArrowDown(),
+                  onPressed: () {
+                    if (expandedIndex.value ==
+                        jobController.serviceItems.indexOf(job)) {
+                      expandedIndex.value = (-2);
+                    } else {
+                      expandedIndex.value =
+                          jobController.serviceItems.indexOf(job);
+                    }
+                  },
+                ),
+              ),
             ],
           ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          padding: const EdgeInsets.all(10),
-          decoration: Decoration3(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Text(
+            job.customerName,
+            style: TextStyleList.text15,
+          ),
+          const SizedBox(height: 2),
+          Row(
             children: [
+              const Icon(Icons.calendar_month_outlined),
+              const SizedBox(width: 5),
               Text(
-                job.summary,
-                style: TextStyleList.text15,
+                getFormattedDate(job.pmPlan),
+                style: TextStyleList.subtext1,
               ),
-              const SizedBox(height: 2),
-              Row(
-                children: [
-                  const Icon(Icons.calendar_month_outlined),
-                  const SizedBox(width: 5),
-                  Text(
-                    job.getFormattedDate(),
-                    style: TextStyleList.subtext1,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 2),
-              Row(
-                children: [
-                  const Icon(Icons.location_on_outlined),
-                  const SizedBox(width: 5),
-                  Text(
-                    job.location,
-                    style: TextStyleList.subtext1,
-                  ),
-                  const SizedBox(width: 5),
-                  Row(
+            ],
+          ),
+          const SizedBox(height: 2),
+          Text(
+            job.description,
+            style: TextStyleList.subtext1,
+          ),
+          Obx(() => expandedIndex.value ==
+                  jobController.serviceItems.indexOf(job)
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GoogleMapButton(
-                        onTap: () {},
-                      )
+                      Container(
+                        height: 0.5,
+                        color: const Color(0xFFEAEAEA),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: Decoration2(),
+                          child: Column(
+                            children: [
+                              BoxInfo(
+                                title: "Name/Model",
+                                value: job.itemNo,
+                              ),
+                              const SizedBox(height: 3),
+                              BoxInfo(
+                                title: "Serial Number",
+                                value: job.serialNo,
+                              ),
+                              const SizedBox(height: 3),
+                              BoxInfo(
+                                title: "Warranty Status",
+                                value: '',
+                                trailing:
+                                    // ignore: unrelated_type_equality_checks
+                                    checkWarrantyStatus(job.serialNo) == true
+                                        ? const CheckStatus(
+                                            status: 1,
+                                          )
+                                        : const CheckStatus(
+                                            status: 0,
+                                          ),
+                              ),
+                            ],
+                          )),
                     ],
                   ),
-                ],
-              ),
-              const SizedBox(height: 8),
-            ],
-          ),
-        ),
-      ],
+                )
+              : const SizedBox())
+        ],
+      ),
     );
   }
 }

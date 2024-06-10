@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 
@@ -189,5 +190,93 @@ class TextFieldEditWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class TextFormFieldBar extends StatelessWidget {
+  final String label;
+  final bool hidetext;
+  final TextInputType? type;
+  final TextEditingController controller;
+
+  const TextFormFieldBar({
+    super.key,
+    required this.label,
+    required this.controller,
+    this.hidetext = false,
+    this.type,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      obscureText: hidetext,
+      keyboardType: type ?? TextInputType.text,
+      style: TextStyleList.text11,
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: TextStyleList.text11,
+        floatingLabelStyle: const TextStyle(color: Colors.black),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+          borderSide: const BorderSide(color: black1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+          borderSide: const BorderSide(color: black1),
+        ),
+        contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      ),
+    );
+  }
+}
+
+class TextFormFieldVisible extends StatelessWidget {
+  final String label;
+  final TextEditingController controller;
+  final RxBool isTextHidden;
+  final Function hiddenChange;
+  const TextFormFieldVisible({
+    super.key,
+    required this.label,
+    required this.controller,
+    required this.isTextHidden,
+    required this.hiddenChange,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      return TextField(
+        obscureText: !isTextHidden.value,
+        keyboardType: TextInputType.number,
+        style: TextStyleList.text11,
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: TextStyleList.text11,
+          floatingLabelStyle: const TextStyle(color: Colors.black),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: const BorderSide(color: black1),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: const BorderSide(color: black1),
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          suffixIcon: IconButton(
+            icon: Icon(
+              !isTextHidden.value ? Icons.visibility_off : Icons.visibility,
+            ),
+            onPressed: () {
+              hiddenChange();
+            },
+          ),
+        ),
+      );
+    });
   }
 }

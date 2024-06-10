@@ -1,4 +1,5 @@
 import 'package:toyotamobile/Models/home_model.dart';
+import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,13 +15,15 @@ class HomeController extends GetxController {
       Get.put(BottomBarController());
   final mostRecentNewJob = Rx<Home?>(null);
   final mostRecentCompleteJob = Rx<Home?>(null);
+  var serviceItems = <ServiceItem>[].obs;
+
   final RxInt expandedIndex = (-2).obs;
   final RxInt expandedIndex2 = (-2).obs;
   @override
   void onInit() {
     super.onInit();
-
     fetchDataFromAssignJob();
+    addInitialServiceItems();
   }
 
   Future<void> fetchDataFromAssignJob() async {
@@ -88,5 +91,103 @@ class HomeController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('notification', 'yes');
     notificationController.checkNotification();
+  }
+
+//PM
+  void addServiceItem(ServiceItem item) {
+    serviceItems.add(item);
+  }
+
+  List<ServiceItem> getServiceItems() {
+    return serviceItems;
+  }
+
+  ServiceItem? getServiceItemByNo(String serviceItemNo) {
+    return serviceItems
+        .firstWhereOrNull((item) => item.serviceItemNo == serviceItemNo);
+  }
+
+  void addInitialServiceItems() {
+    addServiceItem(ServiceItem(
+      jobId: 1,
+      serviceItemNo: 'SV00-00214',
+      itemNo: 'UBRRM12',
+      serialNo: '415822',
+      status: 'assigned',
+      pmPlan: DateTime.parse('2024-01-04'),
+      actual: DateTime.parse('2024-04-29'),
+      description: 'PM Support 1/4.',
+      customerNo: 'CD-0582S001',
+      customerName: 'บริษัท รอยัล ปอร์ซเลน  จำกัด (มหาชน)',
+      shipToCode: '',
+      resourceNo: 'B033',
+      resourceName: 'จรัญ สุตนพัฒน์',
+      serviceZoneCode: 'A',
+    ));
+    addServiceItem(ServiceItem(
+      jobId: 2,
+      serviceItemNo: 'SV00-00214',
+      itemNo: 'UBRRM12',
+      serialNo: '415822',
+      status: 'assigned',
+      pmPlan: DateTime.parse('2024-01-07'),
+      actual: DateTime.parse('2024-04-01'),
+      description: 'PM Support 2/4.',
+      customerNo: 'CD-0582S001',
+      customerName: 'บริษัท รอยัล ปอร์ซเลน จำกัด (มหาชน)',
+      shipToCode: '',
+      resourceNo: 'B033',
+      resourceName: 'จรัญ สุตนพัฒน์',
+      serviceZoneCode: 'A',
+    ));
+    addServiceItem(ServiceItem(
+      jobId: 3,
+      serviceItemNo: 'SV00-00214',
+      itemNo: 'UBRRM12',
+      serialNo: '415822',
+      status: 'assigned',
+      pmPlan: DateTime.parse('2024-01-10'),
+      actual: DateTime.parse('2024-04-01'),
+      description: 'PM Support 3/4.',
+      customerNo: 'CD-0582S001',
+      customerName: 'บริษัท รอยัล ปอร์ซเลน จำกัด (มหาชน)',
+      shipToCode: '',
+      resourceNo: 'B033',
+      resourceName: 'จรัญ สุตนพัฒน์',
+      serviceZoneCode: 'A',
+    ));
+    addServiceItem(ServiceItem(
+      jobId: 4,
+      serviceItemNo: 'SV00-00214',
+      itemNo: 'UBRRM12',
+      serialNo: '415822',
+      status: 'assigned',
+      pmPlan: DateTime.parse('2025-01-01'),
+      actual: DateTime.parse('2024-04-01'),
+      description: 'PM Support 4/4.',
+      customerNo: 'CD-0582S001',
+      customerName: 'บริษัท รอยัล ปอร์ซเลน จำกัด (มหาชน)',
+      shipToCode: '',
+      resourceNo: 'B033',
+      resourceName: 'จรัญ สุตนพัฒน์',
+      serviceZoneCode: 'A',
+    ));
+    addServiceItem(ServiceItem(
+      jobId: 5,
+      serviceItemNo: 'SV00-00236',
+      itemNo: 'UBRRM1',
+      serialNo: '360924',
+      status: 'assigned',
+      pmPlan: DateTime.parse('2025-01-04'),
+      actual: DateTime.parse('2024-04-01'),
+      description: 'PM Support 1/4.',
+      customerNo: 'CD-0582S001',
+      customerName: 'บริษัท รอยัล ปอร์ซเลน จำกัด (มหาชน)',
+      shipToCode: '',
+      resourceNo: 'B033',
+      resourceName: 'จรัญ สุตนพัฒน์',
+      serviceZoneCode: 'A',
+    ));
+    serviceItems.sort((b, a) => b.pmPlan.compareTo(a.pmPlan));
   }
 }

@@ -31,7 +31,7 @@ class ForgetPasswordView extends StatelessWidget {
                       fontSize: 25, fontWeight: FontWeight.w500),
                 ),
                 16.kH,
-                TextFieldLogin(
+                TextFieldBar(
                   label: 'Email',
                   onChanged: controller.setEmail,
                 ),

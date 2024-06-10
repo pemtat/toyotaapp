@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Models/home_model.dart';
+import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
+import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Screen/Ticket/ticket_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
 import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
+import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
@@ -16,10 +21,11 @@ class TicketView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
   final TicketController ticketController = Get.put(TicketController());
 
-  TicketView({Key? key}) : super(key: key);
+  TicketView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -196,22 +202,29 @@ class TicketView extends StatelessWidget {
                         ticketController.isSelected.value = false;
                       },
                       child: Obx(() => Container(
+                            height: 40,
                             decoration: BoxDecoration(
                               color: !ticketController.isSelected.value
-                                  ? white2
-                                  : white3,
+                                  ? red4
+                                  : white5,
                               border: const Border(
                                 bottom: BorderSide(
                                   width: 2,
-                                  color: Color.fromARGB(255, 102, 101, 101),
+                                  color: Color.fromARGB(255, 162, 160, 160),
                                 ),
                               ),
-                              borderRadius: const BorderRadius.only(),
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(8),
+                                  bottomLeft: Radius.circular(8)),
                             ),
-                            child: Text(
-                              'PM',
-                              style: TextStyleList.text6,
-                              textAlign: TextAlign.center,
+                            child: Center(
+                              child: Text(
+                                'PM',
+                                style: !ticketController.isSelected.value
+                                    ? TextStyleList.text7
+                                    : TextStyleList.text6,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           )),
                     ),
@@ -222,22 +235,29 @@ class TicketView extends StatelessWidget {
                         ticketController.isSelected.value = true;
                       },
                       child: Obx(() => Container(
+                            height: 40,
                             decoration: BoxDecoration(
                               color: ticketController.isSelected.value
-                                  ? white2
-                                  : white3,
+                                  ? red4
+                                  : white5,
                               border: const Border(
                                 bottom: BorderSide(
                                   width: 2,
-                                  color: Color.fromARGB(255, 102, 101, 101),
+                                  color: Color.fromARGB(255, 162, 160, 160),
                                 ),
                               ),
-                              borderRadius: const BorderRadius.only(),
+                              borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(8),
+                                  bottomRight: Radius.circular(8)),
                             ),
-                            child: Text(
-                              'Ticket',
-                              style: TextStyleList.text6,
-                              textAlign: TextAlign.center,
+                            child: Center(
+                              child: Text(
+                                'Ticket',
+                                style: ticketController.isSelected.value
+                                    ? TextStyleList.text7
+                                    : TextStyleList.text6,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           )),
                     ),
@@ -247,15 +267,46 @@ class TicketView extends StatelessWidget {
             ),
             Obx(() {
               if (!ticketController.isSelected.value) {
-                return Padding(
-                  padding: const EdgeInsets.all(paddingApp),
-                  child: Column(
-                    children: [
-                      Text(
-                        'No Data',
-                        style: TextStyleList.subtext4,
-                      ),
-                    ],
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(paddingApp),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        5.kH,
+                        Expanded(
+                          child: jobController.serviceItems.isEmpty
+                              ? Center(
+                                  child: Text(
+                                  'No new jobs available.',
+                                  style: TextStyleList.subtitle2,
+                                ))
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: jobController.serviceItems.length,
+                                  itemBuilder: (context, index) {
+                                    ServiceItem job =
+                                        jobController.serviceItems[index];
+                                    return InkWell(
+                                      onTap: () {
+                                        Get.to(() =>
+                                            JobDetailViewPM(ticketId: '99'));
+                                      },
+                                      child: PmItemWidget(
+                                        job: job,
+                                        expandedIndex:
+                                            ticketController.expandedIndex2,
+                                        jobController: jobController,
+                                        ticketController: ticketController,
+                                        sidebar:
+                                            SidebarColor.getColor(job.status),
+                                      ),
+                                    );
+                                  },
+                                ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               } else if (ticketController.isSelected.value) {
@@ -265,10 +316,10 @@ class TicketView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Today',
-                          style: TextStyleList.subtext4,
-                        ),
+                        // Text(
+                        //   'Today',
+                        //   style: TextStyleList.subtext4,
+                        // ),
                         5.kH,
                         Expanded(
                           child: Obx(() {
@@ -318,12 +369,12 @@ class TicketView extends StatelessWidget {
                                     Get.to(() =>
                                         SubTicketView(ticketId: job.jobid));
                                   },
-                                  child: JobItemTicket(
+                                  child: JobItemWidget(
                                     job: job,
                                     expandedIndex:
-                                        ticketController.expandedIndex,
+                                        ticketController.expandedIndex2,
                                     jobController: jobController,
-                                    status: job.status,
+                                    sidebar: SidebarColor.getColor(job.status),
                                   ),
                                 );
                               },

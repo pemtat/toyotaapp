@@ -36,13 +36,13 @@ class TicketDetailController extends GetxController {
         imagePath: 'assets/briefcase.png',
         jobid: '0002',
         description: 'Replace spare parts',
-        datetime: '28 January 2024 at 08:15 PM',
+        datetime: '29 January 2024 at 15:10 PM',
         status: 'pending'),
     JobItemData(
         imagePath: 'assets/briefcase.png',
-        jobid: '0002',
+        jobid: '0003',
         description: 'Replace spare parts',
-        datetime: '28 January 2024 at 08:15 PM',
+        datetime: '30 January 2024 at 10:20 PM',
         status: 'pending'),
   ];
 

@@ -6,7 +6,7 @@ class AttachmentsListWidget extends StatelessWidget {
   final List<Map<String, dynamic>> attachments;
   final bool edit;
 
-  AttachmentsListWidget(this.attachments, this.edit, {super.key});
+  const AttachmentsListWidget(this.attachments, this.edit, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -8,6 +8,7 @@ class DialogAlert extends StatelessWidget {
   final String leftButton;
   final String rightButton;
   final VoidCallback onRightButtonPressed;
+  final Color? rightColor;
 
   const DialogAlert({
     super.key,
@@ -15,6 +16,7 @@ class DialogAlert extends StatelessWidget {
     required this.leftButton,
     required this.rightButton,
     required this.onRightButtonPressed,
+    this.rightColor,
   });
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class DialogAlert extends StatelessWidget {
                 child: _buildButton(
                   context,
                   rightButton,
-                  Colors.black,
+                  rightColor ?? Colors.black,
                   TextStyleList.text7,
                   white3,
                   Colors.transparent,

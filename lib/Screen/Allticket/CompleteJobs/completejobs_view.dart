@@ -5,6 +5,7 @@ import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
+import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/titleheader_widget.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -91,29 +92,6 @@ class CompleteJobsView extends StatelessWidget {
                           onPressed: () {},
                         ),
                       ),
-                      Positioned(
-                        right: 0,
-                        top: 0,
-                        child: Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          constraints: const BoxConstraints(
-                            minWidth: 12,
-                            minHeight: 12,
-                          ),
-                          child: const Text(
-                            '',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 2,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
                     ],
                   )
                 ],
@@ -154,7 +132,7 @@ class CompleteJobsView extends StatelessWidget {
                             job: job,
                             expandedIndex: completeJobsController.expandedIndex,
                             jobController: jobController,
-                            sidebar: black6,
+                            sidebar: SidebarColor.getColor(job.status),
                           ));
                     },
                   );

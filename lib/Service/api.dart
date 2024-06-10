@@ -32,6 +32,10 @@ String getUserInfoById(int userId) {
   return '$user/$userId';
 }
 
+String getUserInfo() {
+  return '$user/me';
+}
+
 String createNoteById(int issueId) {
   return '$issue/$issueId/notes';
 }

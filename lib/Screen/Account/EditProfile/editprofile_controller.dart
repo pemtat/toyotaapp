@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 
-class TicketController extends GetxController {
-  final isSelected = false.obs;
-  final RxInt expandedIndex = (-2).obs;
-  final RxInt expandedIndex2 = (-2).obs;
-  final TextEditingController searchController = TextEditingController();
-  final RxString searchQuery = ''.obs;
-  var selectedDate = Rx<DateTime?>(null);
+class EditProfileController extends GetxController {
   final HomeController jobController = Get.put(HomeController());
-  final selectedStatus = <String>{}.obs;
+  final name = TextEditingController();
+  final email = TextEditingController();
+  final phoneNumber = TextEditingController();
+  final password = TextEditingController();
+  var isTextHidden = false.obs;
 
-  void showAcceptDialog(
+  void toggleVisibility() {
+    isTextHidden.value = !isTextHidden.value;
+  }
+
+  void showEditDialog(
       BuildContext context, String title, String left, String right) {
     showDialog(
       context: context,
@@ -22,16 +25,14 @@ class TicketController extends GetxController {
           title: title,
           leftButton: left,
           rightButton: right,
-          onRightButtonPressed: complete,
+          onRightButtonPressed: () {
+            logout();
+          },
+          rightColor: red1,
         );
       },
     );
   }
 
-  void clearFilters() {
-    selectedStatus.clear();
-    selectedDate.value = null;
-  }
-
-  void complete() {}
+  Future<void> logout() async {}
 }

@@ -107,6 +107,8 @@ class TextStyleList {
       fontWeight: FontWeight.w500,
       color: black4,
       decoration: TextDecoration.underline);
+  static final TextStyle text19 =
+      GoogleFonts.kanit(fontSize: 14, fontWeight: FontWeight.w500, color: red1);
   //12
   static final TextStyle subtext1 = GoogleFonts.kanit(
       fontSize: 12, fontWeight: FontWeight.w400, color: black6);

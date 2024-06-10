@@ -2,9 +2,11 @@ import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
+import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
+import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/titleheader_widget.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -89,29 +91,29 @@ class AssignedjobsNew extends StatelessWidget {
                         onPressed: () {},
                       ),
                     ),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        constraints: const BoxConstraints(
-                          minWidth: 12,
-                          minHeight: 12,
-                        ),
-                        child: const Text(
-                          '',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 2,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
+                    // Positioned(
+                    //   right: 0,
+                    //   top: 0,
+                    //   child: Container(
+                    //     padding: const EdgeInsets.all(2),
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.red,
+                    //       borderRadius: BorderRadius.circular(12),
+                    //     ),
+                    //     constraints: const BoxConstraints(
+                    //       minWidth: 12,
+                    //       minHeight: 12,
+                    //     ),
+                    //     child: const Text(
+                    //       '',
+                    //       style: TextStyle(
+                    //         color: Colors.white,
+                    //         fontSize: 2,
+                    //       ),
+                    //       textAlign: TextAlign.center,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 )
               ],
@@ -144,16 +146,21 @@ class AssignedjobsNew extends StatelessWidget {
                     Home job = filteredJobs[index];
                     return InkWell(
                       onTap: () {
-                        Get.to(() => JobDetailView(
-                              ticketId: job.jobid,
-                              status: job.status,
-                            ));
+                        if (job.status == 'assigned')
+                          Get.to(() => PendingTaskView(
+                                ticketId: job.jobid,
+                                jobId: '',
+                              ));
+                        else {
+                          Get.to(() => JobDetailView(
+                              ticketId: job.jobid, jobId: job.jobid));
+                        }
                       },
                       child: JobItemWidget(
                         job: job,
                         expandedIndex: assignedController.expandedIndex,
                         jobController: jobController,
-                        sidebar: orange1,
+                        sidebar: SidebarColor.getColor(job.status),
                       ),
                     );
                   },

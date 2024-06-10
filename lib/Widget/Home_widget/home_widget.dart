@@ -36,7 +36,7 @@ class JobItemWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                'JobID : ${job.jobid}',
+                'Ticket ID : #${job.jobid.toString().padLeft(7, '0')}',
                 style: TextStyleList.text16,
               ),
               const SizedBox(width: 10),
@@ -106,14 +106,11 @@ class JobItemWidget extends StatelessWidget {
                         color: const Color(0xFFEAEAEA),
                       ),
                       const SizedBox(height: 8),
-                      Text('Ticket ID #${job.ticketid}',
-                          style: TextStyleList.text16),
-                      const SizedBox(height: 4),
                       Text(
                         job.description,
                         style: TextStyleList.text15,
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 8),
                       Container(
                           padding: const EdgeInsets.all(10),
                           decoration: Decoration2(),

@@ -34,3 +34,23 @@ checkWarranty(
     warrantyInfoList.add(warrantyInfo);
   }
 }
+
+Future<bool> checkWarrantyStatus(String serialNumber) async {
+  String username = usernameProduct;
+  String password = passwordProduct;
+
+  String basicAuth =
+      'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+
+  final String checkWarranty = checkWarrantyBySerial(serialNumber);
+  final response = await http.get(
+    Uri.parse(checkWarranty),
+    headers: {'Authorization': basicAuth},
+  );
+
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    return false;
+  }
+}

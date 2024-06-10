@@ -217,6 +217,39 @@ class EndButton2 extends StatelessWidget {
   }
 }
 
+class CustomButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String text;
+  final Color background;
+  final TextStyle textStyle;
+
+  const CustomButton({
+    super.key,
+    required this.onPressed,
+    required this.text,
+    required this.background,
+    required this.textStyle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          backgroundColor: background,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide(color: Colors.red, width: 1.0),
+          ),
+        ),
+        child: Text(text, style: textStyle),
+      ),
+    );
+  }
+}
+
 class ButtonTime extends StatelessWidget {
   final void Function(Rx<String>) saveTime;
   final Rx<String> time;
