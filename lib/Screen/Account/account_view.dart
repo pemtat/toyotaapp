@@ -13,7 +13,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 
 class AccountView extends StatelessWidget {
-  AccountView({super.key, Key? key});
+  const AccountView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class AccountView extends StatelessWidget {
                                 ),
                                 6.kH,
                                 EditButton2(onTap: () {
-                                  Get.to(() => EditProfileView());
+                                  Get.to(() => const EditProfileView());
                                 }),
                               ],
                             ),
@@ -142,7 +142,7 @@ class AccountView extends StatelessWidget {
             ],
           );
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }

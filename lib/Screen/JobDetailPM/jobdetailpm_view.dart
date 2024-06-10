@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
-import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
+import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
@@ -26,7 +26,7 @@ class JobDetailViewPM extends StatelessWidget {
   final String ticketId;
   final String? jobId;
   final String? status;
-  final JobDetailController jobController = Get.put(JobDetailController());
+  final JobDetailControllerPM jobController = Get.put(JobDetailControllerPM());
 
   JobDetailViewPM(
       {super.key, required this.ticketId, this.jobId, this.status}) {

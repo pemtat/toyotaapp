@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
-import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -18,7 +17,9 @@ class SubTicketView extends StatelessWidget {
   final SubTicketController subticketController =
       Get.put(SubTicketController());
 
-  SubTicketView({super.key, required this.ticketId});
+  SubTicketView({super.key, required this.ticketId}) {
+    subticketController.fetchData(ticketId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,13 +220,13 @@ class SubTicketView extends StatelessWidget {
                                   .searchQuery.value
                                   .toLowerCase();
                               final searchQueryMatch =
-                                  job.jobId!.contains(query) ||
+                                  job.id!.contains(query) ||
                                       job.summary!.contains(query);
-                              final statusMatch =
-                                  subticketController.selectedStatus.isEmpty ||
-                                      subticketController.selectedStatus
-                                          .contains(job.status?.name);
-                              return searchQueryMatch && statusMatch;
+                              // final statusMatch =
+                              //     subticketController.selectedStatus.isEmpty ||
+                              //         subticketController.selectedStatus
+                              //             .contains(job.status?.name);
+                              return searchQueryMatch;
                             }).toList();
 
                             if (filteredJobs.isEmpty) {
@@ -242,23 +243,16 @@ class SubTicketView extends StatelessWidget {
                                 final job = subticketController.subJobs[index];
                                 return InkWell(
                                   onTap: () {
-                                    if (job.status?.name == 'assigned')
-                                      Get.to(() => PendingTaskView(
-                                          ticketId: ticketId,
-                                          jobId: job.jobId ?? ''));
-                                    else {
-                                      Get.to(() => JobDetailView(
-                                          ticketId: ticketId,
-                                          jobId: job.jobId ?? ''));
-                                    }
+                                    Get.to(() => JobDetailView(
+                                        ticketId: ticketId,
+                                        jobId: job.id ?? ''));
                                   },
                                   child: SubJobsTicket(
-                                    job: job,
-                                    expandedIndex:
-                                        subticketController.expandedIndex,
-                                    jobController: subticketController,
-                                    status: job.status?.name,
-                                  ),
+                                      job: job,
+                                      expandedIndex:
+                                          subticketController.expandedIndex,
+                                      jobController: subticketController,
+                                      status: 'assigned'),
                                 );
                               },
                             );

@@ -71,14 +71,15 @@ class CalendarView extends StatelessWidget {
                   if (events.isNotEmpty && !isSameDay(day, DateTime.now())) {
                     return Container(
                       margin: const EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.orange,
                         shape: BoxShape.circle,
                       ),
                       child: Center(
                         child: Text(
                           '${day.day}',
-                          style: TextStyle().copyWith(color: Colors.white),
+                          style:
+                              const TextStyle().copyWith(color: Colors.white),
                         ),
                       ),
                     );
@@ -86,14 +87,15 @@ class CalendarView extends StatelessWidget {
                       isSameDay(day, DateTime.now())) {
                     return Container(
                       margin: const EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.red,
                         shape: BoxShape.circle,
                       ),
                       child: Center(
                         child: Text(
                           '${day.day}',
-                          style: TextStyle().copyWith(color: Colors.white),
+                          style:
+                              const TextStyle().copyWith(color: Colors.white),
                         ),
                       ),
                     );

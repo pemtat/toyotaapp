@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toyotamobile/Models/subticket_model.dart';
+import 'package:toyotamobile/Models/subjoball.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 
@@ -19,26 +19,20 @@ class SubTicketController extends GetxController {
   final selectedStatus = <String>{}.obs;
   final isLoading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchData();
-  }
-
-  Future<void> fetchData() async {
+  Future<void> fetchData(String ticketId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
     try {
       final response = await http.get(
-        Uri.parse(getAllSubJob()),
+        Uri.parse(getSubJobByTicketId(ticketId)),
         headers: {
           'Authorization': '$token',
         },
       );
 
       if (response.statusCode == 200) {
-        SubTicketModel data = SubTicketModel.fromJson(
+        SubJobsAll data = SubJobsAll.fromJson(
           jsonDecode(response.body),
         );
         if (data.jobs != null) {

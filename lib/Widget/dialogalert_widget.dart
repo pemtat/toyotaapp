@@ -87,9 +87,7 @@ class DialogAlert extends StatelessWidget {
         foregroundColor: textColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
-          side: BorderSide(
-              color: borderColor,
-              width: 1.0), // Change the border color and width here
+          side: BorderSide(color: borderColor, width: 1.0),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       ),

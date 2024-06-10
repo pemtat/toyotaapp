@@ -29,7 +29,7 @@ class JobDetailView extends StatelessWidget {
   final JobDetailController jobController = Get.put(JobDetailController());
 
   JobDetailView({super.key, required this.ticketId, this.jobId, this.status}) {
-    jobController.fetchData(ticketId);
+    jobController.fetchData(ticketId, jobId ?? '');
   }
 
   @override
@@ -91,7 +91,7 @@ class JobDetailView extends StatelessWidget {
                 ? jobController.addAttatchments
                 : null;
             var issue = jobController.issueData.first;
-
+            var subJob = jobController.subJobs.first;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -407,12 +407,13 @@ class JobDetailView extends StatelessWidget {
                                       )
                                     : Container(),
                               ),
-                              const BoxContainer(
+                              BoxContainer(
                                 children: [
                                   JobInfo(
-                                      jobId: 20,
-                                      dateTime: '12 June 2024 00:25 AM',
-                                      reporter: 'Alex')
+                                      jobId: 0,
+                                      jobIdString: subJob.id,
+                                      dateTime: subJob.dueDate ?? '',
+                                      reporter: subJob.reporterId ?? '')
                                 ],
                               ),
                               8.kH,

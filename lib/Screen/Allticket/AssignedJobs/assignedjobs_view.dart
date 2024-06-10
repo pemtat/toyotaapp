@@ -146,12 +146,12 @@ class AssignedjobsNew extends StatelessWidget {
                     Home job = filteredJobs[index];
                     return InkWell(
                       onTap: () {
-                        if (job.status == 'assigned')
+                        if (job.status == 'assigned') {
                           Get.to(() => PendingTaskView(
                                 ticketId: job.jobid,
                                 jobId: '',
                               ));
-                        else {
+                        } else {
                           Get.to(() => JobDetailView(
                               ticketId: job.jobid, jobId: job.jobid));
                         }

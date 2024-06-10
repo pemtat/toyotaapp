@@ -115,6 +115,7 @@ class TicketInfoStatus extends StatelessWidget {
 
 class JobInfo extends StatelessWidget {
   final int jobId;
+  final String? jobIdString;
   final String dateTime;
   final String reporter;
   final bool? more;
@@ -124,7 +125,8 @@ class JobInfo extends StatelessWidget {
       required this.jobId,
       required this.dateTime,
       required this.reporter,
-      this.more});
+      this.more,
+      this.jobIdString});
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +138,9 @@ class JobInfo extends StatelessWidget {
           children: [
             Row(
               children: [
-                TitleApp(text: 'Job ID: $jobId'),
+                jobIdString != null
+                    ? TitleApp(text: 'Job ID: $jobIdString')
+                    : TitleApp(text: 'Job ID: $jobId'),
                 5.wH,
                 GestureDetector(
                   onTap: () {

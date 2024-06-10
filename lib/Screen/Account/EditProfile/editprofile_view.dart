@@ -11,7 +11,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 
 class EditProfileView extends StatelessWidget {
-  const EditProfileView({Key? key});
+  const EditProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +108,7 @@ class EditProfileView extends StatelessWidget {
             ],
           );
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
-import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Screen/Ticket/ticket_controller.dart';

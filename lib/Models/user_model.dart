@@ -1,4 +1,5 @@
 class User {
+  // ignore: non_constant_identifier_names
   List<User>? Users;
 
   final int id;

@@ -48,5 +48,13 @@ String getAllSubJob() {
   return '$url/api/rest/jobs';
 }
 
+String getSubJobById(String subjobId) {
+  return '$url/api/rest/jobs/$subjobId/getById/';
+}
+
+String getSubJobByTicketId(String ticketId) {
+  return '$url/api/rest/jobs/jobs_bugid?bug_id=$ticketId';
+}
+
 String usernameProduct = 'VanSale-Dev';
 String passwordProduct = 'c8doEpdFC0CFkUWHUEXv';

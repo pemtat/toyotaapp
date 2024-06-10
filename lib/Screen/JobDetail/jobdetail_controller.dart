@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
@@ -24,10 +25,12 @@ class JobDetailController extends GetxController {
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
+  var subJobs = <JobById>[].obs;
   var moreTicketDetail = false.obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
+  var jobId;
   var status = RxString('');
   var imagesBefore = <Map<String, String>>[].obs;
   var imagesAfter = <Map<String, String>>[].obs;
@@ -38,9 +41,31 @@ class JobDetailController extends GetxController {
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
   final BottomBarController bottomController = Get.put(BottomBarController());
 
-  void fetchData(String ticketId) async {
+  void fetchData(String ticketId, String subjobId) async {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
+    jobId = ticketId;
+    try {
+      final response = await http.get(
+        Uri.parse(getSubJobById(subjobId)),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        SubJobDetail data = SubJobDetail.fromJson(
+          jsonDecode(response.body),
+        );
+        if (data.jobById != null) {
+          subJobs.value = data.jobById!;
+        }
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {
@@ -218,7 +243,7 @@ class JobDetailController extends GetxController {
       );
 
       if (response.statusCode == 201) {
-        fetchData(issueId.toString());
+        fetchData(issueId.toString(), jobId.toString());
         notes.value.clear();
       }
     } else if (addAttatchments.isNotEmpty && noteText == '') {
@@ -237,7 +262,7 @@ class JobDetailController extends GetxController {
         body: jsonEncode(body),
       );
       if (response.statusCode == 201) {
-        fetchData(issueId.toString());
+        fetchData(issueId.toString(), jobId);
         notes.value.clear();
       }
     }
