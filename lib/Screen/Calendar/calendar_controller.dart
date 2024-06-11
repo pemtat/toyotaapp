@@ -29,9 +29,8 @@ class CalendarController extends GetxController {
     events.clear();
 
     if (jobList.isEmpty) {
-      print('jobList is empty');
     } else {
-      jobList.forEach((home) {
+      for (var home in jobList) {
         try {
           final dayKey =
               DateTime.utc(home.date.year, home.date.month, home.date.day);
@@ -64,7 +63,7 @@ class CalendarController extends GetxController {
         } catch (e) {
           print('Error processing event: $e');
         }
-      });
+      }
     }
   }
 

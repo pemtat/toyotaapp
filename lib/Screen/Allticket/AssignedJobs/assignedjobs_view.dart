@@ -6,7 +6,9 @@ import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
+import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/titleheader_widget.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -46,14 +48,15 @@ class AssignedjobsNew extends StatelessWidget {
         children: [
           15.kH,
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: paddingApp),
+            padding: const EdgeInsets.symmetric(
+                horizontal: paddingApp, vertical: 10),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: assignedController.searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search by job ID or title',
+                      hintText: 'Search by Ticket ID or title',
                       hintStyle: TextStyleList.detail1,
                       filled: true,
                       fillColor: black5,
@@ -72,7 +75,7 @@ class AssignedjobsNew extends StatelessWidget {
                         ),
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          vertical: 14.0, horizontal: 19.0),
+                          vertical: 10.0, horizontal: 20.0),
                     ),
                     onChanged: (value) {
                       assignedController.searchQuery.value = value;
@@ -80,41 +83,108 @@ class AssignedjobsNew extends StatelessWidget {
                   ),
                 ),
                 8.wH,
-                Stack(
-                  children: [
-                    Container(
-                      decoration: Decoration2(),
-                      margin: const EdgeInsets.all(2),
-                      padding: const EdgeInsets.all(0),
-                      child: IconButton(
-                        icon: Image.asset('assets/sliders.png'),
-                        onPressed: () {},
+                InkWell(
+                  onTap: () {},
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      popupMenuTheme: const PopupMenuThemeData(
+                        color: white3,
                       ),
                     ),
-                    // Positioned(
-                    //   right: 0,
-                    //   top: 0,
-                    //   child: Container(
-                    //     padding: const EdgeInsets.all(2),
-                    //     decoration: BoxDecoration(
-                    //       color: Colors.red,
-                    //       borderRadius: BorderRadius.circular(12),
-                    //     ),
-                    //     constraints: const BoxConstraints(
-                    //       minWidth: 12,
-                    //       minHeight: 12,
-                    //     ),
-                    //     child: const Text(
-                    //       '',
-                    //       style: TextStyle(
-                    //         color: Colors.white,
-                    //         fontSize: 2,
-                    //       ),
-                    //       textAlign: TextAlign.center,
-                    //     ),
-                    //   ),
-                    // ),
-                  ],
+                    child: PopupMenuButton(
+                      offset: const Offset(0, 60),
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                        PopupMenuItem(
+                          value: 'edit',
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Status',
+                                    style: TextStyleList.text2,
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        assignedController.clearFilters();
+                                      },
+                                      child: Text(
+                                        'reset',
+                                        style: TextStyleList.subtext3,
+                                      )),
+                                ],
+                              ),
+                              ...statusCheckboxes(),
+                              8.kH,
+                              const AppDivider(),
+                              8.kH,
+                              Text(
+                                'Date',
+                                style: TextStyleList.text2,
+                              ),
+                              8.kH,
+                              GestureDetector(
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2101),
+                                  );
+                                  if (pickedDate != null) {
+                                    assignedController.selectedDate.value =
+                                        pickedDate;
+                                  }
+                                },
+                                child: AbsorbPointer(
+                                  child: Obx(() => TextField(
+                                        controller: TextEditingController(
+                                          text: assignedController
+                                                      .selectedDate.value !=
+                                                  null
+                                              ? "${assignedController.selectedDate.value!.day}/${assignedController.selectedDate.value!.month}/${assignedController.selectedDate.value!.year}"
+                                              : '',
+                                        ),
+                                        readOnly: true,
+                                        decoration: InputDecoration(
+                                          hintText: "Select date",
+                                          hintStyle: TextStyleList.text5,
+                                          suffixIcon:
+                                              const Icon(Icons.calendar_today),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                      )),
+                                ),
+                              ),
+                              8.kH,
+                            ],
+                          ),
+                        ),
+                      ],
+                      child: Stack(
+                        children: [
+                          Container(
+                            decoration: Decoration2(),
+                            margin: const EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(10),
+                            child: Image.asset('assets/sliders.png'),
+                          ),
+                        ],
+                      ),
+                      onSelected: (value) {
+                        if (value == 'edit') {}
+                      },
+                    ),
+                  ),
                 )
               ],
             ),
@@ -129,14 +199,27 @@ class AssignedjobsNew extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(paddingApp),
               child: Obx(() {
-                final filteredJobs = jobController.jobList
-                    .where((job) =>
-                        job.status != 'closed' &&
-                        (job.jobid.contains(
-                                assignedController.searchQuery.value) ||
-                            job.description.contains(
-                                assignedController.searchQuery.value)))
-                    .toList();
+                final filteredJobs = jobController.jobList.where((job) {
+                  final query =
+                      assignedController.searchQuery.value.toLowerCase();
+                  final searchQueryMatch = job.ticketid.contains(query) ||
+                      job.summary.contains(query);
+                  final statusMatch = assignedController
+                          .selectedStatus.isEmpty ||
+                      assignedController.selectedStatus.contains(job.status);
+                  final dateMatch = assignedController.selectedDate.value ==
+                          null ||
+                      (job.date.year ==
+                              assignedController.selectedDate.value!.year &&
+                          job.date.month ==
+                              assignedController.selectedDate.value!.month &&
+                          job.date.day ==
+                              assignedController.selectedDate.value!.day);
+                  return searchQueryMatch &&
+                      dateMatch &&
+                      statusMatch &&
+                      job.status != 'closed';
+                }).toList();
                 if (filteredJobs.isEmpty) {
                   return const Center(child: Text('No new jobs available.'));
                 }
@@ -171,5 +254,20 @@ class AssignedjobsNew extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<Widget> statusCheckboxes() {
+    return [
+      buildCheckbox(
+          status: 'assigned',
+          selectedStatus: assignedController.selectedStatus),
+      buildCheckbox(
+          status: 'new', selectedStatus: assignedController.selectedStatus),
+      buildCheckbox(
+          status: 'closed', selectedStatus: assignedController.selectedStatus),
+      buildCheckbox(
+          status: 'feedback',
+          selectedStatus: assignedController.selectedStatus),
+    ];
   }
 }

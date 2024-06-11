@@ -56,5 +56,17 @@ String getSubJobByTicketId(String ticketId) {
   return '$url/api/rest/jobs/jobs_bugid?bug_id=$ticketId';
 }
 
+String getPMticketById(String id) {
+  return '$url/api/rest/pm?resource_no=$id';
+}
+
+String getRepairReportById(String id) {
+  return '$url/api/rest/jobs/jobs_report?id=$id';
+}
+
+String getAdditionalRepairReportById(String id) {
+  return '$url/api/rest/jobs/jobs_report_additional?id=$id';
+}
+
 String usernameProduct = 'VanSale-Dev';
 String passwordProduct = 'c8doEpdFC0CFkUWHUEXv';

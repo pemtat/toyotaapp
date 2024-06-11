@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
-import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/Ticket/ticket_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -40,25 +39,24 @@ class PmItemWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                'JobID : ${job.jobId.toString().padLeft(2, '0')}',
+                'JobID : 0001',
                 style: TextStyleList.text16,
               ),
               const SizedBox(width: 10),
-              StatusButton(status: job.status),
+              const StatusButton(status: 'planning'),
               const Spacer(),
               Obx(
                 () => IconButton(
-                  icon: expandedIndex.value ==
-                          jobController.serviceItems.indexOf(job)
-                      ? const ArrowUp()
-                      : const ArrowDown(),
+                  icon:
+                      expandedIndex.value == jobController.pmItems.indexOf(job)
+                          ? const ArrowUp()
+                          : const ArrowDown(),
                   onPressed: () {
                     if (expandedIndex.value ==
-                        jobController.serviceItems.indexOf(job)) {
+                        jobController.pmItems.indexOf(job)) {
                       expandedIndex.value = (-2);
                     } else {
-                      expandedIndex.value =
-                          jobController.serviceItems.indexOf(job);
+                      expandedIndex.value = jobController.pmItems.indexOf(job);
                     }
                   },
                 ),
@@ -75,7 +73,7 @@ class PmItemWidget extends StatelessWidget {
               const Icon(Icons.calendar_month_outlined),
               const SizedBox(width: 5),
               Text(
-                getFormattedDate(job.pmPlan),
+                job.pmPlan,
                 style: TextStyleList.subtext1,
               ),
             ],
@@ -85,8 +83,7 @@ class PmItemWidget extends StatelessWidget {
             job.description,
             style: TextStyleList.subtext1,
           ),
-          Obx(() => expandedIndex.value ==
-                  jobController.serviceItems.indexOf(job)
+          Obx(() => expandedIndex.value == jobController.pmItems.indexOf(job)
               ? Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Column(

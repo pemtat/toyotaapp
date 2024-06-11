@@ -3,12 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toyotamobile/Models/subjoball.dart';
+import 'package:toyotamobile/Models/subjobbyticket_model.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 
 class SubTicketController extends GetxController {
-  var subJobs = <Jobs>[].obs;
+  var subJobs = <SubJobByTicketModel>[].obs;
 
   var type = 'left'.obs;
   final isSelected = false.obs;
@@ -32,12 +32,11 @@ class SubTicketController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        SubJobsAll data = SubJobsAll.fromJson(
-          jsonDecode(response.body),
-        );
-        if (data.jobs != null) {
-          subJobs.value = data.jobs!;
-        }
+        List<dynamic> responseData = jsonDecode(response.body);
+        List<SubJobByTicketModel> jobsList = responseData
+            .map((job) => SubJobByTicketModel.fromJson(job))
+            .toList();
+        subJobs.value = jobsList;
       } else {
         print('Failed to load data: ${response.statusCode}');
       }

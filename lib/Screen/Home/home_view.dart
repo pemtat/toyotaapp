@@ -53,14 +53,16 @@ class HomeView extends StatelessWidget {
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
+                    10.kH,
                     Container(
-                      padding: const EdgeInsets.all(paddingApp),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: paddingApp),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           JobStatusItem(
                             count: jobController.jobListLength,
-                            title: 'Incoming Jobs',
+                            title: 'Ticket\nIncoming Jobs',
                             countColor: const Color(0xffEB0A1E),
                             titleColor: const Color(0xff434343),
                             containerColor:
@@ -72,7 +74,7 @@ class HomeView extends StatelessWidget {
                           10.wH,
                           JobStatusItem(
                             count: jobController.jobListCloseLength,
-                            title: 'Completed Jobs',
+                            title: 'Ticket\nCompleted Jobs',
                             countColor: const Color(0xff323232),
                             titleColor: const Color(0xff434343),
                             containerColor: const Color(0xffEAEAEA),
@@ -83,7 +85,36 @@ class HomeView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    10.kH,
+                    Container(
+                      padding: const EdgeInsets.all(paddingApp),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          JobStatusItem(
+                            count: jobController.pmjobList,
+                            title: 'PM\nIncoming Jobs',
+                            countColor: const Color(0xffEB0A1E),
+                            titleColor: const Color(0xff434343),
+                            containerColor:
+                                const Color.fromARGB(255, 242, 194, 198),
+                            imagePath: 'assets/propjob.png',
+                            flexValue: 6,
+                            center: false,
+                          ),
+                          10.wH,
+                          JobStatusItem(
+                            count: jobController.jobListCloseLength,
+                            title: 'PM\nCompleted Jobs',
+                            countColor: const Color(0xff323232),
+                            titleColor: const Color(0xff434343),
+                            containerColor: const Color(0xffEAEAEA),
+                            flexValue: 4,
+                            center: true,
+                          ),
+                          5.wH,
+                        ],
+                      ),
+                    ),
                     const AppDivider(),
                     10.kH,
                     JobTitle(
@@ -102,7 +133,6 @@ class HomeView extends StatelessWidget {
                             child: Text('No new jobs available.'),
                           );
                         }
-
                         return InkWell(
                             onTap: () {
                               Get.to(() => JobDetailView(

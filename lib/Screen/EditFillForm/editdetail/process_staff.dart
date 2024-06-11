@@ -6,15 +6,15 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class RepairResult extends GetxController {
-  void repairResultModal(BuildContext context) {
+class RepairStaff extends GetxController {
+  void repairStaffModal(BuildContext context) {
     ShowModalWidget(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Result",
+              "Process",
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -27,22 +27,22 @@ class RepairResult extends GetxController {
         8.kH,
         ListView.builder(
           shrinkWrap: true,
-          itemCount: repairResultList.length,
+          itemCount: repairStaffList.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: CheckBoxWidget(
-                  text: repairResultList[index],
-                  listItem: repairResultChoose,
-                  itemSet: repairResultChoose),
+                  text: repairStaffList[index],
+                  listItem: repairStaffChoose,
+                  itemSet: repairStaffChoose),
             );
           },
         ),
         8.kH,
         EndButton(
             onPressed: () {
-              repairResult.clear();
-              repairResult.addAll(repairResultChoose);
+              repairStaff.clear();
+              repairStaff.addAll(repairStaffChoose);
 
               Navigator.pop(context);
             },
@@ -51,13 +51,13 @@ class RepairResult extends GetxController {
     ).showModal(context);
   }
 
-  var repairResult = <String>[].obs;
-  var repairResultChoose = <String>[].obs;
-  List<String> repairResultList = [
-    'Run',
-    'Temporary',
-    'Stop',
-    'H',
-    'M',
+  var repairStaff = <String>[].obs;
+  var repairStaffChoose = <String>[].obs;
+  List<String> repairStaffList = [
+    'Quotation',
+    'Claim',
+    'Close Job',
+    'Repair',
+    'Follow',
   ];
 }

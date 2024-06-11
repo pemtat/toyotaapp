@@ -24,6 +24,8 @@ class StatusButton extends StatelessWidget {
         return const StatusPendingButton();
       case 'ongoing':
         return const StatusOngoingButton();
+      case 'planning':
+        return const StatusPlanningButton();
       default:
         return const SizedBox();
     }
@@ -47,6 +49,8 @@ class SidebarColor {
         return orange1;
       case 'ongoing':
         return green3;
+      case 'planning':
+        return black6;
       default:
         return orange1;
     }

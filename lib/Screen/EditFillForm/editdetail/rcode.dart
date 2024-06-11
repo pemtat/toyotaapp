@@ -1,20 +1,20 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class RepairResult extends GetxController {
-  void repairResultModal(BuildContext context) {
+class Rcode extends GetxController {
+  void rCodeModal(BuildContext context) {
     ShowModalWidget(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Result",
+              "R Code",
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -27,22 +27,22 @@ class RepairResult extends GetxController {
         8.kH,
         ListView.builder(
           shrinkWrap: true,
-          itemCount: repairResultList.length,
+          itemCount: rCodeList.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: CheckBoxWidget(
-                  text: repairResultList[index],
-                  listItem: repairResultChoose,
-                  itemSet: repairResultChoose),
+                  text: rCodeList[index],
+                  listItem: rCodeChoose,
+                  itemSet: rCodeChoose),
             );
           },
         ),
         8.kH,
         EndButton(
             onPressed: () {
-              repairResult.clear();
-              repairResult.addAll(repairResultChoose);
+              rCode.clear();
+              rCode.addAll(rCodeChoose);
 
               Navigator.pop(context);
             },
@@ -51,13 +51,20 @@ class RepairResult extends GetxController {
     ).showModal(context);
   }
 
-  var repairResult = <String>[].obs;
-  var repairResultChoose = <String>[].obs;
-  List<String> repairResultList = [
-    'Run',
-    'Temporary',
-    'Stop',
-    'H',
-    'M',
+  var rCode = <String>[].obs;
+  var rCodeChoose = <String>[].obs;
+  List<String> rCodeList = [
+    'Broken',
+    'No grease',
+    'No oil',
+    'Dirty',
+    'Eroded',
+    'Short circuit',
+    'Disintegrated',
+    'Loose',
+    'Usually loud noise',
+    'Wrong equipment installed',
+    'Overheating',
+    'Other'
   ];
 }

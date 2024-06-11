@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editfillform_view.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
@@ -91,7 +93,9 @@ class JobDetailView extends StatelessWidget {
                 ? jobController.addAttatchments
                 : null;
             var issue = jobController.issueData.first;
-            var subJob = jobController.subJobs.first;
+            var subJob = jobController.subJobs.isNotEmpty
+                ? jobController.subJobs.first
+                : null;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -407,15 +411,21 @@ class JobDetailView extends StatelessWidget {
                                       )
                                     : Container(),
                               ),
-                              BoxContainer(
-                                children: [
-                                  JobInfo(
-                                      jobId: 0,
-                                      jobIdString: subJob.id,
-                                      dateTime: subJob.dueDate ?? '',
-                                      reporter: subJob.reporterId ?? '')
-                                ],
-                              ),
+                              Obx(() {
+                                if (jobController.subJobs.isNotEmpty) {
+                                  return BoxContainer(
+                                    children: [
+                                      JobInfo(
+                                          jobId: 0,
+                                          jobIdString: subJob!.id,
+                                          dateTime: subJob.dueDate ?? '',
+                                          reporter: subJob.reporterId ?? '')
+                                    ],
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              }),
                               8.kH,
                               BoxContainer(
                                 children: [
@@ -424,11 +434,19 @@ class JobDetailView extends StatelessWidget {
                                                 .savedDateStartTime.value ==
                                             ''
                                         ? ButtonTime(
-                                            saveTime: jobController
-                                                .saveCurrentDateTime,
+                                            saveTime: (datetime) {
+                                              jobController.showTimeDialog(
+                                                context,
+                                                'Are you sure to confirm?',
+                                                'No',
+                                                'Yes',
+                                                datetime,
+                                              );
+                                            },
                                             time: jobController
                                                 .savedDateStartTime,
-                                            title: 'Start')
+                                            title: 'Start Time',
+                                          )
                                         : Text(
                                             "Start Time : ${jobController.savedDateStartTime.value}",
                                             style: TextStyleList.text6,
@@ -450,7 +468,13 @@ class JobDetailView extends StatelessWidget {
                                     pickImage: () => jobController
                                         .pickImage(jobController.imagesBefore),
                                   ),
-                                  16.kH,
+                                  18.kH,
+                                  Container(
+                                    height: 0.5,
+                                    color: const Color.fromARGB(
+                                        255, 224, 222, 222),
+                                  ),
+                                  14.kH,
                                   Obx(() => jobController
                                               .savedDateStartTime.value !=
                                           ''
@@ -463,11 +487,20 @@ class JobDetailView extends StatelessWidget {
                                                         .value ==
                                                     ''
                                                 ? ButtonTime(
-                                                    saveTime: jobController
-                                                        .saveCurrentDateTime,
+                                                    saveTime: (datetime) {
+                                                      jobController
+                                                          .showTimeDialog(
+                                                        context,
+                                                        'Are you sure to confirm?',
+                                                        'No',
+                                                        'Yes',
+                                                        datetime,
+                                                      );
+                                                    },
                                                     time: jobController
                                                         .savedDateEndTime,
-                                                    title: 'End Time')
+                                                    title: 'End Time',
+                                                  )
                                                 : Text(
                                                     "End Time : ${jobController.savedDateEndTime.value}",
                                                     style: TextStyleList.text6,
@@ -490,13 +523,16 @@ class JobDetailView extends StatelessWidget {
                                                   .pickImage(jobController
                                                       .imagesAfter),
                                             ),
+                                            16.kH,
                                           ],
                                         )
                                       : Container()),
-                                  8.kH,
+                                  TextFieldType(
+                                    hintText: 'Add Comment',
+                                    textSet: jobController.comment.value,
+                                  ),
                                 ],
                               ),
-                              8.kH,
                               BoxContainer(
                                 children: [
                                   Row(
@@ -504,17 +540,35 @@ class JobDetailView extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const TitleApp(text: 'Repair Report*'),
-                                      AddButton(
-                                        onTap: () {
-                                          Get.to(() => const FillFormView());
-                                        },
-                                      ),
+                                      Obx(() => jobController
+                                              .reportList.isNotEmpty
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(
+                                                    () => const FillFormView());
+                                              },
+                                            )
+                                          : AddButton(
+                                              onTap: () {
+                                                Get.to(() =>
+                                                    const EditFillFormView());
+                                              },
+                                            )),
                                     ],
                                   ),
                                   Text(
                                     'Please fill the field service report',
                                     style: TextStyleList.text16,
-                                  )
+                                  ),
+                                  Obx(() => jobController
+                                              .reportList.isNotEmpty ||
+                                          jobController
+                                              .additionalReportList.isNotEmpty
+                                      ? ShowRepairReport(
+                                          reportData: jobController.reportList,
+                                          additionalReportData: jobController
+                                              .additionalReportList)
+                                      : Container())
                                 ],
                               ),
                             ],

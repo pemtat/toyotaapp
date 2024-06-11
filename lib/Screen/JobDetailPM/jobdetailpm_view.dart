@@ -424,11 +424,19 @@ class JobDetailViewPM extends StatelessWidget {
                                                 .savedDateStartTime.value ==
                                             ''
                                         ? ButtonTime(
-                                            saveTime: jobController
-                                                .saveCurrentDateTime,
+                                            saveTime: (datetime) {
+                                              jobController.showTimeDialog(
+                                                context,
+                                                'Are you sure to confirm?',
+                                                'No',
+                                                'Yes',
+                                                datetime,
+                                              );
+                                            },
                                             time: jobController
                                                 .savedDateStartTime,
-                                            title: 'Start')
+                                            title: 'Start Time',
+                                          )
                                         : Text(
                                             "Start Time : ${jobController.savedDateStartTime.value}",
                                             style: TextStyleList.text6,
@@ -450,7 +458,7 @@ class JobDetailViewPM extends StatelessWidget {
                                     pickImage: () => jobController
                                         .pickImage(jobController.imagesBefore),
                                   ),
-                                  16.kH,
+                                  18.kH,
                                   Obx(() => jobController
                                               .savedDateStartTime.value !=
                                           ''
@@ -463,11 +471,20 @@ class JobDetailViewPM extends StatelessWidget {
                                                         .value ==
                                                     ''
                                                 ? ButtonTime(
-                                                    saveTime: jobController
-                                                        .saveCurrentDateTime,
+                                                    saveTime: (datetime) {
+                                                      jobController
+                                                          .showTimeDialog(
+                                                        context,
+                                                        'Are you sure to confirm?',
+                                                        'No',
+                                                        'Yes',
+                                                        datetime,
+                                                      );
+                                                    },
                                                     time: jobController
                                                         .savedDateEndTime,
-                                                    title: 'End Time')
+                                                    title: 'End Time',
+                                                  )
                                                 : Text(
                                                     "End Time : ${jobController.savedDateEndTime.value}",
                                                     style: TextStyleList.text6,
@@ -490,10 +507,10 @@ class JobDetailViewPM extends StatelessWidget {
                                                   .pickImage(jobController
                                                       .imagesAfter),
                                             ),
+                                            6.kH,
                                           ],
                                         )
                                       : Container()),
-                                  8.kH,
                                 ],
                               ),
                               8.kH,

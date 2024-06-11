@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/process_staff.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/rcode.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/repair_procedure.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/repair_result.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/sparepartlist.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/wcode.dart';
-import 'package:toyotamobile/Screen/FillForm/fillform_controller.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editdetail/additional_spare.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editdetail/process_staff.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editdetail/rcode.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_procedure.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_result.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editdetail/wcode.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editfillform_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/FillForm_widget/Sparepart_widget.dart';
-import 'package:toyotamobile/Widget/FillForm_widget/repairprodecure_widget.dart';
+import 'package:toyotamobile/Widget/EditFillForm_widget/Sparepart_widget.dart';
+import 'package:toyotamobile/Widget/EditFillForm_widget/repairprodecure_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -23,8 +23,8 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 
-class FillFormView extends StatelessWidget {
-  const FillFormView({super.key});
+class EditFillFormView extends StatelessWidget {
+  const EditFillFormView({super.key});
 
   @override
   Widget build(BuildContext context) {

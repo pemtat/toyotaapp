@@ -6,15 +6,15 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class RepairResult extends GetxController {
-  void repairResultModal(BuildContext context) {
+class Wcode extends GetxController {
+  void wCodeModal(BuildContext context) {
     ShowModalWidget(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Result",
+              "W Code",
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -27,22 +27,22 @@ class RepairResult extends GetxController {
         8.kH,
         ListView.builder(
           shrinkWrap: true,
-          itemCount: repairResultList.length,
+          itemCount: wCodeList.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: CheckBoxWidget(
-                  text: repairResultList[index],
-                  listItem: repairResultChoose,
-                  itemSet: repairResultChoose),
-            );
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: CheckBoxWidget(
+                  text: wCodeList[index],
+                  listItem: wCodeChoose,
+                  itemSet: wCodeChoose,
+                ));
           },
         ),
         8.kH,
         EndButton(
             onPressed: () {
-              repairResult.clear();
-              repairResult.addAll(repairResultChoose);
+              wCode.clear();
+              wCode.addAll(wCodeChoose);
 
               Navigator.pop(context);
             },
@@ -51,13 +51,17 @@ class RepairResult extends GetxController {
     ).showModal(context);
   }
 
-  var repairResult = <String>[].obs;
-  var repairResultChoose = <String>[].obs;
-  List<String> repairResultList = [
-    'Run',
-    'Temporary',
-    'Stop',
-    'H',
-    'M',
+  var wCode = <String>[].obs;
+  var wCodeChoose = <String>[].obs;
+  List<String> wCodeList = [
+    'CM Repair works when the repair is first reported',
+    'CMC Repair/part replacement work',
+    'Inspection repair work that is in the conditions',
+    'AC repair work result from an accident',
+    'FF in-depth  problem anaylsis work',
+    'SOT helps other people or other team',
+    'MO Modification work, editing',
+    'SB waiting/ standby',
+    'CO assembly/installation work, dismantling',
   ];
 }

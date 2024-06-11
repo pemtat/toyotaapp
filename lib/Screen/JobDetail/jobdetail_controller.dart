@@ -4,14 +4,17 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
@@ -19,6 +22,9 @@ import 'package:intl/intl.dart';
 
 class JobDetailController extends GetxController {
   final notes = TextEditingController().obs;
+  final comment = TextEditingController().obs;
+  var reportList = <RepairReportModel>[].obs;
+  var additionalReportList = <RepairReportModel>[].obs;
   var notesFiles = <dynamic>[].obs;
   var isPicking = false.obs;
   var issueData = [].obs;
@@ -45,6 +51,7 @@ class JobDetailController extends GetxController {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
     jobId = ticketId;
+    fetchReportData(subjobId);
     try {
       final response = await http.get(
         Uri.parse(getSubJobById(subjobId)),
@@ -207,6 +214,77 @@ class JobDetailController extends GetxController {
       bottomController.currentIndex.value = 0;
       Get.offAll(() => BottomBarView());
     }
+  }
+
+  Future<void> fetchReportData(String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    try {
+      final response = await http.get(
+        Uri.parse(getRepairReportById(id)),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+        List<RepairReportModel> loadedReports = responseData.map((reportJson) {
+          return RepairReportModel.fromJson(reportJson);
+        }).toList();
+
+        reportList.value = loadedReports;
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+    try {
+      final response = await http.get(
+        Uri.parse(getAdditionalRepairReportById(id)),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+        List<RepairReportModel> loadedReports = responseData.map((reportJson) {
+          return RepairReportModel.fromJson(reportJson);
+        }).toList();
+
+        additionalReportList.value = loadedReports;
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  void showTimeDialog(
+    BuildContext context,
+    String title,
+    String left,
+    String right,
+    Rx<String> datetime,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogAlert(
+          title: title,
+          leftButton: left,
+          rightButton: right,
+          rightColor: red1,
+          onRightButtonPressed: () {
+            saveCurrentDateTime(datetime);
+          },
+        );
+      },
+    );
   }
 
   void saveCurrentDateTime(Rx<String> datetime) {

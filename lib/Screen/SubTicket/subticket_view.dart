@@ -8,6 +8,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
+import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
@@ -145,29 +146,31 @@ class SubTicketView extends StatelessWidget {
                                         }
                                       },
                                       child: AbsorbPointer(
-                                        child: TextField(
-                                          controller: TextEditingController(
-                                            text: subticketController
-                                                        .selectedDate.value !=
-                                                    null
-                                                ? "${subticketController.selectedDate.value!.day}/${subticketController.selectedDate.value!.month}/${subticketController.selectedDate.value!.year}"
-                                                : '',
-                                          ),
-                                          readOnly: true,
-                                          decoration: InputDecoration(
-                                            hintText: "Select date",
-                                            hintStyle: TextStyleList.text5,
-                                            suffixIcon: const Icon(
-                                                Icons.calendar_today),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              borderSide: const BorderSide(
-                                                color: Colors.grey,
+                                        child: Obx(() => TextField(
+                                              controller: TextEditingController(
+                                                text: subticketController
+                                                            .selectedDate
+                                                            .value !=
+                                                        null
+                                                    ? "${subticketController.selectedDate.value!.day}/${subticketController.selectedDate.value!.month}/${subticketController.selectedDate.value!.year}"
+                                                    : '',
                                               ),
-                                            ),
-                                          ),
-                                        ),
+                                              readOnly: true,
+                                              decoration: InputDecoration(
+                                                hintText: "Select date",
+                                                hintStyle: TextStyleList.text5,
+                                                suffixIcon: const Icon(
+                                                    Icons.calendar_today),
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              ),
+                                            )),
                                       ),
                                     ),
                                     8.kH,
@@ -222,11 +225,12 @@ class SubTicketView extends StatelessWidget {
                               final searchQueryMatch =
                                   job.id!.contains(query) ||
                                       job.summary!.contains(query);
-                              // final statusMatch =
-                              //     subticketController.selectedStatus.isEmpty ||
-                              //         subticketController.selectedStatus
-                              //             .contains(job.status?.name);
-                              return searchQueryMatch;
+                              final statusMatch =
+                                  subticketController.selectedStatus.isEmpty ||
+                                      subticketController.selectedStatus
+                                          .contains(job.status);
+
+                              return searchQueryMatch && statusMatch;
                             }).toList();
 
                             if (filteredJobs.isEmpty) {
@@ -273,34 +277,16 @@ class SubTicketView extends StatelessWidget {
 
   List<Widget> statusCheckboxes() {
     return [
-      buildCheckbox('assigned'),
-      buildCheckbox('new'),
-      buildCheckbox('closed'),
-      buildCheckbox('feedback'),
+      buildCheckbox(
+          status: 'assigned',
+          selectedStatus: subticketController.selectedStatus),
+      buildCheckbox(
+          status: 'new', selectedStatus: subticketController.selectedStatus),
+      buildCheckbox(
+          status: 'closed', selectedStatus: subticketController.selectedStatus),
+      buildCheckbox(
+          status: 'feedback',
+          selectedStatus: subticketController.selectedStatus),
     ];
-  }
-
-  Widget buildCheckbox(String status) {
-    return Obx(() {
-      final isSelected = subticketController.selectedStatus.contains(status);
-      return Row(
-        children: [
-          Checkbox(
-            value: isSelected,
-            onChanged: (value) {
-              if (value != null && value) {
-                subticketController.selectedStatus.add(status);
-              } else {
-                subticketController.selectedStatus.remove(status);
-              }
-            },
-          ),
-          Text(
-            status.capitalizeFirst!,
-            style: isSelected ? TextStyleList.text9 : null,
-          ),
-        ],
-      );
-    });
   }
 }

@@ -50,3 +50,40 @@ class CheckBoxWidget extends StatelessWidget {
     );
   }
 }
+
+// ignore: camel_case_types
+class buildCheckbox extends StatelessWidget {
+  final String status;
+  final RxSet<String> selectedStatus;
+
+  const buildCheckbox({
+    super.key,
+    required this.status,
+    required this.selectedStatus,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final isSelected = selectedStatus.contains(status);
+      return Row(
+        children: [
+          Checkbox(
+            value: isSelected,
+            onChanged: (value) {
+              if (value != null && value) {
+                selectedStatus.add(status);
+              } else {
+                selectedStatus.remove(status);
+              }
+            },
+          ),
+          Text(
+            status.capitalizeFirst!,
+            style: isSelected ? TextStyleList.text9 : null,
+          ),
+        ],
+      );
+    });
+  }
+}

@@ -11,6 +11,7 @@ import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
@@ -182,6 +183,29 @@ class JobDetailControllerPM extends GetxController {
       bottomController.currentIndex.value = 0;
       Get.offAll(() => BottomBarView());
     }
+  }
+
+  void showTimeDialog(
+    BuildContext context,
+    String title,
+    String left,
+    String right,
+    Rx<String> datetime,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogAlert(
+          title: title,
+          leftButton: left,
+          rightButton: right,
+          rightColor: red1,
+          onRightButtonPressed: () {
+            saveCurrentDateTime(datetime);
+          },
+        );
+      },
+    );
   }
 
   void saveCurrentDateTime(Rx<String> datetime) {

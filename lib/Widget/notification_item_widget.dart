@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Models/notification_model.dart';
+import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 
 class NotificationItem extends StatelessWidget {
-  final NotificationModel notification;
+  final Home notification;
 
   const NotificationItem({super.key, required this.notification});
 
@@ -24,7 +24,7 @@ class NotificationItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'TicketID : ${notification.ticketId}',
+              'TicketID : ${notification.jobid}',
               style: TextStyleList.detailtext1,
             ),
             Text(

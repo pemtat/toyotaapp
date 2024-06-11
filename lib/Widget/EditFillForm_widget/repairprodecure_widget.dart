@@ -1,25 +1,21 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/sparepartlist.dart';
+import 'package:toyotamobile/Models/repair_procedure.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_procedure.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Models/sparepart_model.dart';
 
-class PartDetailWidget extends StatelessWidget {
-  final SparePartModel part;
+class RepairProdecureWidget extends StatelessWidget {
+  final RepairProcedureModel part;
+  final RepairProcedure repairProcedureController;
   final int index;
-  final SparepartList sparePartListController;
-  final AdditSparepartList additSparePartListController;
-  final bool additional;
-  const PartDetailWidget({
+
+  const RepairProdecureWidget({
     super.key,
     required this.part,
     required this.index,
-    required this.sparePartListController,
-    required this.additSparePartListController,
-    required this.additional,
+    required this.repairProcedureController,
   });
 
   @override
@@ -47,58 +43,23 @@ class PartDetailWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'C-Code/Page',
+                  'Repair Procedure',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.cCodePage,
+                  part.repairProcedure,
                   style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Part Number',
+                  'Part Name',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.partNumber,
+                  part.causeProblem,
                   style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  'Part Details (Description)',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  part.partDetails,
-                  style: TextStyleList.text15,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Quantity',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  "${part.quantity}",
-                  style: TextStyleList.text15,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Change Now',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  part.changeNow,
-                  style: TextStyleList.text15,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Change on PM',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  part.changeOnPM,
-                  style: TextStyleList.text15,
-                ),
               ],
             ),
           ),
@@ -133,20 +94,10 @@ class PartDetailWidget extends StatelessWidget {
                 ),
                 onSelected: (value) {
                   if (value == 'edit') {
-                    if (additional) {
-                      additSparePartListController.additSparePartListEditModal(
-                          context, part);
-                    } else {
-                      sparePartListController.sparePartListEditModal(
-                          context, part);
-                    }
+                    repairProcedureController.rPEditModal(context, part);
                   } else if (value == 'delete') {
-                    if (additional) {
-                      additSparePartListController.additSparePartList
-                          .removeAt(index);
-                    } else {
-                      sparePartListController.sparePartList.removeAt(index);
-                    }
+                    repairProcedureController.repairProcedureList
+                        .removeAt(index);
                   }
                 },
               ),

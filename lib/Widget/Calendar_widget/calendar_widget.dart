@@ -102,7 +102,8 @@ class CalendarItem extends StatelessWidget {
                   Obx(
                     () => expandedIndex.value
                         ? Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
+                            padding: const EdgeInsets.only(
+                                top: 10.0, right: 8, bottom: 8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -123,7 +124,7 @@ class CalendarItem extends StatelessWidget {
                                     children: [
                                       BoxInfo(
                                         title: "Name/Model",
-                                        value: "UBRE200H2-TH-7500",
+                                        value: "UBRE200H2-TH",
                                       ),
                                       SizedBox(height: 3),
                                       BoxInfo(

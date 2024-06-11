@@ -1,8 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/sparepartlist.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editdetail/additional_spare.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';

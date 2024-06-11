@@ -66,7 +66,7 @@ class SubJobsTicket extends StatelessWidget {
                   const Icon(Icons.calendar_month_outlined),
                   const SizedBox(width: 5),
                   Text(
-                    '13 June 2024',
+                    job.dueDate,
                     style: TextStyleList.subtext1,
                   ),
                 ],

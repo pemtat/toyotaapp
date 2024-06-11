@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -158,10 +159,17 @@ class CalendarView extends StatelessWidget {
                               itemCount: events.length,
                               itemBuilder: (context, index) {
                                 final event = events[index];
-                                return CalendarItem(
-                                    event: event,
-                                    expandedIndex:
-                                        calendarController.expandedIndex);
+                                return InkWell(
+                                  onTap: () {
+                                    Get.to(() => JobDetailView(
+                                          ticketId: event['ticketid'],
+                                        ));
+                                  },
+                                  child: CalendarItem(
+                                      event: event,
+                                      expandedIndex:
+                                          calendarController.expandedIndex),
+                                );
                               },
                             ),
                           ),
