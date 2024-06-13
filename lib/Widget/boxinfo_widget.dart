@@ -18,9 +18,11 @@ class BoxInfo extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: TextStyleList.text3,
+        Flexible(
+          child: Text(
+            title,
+            style: TextStyleList.text3,
+          ),
         ),
         trailing ??
             Text(

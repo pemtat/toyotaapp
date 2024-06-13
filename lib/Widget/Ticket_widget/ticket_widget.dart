@@ -39,11 +39,11 @@ class PmItemWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                'JobID : 0001',
+                'JobID : ${job.jobId.toString().padLeft(4, '0')}',
                 style: TextStyleList.text16,
               ),
               const SizedBox(width: 10),
-              const StatusButton(status: 'planning'),
+              StatusButton(status: job.pmStatus),
               const Spacer(),
               Obx(
                 () => IconButton(

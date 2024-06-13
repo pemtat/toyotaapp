@@ -24,8 +24,10 @@ class AttachmentsListPdfWidget extends StatelessWidget {
             padding: const EdgeInsets.only(right: 4.0),
             child: GestureDetector(
               onTap: () async {
-                String pdfFilePath = await _createPdfFile(attachment['base64']);
-                Get.to(() => PdfViewerScreen(pdfFilePath, attachment['name']));
+                String pdfFilePath =
+                    await _createPdfFile(attachment['content']);
+                Get.to(
+                    () => PdfViewerScreen(pdfFilePath, attachment['filename']));
               },
               child: Column(
                 children: [
@@ -40,7 +42,7 @@ class AttachmentsListPdfWidget extends StatelessWidget {
                     ),
                   ),
                   4.kH,
-                  Text(attachment['name'], style: TextStyleList.subtext3),
+                  Text(attachment['filename'], style: TextStyleList.subtext3),
                 ],
               ),
             ),

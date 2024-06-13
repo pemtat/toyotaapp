@@ -44,144 +44,145 @@ class HomeView extends StatelessWidget {
         ),
         body: RefreshIndicator(
           onRefresh: refresh,
-          child: Obx(
-            () {
-              if (jobController.jobList.isEmpty) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    10.kH,
-                    Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: paddingApp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          JobStatusItem(
-                            count: jobController.jobListLength,
-                            title: 'Ticket\nIncoming Jobs',
-                            countColor: const Color(0xffEB0A1E),
-                            titleColor: const Color(0xff434343),
-                            containerColor:
-                                const Color.fromARGB(255, 242, 194, 198),
-                            imagePath: 'assets/propjob.png',
-                            flexValue: 6,
-                            center: false,
-                          ),
-                          10.wH,
-                          JobStatusItem(
-                            count: jobController.jobListCloseLength,
-                            title: 'Ticket\nCompleted Jobs',
-                            countColor: const Color(0xff323232),
-                            titleColor: const Color(0xff434343),
-                            containerColor: const Color(0xffEAEAEA),
-                            flexValue: 4,
-                            center: true,
-                          ),
-                          5.wH,
-                        ],
+          // child: Obx(
+          //   () {
+          // if (jobController.jobList.isEmpty) {
+          //   return const Center(child: CircularProgressIndicator());
+          // }
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                10.kH,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: paddingApp),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      JobStatusItem(
+                        count: jobController.jobListLength,
+                        title: 'Ticket\nIncoming Jobs',
+                        countColor: const Color(0xffEB0A1E),
+                        titleColor: const Color(0xff434343),
+                        containerColor:
+                            const Color.fromARGB(255, 242, 194, 198),
+                        imagePath: 'assets/propjob.png',
+                        flexValue: 6,
+                        center: false,
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(paddingApp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          JobStatusItem(
-                            count: jobController.pmjobList,
-                            title: 'PM\nIncoming Jobs',
-                            countColor: const Color(0xffEB0A1E),
-                            titleColor: const Color(0xff434343),
-                            containerColor:
-                                const Color.fromARGB(255, 242, 194, 198),
-                            imagePath: 'assets/propjob.png',
-                            flexValue: 6,
-                            center: false,
-                          ),
-                          10.wH,
-                          JobStatusItem(
-                            count: jobController.jobListCloseLength,
-                            title: 'PM\nCompleted Jobs',
-                            countColor: const Color(0xff323232),
-                            titleColor: const Color(0xff434343),
-                            containerColor: const Color(0xffEAEAEA),
-                            flexValue: 4,
-                            center: true,
-                          ),
-                          5.wH,
-                        ],
+                      10.wH,
+                      JobStatusItem(
+                        count: jobController.jobListCloseLength,
+                        title: 'Ticket\nCompleted Jobs',
+                        countColor: const Color(0xff323232),
+                        titleColor: const Color(0xff434343),
+                        containerColor: const Color(0xffEAEAEA),
+                        flexValue: 4,
+                        center: true,
                       ),
-                    ),
-                    const AppDivider(),
-                    10.kH,
-                    JobTitle(
-                      headerText: 'Incoming Jobs',
-                      buttonText: 'View All',
-                      buttonOnPressed: () {
-                        Get.to(() => AssignedjobsNew());
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(paddingApp),
-                      child: Obx(() {
-                        final job = jobController.mostRecentNewJob.value;
-                        if (job == null) {
-                          return const Center(
-                            child: Text('No new jobs available.'),
-                          );
-                        }
-                        return InkWell(
-                            onTap: () {
-                              Get.to(() => JobDetailView(
-                                    ticketId: job.jobid,
-                                    status: job.status,
-                                  ));
-                            },
-                            child: JobItemWidget(
-                              job: job,
-                              expandedIndex: jobController.expandedIndex,
-                              jobController: jobController,
-                              sidebar: SidebarColor.getColor((job.status)),
-                            ));
-                      }),
-                    ),
-                    JobTitle(
-                      headerText: 'Completed Jobs',
-                      buttonText: 'View All',
-                      buttonOnPressed: () {
-                        Get.to(() => CompleteJobsView());
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(paddingApp),
-                      child: Obx(() {
-                        final job = jobController.mostRecentCompleteJob.value;
-                        if (job == null) {
-                          return const Center(
-                            child: Text('No new jobs available.'),
-                          );
-                        }
-
-                        return InkWell(
-                          onTap: () {
-                            Get.to(() => TicketDetailView(ticketId: job.jobid));
-                          },
-                          child: JobItemWidget(
-                            job: job,
-                            expandedIndex: jobController.expandedIndex2,
-                            jobController: jobController,
-                            sidebar: SidebarColor.getColor(job.status),
-                          ),
-                        );
-                      }),
-                    ),
-                  ],
+                      5.wH,
+                    ],
+                  ),
                 ),
-              );
-            },
+                Container(
+                  padding: const EdgeInsets.all(paddingApp),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      JobStatusItem(
+                        count: jobController.pmjobList,
+                        title: 'PM\nIncoming Jobs',
+                        countColor: const Color(0xffEB0A1E),
+                        titleColor: const Color(0xff434343),
+                        containerColor:
+                            const Color.fromARGB(255, 242, 194, 198),
+                        imagePath: 'assets/propjob.png',
+                        flexValue: 6,
+                        center: false,
+                      ),
+                      10.wH,
+                      JobStatusItem(
+                        count: jobController.pmjobListClosed,
+                        title: 'PM\nCompleted Jobs',
+                        countColor: const Color(0xff323232),
+                        titleColor: const Color(0xff434343),
+                        containerColor: const Color(0xffEAEAEA),
+                        flexValue: 4,
+                        center: true,
+                      ),
+                      5.wH,
+                    ],
+                  ),
+                ),
+                const AppDivider(),
+                10.kH,
+                JobTitle(
+                  headerText: 'Incoming Jobs',
+                  buttonText: 'View All',
+                  buttonOnPressed: () {
+                    Get.to(() => AssignedjobsNew());
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(paddingApp),
+                  child: Obx(() {
+                    final job = jobController.mostRecentNewJob.value;
+                    if (job == null) {
+                      return Center(
+                        child: Text(
+                          'No new jobs available.',
+                          style: TextStyleList.text3,
+                        ),
+                      );
+                    }
+                    return InkWell(
+                        onTap: () {
+                          Get.to(() => JobDetailView(
+                                ticketId: job.jobid,
+                                status: job.status,
+                              ));
+                        },
+                        child: JobItemWidget(
+                          job: job,
+                          expandedIndex: jobController.expandedIndex,
+                          jobController: jobController,
+                          sidebar: SidebarColor.getColor((job.status)),
+                        ));
+                  }),
+                ),
+                JobTitle(
+                  headerText: 'Completed Jobs',
+                  buttonText: 'View All',
+                  buttonOnPressed: () {
+                    Get.to(() => CompleteJobsView());
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(paddingApp),
+                  child: Obx(() {
+                    final job = jobController.mostRecentCompleteJob.value;
+                    if (job == null) {
+                      return Center(
+                        child: Text('No new jobs available.',
+                            style: TextStyleList.text3),
+                      );
+                    }
+
+                    return InkWell(
+                      onTap: () {
+                        Get.to(() => TicketDetailView(ticketId: job.jobid));
+                      },
+                      child: JobItemWidget(
+                        job: job,
+                        expandedIndex: jobController.expandedIndex2,
+                        jobController: jobController,
+                        sidebar: SidebarColor.getColor(job.status),
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            ),
           ),
         ),
       ),

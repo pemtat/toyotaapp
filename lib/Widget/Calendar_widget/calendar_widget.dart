@@ -8,36 +8,39 @@ import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
-import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class CalendarItem extends StatelessWidget {
   final Map<String, dynamic> event;
   final Rx<bool> expandedIndex;
-  const CalendarItem(
-      {super.key, required this.event, required this.expandedIndex});
+  final Rx<String> expandedTicketId;
+
+  const CalendarItem({
+    Key? key,
+    required this.event,
+    required this.expandedIndex,
+    required this.expandedTicketId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      decoration:
-          Decoration1(sideBorderColor: SidebarColor.getColor(event['status'])),
+      decoration: Decoration1(
+        sideBorderColor: SidebarColor.getColor(event['status']),
+      ),
       child: Row(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  Text(
-                    event['time'],
-                    style: TextStyleList.text2,
-                  ),
-                  4.kH,
-                  StatusButton(status: event['status']),
-                ],
-              ),
+            child: Column(
+              children: [
+                Text(
+                  event['time'],
+                  style: TextStyleList.text2,
+                ),
+                const SizedBox(height: 4),
+                StatusButton(status: event['status']),
+              ],
             ),
           ),
           Expanded(
@@ -55,7 +58,7 @@ class CalendarItem extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Ticket ID : ${event['ticketid']}',
+                        'Ticket ID : ${event['ticketid'].toString().padLeft(7, '0')}',
                         style: TextStyleList.text16,
                       ),
                       const SizedBox(width: 10),
@@ -65,9 +68,15 @@ class CalendarItem extends StatelessWidget {
                           padding: const EdgeInsets.all(6.0),
                           child: InkWell(
                             onTap: () {
-                              expandedIndex.value = !expandedIndex.value;
+                              if (expandedTicketId.value == event['ticketid']) {
+                                expandedIndex.value = !expandedIndex.value;
+                              } else {
+                                expandedIndex.value = true;
+                                expandedTicketId.value = event['ticketid'];
+                              }
                             },
-                            child: expandedIndex.value
+                            child: expandedIndex.value &&
+                                    expandedTicketId.value == event['ticketid']
                                 ? const ArrowUp()
                                 : const ArrowDown(),
                           ),
@@ -89,18 +98,15 @@ class CalendarItem extends StatelessWidget {
                         style: TextStyleList.subtext1,
                       ),
                       const SizedBox(width: 5),
-                      Row(
-                        children: [
-                          GoogleMapButton(
-                            onTap: () {},
-                          ),
-                        ],
+                      GoogleMapButton(
+                        onTap: () {},
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Obx(
-                    () => expandedIndex.value
+                    () => expandedIndex.value &&
+                            expandedTicketId.value == event['ticketid']
                         ? Padding(
                             padding: const EdgeInsets.only(
                                 top: 10.0, right: 8, bottom: 8),
@@ -120,23 +126,23 @@ class CalendarItem extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.all(10),
                                   decoration: Decoration2(),
-                                  child: const Column(
+                                  child: Column(
                                     children: [
                                       BoxInfo(
                                         title: "Name/Model",
-                                        value: "UBRE200H2-TH",
+                                        value: event['nameModel'],
                                       ),
-                                      SizedBox(height: 3),
+                                      const SizedBox(height: 3),
                                       BoxInfo(
                                         title: "Serial Number",
-                                        value: "6963131",
+                                        value: event['serialNo'],
                                       ),
-                                      SizedBox(height: 3),
+                                      const SizedBox(height: 3),
                                       BoxInfo(
                                         title: "Warranty Status",
                                         value: '',
                                         trailing: CheckStatus(
-                                          status: 1,
+                                          status: event['warrantyStatus'],
                                         ),
                                       ),
                                     ],

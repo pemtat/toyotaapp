@@ -308,102 +308,134 @@ class JobDetailViewPM extends StatelessWidget {
                                             },
                                           ),
                                           8.kH,
-                                          BoxContainer(
-                                            children: [
-                                              Obx(() {
-                                                if (jobController
-                                                    .notesFiles.isEmpty) {
-                                                  return Center(
-                                                      child: Container());
-                                                } else {
-                                                  return Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                          Obx(() => BoxContainer(
+                                                children: [
+                                                  Obx(() {
+                                                    if (jobController
+                                                        .notesFiles.isEmpty) {
+                                                      return Center(
+                                                          child: Container());
+                                                    } else {
+                                                      return Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const TitleApp(
+                                                              text: 'Notes'),
+                                                          8.kH,
+                                                          ListView.builder(
+                                                            physics:
+                                                                const NeverScrollableScrollPhysics(),
+                                                            shrinkWrap: true,
+                                                            itemCount:
+                                                                jobController
+                                                                    .notesFiles
+                                                                    .length,
+                                                            itemBuilder:
+                                                                (context,
+                                                                    index) {
+                                                              final note =
+                                                                  jobController
+                                                                          .notesFiles[
+                                                                      index];
+
+                                                              if (index <
+                                                                      jobController
+                                                                          .notesFiles
+                                                                          .length &&
+                                                                  index <
+                                                                      jobController
+                                                                          .notePic
+                                                                          .length) {
+                                                                final notePic =
+                                                                    jobController
+                                                                            .notePic[
+                                                                        index];
+                                                                return NoteItem(
+                                                                  note: note,
+                                                                  notePic:
+                                                                      notePic,
+                                                                );
+                                                              } else {
+                                                                final notePic =
+                                                                    jobController
+                                                                            .notePic[
+                                                                        index -
+                                                                            1];
+                                                                return NoteItem(
+                                                                  note: note,
+                                                                  notePic:
+                                                                      notePic,
+                                                                );
+                                                              }
+                                                            },
+                                                          ),
+                                                        ],
+                                                      );
+                                                    }
+                                                  }),
+                                                  12.kH,
+                                                  TextFieldType(
+                                                    hintText: 'Add Notes',
+                                                    textSet: jobController
+                                                        .notes.value,
+                                                  ),
+                                                  8.kH,
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
-                                                      const TitleApp(
-                                                          text: 'Notes'),
-                                                      8.kH,
-                                                      ListView.builder(
-                                                        physics:
-                                                            const NeverScrollableScrollPhysics(),
-                                                        shrinkWrap: true,
-                                                        itemCount: jobController
-                                                            .notesFiles.length,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          final note =
+                                                      GestureDetector(
+                                                        onTap: jobController
+                                                            .pickFile,
+                                                        child: Row(
+                                                          children: [
+                                                            Image.asset(
+                                                                'assets/link.png'),
+                                                            4.wH,
+                                                            Text(
+                                                              'Attach file',
+                                                              style:
+                                                                  TextStyleList
+                                                                      .text1,
+                                                            ),
+                                                            Obx(() {
+                                                              if (jobController
+                                                                  .addAttatchments
+                                                                  .isNotEmpty) {
+                                                                return Row(
+                                                                  children: [
+                                                                    4.wH,
+                                                                    Text(
+                                                                      jobController
+                                                                          .addAttatchments
+                                                                          .first['filename'],
+                                                                      style: TextStyleList
+                                                                          .text1,
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              } else {
+                                                                return Container();
+                                                              }
+                                                            }),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      CustomElevatedButton(
+                                                        onPressed: () {
+                                                          jobController.addNote(
                                                               jobController
-                                                                      .notesFiles[
-                                                                  index];
-                                                          return NoteItem(
-                                                              note: note);
+                                                                  .notes);
                                                         },
+                                                        text: 'Submit',
                                                       ),
                                                     ],
-                                                  );
-                                                }
-                                              }),
-                                              12.kH,
-                                              TextFieldType(
-                                                hintText: 'Add Notes',
-                                                textSet:
-                                                    jobController.notes.value,
-                                              ),
-                                              8.kH,
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap:
-                                                        jobController.pickFile,
-                                                    child: Row(
-                                                      children: [
-                                                        Image.asset(
-                                                            'assets/link.png'),
-                                                        4.wH,
-                                                        Text(
-                                                          'Attach file',
-                                                          style: TextStyleList
-                                                              .text1,
-                                                        ),
-                                                        Obx(() {
-                                                          if (jobController
-                                                              .addAttatchments
-                                                              .isNotEmpty) {
-                                                            return Row(
-                                                              children: [
-                                                                4.wH,
-                                                                Text(
-                                                                  jobController
-                                                                      .addAttatchments
-                                                                      .first['name'],
-                                                                  style:
-                                                                      TextStyleList
-                                                                          .text1,
-                                                                ),
-                                                              ],
-                                                            );
-                                                          } else {
-                                                            return Container();
-                                                          }
-                                                        }),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  CustomElevatedButton(
-                                                    onPressed: () {
-                                                      jobController.addNote(
-                                                          jobController.notes);
-                                                    },
-                                                    text: 'Submit',
                                                   ),
                                                 ],
-                                              ),
-                                            ],
-                                          ),
+                                              )),
                                         ],
                                       )
                                     : Container(),

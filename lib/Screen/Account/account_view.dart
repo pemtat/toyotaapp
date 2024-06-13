@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/Account/EditProfile/editprofile_view.dart';
+import 'package:toyotamobile/Screen/Account/Language/language_view.dart';
+import 'package:toyotamobile/Screen/Account/TaskHistory/taskhistory_view.dart';
 import 'package:toyotamobile/Screen/Account/account_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -38,68 +40,75 @@ class AccountView extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  BoxContainer(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 16),
-                            child: CircleAvatar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 255, 255, 255),
-                              radius: 27,
-                              child: ClipOval(
-                                child: Image.asset(
-                                  'assets/profile.png',
-                                  fit: BoxFit.cover,
-                                  width: 54,
-                                  height: 54,
+              InkWell(
+                onTap: () {
+                  Get.to(() => const EditProfileView());
+                },
+                child: Stack(
+                  children: [
+                    BoxContainer(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16),
+                              child: CircleAvatar(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                radius: 27,
+                                child: ClipOval(
+                                  child: Image.asset(
+                                    'assets/profile.png',
+                                    fit: BoxFit.cover,
+                                    width: 54,
+                                    height: 54,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  userController.userInfo.first.realName,
-                                  style: TextStyleList.subtitle1,
-                                ),
-                                Text(
-                                  'Joined on ${getFormattedDate2(userController.userInfo.first.createdAt)}',
-                                  style: TextStyleList.subtext1,
-                                ),
-                                6.kH,
-                                EditButton2(onTap: () {
-                                  Get.to(() => const EditProfileView());
-                                }),
-                              ],
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    userController.userInfo.first.realName,
+                                    style: TextStyleList.subtitle1,
+                                  ),
+                                  Text(
+                                    'Joined on ${getFormattedDate2(userController.userInfo.first.createdAt)}',
+                                    style: TextStyleList.subtext1,
+                                  ),
+                                  6.kH,
+                                  EditButton2(onTap: () {
+                                    Get.to(() => const EditProfileView());
+                                  }),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  Positioned(
-                    right: 16.0,
-                    top: -40,
-                    bottom: 0,
-                    child: Center(
-                      child: Image.asset('assets/arrowright.png'),
+                          ],
+                        )
+                      ],
                     ),
-                  ),
-                ],
+                    Positioned(
+                      right: 16.0,
+                      top: -40,
+                      bottom: 0,
+                      child: Center(
+                        child: Image.asset('assets/arrowright.png'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               8.kH,
               BoxContainer(
                 children: [
                   TitleWithButton2(
                     titleText: 'My Task History',
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => const TaskHistoryView());
+                    },
                     button: true,
                   )
                 ],
@@ -108,7 +117,9 @@ class AccountView extends StatelessWidget {
                 children: [
                   TitleWithButton2(
                     titleText: 'Language',
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => LanguageView());
+                    },
                     button: true,
                   )
                 ],
@@ -133,7 +144,14 @@ class AccountView extends StatelessWidget {
                 children: [
                   TitleWithButton2(
                     titleText: 'Delete Account',
-                    onTap: () {},
+                    onTap: () {
+                      accountController.showDeleteDialog(
+                        context,
+                        'Are you sure to delete account?',
+                        'Cancel',
+                        'Yes',
+                      );
+                    },
                     button: false,
                     font: TextStyleList.text17,
                   )

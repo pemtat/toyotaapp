@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
@@ -17,6 +18,7 @@ class PeddingtaskController extends GetxController {
   var attachments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
+  var pdfList = <Map<String, dynamic>>[].obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
@@ -28,7 +30,7 @@ class PeddingtaskController extends GetxController {
     final String apiUrl = getTicketbyId(ticketId);
 
     String? token = await getToken();
-
+    fetchPdfData(ticketId, token ?? '', pdfList);
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {

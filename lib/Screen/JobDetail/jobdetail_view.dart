@@ -89,9 +89,8 @@ class JobDetailView extends StatelessWidget {
             var file = jobController.attatchments.isNotEmpty
                 ? jobController.attatchments
                 : null;
-            var filePdf = jobController.addAttatchments.isNotEmpty
-                ? jobController.addAttatchments
-                : null;
+            var filePdf =
+                jobController.pdfList.isNotEmpty ? jobController.pdfList : null;
             var issue = jobController.issueData.first;
             var subJob = jobController.subJobs.isNotEmpty
                 ? jobController.subJobs.first
@@ -339,8 +338,33 @@ class JobDetailView extends StatelessWidget {
                                                               jobController
                                                                       .notesFiles[
                                                                   index];
-                                                          return NoteItem(
-                                                              note: note);
+
+                                                          if (index <
+                                                                  jobController
+                                                                      .notesFiles
+                                                                      .length &&
+                                                              index <
+                                                                  jobController
+                                                                      .notePic
+                                                                      .length) {
+                                                            final notePic =
+                                                                jobController
+                                                                        .notePic[
+                                                                    index];
+                                                            return NoteItem(
+                                                              note: note,
+                                                              notePic: notePic,
+                                                            );
+                                                          } else {
+                                                            final notePic =
+                                                                jobController
+                                                                        .notePic[
+                                                                    index - 1];
+                                                            return NoteItem(
+                                                              note: note,
+                                                              notePic: notePic,
+                                                            );
+                                                          }
                                                         },
                                                       ),
                                                     ],

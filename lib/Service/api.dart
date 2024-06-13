@@ -68,5 +68,9 @@ String getAdditionalRepairReportById(String id) {
   return '$url/api/rest/jobs/jobs_report_additional?id=$id';
 }
 
+String getPdfById(String issueId) {
+  return '$url/api/rest/issues/$issueId/pdf';
+}
+
 String usernameProduct = 'VanSale-Dev';
 String passwordProduct = 'c8doEpdFC0CFkUWHUEXv';

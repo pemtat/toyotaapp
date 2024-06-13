@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/refresh.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
@@ -287,8 +288,27 @@ class TicketView extends StatelessWidget {
                                             .searchQuery.value) ||
                                     job.description!.contains(
                                         ticketController.searchQuery.value);
-
-                                return searchQueryMatch;
+                                final statusMatch =
+                                    ticketController.selectedStatus.isEmpty ||
+                                        ticketController.selectedStatus
+                                            .contains(job.pmStatus);
+                                final jobDate =
+                                    formatDateTimeString(job.pmPlan ?? '');
+                                final dateMatch =
+                                    ticketController.selectedDate.value ==
+                                            null ||
+                                        (jobDate.year ==
+                                                ticketController
+                                                    .selectedDate.value!.year &&
+                                            jobDate.month ==
+                                                ticketController.selectedDate
+                                                    .value!.month &&
+                                            jobDate.day ==
+                                                ticketController
+                                                    .selectedDate.value!.day);
+                                return searchQueryMatch &&
+                                    dateMatch &&
+                                    statusMatch;
                               }).toList();
                               if (filteredJobs.isEmpty) {
                                 return Center(
@@ -314,8 +334,8 @@ class TicketView extends StatelessWidget {
                                           ticketController.expandedIndex2,
                                       jobController: jobController,
                                       ticketController: ticketController,
-                                      sidebar:
-                                          SidebarColor.getColor('planning'),
+                                      sidebar: SidebarColor.getColor(
+                                          job.pmStatus ?? ''),
                                     ),
                                   );
                                 },

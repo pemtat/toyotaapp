@@ -8,7 +8,6 @@ class Home {
   final DateTime date;
   final String location;
   final String serialnumber;
-
   final String status;
 
   Home({
@@ -31,14 +30,13 @@ class Home {
     return Home(
         jobid: json['id'].toString(),
         summary: json['summary'] ?? '',
-        ticketid:
-            json['id'] != null ? json['id'].toString().padLeft(7, '0') : '',
+        ticketid: json['id'] != null ? json['id'].toString() : '',
         description: json['description'] ?? '',
         date: json['due_date'] != null
             ? DateTime.parse(json['due_date'])
             : DateTime.now(),
         location: 'Bangkok',
-        serialnumber: 'CE429423',
+        serialnumber: 'CE429424',
         status: json['status'] != null ? json['status']['name'] : 'Unknown');
   }
 }

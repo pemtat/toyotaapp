@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
@@ -30,13 +31,14 @@ class JobDetailControllerPM extends GetxController {
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
   var status = RxString('');
+  List<String> notePic = [];
   var imagesBefore = <Map<String, String>>[].obs;
   var imagesAfter = <Map<String, String>>[].obs;
   var savedDateStartTime = ''.obs;
   var savedDateEndTime = ''.obs;
+  RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
 
   final HomeController jobController = Get.put(HomeController());
-  RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
   final BottomBarController bottomController = Get.put(BottomBarController());
 
   void fetchData(String ticketId) async {
@@ -70,6 +72,10 @@ class JobDetailControllerPM extends GetxController {
         if (issue['notes'] != null) {
           var issueNotes = issue['notes'] as List<dynamic>;
           notesFiles.assignAll(issueNotes);
+          notesFiles.forEach((note) async {
+            var reporterId = note['reporter']['id'];
+            notePic.add(await checkLevel(reporterId));
+          });
         }
         var issueDetails = {
           'id': issue['id'],
@@ -151,9 +157,9 @@ class JobDetailControllerPM extends GetxController {
           List<int> fileBytes = await file.readAsBytes();
           String base64Content = base64Encode(fileBytes);
           addAttachment({
-            'name': fileName,
+            'filename': fileName,
             'path': filePath,
-            'base64': base64Content,
+            'content': base64Content,
           });
         } else {}
       } else {}
@@ -222,8 +228,8 @@ class JobDetailControllerPM extends GetxController {
     String noteText = textController.text;
     if (addAttatchments.isNotEmpty && noteText != '') {
       var file = addAttatchments.first;
-      String name = file['name'];
-      String content = file['base64'];
+      String name = file['filename'];
+      String content = file['content'];
 
       Map<String, dynamic> body = {
         "text": noteText,

@@ -9,8 +9,9 @@ import 'package:toyotamobile/Widget/divider_widget.dart';
 
 class NoteItem extends StatelessWidget {
   final Map<String, dynamic> note;
+  final String? notePic;
 
-  const NoteItem({super.key, required this.note});
+  const NoteItem({super.key, required this.note, this.notePic});
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +25,29 @@ class NoteItem extends StatelessWidget {
               child: CircleAvatar(
                 backgroundColor: red3,
                 radius: 12,
-                child: FutureBuilder<String>(
-                  future: checkLevel(note['reporter']['id']),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Container();
-                    } else if (snapshot.hasError) {
-                      return const Text('Error');
-                    } else {
-                      String accessLevel = snapshot.data!;
-                      return Text(
-                        accessLevel,
+                child: notePic != null
+                    ? Text(
+                        notePic ?? '',
                         style: TextStyleList.text13,
-                      );
-                    }
-                  },
-                ),
+                      )
+                    : FutureBuilder<String>(
+                        future: checkLevel(note['reporter']['id']),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator(); // Placeholder widget while loading
+                          } else if (snapshot.hasError) {
+                            return Text(
+                                'Error'); // Display an error message if future fails
+                          } else {
+                            String accessLevel = snapshot.data!;
+                            return Text(
+                              accessLevel,
+                              style: TextStyleList.text13,
+                            );
+                          }
+                        },
+                      ),
               ),
             ),
             Column(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
@@ -257,7 +258,9 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       const Spacer(),
                                       GoogleMapButton(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Get.to(() => FillFormView2());
+                                        },
                                       ),
                                     ],
                                   ),

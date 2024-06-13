@@ -166,9 +166,12 @@ class CalendarView extends StatelessWidget {
                                         ));
                                   },
                                   child: CalendarItem(
-                                      event: event,
-                                      expandedIndex:
-                                          calendarController.expandedIndex),
+                                    event: event,
+                                    expandedIndex:
+                                        calendarController.expandedIndex,
+                                    expandedTicketId:
+                                        calendarController.expandedTicketId,
+                                  ),
                                 );
                               },
                             ),

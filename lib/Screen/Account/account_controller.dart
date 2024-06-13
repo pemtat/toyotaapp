@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/Login/login_view.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 
 class AccountController extends GetxController {
@@ -27,6 +28,24 @@ class AccountController extends GetxController {
     );
   }
 
+  void showDeleteDialog(
+      BuildContext context, String title, String left, String right) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogAlert(
+          title: title,
+          leftButton: left,
+          rightButton: right,
+          onRightButtonPressed: () {
+            deleteAccount();
+          },
+          rightColor: red1,
+        );
+      },
+    );
+  }
+
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('access_token', "");
@@ -37,4 +56,6 @@ class AccountController extends GetxController {
     jobController.mostRecentCompleteJob.value = null;
     Get.offAll(() => LoginView());
   }
+
+  Future<void> deleteAccount() async {}
 }

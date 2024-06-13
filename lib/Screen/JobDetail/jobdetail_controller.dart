@@ -4,9 +4,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
@@ -24,10 +25,12 @@ class JobDetailController extends GetxController {
   final notes = TextEditingController().obs;
   final comment = TextEditingController().obs;
   var reportList = <RepairReportModel>[].obs;
+  var pdfList = <Map<String, dynamic>>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
   var notesFiles = <dynamic>[].obs;
   var isPicking = false.obs;
   var issueData = [].obs;
+  List<String> notePic = [];
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
@@ -51,7 +54,8 @@ class JobDetailController extends GetxController {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
     jobId = ticketId;
-    fetchReportData(subjobId);
+    fetchReportData(subjobId, token ?? '');
+    fetchPdfData(ticketId, token ?? '', pdfList);
     try {
       final response = await http.get(
         Uri.parse(getSubJobById(subjobId)),
@@ -100,7 +104,12 @@ class JobDetailController extends GetxController {
 
         if (issue['notes'] != null) {
           var issueNotes = issue['notes'] as List<dynamic>;
+
           notesFiles.assignAll(issueNotes);
+          notesFiles.forEach((note) async {
+            var reporterId = note['reporter']['id'];
+            notePic.add(await checkLevel(reporterId));
+          });
         }
         var issueDetails = {
           'id': issue['id'],
@@ -216,10 +225,7 @@ class JobDetailController extends GetxController {
     }
   }
 
-  Future<void> fetchReportData(String id) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-
+  Future<void> fetchReportData(String id, String token) async {
     try {
       final response = await http.get(
         Uri.parse(getRepairReportById(id)),
