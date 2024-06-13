@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -57,8 +56,8 @@ class TicketDetailView extends StatelessWidget {
             var file = ticketController.attatchments.isNotEmpty
                 ? ticketController.attatchments
                 : null;
-            var filePdf = ticketController.addAttatchments.isNotEmpty
-                ? ticketController.addAttatchments
+            var filePdf = ticketController.pdfList.isNotEmpty
+                ? ticketController.pdfList
                 : null;
             var issue = ticketController.issueData.first;
 
@@ -77,10 +76,10 @@ class TicketDetailView extends StatelessWidget {
                             children: [
                               BoxContainer(children: [
                                 TicketInfoStatus(
-                                  ticketId: issue['id'],
-                                  dateTime: formatDateTime(issue['created_at']),
-                                  reporter: issue['reporter'],
-                                  status: issue['status'],
+                                  ticketId: issue.id,
+                                  dateTime: '2025',
+                                  reporter: issue.reporter.name,
+                                  status: issue.status.name,
                                 ),
                               ]),
                               8.kH,
@@ -131,7 +130,7 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       Flexible(
                                         child: Text(
-                                          issue['description'],
+                                          issue.description,
                                           style: TextStyleList.text9,
                                         ),
                                       ),
@@ -153,15 +152,15 @@ class TicketDetailView extends StatelessWidget {
                                             children: [
                                               BoxInfo(
                                                 title: "Category",
-                                                value: issue['category'],
+                                                value: issue.category.name,
                                               ),
                                               BoxInfo(
                                                 title: "Severity",
-                                                value: issue['severity'],
+                                                value: issue.severity.name,
                                               ),
                                               BoxInfo(
                                                 title: "Relations",
-                                                value: issue['relations'],
+                                                value: '-',
                                               ),
                                             ],
                                           ),
@@ -237,12 +236,12 @@ class TicketDetailView extends StatelessWidget {
                                   8.kH,
                                   BoxInfo(
                                     title: "Contact name",
-                                    value: issue['reporter'],
+                                    value: issue.reporter.name,
                                   ),
                                   3.kH,
                                   BoxInfo(
                                     title: "Email",
-                                    value: issue['email'],
+                                    value: 'Wait',
                                   ),
                                   3.kH,
                                   const BoxInfo(

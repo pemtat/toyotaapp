@@ -3,12 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 
 class NoteItem extends StatelessWidget {
-  final Map<String, dynamic> note;
+  final Notes note;
   final String? notePic;
 
   const NoteItem({super.key, required this.note, this.notePic});
@@ -31,14 +32,13 @@ class NoteItem extends StatelessWidget {
                         style: TextStyleList.text13,
                       )
                     : FutureBuilder<String>(
-                        future: checkLevel(note['reporter']['id']),
+                        future: checkLevel(note.reporter!.id ?? 0),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return CircularProgressIndicator(); // Placeholder widget while loading
+                            return CircularProgressIndicator();
                           } else if (snapshot.hasError) {
-                            return Text(
-                                'Error'); // Display an error message if future fails
+                            return Text('Error');
                           } else {
                             String accessLevel = snapshot.data!;
                             return Text(
@@ -56,24 +56,23 @@ class NoteItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      note['reporter']['real_name'],
+                      note.reporter!.name ?? '',
                       style: TextStyleList.text10,
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      formatDateTime(note['created_at']),
+                      formatDateTime(note.createdAt ?? ''),
                       style: TextStyleList.subtext1,
                     ),
                   ],
                 ),
                 Text(
-                  note['text'],
+                  note.text ?? '',
                   style: TextStyleList.subtext3,
                 ),
-                if (note['attachments'] != null &&
-                    note['attachments'].isNotEmpty)
+                if (note.attachments != null && note.attachments!.isNotEmpty)
                   Text(
-                    'Attachments: ${note['attachments'][0]['filename']}',
+                    'Attachments: ${note.attachments![0].filename}',
                     style: TextStyleList.subtext3,
                   ),
               ],

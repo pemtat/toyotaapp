@@ -5,11 +5,13 @@ import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
+import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 
 class LoginController extends GetxController {
   final LoginModel _loginModel = LoginModel();
   final HomeController jobController = Get.put(HomeController());
+  final UserController userController = Get.put(UserController());
 
   void setEmail(String username) {
     _loginModel.email.value = username;
@@ -67,7 +69,7 @@ class LoginController extends GetxController {
         Map<String, dynamic> tokenData = json.decode(tokenResponse ?? '');
         prefs.setString('token', tokenData['token']);
         jobController.fetchDataFromAssignJob();
-
+        userController.fetchData();
         Get.offAll(() => BottomBarView());
         Get.snackbar('Login Succesful', 'Welcome to T-Service');
       } else {

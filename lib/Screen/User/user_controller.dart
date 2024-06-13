@@ -8,12 +8,6 @@ import 'package:toyotamobile/Service/api.dart';
 class UserController extends GetxController {
   var userInfo = <User>[].obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchData();
-  }
-
   Future<void> fetchData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');

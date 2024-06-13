@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Function/pdfget.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
@@ -20,7 +19,7 @@ import 'package:intl/intl.dart';
 
 class JobDetailControllerPM extends GetxController {
   final notes = TextEditingController().obs;
-  var notesFiles = <dynamic>[].obs;
+  var notesFiles = <Notes>[].obs;
   var isPicking = false.obs;
   var issueData = [].obs;
   var attatchments = <Map<String, dynamic>>[].obs;
@@ -30,6 +29,7 @@ class JobDetailControllerPM extends GetxController {
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
+  var pdfList = <Map<String, dynamic>>[].obs;
   var status = RxString('');
   List<String> notePic = [];
   var imagesBefore = <Map<String, String>>[].obs;
@@ -44,128 +44,26 @@ class JobDetailControllerPM extends GetxController {
   void fetchData(String ticketId) async {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
+    fetchPdfData(ticketId, token ?? '', pdfList);
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {
         'Authorization': '$token',
       },
     );
-
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
-      var issues = data['issues'] as List<dynamic>;
-
-      var extractedData = issues.map((issue) {
-        if (issue['attachments'] != null) {
-          var attachments = issue['attachments'] as List<dynamic>;
-          for (var attachment in attachments) {
-            Map<String, dynamic> attachmentMap = {
-              'id': attachment['id'],
-              'filename': attachment['filename'],
-            };
-            attachmentsData.add(attachmentMap);
-          }
-        }
-        issueId = issue['id'];
-        status.value = issue['status']['name'];
-
-        if (issue['notes'] != null) {
-          var issueNotes = issue['notes'] as List<dynamic>;
-          notesFiles.assignAll(issueNotes);
-          notesFiles.forEach((note) async {
-            var reporterId = note['reporter']['id'];
-            notePic.add(await checkLevel(reporterId));
-          });
-        }
-        var issueDetails = {
-          'id': issue['id'],
-          'summary': issue['summary'],
-          'description': issue['description'],
-          'created_at': issue['created_at'],
-          'reporter': issue['reporter']['name'],
-          'status': issue['status']['name'],
-          'serialNumber': 'CE429423',
-          'email': issue['reporter']['email'],
-          'category': issue['category']['name'],
-          'severity': issue['severity']['name'],
-          'relations': '-',
-        };
-        checkWarranty(issueDetails['serialNumber'], warrantyInfoList);
-
-        return issueDetails;
+      TicketByIdModel ticketModel = TicketByIdModel.fromJson(data);
+      List<Issues>? issuesList = ticketModel.issues;
+      issuesList!.map((issue) {
+        issueId = issue.id;
+        fetchReadAttachment(issueId, token ?? '', issue.attachments,
+            attachmentsData, attatchments);
+        fetchNotesPic(issue.notes, notesFiles, notePic);
+        checkWarranty(issue.serialNo ?? '', warrantyInfoList);
       }).toList();
-      for (var attachment in attachmentsData) {
-        int attachmentId = attachment['id'];
-        final String getFileUrl = getAttachmentFileById(issueId, attachmentId);
-
-        final response2 = await http.get(
-          Uri.parse(getFileUrl),
-          headers: {
-            'Authorization': '$token',
-          },
-        );
-        if (response2.statusCode == 200) {
-          Map<String, dynamic> data = json.decode(response2.body);
-          var files = data['files'] as List<dynamic>;
-          var fileData = files.map((file) {
-            return {
-              'id': file['id'],
-              'filename': file['filename'],
-              'content': file['content'],
-            };
-          }).toList();
-          attatchments.addAll(fileData);
-        } else {}
-      }
-
-      issueData.value = extractedData;
+      issueData.value = issuesList;
     } else {}
-  }
-
-  Future<void> pickImage(RxList<Map<String, String>> file) async {
-    if (isPicking.value) return;
-    isPicking.value = true;
-    try {
-      final picker = ImagePicker();
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        File imageFile = File(pickedFile.path);
-        String fileName = pickedFile.name;
-        String base64Content = base64Encode(await imageFile.readAsBytes());
-        file.add({
-          'filename': fileName,
-          'content': base64Content,
-        });
-      }
-    } finally {
-      isPicking.value = false;
-    }
-  }
-
-  Future<void> pickFile() async {
-    if (isPicking.value) return;
-
-    isPicking.value = true;
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
-      if (result != null && result.files.isNotEmpty) {
-        String? filePath = result.files.single.path;
-        String fileName = result.files.single.name;
-
-        if (filePath != null) {
-          File file = File(filePath);
-          List<int> fileBytes = await file.readAsBytes();
-          String base64Content = base64Encode(fileBytes);
-          addAttachment({
-            'filename': fileName,
-            'path': filePath,
-            'content': base64Content,
-          });
-        } else {}
-      } else {}
-    } finally {
-      isPicking.value = false;
-    }
   }
 
   void completeJob() async {
@@ -271,10 +169,6 @@ class JobDetailControllerPM extends GetxController {
         notes.value.clear();
       }
     }
-  }
-
-  void addAttachment(Map<String, String> file) {
-    addAttatchments.add(file);
   }
 
   void showCompletedDialog(

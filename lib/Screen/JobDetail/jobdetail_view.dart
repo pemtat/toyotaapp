@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editfillform_view.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
@@ -60,10 +61,8 @@ class JobDetailView extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${job['summary']}',
-                              style: TextStyleList.title1),
-                          Text('JobID: ${job['id']}',
-                              style: TextStyleList.text16),
+                          Text('${job.summary}', style: TextStyleList.title1),
+                          Text('JobID: ${job.id}', style: TextStyleList.text16),
                         ],
                       );
                     }
@@ -172,10 +171,9 @@ class JobDetailView extends StatelessWidget {
                                 child: BoxContainer(
                                   children: [
                                     TicketInfo(
-                                      ticketId: issue['id'],
-                                      dateTime:
-                                          formatDateTime(issue['created_at']),
-                                      reporter: issue['reporter'],
+                                      ticketId: issue.id,
+                                      dateTime: formatDateTime(issue.createdAt),
+                                      reporter: issue.reporter.name,
                                       more:
                                           jobController.moreTicketDetail.value,
                                     ),
@@ -197,7 +195,7 @@ class JobDetailView extends StatelessWidget {
                                                 children: [
                                                   Flexible(
                                                     child: Text(
-                                                      issue['description'],
+                                                      issue.description,
                                                       style:
                                                           TextStyleList.text9,
                                                     ),
@@ -222,18 +220,17 @@ class JobDetailView extends StatelessWidget {
                                                         children: [
                                                           BoxInfo(
                                                             title: "Category",
-                                                            value: issue[
-                                                                'category'],
+                                                            value: issue
+                                                                .category.name,
                                                           ),
                                                           BoxInfo(
                                                             title: "Severity",
-                                                            value: issue[
-                                                                'severity'],
+                                                            value: issue
+                                                                .severity.name,
                                                           ),
                                                           BoxInfo(
                                                             title: "Relations",
-                                                            value: issue[
-                                                                'relations'],
+                                                            value: '-',
                                                           ),
                                                         ],
                                                       ),
@@ -384,8 +381,13 @@ class JobDetailView extends StatelessWidget {
                                                         .spaceBetween,
                                                 children: [
                                                   GestureDetector(
-                                                    onTap:
-                                                        jobController.pickFile,
+                                                    onTap: () {
+                                                      pickFile(
+                                                          jobController
+                                                              .addAttatchments,
+                                                          jobController
+                                                              .isPicking);
+                                                    },
                                                     child: Row(
                                                       children: [
                                                         Image.asset(
@@ -459,7 +461,7 @@ class JobDetailView extends StatelessWidget {
                                             ''
                                         ? ButtonTime(
                                             saveTime: (datetime) {
-                                              jobController.showTimeDialog(
+                                              showTimeDialog(
                                                 context,
                                                 'Are you sure to confirm?',
                                                 'No',
@@ -489,9 +491,9 @@ class JobDetailView extends StatelessWidget {
                                           : Container()),
                                   10.kH,
                                   UploadImageWidget(
-                                    pickImage: () => jobController
-                                        .pickImage(jobController.imagesBefore),
-                                  ),
+                                      pickImage: () => pickImage(
+                                          jobController.imagesBefore,
+                                          jobController.isPicking)),
                                   18.kH,
                                   Container(
                                     height: 0.5,
@@ -512,8 +514,7 @@ class JobDetailView extends StatelessWidget {
                                                     ''
                                                 ? ButtonTime(
                                                     saveTime: (datetime) {
-                                                      jobController
-                                                          .showTimeDialog(
+                                                      showTimeDialog(
                                                         context,
                                                         'Are you sure to confirm?',
                                                         'No',
@@ -543,9 +544,9 @@ class JobDetailView extends StatelessWidget {
                                                 : Container()),
                                             10.kH,
                                             UploadImageWidget(
-                                              pickImage: () => jobController
-                                                  .pickImage(jobController
-                                                      .imagesAfter),
+                                              pickImage: () => pickImage(
+                                                  jobController.imagesAfter,
+                                                  jobController.isPicking),
                                             ),
                                             16.kH,
                                           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -59,10 +60,8 @@ class JobDetailViewPM extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${job['summary']}',
-                              style: TextStyleList.title1),
-                          Text('JobID: ${job['id']}',
-                              style: TextStyleList.text16),
+                          Text('${job.summary}', style: TextStyleList.title1),
+                          Text('JobID: ${job.id}', style: TextStyleList.text16),
                         ],
                       );
                     }
@@ -170,10 +169,9 @@ class JobDetailViewPM extends StatelessWidget {
                                 child: BoxContainer(
                                   children: [
                                     TicketInfo(
-                                      ticketId: issue['id'],
-                                      dateTime:
-                                          formatDateTime(issue['created_at']),
-                                      reporter: issue['reporter'],
+                                      ticketId: issue.id,
+                                      dateTime: formatDateTime(issue.createdAt),
+                                      reporter: issue.reporter.name,
                                       more:
                                           jobController.moreTicketDetail.value,
                                     ),
@@ -195,7 +193,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                 children: [
                                                   Flexible(
                                                     child: Text(
-                                                      issue['description'],
+                                                      issue.description,
                                                       style:
                                                           TextStyleList.text9,
                                                     ),
@@ -220,18 +218,17 @@ class JobDetailViewPM extends StatelessWidget {
                                                         children: [
                                                           BoxInfo(
                                                             title: "Category",
-                                                            value: issue[
-                                                                'category'],
+                                                            value: issue
+                                                                .category.name,
                                                           ),
                                                           BoxInfo(
                                                             title: "Severity",
-                                                            value: issue[
-                                                                'severity'],
+                                                            value: issue
+                                                                .severity.name,
                                                           ),
                                                           BoxInfo(
                                                             title: "Relations",
-                                                            value: issue[
-                                                                'relations'],
+                                                            value: '-',
                                                           ),
                                                         ],
                                                       ),
@@ -388,8 +385,13 @@ class JobDetailViewPM extends StatelessWidget {
                                                             .spaceBetween,
                                                     children: [
                                                       GestureDetector(
-                                                        onTap: jobController
-                                                            .pickFile,
+                                                        onTap: () {
+                                                          pickFile(
+                                                              jobController
+                                                                  .addAttatchments,
+                                                              jobController
+                                                                  .isPicking);
+                                                        },
                                                         child: Row(
                                                           children: [
                                                             Image.asset(
@@ -487,8 +489,9 @@ class JobDetailViewPM extends StatelessWidget {
                                           : Container()),
                                   10.kH,
                                   UploadImageWidget(
-                                    pickImage: () => jobController
-                                        .pickImage(jobController.imagesBefore),
+                                    pickImage: () => pickImage(
+                                        jobController.imagesBefore,
+                                        jobController.isPicking),
                                   ),
                                   18.kH,
                                   Obx(() => jobController
@@ -535,9 +538,9 @@ class JobDetailViewPM extends StatelessWidget {
                                                 : Container()),
                                             10.kH,
                                             UploadImageWidget(
-                                              pickImage: () => jobController
-                                                  .pickImage(jobController
-                                                      .imagesAfter),
+                                              pickImage: () => pickImage(
+                                                  jobController.imagesAfter,
+                                                  jobController.isPicking),
                                             ),
                                             6.kH,
                                           ],

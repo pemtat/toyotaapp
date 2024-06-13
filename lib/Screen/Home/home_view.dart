@@ -170,7 +170,7 @@ class HomeView extends StatelessWidget {
 
                     return InkWell(
                       onTap: () {
-                        Get.to(() => TicketDetailView(ticketId: job.jobid));
+                        Get.to(() => TicketDetailView(ticketId: '81'));
                       },
                       child: JobItemWidget(
                         job: job,

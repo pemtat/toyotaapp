@@ -4,12 +4,10 @@ import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'dart:convert';
 
 class HomeController extends GetxController {
-  final UserController userController = Get.put(UserController());
   var jobList = <Home>[].obs;
   final RxInt jobListLength = 0.obs;
   final RxInt jobListCloseLength = 0.obs;
@@ -27,7 +25,6 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     fetchDataFromAssignJob();
-    userController.fetchData();
   }
 
   Future<void> fetchDataFromAssignJob() async {

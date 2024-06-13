@@ -30,6 +30,7 @@ class TextFieldBar extends StatelessWidget {
           onChanged: onChanged,
           decoration: InputDecoration(
             labelText: label,
+            labelStyle: TextStyleList.text11,
             floatingLabelStyle: const TextStyle(color: Colors.black),
             border: InputBorder.none,
             contentPadding:
