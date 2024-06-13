@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io' as io;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -11,18 +10,23 @@ import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
+import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
+import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
+import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
+final BottomBarController bottomController = Get.put(BottomBarController());
+final HomeController jobController = Get.put(HomeController());
 void fetchSubJob(String subjobId, String token, RxList<JobById> subJobs) async {
   try {
     final response = await http.get(
       Uri.parse(getSubJobById(subjobId)),
       headers: {
-        'Authorization': '$token',
+        'Authorization': token,
       },
     );
 
@@ -64,7 +68,7 @@ void fetchReadAttachment(
       final response2 = await http.get(
         Uri.parse(getFileUrl),
         headers: {
-          'Authorization': '$token',
+          'Authorization': token,
         },
       );
       if (response2.statusCode == 200) {
@@ -237,6 +241,29 @@ void showTimeDialog(
       );
     },
   );
+}
+
+void changeIssueStatus(int issueId, String status) async {
+  final String updateStatus = updateIssueStatusById(issueId);
+
+  String? token = await getToken();
+  Map<String, dynamic> body = {
+    "status": {"name": status}
+  };
+
+  final response = await http.patch(
+    Uri.parse(updateStatus),
+    headers: {
+      'Authorization': '$token',
+      'Content-Type': 'application/json',
+    },
+    body: jsonEncode(body),
+  );
+  if (response.statusCode == 200) {
+    jobController.fetchDataFromAssignJob();
+    bottomController.currentIndex.value = 0;
+    Get.offAll(() => BottomBarView());
+  }
 }
 
 void saveCurrentDateTime(Rx<String> datetime) {

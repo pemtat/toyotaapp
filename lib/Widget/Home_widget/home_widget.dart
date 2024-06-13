@@ -117,7 +117,7 @@ class JobItemWidget extends StatelessWidget {
                           decoration: Decoration2(),
                           child: Column(
                             children: [
-                              BoxInfo(
+                              const BoxInfo(
                                 title: "Name/Model",
                                 value: 'SDOPVPFK-10SJ',
                               ),

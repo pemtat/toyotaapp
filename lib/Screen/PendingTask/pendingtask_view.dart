@@ -21,7 +21,7 @@ class PendingTaskView extends StatelessWidget {
   final String ticketId;
   final String jobId;
   PendingTaskView({super.key, required this.ticketId, required this.jobId}) {
-    penddingTaskController.fetchData(ticketId);
+    penddingTaskController.fetchData(ticketId, jobId);
   }
 
   @override
@@ -74,11 +74,11 @@ class PendingTaskView extends StatelessWidget {
                             BoxContainer(
                               children: [
                                 TicketInfoStatus(
-                                  ticketId: issue['id'],
+                                  ticketId: issue.id,
                                   dateTime: penddingTaskController
-                                      .formatDateTime(issue['created_at']),
-                                  reporter: issue['reporter'],
-                                  status: issue['status'],
+                                      .formatDateTime(issue.createdAt),
+                                  reporter: issue.reporter.name,
+                                  status: issue.status.name,
                                 ),
                               ],
                             ),
@@ -93,7 +93,7 @@ class PendingTaskView extends StatelessWidget {
                                   children: [
                                     Flexible(
                                       child: Text(
-                                        issue['summary'],
+                                        issue.summary,
                                         style: TextStyleList.text9,
                                       ),
                                     ),
@@ -115,15 +115,15 @@ class PendingTaskView extends StatelessWidget {
                                           children: [
                                             BoxInfo(
                                               title: "Category",
-                                              value: issue['category'],
+                                              value: issue.category.name,
                                             ),
                                             BoxInfo(
                                               title: "Severity",
-                                              value: issue['severity'],
+                                              value: issue.severity.name,
                                             ),
-                                            BoxInfo(
+                                            const BoxInfo(
                                               title: "Relations",
-                                              value: issue['relations'],
+                                              value: '-',
                                             ),
                                           ],
                                         ),
@@ -196,12 +196,12 @@ class PendingTaskView extends StatelessWidget {
                                 8.kH,
                                 BoxInfo(
                                   title: "Contact name",
-                                  value: issue['reporter'],
+                                  value: issue.reporter.name,
                                 ),
                                 3.kH,
-                                BoxInfo(
+                                const BoxInfo(
                                   title: "Email",
-                                  value: issue['email'],
+                                  value: 'email',
                                 ),
                                 3.kH,
                                 const BoxInfo(

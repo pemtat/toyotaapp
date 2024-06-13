@@ -36,9 +36,9 @@ class NoteItem extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           } else if (snapshot.hasError) {
-                            return Text('Error');
+                            return const Text('Error');
                           } else {
                             String accessLevel = snapshot.data!;
                             return Text(

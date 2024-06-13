@@ -209,7 +209,9 @@ class JobDetailController extends GetxController {
           title: title,
           leftButton: left,
           rightButton: right,
-          onRightButtonPressed: completeJob,
+          onRightButtonPressed: () {
+            changeIssueStatus(issueId, 'closed');
+          },
         );
       },
     );

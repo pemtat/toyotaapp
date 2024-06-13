@@ -226,7 +226,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                             value: issue
                                                                 .severity.name,
                                                           ),
-                                                          BoxInfo(
+                                                          const BoxInfo(
                                                             title: "Relations",
                                                             value: '-',
                                                           ),

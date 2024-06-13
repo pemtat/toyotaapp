@@ -15,11 +15,11 @@ class CalendarItem extends StatelessWidget {
   final Rx<String> expandedTicketId;
 
   const CalendarItem({
-    Key? key,
+    super.key,
     required this.event,
     required this.expandedIndex,
     required this.expandedTicketId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
