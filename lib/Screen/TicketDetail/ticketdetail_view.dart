@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/base64img.dart';
+import 'package:toyotamobile/Widget/customerinfo_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
-import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/moredetail.widget.dart';
 import 'package:toyotamobile/Widget/noteItem_widget.dart';
 import 'package:toyotamobile/Widget/progressbar_widget.dart.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
-import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
 
@@ -120,96 +118,17 @@ class TicketDetailView extends StatelessWidget {
                                 ],
                               ),
                               8.kH,
-                              BoxContainer(
-                                children: [
-                                  Text(
-                                    'Summary of issue',
-                                    style: TextStyleList.text16,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          issue.description,
-                                          style: TextStyleList.text9,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  file != null
-                                      ? Column(
-                                          children: [
-                                            8.kH,
-                                            AttachmentsListWidget(file, false),
-                                            8.kH,
-                                          ],
-                                        )
-                                      : Container(),
-                                  Obx(
-                                    () => !ticketController.moreDetail.value
-                                        ? Container()
-                                        : Column(
-                                            children: [
-                                              BoxInfo(
-                                                title: "Category",
-                                                value: issue.category.name,
-                                              ),
-                                              BoxInfo(
-                                                title: "Severity",
-                                                value: issue.severity.name,
-                                              ),
-                                              const BoxInfo(
-                                                title: "Relations",
-                                                value: '-',
-                                              ),
-                                            ],
-                                          ),
-                                  ),
-                                ],
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  ticketController.moreDetail.value =
-                                      !ticketController.moreDetail.value;
-                                },
-                                child: Obx(
-                                  () => !ticketController.moreDetail.value
-                                      ? BoxContainer(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'More details',
-                                                  style: TextStyleList.text16,
-                                                ),
-                                                Image.asset(
-                                                    'assets/arrowdown.png')
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                      : BoxContainer(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Less details',
-                                                  style: TextStyleList.text16,
-                                                ),
-                                                Image.asset(
-                                                    'assets/arrowup.png')
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                ),
-                              ),
+                              MoreDetail(
+                                  file: file,
+                                  description: issue.description,
+                                  moreDetail: ticketController.moreDetail,
+                                  ediefile: false,
+                                  summary: issue.summary,
+                                  category: issue.category.name,
+                                  relations: '-',
+                                  severity: issue.severity.name),
+                              MoreDetailArrow(
+                                  moreDetail: ticketController.moreDetail),
                               8.kH,
                               Obx(
                                 () {
@@ -230,41 +149,12 @@ class TicketDetailView extends StatelessWidget {
                                 },
                               ),
                               8.kH,
-                              BoxContainer(
-                                children: [
-                                  const TitleApp(text: "Customer Information"),
-                                  8.kH,
-                                  BoxInfo(
-                                    title: "Contact name",
-                                    value: issue.reporter.name,
-                                  ),
-                                  3.kH,
-                                  const BoxInfo(
-                                    title: "Email",
-                                    value: 'Wait',
-                                  ),
-                                  3.kH,
-                                  const BoxInfo(
-                                    title: "Phone number",
-                                    value: "0828203345",
-                                  ),
-                                  const BoxInfo(
-                                    title: "Location",
-                                    value: "Onnut, Bangkok, Thailand",
-                                  ),
-                                  5.kH,
-                                  Row(
-                                    children: [
-                                      const Spacer(),
-                                      GoogleMapButton(
-                                        onTap: () {
-                                          Get.to(() => const FillFormView2());
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                              CustomerInformation(
+                                  contactName: issue.reporter.name,
+                                  email: 'email',
+                                  phoneNumber: '0828203345',
+                                  location: 'Onnut, Bangkok, Thailand',
+                                  onTap: () {}),
                               8.kH,
                               BoxContainer(
                                 children: [

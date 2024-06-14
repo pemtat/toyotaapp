@@ -76,7 +76,7 @@ class JobStatusItem extends StatelessWidget {
                         style: GoogleFonts.kanit(
                           color: titleColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     )
@@ -85,7 +85,7 @@ class JobStatusItem extends StatelessWidget {
                       style: GoogleFonts.kanit(
                         color: titleColor,
                         fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
             ],

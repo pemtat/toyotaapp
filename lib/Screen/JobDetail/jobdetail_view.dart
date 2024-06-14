@@ -9,17 +9,18 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
+import 'package:toyotamobile/Widget/addnote_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
-import 'package:toyotamobile/Widget/noteItem_widget.dart';
+import 'package:toyotamobile/Widget/intruction_widget.dart';
+import 'package:toyotamobile/Widget/moredetail.widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
-import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/uploadimage_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
@@ -107,61 +108,9 @@ class JobDetailView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              BoxContainer(
-                                children: [
-                                  const TitleApp(text: 'Intruction'),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Step 1: Contact reporter',
-                                        style: TextStyleList.text4,
-                                      ),
-                                      3.wH,
-                                      Text('(Phone number: 0823424234)',
-                                          style: TextStyleList.subtext3),
-                                    ],
-                                  ),
-                                  3.kH,
-                                  Wrap(
-                                    children: [
-                                      RichText(
-                                          text: TextSpan(
-                                        text: 'Step 2 ',
-                                        style: TextStyleList.text4,
-                                        children: [
-                                          TextSpan(
-                                              text: 'Go to the machine',
-                                              style: TextStyleList.text4),
-                                          TextSpan(
-                                              text:
-                                                  ' (Location: Onnut, Bangkok)   ',
-                                              style: TextStyleList.subtext3),
-                                          WidgetSpan(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                GoogleMapButton(
-                                                  onTap: () {},
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                    ],
-                                  ),
-                                  3.kH,
-                                  Text(
-                                    'Step 3: Report to admin about machine',
-                                    style: TextStyleList.text4,
-                                  ),
-                                  3.kH,
-                                  Text(
-                                    'Step 4: Complete investigation',
-                                    style: TextStyleList.text4,
-                                  ),
-                                ],
-                              ),
+                              const Intruction(
+                                  phoneNumber: '0823424234',
+                                  location: 'Bangkok'),
                               8.kH,
                               InkWell(
                                 onTap: () {
@@ -185,107 +134,19 @@ class JobDetailView extends StatelessWidget {
                                 () => jobController.moreTicketDetail.value
                                     ? Column(
                                         children: [
-                                          BoxContainer(
-                                            children: [
-                                              Text(
-                                                'Summary of issue',
-                                                style: TextStyleList.text16,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Flexible(
-                                                    child: Text(
-                                                      issue.description,
-                                                      style:
-                                                          TextStyleList.text9,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              file != null
-                                                  ? Column(
-                                                      children: [
-                                                        8.kH,
-                                                        AttachmentsListWidget(
-                                                            file, false),
-                                                        8.kH,
-                                                      ],
-                                                    )
-                                                  : Container(),
-                                              Obx(
-                                                () => !jobController
-                                                        .moreDetail.value
-                                                    ? Container()
-                                                    : Column(
-                                                        children: [
-                                                          BoxInfo(
-                                                            title: "Category",
-                                                            value: issue
-                                                                .category.name,
-                                                          ),
-                                                          BoxInfo(
-                                                            title: "Severity",
-                                                            value: issue
-                                                                .severity.name,
-                                                          ),
-                                                          const BoxInfo(
-                                                            title: "Relations",
-                                                            value: '-',
-                                                          ),
-                                                        ],
-                                                      ),
-                                              ),
-                                            ],
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              jobController.moreDetail.value =
-                                                  !jobController
-                                                      .moreDetail.value;
-                                            },
-                                            child: Obx(
-                                              () => !jobController
-                                                      .moreDetail.value
-                                                  ? BoxContainer(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              'More details',
-                                                              style:
-                                                                  TextStyleList
-                                                                      .text16,
-                                                            ),
-                                                            Image.asset(
-                                                                'assets/arrowdown.png')
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : BoxContainer(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              'Less details',
-                                                              style:
-                                                                  TextStyleList
-                                                                      .text16,
-                                                            ),
-                                                            Image.asset(
-                                                                'assets/arrowup.png')
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                            ),
-                                          ),
+                                          MoreDetail(
+                                              file: file,
+                                              description: issue.description,
+                                              moreDetail:
+                                                  jobController.moreDetail,
+                                              ediefile: false,
+                                              summary: issue.summary,
+                                              category: issue.category.name,
+                                              relations: '-',
+                                              severity: issue.severity.name),
+                                          MoreDetailArrow(
+                                              moreDetail:
+                                                  jobController.moreDetail),
                                           8.kH,
                                           Obx(
                                             () {
@@ -307,132 +168,16 @@ class JobDetailView extends StatelessWidget {
                                             },
                                           ),
                                           8.kH,
-                                          BoxContainer(
-                                            children: [
-                                              Obx(() {
-                                                if (jobController
-                                                    .notesFiles.isEmpty) {
-                                                  return Center(
-                                                      child: Container());
-                                                } else {
-                                                  return Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      const TitleApp(
-                                                          text: 'Notes'),
-                                                      8.kH,
-                                                      ListView.builder(
-                                                        physics:
-                                                            const NeverScrollableScrollPhysics(),
-                                                        shrinkWrap: true,
-                                                        itemCount: jobController
-                                                            .notesFiles.length,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          final note =
-                                                              jobController
-                                                                      .notesFiles[
-                                                                  index];
-
-                                                          if (index <
-                                                                  jobController
-                                                                      .notesFiles
-                                                                      .length &&
-                                                              index <
-                                                                  jobController
-                                                                      .notePic
-                                                                      .length) {
-                                                            final notePic =
-                                                                jobController
-                                                                        .notePic[
-                                                                    index];
-                                                            return NoteItem(
-                                                              note: note,
-                                                              notePic: notePic,
-                                                            );
-                                                          } else {
-                                                            final notePic =
-                                                                jobController
-                                                                        .notePic[
-                                                                    index - 1];
-                                                            return NoteItem(
-                                                              note: note,
-                                                              notePic: notePic,
-                                                            );
-                                                          }
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                }
-                                              }),
-                                              12.kH,
-                                              TextFieldType(
-                                                hintText: 'Add Notes',
-                                                textSet:
-                                                    jobController.notes.value,
-                                              ),
-                                              8.kH,
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      pickFile(
-                                                          jobController
-                                                              .addAttatchments,
-                                                          jobController
-                                                              .isPicking);
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        Image.asset(
-                                                            'assets/link.png'),
-                                                        4.wH,
-                                                        Text(
-                                                          'Attach file',
-                                                          style: TextStyleList
-                                                              .text1,
-                                                        ),
-                                                        Obx(() {
-                                                          if (jobController
-                                                              .addAttatchments
-                                                              .isNotEmpty) {
-                                                            return Row(
-                                                              children: [
-                                                                4.wH,
-                                                                Text(
-                                                                  jobController
-                                                                      .addAttatchments
-                                                                      .first['name'],
-                                                                  style:
-                                                                      TextStyleList
-                                                                          .text1,
-                                                                ),
-                                                              ],
-                                                            );
-                                                          } else {
-                                                            return Container();
-                                                          }
-                                                        }),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  CustomElevatedButton(
-                                                    onPressed: () {
-                                                      jobController.addNote(
-                                                          jobController.notes);
-                                                    },
-                                                    text: 'Submit',
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                          AddNote(
+                                              notePic: jobController.notePic,
+                                              notesFiles:
+                                                  jobController.notesFiles,
+                                              notes: jobController.notes,
+                                              addAttatchments:
+                                                  jobController.addAttatchments,
+                                              isPicking:
+                                                  jobController.isPicking,
+                                              addNote: jobController.addNote)
                                         ],
                                       )
                                     : Container(),
