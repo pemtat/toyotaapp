@@ -81,11 +81,12 @@ class ShowRepairReport extends StatelessWidget {
                 BoxInfo2(
                     title: 'Additional spare part list',
                     value: additionalReportData.isEmpty ? '-' : ''),
+                4.kH,
                 if (additionalReportData.isNotEmpty)
                   ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: reportData.length,
+                    itemCount: additionalReportData.length,
                     itemBuilder: (context, index) {
                       final data = additionalReportData[index];
                       return Container(

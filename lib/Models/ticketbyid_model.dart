@@ -398,10 +398,21 @@ class History {
     message = json['message'];
     file = json['file'] != null ? File.fromJson(json['file']) : null;
     field = json['field'] != null ? Field.fromJson(json['field']) : null;
-    oldValue =
-        json['old_value'] != null ? OldValue.fromJson(json['old_value']) : null;
-    newValue =
-        json['new_value'] != null ? OldValue.fromJson(json['new_value']) : null;
+    try {
+      oldValue = json['old_value'] != null
+          ? OldValue.fromJson(json['old_value'])
+          : null;
+    } catch (e) {
+      print("Error parsing oldValue: ${json['old_value']} - $e");
+    }
+
+    try {
+      newValue = json['new_value'] != null
+          ? OldValue.fromJson(json['new_value'])
+          : null;
+    } catch (e) {
+      print("Error parsing newValue: ${json['new_value']} - $e");
+    }
     change = json['change'];
     note = json['note'] != null ? Note.fromJson(json['note']) : null;
   }

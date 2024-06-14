@@ -59,51 +59,58 @@ class CalendarView extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 selectedDecoration: const BoxDecoration(
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 240, 147, 17),
                   shape: BoxShape.circle,
                 ),
-                markerDecoration: const BoxDecoration(
-                  color: Colors.red,
-                  shape: BoxShape.circle,
-                ),
+                markerDecoration: const BoxDecoration(),
               ),
-              calendarBuilders: CalendarBuilders(
-                markerBuilder: (context, day, events) {
-                  if (events.isNotEmpty && !isSameDay(day, DateTime.now())) {
+              calendarBuilders:
+                  CalendarBuilders(markerBuilder: (context, day, events) {
+                if (events is List<Map<String, dynamic>> &&
+                    events.isNotEmpty &&
+                    !isSameDay(day, DateTime.now())) {
+                  final jobEvents = events
+                      .where((event) => event['type'] == EventType.Job)
+                      .toList();
+                  final pmEvents = events
+                      .where((event) => event['type'] == EventType.PM)
+                      .toList();
+
+                  if (jobEvents.isNotEmpty) {
                     return Container(
                       margin: const EdgeInsets.all(6.0),
                       decoration: const BoxDecoration(
-                        color: Colors.orange,
+                        color: red5,
                         shape: BoxShape.circle,
                       ),
                       child: Center(
                         child: Text(
                           '${day.day}',
-                          style:
-                              const TextStyle().copyWith(color: Colors.white),
-                        ),
-                      ),
-                    );
-                  } else if (events.isNotEmpty &&
-                      isSameDay(day, DateTime.now())) {
-                    return Container(
-                      margin: const EdgeInsets.all(6.0),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Text(
-                          '${day.day}',
-                          style:
-                              const TextStyle().copyWith(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
                     );
                   }
+                  if (pmEvents.isNotEmpty) {
+                    return Container(
+                      margin: const EdgeInsets.all(6.0),
+                      decoration: const BoxDecoration(
+                        color: blue2,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${day.day}',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  }
+
                   return null;
-                },
-              ),
+                }
+                return null;
+              }),
               selectedDayPredicate: (day) {
                 return isSameDay(calendarController.selectedDay.value, day);
               },

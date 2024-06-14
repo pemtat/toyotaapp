@@ -4,6 +4,7 @@ const Color red1 = Color(0xfFEB0A1E);
 const Color red2 = Color(0xffF55C02);
 const Color red3 = Color(0xffC06A6A);
 const Color red4 = Color.fromARGB(255, 237, 26, 43);
+const Color red5 = Color.fromARGB(255, 246, 135, 135);
 
 const Color orange1 = Color(0xffF55C02);
 
@@ -22,6 +23,7 @@ const Color green2 = Color.fromARGB(34, 34, 132, 62);
 const Color green3 = Color(0xff22843E);
 
 const Color blue1 = Color(0xff2E7CF6);
+const Color blue2 = Color.fromARGB(255, 106, 175, 248);
 
 const Color black = Colors.black;
 const Color black1 = Color.fromARGB(117, 29, 27, 32);

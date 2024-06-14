@@ -7,7 +7,6 @@ import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Screen/Ticket/ticket_controller.dart';
-import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -16,6 +15,7 @@ import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
+import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class TicketView extends StatelessWidget {
@@ -52,150 +52,12 @@ class TicketView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               15.kH,
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: paddingApp, vertical: 10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: ticketController.searchController,
-                        decoration: InputDecoration(
-                          hintText: 'Search by ticket ID or title',
-                          hintStyle: TextStyleList.detail1,
-                          filled: true,
-                          fillColor: black5,
-                          prefixIcon: const Icon(Icons.search),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: const BorderSide(
-                              color: white2,
-                              width: 1.5,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: const BorderSide(
-                              color: Colors.blue,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 20.0),
-                        ),
-                        onChanged: (value) {
-                          ticketController.searchQuery.value = value;
-                        },
-                      ),
-                    ),
-                    8.wH,
-                    InkWell(
-                      onTap: () {},
-                      child: Theme(
-                        data: Theme.of(context).copyWith(
-                          popupMenuTheme: const PopupMenuThemeData(
-                            color: white3,
-                          ),
-                        ),
-                        child: PopupMenuButton(
-                          offset: const Offset(0, 60),
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry>[
-                            PopupMenuItem(
-                              value: 'edit',
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Status',
-                                        style: TextStyleList.text2,
-                                      ),
-                                      InkWell(
-                                          onTap: () {
-                                            ticketController.clearFilters();
-                                          },
-                                          child: Text(
-                                            'reset',
-                                            style: TextStyleList.subtext3,
-                                          )),
-                                    ],
-                                  ),
-                                  ...statusCheckboxes(),
-                                  8.kH,
-                                  const AppDivider(),
-                                  8.kH,
-                                  Text(
-                                    'Date',
-                                    style: TextStyleList.text2,
-                                  ),
-                                  8.kH,
-                                  GestureDetector(
-                                    onTap: () async {
-                                      DateTime? pickedDate =
-                                          await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(2101),
-                                      );
-                                      if (pickedDate != null) {
-                                        ticketController.selectedDate.value =
-                                            pickedDate;
-                                      }
-                                    },
-                                    child: AbsorbPointer(
-                                      child: Obx(() => TextField(
-                                            controller: TextEditingController(
-                                              text: ticketController
-                                                          .selectedDate.value !=
-                                                      null
-                                                  ? "${ticketController.selectedDate.value!.day}/${ticketController.selectedDate.value!.month}/${ticketController.selectedDate.value!.year}"
-                                                  : '',
-                                            ),
-                                            readOnly: true,
-                                            decoration: InputDecoration(
-                                              hintText: "Select date",
-                                              hintStyle: TextStyleList.text5,
-                                              suffixIcon: const Icon(
-                                                  Icons.calendar_today),
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                borderSide: const BorderSide(
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                            ),
-                                          )),
-                                    ),
-                                  ),
-                                  8.kH,
-                                ],
-                              ),
-                            ),
-                          ],
-                          child: Stack(
-                            children: [
-                              Container(
-                                decoration: Decoration2(),
-                                margin: const EdgeInsets.all(2),
-                                padding: const EdgeInsets.all(10),
-                                child: Image.asset('assets/sliders.png'),
-                              ),
-                            ],
-                          ),
-                          onSelected: (value) {
-                            if (value == 'edit') {}
-                          },
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              SearchFilter(
+                  searchController: ticketController.searchController,
+                  searchQuery: ticketController.searchQuery,
+                  statusCheckboxes: statusCheckboxes(),
+                  selectedDate: ticketController.selectedDate,
+                  clearFilters: ticketController.clearFilters),
               16.kH,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -333,7 +195,6 @@ class TicketView extends StatelessWidget {
                                       expandedIndex:
                                           ticketController.expandedIndex2,
                                       jobController: jobController,
-                                      ticketController: ticketController,
                                       sidebar: SidebarColor.getColor(
                                           job.pmStatus ?? ''),
                                     ),

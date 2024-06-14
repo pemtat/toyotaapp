@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class Home {
   final String jobid;
   final String ticketid;
@@ -20,11 +18,6 @@ class Home {
     required this.status,
     required this.serialnumber,
   });
-
-  String getFormattedDate() {
-    final DateFormat formatter = DateFormat('dd MMMM yyyy hh:mm a');
-    return formatter.format(date);
-  }
 
   factory Home.fromJson(Map<String, dynamic> json) {
     return Home(

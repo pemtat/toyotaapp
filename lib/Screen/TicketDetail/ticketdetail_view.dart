@@ -158,7 +158,7 @@ class TicketDetailView extends StatelessWidget {
                                                 title: "Severity",
                                                 value: issue.severity.name,
                                               ),
-                                              BoxInfo(
+                                              const BoxInfo(
                                                 title: "Relations",
                                                 value: '-',
                                               ),
@@ -239,7 +239,7 @@ class TicketDetailView extends StatelessWidget {
                                     value: issue.reporter.name,
                                   ),
                                   3.kH,
-                                  BoxInfo(
+                                  const BoxInfo(
                                     title: "Email",
                                     value: 'Wait',
                                   ),
@@ -258,7 +258,7 @@ class TicketDetailView extends StatelessWidget {
                                       const Spacer(),
                                       GoogleMapButton(
                                         onTap: () {
-                                          Get.to(() => FillFormView2());
+                                          Get.to(() => const FillFormView2());
                                         },
                                       ),
                                     ],

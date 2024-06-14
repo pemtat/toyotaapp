@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
-import 'package:toyotamobile/Screen/Ticket/ticket_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
@@ -15,7 +14,6 @@ class PmItemWidget extends StatelessWidget {
   final job;
   final RxInt expandedIndex;
   final HomeController jobController;
-  final TicketController ticketController;
   final Color sidebar;
 
   const PmItemWidget({
@@ -23,7 +21,6 @@ class PmItemWidget extends StatelessWidget {
     required this.job,
     required this.expandedIndex,
     required this.jobController,
-    required this.ticketController,
     required this.sidebar,
   });
 

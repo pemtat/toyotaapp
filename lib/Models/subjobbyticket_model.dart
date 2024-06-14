@@ -13,15 +13,15 @@ class SubJobByTicketModel {
   String? resolution;
   String? projection;
   String? eta;
-  dynamic os; // Changed from Null to dynamic
-  dynamic osBuild; // Changed from Null to dynamic
-  dynamic platform; // Changed from Null to dynamic
-  dynamic version; // Changed from Null to dynamic
-  dynamic fixedInVersion; // Changed from Null to dynamic
-  dynamic build; // Changed from Null to dynamic
-  dynamic sponsorshipTotal; // Changed from Null to dynamic
+  dynamic os;
+  dynamic osBuild;
+  dynamic platform;
+  dynamic version;
+  dynamic fixedInVersion;
+  dynamic build;
+  dynamic sponsorshipTotal;
   bool? sticky;
-  dynamic targetVersion; // Changed from Null to dynamic
+  dynamic targetVersion;
   String? categoryId;
   String? projectId;
   String? handlerId;

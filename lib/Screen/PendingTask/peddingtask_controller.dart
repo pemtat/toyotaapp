@@ -71,7 +71,7 @@ class PeddingtaskController extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
-            changeIssueStatus(issueId, 'confirm');
+            changeIssueStatus(issueId, 'confirmed');
           },
         );
       },

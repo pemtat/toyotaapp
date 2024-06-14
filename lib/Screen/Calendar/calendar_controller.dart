@@ -8,6 +8,11 @@ import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 
+enum EventType {
+  Job,
+  PM,
+}
+
 class CalendarController extends GetxController {
   var calendarFormat = CalendarFormat.month.obs;
   var selectedDay = DateTime.now().obs;
@@ -22,11 +27,11 @@ class CalendarController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ever(jobController.jobList, (_) {
-      updateEventsFromJobs(jobController.jobList);
+    jobController.jobList.listen((_) {
+      updateEvents();
     });
-    ever(jobController.pmItems, (_) {
-      updateEventsFromPM(jobController.pmItems);
+    jobController.pmItems.listen((_) {
+      updateEvents();
     });
   }
 
@@ -34,9 +39,19 @@ class CalendarController extends GetxController {
     return DateFormat('dd MMMM yyyy').format(dateTime);
   }
 
-  void updateEventsFromPM(List<PmModel> pmList) async {
-    events.clear();
+  void updateEvents() async {
+    final tempEvents = <DateTime, List<Map<String, dynamic>>>{};
 
+    await Future.wait([
+      updateEventsFromJobs(jobController.jobList, tempEvents),
+      updateEventsFromPM(jobController.pmItems, tempEvents),
+    ]);
+
+    events.value = tempEvents;
+  }
+
+  Future<void> updateEventsFromPM(List<PmModel> pmList,
+      Map<DateTime, List<Map<String, dynamic>>> tempEvents) async {
     for (var pm in pmList) {
       try {
         final pmDate = formatDateTimeString(pm.pmPlan ?? '');
@@ -53,6 +68,7 @@ class CalendarController extends GetxController {
         var warrantyInfoList = <WarrantyInfo>[].obs;
         warrantyInfoList =
             await checkWarrantyReturn(pm.serialNo ?? '', warrantyInfoList);
+
         final eventData = {
           "ticketid": pm.jobId,
           "time": formattedTime,
@@ -63,13 +79,21 @@ class CalendarController extends GetxController {
           "serialNo": pm.serialNo,
           "warrantyStatus": warrantyInfoList.first.warrantyStatus,
           "nameModel": warrantyInfoList.first.model,
+          "type": EventType.PM,
         };
 
-        if (events.containsKey(dayKey)) {
-          events[dayKey]!.add(eventData);
-          events[dayKey]!.sort((a, b) => a['time'].compareTo(b['time']));
-        } else {
-          events[dayKey] = [eventData];
+        bool isDuplicate = tempEvents[dayKey]?.any((event) =>
+                event['ticketid'] == pm.jobId &&
+                event['type'] == EventType.PM) ??
+            false;
+
+        if (!isDuplicate) {
+          if (tempEvents.containsKey(dayKey)) {
+            tempEvents[dayKey]!.add(eventData);
+            tempEvents[dayKey]!.sort((a, b) => a['time'].compareTo(b['time']));
+          } else {
+            tempEvents[dayKey] = [eventData];
+          }
         }
       } catch (e) {
         print('Error processing PM event: $e');
@@ -77,7 +101,8 @@ class CalendarController extends GetxController {
     }
   }
 
-  void updateEventsFromJobs(List<Home> jobList) async {
+  Future<void> updateEventsFromJobs(List<Home> jobList,
+      Map<DateTime, List<Map<String, dynamic>>> tempEvents) async {
     for (var job in jobList) {
       try {
         final jobDate = job.date;
@@ -105,12 +130,21 @@ class CalendarController extends GetxController {
           "serialNo": warrantyInfoList.first.serial,
           "warrantyStatus": warrantyInfoList.first.warrantyStatus,
           "nameModel": warrantyInfoList.first.model,
+          "type": EventType.Job,
         };
-        if (events.containsKey(dayKey)) {
-          events[dayKey]!.add(eventData);
-          events[dayKey]!.sort((a, b) => a['time'].compareTo(b['time']));
-        } else {
-          events[dayKey] = [eventData];
+
+        bool isDuplicate = tempEvents[dayKey]?.any((event) =>
+                event['ticketid'] == job.ticketid &&
+                event['type'] == EventType.Job) ??
+            false;
+
+        if (!isDuplicate) {
+          if (tempEvents.containsKey(dayKey)) {
+            tempEvents[dayKey]!.add(eventData);
+            tempEvents[dayKey]!.sort((a, b) => a['time'].compareTo(b['time']));
+          } else {
+            tempEvents[dayKey] = [eventData];
+          }
         }
       } catch (e) {
         print('Error processing job event: $e');

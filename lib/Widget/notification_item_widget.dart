@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
@@ -28,7 +29,7 @@ class NotificationItem extends StatelessWidget {
               style: TextStyleList.detailtext1,
             ),
             Text(
-              notification.getFormattedDate(),
+              getFormattedDate(notification.date),
               style: TextStyleList.detailtext1,
             ),
           ],

@@ -21,6 +21,7 @@ class HomeController extends GetxController {
   final RxInt pmCompletedList = 0.obs;
   final RxInt expandedIndex = (-2).obs;
   final RxInt expandedIndex2 = (-2).obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -112,6 +113,7 @@ class HomeController extends GetxController {
         List<dynamic> responseData = jsonDecode(response.body);
         List<PmModel> itemList =
             responseData.map((job) => PmModel.fromJson(job)).toList();
+        itemList.sort((a, b) => b.pmPlan!.compareTo(a.pmPlan!));
         List<PmModel> closedPmItems =
             itemList.where((pm) => pm.pmStatus == 'closed').toList();
 
