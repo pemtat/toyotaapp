@@ -8,13 +8,13 @@ import 'package:toyotamobile/Service/api.dart';
 import 'dart:convert';
 
 class HomeController extends GetxController {
-  var jobList = <Home>[].obs;
+  var jobList = <Issues>[].obs;
   final RxInt jobListLength = 0.obs;
   final RxInt jobListCloseLength = 0.obs;
   final BottomBarController notificationController =
       Get.put(BottomBarController());
-  final mostRecentNewJob = Rx<Home?>(null);
-  final mostRecentCompleteJob = Rx<Home?>(null);
+  final mostRecentNewJob = Rx<Issues?>(null);
+  final mostRecentCompleteJob = Rx<Issues?>(null);
   var pmItems = <PmModel>[].obs;
   final RxInt pmjobList = 0.obs;
   final RxInt pmjobListClosed = 0.obs;
@@ -46,7 +46,8 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         Map<String, dynamic> responseData = json.decode(response.body);
         List<dynamic> issues = responseData['issues'];
-        jobList.assignAll(issues.map((data) => Home.fromJson(data)).toList());
+        jobList.assignAll(issues.map((data) => Issues.fromJson(data)).toList());
+        findMostRecentNewJob();
       }
       final response2 = await http.get(
         Uri.parse(getAllJob),
@@ -55,36 +56,45 @@ class HomeController extends GetxController {
         },
       );
       if (response2.statusCode == 200) {
-        Map<String, dynamic> responseData = json.decode(response2.body);
-        List<dynamic> issues = responseData['issues'];
-        List<dynamic> filteredIssues = issues.where((issue) {
-          return issue.containsKey('handler') &&
-              issue['handler'] is Map<String, dynamic> &&
-              issue['handler']['id'] == handlerId;
-        }).toList();
-        jobList.assignAll(
-            filteredIssues.map((data) => Home.fromJson(data)).toList());
-        findMostRecentNewJob();
-        findMostRecentCompleteJob();
-      }
+        try {
+          Map<String, dynamic> responseData = json.decode(response2.body);
+          List<dynamic> issues = responseData['issues'];
+          List<dynamic> filteredIssues = issues.where((issue) {
+            return issue.containsKey('handler') &&
+                issue['handler'].containsKey('id') &&
+                issue['handler'] is Map<String, dynamic> &&
+                issue['handler']['id'] == handlerId;
+          }).toList();
+
+          jobList.assignAll(
+              filteredIssues.map((data) => Issues.fromJson(data)).toList());
+
+          findMostRecentCompleteJob();
+        } catch (e) {
+          print('Exception occurred: $e');
+        }
+      } else {}
+
       // ignore: empty_catches
     } catch (e) {}
   }
 
   void findMostRecentNewJob() {
-    var assignedJobs = jobList.where((job) => job.status != 'closed').toList();
+    var assignedJobs =
+        jobList.where((job) => job.status?.name != 'closed').toList();
     if (assignedJobs.isNotEmpty) {
-      mostRecentNewJob.value =
-          assignedJobs.reduce((a, b) => a.date.isAfter(b.date) ? a : b);
+      mostRecentNewJob.value = assignedJobs
+          .reduce((a, b) => a.createdAt!.compareTo(b.createdAt!) > 0 ? a : b);
     }
     jobListLength.value = assignedJobs.length;
   }
 
   void findMostRecentCompleteJob() {
-    var closeJobs = jobList.where((job) => job.status == 'closed').toList();
+    var closeJobs =
+        jobList.where((job) => job.status?.name == 'closed').toList();
     if (closeJobs.isNotEmpty) {
-      mostRecentCompleteJob.value =
-          closeJobs.reduce((a, b) => a.date.isAfter(b.date) ? a : b);
+      mostRecentCompleteJob.value = closeJobs
+          .reduce((a, b) => a.createdAt!.compareTo(b.createdAt!) > 0 ? a : b);
     }
     jobListCloseLength.value = closeJobs.length;
   }
@@ -95,7 +105,7 @@ class HomeController extends GetxController {
     notificationController.checkNotification();
   }
 
-//PM
+  //PM
 
   Future<void> fetchPMdata(int id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

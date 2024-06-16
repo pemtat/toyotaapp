@@ -1,3 +1,4 @@
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Screen/Allticket/CompleteJobs/completejobs_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -66,27 +67,30 @@ class CompleteJobsView extends StatelessWidget {
                   final filteredJobs = jobController.jobList.where((job) {
                     final query =
                         completeJobsController.searchQuery.value.toLowerCase();
-                    final searchQueryMatch = job.ticketid.contains(query) ||
-                        job.summary.contains(query);
+                    final searchQueryMatch =
+                        job.id.toString().contains(query) ||
+                            job.summary!.contains(query);
                     final statusMatch =
                         completeJobsController.selectedStatus.isEmpty ||
                             completeJobsController.selectedStatus
-                                .contains(job.status);
+                                .contains(job.status!.name);
+                    final jobDate = formatDateTimeString(job.dueDate ?? '');
+
                     final dateMatch =
                         completeJobsController.selectedDate.value == null ||
-                            (job.date.year ==
+                            (jobDate.year ==
                                     completeJobsController
                                         .selectedDate.value!.year &&
-                                job.date.month ==
+                                jobDate.month ==
                                     completeJobsController
                                         .selectedDate.value!.month &&
-                                job.date.day ==
+                                jobDate.day ==
                                     completeJobsController
                                         .selectedDate.value!.day);
                     return searchQueryMatch &&
                         dateMatch &&
                         statusMatch &&
-                        job.status == 'closed';
+                        job.status!.name == 'closed';
                   }).toList();
                   if (filteredJobs.isEmpty) {
                     return const Center(child: Text('No new jobs available.'));
@@ -94,18 +98,19 @@ class CompleteJobsView extends StatelessWidget {
                   return ListView.builder(
                     itemCount: filteredJobs.length,
                     itemBuilder: (context, index) {
-                      Home job = filteredJobs[index];
+                      Issues job = filteredJobs[index];
                       return InkWell(
                           onTap: () {
                             Get.to(() => TicketDetailView(
-                                  ticketId: job.jobid,
+                                  ticketId: job.id.toString(),
                                 ));
                           },
                           child: JobItemWidget(
                             job: job,
                             expandedIndex: completeJobsController.expandedIndex,
                             jobController: jobController,
-                            sidebar: SidebarColor.getColor(job.status),
+                            sidebar:
+                                SidebarColor.getColor(job.status!.name ?? ''),
                           ));
                     },
                   );

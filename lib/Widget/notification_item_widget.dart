@@ -5,7 +5,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 
 class NotificationItem extends StatelessWidget {
-  final Home notification;
+  final Issues notification;
 
   const NotificationItem({super.key, required this.notification});
 
@@ -14,22 +14,22 @@ class NotificationItem extends StatelessWidget {
     return BoxContainer(
       children: [
         Text(
-          notification.summary,
+          notification.summary ?? '',
           style: TextStyleList.text10,
         ),
         Text(
-          notification.description,
+          notification.description ?? '',
           style: TextStyleList.text16,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'TicketID : ${notification.jobid}',
+              'TicketID : ${notification.id}',
               style: TextStyleList.detailtext1,
             ),
             Text(
-              getFormattedDate(notification.date),
+              formatDateTime(notification.dueDate ?? ''),
               style: TextStyleList.detailtext1,
             ),
           ],

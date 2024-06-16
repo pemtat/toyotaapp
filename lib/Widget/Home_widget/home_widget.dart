@@ -38,11 +38,11 @@ class JobItemWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Ticket ID : #${job.jobid.toString().padLeft(7, '0')}',
+                'Ticket ID : #${job.id.toString().padLeft(7, '0')}',
                 style: TextStyleList.text16,
               ),
               const SizedBox(width: 10),
-              StatusButton(status: job.status),
+              StatusButton(status: job.status.name),
               const Spacer(),
               Obx(
                 () => IconButton(
@@ -72,7 +72,7 @@ class JobItemWidget extends StatelessWidget {
               const Icon(Icons.calendar_month_outlined),
               const SizedBox(width: 5),
               Text(
-                getFormattedDate(job.date),
+                formatDateTime(job.dueDate),
                 style: TextStyleList.subtext1,
               ),
             ],
@@ -125,7 +125,7 @@ class JobItemWidget extends StatelessWidget {
                               const SizedBox(height: 3),
                               BoxInfo(
                                 title: "Serial Number",
-                                value: job.serialnumber,
+                                value: job.serialNo,
                               ),
                               const SizedBox(height: 3),
                               BoxInfo(
@@ -133,8 +133,7 @@ class JobItemWidget extends StatelessWidget {
                                 value: '',
                                 trailing:
                                     // ignore: unrelated_type_equality_checks
-                                    checkWarrantyStatus(job.serialnumber) ==
-                                            true
+                                    checkWarrantyStatus(job.serialNo) == true
                                         ? const CheckStatus(
                                             status: 1,
                                           )

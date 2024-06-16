@@ -223,15 +223,19 @@ class TicketView extends StatelessWidget {
                             child: Obx(() {
                               final filteredJobs =
                                   jobController.jobList.where((job) {
-                                final jobDate = job.date;
-                                final searchQueryMatch = job.jobid.contains(
-                                        ticketController.searchQuery.value) ||
-                                    job.description.contains(
+                                final jobDate =
+                                    formatDateTimeString(job.dueDate ?? '');
+
+                                final searchQueryMatch = job.id
+                                        .toString()
+                                        .contains(ticketController
+                                            .searchQuery.value) ||
+                                    job.description!.contains(
                                         ticketController.searchQuery.value);
                                 final statusMatch =
                                     ticketController.selectedStatus.isEmpty ||
                                         ticketController.selectedStatus
-                                            .contains(job.status);
+                                            .contains(job.status!.name);
                                 final dateMatch =
                                     ticketController.selectedDate.value ==
                                             null ||
@@ -248,8 +252,8 @@ class TicketView extends StatelessWidget {
                                     statusMatch &&
                                     dateMatch;
                               }).toList();
-                              filteredJobs
-                                  .sort((a, b) => b.date.compareTo(a.date));
+                              filteredJobs.sort(
+                                  (a, b) => b.dueDate!.compareTo(a.dueDate!));
 
                               if (filteredJobs.isEmpty) {
                                 return Center(
@@ -262,19 +266,19 @@ class TicketView extends StatelessWidget {
                                 shrinkWrap: true,
                                 itemCount: filteredJobs.length,
                                 itemBuilder: (context, index) {
-                                  Home job = filteredJobs[index];
+                                  Issues job = filteredJobs[index];
                                   return InkWell(
                                     onTap: () {
-                                      Get.to(() =>
-                                          SubTicketView(ticketId: job.jobid));
+                                      Get.to(() => SubTicketView(
+                                          ticketId: job.id.toString()));
                                     },
                                     child: JobItemWidget(
                                       job: job,
                                       expandedIndex:
                                           ticketController.expandedIndex2,
                                       jobController: jobController,
-                                      sidebar:
-                                          SidebarColor.getColor(job.status),
+                                      sidebar: SidebarColor.getColor(
+                                          job.status!.name ?? ''),
                                     ),
                                   );
                                 },

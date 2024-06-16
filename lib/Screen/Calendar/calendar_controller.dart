@@ -101,11 +101,12 @@ class CalendarController extends GetxController {
     }
   }
 
-  Future<void> updateEventsFromJobs(List<Home> jobList,
+  Future<void> updateEventsFromJobs(List<Issues> jobList,
       Map<DateTime, List<Map<String, dynamic>>> tempEvents) async {
     for (var job in jobList) {
       try {
-        final jobDate = job.date;
+        final jobDate = formatDateTimeString(job.dueDate ?? '');
+
         final dayKey = DateTime.utc(jobDate.year, jobDate.month, jobDate.day);
         final timeParts = jobDate.toLocal().toString().split(' ')[1].split(':');
         final hour = int.parse(timeParts[0]);
@@ -118,12 +119,12 @@ class CalendarController extends GetxController {
         final formattedTime = '$formattedHour:${timeParts[1]} $period';
         var warrantyInfoList = <WarrantyInfo>[].obs;
         warrantyInfoList =
-            await checkWarrantyReturn(job.serialnumber, warrantyInfoList);
+            await checkWarrantyReturn(job.serialNo ?? '', warrantyInfoList);
 
         final eventData = {
-          "ticketid": job.ticketid,
+          "ticketid": job.id.toString(),
           "time": formattedTime,
-          "status": job.status,
+          "status": job.status!.name,
           "task": job.summary,
           "description": job.description,
           "location": job.location,
@@ -134,7 +135,7 @@ class CalendarController extends GetxController {
         };
 
         bool isDuplicate = tempEvents[dayKey]?.any((event) =>
-                event['ticketid'] == job.ticketid &&
+                event['ticketid'] == job.id &&
                 event['type'] == EventType.Job) ??
             false;
 

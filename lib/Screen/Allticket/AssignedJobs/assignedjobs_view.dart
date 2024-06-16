@@ -1,3 +1,4 @@
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
@@ -65,23 +66,25 @@ class AssignedjobsNew extends StatelessWidget {
                 final filteredJobs = jobController.jobList.where((job) {
                   final query =
                       assignedController.searchQuery.value.toLowerCase();
-                  final searchQueryMatch = job.ticketid.contains(query) ||
-                      job.summary.contains(query);
-                  final statusMatch = assignedController
-                          .selectedStatus.isEmpty ||
-                      assignedController.selectedStatus.contains(job.status);
+                  final searchQueryMatch = job.id.toString().contains(query) ||
+                      job.summary!.contains(query);
+                  final statusMatch =
+                      assignedController.selectedStatus.isEmpty ||
+                          assignedController.selectedStatus
+                              .contains(job.status!.name);
+                  final jobDate = formatDateTimeString(job.dueDate ?? '');
                   final dateMatch = assignedController.selectedDate.value ==
                           null ||
-                      (job.date.year ==
+                      (jobDate.year ==
                               assignedController.selectedDate.value!.year &&
-                          job.date.month ==
+                          jobDate.month ==
                               assignedController.selectedDate.value!.month &&
-                          job.date.day ==
+                          jobDate.day ==
                               assignedController.selectedDate.value!.day);
                   return searchQueryMatch &&
                       dateMatch &&
                       statusMatch &&
-                      job.status != 'closed';
+                      job.status!.name != 'closed';
                 }).toList();
                 if (filteredJobs.isEmpty) {
                   return const Center(child: Text('No new jobs available.'));
@@ -89,24 +92,25 @@ class AssignedjobsNew extends StatelessWidget {
                 return ListView.builder(
                   itemCount: filteredJobs.length,
                   itemBuilder: (context, index) {
-                    Home job = filteredJobs[index];
+                    Issues job = filteredJobs[index];
                     return InkWell(
                       onTap: () {
                         if (job.status == 'assigned') {
                           Get.to(() => PendingTaskView(
-                                ticketId: job.jobid,
+                                ticketId: job.id.toString(),
                                 jobId: '',
                               ));
                         } else {
                           Get.to(() => JobDetailView(
-                              ticketId: job.jobid, jobId: job.jobid));
+                              ticketId: job.id.toString(),
+                              jobId: job.id.toString()));
                         }
                       },
                       child: JobItemWidget(
                         job: job,
                         expandedIndex: assignedController.expandedIndex,
                         jobController: jobController,
-                        sidebar: SidebarColor.getColor(job.status),
+                        sidebar: SidebarColor.getColor(job.status!.name ?? ''),
                       ),
                     );
                   },

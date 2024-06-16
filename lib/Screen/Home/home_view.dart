@@ -141,8 +141,8 @@ class HomeView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(paddingApp),
                   child: Obx(() {
-                    final job = jobController.mostRecentNewJob.value;
-                    if (job == null) {
+                    final jobs = jobController.jobList;
+                    if (jobs.isEmpty) {
                       return Center(
                         child: Text(
                           'No new jobs available.',
@@ -155,24 +155,26 @@ class HomeView extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: 3,
                       itemBuilder: (context, index) {
-                        var job = jobController.jobList[index];
+                        var job = jobs[index];
                         return InkWell(
                           onTap: () {
-                            if (job.status == 'assigned') {
+                            if (job.status!.name == 'assigned') {
                               Get.to(() => PendingTaskView(
-                                    ticketId: job.jobid,
+                                    ticketId: job.id.toString(),
                                     jobId: '',
                                   ));
                             } else {
                               Get.to(() => JobDetailView(
-                                  ticketId: job.jobid, jobId: job.jobid));
+                                  ticketId: job.id.toString(),
+                                  jobId: job.id.toString()));
                             }
                           },
                           child: JobItemWidget(
                             job: job,
                             expandedIndex: jobController.expandedIndex,
                             jobController: jobController,
-                            sidebar: SidebarColor.getColor(job.status),
+                            sidebar:
+                                SidebarColor.getColor(job.status!.name ?? ''),
                           ),
                         );
                       },

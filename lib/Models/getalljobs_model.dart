@@ -1,65 +1,59 @@
-import 'package:intl/intl.dart';
+class GetAllJobs {
+  List<ClosedIssues>? allIssues;
 
-class Home {
-  List<Issues>? issues;
+  GetAllJobs({this.allIssues});
 
-  Home({this.issues});
-
-  Home.fromJson(Map<String, dynamic> json) {
+  GetAllJobs.fromJson(Map<String, dynamic> json) {
     if (json['issues'] != null) {
-      issues = <Issues>[];
+      allIssues = <ClosedIssues>[];
       json['issues'].forEach((v) {
-        issues!.add(Issues.fromJson(v));
+        allIssues!.add(ClosedIssues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (issues != null) {
-      data['issues'] = issues!.map((v) => v.toJson()).toList();
+    if (allIssues != null) {
+      data['issues'] = allIssues!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Issues {
+class ClosedIssues {
   int? id;
   String? summary;
   String? description;
   Project? project;
   Project? category;
-  Project? version;
-  Project? targetVersion;
   Reporter? reporter;
-  Reporter? handler;
   Status? status;
   Resolution? resolution;
   Resolution? viewState;
   Resolution? priority;
   Resolution? severity;
-  String? location;
-  String? serialNo;
   Resolution? reproducibility;
   Resolution? eta;
-  String? dueDate;
   bool? sticky;
   String? createdAt;
   String? updatedAt;
   List<Attachments>? attachments;
-  List<Notes>? notes;
   List<History>? history;
+  Project? version;
+  Reporter? handler;
+  String? dueDate;
+  List<Notes>? notes;
+  Project? targetVersion;
+  Project? fixedInVersion;
 
-  Issues(
+  ClosedIssues(
       {this.id,
       this.summary,
       this.description,
       this.project,
       this.category,
-      this.version,
-      this.targetVersion,
       this.reporter,
-      this.handler,
       this.status,
       this.resolution,
       this.viewState,
@@ -67,17 +61,19 @@ class Issues {
       this.severity,
       this.reproducibility,
       this.eta,
-      this.dueDate,
       this.sticky,
-      this.location,
-      this.serialNo,
       this.createdAt,
       this.updatedAt,
       this.attachments,
+      this.history,
+      this.version,
+      this.handler,
+      this.dueDate,
       this.notes,
-      this.history});
+      this.targetVersion,
+      this.fixedInVersion});
 
-  Issues.fromJson(Map<String, dynamic> json) {
+  ClosedIssues.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     summary = json['summary'];
     description = json['description'];
@@ -85,15 +81,8 @@ class Issues {
         json['project'] != null ? Project.fromJson(json['project']) : null;
     category =
         json['category'] != null ? Project.fromJson(json['category']) : null;
-    version =
-        json['version'] != null ? Project.fromJson(json['version']) : null;
-    targetVersion = json['target_version'] != null
-        ? Project.fromJson(json['target_version'])
-        : null;
     reporter =
         json['reporter'] != null ? Reporter.fromJson(json['reporter']) : null;
-    handler =
-        json['handler'] != null ? Reporter.fromJson(json['handler']) : null;
     status = json['status'] != null ? Status.fromJson(json['status']) : null;
     resolution = json['resolution'] != null
         ? Resolution.fromJson(json['resolution'])
@@ -109,11 +98,7 @@ class Issues {
         ? Resolution.fromJson(json['reproducibility'])
         : null;
     eta = json['eta'] != null ? Resolution.fromJson(json['eta']) : null;
-    dueDate =
-        json['due_date'] ?? DateFormat('yyyy-MM-dd').format(DateTime.now());
     sticky = json['sticky'];
-    serialNo = 'CE429424';
-    location = 'Bangkok';
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['attachments'] != null) {
@@ -122,18 +107,29 @@ class Issues {
         attachments!.add(Attachments.fromJson(v));
       });
     }
-    if (json['notes'] != null) {
-      notes = <Notes>[];
-      json['notes'].forEach((v) {
-        notes!.add(Notes.fromJson(v));
-      });
-    }
     if (json['history'] != null) {
       history = <History>[];
       json['history'].forEach((v) {
         history!.add(History.fromJson(v));
       });
     }
+    version =
+        json['version'] != null ? Project.fromJson(json['version']) : null;
+    handler =
+        json['handler'] != null ? Reporter.fromJson(json['handler']) : null;
+    dueDate = json['due_date'];
+    if (json['notes'] != null) {
+      notes = <Notes>[];
+      json['notes'].forEach((v) {
+        notes!.add(Notes.fromJson(v));
+      });
+    }
+    targetVersion = json['target_version'] != null
+        ? Project.fromJson(json['target_version'])
+        : null;
+    fixedInVersion = json['fixed_in_version'] != null
+        ? Project.fromJson(json['fixed_in_version'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -147,17 +143,8 @@ class Issues {
     if (category != null) {
       data['category'] = category!.toJson();
     }
-    if (version != null) {
-      data['version'] = version!.toJson();
-    }
-    if (targetVersion != null) {
-      data['target_version'] = targetVersion!.toJson();
-    }
     if (reporter != null) {
       data['reporter'] = reporter!.toJson();
-    }
-    if (handler != null) {
-      data['handler'] = handler!.toJson();
     }
     if (status != null) {
       data['status'] = status!.toJson();
@@ -180,18 +167,30 @@ class Issues {
     if (eta != null) {
       data['eta'] = eta!.toJson();
     }
-    data['due_date'] = dueDate;
     data['sticky'] = sticky;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     if (attachments != null) {
       data['attachments'] = attachments!.map((v) => v.toJson()).toList();
     }
+    if (history != null) {
+      data['history'] = history!.map((v) => v.toJson()).toList();
+    }
+    if (version != null) {
+      data['version'] = version!.toJson();
+    }
+    if (handler != null) {
+      data['handler'] = handler!.toJson();
+    }
+    data['due_date'] = dueDate;
     if (notes != null) {
       data['notes'] = notes!.map((v) => v.toJson()).toList();
     }
-    if (history != null) {
-      data['history'] = history!.map((v) => v.toJson()).toList();
+    if (targetVersion != null) {
+      data['target_version'] = targetVersion!.toJson();
+    }
+    if (fixedInVersion != null) {
+      data['fixed_in_version'] = fixedInVersion!.toJson();
     }
     return data;
   }
@@ -324,65 +323,6 @@ class Attachments {
     data['filename'] = filename;
     data['size'] = size;
     data['content_type'] = contentType;
-    return data;
-  }
-}
-
-class Notes {
-  int? id;
-  Reporter? reporter;
-  String? text;
-  Resolution? viewState;
-  List<Attachments>? attachments;
-  String? type;
-  String? createdAt;
-  String? updatedAt;
-
-  Notes(
-      {this.id,
-      this.reporter,
-      this.text,
-      this.viewState,
-      this.attachments,
-      this.type,
-      this.createdAt,
-      this.updatedAt});
-
-  Notes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    reporter =
-        json['reporter'] != null ? Reporter.fromJson(json['reporter']) : null;
-    text = json['text'];
-    viewState = json['view_state'] != null
-        ? Resolution.fromJson(json['view_state'])
-        : null;
-    if (json['attachments'] != null) {
-      attachments = <Attachments>[];
-      json['attachments'].forEach((v) {
-        attachments!.add(Attachments.fromJson(v));
-      });
-    }
-    type = json['type'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    if (reporter != null) {
-      data['reporter'] = reporter!.toJson();
-    }
-    data['text'] = text;
-    if (viewState != null) {
-      data['view_state'] = viewState!.toJson();
-    }
-    if (attachments != null) {
-      data['attachments'] = attachments!.map((v) => v.toJson()).toList();
-    }
-    data['type'] = type;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -538,6 +478,65 @@ class Note {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    return data;
+  }
+}
+
+class Notes {
+  int? id;
+  Reporter? reporter;
+  String? text;
+  Resolution? viewState;
+  List<Attachments>? attachments;
+  String? type;
+  String? createdAt;
+  String? updatedAt;
+
+  Notes(
+      {this.id,
+      this.reporter,
+      this.text,
+      this.viewState,
+      this.attachments,
+      this.type,
+      this.createdAt,
+      this.updatedAt});
+
+  Notes.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    reporter =
+        json['reporter'] != null ? Reporter.fromJson(json['reporter']) : null;
+    text = json['text'];
+    viewState = json['view_state'] != null
+        ? Resolution.fromJson(json['view_state'])
+        : null;
+    if (json['attachments'] != null) {
+      attachments = <Attachments>[];
+      json['attachments'].forEach((v) {
+        attachments!.add(Attachments.fromJson(v));
+      });
+    }
+    type = json['type'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (reporter != null) {
+      data['reporter'] = reporter!.toJson();
+    }
+    data['text'] = text;
+    if (viewState != null) {
+      data['view_state'] = viewState!.toJson();
+    }
+    if (attachments != null) {
+      data['attachments'] = attachments!.map((v) => v.toJson()).toList();
+    }
+    data['type'] = type;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
