@@ -32,7 +32,7 @@ class SearchFilter extends StatelessWidget {
             child: TextField(
               controller: searchController,
               decoration: InputDecoration(
-                hintText: 'Search by ticket ID or title',
+                hintText: 'Search by ID or title',
                 hintStyle: TextStyleList.detail1,
                 filled: true,
                 fillColor: black5,

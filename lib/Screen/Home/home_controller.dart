@@ -47,7 +47,6 @@ class HomeController extends GetxController {
         Map<String, dynamic> responseData = json.decode(response.body);
         List<dynamic> issues = responseData['issues'];
         jobList.assignAll(issues.map((data) => Issues.fromJson(data)).toList());
-        findMostRecentNewJob();
       }
       final response2 = await http.get(
         Uri.parse(getAllJob),
@@ -68,7 +67,7 @@ class HomeController extends GetxController {
 
           jobList.assignAll(
               filteredIssues.map((data) => Issues.fromJson(data)).toList());
-
+          findMostRecentNewJob();
           findMostRecentCompleteJob();
         } catch (e) {
           print('Exception occurred: $e');
@@ -123,7 +122,7 @@ class HomeController extends GetxController {
         List<dynamic> responseData = jsonDecode(response.body);
         List<PmModel> itemList =
             responseData.map((job) => PmModel.fromJson(job)).toList();
-        itemList.sort((a, b) => b.pmPlan!.compareTo(a.pmPlan!));
+        itemList.sort((a, b) => a.pmPlan!.compareTo(b.pmPlan!));
         List<PmModel> closedPmItems =
             itemList.where((pm) => pm.pmStatus == 'closed').toList();
 

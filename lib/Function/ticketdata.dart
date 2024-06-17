@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
+import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
@@ -21,6 +22,7 @@ import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
 final BottomBarController bottomController = Get.put(BottomBarController());
 final HomeController jobController = Get.put(HomeController());
+
 void fetchSubJob(String subjobId, String token, RxList<JobById> subJobs) async {
   try {
     final response = await http.get(
@@ -89,7 +91,7 @@ void fetchReadAttachment(
 
 void fetchNotes(List<Notes>? notes, RxList<Notes> notesFiles) {
   if (notes != null) {
-    var issueNotes = notes as List<Notes>;
+    var issueNotes = notes;
     notesFiles.assignAll(issueNotes);
   }
 }
@@ -97,6 +99,7 @@ void fetchNotes(List<Notes>? notes, RxList<Notes> notesFiles) {
 void fetchNotesPic(
     List<Notes>? notes, RxList<Notes> notesFiles, List<String> notePic) {
   if (notes != null) {
+    // ignore: unnecessary_cast
     var issueNotes = notes as List<Notes>;
     notesFiles.assignAll(issueNotes);
 
@@ -104,6 +107,56 @@ void fetchNotesPic(
       var reporterId = note.reporter!.id;
       notePic.add(await checkLevel(reporterId ?? 0));
     });
+  }
+}
+
+Future<void> fetchReportData(
+  String id,
+  String token,
+  RxList<RepairReportModel> reportList,
+  RxList<RepairReportModel> additionalReportList,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getRepairReportById(id)),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = jsonDecode(response.body);
+      List<RepairReportModel> loadedReports = responseData.map((reportJson) {
+        return RepairReportModel.fromJson(reportJson);
+      }).toList();
+
+      reportList.value = loadedReports;
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+  try {
+    final response = await http.get(
+      Uri.parse(getAdditionalRepairReportById(id)),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = jsonDecode(response.body);
+      List<RepairReportModel> loadedReports = responseData.map((reportJson) {
+        return RepairReportModel.fromJson(reportJson);
+      }).toList();
+
+      additionalReportList.value = loadedReports;
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
   }
 }
 

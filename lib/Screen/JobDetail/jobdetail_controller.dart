@@ -50,7 +50,7 @@ class JobDetailController extends GetxController {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
     jobId = ticketId;
-    fetchReportData(subjobId, token ?? '');
+    fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
     fetchPdfData(ticketId, token ?? '', pdfList);
     fetchSubJob(subjobId, token ?? '', subJobs);
     final response = await http.get(
@@ -94,51 +94,6 @@ class JobDetailController extends GetxController {
       jobController.fetchDataFromAssignJob();
       bottomController.currentIndex.value = 0;
       Get.offAll(() => BottomBarView());
-    }
-  }
-
-  Future<void> fetchReportData(String id, String token) async {
-    try {
-      final response = await http.get(
-        Uri.parse(getRepairReportById(id)),
-        headers: {
-          'Authorization': '$token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(response.body);
-        List<RepairReportModel> loadedReports = responseData.map((reportJson) {
-          return RepairReportModel.fromJson(reportJson);
-        }).toList();
-
-        reportList.value = loadedReports;
-      } else {
-        print('Failed to load data: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-    try {
-      final response = await http.get(
-        Uri.parse(getAdditionalRepairReportById(id)),
-        headers: {
-          'Authorization': '$token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(response.body);
-        List<RepairReportModel> loadedReports = responseData.map((reportJson) {
-          return RepairReportModel.fromJson(reportJson);
-        }).toList();
-
-        additionalReportList.value = loadedReports;
-      } else {
-        print('Failed to load data: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error: $e');
     }
   }
 
@@ -194,10 +149,6 @@ class JobDetailController extends GetxController {
         notes.value.clear();
       }
     }
-  }
-
-  void addAttachment(Map<String, String> file) {
-    addAttatchments.add(file);
   }
 
   void showCompletedDialog(

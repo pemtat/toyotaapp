@@ -58,7 +58,7 @@ class RepairProcedure extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Spare part list",
+              "Repair prodecure",
               style: TextStyleList.subheading,
             ),
             InkWell(

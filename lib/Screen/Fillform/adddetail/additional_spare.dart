@@ -326,13 +326,13 @@ class AdditSparepartList extends GetxController {
     String changeOnPMValue =
         changeonPM.value.text != '' ? changeonPM.value.text : '-';
     additSparePartList.add(SparePartModel(
-      cCodePage: cCodePageValue,
-      partNumber: partNumberValue,
-      partDetails: partDetailsValue,
-      quantity: quantity.value,
-      changeNow: changeNowValue,
-      changeOnPM: changeOnPMValue,
-    ));
+        cCodePage: cCodePageValue,
+        partNumber: partNumberValue,
+        partDetails: partDetailsValue,
+        quantity: quantity.value,
+        changeNow: changeNowValue,
+        changeOnPM: changeOnPMValue,
+        additional: 0));
   }
 
   void additSparePartUpdate(SparePartModel part) {

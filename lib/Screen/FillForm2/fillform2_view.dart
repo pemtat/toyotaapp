@@ -40,7 +40,7 @@ class FillFormView2 extends StatelessWidget {
     final AdditSparepartList additSparePartListController =
         Get.put(AdditSparepartList());
     final RepairResult repairResultController = Get.put(RepairResult());
-    final RepairStaff repairStaffController = Get.put(RepairStaff());
+    final ProcessStaff processStaffController = Get.put(ProcessStaff());
     final FillformController2 fillformController2 =
         Get.put(FillformController2());
 
@@ -237,11 +237,11 @@ class FillFormView2 extends StatelessWidget {
                 Obx(
                   () => AddEditBox(
                       titleText: 'Action & Result / Change spare parts',
-                      list: repairStaffController.repairStaff,
+                      list: processStaffController.repairStaff,
                       onTap: () =>
-                          repairStaffController.repairStaffModal(context),
+                          processStaffController.repairStaffModal(context),
                       moreText:
-                          getDisplayString(repairStaffController.repairStaff)),
+                          getDisplayString(processStaffController.repairStaff)),
                 ),
               ],
             ),

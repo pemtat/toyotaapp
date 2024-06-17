@@ -5,6 +5,7 @@ class SparePartModel {
   int quantity;
   String changeNow;
   String changeOnPM;
+  int additional;
 
   SparePartModel({
     required this.cCodePage,
@@ -13,5 +14,17 @@ class SparePartModel {
     required this.quantity,
     required this.changeNow,
     required this.changeOnPM,
+    required this.additional,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'c_code': cCodePage,
+      'part_number': partNumber,
+      'description': partDetails,
+      'quantity': quantity.toString(),
+      'change_now': changeNow,
+      'change_on_pm': changeOnPM,
+      'additional': additional,
+    };
+  }
 }

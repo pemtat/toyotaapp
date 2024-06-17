@@ -314,14 +314,17 @@ class JobDetailView extends StatelessWidget {
                                               .reportList.isNotEmpty
                                           ? EditButton(
                                               onTap: () {
-                                                Get.to(
-                                                    () => const FillFormView());
+                                                Get.to(() => EditFillFormView(
+                                                      reportId: jobId ?? '',
+                                                    ));
                                               },
                                             )
                                           : AddButton(
                                               onTap: () {
-                                                Get.to(() =>
-                                                    const EditFillFormView());
+                                                Get.to(() => FillFormView(
+                                                      ticketId: ticketId,
+                                                      jobId: jobId ?? '',
+                                                    ));
                                               },
                                             )),
                                     ],

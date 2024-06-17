@@ -55,11 +55,11 @@ class CalendarView extends StatelessWidget {
               calendarStyle: CalendarStyle(
                 defaultTextStyle: TextStyleList.subtitle2,
                 todayDecoration: const BoxDecoration(
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 240, 147, 17),
                   shape: BoxShape.circle,
                 ),
                 selectedDecoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 240, 147, 17),
+                  color: Colors.blue,
                   shape: BoxShape.circle,
                 ),
                 markerDecoration: const BoxDecoration(),

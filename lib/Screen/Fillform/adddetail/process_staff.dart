@@ -6,7 +6,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class RepairStaff extends GetxController {
+class ProcessStaff extends GetxController {
   void repairStaffModal(BuildContext context) {
     ShowModalWidget(
       children: [

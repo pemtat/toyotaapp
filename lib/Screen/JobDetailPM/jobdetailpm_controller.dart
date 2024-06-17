@@ -15,7 +15,6 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
-import 'package:intl/intl.dart';
 
 class JobDetailControllerPM extends GetxController {
   final notes = TextEditingController().obs;
@@ -110,11 +109,6 @@ class JobDetailControllerPM extends GetxController {
         );
       },
     );
-  }
-
-  void saveCurrentDateTime(Rx<String> datetime) {
-    DateTime now = DateTime.now();
-    datetime.value = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
   }
 
   void addNote(Rx<TextEditingController> textControllerRx) async {

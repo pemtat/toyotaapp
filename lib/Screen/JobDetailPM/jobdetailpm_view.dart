@@ -295,7 +295,10 @@ class JobDetailViewPM extends StatelessWidget {
                                       const TitleApp(text: 'Repair Report*'),
                                       AddButton(
                                         onTap: () {
-                                          Get.to(() => const FillFormView());
+                                          Get.to(() => FillFormView(
+                                                ticketId: ticketId,
+                                                jobId: jobId ?? '',
+                                              ));
                                         },
                                       ),
                                     ],

@@ -23,23 +23,26 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class FillFormView extends StatelessWidget {
-  const FillFormView({super.key});
+  final String ticketId;
+  final String jobId;
+  FillFormView({super.key, required this.ticketId, required this.jobId}) {
+    fillFormController.fetchData(ticketId, jobId);
+  }
 
+  final Rcode rcodeController = Get.put(Rcode());
+  final Wcode wcodeController = Get.put(Wcode());
+  final RepairProcedure rPController = Get.put(RepairProcedure());
+  final SparepartList sparePartListController = Get.put(SparepartList());
+  final AdditSparepartList additSparePartListController =
+      Get.put(AdditSparepartList());
+  final RepairResult repairResultController = Get.put(RepairResult());
+  final ProcessStaff processStaffController = Get.put(ProcessStaff());
+  final FillformController fillFormController = Get.put(FillformController());
+  int space = 8;
   @override
   Widget build(BuildContext context) {
-    final Rcode rcodeController = Get.put(Rcode());
-    final Wcode wcodeController = Get.put(Wcode());
-    final RepairProcedure rPController = Get.put(RepairProcedure());
-    final SparepartList sparePartListController = Get.put(SparepartList());
-    final AdditSparepartList additSparePartListController =
-        Get.put(AdditSparepartList());
-    final RepairResult repairResultController = Get.put(RepairResult());
-    final RepairStaff repairStaffController = Get.put(RepairStaff());
-
-    final FillformController fillFormController = Get.put(FillformController());
-    int space = 8;
-
     return Scaffold(
       backgroundColor: white4,
       appBar: PreferredSize(
@@ -120,13 +123,14 @@ class FillFormView extends StatelessWidget {
               () => BoxContainer(
                 children: [
                   TitleWithButton(
-                    titleText: 'Repair prodecure',
-                    button: AddButton(
-                      onTap: () {
-                        rPController.rPModal(context);
-                      },
-                    ),
-                  ),
+                      titleText: 'Repair prodecure',
+                      button: rPController.repairProcedureList.isEmpty
+                          ? AddButton(
+                              onTap: () {
+                                rPController.rPModal(context);
+                              },
+                            )
+                          : Container()),
                   rPController.repairProcedureList.isNotEmpty
                       ? ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -235,11 +239,11 @@ class FillFormView extends StatelessWidget {
                 Obx(
                   () => AddEditBox(
                       titleText: 'Process Staff',
-                      list: repairStaffController.repairStaff,
+                      list: processStaffController.repairStaff,
                       onTap: () =>
-                          repairStaffController.repairStaffModal(context),
+                          processStaffController.repairStaffModal(context),
                       moreText:
-                          getDisplayString(repairStaffController.repairStaff)),
+                          getDisplayString(processStaffController.repairStaff)),
                 ),
               ],
             ),
@@ -248,7 +252,10 @@ class FillFormView extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    fillFormController.showSavedDialog(context,
+                        'Are you confirm to save report?', 'No', 'Yes');
+                  },
                   style: TextButton.styleFrom(
                     backgroundColor: black3,
                     foregroundColor: Colors.black12,

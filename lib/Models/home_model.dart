@@ -128,12 +128,12 @@ class Issues {
         notes!.add(Notes.fromJson(v));
       });
     }
-    if (json['history'] != null) {
-      history = <History>[];
-      json['history'].forEach((v) {
-        history!.add(History.fromJson(v));
-      });
-    }
+    // if (json['history'] != null) { // Error String Type
+    //   history = <History>[];
+    //   json['history'].forEach((v) {
+    //     history!.add(History.fromJson(v));
+    //   });
+    // }
   }
 
   Map<String, dynamic> toJson() {

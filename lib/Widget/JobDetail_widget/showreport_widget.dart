@@ -59,7 +59,7 @@ class ShowRepairReport extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final data = reportData[index];
                     return Container(
-                      margin: const EdgeInsets.only(bottom: 6),
+                      margin: const EdgeInsets.only(bottom: 8),
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           border: Border.all(width: 1, color: black3),
@@ -74,6 +74,7 @@ class ShowRepairReport extends StatelessWidget {
                         BoxInfo(
                             title: 'Description',
                             value: data.description ?? '-'),
+                        BoxInfo(title: 'Quantity', value: data.quantity ?? ''),
                       ]),
                     );
                   },
@@ -105,6 +106,8 @@ class ShowRepairReport extends StatelessWidget {
                           BoxInfo(
                               title: 'Description',
                               value: data.description ?? ''),
+                          BoxInfo(
+                              title: 'Quantity', value: data.quantity ?? ''),
                         ]),
                       );
                     },

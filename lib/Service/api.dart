@@ -72,5 +72,17 @@ String getPdfById(String issueId) {
   return '$url/api/rest/issues/$issueId/pdf';
 }
 
+String createJobReport() {
+  return '$url/api/rest/jobs/create_repair_report';
+}
+
+String createJobReportAdditional() {
+  return '$url/api/rest/jobs/create_repair_report_addition';
+}
+
+String getHighRelelationReport() {
+  return '$url/api/rest/jobs/high_relation_report';
+}
+
 String usernameProduct = 'VanSale-Dev';
 String passwordProduct = 'c8doEpdFC0CFkUWHUEXv';
