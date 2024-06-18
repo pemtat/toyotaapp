@@ -10,7 +10,11 @@ const String search = '$url/api/rest/users/me/token';
 
 const String getAssignJob =
     '$url/api/rest/issues?filter_id=assigned&page_size=10&page=1';
-const String getAllJob = '$url/api/rest/issues?page_size=10&page=1';
+const String getAllJob = '$url/api/rest/issues?page_size=10&page=2';
+
+String getAllJobs(int page) {
+  return '$url/api/rest/issues?page_size=10&page=$page';
+}
 
 String getTicketbyId(String issueId) {
   return '$issue/$issueId';

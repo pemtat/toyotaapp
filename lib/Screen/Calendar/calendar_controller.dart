@@ -52,7 +52,9 @@ class CalendarController extends GetxController {
 
   Future<void> updateEventsFromPM(List<PmModel> pmList,
       Map<DateTime, List<Map<String, dynamic>>> tempEvents) async {
-    for (var pm in pmList) {
+    var pmListCopy = List<PmModel>.from(pmList); // Create a copy of the list
+
+    for (var pm in pmListCopy) {
       try {
         final pmDate = formatDateTimeString(pm.pmPlan ?? '');
         final dayKey = DateTime.utc(pmDate.year, pmDate.month, pmDate.day);
@@ -103,7 +105,9 @@ class CalendarController extends GetxController {
 
   Future<void> updateEventsFromJobs(List<Issues> jobList,
       Map<DateTime, List<Map<String, dynamic>>> tempEvents) async {
-    for (var job in jobList) {
+    var jobListCopy = List<Issues>.from(jobList);
+
+    for (var job in jobListCopy) {
       try {
         final jobDate = formatDateTimeString(job.dueDate ?? '');
 
@@ -135,7 +139,13 @@ class CalendarController extends GetxController {
         };
 
         bool isDuplicate = tempEvents[dayKey]?.any((event) =>
-                event['ticketid'] == job.id &&
+                event['ticketid'] == job.id.toString() &&
+                event['time'] == formattedTime &&
+                event['status'] == job.status!.name &&
+                event['task'] == job.summary &&
+                event['description'] == job.description &&
+                event['location'] == job.location &&
+                event['serialNo'] == warrantyInfoList.first.serial &&
                 event['type'] == EventType.Job) ??
             false;
 

@@ -48,12 +48,39 @@ class HomeController extends GetxController {
         List<dynamic> issues = responseData['issues'];
         jobList.assignAll(issues.map((data) => Issues.fromJson(data)).toList());
       }
+
+      fetchAndProcessJobs(handlerId, accessToken ?? '');
+
+      // ignore: empty_catches
+    } catch (e) {}
+  }
+
+  Future<void> fetchAndProcessJobs(int handlerId, String accessToken) async {
+    try {
+      List<Future<void>> fetchTasks = [];
+
+      for (int page = 1; page <= 10; page++) {
+        fetchTasks.add(fetchAndProcessJobPage(page, handlerId, accessToken));
+      }
+
+      await Future.wait(fetchTasks);
+      findMostRecentNewJob();
+      findMostRecentCompleteJob();
+    } catch (e) {
+      print('Exception occurred during fetching and processing jobs: $e');
+    }
+  }
+
+  Future<void> fetchAndProcessJobPage(
+      int page, int handlerId, String accessToken) async {
+    try {
       final response2 = await http.get(
-        Uri.parse(getAllJob),
+        Uri.parse(getAllJobs(page)),
         headers: {
           'Authorization': '$accessToken',
         },
       );
+
       if (response2.statusCode == 200) {
         try {
           Map<String, dynamic> responseData = json.decode(response2.body);
@@ -65,17 +92,17 @@ class HomeController extends GetxController {
                 issue['handler']['id'] == handlerId;
           }).toList();
 
-          jobList.assignAll(
+          jobList.addAll(
               filteredIssues.map((data) => Issues.fromJson(data)).toList());
-          findMostRecentNewJob();
-          findMostRecentCompleteJob();
         } catch (e) {
-          print('Exception occurred: $e');
+          print('Exception occurred during JSON parsing or filtering: $e');
         }
-      } else {}
-
-      // ignore: empty_catches
-    } catch (e) {}
+      } else {
+        print('Failed to fetch jobs for page $page: ${response2.statusCode}');
+      }
+    } catch (e) {
+      print('Exception occurred during HTTP request for page $page: $e');
+    }
   }
 
   void findMostRecentNewJob() {
