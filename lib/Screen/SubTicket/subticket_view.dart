@@ -121,7 +121,9 @@ class SubTicketView extends StatelessWidget {
                                     ;
                                   },
                                   child: SubJobsTicket(
+                                      jobsHome: jobController,
                                       bugId: ticketId,
+                                      reporter: job.reporter!.id.toString(),
                                       job: job,
                                       expandedIndex:
                                           subticketController.expandedIndex,

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AssignedjobsController extends GetxController {
-  final isSelected = 1.obs;
-
+class CompleteJobsController extends GetxController {
   final RxInt expandedIndex = (-2).obs;
   final TextEditingController searchController = TextEditingController();
   final RxString searchQuery = ''.obs;

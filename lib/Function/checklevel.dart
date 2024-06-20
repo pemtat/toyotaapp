@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 Future<String> checkLevel(int userId) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String getUserInfo = getUserInfoById(userId);
+  final String getUserInfo = getUserInfoById(userId.toString());
   String? token = prefs.getString('token');
 
   final response = await http.get(

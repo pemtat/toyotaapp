@@ -11,6 +11,7 @@ import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
+import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -46,6 +47,28 @@ Future<void> fetchSubJob(
     }
   } catch (e) {
     print('Error: $e');
+  }
+}
+
+Future<void> fetchUserById(String id, RxList<UserById> userData) async {
+  String? token = await getToken();
+  final response = await http.get(
+    Uri.parse(getUserInfoById(id)),
+    headers: {
+      'Authorization': '$token',
+    },
+  );
+  if (response.statusCode == 200) {
+    final dynamic responseData = jsonDecode(response.body);
+
+    if (responseData is Map<String, dynamic>) {
+      UserById user = UserById.fromJson(responseData);
+      userData.value = [user];
+    } else {
+      print('Invalid data format');
+    }
+  } else {
+    print('Failed to load data: ${response.statusCode}');
   }
 }
 

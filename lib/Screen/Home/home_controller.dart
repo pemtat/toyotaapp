@@ -1,9 +1,11 @@
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
+import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,19 +16,25 @@ import 'dart:convert';
 
 class HomeController extends GetxController {
   var jobList = <Issues>[].obs;
+  var userInfo = <UserById>[].obs;
   var ticketJobList = <Issues>[].obs;
   var issueData = [].obs;
+  var userData = [].obs;
   final RxInt jobListLength = 0.obs;
   final RxInt jobListCloseLength = 0.obs;
+  var customerUserInfo = <CustomerById>[].obs;
+  var subJobAssignedList = <SubJobAssgined>[].obs;
   var subJobAssigned = <SubJobAssgined>[].obs;
   final BottomBarController notificationController =
       Get.put(BottomBarController());
   final mostRecentNewJob = Rx<Issues?>(null);
   final mostRecentCompleteJob = Rx<Issues?>(null);
   var pmItems = <PmModel>[].obs;
+  RxBool isLoading = true.obs;
   final RxInt pmjobList = 0.obs;
   final RxInt pmjobListClosed = 0.obs;
   final RxInt subjobList = 0.obs;
+  final RxInt subjobListPending = 0.obs;
   final RxInt subjobListClosed = 0.obs;
   final RxInt pmCompletedList = 0.obs;
   final RxInt expandedIndex = (-2).obs;
@@ -40,6 +48,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> fetchDataFromAssignJob() async {
+    isLoading.value = true;
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? tokenResponse = prefs.getString('token_response');
@@ -192,14 +201,66 @@ class HomeController extends GetxController {
       List<ticket.Issues>? issuesList = ticketModel.issues;
       issuesList!.map((issue) {}).toList();
       issueData.addAll(issuesList);
-      issuesList.forEach((issue) {
-        if (issue.status!.name == 'closed') {
-          subjobListClosed.value = subjobListClosed.value + 1;
-        } else {
-          subjobList.value = subjobList.value + 1;
-        }
-      });
     } else {}
+  }
+
+  Future<Map<String, String>> fetchUserById(String id) async {
+    String? token = await getToken();
+    final response = await http.get(
+      Uri.parse(getUserInfoById(id)),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+    if (response.statusCode == 200) {
+      final dynamic responseData = jsonDecode(response.body);
+
+      if (responseData is Map<String, dynamic>) {
+        UserById user = UserById.fromJson(responseData);
+        userInfo.value = [user];
+        CustomerById customerInfo = await fetchCustomerInfo(
+            userInfo.first.users!.first.companyId ?? '');
+        return {
+          'name': userInfo.first.users!.first.name ?? '',
+          'location': customerInfo.customerAddress ?? ''
+        };
+      } else {
+        print('Invalid data format');
+        return {};
+      }
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+      return {};
+    }
+  }
+
+  Future<CustomerById> fetchCustomerInfo(String id) async {
+    String username = usernameProduct;
+    String password = passwordProduct;
+
+    String basicAuth =
+        'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+
+    try {
+      final response = await http.get(
+        Uri.parse(getCustomerInfoById(id.toString())),
+        headers: {'Authorization': basicAuth},
+      );
+      if (response.statusCode == 200) {
+        final dynamic responseData = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          CustomerById customer = CustomerById.fromJson(responseData);
+          return customer;
+        } else {
+          throw FormatException('Unexpected response format');
+        }
+      } else {
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      rethrow; // Rethrow the caught error
+    }
   }
 
   //Subjobs
@@ -218,17 +279,25 @@ class HomeController extends GetxController {
         List<SubJobAssgined> itemList =
             responseData.map((job) => SubJobAssgined.fromJson(job)).toList();
 
-        // Filter and sort itemList
-        // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
-        List<SubJobAssgined> closedSubJob = itemList
-            .where((subJob) => stringToStatus(subJob.status ?? '') == 'closed')
+        List<SubJobAssgined> newSubJobs =
+            itemList.where((subJob) => subJob.status == '10').toList();
+        subjobList.value = newSubJobs.length;
+        List<SubJobAssgined> pendingSubJobs = itemList
+            .where((subJob) => subJob.status != '10' && subJob.status != '90')
             .toList();
+        subjobListPending.value = pendingSubJobs.length;
+        List<SubJobAssgined> completedSubJobs =
+            itemList.where((subJob) => subJob.status == '90').toList();
+        subjobListClosed.value = completedSubJobs.length;
+        // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
+        // List<SubJobAssgined> closedSubJob = itemList
+        //     .where((subJob) => stringToStatus(subJob.status ?? '') == 'closed')
+        //     .toList();
 
         Set<String> uniqueBugIds = Set();
         List<String> allIds = [];
         List<SubJobAssgined> filteredItemList = [];
-        subjobListClosed.value = 0;
-        subjobList.value = 0;
+
         for (var subJob in itemList) {
           if (!uniqueBugIds.contains(subJob.bugId)) {
             uniqueBugIds.add(subJob.bugId ?? '');
@@ -238,7 +307,7 @@ class HomeController extends GetxController {
           }
         }
 
-        subJobAssigned.value = filteredItemList;
+        subJobAssigned.value = itemList;
       } else {
         print('Failed to load data: ${response.statusCode}');
       }

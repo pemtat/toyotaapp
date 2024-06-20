@@ -44,7 +44,7 @@ class TicketView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('Incoming Ticket', style: TextStyleList.title1),
+                title: Text('All Ticket', style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,
@@ -397,8 +397,10 @@ class TicketView extends StatelessWidget {
                                       ;
                                     },
                                     child: SubJobsTicket(
+                                      jobsHome: jobController,
                                       bugId: job.bugId ?? '',
                                       job: job,
+                                      reporter: job.reporterId ?? '',
                                       expandedIndex:
                                           ticketController.expandedIndex,
                                       jobController: subticketController,

@@ -8,8 +8,10 @@ import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
+import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Service/api.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,6 +23,8 @@ class PeddingtaskController extends GetxController {
   var pdfList = <Map<String, dynamic>>[].obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
+  var userData = <UserById>[].obs;
+
   var issueId;
   var jobId;
   var subJobs = <SubJobDetail>[].obs;
@@ -36,6 +40,8 @@ class PeddingtaskController extends GetxController {
 
     await fetchPdfData(ticketId, token ?? '', pdfList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
+    await fetchUserById(subJobs.first.reporterId ?? '', userData);
+
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {
@@ -69,6 +75,7 @@ class PeddingtaskController extends GetxController {
       context: context,
       builder: (BuildContext context) {
         return DialogAlert(
+          rightColor: red1,
           title: title,
           leftButton: left,
           rightButton: right,

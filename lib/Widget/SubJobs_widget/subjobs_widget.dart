@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -13,7 +14,10 @@ class SubJobsTicket extends StatelessWidget {
   final job;
   final RxInt expandedIndex;
   final SubTicketController jobController;
+  final HomeController jobsHome;
   final String bugId;
+  final String reporter;
+
   final String? status;
 
   const SubJobsTicket(
@@ -22,90 +26,113 @@ class SubJobsTicket extends StatelessWidget {
       required this.expandedIndex,
       required this.jobController,
       required this.status,
-      required this.bugId});
+      required this.bugId,
+      required this.reporter,
+      required this.jobsHome});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              bottomLeft: Radius.circular(0),
-              topRight: Radius.circular(10),
-              bottomRight: Radius.circular(0),
-            ),
-            color: white5,
-          ),
-          child: Row(
-            children: [
-              Text(
-                'JobID: #${job.id.toString().padLeft(4, '0')}',
-                style: TextStyleList.subtitle1,
+    return FutureBuilder<Map<String, String>>(
+      future: jobsHome.fetchUserById(reporter),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container();
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('No data available'));
+        }
+
+        Map<String, String> userData = snapshot.data!;
+        return Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(0),
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(0),
+                ),
+                color: white5,
               ),
-              const SizedBox(width: 5),
-              Text(
-                ('(Ticket #$bugId}'),
-                style: TextStyleList.text11,
-              ),
-              const Spacer(),
-              StatusButton(status: status ?? '')
-            ],
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          padding: const EdgeInsets.all(10),
-          decoration: Decoration3(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                job.summary,
-                style: TextStyleList.text15,
-              ),
-              const SizedBox(height: 2),
-              Text(
-                job.description,
-                style: TextStyleList.text15,
-              ),
-              const SizedBox(height: 2),
-              Row(
+              child: Row(
                 children: [
-                  const Icon(Icons.calendar_month_outlined),
+                  Text(
+                    'JobID: #${job.id.toString().padLeft(4, '0')}',
+                    style: TextStyleList.subtitle1,
+                  ),
                   const SizedBox(width: 5),
                   Text(
-                    '${job.dueDate}',
-                    style: TextStyleList.subtext1,
+                    ('(Ticket #$bugId)'),
+                    style: TextStyleList.text11,
                   ),
+                  const Spacer(),
+                  StatusButton(status: status ?? '')
                 ],
               ),
-              const SizedBox(height: 2),
-              Row(
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.all(10),
+              decoration: Decoration3(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.location_on_outlined),
-                  const SizedBox(width: 5),
                   Text(
-                    'Bangkok',
-                    style: TextStyleList.subtext1,
+                    job.summary ?? '',
+                    style: TextStyleList.text15,
                   ),
-                  const SizedBox(width: 5),
+                  const SizedBox(height: 2),
+                  Text(
+                    job.description ?? '',
+                    style: TextStyleList.text15,
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Reported by ${userData['name']}',
+                    style: TextStyleList.subtext4,
+                  ),
+                  const SizedBox(height: 2),
                   Row(
                     children: [
-                      GoogleMapButton(
-                        onTap: () {},
-                      )
+                      const Icon(Icons.calendar_month_outlined),
+                      const SizedBox(width: 5),
+                      Text(
+                        '${job.dueDate == null ? 'ยังไม่มีกำหนดการ' : job.dueDate}',
+                        style: TextStyleList.subtext1,
+                      ),
                     ],
                   ),
+                  const SizedBox(height: 2),
+                  Row(
+                    children: [
+                      const Icon(Icons.location_on_outlined),
+                      const SizedBox(width: 5),
+                      Flexible(
+                        child: Text(
+                          userData['location'] ?? '',
+                          style: TextStyleList.subtext1,
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Row(
+                        children: [
+                          GoogleMapButton(
+                            onTap: () {},
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
                 ],
               ),
-              const SizedBox(height: 8),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

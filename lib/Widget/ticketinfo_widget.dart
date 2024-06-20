@@ -88,7 +88,7 @@ class PMJobInfo extends StatelessWidget {
             Row(
               children: [
                 TitleApp(
-                    text: 'JobID: #${ticketId.toString().padLeft(7, '0')}'),
+                    text: 'JobID: #${ticketId.toString().padLeft(4, '0')}'),
                 5.wH,
                 GestureDetector(
                   onTap: () {

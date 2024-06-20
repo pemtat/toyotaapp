@@ -78,33 +78,63 @@ class CalendarView extends StatelessWidget {
                       .toList();
 
                   if (jobEvents.isNotEmpty) {
-                    return Container(
-                      margin: const EdgeInsets.all(6.0),
-                      decoration: const BoxDecoration(
-                        color: red5,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Text(
-                          '${day.day}',
-                          style: const TextStyle(color: Colors.white),
+                    return Stack(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(6.0),
+                          decoration: const BoxDecoration(
+                            color: red5,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${day.day}',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
                         ),
-                      ),
+                        Positioned(
+                          bottom: 2,
+                          right: 2,
+                          child: Container(
+                            width: 8,
+                            height: 8,
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 248, 35, 7),
+                                shape: BoxShape.circle),
+                          ),
+                        )
+                      ],
                     );
                   }
                   if (pmEvents.isNotEmpty) {
-                    return Container(
-                      margin: const EdgeInsets.all(6.0),
-                      decoration: const BoxDecoration(
-                        color: blue2,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Text(
-                          '${day.day}',
-                          style: const TextStyle(color: Colors.white),
+                    return Stack(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(6.0),
+                          decoration: const BoxDecoration(
+                            color: blue2,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${day.day}',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
                         ),
-                      ),
+                        Positioned(
+                          bottom: 2,
+                          right: 2,
+                          child: Container(
+                            width: 8,
+                            height: 8,
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 7, 54, 243),
+                                shape: BoxShape.circle),
+                          ),
+                        )
+                      ],
                     );
                   }
 

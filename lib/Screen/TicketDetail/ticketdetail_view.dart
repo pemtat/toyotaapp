@@ -63,6 +63,9 @@ class TicketDetailView extends StatelessWidget {
             var subJob = ticketController.subJobs.isNotEmpty
                 ? ticketController.subJobs.first
                 : null;
+            var userData = ticketController.userData.first.users!.isNotEmpty
+                ? ticketController.userData.first.users!.first
+                : null;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -91,50 +94,50 @@ class TicketDetailView extends StatelessWidget {
                                     jobId: 0,
                                     jobIdString: subJob!.id,
                                     dateTime: subJob.dueDate ?? '-',
-                                    reporter: subJob.reporterId ?? '',
+                                    reporter: userData!.name ?? '',
                                     summary: subJob.summary ?? '',
                                     description: subJob.description ?? '',
                                     status: stringToStatus(subJob.status ?? ''),
                                   )
                                 ],
                               ),
-                              8.kH,
-                              BoxContainer(
-                                children: [
-                                  const TitleApp(text: 'Job Progress'),
-                                  8.kH,
-                                  Column(
-                                    children: List.generate(
-                                        ticketController
-                                            .jobTimeLineItems.length, (index) {
-                                      return Column(
-                                        children: [
-                                          TimeLineItem(
-                                            imagePath: ticketController
-                                                .jobTimeLineItems[index]
-                                                .imagePath,
-                                            jobid: ticketController
-                                                .jobTimeLineItems[index].jobid,
-                                            description: ticketController
-                                                .jobTimeLineItems[index]
-                                                .description,
-                                            dateTime: ticketController
-                                                .jobTimeLineItems[index]
-                                                .datetime,
-                                            status: ticketController
-                                                .jobTimeLineItems[index].status,
-                                            isLast: index ==
-                                                ticketController
-                                                        .jobTimeLineItems
-                                                        .length -
-                                                    1,
-                                          ),
-                                        ],
-                                      );
-                                    }),
-                                  ),
-                                ],
-                              ),
+                              // 8.kH,
+                              // BoxContainer(
+                              //   children: [
+                              //     const TitleApp(text: 'Job Progress'),
+                              //     8.kH,
+                              //     Column(
+                              //       children: List.generate(
+                              //           ticketController
+                              //               .jobTimeLineItems.length, (index) {
+                              //         return Column(
+                              //           children: [
+                              //             TimeLineItem(
+                              //               imagePath: ticketController
+                              //                   .jobTimeLineItems[index]
+                              //                   .imagePath,
+                              //               jobid: ticketController
+                              //                   .jobTimeLineItems[index].jobid,
+                              //               description: ticketController
+                              //                   .jobTimeLineItems[index]
+                              //                   .description,
+                              //               dateTime: ticketController
+                              //                   .jobTimeLineItems[index]
+                              //                   .datetime,
+                              //               status: ticketController
+                              //                   .jobTimeLineItems[index].status,
+                              //               isLast: index ==
+                              //                   ticketController
+                              //                           .jobTimeLineItems
+                              //                           .length -
+                              //                       1,
+                              //             ),
+                              //           ],
+                              //         );
+                              //       }),
+                              //     ),
+                              //   ],
+                              // ),
                               8.kH,
                               MoreDetail(
                                   file: file,

@@ -63,6 +63,9 @@ class PendingTaskView extends StatelessWidget {
           var subJob = penddingTaskController.subJobs.isNotEmpty
               ? penddingTaskController.subJobs.first
               : null;
+          var userData = penddingTaskController.userData.first.users!.isNotEmpty
+              ? penddingTaskController.userData.first.users!.first
+              : null;
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -132,7 +135,7 @@ class PendingTaskView extends StatelessWidget {
                                   jobId: 0,
                                   jobIdString: subJob!.id,
                                   dateTime: subJob.dueDate ?? '-',
-                                  reporter: subJob.reporterId ?? '',
+                                  reporter: userData!.name ?? '',
                                   summary: subJob.summary ?? '',
                                   description: subJob.description ?? '',
                                   status: stringToStatus(subJob.status ?? ''),

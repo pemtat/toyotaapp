@@ -9,11 +9,13 @@ import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
+import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
@@ -31,6 +33,8 @@ class JobDetailController extends GetxController {
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
+  var userData = <UserById>[].obs;
+
   var subJobs = <SubJobDetail>[].obs;
   var moreTicketDetail = false.obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
@@ -61,6 +65,7 @@ class JobDetailController extends GetxController {
     fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
     fetchPdfData(ticketId, token ?? '', pdfList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
+    await fetchUserById(subJobs.first.reporterId ?? '', userData);
     savedDateStartTime.value = subJobs.first.timeStart ?? '';
     savedDateEndTime.value = subJobs.first.timeEnd ?? '';
     final response = await http.get(
@@ -167,6 +172,7 @@ class JobDetailController extends GetxController {
       context: context,
       builder: (BuildContext context) {
         return DialogAlert(
+          rightColor: red1,
           title: title,
           leftButton: left,
           rightButton: right,

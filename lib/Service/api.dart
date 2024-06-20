@@ -24,6 +24,10 @@ String attatchNoteFile(String issueId) {
   return '$issueId/files';
 }
 
+String getCustomerInfoById(String customerId) {
+  return '$urlFSM/api/customer/search/$customerId';
+}
+
 String updateIssueStatusById(int issueId) {
   return '$issue/$issueId';
 }
@@ -32,7 +36,7 @@ String getAttachmentFileById(int issueId, int attachmentId) {
   return '$issue/$issueId/files/$attachmentId';
 }
 
-String getUserInfoById(int userId) {
+String getUserInfoById(String userId) {
   return '$user/$userId';
 }
 

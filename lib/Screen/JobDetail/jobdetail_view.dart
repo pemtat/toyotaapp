@@ -96,6 +96,9 @@ class JobDetailView extends StatelessWidget {
             var subJob = jobController.subJobs.isNotEmpty
                 ? jobController.subJobs.first
                 : null;
+            var userData = jobController.userData.first.users!.isNotEmpty
+                ? jobController.userData.first.users!.first
+                : null;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -191,7 +194,7 @@ class JobDetailView extends StatelessWidget {
                                         jobId: 0,
                                         jobIdString: subJob!.id,
                                         dateTime: subJob.dueDate ?? '-',
-                                        reporter: subJob.id ?? '',
+                                        reporter: userData!.name ?? '',
                                         summary: subJob.summary ?? '',
                                         description: subJob.description ?? '',
                                         status: stringToStatus(
