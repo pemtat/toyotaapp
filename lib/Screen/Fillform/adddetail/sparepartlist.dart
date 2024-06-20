@@ -332,7 +332,7 @@ class SparepartList extends GetxController {
         quantity: quantity.value,
         changeNow: changeNowValue,
         changeOnPM: changeOnPMValue,
-        additional: 1));
+        additional: 0));
   }
 
   void sparePartUpdate(SparePartModel part) {

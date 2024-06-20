@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/process_staff.dart';
@@ -8,6 +9,7 @@ import 'package:toyotamobile/Screen/FillForm/adddetail/repair_result.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/wcode.dart';
 import 'package:toyotamobile/Screen/FillForm/fillform_controller.dart';
+import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -247,30 +249,52 @@ class FillFormView extends StatelessWidget {
                 ),
               ],
             ),
-            130.kH,
-            BoxContainer(paddingCustom: 10, children: [
-              SizedBox(
-                width: double.infinity,
-                child: TextButton(
-                  onPressed: () {
-                    fillFormController.showSavedDialog(context,
-                        'Are you confirm to save report?', 'No', 'Yes');
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: black3,
-                    foregroundColor: Colors.black12,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+            8.kH,
+            BoxContainer(
+              children: [
+                Container(
+                    height: 200,
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.grey)),
+                    child: SfSignaturePad(
+                        key: fillFormController.signature,
+                        backgroundColor: Colors.white,
+                        strokeColor: Colors.black,
+                        minimumStrokeWidth: 1.0,
+                        maximumStrokeWidth: 4.0)),
+                10.kH,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: fillFormController.clearSignature,
+                      child: Text(
+                        'Clear',
+                        style: TextStyleList.text20,
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    'Save',
-                    style: TextStyleList.text5,
-                  ),
+                  ],
                 ),
-              ),
-            ])
+                8.kH,
+                TextFieldWidget(
+                    text: 'ลงชื่อ',
+                    textSet: fillFormController.signatureController)
+              ],
+            ),
+            130.kH,
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: white3,
+        child: Container(
+          decoration: Decoration2(),
+          child: EndButton(
+              onPressed: () {
+                fillFormController.showSavedDialog(
+                    context, 'Are you confirm to save report?', 'No', 'Yes');
+              },
+              text: 'Save'),
         ),
       ),
     );

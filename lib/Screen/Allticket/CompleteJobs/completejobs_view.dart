@@ -2,7 +2,7 @@ import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Screen/Allticket/CompleteJobs/completejobs_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
-import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
+import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
@@ -15,6 +15,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 
 class CompleteJobsView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -64,7 +65,7 @@ class CompleteJobsView extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(paddingApp),
                 child: Obx(() {
-                  final filteredJobs = jobController.jobList.where((job) {
+                  final filteredJobs = jobController.issueData.where((job) {
                     final query =
                         completeJobsController.searchQuery.value.toLowerCase();
                     final searchQueryMatch =
@@ -74,7 +75,7 @@ class CompleteJobsView extends StatelessWidget {
                         completeJobsController.selectedStatus.isEmpty ||
                             completeJobsController.selectedStatus
                                 .contains(job.status!.name);
-                    final jobDate = formatDateTimeString(job.dueDate ?? '');
+                    final jobDate = job.dueDate ?? DateTime.now();
 
                     final dateMatch =
                         completeJobsController.selectedDate.value == null ||
@@ -98,10 +99,10 @@ class CompleteJobsView extends StatelessWidget {
                   return ListView.builder(
                     itemCount: filteredJobs.length,
                     itemBuilder: (context, index) {
-                      Issues job = filteredJobs[index];
+                      ticket.Issues job = filteredJobs[index];
                       return InkWell(
                           onTap: () {
-                            Get.to(() => TicketDetailView(
+                            Get.to(() => SubTicketView(
                                   ticketId: job.id.toString(),
                                 ));
                           },

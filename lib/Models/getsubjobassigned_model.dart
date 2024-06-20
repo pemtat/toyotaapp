@@ -1,4 +1,4 @@
-class SubJobDetail {
+class SubJobAssgined {
   String? id;
   String? reporterId;
   String? priority;
@@ -20,11 +20,15 @@ class SubJobDetail {
   String? description;
   String? timeStart;
   String? timeEnd;
+  String? comment;
+  String? contentBefore;
   String? imageBefore;
   String? imageAfter;
-  String? comment;
+  String? contentAfter;
+  String? location;
+  String? serialNo;
 
-  SubJobDetail(
+  SubJobAssgined(
       {this.id,
       this.reporterId,
       this.priority,
@@ -46,11 +50,15 @@ class SubJobDetail {
       this.description,
       this.timeStart,
       this.timeEnd,
+      this.comment,
+      this.contentBefore,
       this.imageBefore,
       this.imageAfter,
-      this.comment});
+      this.contentAfter,
+      this.location,
+      this.serialNo});
 
-  SubJobDetail.fromJson(Map<String, dynamic> json) {
+  SubJobAssgined.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     reporterId = json['reporter_id'];
     priority = json['priority'];
@@ -72,13 +80,15 @@ class SubJobDetail {
     description = json['description'];
     timeStart = json['time_start'];
     timeEnd = json['time_end'];
+    comment = json['comment'];
+    contentBefore = json['content_before'];
     imageBefore = json['image_before'];
     imageAfter = json['image_after'];
-    comment = json['comment'];
+    contentAfter = json['content_after'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['reporter_id'] = reporterId;
     data['priority'] = priority;
@@ -100,9 +110,11 @@ class SubJobDetail {
     data['description'] = description;
     data['time_start'] = timeStart;
     data['time_end'] = timeEnd;
+    data['comment'] = comment;
+    data['content_before'] = contentBefore;
     data['image_before'] = imageBefore;
     data['image_after'] = imageAfter;
-    data['comment'] = comment;
+    data['content_after'] = contentAfter;
     return data;
   }
 }

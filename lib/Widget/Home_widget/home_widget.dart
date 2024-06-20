@@ -46,16 +46,17 @@ class JobItemWidget extends StatelessWidget {
               const Spacer(),
               Obx(
                 () => IconButton(
-                  icon:
-                      expandedIndex.value == jobController.jobList.indexOf(job)
-                          ? const ArrowUp()
-                          : const ArrowDown(),
+                  icon: expandedIndex.value ==
+                          jobController.issueData.indexOf(job)
+                      ? const ArrowUp()
+                      : const ArrowDown(),
                   onPressed: () {
                     if (expandedIndex.value ==
-                        jobController.jobList.indexOf(job)) {
+                        jobController.issueData.indexOf(job)) {
                       expandedIndex.value = (-2);
                     } else {
-                      expandedIndex.value = jobController.jobList.indexOf(job);
+                      expandedIndex.value =
+                          jobController.issueData.indexOf(job);
                     }
                   },
                 ),
@@ -72,7 +73,9 @@ class JobItemWidget extends StatelessWidget {
               const Icon(Icons.calendar_month_outlined),
               const SizedBox(width: 5),
               Text(
-                formatDateTime(job.dueDate),
+                job.dueDate != null
+                    ? (job.dueDate)
+                    : getFormattedDate(DateTime.now()),
                 style: TextStyleList.subtext1,
               ),
             ],
@@ -83,7 +86,7 @@ class JobItemWidget extends StatelessWidget {
               const Icon(Icons.location_on_outlined),
               const SizedBox(width: 5),
               Text(
-                job.location,
+                'Bangkok',
                 style: TextStyleList.subtext1,
               ),
               const SizedBox(width: 5),
@@ -97,7 +100,7 @@ class JobItemWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Obx(() => expandedIndex.value == jobController.jobList.indexOf(job)
+          Obx(() => expandedIndex.value == jobController.issueData.indexOf(job)
               ? Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Column(

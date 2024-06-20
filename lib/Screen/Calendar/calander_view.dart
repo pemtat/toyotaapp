@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
+import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -168,9 +169,13 @@ class CalendarView extends StatelessWidget {
                                 final event = events[index];
                                 return InkWell(
                                   onTap: () {
-                                    Get.to(() => JobDetailView(
-                                          ticketId: event['ticketid'],
-                                        ));
+                                    event['type'] == EventType.Job
+                                        ? Get.to(() => SubTicketView(
+                                              ticketId: event['ticketid'],
+                                            ))
+                                        : Get.to(() => JobDetailView(
+                                              ticketId: event['ticketid'],
+                                            ));
                                   },
                                   child: CalendarItem(
                                     event: event,

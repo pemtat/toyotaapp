@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
@@ -30,7 +31,7 @@ class JobDetailController extends GetxController {
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
-  var subJobs = <JobById>[].obs;
+  var subJobs = <SubJobDetail>[].obs;
   var moreTicketDetail = false.obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
@@ -46,13 +47,22 @@ class JobDetailController extends GetxController {
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
   final BottomBarController bottomController = Get.put(BottomBarController());
 
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
   void fetchData(String ticketId, String subjobId) async {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
-    jobId = ticketId;
+
+    issueId = ticketId;
+    jobId = subjobId;
     fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
     fetchPdfData(ticketId, token ?? '', pdfList);
-    fetchSubJob(subjobId, token ?? '', subJobs);
+    await fetchSubJob(subjobId, token ?? '', subJobs);
+    savedDateStartTime.value = subJobs.first.timeStart ?? '';
+    savedDateEndTime.value = subJobs.first.timeEnd ?? '';
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {
@@ -145,7 +155,7 @@ class JobDetailController extends GetxController {
         body: jsonEncode(body),
       );
       if (response.statusCode == 201) {
-        fetchData(issueId.toString(), jobId);
+        fetchData(issueId.toString(), issueId);
         notes.value.clear();
       }
     }
@@ -161,7 +171,8 @@ class JobDetailController extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
-            changeIssueStatus(issueId, 'closed');
+            print(jobId);
+            updateStatusSubjobs(jobId, comment.value.text, issueId.toString());
           },
         );
       },

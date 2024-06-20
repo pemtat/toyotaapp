@@ -1,9 +1,7 @@
-import 'package:toyotamobile/Function/stringtodatetime.dart';
-import 'package:toyotamobile/Models/home_model.dart';
+import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_controller.dart';
-import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
-import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
+import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
@@ -63,7 +61,7 @@ class AssignedjobsNew extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(paddingApp),
               child: Obx(() {
-                final filteredJobs = jobController.jobList.where((job) {
+                final filteredJobs = jobController.issueData.where((job) {
                   final query =
                       assignedController.searchQuery.value.toLowerCase();
                   final searchQueryMatch = job.id.toString().contains(query) ||
@@ -72,7 +70,7 @@ class AssignedjobsNew extends StatelessWidget {
                       assignedController.selectedStatus.isEmpty ||
                           assignedController.selectedStatus
                               .contains(job.status!.name);
-                  final jobDate = formatDateTimeString(job.dueDate ?? '');
+                  final jobDate = job.dueDate ?? DateTime.now();
                   final dateMatch = assignedController.selectedDate.value ==
                           null ||
                       (jobDate.year ==
@@ -92,19 +90,12 @@ class AssignedjobsNew extends StatelessWidget {
                 return ListView.builder(
                   itemCount: filteredJobs.length,
                   itemBuilder: (context, index) {
-                    Issues job = filteredJobs[index];
+                    ticket.Issues job = filteredJobs[index];
                     return InkWell(
                       onTap: () {
-                        if (job.status == 'assigned') {
-                          Get.to(() => PendingTaskView(
-                                ticketId: job.id.toString(),
-                                jobId: '',
-                              ));
-                        } else {
-                          Get.to(() => JobDetailView(
+                        Get.to(() => SubTicketView(
                               ticketId: job.id.toString(),
-                              jobId: job.id.toString()));
-                        }
+                            ));
                       },
                       child: JobItemWidget(
                         job: job,

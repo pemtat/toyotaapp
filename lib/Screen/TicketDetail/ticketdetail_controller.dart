@@ -7,6 +7,7 @@ import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/jobprogress_model.dart';
+import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -26,6 +27,7 @@ class TicketDetailController extends GetxController {
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
+  var subJobs = <SubJobDetail>[].obs;
 
   final List<JobItemData> jobTimeLineItems = [
     JobItemData(
@@ -49,9 +51,11 @@ class TicketDetailController extends GetxController {
   ];
 
   final HomeController jobController = Get.put(HomeController());
-  void fetchData(String ticketId) async {
+  void fetchData(String ticketId, subjobId) async {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
+    await fetchSubJob(subjobId, token ?? '', subJobs);
+
     fetchPdfData(ticketId, token ?? '', pdfList);
     final response = await http.get(
       Uri.parse(apiUrl),

@@ -107,6 +107,28 @@ class StatusFeedBackButton extends StatelessWidget {
   }
 }
 
+class StatusResolved extends StatelessWidget {
+  const StatusResolved({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: const Color.fromARGB(255, 255, 231, 217),
+      ),
+      child: Text(
+        "Resolved",
+        style: GoogleFonts.kanit(
+            color: const Color(0xffF55C02),
+            fontSize: 14,
+            fontWeight: FontWeight.w400),
+      ),
+    );
+  }
+}
+
 class StatusPendingButton extends StatelessWidget {
   const StatusPendingButton({super.key});
 

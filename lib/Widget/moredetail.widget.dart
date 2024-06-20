@@ -39,7 +39,7 @@ class MoreDetail extends StatelessWidget {
             Flexible(
               child: Text(
                 summary,
-                style: TextStyleList.text9,
+                style: TextStyleList.text10,
               ),
             ),
           ],
@@ -49,7 +49,7 @@ class MoreDetail extends StatelessWidget {
             Flexible(
               child: Text(
                 description,
-                style: TextStyleList.text9,
+                style: TextStyleList.text10,
               ),
             ),
           ],

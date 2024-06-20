@@ -60,6 +60,73 @@ class TicketInfo extends StatelessWidget {
   }
 }
 
+class PMJobInfo extends StatelessWidget {
+  final int ticketId;
+  final String dateTime;
+  final String reporter;
+  final String description;
+  final String summary;
+  final bool? more;
+
+  const PMJobInfo(
+      {super.key,
+      required this.ticketId,
+      required this.dateTime,
+      required this.reporter,
+      required this.description,
+      required this.summary,
+      this.more});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                TitleApp(
+                    text: 'JobID: #${ticketId.toString().padLeft(7, '0')}'),
+                5.wH,
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: ticketId.toString()));
+                    Fluttertoast.showToast(
+                        msg: "คัดลอกข้อความ",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        fontSize: 12.0);
+                  },
+                  child: Image.asset('assets/ticketblock.png'),
+                )
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '$dateTime\nReported by $reporter',
+              style: TextStyleList.subtext1,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '$summary',
+              style: TextStyleList.subtext3,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '$description',
+              style: TextStyleList.subtext3,
+            ),
+            const SizedBox(height: 4),
+          ],
+        ),
+        if (more == false) const ArrowRight() else const ArrowDown(),
+      ],
+    );
+  }
+}
+
 class TicketInfoStatus extends StatelessWidget {
   final int ticketId;
   final String dateTime;
@@ -118,50 +185,78 @@ class JobInfo extends StatelessWidget {
   final String? jobIdString;
   final String dateTime;
   final String reporter;
+  final String summary;
+  final String description;
   final bool? more;
+  final String? status;
 
   const JobInfo(
       {super.key,
       required this.jobId,
       required this.dateTime,
       required this.reporter,
+      required this.summary,
+      required this.description,
       this.more,
-      this.jobIdString});
+      this.jobIdString,
+      this.status});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Stack(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                jobIdString != null
-                    ? TitleApp(text: 'Job ID: $jobIdString')
-                    : TitleApp(text: 'Job ID: $jobId'),
-                5.wH,
-                GestureDetector(
-                  onTap: () {
-                    Clipboard.setData(ClipboardData(text: jobId.toString()));
-                    Fluttertoast.showToast(
-                        msg: "คัดลอกข้อความ",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        fontSize: 12.0);
-                  },
-                  child: Image.asset('assets/ticketblock.png'),
-                )
+                Row(
+                  children: [
+                    jobIdString != null
+                        ? TitleApp(text: 'Job ID: $jobIdString')
+                        : TitleApp(text: 'Job ID: $jobId'),
+                    5.wH,
+                    GestureDetector(
+                      onTap: () {
+                        Clipboard.setData(
+                            ClipboardData(text: jobId.toString()));
+                        Fluttertoast.showToast(
+                            msg: "คัดลอกข้อความ",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            fontSize: 12.0);
+                      },
+                      child: Image.asset('assets/ticketblock.png'),
+                    )
+                  ],
+                ),
+                4.kH,
+                Text(
+                  '$summary',
+                  style: TextStyleList.text10,
+                ),
+                4.kH,
+                Text(
+                  '$description',
+                  style: TextStyleList.text10,
+                ),
+                4.kH,
+                Text(
+                  '$dateTime\nReported by $reporter',
+                  style: TextStyleList.subtext1,
+                ),
               ],
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '$dateTime\nReported by $reporter',
-              style: TextStyleList.subtext1,
             ),
           ],
         ),
+        if (status != null)
+          Positioned(
+            right: 0,
+            child: StatusButton(
+              status: status ?? '',
+            ),
+          ),
       ],
     );
   }

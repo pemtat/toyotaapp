@@ -11,18 +11,20 @@ class User {
   final AccessLevel accessLevel;
   final DateTime createdAt;
   final List<Project> projects;
-
-  User({
-    required this.id,
-    required this.name,
-    required this.realName,
-    required this.email,
-    required this.language,
-    required this.timezone,
-    required this.accessLevel,
-    required this.createdAt,
-    required this.projects,
-  });
+  final String companyId;
+  final String resourceNo;
+  User(
+      {required this.id,
+      required this.name,
+      required this.realName,
+      required this.email,
+      required this.language,
+      required this.timezone,
+      required this.accessLevel,
+      required this.createdAt,
+      required this.projects,
+      required this.companyId,
+      required this.resourceNo});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -38,6 +40,8 @@ class User {
               ?.map((projectJson) => Project.fromJson(projectJson))
               .toList() ??
           [],
+      companyId: json['company_id'] ?? '',
+      resourceNo: json['resource_no'] ?? '',
     );
   }
 }

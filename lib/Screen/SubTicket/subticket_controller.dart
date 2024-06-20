@@ -8,7 +8,7 @@ import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 
 class SubTicketController extends GetxController {
-  var subJobs = <SubJobByTicketModel>[].obs;
+  var subJobs = <Subjobs>[].obs;
 
   var type = 'left'.obs;
   final isSelected = false.obs;
@@ -32,16 +32,15 @@ class SubTicketController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(response.body);
-        List<SubJobByTicketModel> jobsList = responseData
-            .map((job) => SubJobByTicketModel.fromJson(job))
-            .toList();
-        subJobs.value = jobsList;
+        Map<String, dynamic> responseData = json.decode(response.body);
+        List<dynamic> issues = responseData['subjobs'];
+        subJobs
+            .assignAll(issues.map((data) => Subjobs.fromJson(data)).toList());
       } else {
-        print('Failed to load data: ${response.statusCode}');
+        print('Error Fetching Data');
       }
     } catch (e) {
-      print('Error: $e');
+      print('Errsor: $e');
     }
   }
 

@@ -109,6 +109,12 @@ class TextStyleList {
       decoration: TextDecoration.underline);
   static final TextStyle text19 =
       GoogleFonts.kanit(fontSize: 14, fontWeight: FontWeight.w500, color: red1);
+  static final TextStyle text20 = GoogleFonts.kanit(
+    fontSize: 14,
+    fontWeight: FontWeight.w300,
+    color: black12,
+    decoration: TextDecoration.underline,
+  );
   //12
   static final TextStyle subtext1 = GoogleFonts.kanit(
       fontSize: 12, fontWeight: FontWeight.w400, color: black6);
@@ -138,6 +144,8 @@ class TextStyleList {
     fontWeight: FontWeight.w400,
     color: red2,
   );
+  static final TextStyle subtext7 = GoogleFonts.kanit(
+      fontSize: 12, fontWeight: FontWeight.w500, color: black6);
   //11
   static final TextStyle detailtext1 = GoogleFonts.kanit(
     fontSize: 11,

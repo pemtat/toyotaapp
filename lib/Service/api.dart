@@ -53,15 +53,19 @@ String getAllSubJob() {
 }
 
 String getSubJobById(String subjobId) {
-  return '$url/api/rest/jobs/$subjobId/getById/';
+  return '$url/api/rest/jobs/$subjobId/sub_by_id';
 }
 
 String getSubJobByTicketId(String ticketId) {
-  return '$url/api/rest/jobs/jobs_bugid?bug_id=$ticketId';
+  return '$url/api/rest/jobs/$ticketId/getById/';
 }
 
 String getPMticketById(String id) {
   return '$url/api/rest/pm?resource_no=$id';
+}
+
+String getSubJobsByHandler(String id) {
+  return '$url/api/rest/jobs/getByHandlerId?handler_id=$id';
 }
 
 String getRepairReportById(String id) {
@@ -86,6 +90,10 @@ String createJobReportAdditional() {
 
 String getHighRelelationReport() {
   return '$url/api/rest/jobs/high_relation_report';
+}
+
+String updateSubJobs(String jobId) {
+  return '$url/api/rest/jobs/job_issue_update/$jobId';
 }
 
 String usernameProduct = 'VanSale-Dev';

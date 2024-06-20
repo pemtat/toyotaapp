@@ -7,14 +7,12 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/addnote_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/intruction_widget.dart';
-import 'package:toyotamobile/Widget/moredetail.widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
@@ -60,8 +58,8 @@ class JobDetailViewPM extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${job.summary}', style: TextStyleList.title1),
-                          Text('JobID: ${job.id}', style: TextStyleList.text16),
+                          Text('PM Support 1/4', style: TextStyleList.title1),
+                          Text('JobID: 0001', style: TextStyleList.text16),
                         ],
                       );
                     }
@@ -84,9 +82,6 @@ class JobDetailViewPM extends StatelessWidget {
           if (jobController.issueData.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            var file = jobController.attatchments.isNotEmpty
-                ? jobController.attatchments
-                : null;
             var filePdf = jobController.addAttatchments.isNotEmpty
                 ? jobController.addAttatchments
                 : null;
@@ -116,34 +111,22 @@ class JobDetailViewPM extends StatelessWidget {
                                 },
                                 child: BoxContainer(
                                   children: [
-                                    TicketInfo(
-                                      ticketId: issue.id,
+                                    PMJobInfo(
+                                      ticketId: 1,
                                       dateTime: formatDateTime(issue.createdAt),
                                       reporter: issue.reporter.name,
+                                      summary: 'ตรวจสภาพรถ',
+                                      description: issue.description,
                                       more:
                                           jobController.moreTicketDetail.value,
                                     ),
                                   ],
                                 ),
                               ),
-                              8.kH,
                               Obx(
                                 () => jobController.moreTicketDetail.value
                                     ? Column(
                                         children: [
-                                          MoreDetail(
-                                              file: file,
-                                              description: issue.description,
-                                              moreDetail:
-                                                  jobController.moreDetail,
-                                              ediefile: false,
-                                              summary: issue.summary,
-                                              category: issue.category.name,
-                                              relations: '-',
-                                              severity: issue.severity.name),
-                                          MoreDetailArrow(
-                                              moreDetail:
-                                                  jobController.moreDetail),
                                           8.kH,
                                           Obx(
                                             () {
@@ -164,28 +147,9 @@ class JobDetailViewPM extends StatelessWidget {
                                               }
                                             },
                                           ),
-                                          8.kH,
-                                          AddNote(
-                                              notePic: jobController.notePic,
-                                              notesFiles:
-                                                  jobController.notesFiles,
-                                              notes: jobController.notes,
-                                              addAttatchments:
-                                                  jobController.addAttatchments,
-                                              isPicking:
-                                                  jobController.isPicking,
-                                              addNote: jobController.addNote),
                                         ],
                                       )
                                     : Container(),
-                              ),
-                              const BoxContainer(
-                                children: [
-                                  JobInfo(
-                                      jobId: 20,
-                                      dateTime: '12 June 2024 00:25 AM',
-                                      reporter: 'Alex')
-                                ],
                               ),
                               8.kH,
                               BoxContainer(
@@ -228,7 +192,9 @@ class JobDetailViewPM extends StatelessWidget {
                                   UploadImageWidget(
                                     pickImage: () => pickImage(
                                         jobController.imagesBefore,
-                                        jobController.isPicking),
+                                        jobController.isPicking,
+                                        ticketId,
+                                        jobId ?? ''),
                                   ),
                                   18.kH,
                                   Obx(() => jobController
@@ -277,7 +243,9 @@ class JobDetailViewPM extends StatelessWidget {
                                             UploadImageWidget(
                                               pickImage: () => pickImage(
                                                   jobController.imagesAfter,
-                                                  jobController.isPicking),
+                                                  jobController.isPicking,
+                                                  ticketId,
+                                                  jobId ?? ''),
                                             ),
                                             6.kH,
                                           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -12,15 +13,16 @@ class SubJobsTicket extends StatelessWidget {
   final job;
   final RxInt expandedIndex;
   final SubTicketController jobController;
+  final String bugId;
   final String? status;
 
-  const SubJobsTicket({
-    super.key,
-    required this.job,
-    required this.expandedIndex,
-    required this.jobController,
-    required this.status,
-  });
+  const SubJobsTicket(
+      {super.key,
+      required this.job,
+      required this.expandedIndex,
+      required this.jobController,
+      required this.status,
+      required this.bugId});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,11 @@ class SubJobsTicket extends StatelessWidget {
                 'JobID: #${job.id.toString().padLeft(4, '0')}',
                 style: TextStyleList.subtitle1,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 5),
+              Text(
+                ('(Ticket #$bugId}'),
+                style: TextStyleList.text11,
+              ),
               const Spacer(),
               StatusButton(status: status ?? '')
             ],
@@ -61,12 +67,17 @@ class SubJobsTicket extends StatelessWidget {
                 style: TextStyleList.text15,
               ),
               const SizedBox(height: 2),
+              Text(
+                job.description,
+                style: TextStyleList.text15,
+              ),
+              const SizedBox(height: 2),
               Row(
                 children: [
                   const Icon(Icons.calendar_month_outlined),
                   const SizedBox(width: 5),
                   Text(
-                    job.dueDate,
+                    '${job.dueDate}',
                     style: TextStyleList.subtext1,
                   ),
                 ],

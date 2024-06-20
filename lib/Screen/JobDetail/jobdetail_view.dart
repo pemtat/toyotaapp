@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editfillform_view.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
@@ -49,7 +50,7 @@ class JobDetailView extends StatelessWidget {
                 AppBar(
                   backgroundColor: white3,
                   title: Obx(() {
-                    if (jobController.issueData.isEmpty) {
+                    if (jobController.subJobs.isEmpty) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -58,7 +59,7 @@ class JobDetailView extends StatelessWidget {
                         ],
                       );
                     } else {
-                      var job = jobController.issueData.first;
+                      var job = jobController.subJobs.first;
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -129,11 +130,11 @@ class JobDetailView extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              8.kH,
                               Obx(
                                 () => jobController.moreTicketDetail.value
                                     ? Column(
                                         children: [
+                                          8.kH,
                                           MoreDetail(
                                               file: file,
                                               description: issue.description,
@@ -187,10 +188,15 @@ class JobDetailView extends StatelessWidget {
                                   return BoxContainer(
                                     children: [
                                       JobInfo(
-                                          jobId: 0,
-                                          jobIdString: subJob!.id,
-                                          dateTime: subJob.dueDate ?? '',
-                                          reporter: subJob.reporterId ?? '')
+                                        jobId: 0,
+                                        jobIdString: subJob!.id,
+                                        dateTime: subJob.dueDate ?? '-',
+                                        reporter: subJob.id ?? '',
+                                        summary: subJob.summary ?? '',
+                                        description: subJob.description ?? '',
+                                        status: stringToStatus(
+                                            subJob.status.toString()),
+                                      )
                                     ],
                                   );
                                 } else {
@@ -207,12 +213,14 @@ class JobDetailView extends StatelessWidget {
                                         ? ButtonTime(
                                             saveTime: (datetime) {
                                               showTimeDialog(
-                                                context,
-                                                'Are you sure to confirm?',
-                                                'No',
-                                                'Yes',
-                                                datetime,
-                                              );
+                                                  context,
+                                                  'Are you sure to confirm?',
+                                                  'No',
+                                                  'Yes',
+                                                  datetime,
+                                                  jobId ?? '',
+                                                  'timestart',
+                                                  ticketId);
                                             },
                                             time: jobController
                                                 .savedDateStartTime,
@@ -238,7 +246,9 @@ class JobDetailView extends StatelessWidget {
                                   UploadImageWidget(
                                       pickImage: () => pickImage(
                                           jobController.imagesBefore,
-                                          jobController.isPicking)),
+                                          jobController.isPicking,
+                                          ticketId,
+                                          jobId ?? '')),
                                   18.kH,
                                   Container(
                                     height: 0.5,
@@ -260,12 +270,14 @@ class JobDetailView extends StatelessWidget {
                                                 ? ButtonTime(
                                                     saveTime: (datetime) {
                                                       showTimeDialog(
-                                                        context,
-                                                        'Are you sure to confirm?',
-                                                        'No',
-                                                        'Yes',
-                                                        datetime,
-                                                      );
+                                                          context,
+                                                          'Are you sure to confirm?',
+                                                          'No',
+                                                          'Yes',
+                                                          datetime,
+                                                          jobId ?? '',
+                                                          'timeend',
+                                                          ticketId);
                                                     },
                                                     time: jobController
                                                         .savedDateEndTime,
@@ -291,7 +303,9 @@ class JobDetailView extends StatelessWidget {
                                             UploadImageWidget(
                                               pickImage: () => pickImage(
                                                   jobController.imagesAfter,
-                                                  jobController.isPicking),
+                                                  jobController.isPicking,
+                                                  ticketId,
+                                                  jobId ?? ''),
                                             ),
                                             16.kH,
                                           ],

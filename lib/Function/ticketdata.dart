@@ -14,6 +14,7 @@ import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Styles/color.dart';
@@ -22,8 +23,10 @@ import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
 final BottomBarController bottomController = Get.put(BottomBarController());
 final HomeController jobController = Get.put(HomeController());
+final JobDetailController jobDetailController = Get.put(JobDetailController());
 
-void fetchSubJob(String subjobId, String token, RxList<JobById> subJobs) async {
+Future<void> fetchSubJob(
+    String subjobId, String token, RxList<SubJobDetail> subJobs) async {
   try {
     final response = await http.get(
       Uri.parse(getSubJobById(subjobId)),
@@ -33,12 +36,11 @@ void fetchSubJob(String subjobId, String token, RxList<JobById> subJobs) async {
     );
 
     if (response.statusCode == 200) {
-      SubJobDetail data = SubJobDetail.fromJson(
-        jsonDecode(response.body),
-      );
-      if (data.jobById != null) {
-        subJobs.value = data.jobById!;
-      }
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+
+      List<SubJobDetail> dataList =
+          jsonResponse.map((json) => SubJobDetail.fromJson(json)).toList();
+      subJobs.assignAll(dataList);
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
@@ -120,7 +122,7 @@ Future<void> fetchReportData(
     final response = await http.get(
       Uri.parse(getRepairReportById(id)),
       headers: {
-        'Authorization': '$token',
+        'Authorization': token,
       },
     );
 
@@ -141,7 +143,7 @@ Future<void> fetchReportData(
     final response = await http.get(
       Uri.parse(getAdditionalRepairReportById(id)),
       headers: {
-        'Authorization': '$token',
+        'Authorization': token,
       },
     );
 
@@ -252,8 +254,8 @@ void addNote(
   }
 }
 
-Future<void> pickImage(
-    RxList<Map<String, String>> file, Rx<bool> isPicking) async {
+Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
+    String ticketId, String jobId) async {
   if (isPicking.value) return;
   isPicking.value = true;
   try {
@@ -267,6 +269,7 @@ Future<void> pickImage(
         'filename': fileName,
         'content': base64Content,
       });
+      updateImgSubjobs(jobId, ticketId, file);
     }
   } finally {
     isPicking.value = false;
@@ -274,12 +277,14 @@ Future<void> pickImage(
 }
 
 void showTimeDialog(
-  BuildContext context,
-  String title,
-  String left,
-  String right,
-  Rx<String> datetime,
-) {
+    BuildContext context,
+    String title,
+    String left,
+    String right,
+    Rx<String> datetime,
+    String jobId,
+    String option,
+    String ticketId) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -289,7 +294,7 @@ void showTimeDialog(
         rightButton: right,
         rightColor: red1,
         onRightButtonPressed: () {
-          saveCurrentDateTime(datetime);
+          saveCurrentDateTimeToSubJob(datetime, jobId, option, ticketId);
         },
       );
     },
@@ -322,4 +327,126 @@ void changeIssueStatus(int issueId, String status) async {
 void saveCurrentDateTime(Rx<String> datetime) {
   DateTime now = DateTime.now();
   datetime.value = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+}
+
+void saveCurrentDateTimeToSubJob(
+    Rx<String> datetime, String jobId, String option, String ticketId) async {
+  try {
+    DateTime now = DateTime.now();
+    String? token = await getToken();
+    datetime.value = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+
+    Map<String, dynamic> body = {
+      if (option == 'timestart') 'time_start': datetime.value,
+      if (option == 'timestart') 'status': '40',
+      if (option == 'timeend') 'time_end': datetime.value,
+      if (option == 'timeend') 'status': '80',
+    };
+
+    final response = await http.put(
+      Uri.parse(updateSubJobs(jobId)),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Update time done');
+      jobDetailController.fetchData(ticketId, jobId);
+    } else {
+      print('Failed to update time: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+void updateStatusSubjobs(String jobId, String comment, String ticketId) async {
+  try {
+    String? token = await getToken();
+
+    Map<String, dynamic> body = {'comment': comment, 'status': '90'};
+
+    final response = await http.put(
+      Uri.parse(updateSubJobs(jobId)),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Update status done');
+      jobDetailController.fetchData(ticketId, jobId);
+    } else {
+      print('Failed to update status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+void updateAcceptStatusSubjobs(
+    String jobId, String ticketId, String status) async {
+  try {
+    String? token = await getToken();
+
+    Map<String, dynamic> body = {'status': status};
+
+    final response = await http.put(
+      Uri.parse(updateSubJobs(jobId)),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Update status done');
+      jobDetailController.fetchData(ticketId, jobId);
+    } else {
+      print('Failed to update status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> updateImgSubjobs(String jobId, String ticketId,
+    RxList<Map<String, dynamic>> imageData) async {
+  try {
+    String? token = await getToken();
+
+    // Prepare the body by extracting the content and filename
+    Map<String, dynamic> body = {
+      'image_before': ['s', 'w'],
+      'content_before': ['a']
+    };
+
+    final response = await http.put(
+      Uri.parse(updateSubJobs(jobId)),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Update Img done');
+      jobDetailController.fetchData(ticketId, jobId);
+    } else {
+      print('Failed to update status: ${response.statusCode}');
+      print(body);
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
 }

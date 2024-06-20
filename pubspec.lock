@@ -701,6 +701,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "25.2.6"
+  syncfusion_flutter_signaturepad:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_signaturepad
+      sha256: "8b3218ff89571b91034c78f37cdd870228a2415433d6d0fac38c8ad53bcf8662"
+      url: "https://pub.dev"
+    source: hosted
+    version: "25.2.6"
   table_calendar:
     dependency: "direct main"
     description:

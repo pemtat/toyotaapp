@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
+import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
+import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -63,11 +65,6 @@ class SubTicketView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Today',
-                          style: TextStyleList.subtext4,
-                        ),
-                        5.kH,
                         Expanded(
                           child: Obx(() {
                             if (subticketController.subJobs.isEmpty) {
@@ -83,12 +80,12 @@ class SubTicketView extends StatelessWidget {
                                   .searchQuery.value
                                   .toLowerCase();
                               final searchQueryMatch =
-                                  job.id!.contains(query) ||
+                                  job.id.toString().contains(query) ||
                                       job.summary!.contains(query);
                               final statusMatch = subticketController
                                       .selectedStatus.isEmpty ||
                                   subticketController.selectedStatus.contains(
-                                      stringToStatus(job.status ?? ''));
+                                      stringToStatus(job.status!.name ?? ''));
 
                               return searchQueryMatch && statusMatch;
                             }).toList();
@@ -107,16 +104,29 @@ class SubTicketView extends StatelessWidget {
                                 final job = subticketController.subJobs[index];
                                 return InkWell(
                                   onTap: () {
-                                    Get.to(() => JobDetailView(
-                                        ticketId: ticketId,
-                                        jobId: job.id ?? ''));
+                                    if (job.status!.name == 'new') {
+                                      Get.to(() => PendingTaskView(
+                                          ticketId: ticketId,
+                                          jobId: job.id.toString()));
+                                    } else if (job.status!.name == 'closed') {
+                                      Get.to(() => TicketDetailView(
+                                            ticketId: ticketId,
+                                            jobId: job.id.toString(),
+                                          ));
+                                    } else {
+                                      Get.to(() => JobDetailView(
+                                          ticketId: ticketId,
+                                          jobId: job.id.toString()));
+                                    }
+                                    ;
                                   },
                                   child: SubJobsTicket(
+                                      bugId: ticketId,
                                       job: job,
                                       expandedIndex:
                                           subticketController.expandedIndex,
                                       jobController: subticketController,
-                                      status: stringToStatus(job.status ?? '')),
+                                      status: job.status!.name ?? ''),
                                 );
                               },
                             );

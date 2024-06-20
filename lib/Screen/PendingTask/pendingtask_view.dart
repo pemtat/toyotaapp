@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/PendingTask/peddingtask_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -17,6 +19,8 @@ import 'package:toyotamobile/Widget/warranty_widget.dart';
 class PendingTaskView extends StatelessWidget {
   final PeddingtaskController penddingTaskController =
       Get.put(PeddingtaskController());
+  final JobDetailController jobController = Get.put(JobDetailController());
+
   final String ticketId;
   final String jobId;
   PendingTaskView({super.key, required this.ticketId, required this.jobId}) {
@@ -56,7 +60,9 @@ class PendingTaskView extends StatelessWidget {
               ? penddingTaskController.addAttatchments
               : null;
           var issue = penddingTaskController.issueData.first;
-
+          var subJob = penddingTaskController.subJobs.isNotEmpty
+              ? penddingTaskController.subJobs.first
+              : null;
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -120,12 +126,17 @@ class PendingTaskView extends StatelessWidget {
                                 location: 'Onnut, Bangkok, Thailand',
                                 onTap: () {}),
                             8.kH,
-                            const BoxContainer(
+                            BoxContainer(
                               children: [
                                 JobInfo(
-                                    jobId: 20,
-                                    dateTime: '12 June 2024 00:25 AM',
-                                    reporter: 'Alex')
+                                  jobId: 0,
+                                  jobIdString: subJob!.id,
+                                  dateTime: subJob.dueDate ?? '-',
+                                  reporter: subJob.reporterId ?? '',
+                                  summary: subJob.summary ?? '',
+                                  description: subJob.description ?? '',
+                                  status: stringToStatus(subJob.status ?? ''),
+                                )
                               ],
                             ),
                           ],

@@ -4,7 +4,7 @@ import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 
 class TicketController extends GetxController {
-  final isSelected = false.obs;
+  final isSelected = 1.obs;
   final RxInt expandedIndex = (-2).obs;
   final RxInt expandedIndex2 = (-2).obs;
   final TextEditingController searchController = TextEditingController();

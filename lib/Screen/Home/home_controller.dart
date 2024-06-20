@@ -1,16 +1,24 @@
+import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
+import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'dart:convert';
 
 class HomeController extends GetxController {
   var jobList = <Issues>[].obs;
+  var ticketJobList = <Issues>[].obs;
+  var issueData = [].obs;
   final RxInt jobListLength = 0.obs;
   final RxInt jobListCloseLength = 0.obs;
+  var subJobAssigned = <SubJobAssgined>[].obs;
   final BottomBarController notificationController =
       Get.put(BottomBarController());
   final mostRecentNewJob = Rx<Issues?>(null);
@@ -18,9 +26,12 @@ class HomeController extends GetxController {
   var pmItems = <PmModel>[].obs;
   final RxInt pmjobList = 0.obs;
   final RxInt pmjobListClosed = 0.obs;
+  final RxInt subjobList = 0.obs;
+  final RxInt subjobListClosed = 0.obs;
   final RxInt pmCompletedList = 0.obs;
   final RxInt expandedIndex = (-2).obs;
   final RxInt expandedIndex2 = (-2).obs;
+  final UserController userController = Get.put(UserController());
 
   @override
   void onInit() {
@@ -35,7 +46,9 @@ class HomeController extends GetxController {
       Map<String, dynamic> tokenData = json.decode(tokenResponse ?? '');
       String? accessToken = tokenData['token'];
       int handlerId = tokenData['user']['id'];
+      await userController.fetchData();
       fetchPMdata(handlerId);
+      fetchSubJobsdata(handlerId);
       final response = await http.get(
         Uri.parse(getAssignJob),
         headers: {
@@ -89,7 +102,8 @@ class HomeController extends GetxController {
             return issue.containsKey('handler') &&
                 issue['handler'].containsKey('id') &&
                 issue['handler'] is Map<String, dynamic> &&
-                issue['handler']['id'] == handlerId;
+                issue['handler']['id'] == handlerId &&
+                issue['status']['name'] == 'closed';
           }).toList();
 
           jobList.addAll(
@@ -136,10 +150,9 @@ class HomeController extends GetxController {
   Future<void> fetchPMdata(int id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
-
     try {
       final response = await http.get(
-        Uri.parse(getPMticketById('B182')),
+        Uri.parse(getPMticketById(userController.userInfo.first.resourceNo)),
         headers: {
           'Authorization': '$token',
         },
@@ -156,6 +169,76 @@ class HomeController extends GetxController {
         pmItems.value = itemList;
         pmjobList.value = pmItems.length;
         pmjobListClosed.value = closedPmItems.length;
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> fetchTicketJobs(String id) async {
+    String? token = await getToken();
+    final response = await http.get(
+      Uri.parse(getTicketbyId(id.toString())),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      ticket.TicketByIdModel ticketModel =
+          ticket.TicketByIdModel.fromJson(data);
+      List<ticket.Issues>? issuesList = ticketModel.issues;
+      issuesList!.map((issue) {}).toList();
+      issueData.addAll(issuesList);
+      issuesList.forEach((issue) {
+        if (issue.status!.name == 'closed') {
+          subjobListClosed.value = subjobListClosed.value + 1;
+        } else {
+          subjobList.value = subjobList.value + 1;
+        }
+      });
+    } else {}
+  }
+
+  //Subjobs
+  Future<void> fetchSubJobsdata(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    try {
+      final response = await http.get(
+        Uri.parse(getSubJobsByHandler(id.toString())),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+        List<SubJobAssgined> itemList =
+            responseData.map((job) => SubJobAssgined.fromJson(job)).toList();
+
+        // Filter and sort itemList
+        // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
+        List<SubJobAssgined> closedSubJob = itemList
+            .where((subJob) => stringToStatus(subJob.status ?? '') == 'closed')
+            .toList();
+
+        Set<String> uniqueBugIds = Set();
+        List<String> allIds = [];
+        List<SubJobAssgined> filteredItemList = [];
+        subjobListClosed.value = 0;
+        subjobList.value = 0;
+        for (var subJob in itemList) {
+          if (!uniqueBugIds.contains(subJob.bugId)) {
+            uniqueBugIds.add(subJob.bugId ?? '');
+            allIds.add(subJob.id ?? '');
+            filteredItemList.add(subJob);
+            await fetchTicketJobs(subJob.bugId ?? '');
+          }
+        }
+
+        subJobAssigned.value = filteredItemList;
       } else {
         print('Failed to load data: ${response.statusCode}');
       }

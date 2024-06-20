@@ -139,13 +139,7 @@ class CalendarController extends GetxController {
         };
 
         bool isDuplicate = tempEvents[dayKey]?.any((event) =>
-                event['ticketid'] == job.id.toString() &&
-                event['time'] == formattedTime &&
-                event['status'] == job.status!.name &&
-                event['task'] == job.summary &&
-                event['description'] == job.description &&
-                event['location'] == job.location &&
-                event['serialNo'] == warrantyInfoList.first.serial &&
+                event['ticketid'] == job.id &&
                 event['type'] == EventType.Job) ??
             false;
 

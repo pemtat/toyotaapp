@@ -1,10 +1,11 @@
 import 'package:toyotamobile/Function/refresh.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/Allticket/CompleteJobs/completejobs_view.dart';
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_view.dart';
 import 'package:toyotamobile/Screen/Allticket/PMAssignedJobs/pmAssignedjobs_view.dart';
 import 'package:toyotamobile/Screen/Allticket/PMCompleteJobs/pmCompleteJobs_view.dart';
-import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
-import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
+import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
+import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
 import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
@@ -66,7 +67,7 @@ class HomeView extends StatelessWidget {
                         onTap: () {
                           Get.to(() => AssignedjobsNew());
                         },
-                        count: jobController.jobListLength,
+                        count: jobController.subjobList,
                         title: 'Ticket\nIncoming Jobs',
                         countColor: const Color(0xffEB0A1E),
                         titleColor: const Color(0xff434343),
@@ -81,7 +82,7 @@ class HomeView extends StatelessWidget {
                         onTap: () {
                           Get.to(() => CompleteJobsView());
                         },
-                        count: jobController.jobListCloseLength,
+                        count: jobController.subjobListClosed,
                         title: 'Ticket\nCompleted Jobs',
                         countColor: const Color(0xff323232),
                         titleColor: const Color(0xff434343),
@@ -132,7 +133,7 @@ class HomeView extends StatelessWidget {
                 const AppDivider(),
                 10.kH,
                 JobTitle(
-                  headerText: 'Ticket Incoming Jobs',
+                  headerText: 'Incoming New Jobs',
                   buttonText: 'View All',
                   buttonOnPressed: () {
                     Get.to(() => AssignedjobsNew());
@@ -141,7 +142,7 @@ class HomeView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(paddingApp),
                   child: Obx(() {
-                    final jobs = jobController.jobList;
+                    final jobs = jobController.issueData;
                     if (jobs.isEmpty) {
                       return Center(
                         child: Text(
@@ -153,28 +154,22 @@ class HomeView extends StatelessWidget {
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: 3,
+                      itemCount: jobs.length >= 3 ? 3 : jobs.length,
                       itemBuilder: (context, index) {
                         var job = jobs[index];
+
                         return InkWell(
                           onTap: () {
-                            if (job.status!.name == 'assigned') {
-                              Get.to(() => PendingTaskView(
-                                    ticketId: job.id.toString(),
-                                    jobId: '',
-                                  ));
-                            } else {
-                              Get.to(() => JobDetailView(
+                            Get.to(() => SubTicketView(
                                   ticketId: job.id.toString(),
-                                  jobId: job.id.toString()));
-                            }
+                                ));
                           },
                           child: JobItemWidget(
                             job: job,
                             expandedIndex: jobController.expandedIndex,
                             jobController: jobController,
                             sidebar:
-                                SidebarColor.getColor(job.status!.name ?? ''),
+                                SidebarColor.getColor((job.status.name ?? '')),
                           ),
                         );
                       },
@@ -208,15 +203,7 @@ class HomeView extends StatelessWidget {
                         var job = jobController.pmItems[index];
                         return InkWell(
                           onTap: () {
-                            if (job.pmStatus == 'assigned') {
-                              Get.to(() => PendingTaskView(
-                                    ticketId: job.jobId ?? '',
-                                    jobId: '',
-                                  ));
-                            } else {
-                              Get.to(() => JobDetailView(
-                                  ticketId: job.jobId ?? '', jobId: job.jobId));
-                            }
+                            Get.to(() => JobDetailViewPM(ticketId: '99'));
                           },
                           child: PmItemWidget(
                             job: job,

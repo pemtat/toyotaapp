@@ -22,7 +22,8 @@ class PeddingtaskController extends GetxController {
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
-  var subJobs = <JobById>[].obs;
+  var jobId;
+  var subJobs = <SubJobDetail>[].obs;
   var notesFiles = <Notes>[].obs;
 
   var attatchments = <Map<String, dynamic>>[].obs;
@@ -33,8 +34,8 @@ class PeddingtaskController extends GetxController {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
 
-    fetchPdfData(ticketId, token ?? '', pdfList);
-    fetchSubJob(subjobId, token ?? '', subJobs);
+    await fetchPdfData(ticketId, token ?? '', pdfList);
+    await fetchSubJob(subjobId, token ?? '', subJobs);
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {
@@ -47,6 +48,7 @@ class PeddingtaskController extends GetxController {
       List<Issues>? issuesList = ticketModel.issues;
       issuesList!.map((issue) {
         issueId = issue.id;
+        jobId = subjobId;
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);
         fetchNotes(issue.notes, notesFiles);
@@ -72,6 +74,7 @@ class PeddingtaskController extends GetxController {
           rightButton: right,
           onRightButtonPressed: () {
             changeIssueStatus(issueId, 'confirmed');
+            updateAcceptStatusSubjobs(jobId, issueId.toString(), '50');
           },
         );
       },

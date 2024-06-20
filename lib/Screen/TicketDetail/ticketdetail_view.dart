@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
@@ -18,11 +19,12 @@ import 'package:toyotamobile/Widget/warranty_widget.dart';
 // ignore: use_key_in_widget_constructors
 class TicketDetailView extends StatelessWidget {
   final String ticketId;
+  final String jobId;
   final TicketDetailController ticketController =
       Get.put(TicketDetailController());
 
-  TicketDetailView({super.key, required this.ticketId}) {
-    ticketController.fetchData(ticketId);
+  TicketDetailView({super.key, required this.ticketId, required this.jobId}) {
+    ticketController.fetchData(ticketId, jobId);
   }
 
   @override
@@ -38,7 +40,7 @@ class TicketDetailView extends StatelessWidget {
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Ticket Detail', style: TextStyleList.title1),
+                  Text('Jobs Detail', style: TextStyleList.title1),
                 ],
               ),
               leading: const BackIcon(),
@@ -58,7 +60,9 @@ class TicketDetailView extends StatelessWidget {
                 ? ticketController.pdfList
                 : null;
             var issue = ticketController.issueData.first;
-
+            var subJob = ticketController.subJobs.isNotEmpty
+                ? ticketController.subJobs.first
+                : null;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -75,11 +79,25 @@ class TicketDetailView extends StatelessWidget {
                               BoxContainer(children: [
                                 TicketInfoStatus(
                                   ticketId: issue.id,
-                                  dateTime: '2025',
+                                  dateTime: '2024-06-07',
                                   reporter: issue.reporter.name,
                                   status: issue.status.name,
                                 ),
                               ]),
+                              8.kH,
+                              BoxContainer(
+                                children: [
+                                  JobInfo(
+                                    jobId: 0,
+                                    jobIdString: subJob!.id,
+                                    dateTime: subJob.dueDate ?? '-',
+                                    reporter: subJob.reporterId ?? '',
+                                    summary: subJob.summary ?? '',
+                                    description: subJob.description ?? '',
+                                    status: stringToStatus(subJob.status ?? ''),
+                                  )
+                                ],
+                              ),
                               8.kH,
                               BoxContainer(
                                 children: [

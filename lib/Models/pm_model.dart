@@ -3,11 +3,11 @@ class PmModel {
   String? itemNo;
   String? serialNo;
   String? pmPlan;
-  Null actual;
+  String? actual;
   String? description;
   String? customerNo;
   String? customerName;
-  Null shipToCode;
+  String? shipToCode;
   String? resourceNo;
   String? resourceName;
   String? serviceZoneCode;
