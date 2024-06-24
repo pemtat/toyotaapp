@@ -220,7 +220,7 @@ class TicketView extends StatelessWidget {
                               if (filteredJobs.isEmpty) {
                                 return Center(
                                     child: Text(
-                                  'No new jobs available.',
+                                  'No jobs available.',
                                   style: TextStyleList.subtitle2,
                                 ));
                               }
@@ -232,8 +232,8 @@ class TicketView extends StatelessWidget {
                                   var job = filteredJobs[index];
                                   return InkWell(
                                     onTap: () {
-                                      Get.to(() =>
-                                          JobDetailViewPM(ticketId: '99'));
+                                      Get.to(() => JobDetailViewPM(
+                                          ticketId: '99', data: job));
                                     },
                                     child: PmItemWidget(
                                       job: job,
@@ -299,7 +299,7 @@ class TicketView extends StatelessWidget {
                               if (filteredJobs.isEmpty) {
                                 return Center(
                                     child: Text(
-                                  'No new jobs available.',
+                                  'No jobs available.',
                                   style: TextStyleList.subtitle2,
                                 ));
                               }
@@ -343,7 +343,7 @@ class TicketView extends StatelessWidget {
                               if (jobController.subJobAssigned.isEmpty) {
                                 return Center(
                                     child: Text(
-                                  'No new jobs available.',
+                                  'No jobs available.',
                                   style: TextStyleList.subtitle2,
                                 ));
                               }
@@ -353,7 +353,7 @@ class TicketView extends StatelessWidget {
                                     .toLowerCase();
                                 final searchQueryMatch =
                                     job.id.toString().contains(query) ||
-                                        job.summary!.contains(query);
+                                        job.description!.contains(query);
                                 final statusMatch = ticketController
                                         .selectedStatus.isEmpty ||
                                     ticketController.selectedStatus.contains(
@@ -377,14 +377,11 @@ class TicketView extends StatelessWidget {
                                       jobController.subJobAssigned[index];
                                   return InkWell(
                                     onTap: () {
-                                      if (stringToStatus(job.status ?? '') ==
-                                          'new') {
+                                      if (job.status == '101') {
                                         Get.to(() => PendingTaskView(
                                             ticketId: job.bugId ?? '',
                                             jobId: job.id.toString()));
-                                      } else if (stringToStatus(
-                                              job.status ?? '') ==
-                                          'closed') {
+                                      } else if (job.status == '103') {
                                         Get.to(() => TicketDetailView(
                                               ticketId: job.bugId ?? '',
                                               jobId: job.id.toString(),
@@ -397,6 +394,7 @@ class TicketView extends StatelessWidget {
                                       ;
                                     },
                                     child: SubJobsTicket(
+                                      index: index,
                                       jobsHome: jobController,
                                       bugId: job.bugId ?? '',
                                       job: job,

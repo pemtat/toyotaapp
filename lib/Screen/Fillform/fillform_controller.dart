@@ -1,11 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui';
-
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
@@ -19,6 +15,7 @@ import 'package:toyotamobile/Screen/FillForm/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/wcode.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 
@@ -63,6 +60,7 @@ class FillformController extends GetxController {
           title: title,
           leftButton: left,
           rightButton: right,
+          rightColor: red1,
           onRightButtonPressed: () {
             saveReport(context);
             Navigator.pop(context);
@@ -127,8 +125,7 @@ class FillformController extends GetxController {
           'Authorization': '$token',
         },
       );
-      await saveSignature();
-      ;
+
       if (response.statusCode == 200) {
         List<dynamic> highRelationData = json.decode(response.body);
 
@@ -152,7 +149,7 @@ class FillformController extends GetxController {
             'relation_id': highRelation,
             'save_time': saveCompletedtime.value,
             'signature': signatureController.value.text,
-            'signaturePad': signaturePad.value
+            'signature_pad': signaturePad.value
           };
           List<SparePartModel> allSpareParts =
               List.from(sparePartListController.sparePartList);

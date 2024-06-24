@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
-import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
+import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
@@ -55,9 +56,19 @@ class CalendarView extends StatelessWidget {
               },
               calendarStyle: CalendarStyle(
                 defaultTextStyle: TextStyleList.subtitle2,
-                todayDecoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 240, 147, 17),
+                todayDecoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 240, 147, 17),
                   shape: BoxShape.circle,
+                  border: calendarController
+                          .getEventsForDay(DateTime.now())
+                          .isNotEmpty
+                      ? const Border(
+                          bottom: BorderSide(
+                            color: Color.fromARGB(255, 182, 164, 30),
+                            width: 3,
+                          ),
+                        )
+                      : null,
                 ),
                 selectedDecoration: const BoxDecoration(
                   color: Colors.blue,
@@ -76,7 +87,46 @@ class CalendarView extends StatelessWidget {
                   final pmEvents = events
                       .where((event) => event['type'] == EventType.PM)
                       .toList();
-
+                  if (jobEvents.isNotEmpty && pmEvents.isNotEmpty) {
+                    return Stack(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(6.0),
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 251, 98, 3),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${day.day}',
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 2,
+                          right: 2,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 8,
+                                height: 8,
+                                decoration: const BoxDecoration(
+                                    color: red6, shape: BoxShape.circle),
+                              ),
+                              Container(
+                                width: 8,
+                                height: 8,
+                                decoration: const BoxDecoration(
+                                    color: blue3, shape: BoxShape.circle),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    );
+                  }
                   if (jobEvents.isNotEmpty) {
                     return Stack(
                       children: [
@@ -100,8 +150,7 @@ class CalendarView extends StatelessWidget {
                             width: 8,
                             height: 8,
                             decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 248, 35, 7),
-                                shape: BoxShape.circle),
+                                color: red6, shape: BoxShape.circle),
                           ),
                         )
                       ],
@@ -130,8 +179,7 @@ class CalendarView extends StatelessWidget {
                             width: 8,
                             height: 8,
                             decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 7, 54, 243),
-                                shape: BoxShape.circle),
+                                color: blue3, shape: BoxShape.circle),
                           ),
                         )
                       ],
@@ -203,8 +251,10 @@ class CalendarView extends StatelessWidget {
                                         ? Get.to(() => SubTicketView(
                                               ticketId: event['ticketid'],
                                             ))
-                                        : Get.to(() => JobDetailView(
-                                              ticketId: event['ticketid'],
+                                        : Get.to(() => JobDetailViewPM(
+                                              data:
+                                                  jobController.pmItems[index],
+                                              ticketId: '99',
                                             ));
                                   },
                                   child: CalendarItem(

@@ -278,7 +278,7 @@ void addNote(
 }
 
 Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
-    String ticketId, String jobId) async {
+    String option, String ticketId, String jobId) async {
   if (isPicking.value) return;
   isPicking.value = true;
   try {
@@ -292,7 +292,7 @@ Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
         'filename': fileName,
         'content': base64Content,
       });
-      updateImgSubjobs(jobId, ticketId, file);
+      updateImgSubjobs(jobId, ticketId, file, option);
     }
   } finally {
     isPicking.value = false;
@@ -361,9 +361,7 @@ void saveCurrentDateTimeToSubJob(
 
     Map<String, dynamic> body = {
       if (option == 'timestart') 'time_start': datetime.value,
-      if (option == 'timestart') 'status': '40',
       if (option == 'timeend') 'time_end': datetime.value,
-      if (option == 'timeend') 'status': '80',
     };
 
     final response = await http.put(
@@ -391,7 +389,7 @@ void updateStatusSubjobs(String jobId, String comment, String ticketId) async {
   try {
     String? token = await getToken();
 
-    Map<String, dynamic> body = {'comment': comment, 'status': '90'};
+    Map<String, dynamic> body = {'comment': comment, 'status': '103'};
 
     final response = await http.put(
       Uri.parse(updateSubJobs(jobId)),
@@ -443,16 +441,22 @@ void updateAcceptStatusSubjobs(
 }
 
 Future<void> updateImgSubjobs(String jobId, String ticketId,
-    RxList<Map<String, dynamic>> imageData) async {
+    RxList<Map<String, dynamic>> imageData, String option) async {
   try {
     String? token = await getToken();
-
+    Map<String, dynamic> body = {};
+    List<String> filenames = [];
+    List<String> contents = [];
     // Prepare the body by extracting the content and filename
-    Map<String, dynamic> body = {
-      'image_before': ['s', 'w'],
-      'content_before': ['a']
-    };
-
+    for (var data in imageData) {
+      filenames.add(data['filename'] ?? '');
+      contents.add(data['content'] ?? '');
+    }
+    if (option == 'before') {
+      body = {'image_before': filenames, 'content_before': contents};
+    } else {
+      body = {'image_after': filenames, 'content_after': contents};
+    }
     final response = await http.put(
       Uri.parse(updateSubJobs(jobId)),
       headers: {
@@ -464,7 +468,43 @@ Future<void> updateImgSubjobs(String jobId, String ticketId,
 
     if (response.statusCode == 200) {
       print('Update Img done');
-      jobDetailController.fetchData(ticketId, jobId);
+    } else {
+      print('Failed to update status: ${response.statusCode}');
+      print(body);
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> deleteImgSubJob(
+    String jobId, List<Map<String, dynamic>> imageData, String option) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {};
+    List<String> filenames = [];
+    List<String> contents = [];
+    // Prepare the body by extracting the content and filename
+    for (var data in imageData) {
+      filenames.add(data['filename'] ?? '');
+      contents.add(data['content'] ?? '');
+    }
+    if (option == 'before') {
+      body = {'image_before': filenames, 'content_before': contents};
+    } else {
+      body = {'image_after': filenames, 'content_after': contents};
+    }
+    final response = await http.put(
+      Uri.parse(updateSubJobs(jobId)),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Delete Img done');
     } else {
       print('Failed to update status: ${response.statusCode}');
       print(body);

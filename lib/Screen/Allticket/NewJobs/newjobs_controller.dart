@@ -1,16 +1,11 @@
-import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
-import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Screen/Allticket/CompleteJobs/completejobs_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
-import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Styles/margin.dart';
-import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
-import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/titleheader_widget.dart';
@@ -19,7 +14,6 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 
 class CompleteJobsView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -111,10 +105,9 @@ class CompleteJobsView extends StatelessWidget {
                           Get.to(() => PendingTaskView(
                               ticketId: job.bugId ?? '',
                               jobId: job.id.toString()));
-
-                          ;
                         },
                         child: SubJobsTicket(
+                            index: index,
                             jobsHome: jobController,
                             bugId: job.bugId ?? '',
                             reporter: job.reporterId ?? '',

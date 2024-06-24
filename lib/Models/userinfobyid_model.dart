@@ -7,15 +7,15 @@ class UserById {
     if (json['users'] != null) {
       users = <Users>[];
       json['users'].forEach((v) {
-        users!.add(new Users.fromJson(v));
+        users!.add(Users.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.users != null) {
-      data['users'] = this.users!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (users != null) {
+      data['users'] = users!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -53,7 +53,7 @@ class Users {
     language = json['language'];
     timezone = json['timezone'];
     accessLevel = json['access_level'] != null
-        ? new AccessLevel.fromJson(json['access_level'])
+        ? AccessLevel.fromJson(json['access_level'])
         : null;
     createdAt = json['created_at'];
     companyId = json['company_id'];
@@ -61,19 +61,19 @@ class Users {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['real_name'] = this.realName;
-    data['email'] = this.email;
-    data['language'] = this.language;
-    data['timezone'] = this.timezone;
-    if (this.accessLevel != null) {
-      data['access_level'] = this.accessLevel!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['real_name'] = realName;
+    data['email'] = email;
+    data['language'] = language;
+    data['timezone'] = timezone;
+    if (accessLevel != null) {
+      data['access_level'] = accessLevel!.toJson();
     }
-    data['created_at'] = this.createdAt;
-    data['company_id'] = this.companyId;
-    data['resource_no'] = this.resourceNo;
+    data['created_at'] = createdAt;
+    data['company_id'] = companyId;
+    data['resource_no'] = resourceNo;
     return data;
   }
 }
@@ -92,10 +92,10 @@ class AccessLevel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['label'] = this.label;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['label'] = label;
     return data;
   }
 }

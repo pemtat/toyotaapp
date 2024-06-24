@@ -5,6 +5,7 @@ import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
@@ -28,6 +29,7 @@ class JobDetailControllerPM extends GetxController {
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
+  PmModel? pmData;
   var pdfList = <Map<String, dynamic>>[].obs;
   var status = RxString('');
   List<String> notePic = [];
@@ -40,7 +42,7 @@ class JobDetailControllerPM extends GetxController {
   final HomeController jobController = Get.put(HomeController());
   final BottomBarController bottomController = Get.put(BottomBarController());
 
-  void fetchData(String ticketId) async {
+  void fetchData(String ticketId, PmModel data) async {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
     fetchPdfData(ticketId, token ?? '', pdfList);
@@ -50,6 +52,8 @@ class JobDetailControllerPM extends GetxController {
         'Authorization': '$token',
       },
     );
+    pmData = data;
+
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
       TicketByIdModel ticketModel = TicketByIdModel.fromJson(data);
@@ -58,8 +62,9 @@ class JobDetailControllerPM extends GetxController {
         issueId = issue.id;
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);
+
         fetchNotesPic(issue.notes, notesFiles, notePic);
-        checkWarranty(issue.serialNo ?? '', warrantyInfoList);
+        checkWarranty(pmData!.serialNo ?? '', warrantyInfoList);
       }).toList();
       issueData.value = issuesList;
     } else {}
@@ -140,7 +145,7 @@ class JobDetailControllerPM extends GetxController {
       );
 
       if (response.statusCode == 201) {
-        fetchData(issueId.toString());
+        // fetchData(issueId.toString(), pmData ?? {null});
         notes.value.clear();
       }
     } else if (addAttatchments.isNotEmpty && noteText == '') {
@@ -159,7 +164,7 @@ class JobDetailControllerPM extends GetxController {
         body: jsonEncode(body),
       );
       if (response.statusCode == 201) {
-        fetchData(issueId.toString());
+        // fetchData(issueId.toString());
         notes.value.clear();
       }
     }

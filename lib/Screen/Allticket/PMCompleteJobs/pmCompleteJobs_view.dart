@@ -120,7 +120,10 @@ class PmCompleteJobsView extends StatelessWidget {
                               var job = filteredJobs[index];
                               return InkWell(
                                 onTap: () {
-                                  Get.to(() => JobDetailViewPM(ticketId: '99'));
+                                  Get.to(() => JobDetailViewPM(
+                                        ticketId: '99',
+                                        data: job,
+                                      ));
                                 },
                                 child: PmItemWidget(
                                   job: job,

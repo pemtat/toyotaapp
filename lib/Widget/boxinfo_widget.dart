@@ -37,6 +37,7 @@ class BoxInfo extends StatelessWidget {
 class BoxInfo2 extends StatelessWidget {
   final String title;
   final String value;
+  final bool? space;
   final Widget? trailing;
 
   const BoxInfo2({
@@ -44,23 +45,39 @@ class BoxInfo2 extends StatelessWidget {
     required this.title,
     required this.value,
     this.trailing,
+    this.space,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: TextStyleList.text15,
-        ),
-        trailing ??
-            Text(
-              value,
-              style: TextStyleList.text11,
-            ),
-      ],
-    );
+    return space == true
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyleList.text15,
+              ),
+              trailing ??
+                  Text(
+                    value,
+                    style: TextStyleList.text11,
+                  ),
+            ],
+          )
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: TextStyleList.text15,
+              ),
+              trailing ??
+                  Text(
+                    value,
+                    style: TextStyleList.text11,
+                  ),
+            ],
+          );
   }
 }

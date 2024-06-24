@@ -60,7 +60,7 @@ class EditFillFormView extends StatelessWidget {
       body: Obx(
         () {
           if (fillFormController.reportList.isEmpty) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
             child: Column(
@@ -130,13 +130,14 @@ class EditFillFormView extends StatelessWidget {
                   () => BoxContainer(
                     children: [
                       TitleWithButton(
-                        titleText: 'Repair prodecure',
-                        button: AddButton(
-                          onTap: () {
-                            rPController.rPModal(context);
-                          },
-                        ),
-                      ),
+                          titleText: 'Repair prodecure',
+                          button: rPController.repairProcedureList.isEmpty
+                              ? AddButton(
+                                  onTap: () {
+                                    rPController.rPModal(context);
+                                  },
+                                )
+                              : Container()),
                       rPController.repairProcedureList.isNotEmpty
                           ? ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),

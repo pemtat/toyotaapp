@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -57,10 +58,15 @@ class CalendarItem extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        'Ticket ID : ${event['ticketid'].toString().padLeft(7, '0')}',
-                        style: TextStyleList.text16,
-                      ),
+                      event['type'] == EventType.Job
+                          ? Text(
+                              'Ticket ID : ${event['ticketid'].toString().padLeft(7, '0')}',
+                              style: TextStyleList.text16,
+                            )
+                          : Text(
+                              'PM ID : ${event['ticketid'].toString().padLeft(7, '0')}',
+                              style: TextStyleList.text16,
+                            ),
                       const SizedBox(width: 10),
                       const Spacer(),
                       Obx(

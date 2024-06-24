@@ -1,5 +1,4 @@
 import 'package:toyotamobile/Function/gettoken.dart';
-import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/home_model.dart';
@@ -204,30 +203,43 @@ class HomeController extends GetxController {
     } else {}
   }
 
-  Future<Map<String, String>> fetchUserById(String id) async {
+  Future<Map<String, String>> fetchTicketById(String id) async {
     String? token = await getToken();
     final response = await http.get(
-      Uri.parse(getUserInfoById(id)),
+      Uri.parse(getTicketbyId(id)),
       headers: {
         'Authorization': '$token',
       },
     );
     if (response.statusCode == 200) {
-      final dynamic responseData = jsonDecode(response.body);
+      Map<String, dynamic> data = json.decode(response.body);
+      ticket.TicketByIdModel ticketModel =
+          ticket.TicketByIdModel.fromJson(data);
 
-      if (responseData is Map<String, dynamic>) {
-        UserById user = UserById.fromJson(responseData);
-        userInfo.value = [user];
-        CustomerById customerInfo = await fetchCustomerInfo(
-            userInfo.first.users!.first.companyId ?? '');
-        return {
-          'name': userInfo.first.users!.first.name ?? '',
-          'location': customerInfo.customerAddress ?? ''
-        };
-      } else {
-        print('Invalid data format');
-        return {};
+      List<ticket.Issues>? issuesList = ticketModel.issues;
+      final response2 = await http.get(
+        Uri.parse(getUserInfoById(issuesList!.first.reporter!.id.toString())),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+      if (response2.statusCode == 200) {
+        final dynamic responseData = jsonDecode(response2.body);
+
+        if (responseData is Map<String, dynamic>) {
+          UserById user = UserById.fromJson(responseData);
+          userInfo.value = [user];
+        } else {
+          print('Invalid data format');
+        }
       }
+      CustomerById customerInfo = await fetchCustomerInfo(
+          userInfo.first.users!.first.companyId.toString());
+
+      return {
+        'name': issuesList.first.reporter!.name ?? '',
+        'location': customerInfo.customerAddress ?? ''
+      };
     } else {
       print('Failed to load data: ${response.statusCode}');
       return {};
@@ -280,14 +292,13 @@ class HomeController extends GetxController {
             responseData.map((job) => SubJobAssgined.fromJson(job)).toList();
 
         List<SubJobAssgined> newSubJobs =
-            itemList.where((subJob) => subJob.status == '10').toList();
+            itemList.where((subJob) => subJob.status == '101').toList();
         subjobList.value = newSubJobs.length;
-        List<SubJobAssgined> pendingSubJobs = itemList
-            .where((subJob) => subJob.status != '10' && subJob.status != '90')
-            .toList();
+        List<SubJobAssgined> pendingSubJobs =
+            itemList.where((subJob) => subJob.status == '102').toList();
         subjobListPending.value = pendingSubJobs.length;
         List<SubJobAssgined> completedSubJobs =
-            itemList.where((subJob) => subJob.status == '90').toList();
+            itemList.where((subJob) => subJob.status == '103').toList();
         subjobListClosed.value = completedSubJobs.length;
         // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
         // List<SubJobAssgined> closedSubJob = itemList

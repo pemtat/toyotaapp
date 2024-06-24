@@ -258,6 +258,7 @@ class FillFormView extends StatelessWidget {
                         BoxDecoration(border: Border.all(color: Colors.grey)),
                     child: SfSignaturePad(
                         key: fillFormController.signature,
+                        onDrawEnd: fillFormController.saveSignature,
                         backgroundColor: Colors.white,
                         strokeColor: Colors.black,
                         minimumStrokeWidth: 1.0,
@@ -278,7 +279,7 @@ class FillFormView extends StatelessWidget {
                 8.kH,
                 TextFieldWidget(
                     text: 'ลงชื่อ',
-                    textSet: fillFormController.signatureController)
+                    textSet: fillFormController.signatureController),
               ],
             ),
             130.kH,

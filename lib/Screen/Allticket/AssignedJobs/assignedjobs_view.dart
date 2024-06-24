@@ -1,24 +1,16 @@
 import 'package:toyotamobile/Function/refresh.dart';
-import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
-import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
-import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
-import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
 import 'package:toyotamobile/Styles/margin.dart';
-import 'package:toyotamobile/Widget/Home_widget/home_widget.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
-import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
-import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
-import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
-import 'package:toyotamobile/Widget/titleheader_widget.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -34,6 +26,7 @@ class AssignedjobsNew extends StatelessWidget {
   AssignedjobsNew({super.key});
   final isSelected = 1.obs;
 
+  @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
     return WillPopScope(
@@ -95,7 +88,7 @@ class AssignedjobsNew extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'New (${jobController.subjobList.value})',
+                                  'Pending (${jobController.subjobList.value})',
                                   style:
                                       assignedController.isSelected.value == 1
                                           ? TextStyleList.text7
@@ -133,7 +126,7 @@ class AssignedjobsNew extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Pending (${jobController.subjobListPending.value})',
+                                  'Confirmed (${jobController.subjobListPending.value})',
                                   style:
                                       assignedController.isSelected.value == 2
                                           ? TextStyleList.text7
@@ -218,13 +211,13 @@ class AssignedjobsNew extends StatelessWidget {
                                 //                 .selectedDate.value!.day);
                                 return searchQueryMatch &&
                                     // dateMatch &&
-                                    job.status == '10' &&
+                                    job.status == '101' &&
                                     statusMatch;
                               }).toList();
                               if (filteredJobs.isEmpty) {
                                 return Center(
                                     child: Text(
-                                  'No new jobs available.',
+                                  'No jobs available.',
                                   style: TextStyleList.subtitle2,
                                 ));
                               }
@@ -238,10 +231,9 @@ class AssignedjobsNew extends StatelessWidget {
                                       Get.to(() => PendingTaskView(
                                           ticketId: job.bugId ?? '',
                                           jobId: job.id.toString()));
-
-                                      ;
                                     },
                                     child: SubJobsTicket(
+                                        index: index,
                                         bugId: job.bugId ?? '',
                                         reporter: job.reporterId ?? '',
                                         job: job,
@@ -296,14 +288,14 @@ class AssignedjobsNew extends StatelessWidget {
                                 //                 .selectedDate.value!.day);
                                 return searchQueryMatch &&
                                     // dateMatch &&
-                                    job.status != '10' &&
-                                    job.status != '90' &&
+
+                                    job.status == '102' &&
                                     statusMatch;
                               }).toList();
                               if (filteredJobs.isEmpty) {
                                 return Center(
                                     child: Text(
-                                  'No new jobs available.',
+                                  'No jobs available.',
                                   style: TextStyleList.subtitle2,
                                 ));
                               }
@@ -314,13 +306,12 @@ class AssignedjobsNew extends StatelessWidget {
                                   final job = filteredJobs[index];
                                   return InkWell(
                                     onTap: () {
-                                      Get.to(() => PendingTaskView(
+                                      Get.to(() => JobDetailView(
                                           ticketId: job.bugId ?? '',
                                           jobId: job.id.toString()));
-
-                                      ;
                                     },
                                     child: SubJobsTicket(
+                                        index: index,
                                         bugId: job.bugId ?? '',
                                         reporter: job.reporterId ?? '',
                                         job: job,
@@ -376,13 +367,13 @@ class AssignedjobsNew extends StatelessWidget {
                                 return searchQueryMatch &&
                                     // dateMatch &&
 
-                                    job.status == '90' &&
+                                    job.status == '103' &&
                                     statusMatch;
                               }).toList();
                               if (filteredJobs.isEmpty) {
                                 return Center(
                                     child: Text(
-                                  'No new jobs available.',
+                                  'No jobs available.',
                                   style: TextStyleList.subtitle2,
                                 ));
                               }
@@ -396,10 +387,9 @@ class AssignedjobsNew extends StatelessWidget {
                                       Get.to(() => TicketDetailView(
                                           ticketId: job.bugId ?? '',
                                           jobId: job.id.toString()));
-
-                                      ;
                                     },
                                     child: SubJobsTicket(
+                                        index: index,
                                         bugId: job.bugId ?? '',
                                         reporter: job.reporterId ?? '',
                                         job: job,
@@ -433,10 +423,10 @@ class AssignedjobsNew extends StatelessWidget {
   List<Widget> statusCheckboxes() {
     return [
       buildCheckbox(
-          status: 'assigned',
+          status: 'resolved',
           selectedStatus: assignedController.selectedStatus),
       buildCheckbox(
-          status: 'new', selectedStatus: assignedController.selectedStatus),
+          status: 'confirm', selectedStatus: assignedController.selectedStatus),
       buildCheckbox(
           status: 'closed', selectedStatus: assignedController.selectedStatus),
       buildCheckbox(

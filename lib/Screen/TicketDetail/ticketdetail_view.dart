@@ -4,13 +4,16 @@ import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
+import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/customerinfo_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/moredetail.widget.dart';
 import 'package:toyotamobile/Widget/noteItem_widget.dart';
-import 'package:toyotamobile/Widget/progressbar_widget.dart.dart';
+import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
@@ -40,7 +43,7 @@ class TicketDetailView extends StatelessWidget {
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Jobs Detail', style: TextStyleList.title1),
+                  Text('View Detail', style: TextStyleList.title1),
                 ],
               ),
               leading: const BackIcon(),
@@ -79,28 +82,23 @@ class TicketDetailView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              BoxContainer(children: [
-                                TicketInfoStatus(
-                                  ticketId: issue.id,
-                                  dateTime: '2024-06-07',
-                                  reporter: issue.reporter.name,
-                                  status: issue.status.name,
-                                ),
-                              ]),
-                              8.kH,
-                              BoxContainer(
-                                children: [
-                                  JobInfo(
-                                    jobId: 0,
-                                    jobIdString: subJob!.id,
-                                    dateTime: subJob.dueDate ?? '-',
-                                    reporter: userData!.name ?? '',
-                                    summary: subJob.summary ?? '',
-                                    description: subJob.description ?? '',
-                                    status: stringToStatus(subJob.status ?? ''),
-                                  )
-                                ],
+                              InkWell(
+                                onTap: () {
+                                  ticketController.moreTicketDetail.value =
+                                      !ticketController.moreTicketDetail.value;
+                                },
+                                child: BoxContainer(children: [
+                                  TicketInfoStatus(
+                                    ticketId: issue.id,
+                                    dateTime: '2024-06-07',
+                                    reporter: issue.reporter.name,
+                                    status: issue.status.name,
+                                    more:
+                                        ticketController.moreTicketDetail.value,
+                                  ),
+                                ]),
                               ),
+
                               // 8.kH,
                               // BoxContainer(
                               //   children: [
@@ -138,74 +136,177 @@ class TicketDetailView extends StatelessWidget {
                               //     ),
                               //   ],
                               // ),
-                              8.kH,
-                              MoreDetail(
-                                  file: file,
-                                  description: issue.description,
-                                  moreDetail: ticketController.moreDetail,
-                                  ediefile: false,
-                                  summary: issue.summary,
-                                  category: issue.category.name,
-                                  relations: '-',
-                                  severity: issue.severity.name),
-                              MoreDetailArrow(
-                                  moreDetail: ticketController.moreDetail),
-                              8.kH,
+
                               Obx(
-                                () {
-                                  if (ticketController
-                                      .warrantyInfoList.isEmpty) {
-                                    return const Center(
-                                      child: Text('No Data'),
-                                    );
-                                  } else {
-                                    var warrantyInfo =
-                                        ticketController.warrantyInfoList.first;
-                                    return WarrantyBox(
-                                        model: warrantyInfo.model,
-                                        serial: warrantyInfo.serial,
-                                        status: warrantyInfo.warrantyStatus,
-                                        filePdf: filePdf);
-                                  }
-                                },
+                                () => ticketController.moreTicketDetail.value
+                                    ? Column(
+                                        children: [
+                                          8.kH,
+                                          MoreDetail(
+                                              file: file,
+                                              description: issue.description,
+                                              moreDetail:
+                                                  ticketController.moreDetail,
+                                              ediefile: false,
+                                              summary: issue.summary,
+                                              category: issue.category.name,
+                                              relations: '-',
+                                              severity: issue.severity.name),
+                                          MoreDetailArrow(
+                                              moreDetail:
+                                                  ticketController.moreDetail),
+                                          8.kH,
+                                          Obx(
+                                            () {
+                                              if (ticketController
+                                                  .warrantyInfoList.isEmpty) {
+                                                return const Center(
+                                                  child: Text('No Data'),
+                                                );
+                                              } else {
+                                                var warrantyInfo =
+                                                    ticketController
+                                                        .warrantyInfoList.first;
+                                                return WarrantyBox(
+                                                    model: warrantyInfo.model,
+                                                    serial: warrantyInfo.serial,
+                                                    status: warrantyInfo
+                                                        .warrantyStatus,
+                                                    filePdf: filePdf);
+                                              }
+                                            },
+                                          ),
+                                          8.kH,
+                                          CustomerInformation(
+                                              contactName: issue.reporter.name,
+                                              email: '-',
+                                              phoneNumber: '-',
+                                              location:
+                                                  'Onnut, Bangkok, Thailand',
+                                              onTap: () {}),
+                                          8.kH,
+                                          BoxContainer(
+                                            children: [
+                                              Obx(() {
+                                                if (ticketController
+                                                    .notesFiles.isEmpty) {
+                                                  return Center(
+                                                      child: Container());
+                                                } else {
+                                                  return Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const TitleApp(
+                                                          text: 'Notes'),
+                                                      8.kH,
+                                                      ListView.builder(
+                                                        physics:
+                                                            const NeverScrollableScrollPhysics(),
+                                                        shrinkWrap: true,
+                                                        itemCount:
+                                                            ticketController
+                                                                .notesFiles
+                                                                .length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          final note =
+                                                              ticketController
+                                                                      .notesFiles[
+                                                                  index];
+                                                          return NoteItem(
+                                                              note: note);
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                }
+                                              }),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
                               ),
-                              8.kH,
-                              CustomerInformation(
-                                  contactName: issue.reporter.name,
-                                  email: 'email',
-                                  phoneNumber: '0828203345',
-                                  location: 'Onnut, Bangkok, Thailand',
-                                  onTap: () {}),
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  Obx(() {
-                                    if (ticketController.notesFiles.isEmpty) {
-                                      return Center(child: Container());
-                                    } else {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const TitleApp(text: 'Notes'),
-                                          8.kH,
-                                          ListView.builder(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemCount: ticketController
-                                                .notesFiles.length,
-                                            itemBuilder: (context, index) {
-                                              final note = ticketController
-                                                  .notesFiles[index];
-                                              return NoteItem(note: note);
-                                            },
-                                          ),
-                                          18.kH,
-                                        ],
-                                      );
-                                    }
-                                  }),
+                                  JobInfo(
+                                    jobId: 0,
+                                    jobIdString: subJob!.id,
+                                    dateTime:
+                                        subJob.dueDate ?? 'ยังไม่มีกำหนดการ',
+                                    reporter: issue.reporter.name ?? '',
+                                    summary: subJob.summary ?? '',
+                                    description: subJob.description ?? '',
+                                    status: stringToStatus(subJob.status ?? ''),
+                                  )
+                                ],
+                              ),
+                              8.kH,
+                              BoxContainer(
+                                children: [
+                                  Text(
+                                    "Start Time : ${subJob.timeStart == null ? '- ' : subJob.timeStart}",
+                                    style: TextStyleList.text6,
+                                  ),
+                                  8.kH,
+                                  if (ticketController.imagesBefore.isNotEmpty)
+                                    AttachmentsListWidget(
+                                      attachments:
+                                          ticketController.imagesBefore,
+                                      edit: false,
+                                      jobid: jobId,
+                                      option: 'before',
+                                    ),
+                                  10.kH,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "End Time : ${subJob.timeEnd == null ? '-' : subJob.timeEnd}",
+                                        style: TextStyleList.text6,
+                                      ),
+                                      8.kH,
+                                      if (ticketController
+                                          .imagesBefore.isNotEmpty)
+                                        AttachmentsListWidget(
+                                          attachments:
+                                              ticketController.imagesAfter,
+                                          edit: false,
+                                          jobid: jobId,
+                                          option: 'after',
+                                        ),
+                                      Container(
+                                        height: 0.5,
+                                        color: const Color.fromARGB(
+                                            255, 224, 222, 222),
+                                      ),
+                                      10.kH,
+                                      ShowTextFieldType(
+                                          hintText: subJob.comment == ''
+                                              ? '-'
+                                              : subJob.comment ?? '-'),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              8.kH,
+                              BoxContainer(
+                                children: [
+                                  const TitleApp(text: 'Repair Report*'),
+                                  Obx(() => ticketController
+                                              .reportList.isNotEmpty ||
+                                          ticketController
+                                              .additionalReportList.isNotEmpty
+                                      ? ShowRepairReport(
+                                          reportData:
+                                              ticketController.reportList,
+                                          additionalReportData: ticketController
+                                              .additionalReportList)
+                                      : Container())
                                 ],
                               ),
                             ],

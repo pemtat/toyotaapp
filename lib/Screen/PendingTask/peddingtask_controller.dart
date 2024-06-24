@@ -55,8 +55,10 @@ class PeddingtaskController extends GetxController {
       issuesList!.map((issue) {
         issueId = issue.id;
         jobId = subjobId;
+
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);
+
         fetchNotes(issue.notes, notesFiles);
         checkWarranty(issue.serialNo ?? '', warrantyInfoList);
       }).toList();
@@ -81,7 +83,7 @@ class PeddingtaskController extends GetxController {
           rightButton: right,
           onRightButtonPressed: () {
             changeIssueStatus(issueId, 'confirmed');
-            updateAcceptStatusSubjobs(jobId, issueId.toString(), '50');
+            updateAcceptStatusSubjobs(jobId, issueId.toString(), '102');
           },
         );
       },

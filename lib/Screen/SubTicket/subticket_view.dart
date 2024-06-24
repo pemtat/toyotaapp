@@ -104,7 +104,7 @@ class SubTicketView extends StatelessWidget {
                                 final job = subticketController.subJobs[index];
                                 return InkWell(
                                   onTap: () {
-                                    if (job.status!.name == 'new') {
+                                    if (job.status!.name == 'pending') {
                                       Get.to(() => PendingTaskView(
                                           ticketId: ticketId,
                                           jobId: job.id.toString()));
@@ -121,6 +121,7 @@ class SubTicketView extends StatelessWidget {
                                     ;
                                   },
                                   child: SubJobsTicket(
+                                      index: index,
                                       jobsHome: jobController,
                                       bugId: ticketId,
                                       reporter: job.reporter!.id.toString(),

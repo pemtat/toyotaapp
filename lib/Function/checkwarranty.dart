@@ -20,9 +20,9 @@ checkWarranty(
 
   if (response.statusCode == 200) {
     Map<String, dynamic> data = json.decode(response.body);
-    String productName = data['NameTruck'] ?? '';
-    String serial = data['Serial'] ?? '';
-    String model = data['Model'] ?? '';
+    String productName = data['NameTruck'] ?? '-';
+    String serial = data['Serial'] ?? '-';
+    String model = data['Model'] ?? '-';
     int warrantyStatus = data['WarrantyStatus'] ?? 0;
     WarrantyInfo warrantyInfo = WarrantyInfo(
       productName: productName,

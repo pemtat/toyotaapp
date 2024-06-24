@@ -7,6 +7,7 @@ import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/jobprogress_model.dart';
+import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
@@ -20,7 +21,14 @@ class TicketDetailController extends GetxController {
   final notes = TextEditingController().obs;
   var pdfList = <Map<String, dynamic>>[].obs;
   var issueData = [].obs;
+  var reportList = <RepairReportModel>[].obs;
+  var additionalReportList = <RepairReportModel>[].obs;
+  var savedDateStartTime = ''.obs;
+  var savedDateEndTime = ''.obs;
+  var imagesBefore = <Map<String, String>>[].obs;
+  var imagesAfter = <Map<String, String>>[].obs;
   var notesFiles = <Notes>[].obs;
+  var moreTicketDetail = false.obs;
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
@@ -57,9 +65,41 @@ class TicketDetailController extends GetxController {
   void fetchData(String ticketId, subjobId) async {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
+    fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
     await fetchUserById(subJobs.first.reporterId ?? '', userData);
+    savedDateStartTime.value = subJobs.first.timeStart ?? '';
+    savedDateEndTime.value = subJobs.first.timeEnd ?? '';
+    try {
+      if (subJobs.first.imageBefore != '' &&
+          subJobs.first.contentBefore != '') {
+        List<dynamic> imageBeforeList = jsonDecode(subJobs.first.imageBefore!);
+        List<dynamic> contentBeforeList =
+            jsonDecode(subJobs.first.contentBefore!);
 
+        for (int i = 0; i < imageBeforeList.length; i++) {
+          imagesBefore.add({
+            'filename': imageBeforeList[i],
+            'content': contentBeforeList[i],
+          });
+        }
+      }
+
+      if (subJobs.first.imageAfter != '' && subJobs.first.contentAfter != '') {
+        List<dynamic> imageAfterList = jsonDecode(subJobs.first.imageAfter!);
+        List<dynamic> contentAfterList =
+            jsonDecode(subJobs.first.contentAfter!);
+
+        for (int i = 0; i < contentAfterList.length; i++) {
+          imagesAfter.add({
+            'filename': imageAfterList[i],
+            'content': contentAfterList[i],
+          });
+        }
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
     fetchPdfData(ticketId, token ?? '', pdfList);
     final response = await http.get(
       Uri.parse(apiUrl),

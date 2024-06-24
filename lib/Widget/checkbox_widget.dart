@@ -24,8 +24,8 @@ class CheckBoxWidget extends StatelessWidget {
           },
           child: Obx(
             () => Container(
-              width: 18,
-              height: 18,
+              width: 24,
+              height: 24,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
                 border: !listItem.contains(text)
@@ -36,7 +36,7 @@ class CheckBoxWidget extends StatelessWidget {
               ),
               child: Center(
                 child: listItem.contains(text)
-                    ? const Icon(Icons.check, color: Colors.white, size: 16)
+                    ? const Icon(Icons.check, color: Colors.white, size: 18)
                     : const SizedBox(),
               ),
             ),

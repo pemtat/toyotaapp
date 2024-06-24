@@ -41,7 +41,7 @@ class PendingTaskView extends StatelessWidget {
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('View Detail', style: TextStyleList.title1),
+                  Text('Job Detail', style: TextStyleList.title1),
                 ],
               ),
               leading: const BackIcon(),
@@ -53,8 +53,8 @@ class PendingTaskView extends StatelessWidget {
         if (penddingTaskController.issueData.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         } else {
-          var file = penddingTaskController.attachments.isNotEmpty
-              ? penddingTaskController.attachments
+          var file = penddingTaskController.attatchments.isNotEmpty
+              ? penddingTaskController.attatchments
               : null;
           var filePdf = penddingTaskController.addAttatchments.isNotEmpty
               ? penddingTaskController.addAttatchments
@@ -124,8 +124,8 @@ class PendingTaskView extends StatelessWidget {
                             8.kH,
                             CustomerInformation(
                                 contactName: issue.reporter.name,
-                                email: 'email',
-                                phoneNumber: '0828203345',
+                                email: '-',
+                                phoneNumber: '-',
                                 location: 'Onnut, Bangkok, Thailand',
                                 onTap: () {}),
                             8.kH,
@@ -134,8 +134,9 @@ class PendingTaskView extends StatelessWidget {
                                 JobInfo(
                                   jobId: 0,
                                   jobIdString: subJob!.id,
-                                  dateTime: subJob.dueDate ?? '-',
-                                  reporter: userData!.name ?? '',
+                                  dateTime:
+                                      subJob.dueDate ?? 'ยังไม่มีกำหนดการ',
+                                  reporter: issue.reporter.name ?? '',
                                   summary: subJob.summary ?? '',
                                   description: subJob.description ?? '',
                                   status: stringToStatus(subJob.status ?? ''),

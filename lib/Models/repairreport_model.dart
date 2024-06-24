@@ -12,6 +12,9 @@ class RepairReportModel {
   String? repairResult;
   String? processStaff;
   String? relationId;
+  String? saveTime;
+  String? signature;
+  String? signaturePad;
   String? cCode;
   String? partNumber;
   String? description;
@@ -34,6 +37,9 @@ class RepairReportModel {
       this.repairResult,
       this.processStaff,
       this.relationId,
+      this.saveTime,
+      this.signature,
+      this.signaturePad,
       this.cCode,
       this.partNumber,
       this.description,
@@ -56,6 +62,9 @@ class RepairReportModel {
     repairResult = json['repair_result'];
     processStaff = json['process_staff'];
     relationId = json['relation_id'];
+    saveTime = json['save_time'];
+    signature = json['signature'];
+    signaturePad = json['signature_pad'];
     cCode = json['c_code'];
     partNumber = json['part_number'];
     description = json['description'];
@@ -80,6 +89,9 @@ class RepairReportModel {
     data['repair_result'] = repairResult;
     data['process_staff'] = processStaff;
     data['relation_id'] = relationId;
+    data['save_time'] = saveTime;
+    data['signature'] = signature;
+    data['signature_pad'] = signaturePad;
     data['c_code'] = cCode;
     data['part_number'] = partNumber;
     data['description'] = description;

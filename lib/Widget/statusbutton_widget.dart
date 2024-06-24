@@ -169,6 +169,24 @@ class StatusOnprocessButton extends StatelessWidget {
   }
 }
 
+class StatusConfirmedButton extends StatelessWidget {
+  const StatusConfirmedButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: green2),
+      child: Text(
+        "Confirmed",
+        style: GoogleFonts.kanit(
+            color: green3, fontSize: 14, fontWeight: FontWeight.w400),
+      ),
+    );
+  }
+}
+
 class StatusPlanningButton extends StatelessWidget {
   const StatusPlanningButton({super.key});
 

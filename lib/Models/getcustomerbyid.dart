@@ -34,15 +34,15 @@ class CustomerById {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CustomerNo'] = this.customerNo;
-    data['CustomerName'] = this.customerName;
-    data['CustomerAddress'] = this.customerAddress;
-    data['CustomerEmail'] = this.customerEmail;
-    data['CustomerTaxID'] = this.customerTaxID;
-    data['BillToCustomerNo'] = this.billToCustomerNo;
-    data['CustomerPostingGroup'] = this.customerPostingGroup;
-    data['PaymentTerm'] = this.paymentTerm;
-    data['LastModify'] = this.lastModify;
+    data['CustomerNo'] = customerNo;
+    data['CustomerName'] = customerName;
+    data['CustomerAddress'] = customerAddress;
+    data['CustomerEmail'] = customerEmail;
+    data['CustomerTaxID'] = customerTaxID;
+    data['BillToCustomerNo'] = billToCustomerNo;
+    data['CustomerPostingGroup'] = customerPostingGroup;
+    data['PaymentTerm'] = paymentTerm;
+    data['LastModify'] = lastModify;
     return data;
   }
 }

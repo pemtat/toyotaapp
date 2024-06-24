@@ -13,6 +13,7 @@ class TextFieldType extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: textSet,
+      keyboardType: TextInputType.text,
       maxLines: 3,
       decoration: InputDecoration(
         border: const OutlineInputBorder(

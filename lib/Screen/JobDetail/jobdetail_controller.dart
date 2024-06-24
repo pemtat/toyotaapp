@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
-import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
@@ -51,42 +50,76 @@ class JobDetailController extends GetxController {
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
   final BottomBarController bottomController = Get.put(BottomBarController());
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void fetchData(String ticketId, String subjobId) async {
-    final String apiUrl = getTicketbyId(ticketId);
-    String? token = await getToken();
+    try {
+      final String apiUrl = getTicketbyId(ticketId);
+      String? token = await getToken();
 
-    issueId = ticketId;
-    jobId = subjobId;
-    fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
-    fetchPdfData(ticketId, token ?? '', pdfList);
-    await fetchSubJob(subjobId, token ?? '', subJobs);
-    await fetchUserById(subJobs.first.reporterId ?? '', userData);
-    savedDateStartTime.value = subJobs.first.timeStart ?? '';
-    savedDateEndTime.value = subJobs.first.timeEnd ?? '';
-    final response = await http.get(
-      Uri.parse(apiUrl),
-      headers: {
-        'Authorization': '$token',
-      },
-    );
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = json.decode(response.body);
-      TicketByIdModel ticketModel = TicketByIdModel.fromJson(data);
-      List<Issues>? issuesList = ticketModel.issues;
-      issuesList!.map((issue) {
-        issueId = issue.id;
-        fetchReadAttachment(issueId, token ?? '', issue.attachments,
-            attachmentsData, attatchments);
-        fetchNotesPic(issue.notes, notesFiles, notePic);
-        checkWarranty(issue.serialNo ?? '', warrantyInfoList);
-      }).toList();
-      issueData.value = issuesList;
-    } else {}
+      issueId = ticketId;
+      jobId = subjobId;
+      fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
+      fetchPdfData(ticketId, token ?? '', pdfList);
+      await fetchSubJob(subjobId, token ?? '', subJobs);
+      await fetchUserById(subJobs.first.reporterId ?? '', userData);
+      savedDateStartTime.value = subJobs.first.timeStart ?? '';
+      savedDateEndTime.value = subJobs.first.timeEnd ?? '';
+      imagesBefore.clear();
+      imagesAfter.clear();
+      try {
+        if (subJobs.first.imageBefore != '' &&
+            subJobs.first.contentBefore != '') {
+          List<dynamic> imageBeforeList =
+              jsonDecode(subJobs.first.imageBefore!);
+          List<dynamic> contentBeforeList =
+              jsonDecode(subJobs.first.contentBefore!);
+
+          for (int i = 0; i < imageBeforeList.length; i++) {
+            imagesBefore.add({
+              'filename': imageBeforeList[i],
+              'content': contentBeforeList[i],
+            });
+          }
+        }
+
+        if (subJobs.first.imageAfter != '' &&
+            subJobs.first.contentAfter != '') {
+          List<dynamic> imageAfterList = jsonDecode(subJobs.first.imageAfter!);
+          List<dynamic> contentAfterList =
+              jsonDecode(subJobs.first.contentAfter!);
+
+          for (int i = 0; i < contentAfterList.length; i++) {
+            imagesAfter.add({
+              'filename': imageAfterList[i],
+              'content': contentAfterList[i],
+            });
+          }
+        }
+      } catch (e) {
+        print("Error: $e");
+      }
+
+      final response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+        TicketByIdModel ticketModel = TicketByIdModel.fromJson(data);
+        List<Issues>? issuesList = ticketModel.issues;
+        issuesList!.map((issue) {
+          issueId = issue.id;
+          fetchReadAttachment(issueId, token ?? '', issue.attachments,
+              attachmentsData, attatchments);
+          fetchNotesPic(issue.notes, notesFiles, notePic);
+          checkWarranty(issue.serialNo ?? '', warrantyInfoList);
+        }).toList();
+        issueData.value = issuesList;
+      } else {}
+    } catch (e) {
+      Get.to(() => BottomBarView());
+    }
   }
 
   void completeJob() async {
@@ -179,6 +212,8 @@ class JobDetailController extends GetxController {
           onRightButtonPressed: () {
             print(jobId);
             updateStatusSubjobs(jobId, comment.value.text, issueId.toString());
+            jobController.fetchDataFromAssignJob();
+            Navigator.pop(context);
           },
         );
       },

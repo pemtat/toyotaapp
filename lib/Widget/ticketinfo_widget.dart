@@ -132,13 +132,14 @@ class TicketInfoStatus extends StatelessWidget {
   final String dateTime;
   final String reporter;
   final String status;
-
+  final bool? more;
   const TicketInfoStatus({
     super.key,
     required this.ticketId,
     required this.dateTime,
     required this.reporter,
     required this.status,
+    this.more,
   });
 
   @override
@@ -175,6 +176,12 @@ class TicketInfoStatus extends StatelessWidget {
             status: status,
           ),
         ),
+        if (more != null)
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: more == false ? const ArrowRight() : const ArrowDown(),
+          ),
       ],
     );
   }
@@ -231,12 +238,6 @@ class JobInfo extends StatelessWidget {
                     )
                   ],
                 ),
-                4.kH,
-                Text(
-                  '$summary',
-                  style: TextStyleList.text10,
-                ),
-                4.kH,
                 Text(
                   '$description',
                   style: TextStyleList.text10,

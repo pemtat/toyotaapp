@@ -58,7 +58,10 @@ class MoreDetail extends StatelessWidget {
             ? Column(
                 children: [
                   8.kH,
-                  AttachmentsListWidget(file ?? [], ediefile),
+                  AttachmentsListWidget(
+                    attachments: file ?? [],
+                    edit: ediefile,
+                  ),
                   8.kH,
                 ],
               )

@@ -98,7 +98,7 @@ class Issues {
     eta = json['eta'] != null ? Resolution.fromJson(json['eta']) : null;
     sticky = json['sticky'];
     dueDate = json['dueDate'];
-    serialNo = 'CE429424';
+    serialNo = 'CE389879';
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['attachments'] != null) {
@@ -402,17 +402,13 @@ class History {
       oldValue = json['old_value'] != null
           ? OldValue.fromJson(json['old_value'])
           : null;
-    } catch (e) {
-      print("Error parsing oldValue: ${json['old_value']} - $e");
-    }
+    } catch (e) {}
 
     try {
       newValue = json['new_value'] != null
           ? OldValue.fromJson(json['new_value'])
           : null;
-    } catch (e) {
-      print("Error parsing newValue: ${json['new_value']} - $e");
-    }
+    } catch (e) {}
     change = json['change'];
     note = json['note'] != null ? Note.fromJson(json['note']) : null;
   }

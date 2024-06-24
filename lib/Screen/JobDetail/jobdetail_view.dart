@@ -63,7 +63,8 @@ class JobDetailView extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${job.summary}', style: TextStyleList.title1),
+                          Text('${job.description}',
+                              style: TextStyleList.title1),
                           Text('JobID: ${job.id}', style: TextStyleList.text16),
                         ],
                       );
@@ -193,8 +194,9 @@ class JobDetailView extends StatelessWidget {
                                       JobInfo(
                                         jobId: 0,
                                         jobIdString: subJob!.id,
-                                        dateTime: subJob.dueDate ?? '-',
-                                        reporter: userData!.name ?? '',
+                                        dateTime: subJob.dueDate ??
+                                            'ยังไม่มีกำหนดการ',
+                                        reporter: issue.reporter.name ?? '',
                                         summary: subJob.summary ?? '',
                                         description: subJob.description ?? '',
                                         status: stringToStatus(
@@ -243,13 +245,19 @@ class JobDetailView extends StatelessWidget {
                                   Obx(() =>
                                       jobController.imagesBefore.isNotEmpty
                                           ? AttachmentsListWidget(
-                                              jobController.imagesBefore, true)
+                                              attachments:
+                                                  jobController.imagesBefore,
+                                              edit: true,
+                                              jobid: jobId ?? '',
+                                              option: 'before',
+                                            )
                                           : Container()),
                                   10.kH,
                                   UploadImageWidget(
                                       pickImage: () => pickImage(
                                           jobController.imagesBefore,
                                           jobController.isPicking,
+                                          'before',
                                           ticketId,
                                           jobId ?? '')),
                                   18.kH,
@@ -299,14 +307,19 @@ class JobDetailView extends StatelessWidget {
                                             Obx(() => jobController
                                                     .imagesAfter.isNotEmpty
                                                 ? AttachmentsListWidget(
-                                                    jobController.imagesAfter,
-                                                    true)
+                                                    attachments: jobController
+                                                        .imagesAfter,
+                                                    edit: true,
+                                                    jobid: jobId ?? '',
+                                                    option: 'after',
+                                                  )
                                                 : Container()),
                                             10.kH,
                                             UploadImageWidget(
                                               pickImage: () => pickImage(
                                                   jobController.imagesAfter,
                                                   jobController.isPicking,
+                                                  'after',
                                                   ticketId,
                                                   jobId ?? ''),
                                             ),

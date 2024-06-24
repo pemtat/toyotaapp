@@ -29,7 +29,7 @@ class StatusButton extends StatelessWidget {
       case 'planning':
         return const StatusPlanningButton();
       default:
-        return const SizedBox();
+        return const StatusPendingButton();
     }
   }
 }

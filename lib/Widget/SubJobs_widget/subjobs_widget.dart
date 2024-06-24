@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -17,6 +16,7 @@ class SubJobsTicket extends StatelessWidget {
   final HomeController jobsHome;
   final String bugId;
   final String reporter;
+  final int? index;
 
   final String? status;
 
@@ -28,19 +28,22 @@ class SubJobsTicket extends StatelessWidget {
       required this.status,
       required this.bugId,
       required this.reporter,
-      required this.jobsHome});
+      required this.jobsHome,
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map<String, String>>(
-      future: jobsHome.fetchUserById(reporter),
+      future: jobsHome.fetchTicketById(bugId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container();
+          return index == 0
+              ? Center(child: CircularProgressIndicator())
+              : Container();
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No data available'));
+          return Container();
         }
 
         Map<String, String> userData = snapshot.data!;
@@ -81,11 +84,6 @@ class SubJobsTicket extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    job.summary ?? '',
-                    style: TextStyleList.text15,
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
                     job.description ?? '',
                     style: TextStyleList.text15,
                   ),
@@ -100,7 +98,7 @@ class SubJobsTicket extends StatelessWidget {
                       const Icon(Icons.calendar_month_outlined),
                       const SizedBox(width: 5),
                       Text(
-                        '${job.dueDate == null ? 'ยังไม่มีกำหนดการ' : job.dueDate}',
+                        '${job.dueDate ?? 'ยังไม่มีกำหนดการ'}',
                         style: TextStyleList.subtext1,
                       ),
                     ],

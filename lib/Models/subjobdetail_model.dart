@@ -21,7 +21,10 @@ class SubJobDetail {
   String? timeStart;
   String? timeEnd;
   String? imageBefore;
+  String? contentBefore;
   String? imageAfter;
+  String? contentAfter;
+
   String? comment;
 
   SubJobDetail(
@@ -46,6 +49,8 @@ class SubJobDetail {
       this.description,
       this.timeStart,
       this.timeEnd,
+      this.contentBefore,
+      this.contentAfter,
       this.imageBefore,
       this.imageAfter,
       this.comment});
@@ -73,12 +78,14 @@ class SubJobDetail {
     timeStart = json['time_start'];
     timeEnd = json['time_end'];
     imageBefore = json['image_before'];
+    contentBefore = json['content_before'];
     imageAfter = json['image_after'];
+    contentAfter = json['content_after'];
     comment = json['comment'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['reporter_id'] = reporterId;
     data['priority'] = priority;
@@ -101,6 +108,8 @@ class SubJobDetail {
     data['time_start'] = timeStart;
     data['time_end'] = timeEnd;
     data['image_before'] = imageBefore;
+    data['content_before'] = contentBefore;
+    data['content_after'] = contentAfter;
     data['image_after'] = imageAfter;
     data['comment'] = comment;
     return data;

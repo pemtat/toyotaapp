@@ -12,6 +12,7 @@ class TicketController extends GetxController {
   var selectedDate = Rx<DateTime?>(null);
   final HomeController jobController = Get.put(HomeController());
   final selectedStatus = <String>{}.obs;
+  final RxInt displayedPmItems = 10.obs;
 
   void showAcceptDialog(
       BuildContext context, String title, String left, String right) {

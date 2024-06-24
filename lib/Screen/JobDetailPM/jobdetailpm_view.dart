@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -25,11 +26,16 @@ class JobDetailViewPM extends StatelessWidget {
   final String ticketId;
   final String? jobId;
   final String? status;
+  final PmModel data;
   final JobDetailControllerPM jobController = Get.put(JobDetailControllerPM());
 
   JobDetailViewPM(
-      {super.key, required this.ticketId, this.jobId, this.status}) {
-    jobController.fetchData(ticketId);
+      {super.key,
+      required this.ticketId,
+      this.jobId,
+      this.status,
+      required this.data}) {
+    jobController.fetchData(ticketId, data);
   }
 
   @override
@@ -54,11 +60,11 @@ class JobDetailViewPM extends StatelessWidget {
                         ],
                       );
                     } else {
-                      var job = jobController.issueData.first;
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('PM Support 1/4', style: TextStyleList.title1),
+                          Text(data.description ?? '',
+                              style: TextStyleList.title1),
                           Text('JobID: 0001', style: TextStyleList.text16),
                         ],
                       );
@@ -70,7 +76,8 @@ class JobDetailViewPM extends StatelessWidget {
                   right: 15.0,
                   top: 15,
                   bottom: 0,
-                  child: Center(child: StatusButton(status: status ?? '')),
+                  child:
+                      Center(child: StatusButton(status: data.pmStatus ?? '')),
                 ),
               ],
             ),
@@ -113,10 +120,11 @@ class JobDetailViewPM extends StatelessWidget {
                                   children: [
                                     PMJobInfo(
                                       ticketId: 1,
-                                      dateTime: formatDateTime(issue.createdAt),
-                                      reporter: issue.reporter.name,
-                                      summary: 'ตรวจสภาพรถ',
-                                      description: issue.description,
+                                      dateTime: data.pmPlan ?? '',
+                                      reporter: data.customerNo ?? '',
+                                      summary: 'ช่าง ${data.resourceName}',
+                                      description:
+                                          'Service Zone :  ${data.serviceZoneCode ?? ''}',
                                       more:
                                           jobController.moreTicketDetail.value,
                                     ),
@@ -139,8 +147,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                 var warrantyInfo = jobController
                                                     .warrantyInfoList.first;
                                                 return WarrantyBox(
-                                                    model: warrantyInfo.model,
-                                                    serial: warrantyInfo.serial,
+                                                    model: '-',
+                                                    serial: "415822",
                                                     status: warrantyInfo
                                                         .warrantyStatus,
                                                     filePdf: filePdf);
@@ -186,13 +194,19 @@ class JobDetailViewPM extends StatelessWidget {
                                   Obx(() =>
                                       jobController.imagesBefore.isNotEmpty
                                           ? AttachmentsListWidget(
-                                              jobController.imagesBefore, true)
+                                              attachments:
+                                                  jobController.imagesBefore,
+                                              edit: true,
+                                              jobid: jobId ?? '',
+                                              option: 'before',
+                                            )
                                           : Container()),
                                   10.kH,
                                   UploadImageWidget(
                                     pickImage: () => pickImage(
                                         jobController.imagesBefore,
                                         jobController.isPicking,
+                                        'before',
                                         ticketId,
                                         jobId ?? ''),
                                   ),
@@ -236,14 +250,19 @@ class JobDetailViewPM extends StatelessWidget {
                                             Obx(() => jobController
                                                     .imagesAfter.isNotEmpty
                                                 ? AttachmentsListWidget(
-                                                    jobController.imagesAfter,
-                                                    true)
+                                                    attachments: jobController
+                                                        .imagesAfter,
+                                                    edit: true,
+                                                    jobid: jobId ?? '',
+                                                    option: 'after',
+                                                  )
                                                 : Container()),
                                             10.kH,
                                             UploadImageWidget(
                                               pickImage: () => pickImage(
                                                   jobController.imagesAfter,
                                                   jobController.isPicking,
+                                                  'after',
                                                   ticketId,
                                                   jobId ?? ''),
                                             ),

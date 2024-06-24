@@ -7,15 +7,15 @@ class Subjob {
     if (json['subjobs'] != null) {
       subjobs = <Subjobs>[];
       json['subjobs'].forEach((v) {
-        subjobs!.add(new Subjobs.fromJson(v));
+        subjobs!.add(Subjobs.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.subjobs != null) {
-      data['subjobs'] = this.subjobs!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (subjobs != null) {
+      data['subjobs'] = subjobs!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -66,16 +66,14 @@ class Subjobs {
   Subjobs.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     projectId = json['project_id'];
-    reporter = json['reporter'] != null
-        ? new Reporter.fromJson(json['reporter'])
-        : null;
+    reporter =
+        json['reporter'] != null ? Reporter.fromJson(json['reporter']) : null;
     handlerId = json['handler_id'];
     duplicateId = json['duplicate_id'];
     priority = json['priority'];
     severity = json['severity'];
     reproducibility = json['reproducibility'];
-    status =
-        json['status'] != null ? new Status.fromJson(json['status']) : null;
+    status = json['status'] != null ? Status.fromJson(json['status']) : null;
     resolution = json['resolution'];
     projection = json['projection'];
     categoryId = json['category_id'];
@@ -89,30 +87,30 @@ class Subjobs {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['project_id'] = this.projectId;
-    if (this.reporter != null) {
-      data['reporter'] = this.reporter!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['project_id'] = projectId;
+    if (reporter != null) {
+      data['reporter'] = reporter!.toJson();
     }
-    data['handler_id'] = this.handlerId;
-    data['duplicate_id'] = this.duplicateId;
-    data['priority'] = this.priority;
-    data['severity'] = this.severity;
-    data['reproducibility'] = this.reproducibility;
-    if (this.status != null) {
-      data['status'] = this.status!.toJson();
+    data['handler_id'] = handlerId;
+    data['duplicate_id'] = duplicateId;
+    data['priority'] = priority;
+    data['severity'] = severity;
+    data['reproducibility'] = reproducibility;
+    if (status != null) {
+      data['status'] = status!.toJson();
     }
-    data['resolution'] = this.resolution;
-    data['projection'] = this.projection;
-    data['category_id'] = this.categoryId;
-    data['created_at'] = this.createdAt;
-    data['view_state'] = this.viewState;
-    data['summary'] = this.summary;
-    data['sticky'] = this.sticky;
-    data['due_date'] = this.dueDate;
-    data['profile_id'] = this.profileId;
-    data['description'] = this.description;
+    data['resolution'] = resolution;
+    data['projection'] = projection;
+    data['category_id'] = categoryId;
+    data['created_at'] = createdAt;
+    data['view_state'] = viewState;
+    data['summary'] = summary;
+    data['sticky'] = sticky;
+    data['due_date'] = dueDate;
+    data['profile_id'] = profileId;
+    data['description'] = description;
     return data;
   }
 }
@@ -133,11 +131,11 @@ class Reporter {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['real_name'] = this.realName;
-    data['email'] = this.email;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['real_name'] = realName;
+    data['email'] = email;
     return data;
   }
 }
@@ -158,11 +156,11 @@ class Status {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['label'] = this.label;
-    data['color'] = this.color;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['label'] = label;
+    data['color'] = color;
     return data;
   }
 }

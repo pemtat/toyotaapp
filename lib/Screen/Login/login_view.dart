@@ -32,7 +32,7 @@ class LoginView extends StatelessWidget {
                 )),
                 40.kH,
                 TextFieldBar(
-                  label: 'Email',
+                  label: 'Username',
                   onChanged: controller.setEmail,
                 ),
                 20.kH,

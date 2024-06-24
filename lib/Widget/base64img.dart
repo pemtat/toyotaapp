@@ -1,12 +1,20 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 
 class AttachmentsListWidget extends StatelessWidget {
   final List<Map<String, dynamic>> attachments;
-  final bool edit;
+  final String? option;
+  final String? jobid;
+  final bool? edit;
 
-  const AttachmentsListWidget(this.attachments, this.edit, {super.key});
+  AttachmentsListWidget(
+      {super.key,
+      required this.attachments,
+      this.option,
+      this.jobid,
+      this.edit});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +40,13 @@ class AttachmentsListWidget extends StatelessWidget {
                     top: 0,
                     child: GestureDetector(
                       onTap: () {
-                        attachments.removeAt(index);
+                        if (jobid != null && option != null) {
+                          attachments.removeAt(index);
+                          deleteImgSubJob(
+                              jobid ?? '', attachments, option ?? '');
+                        } else {
+                          attachments.removeAt(index);
+                        }
                       },
                       child: Container(
                         decoration: BoxDecoration(
