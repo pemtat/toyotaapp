@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/process_staff.dart';
@@ -8,6 +9,7 @@ import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_result.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/wcode.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editfillform_controller.dart';
+import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -26,9 +28,14 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class EditFillFormView extends StatelessWidget {
   final String reportId;
-  EditFillFormView({super.key, required this.reportId}) {
-    print(reportId);
-    fillFormController.fetchForm(reportId);
+  final String ticketId;
+  final String jobId;
+  EditFillFormView(
+      {super.key,
+      required this.reportId,
+      required this.ticketId,
+      required this.jobId}) {
+    fillFormController.fetchForm(reportId, ticketId, jobId);
   }
 
   final Rcode rcodeController = Get.put(Rcode());
@@ -257,30 +264,55 @@ class EditFillFormView extends StatelessWidget {
                     ),
                   ],
                 ),
-                130.kH,
-                BoxContainer(paddingCustom: 10, children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        backgroundColor: black3,
-                        foregroundColor: Colors.black12,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                BoxContainer(
+                  children: [
+                    Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey)),
+                        child: SfSignaturePad(
+                            key: fillFormController.signature,
+                            onDrawEnd: fillFormController.saveSignature,
+                            backgroundColor: Colors.white,
+                            strokeColor: Colors.black,
+                            minimumStrokeWidth: 1.0,
+                            maximumStrokeWidth: 4.0)),
+                    10.kH,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: fillFormController.clearSignature,
+                          child: Text(
+                            'Clear',
+                            style: TextStyleList.text20,
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        'Save',
-                        style: TextStyleList.text5,
-                      ),
+                      ],
                     ),
-                  ),
-                ])
+                    8.kH,
+                    TextFieldWidget(
+                        text: 'ลงชื่อ',
+                        textSet: fillFormController.signatureController),
+                  ],
+                ),
+                130.kH,
               ],
             ),
           );
         },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: white3,
+        child: Container(
+          decoration: Decoration2(),
+          child: EndButton(
+              onPressed: () {
+                fillFormController.showSavedDialog(
+                    context, 'Are you confirm to save report?', 'No', 'Yes');
+              },
+              text: 'Save'),
+        ),
       ),
     );
   }

@@ -8,6 +8,8 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class Rcode extends GetxController {
   void rCodeModal(BuildContext context) {
+    rCodeChoose.clear();
+    rCodeChoose.addAll(rCode);
     ShowModalWidget(
       children: [
         Row(
@@ -43,7 +45,6 @@ class Rcode extends GetxController {
             onPressed: () {
               rCode.clear();
               rCode.addAll(rCodeChoose);
-
               Navigator.pop(context);
             },
             text: 'Confirm')

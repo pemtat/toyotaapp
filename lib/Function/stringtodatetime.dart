@@ -6,8 +6,12 @@ String formatDateTime(String dateTime) {
 }
 
 DateTime formatDateTimeString(String dateTime) {
-  DateTime parsedDate = DateTime.parse(dateTime);
-  return parsedDate;
+  try {
+    DateTime parsedDate = DateTime.parse(dateTime);
+    return parsedDate;
+  } catch (e) {
+    return DateTime.now();
+  }
 }
 
 String getFormattedDate(DateTime date) {

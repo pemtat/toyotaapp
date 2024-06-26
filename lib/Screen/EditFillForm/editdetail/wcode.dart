@@ -8,6 +8,8 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class Wcode extends GetxController {
   void wCodeModal(BuildContext context) {
+    wCodeChoose.clear();
+    wCodeChoose.addAll(wCode);
     ShowModalWidget(
       children: [
         Row(
@@ -42,7 +44,7 @@ class Wcode extends GetxController {
         EndButton(
             onPressed: () {
               wCode.clear();
-              wCode.addAll(wCodeChoose);
+              wCode.addAll(wCodeChoose.where((code) => code.isNotEmpty));
 
               Navigator.pop(context);
             },

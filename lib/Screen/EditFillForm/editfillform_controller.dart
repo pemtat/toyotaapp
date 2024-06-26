@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:ui';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/repair_procedure.dart';
@@ -12,6 +16,10 @@ import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_procedure.dar
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_result.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/wcode.dart';
+import 'package:toyotamobile/Service/api.dart';
+import 'package:toyotamobile/Styles/color.dart';
+import 'package:toyotamobile/Widget/dialogalert_widget.dart';
+import 'package:http/http.dart' as http;
 
 class EditFillformController extends GetxController {
   final fault = TextEditingController().obs;
@@ -34,24 +42,46 @@ class EditFillformController extends GetxController {
     'Comission',
     'Other',
   ];
-
+  final TextEditingController signatureController = TextEditingController();
+  var signaturePad = ''.obs;
+  final GlobalKey<SfSignaturePadState> signature = GlobalKey();
+  var saveCompletedtime = ''.obs;
   var fieldServiceReport = <String>[].obs;
   var detail = <String>[].obs;
+  var isSignatureEmpty = true.obs;
+  var ticketId = ''.obs;
+  var jobId = ''.obs;
+  var relationId = ''.obs;
 
-  void fetchForm(String reportId) async {
+  void fetchForm(String reportId, String ticketId, String jobId) async {
     String? token = await getToken();
+    this.ticketId.value = ticketId;
+    this.jobId.value = jobId;
+
     await fetchReportData(
         reportId, token ?? '', reportList, additionalReportList);
 
     if (reportList.isNotEmpty) {
       var reportData = reportList.first;
+      relationId.value = reportData.relationId ?? '';
       fault.value.text = reportData.faultReport ?? '';
       errorCode.value.text = reportData.errorCodeReport ?? '';
       workorderNumber.value.text = reportData.orderNo ?? '';
+      if (reportData.rCode!.isNotEmpty)
+        rcodeController.rCode.add(reportData.rCode ?? '');
       fieldServiceReport.add(reportData.fieldReport ?? '');
-      rcodeController.rCode.add(reportData.rCode ?? '');
+      List<String> newList = reportData.rCode!.split(',');
+      rcodeController.rCodeChoose.addAll(newList);
+      newList = reportData.wCode!.split(',');
+      wcodeController.wCodeChoose.addAll(newList);
 
-      wcodeController.wCode.add(reportData.wCode ?? '');
+      newList = reportData.repairResult!.split(',');
+      repairResultController.repairResultChoose.addAll(newList);
+
+      newList = reportData.processStaff!.split(',');
+      repairStaffController.repairStaffChoose.addAll(newList);
+      if (reportData.wCode!.isNotEmpty)
+        wcodeController.wCode.add(reportData.wCode ?? '');
       rPController.repairProcedureList.add(RepairProcedureModel(
         repairProcedure: reportData.produre ?? '',
         causeProblem: reportData.problem ?? '',
@@ -84,9 +114,156 @@ class EditFillformController extends GetxController {
                 additional: 1));
           }
         }
+      if (reportData.repairResult!.isNotEmpty)
+        repairResultController.repairResult.add(reportData.repairResult ?? '');
+      if (reportData.processStaff!.isNotEmpty)
+        repairStaffController.repairStaff.add(reportData.processStaff ?? '');
+      signatureController.value =
+          TextEditingValue(text: reportData.signature ?? '');
+    }
+  }
 
-      repairResultController.repairResult.add(reportData.repairResult ?? '');
-      repairStaffController.repairStaff.add(reportData.processStaff ?? '');
+  void clearSignature() {
+    isSignatureEmpty.value = true;
+    signature.currentState!.clear();
+  }
+
+  Future<void> saveSignature() async {
+    if (signature.currentState != null) {
+      try {
+        final data = await signature.currentState!.toImage(pixelRatio: 3.0);
+        final byteData = await data.toByteData(format: ImageByteFormat.png);
+        String base64String = base64Encode(byteData!.buffer.asUint8List());
+        signaturePad.value = base64String;
+      } catch (e) {
+        print('Error saving signature: $e');
+      }
+    } else {
+      print('Signature pad not initialized');
+    }
+  }
+
+  void showSavedDialog(
+      BuildContext context, String title, String left, String right) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogAlert(
+          title: title,
+          leftButton: left,
+          rightButton: right,
+          rightColor: red1,
+          onRightButtonPressed: () {
+            saveReport(context);
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> saveReport(BuildContext context) async {
+    String? token = await getToken();
+    try {
+      if (relationId.value != '') {
+        saveCurrentDateTime(saveCompletedtime);
+        final Map<String, dynamic> data = {
+          'field_report': fieldServiceReport.first,
+          'fault_report': fault.value.text,
+          'error_code_report': errorCode.value.text,
+          'order_no': workorderNumber.value.text,
+          'r_code': rcodeController.rCode.join(','),
+          'w_code': wcodeController.wCode.join(','),
+          'produre': rPController.repairProcedureList.first.repairProcedure,
+          'problem': rPController.repairProcedureList.first.causeProblem,
+          'repair_result': repairResultController.repairResult.join(','),
+          'process_staff': repairStaffController.repairStaff.join(','),
+          'relation_id': relationId.value,
+          'save_time': saveCompletedtime.value,
+          'signature': signatureController.value.text,
+          'signature_pad': signaturePad.value
+        };
+        // List<SparePartModel> allSpareParts =
+        //     List.from(sparePartListController.sparePartList);
+        // allSpareParts.addAll(additSparePartListController.additSparePartList);
+        // if (sparePartListController.sparePartList.isEmpty) {
+        //   final SparePartModel defaultSparePart = SparePartModel(
+        //     relationId: relationId.value,
+        //     cCodePage: "-",
+        //     partNumber: "-",
+        //     partDetails: "-",
+        //     quantity: 0,
+        //     changeNow: "-",
+        //     changeOnPM: "-",
+        //     additional: 0,
+        //   );
+
+        //   allSpareParts.add(defaultSparePart);
+        // }
+        // if (additSparePartListController.additSparePartList.isEmpty) {
+        //   final SparePartModel defaultSparePart = SparePartModel(
+        //     relationId: relationId.value,
+        //     cCodePage: "-",
+        //     partNumber: "-",
+        //     partDetails: "-",
+        //     quantity: 0,
+        //     changeNow: "-",
+        //     changeOnPM: "-",
+        //     additional: 1,
+        //   );
+
+        //   allSpareParts.add(defaultSparePart);
+        // }
+
+        // if (allSpareParts.isNotEmpty) {
+        //   for (var sparePart in allSpareParts) {
+        //     final sparePartData = {
+        //       ...sparePart.toJson(),
+        //       'relation_id': relationId.value,
+        //     };
+
+        //     try {
+        //       final response =
+        //           await http.post(Uri.parse(createJobReportAdditional()),
+        //               headers: {
+        //                 'Authorization': '$token',
+        //                 'Content-Type': 'application/json',
+        //               },
+        //               body: jsonEncode(sparePartData));
+
+        //       if (response.statusCode == 201) {
+        //         print('Sparepart saved successfully');
+        //       } else {
+        //         print('Failed to save sparepart: ${response.body}');
+        //       }
+        //     } catch (e) {
+        //       print('Error occurred while saving sparepart: $e');
+        //     }
+        //   }
+        // }
+
+        try {
+          final response =
+              await http.put(Uri.parse(updateReportById(jobId.value)),
+                  headers: {
+                    'Authorization': '$token',
+                    'Content-Type': 'application/json',
+                  },
+                  body: jsonEncode(data));
+
+          if (response.statusCode == 200) {
+            print('Report updated successfully');
+            jobDetailController.fetchData(
+                ticketId.toString(), jobId.toString());
+          } else {
+            print('Failed to save report: ${response.statusCode}');
+          }
+        } catch (e) {
+          print('Error occurred while saving report: $e');
+        }
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

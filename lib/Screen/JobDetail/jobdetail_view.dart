@@ -3,6 +3,7 @@ import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editfillform_view.dart';
+import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -346,6 +347,8 @@ class JobDetailView extends StatelessWidget {
                                               onTap: () {
                                                 Get.to(() => EditFillFormView(
                                                       reportId: jobId ?? '',
+                                                      ticketId: ticketId,
+                                                      jobId: jobId.toString(),
                                                     ));
                                               },
                                             )
@@ -361,6 +364,50 @@ class JobDetailView extends StatelessWidget {
                                   ),
                                   Text(
                                     'Please fill the field service report',
+                                    style: TextStyleList.text16,
+                                  ),
+                                  Obx(() => jobController
+                                              .reportList.isNotEmpty ||
+                                          jobController
+                                              .additionalReportList.isNotEmpty
+                                      ? ShowRepairReport(
+                                          reportData: jobController.reportList,
+                                          additionalReportData: jobController
+                                              .additionalReportList)
+                                      : Container())
+                                ],
+                              ),
+                              BoxContainer(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleApp(
+                                          text: 'Battery Maintenance Report'),
+                                      Obx(() => jobController
+                                              .reportList.isNotEmpty
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(() => EditFillFormView(
+                                                      reportId: jobId ?? '',
+                                                      ticketId: ticketId,
+                                                      jobId: jobId.toString(),
+                                                    ));
+                                              },
+                                            )
+                                          : AddButton(
+                                              onTap: () {
+                                                Get.to(() => FillFormView2(
+                                                    // ticketId: ticketId,
+                                                    // jobId: jobId ?? '',
+                                                    ));
+                                              },
+                                            )),
+                                    ],
+                                  ),
+                                  Text(
+                                    'Please fill the bettery maintenance report',
                                     style: TextStyleList.text16,
                                   ),
                                   Obx(() => jobController

@@ -105,7 +105,6 @@ class FillformController extends GetxController {
         final byteData = await data.toByteData(format: ImageByteFormat.png);
         String base64String = base64Encode(byteData!.buffer.asUint8List());
         signaturePad.value = base64String;
-        print(signaturePad);
       } catch (e) {
         print('Error saving signature: $e');
       }

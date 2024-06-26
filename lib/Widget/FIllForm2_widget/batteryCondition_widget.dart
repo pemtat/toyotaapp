@@ -1,25 +1,15 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Screen/EditFillForm/editdetail/additional_spare.dart';
-import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
+import 'package:toyotamobile/Screen/FillForm2/adddetail/battery_condition.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Models/sparepart_model.dart';
 
-class PartDetailWidget extends StatelessWidget {
-  final SparePartModel part;
-  final int index;
-  final SparepartList sparePartListController;
-  final AdditSparepartList additSparePartListController;
-  final bool additional;
-  const PartDetailWidget({
+class BatteryConditionWidget extends StatelessWidget {
+  final BatteryCondition controller;
+  const BatteryConditionWidget({
     super.key,
-    required this.part,
-    required this.index,
-    required this.sparePartListController,
-    required this.additSparePartListController,
-    required this.additional,
+    required this.controller,
   });
 
   @override
@@ -47,56 +37,128 @@ class PartDetailWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'C-Code/Page',
+                  'Tray',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.cCodePage,
+                  controller.tray.first,
                   style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Part Number',
+                  'Container',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.partNumber,
+                  controller.container.first,
                   style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Part Details (Description)',
+                  'Container',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.partDetails,
+                  controller.container.first,
                   style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Quantity',
+                  'Container',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  "${part.quantity}",
+                  controller.container.first,
                   style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Change Now',
+                  'Container',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.changeNow ?? '-',
+                  controller.container.first,
                   style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Change on PM',
+                  'Container',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.changeOnPM ?? '-',
+                  controller.container.first,
+                  style: TextStyleList.text15,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Container',
+                  style: TextStyleList.subtext1,
+                ),
+                Text(
+                  controller.container.first,
+                  style: TextStyleList.text15,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Container',
+                  style: TextStyleList.subtext1,
+                ),
+                Text(
+                  controller.container.first,
+                  style: TextStyleList.text15,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Container',
+                  style: TextStyleList.subtext1,
+                ),
+                Text(
+                  controller.container.first,
+                  style: TextStyleList.text15,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Container',
+                  style: TextStyleList.subtext1,
+                ),
+                Text(
+                  controller.container.first,
+                  style: TextStyleList.text15,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Container',
+                  style: TextStyleList.subtext1,
+                ),
+                Text(
+                  controller.container.first,
+                  style: TextStyleList.text15,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Container',
+                  style: TextStyleList.subtext1,
+                ),
+                Text(
+                  controller.container.first,
+                  style: TextStyleList.text15,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Container',
+                  style: TextStyleList.subtext1,
+                ),
+                Text(
+                  controller.container.first,
+                  style: TextStyleList.text15,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Container',
+                  style: TextStyleList.subtext1,
+                ),
+                Text(
+                  controller.container.first,
                   style: TextStyleList.text15,
                 ),
               ],
@@ -133,21 +195,8 @@ class PartDetailWidget extends StatelessWidget {
                 ),
                 onSelected: (value) {
                   if (value == 'edit') {
-                    if (additional) {
-                      additSparePartListController.additSparePartListEditModal(
-                          context, part);
-                    } else {
-                      sparePartListController.sparePartListEditModal(
-                          context, part);
-                    }
-                  } else if (value == 'delete') {
-                    if (additional) {
-                      additSparePartListController.additSparePartList
-                          .removeAt(index);
-                    } else {
-                      sparePartListController.sparePartList.removeAt(index);
-                    }
-                  }
+                    controller.batteryConditionModal(context);
+                  } else if (value == 'delete') {}
                 },
               ),
             ),

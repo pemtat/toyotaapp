@@ -1,19 +1,19 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Screen/EditFillForm/editdetail/additional_spare.dart';
-import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
+import 'package:toyotamobile/Screen/FillForm2/adddetail/additional_spare.dart';
+import 'package:toyotamobile/Screen/FillForm2/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
 
-class PartDetailWidget extends StatelessWidget {
+class PartDetailWidget2 extends StatelessWidget {
   final SparePartModel part;
   final int index;
   final SparepartList sparePartListController;
   final AdditSparepartList additSparePartListController;
   final bool additional;
-  const PartDetailWidget({
+  const PartDetailWidget2({
     super.key,
     required this.part,
     required this.index,
@@ -82,23 +82,6 @@ class PartDetailWidget extends StatelessWidget {
                   style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  'Change Now',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  part.changeNow ?? '-',
-                  style: TextStyleList.text15,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Change on PM',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  part.changeOnPM ?? '-',
-                  style: TextStyleList.text15,
-                ),
               ],
             ),
           ),

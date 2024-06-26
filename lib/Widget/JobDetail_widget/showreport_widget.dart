@@ -57,9 +57,17 @@ class ShowRepairReport extends StatelessWidget {
                   space: true,
                 ),
                 space.kH,
-                BoxInfo2(title: 'Repair Procedure', value: data.produre ?? '-'),
+                BoxInfo2(
+                  title: 'Repair Procedure',
+                  value: data.produre ?? '-',
+                  space: true,
+                ),
                 space.kH,
-                BoxInfo2(title: 'Problem', value: data.problem ?? '-'),
+                BoxInfo2(
+                  title: 'Problem',
+                  value: data.problem ?? '-',
+                  space: true,
+                ),
                 space.kH,
                 4.kH,
                 reportData.first.cCode != '-' &&

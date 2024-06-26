@@ -301,8 +301,8 @@ class SparepartList extends GetxController {
     partNumber.value.text = part.partNumber;
     partDetails.value.text = part.partDetails;
     quantity.value = part.quantity;
-    changeNow.value.text = part.changeNow;
-    changeonPM.value.text = part.changeOnPM;
+    changeNow.value.text = part.changeNow ?? '-';
+    changeonPM.value.text = part.changeOnPM ?? '-';
   }
 
   void sparePartClear() {

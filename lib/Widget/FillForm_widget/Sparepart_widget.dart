@@ -87,7 +87,7 @@ class PartDetailWidget extends StatelessWidget {
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.changeNow,
+                  part.changeNow ?? '-',
                   style: TextStyleList.text15,
                 ),
                 const SizedBox(height: 8),
@@ -96,7 +96,7 @@ class PartDetailWidget extends StatelessWidget {
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.changeOnPM,
+                  part.changeOnPM ?? '-',
                   style: TextStyleList.text15,
                 ),
               ],

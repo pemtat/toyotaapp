@@ -8,6 +8,8 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class RepairStaff extends GetxController {
   void repairStaffModal(BuildContext context) {
+    repairStaffChoose.clear();
+    repairStaffChoose.addAll(repairStaff);
     ShowModalWidget(
       children: [
         Row(
@@ -42,7 +44,7 @@ class RepairStaff extends GetxController {
         EndButton(
             onPressed: () {
               repairStaff.clear();
-              repairStaff.addAll(repairStaffChoose);
+              repairStaff.addAll(repairStaff.where((code) => code.isNotEmpty));
 
               Navigator.pop(context);
             },

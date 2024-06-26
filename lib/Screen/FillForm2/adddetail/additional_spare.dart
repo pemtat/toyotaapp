@@ -17,9 +17,11 @@ class AdditSparepartList extends GetxController {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "Additional spare part list",
-              style: TextStyleList.subheading,
+            Flexible(
+              child: Text(
+                "Action & Result / Change spare parts",
+                style: TextStyleList.subheading,
+              ),
             ),
             InkWell(
                 onTap: () {
@@ -121,16 +123,6 @@ class AdditSparepartList extends GetxController {
               ],
             ),
           ],
-        ),
-        space.kH,
-        TextFieldWidget(
-          text: 'Change Now',
-          textSet: changeNow.value,
-        ),
-        space.kH,
-        TextFieldWidget(
-          text: 'Change on PM',
-          textSet: changeonPM.value,
         ),
         space.kH,
         EndButton(
@@ -255,16 +247,6 @@ class AdditSparepartList extends GetxController {
               ],
             ),
           ],
-        ),
-        space.kH,
-        TextFieldEditWidget(
-          text: 'Change Now',
-          textSet: changeNow.value,
-        ),
-        space.kH,
-        TextFieldEditWidget(
-          text: 'Change on PM',
-          textSet: changeonPM.value,
         ),
         space.kH,
         EndButton(

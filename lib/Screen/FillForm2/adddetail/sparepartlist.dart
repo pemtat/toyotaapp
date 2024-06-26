@@ -9,16 +9,16 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
-class AdditSparepartList extends GetxController {
+class SparepartList extends GetxController {
   int space = 24;
-  void additSparePartListModal(BuildContext context) {
+  void sparePartListModal(BuildContext context) {
     ShowModalWidget(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Additional spare part list",
+              "Spare part list",
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -123,20 +123,10 @@ class AdditSparepartList extends GetxController {
           ],
         ),
         space.kH,
-        TextFieldWidget(
-          text: 'Change Now',
-          textSet: changeNow.value,
-        ),
-        space.kH,
-        TextFieldWidget(
-          text: 'Change on PM',
-          textSet: changeonPM.value,
-        ),
-        space.kH,
         EndButton(
             onPressed: () {
-              additSparePartWrite();
-              additSparePartClear();
+              sparePartWrite();
+              sparePartClear();
               Navigator.pop(context);
             },
             text: 'Confirm')
@@ -144,8 +134,8 @@ class AdditSparepartList extends GetxController {
     ).showModal(context);
   }
 
-  void additSparePartListEditModal(BuildContext context, SparePartModel part) {
-    additSparePartRead(part);
+  void sparePartListEditModal(BuildContext context, SparePartModel part) {
+    sparePartRead(part);
     ShowModalWidget(
       children: [
         Row(
@@ -257,21 +247,11 @@ class AdditSparepartList extends GetxController {
           ],
         ),
         space.kH,
-        TextFieldEditWidget(
-          text: 'Change Now',
-          textSet: changeNow.value,
-        ),
-        space.kH,
-        TextFieldEditWidget(
-          text: 'Change on PM',
-          textSet: changeonPM.value,
-        ),
-        space.kH,
         EndButton(
             onPressed: () {
-              additSparePartUpdate(part);
-              additSparePartList.refresh();
-              additSparePartClear();
+              sparePartUpdate(part);
+              sparePartList.refresh();
+              sparePartClear();
               Navigator.pop(context);
             },
             text: 'Confirm')
@@ -280,7 +260,7 @@ class AdditSparepartList extends GetxController {
   }
 
   var quantity = 1.obs;
-  var additSparePartList = <SparePartModel>[].obs;
+  var sparePartList = <SparePartModel>[].obs;
   final cCodePage = TextEditingController().obs;
   final partNumber = TextEditingController().obs;
   final partDetails = TextEditingController().obs;
@@ -296,7 +276,7 @@ class AdditSparepartList extends GetxController {
     }
   }
 
-  void additSparePartRead(SparePartModel part) {
+  void sparePartRead(SparePartModel part) {
     cCodePage.value.text = part.cCodePage;
     partNumber.value.text = part.partNumber;
     partDetails.value.text = part.partDetails;
@@ -305,7 +285,7 @@ class AdditSparepartList extends GetxController {
     changeonPM.value.text = part.changeOnPM ?? '-';
   }
 
-  void additSparePartClear() {
+  void sparePartClear() {
     cCodePage.value.clear();
     partNumber.value.clear();
     partDetails.value.clear();
@@ -314,7 +294,7 @@ class AdditSparepartList extends GetxController {
     changeonPM.value.clear();
   }
 
-  void additSparePartWrite() {
+  void sparePartWrite() {
     String cCodePageValue =
         cCodePage.value.text != '' ? cCodePage.value.text : '-';
     String partNumberValue =
@@ -325,17 +305,17 @@ class AdditSparepartList extends GetxController {
         changeNow.value.text != '' ? changeNow.value.text : '-';
     String changeOnPMValue =
         changeonPM.value.text != '' ? changeonPM.value.text : '-';
-    additSparePartList.add(SparePartModel(
+    sparePartList.add(SparePartModel(
         cCodePage: cCodePageValue,
         partNumber: partNumberValue,
         partDetails: partDetailsValue,
         quantity: quantity.value,
         changeNow: changeNowValue,
         changeOnPM: changeOnPMValue,
-        additional: 1));
+        additional: 0));
   }
 
-  void additSparePartUpdate(SparePartModel part) {
+  void sparePartUpdate(SparePartModel part) {
     String cCodePageValue =
         cCodePage.value.text != '' ? cCodePage.value.text : '-';
     String partNumberValue =

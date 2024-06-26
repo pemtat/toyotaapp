@@ -8,6 +8,8 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class RepairResult extends GetxController {
   void repairResultModal(BuildContext context) {
+    repairResultChoose.clear();
+    repairResultChoose.addAll(repairResult);
     ShowModalWidget(
       children: [
         Row(

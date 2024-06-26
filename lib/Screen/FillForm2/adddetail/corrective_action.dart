@@ -9,10 +9,9 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 
 class CorrectiveAction extends GetxController {
   int space = 24;
-  void correctiveActionModal(BuildContext context, String option) {
+  void correctiveActionModal(BuildContext context) {
     correctiveActionChoose.clear();
     correctiveActionChoose.addAll(correctiveAction);
-    otherChoose.value = other.value;
     ShowModalWidget(
       children: [
         Row(
@@ -35,48 +34,26 @@ class CorrectiveAction extends GetxController {
           shrinkWrap: true,
           itemCount: correctiveActionList.length,
           itemBuilder: (context, index) {
-            if (option == 'add') {
-              return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: CheckBoxWidget(
-                    text: correctiveActionList[index],
-                    listItem: correctiveActionChoose,
-                    itemSet: correctiveActionChoose,
-                  ));
-            } else {
-              return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: CheckBoxWidget(
-                    text: correctiveActionList[index],
-                    listItem: correctiveActionChoose,
-                    itemSet: correctiveActionChoose,
-                  ));
-            }
+            return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: CheckBoxWidget(
+                  text: correctiveActionList[index],
+                  listItem: correctiveActionChoose,
+                  itemSet: correctiveActionChoose,
+                ));
           },
         ),
         Obx(() {
           if (correctiveActionChoose.contains('Other')) {
-            if (option == 'add') {
-              return Column(
-                children: [
-                  6.kH,
-                  TextFieldWidget(
-                    text: 'Other',
-                    textSet: otherChoose.value,
-                  ),
-                ],
-              );
-            } else {
-              return Column(
-                children: [
-                  6.kH,
-                  TextFieldEditWidget(
-                    text: 'Other',
-                    textSet: otherChoose.value,
-                  ),
-                ],
-              );
-            }
+            return Column(
+              children: [
+                6.kH,
+                TextFieldEditWidget(
+                  text: 'Other',
+                  textSet: otherChoose.value,
+                ),
+              ],
+            );
           } else {
             return Container();
           }
@@ -87,8 +64,6 @@ class CorrectiveAction extends GetxController {
             correctiveAction.clear();
             other.value = otherChoose.value;
             correctiveAction.addAll(correctiveActionChoose);
-            correctiveActionChoose.clear();
-            otherChoose.value.clear();
             Navigator.pop(context);
           },
           text: 'Confirm',

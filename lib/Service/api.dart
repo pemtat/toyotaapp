@@ -76,6 +76,10 @@ String getRepairReportById(String id) {
   return '$url/api/rest/jobs/jobs_report?id=$id';
 }
 
+String updateReportById(String id) {
+  return "$url/api/rest/jobs/job_report_update?job_issue_id='$id'";
+}
+
 String getAdditionalRepairReportById(String id) {
   return '$url/api/rest/jobs/jobs_report_additional?id=$id';
 }

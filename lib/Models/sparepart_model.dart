@@ -3,8 +3,8 @@ class SparePartModel {
   String partNumber;
   String partDetails;
   int quantity;
-  String changeNow;
-  String changeOnPM;
+  String? changeNow;
+  String? changeOnPM;
   int additional;
   String? relationId;
   SparePartModel({
@@ -12,8 +12,8 @@ class SparePartModel {
     required this.partNumber,
     required this.partDetails,
     required this.quantity,
-    required this.changeNow,
-    required this.changeOnPM,
+    this.changeNow,
+    this.changeOnPM,
     required this.additional,
     this.relationId,
   });

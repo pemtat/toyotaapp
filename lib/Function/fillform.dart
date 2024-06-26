@@ -43,3 +43,12 @@ void updateCheckbox(String label, RxList<String> data) {
     data.add(label);
   }
 }
+
+void updateCheckbox2(String label, RxList<String> data) {
+  if (data.isEmpty) {
+    data.add(label);
+  } else {
+    data.clear();
+    data.add(label);
+  }
+}

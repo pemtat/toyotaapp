@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/process_staff.dart';
+import 'package:toyotamobile/Screen/FillForm2/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/repair_result.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/sparepartlist.dart';
+import 'package:toyotamobile/Screen/FillForm2/adddetail/battery_condition.dart';
+import 'package:toyotamobile/Screen/FillForm2/adddetail/forklife_information.dart';
+import 'package:toyotamobile/Screen/FillForm2/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/battery_information.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/batteryusage_widget.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/corrective_action.dart';
@@ -13,10 +14,12 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/FIllForm2_widget/batteryCondition_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/batteryInformation_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/batteryusage_widget.dart';
+import 'package:toyotamobile/Widget/FIllForm2_widget/forkliftinformation_widget.dart';
+import 'package:toyotamobile/Widget/FIllForm2_widget/sparepart_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/specicgravity_widget.dart';
-import 'package:toyotamobile/Widget/FillForm_widget/Sparepart_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -40,9 +43,12 @@ class FillFormView2 extends StatelessWidget {
     final AdditSparepartList additSparePartListController =
         Get.put(AdditSparepartList());
     final RepairResult repairResultController = Get.put(RepairResult());
-    final ProcessStaff processStaffController = Get.put(ProcessStaff());
+    final BatteryCondition batteryConditionController =
+        Get.put(BatteryCondition());
     final FillformController2 fillformController2 =
         Get.put(FillformController2());
+    final ForklifeInformation forkLifeInformation =
+        Get.put(ForklifeInformation());
 
     int space = 8;
 
@@ -69,11 +75,14 @@ class FillFormView2 extends StatelessWidget {
                 children: [
                   TitleWithButton(
                     titleText: 'Bettery Information',
-                    button: AddButton(
-                      onTap: () {
-                        batteryInfoController.batteryInformationModal(context);
-                      },
-                    ),
+                    button: batteryInfoController.batteryInformationList.isEmpty
+                        ? AddButton(
+                            onTap: () {
+                              batteryInfoController
+                                  .batteryInformationModal(context);
+                            },
+                          )
+                        : Container(),
                   ),
                   batteryInfoController.batteryInformationList.isNotEmpty
                       ? ListView.builder(
@@ -100,13 +109,48 @@ class FillFormView2 extends StatelessWidget {
               () => BoxContainer(
                 children: [
                   TitleWithButton(
-                    titleText: 'Bettery Usage',
-                    button: AddButton(
-                      onTap: () {
-                        batteryUsageController.batteryUsageModal(context);
-                      },
-                    ),
-                  ),
+                      titleText: 'Forklife Information',
+                      button: forkLifeInformation.forklifeList.isEmpty
+                          ? AddButton(
+                              onTap: () {
+                                forkLifeInformation
+                                    .forklifeInformationModal(context);
+                              },
+                            )
+                          : Container()),
+                  forkLifeInformation.forklifeList.isNotEmpty
+                      ? ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: forkLifeInformation.forklifeList.length,
+                          itemBuilder: (context, index) {
+                            final part =
+                                forkLifeInformation.forklifeList[index];
+                            return ForkliftinformationWidget(
+                              info: part,
+                              index: index,
+                              controller: forkLifeInformation,
+                            );
+                          },
+                        )
+                      : const SizedBox()
+                ],
+              ),
+            ),
+            space.kH,
+            Obx(
+              () => BoxContainer(
+                children: [
+                  TitleWithButton(
+                      titleText: 'Bettery Usage',
+                      button: batteryUsageController.batteryUsageList.isEmpty
+                          ? AddButton(
+                              onTap: () {
+                                batteryUsageController
+                                    .batteryUsageModal(context);
+                              },
+                            )
+                          : Container()),
                   batteryUsageController.batteryUsageList.isNotEmpty
                       ? ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -160,16 +204,52 @@ class FillFormView2 extends StatelessWidget {
               ),
             ),
             space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Bettery Conditions',
+                    button: batteryConditionController.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              batteryConditionController
+                                  .batteryConditionModal(context);
+                            },
+                          )
+                        : Container()),
+                !batteryConditionController.isAllFieldsFilled.value
+                    ? BatteryConditionWidget(
+                        controller: batteryConditionController,
+                      )
+                    : const SizedBox()
+              ],
+            ),
+            space.kH,
+            Obx(() => BoxContainer(
+                  children: [
+                    AddEditBox(
+                      titleText: 'Corrective Action',
+                      list: correctiveActionController.correctiveAction,
+                      onTap: () => correctiveActionController
+                          .correctiveActionModal(context),
+                      moreText: getDisplayString3(
+                          correctiveActionController.correctiveAction),
+                      other: correctiveActionController.other,
+                    )
+                  ],
+                )),
+            space.kH,
             Obx(() => BoxContainer(
                   children: [
                     TitleWithButton(
-                      titleText: 'Battery Condition',
-                      button: AddButton(
-                        onTap: () {
-                          sparePartListController.sparePartListModal(context);
-                        },
-                      ),
-                    ),
+                        titleText: 'Recommanded Spare Part',
+                        button: sparePartListController.sparePartList.length < 3
+                            ? AddButton(
+                                onTap: () {
+                                  sparePartListController
+                                      .sparePartListModal(context);
+                                },
+                              )
+                            : Container()),
                     sparePartListController.sparePartList.isNotEmpty
                         ? ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
@@ -179,7 +259,7 @@ class FillFormView2 extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final part =
                                   sparePartListController.sparePartList[index];
-                              return PartDetailWidget(
+                              return PartDetailWidget2(
                                 part: part,
                                 index: index,
                                 sparePartListController:
@@ -196,30 +276,6 @@ class FillFormView2 extends StatelessWidget {
             space.kH,
             BoxContainer(
               children: [
-                Obx(() => correctiveActionController.correctiveAction.isEmpty
-                    ? AddEditBox(
-                        titleText: 'Corrective Action',
-                        list: correctiveActionController.correctiveAction,
-                        onTap: () => correctiveActionController
-                            .correctiveActionModal(context, 'add'),
-                        moreText: getDisplayString3(
-                            correctiveActionController.correctiveAction),
-                        other: correctiveActionController.other,
-                      )
-                    : AddEditBox(
-                        titleText: 'Corrective Action',
-                        list: correctiveActionController.correctiveAction,
-                        onTap: () => correctiveActionController
-                            .correctiveActionModal(context, 'edit'),
-                        moreText: getDisplayString3(
-                            correctiveActionController.correctiveAction),
-                        other: correctiveActionController.other,
-                      )),
-              ],
-            ),
-            space.kH,
-            BoxContainer(
-              children: [
                 Obx(
                   () => AddEditBox(
                       titleText: 'Repair P.M Battery',
@@ -232,19 +288,44 @@ class FillFormView2 extends StatelessWidget {
               ],
             ),
             space.kH,
-            BoxContainer(
-              children: [
-                Obx(
-                  () => AddEditBox(
+            Obx(() => BoxContainer(
+                  children: [
+                    TitleWithButton(
                       titleText: 'Action & Result / Change spare parts',
-                      list: processStaffController.repairStaff,
-                      onTap: () =>
-                          processStaffController.repairStaffModal(context),
-                      moreText:
-                          getDisplayString(processStaffController.repairStaff)),
-                ),
-              ],
-            ),
+                      button: additSparePartListController
+                                  .additSparePartList.length <
+                              7
+                          ? AddButton(
+                              onTap: () {
+                                additSparePartListController
+                                    .additSparePartListModal(context);
+                              },
+                            )
+                          : Container(),
+                    ),
+                    additSparePartListController.additSparePartList.isNotEmpty
+                        ? ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: additSparePartListController
+                                .additSparePartList.length,
+                            itemBuilder: (context, index) {
+                              final part = additSparePartListController
+                                  .additSparePartList[index];
+                              return PartDetailWidget2(
+                                part: part,
+                                index: index,
+                                sparePartListController:
+                                    sparePartListController,
+                                additSparePartListController:
+                                    additSparePartListController,
+                                additional: true,
+                              );
+                            },
+                          )
+                        : const SizedBox()
+                  ],
+                )),
           ],
         ),
       ),

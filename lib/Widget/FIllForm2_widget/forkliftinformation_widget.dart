@@ -1,25 +1,21 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Screen/EditFillForm/editdetail/additional_spare.dart';
-import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
+import 'package:toyotamobile/Models/forkliftinformation.dart';
+import 'package:toyotamobile/Screen/FillForm2/adddetail/forklife_information.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Models/sparepart_model.dart';
+import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class PartDetailWidget extends StatelessWidget {
-  final SparePartModel part;
+class ForkliftinformationWidget extends StatelessWidget {
+  final ForkliftInformationModel info;
   final int index;
-  final SparepartList sparePartListController;
-  final AdditSparepartList additSparePartListController;
-  final bool additional;
-  const PartDetailWidget({
+  final ForklifeInformation controller;
+  const ForkliftinformationWidget({
     super.key,
-    required this.part,
+    required this.info,
     required this.index,
-    required this.sparePartListController,
-    required this.additSparePartListController,
-    required this.additional,
+    required this.controller,
   });
 
   @override
@@ -47,58 +43,43 @@ class PartDetailWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'C-Code/Page',
+                  'Forklife Brand',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.cCodePage,
+                  "${info.forkLifeBrand}",
                   style: TextStyleList.text15,
                 ),
-                const SizedBox(height: 8),
+                8.kH,
                 Text(
-                  'Part Number',
+                  'Forklife Model',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  part.partNumber,
+                  "${info.forkLifeModel}",
                   style: TextStyleList.text15,
                 ),
-                const SizedBox(height: 8),
+                8.kH,
                 Text(
-                  'Part Details (Description)',
+                  'Serial No',
                   style: TextStyleList.subtext1,
                 ),
+                8.kH,
                 Text(
-                  part.partDetails,
+                  "${info.serialNo}",
                   style: TextStyleList.text15,
                 ),
-                const SizedBox(height: 8),
+                8.kH,
                 Text(
-                  'Quantity',
+                  'Forklife Operation',
                   style: TextStyleList.subtext1,
                 ),
+                8.kH,
                 Text(
-                  "${part.quantity}",
+                  "${info.forkLifeOperation}",
                   style: TextStyleList.text15,
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'Change Now',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  part.changeNow ?? '-',
-                  style: TextStyleList.text15,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Change on PM',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  part.changeOnPM ?? '-',
-                  style: TextStyleList.text15,
-                ),
+                8.kH,
               ],
             ),
           ),
@@ -133,20 +114,9 @@ class PartDetailWidget extends StatelessWidget {
                 ),
                 onSelected: (value) {
                   if (value == 'edit') {
-                    if (additional) {
-                      additSparePartListController.additSparePartListEditModal(
-                          context, part);
-                    } else {
-                      sparePartListController.sparePartListEditModal(
-                          context, part);
-                    }
+                    controller.forklifeEditModal(context, info);
                   } else if (value == 'delete') {
-                    if (additional) {
-                      additSparePartListController.additSparePartList
-                          .removeAt(index);
-                    } else {
-                      sparePartListController.sparePartList.removeAt(index);
-                    }
+                    controller.forklifeList.removeAt(index);
                   }
                 },
               ),
