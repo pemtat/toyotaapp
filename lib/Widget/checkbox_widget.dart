@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/fillform.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
@@ -231,5 +232,39 @@ class buildCheckbox extends StatelessWidget {
         ],
       );
     });
+  }
+}
+
+class CheckBoxList extends StatelessWidget {
+  final RxList<String> selectionsChoose;
+  final int index;
+  final String text;
+  const CheckBoxList(
+      {super.key,
+      required this.selectionsChoose,
+      required this.index,
+      required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Row(
+          children: [
+            Checkbox(
+              visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+              activeColor: red1,
+              value: selectionsChoose[index] == text,
+              onChanged: (value) {
+                if (value == true) {
+                  updateSelection(index, text, selectionsChoose);
+                }
+              },
+            ),
+            5.kH,
+            Text(
+              text,
+              style: TextStyleList.text9,
+            ),
+          ],
+        ));
   }
 }

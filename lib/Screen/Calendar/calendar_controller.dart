@@ -56,7 +56,7 @@ class CalendarController extends GetxController {
 
     for (var pm in pmListCopy) {
       try {
-        final pmDate = formatDateTimeString(pm.pmPlan ?? '');
+        final pmDate = formatDateTimeString(pm.dueDate ?? '');
         final dayKey = DateTime.utc(pmDate.year, pmDate.month, pmDate.day);
         final timeParts = pmDate.toLocal().toString().split(' ')[1].split(':');
         final hour = int.parse(timeParts[0]);
@@ -72,10 +72,10 @@ class CalendarController extends GetxController {
         //     await checkWarrantyReturn(pm.serialNo ?? '', warrantyInfoList);
 
         final eventData = {
-          "ticketid": pm.jobId,
+          "ticketid": pm.id,
           "time": formattedTime,
-          "status": pm.pmStatus,
-          "task": pm.pmPlan,
+          "status": pm.status,
+          "task": pm.dueDate,
           "description": pm.description,
           "location": pm.serviceZoneCode,
           "serialNo": "415822",
@@ -85,8 +85,7 @@ class CalendarController extends GetxController {
         };
 
         bool isDuplicate = tempEvents[dayKey]?.any((event) =>
-                event['ticketid'] == pm.jobId &&
-                event['type'] == EventType.PM) ??
+                event['ticketid'] == pm.id && event['type'] == EventType.PM) ??
             false;
 
         if (!isDuplicate) {

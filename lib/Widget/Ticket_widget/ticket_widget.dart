@@ -36,11 +36,11 @@ class PmItemWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                'JobID : ${job.jobId.toString().padLeft(4, '0')}',
+                'JobID : ${job.id.toString().padLeft(4, '0')}',
                 style: TextStyleList.text16,
               ),
               const SizedBox(width: 10),
-              StatusButton(status: job.pmStatus),
+              StatusButton(status: job.status),
               const Spacer(),
               Obx(
                 () => IconButton(
@@ -70,7 +70,7 @@ class PmItemWidget extends StatelessWidget {
               const Icon(Icons.calendar_month_outlined),
               const SizedBox(width: 5),
               Text(
-                job.pmPlan,
+                job.dueDate,
                 style: TextStyleList.subtext1,
               ),
             ],
@@ -98,7 +98,7 @@ class PmItemWidget extends StatelessWidget {
                             children: [
                               BoxInfo(
                                 title: "Name/Model",
-                                value: job.itemNo,
+                                value: '-',
                               ),
                               const SizedBox(height: 3),
                               BoxInfo(

@@ -99,3 +99,37 @@ class DialogAlert extends StatelessWidget {
     );
   }
 }
+
+class AlertDialog1 extends StatelessWidget {
+  const AlertDialog1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Center(
+          child: Text(
+        'เเจ้งเตือน',
+        style: TextStyleList.subtitle1,
+      )),
+      content: Row(
+        children: [
+          Text(
+            'โปรดกรอกข้อมูลให้ครบถ้วน',
+            style: TextStyleList.text2,
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: Text(
+            'ตกลง',
+            style: TextStyleList.subtext3,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+}

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 
-class FillformController2 extends GetxController {
+class FillformController3 extends GetxController {
   var ticketId = ''.obs;
   var jobId = ''.obs;
   var isSignatureEmpty = true.obs;

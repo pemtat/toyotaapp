@@ -198,9 +198,9 @@ class TicketView extends StatelessWidget {
                                 final statusMatch =
                                     ticketController.selectedStatus.isEmpty ||
                                         ticketController.selectedStatus
-                                            .contains(job.pmStatus);
+                                            .contains(job.status);
                                 final jobDate =
-                                    formatDateTimeString(job.pmPlan ?? '');
+                                    formatDateTimeString(job.dueDate ?? '');
                                 final dateMatch =
                                     ticketController.selectedDate.value ==
                                             null ||
@@ -217,6 +217,8 @@ class TicketView extends StatelessWidget {
                                     dateMatch &&
                                     statusMatch;
                               }).toList();
+                              filteredJobs.sort((a, b) =>
+                                  b.status!.compareTo(a.status ?? ''));
                               if (filteredJobs.isEmpty) {
                                 return Center(
                                     child: Text(
@@ -233,7 +235,8 @@ class TicketView extends StatelessWidget {
                                   return InkWell(
                                     onTap: () {
                                       Get.to(() => JobDetailViewPM(
-                                          ticketId: '99', data: job));
+                                          ticketId: job.id.toString(),
+                                          data: job));
                                     },
                                     child: PmItemWidget(
                                       job: job,
@@ -241,7 +244,7 @@ class TicketView extends StatelessWidget {
                                           ticketController.expandedIndex2,
                                       jobController: jobController,
                                       sidebar: SidebarColor.getColor(
-                                          job.pmStatus ?? ''),
+                                          job.status ?? ''),
                                     ),
                                   );
                                 },
@@ -358,10 +361,14 @@ class TicketView extends StatelessWidget {
                                         .selectedStatus.isEmpty ||
                                     ticketController.selectedStatus.contains(
                                         stringToStatus(job.status ?? ''));
-
-                                return searchQueryMatch && statusMatch;
+                                return searchQueryMatch &&
+                                        statusMatch &&
+                                        job.status == '101' ||
+                                    job.status == '102' ||
+                                    job.status == '103';
                               }).toList();
-
+                              filteredJobs.sort((a, b) =>
+                                  b.status!.compareTo(a.status ?? ''));
                               if (filteredJobs.isEmpty) {
                                 return Center(
                                   child: Text(
@@ -371,10 +378,9 @@ class TicketView extends StatelessWidget {
                                 );
                               }
                               return ListView.builder(
-                                itemCount: jobController.subJobAssigned.length,
+                                itemCount: filteredJobs.length,
                                 itemBuilder: (context, index) {
-                                  final job =
-                                      jobController.subJobAssigned[index];
+                                  final job = filteredJobs[index];
                                   return InkWell(
                                     onTap: () {
                                       if (job.status == '101') {

@@ -1,68 +1,68 @@
 class PmModel {
-  String? serviceItemNo;
-  String? itemNo;
+  String? id;
+  String? handlerId;
+  String? status;
+  String? dueDate;
   String? serialNo;
-  String? pmPlan;
-  String? actual;
   String? description;
   String? customerNo;
   String? customerName;
-  String? shipToCode;
+  String? pmRef;
+  String? actual;
   String? resourceNo;
   String? resourceName;
   String? serviceZoneCode;
-  String? jobId;
-  String? pmStatus;
+  String? pmPlan;
 
   PmModel(
-      {this.serviceItemNo,
-      this.itemNo,
+      {this.id,
+      this.handlerId,
       this.serialNo,
-      this.pmPlan,
-      this.actual,
+      this.status,
+      this.dueDate,
       this.description,
+      this.actual,
       this.customerNo,
       this.customerName,
-      this.shipToCode,
       this.resourceNo,
       this.resourceName,
-      this.serviceZoneCode,
-      this.jobId,
-      this.pmStatus});
+      this.pmRef,
+      this.pmPlan,
+      this.serviceZoneCode});
 
   PmModel.fromJson(Map<String, dynamic> json) {
-    serviceItemNo = json['service_item_no'];
-    itemNo = json['item_no'];
+    id = json['id'];
+    handlerId = json['handler_id'];
     serialNo = json['serial_no'];
-    pmPlan = json['pm_plan'];
+    status = json['status'];
+    dueDate = json['due_date_formatted'];
     actual = json['actual'];
     description = json['description'];
     customerNo = json['customer_no'];
     customerName = json['customer_name'];
-    shipToCode = json['ship_to_code'];
+    pmRef = json['pm_ref'];
+    pmPlan = json['pm_plan'];
     resourceNo = json['resource_no'];
     resourceName = json['resource_name'];
     serviceZoneCode = json['service_zone_code'];
-    pmStatus = 'planning';
-    jobId = '1';
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['service_item_no'] = serviceItemNo;
-    data['item_no'] = itemNo;
+    data['id'] = id;
+    data['handler_id'] = handlerId;
     data['serial_no'] = serialNo;
-    data['pm_plan'] = pmPlan;
+    data['status'] = status;
+    data['due_date_formatted'] = dueDate;
     data['actual'] = actual;
     data['description'] = description;
     data['customer_no'] = customerNo;
     data['customer_name'] = customerName;
-    data['ship_to_code'] = shipToCode;
+    data['pm_ref'] = pmRef;
+    data['pm_plan'] = pmPlan;
     data['resource_no'] = resourceNo;
     data['resource_name'] = resourceName;
     data['service_zone_code'] = serviceZoneCode;
-    data['jobId'] = jobId;
-    data['pmStatus'] = pmStatus;
+
     return data;
   }
 }

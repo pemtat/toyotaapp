@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/fillform.dart';
-import 'package:toyotamobile/Screen/FillForm2/adddetail/additional_spare.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/repair_result.dart';
-import 'package:toyotamobile/Screen/FillForm2/adddetail/battery_condition.dart';
-import 'package:toyotamobile/Screen/FillForm2/adddetail/forklife_information.dart';
-import 'package:toyotamobile/Screen/FillForm2/adddetail/repairpm.dart';
-import 'package:toyotamobile/Screen/FillForm2/adddetail/sparepartlist.dart';
-import 'package:toyotamobile/Screen/FillForm2/adddetail/battery_information.dart';
-import 'package:toyotamobile/Screen/FillForm2/adddetail/batteryusage_widget.dart';
-import 'package:toyotamobile/Screen/FillForm2/adddetail/corrective_action.dart';
-import 'package:toyotamobile/Screen/FillForm2/adddetail/specic_gravity.dart';
-import 'package:toyotamobile/Screen/FillForm2/fillform2_controller.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/additional_spare.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/chassischeck.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/forklife_information.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/hydraulicmotor.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/initialchecks.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/repairpm.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/sparepartlist.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/batteryusage_widget.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/corrective_action.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/specic_gravity.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/steeringmotor.dart';
+import 'package:toyotamobile/Screen/FillForm3/fillform3_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/FIllForm2_widget/batteryCondition_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm2_widget/batteryInformation_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm2_widget/batteryusage_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm2_widget/forkliftinformation_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm2_widget/sparepart_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm2_widget/specicgravity_widget.dart';
+import 'package:toyotamobile/Widget/FIllForm3_widget/listcheck_widget.dart';
+import 'package:toyotamobile/Widget/FIllForm3_widget/batteryusage_widget.dart';
+import 'package:toyotamobile/Widget/FIllForm3_widget/forkliftinformation_widget.dart';
+import 'package:toyotamobile/Widget/FIllForm3_widget/sparepart_widget.dart';
+import 'package:toyotamobile/Widget/FIllForm3_widget/specicgravity_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -31,13 +31,11 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 
-class FillFormView2 extends StatelessWidget {
-  const FillFormView2({super.key});
+class FillFormView3 extends StatelessWidget {
+  const FillFormView3({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final BatteryInformation batteryInfoController =
-        Get.put(BatteryInformation());
     final BatteryUsage batteryUsageController = Get.put(BatteryUsage());
     final SpecicGravity specicGravityController = Get.put(SpecicGravity());
     final CorrectiveAction correctiveActionController =
@@ -45,13 +43,12 @@ class FillFormView2 extends StatelessWidget {
     final SparepartList sparePartListController = Get.put(SparepartList());
     final AdditSparepartList additSparePartListController =
         Get.put(AdditSparepartList());
-    final RepairResult repairResultController = Get.put(RepairResult());
-    final BatteryCondition batteryConditionController =
-        Get.put(BatteryCondition());
-    final FillformController2 fillformController2 =
-        Get.put(FillformController2());
-    final ForklifeInformation forkLifeInformation =
-        Get.put(ForklifeInformation());
+    final InitialChecks initialChecks = Get.put(InitialChecks());
+    final ChassisChecks chassisChecks = Get.put(ChassisChecks());
+    final HydraulicmMotor hydraulicmMotor = Get.put(HydraulicmMotor());
+    final FillformController3 fillformController3 =
+        Get.put(FillformController3());
+    final SteeringMotor steeringMotor = Get.put(SteeringMotor());
     final RepairPM repairPmController = Get.put(RepairPM());
     int space = 8;
 
@@ -63,7 +60,7 @@ class FillFormView2 extends StatelessWidget {
           children: [
             AppBar(
                 backgroundColor: white3,
-                title: Text('Battery Maintenance Report',
+                title: Text('Periodic Maintenance Report',
                     style: TextStyleList.title1),
                 leading: const CloseIcon()),
           ],
@@ -73,106 +70,136 @@ class FillFormView2 extends StatelessWidget {
         child: Column(
           children: [
             14.kH,
-            Obx(
-              () => BoxContainer(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
                 children: [
-                  TitleWithButton(
-                    titleText: 'Bettery Information',
-                    button: batteryInfoController.batteryInformationList.isEmpty
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('I = ตรวจสอบ (Inspection)',
+                          style: TextStyleList.text11),
+                      Text('H = ฟังเสียง(Hearing)', style: TextStyleList.text11)
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('L = หล่อลื่น(Lubrication)',
+                          style: TextStyleList.text11),
+                      Text('M = วัดค่า(Measurement)',
+                          style: TextStyleList.text11)
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('T = ขันแน่น(Tighten)', style: TextStyleList.text11),
+                      Text('W = ทำความสะอาด(Washing)',
+                          style: TextStyleList.text11)
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Intial Checks',
+                    button: Obx(() => !initialChecks.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
-                              batteryInfoController
-                                  .batteryInformationModal(context);
+                              initialChecks.checkModal(context);
                             },
                           )
-                        : Container(),
-                  ),
-                  batteryInfoController.batteryInformationList.isNotEmpty
-                      ? ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: batteryInfoController
-                              .batteryInformationList.length,
-                          itemBuilder: (context, index) {
-                            final info = batteryInfoController
-                                .batteryInformationList[index];
-                            return BatteryInfoDetailWidget(
-                              info: info,
-                              index: index,
-                              batteryInfoController: batteryInfoController,
-                            );
-                          },
-                        )
-                      : const SizedBox()
-                ],
-              ),
+                        : Container())),
+                Obx(() => initialChecks.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: initialChecks.selections,
+                        remarkSelection: initialChecks.remarks,
+                        listSelection: initialChecks.ListData,
+                        showModal: initialChecks.checkModal,
+                        show: initialChecks.isAllFieldsFilled,
+                      )
+                    : const SizedBox())
+              ],
             ),
             space.kH,
-            Obx(
-              () => BoxContainer(
-                children: [
-                  TitleWithButton(
-                      titleText: 'Forklife Information',
-                      button: forkLifeInformation.forklifeList.isEmpty
-                          ? AddButton(
-                              onTap: () {
-                                forkLifeInformation
-                                    .forklifeInformationModal(context);
-                              },
-                            )
-                          : Container()),
-                  forkLifeInformation.forklifeList.isNotEmpty
-                      ? ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: forkLifeInformation.forklifeList.length,
-                          itemBuilder: (context, index) {
-                            final part =
-                                forkLifeInformation.forklifeList[index];
-                            return ForkliftinformationWidget(
-                              info: part,
-                              index: index,
-                              controller: forkLifeInformation,
-                            );
-                          },
-                        )
-                      : const SizedBox()
-                ],
-              ),
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Chassis Checks',
+                    button: Obx(() => !chassisChecks.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              chassisChecks.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => chassisChecks.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: chassisChecks.selections,
+                        remarkSelection: chassisChecks.remarks,
+                        listSelection: chassisChecks.ListData,
+                        showModal: chassisChecks.checkModal,
+                        show: chassisChecks.isAllFieldsFilled,
+                        additional: chassisChecks.additional,
+                        unit: 'mm',
+                      )
+                    : const SizedBox())
+              ],
             ),
             space.kH,
-            Obx(
-              () => BoxContainer(
-                children: [
-                  TitleWithButton(
-                      titleText: 'Bettery Usage',
-                      button: batteryUsageController.batteryUsageList.isEmpty
-                          ? AddButton(
-                              onTap: () {
-                                batteryUsageController
-                                    .batteryUsageModal(context);
-                              },
-                            )
-                          : Container()),
-                  batteryUsageController.batteryUsageList.isNotEmpty
-                      ? ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount:
-                              batteryUsageController.batteryUsageList.length,
-                          itemBuilder: (context, index) {
-                            final info =
-                                batteryUsageController.batteryUsageList[index];
-                            return BatteryUsageWidget(
-                              info: info,
-                              index: index,
-                              batteryUsageController: batteryUsageController,
-                            );
-                          },
-                        )
-                      : const SizedBox()
-                ],
-              ),
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Hydraulic motor & Punp Checks',
+                    button: Obx(() => !hydraulicmMotor.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              hydraulicmMotor.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => hydraulicmMotor.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: hydraulicmMotor.selections,
+                        remarkSelection: hydraulicmMotor.remarks,
+                        listSelection: hydraulicmMotor.ListData,
+                        showModal: hydraulicmMotor.checkModal,
+                        show: hydraulicmMotor.isAllFieldsFilled,
+                        additional: hydraulicmMotor.additional,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText:
+                        'Steering Motor & Hydraulic steering\nsystem checks (CBE)',
+                    button: Obx(() => !steeringMotor.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              steeringMotor.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => steeringMotor.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: steeringMotor.selections,
+                        remarkSelection: steeringMotor.remarks,
+                        listSelection: steeringMotor.ListData,
+                        showModal: steeringMotor.checkModal,
+                        show: steeringMotor.isAllFieldsFilled,
+                        additional: steeringMotor.additional,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
             ),
             space.kH,
             Obx(
@@ -205,27 +232,6 @@ class FillFormView2 extends StatelessWidget {
                       : const SizedBox()
                 ],
               ),
-            ),
-            space.kH,
-            BoxContainer(
-              children: [
-                TitleWithButton(
-                    titleText: 'Bettery Conditions',
-                    button: Obx(() =>
-                        !batteryConditionController.isAllFieldsFilled.value
-                            ? AddButton(
-                                onTap: () {
-                                  batteryConditionController
-                                      .batteryConditionModal(context);
-                                },
-                              )
-                            : Container())),
-                Obx(() => batteryConditionController.isAllFieldsFilled.value
-                    ? BatteryConditionWidget(
-                        controller: batteryConditionController,
-                      )
-                    : const SizedBox())
-              ],
             ),
             space.kH,
             Obx(() => BoxContainer(
@@ -338,8 +344,8 @@ class FillFormView2 extends StatelessWidget {
                     decoration:
                         BoxDecoration(border: Border.all(color: Colors.grey)),
                     child: SfSignaturePad(
-                        key: fillformController2.signature,
-                        onDrawEnd: fillformController2.saveSignature,
+                        key: fillformController3.signature,
+                        onDrawEnd: fillformController3.saveSignature,
                         backgroundColor: Colors.white,
                         strokeColor: Colors.black,
                         minimumStrokeWidth: 1.0,
@@ -349,7 +355,7 @@ class FillFormView2 extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     InkWell(
-                      onTap: fillformController2.clearSignature,
+                      onTap: fillformController3.clearSignature,
                       child: Text(
                         'Clear',
                         style: TextStyleList.text20,
@@ -360,7 +366,7 @@ class FillFormView2 extends StatelessWidget {
                 8.kH,
                 TextFieldWidget(
                     text: 'ลงชื่อ',
-                    textSet: fillformController2.signatureController),
+                    textSet: fillformController3.signatureController),
               ],
             ),
             130.kH,
@@ -373,7 +379,7 @@ class FillFormView2 extends StatelessWidget {
           decoration: Decoration3(),
           child: EndButton(
               onPressed: () {
-                fillformController2.showSaveDialog(
+                fillformController3.showSaveDialog(
                     context,
                     'Successfully finished job on investigating!',
                     'Not yet',

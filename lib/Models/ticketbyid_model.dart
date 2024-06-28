@@ -30,6 +30,7 @@ class Issues {
   Reporter? reporter;
   Reporter? handler;
   Status? status;
+  List<CustomFields>? customFields;
   Resolution? resolution;
   Resolution? viewState;
   Resolution? priority;
@@ -56,6 +57,7 @@ class Issues {
       this.status,
       this.resolution,
       this.viewState,
+      this.customFields,
       this.priority,
       this.severity,
       this.reproducibility,
@@ -79,6 +81,12 @@ class Issues {
         json['category'] != null ? Project.fromJson(json['category']) : null;
     reporter =
         json['reporter'] != null ? Reporter.fromJson(json['reporter']) : null;
+    if (json['custom_fields'] != null) {
+      customFields = <CustomFields>[];
+      json['custom_fields'].forEach((v) {
+        customFields!.add(CustomFields.fromJson(v));
+      });
+    }
     handler =
         json['handler'] != null ? Reporter.fromJson(json['handler']) : null;
     status = json['status'] != null ? Status.fromJson(json['status']) : null;
@@ -525,6 +533,27 @@ class Note {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    return data;
+  }
+}
+
+class CustomFields {
+  Project? field;
+  String? value;
+
+  CustomFields({this.field, this.value});
+
+  CustomFields.fromJson(Map<String, dynamic> json) {
+    field = json['field'] != null ? new Project.fromJson(json['field']) : null;
+    value = json['value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.field != null) {
+      data['field'] = this.field!.toJson();
+    }
+    data['value'] = this.value;
     return data;
   }
 }

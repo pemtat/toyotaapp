@@ -9,17 +9,19 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
-class SparepartList extends GetxController {
+class AdditSparepartList extends GetxController {
   int space = 24;
-  void sparePartListModal(BuildContext context) {
+  void additSparePartListModal(BuildContext context) {
     ShowModalWidget(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "Recommanded spare part ",
-              style: TextStyleList.subheading,
+            Flexible(
+              child: Text(
+                "Action & Result / Change spare parts",
+                style: TextStyleList.subheading,
+              ),
             ),
             InkWell(
                 onTap: () {
@@ -125,8 +127,8 @@ class SparepartList extends GetxController {
         space.kH,
         EndButton(
             onPressed: () {
-              sparePartWrite();
-              sparePartClear();
+              additSparePartWrite();
+              additSparePartClear();
               Navigator.pop(context);
             },
             text: 'Confirm')
@@ -134,8 +136,8 @@ class SparepartList extends GetxController {
     ).showModal(context);
   }
 
-  void sparePartListEditModal(BuildContext context, SparePartModel part) {
-    sparePartRead(part);
+  void additSparePartListEditModal(BuildContext context, SparePartModel part) {
+    additSparePartRead(part);
     ShowModalWidget(
       children: [
         Row(
@@ -249,9 +251,9 @@ class SparepartList extends GetxController {
         space.kH,
         EndButton(
             onPressed: () {
-              sparePartUpdate(part);
-              sparePartList.refresh();
-              sparePartClear();
+              additSparePartUpdate(part);
+              additSparePartList.refresh();
+              additSparePartClear();
               Navigator.pop(context);
             },
             text: 'Confirm')
@@ -260,7 +262,7 @@ class SparepartList extends GetxController {
   }
 
   var quantity = 1.obs;
-  var sparePartList = <SparePartModel>[].obs;
+  var additSparePartList = <SparePartModel>[].obs;
   final cCodePage = TextEditingController().obs;
   final partNumber = TextEditingController().obs;
   final partDetails = TextEditingController().obs;
@@ -276,7 +278,7 @@ class SparepartList extends GetxController {
     }
   }
 
-  void sparePartRead(SparePartModel part) {
+  void additSparePartRead(SparePartModel part) {
     cCodePage.value.text = part.cCodePage;
     partNumber.value.text = part.partNumber;
     partDetails.value.text = part.partDetails;
@@ -285,7 +287,7 @@ class SparepartList extends GetxController {
     changeonPM.value.text = part.changeOnPM ?? '-';
   }
 
-  void sparePartClear() {
+  void additSparePartClear() {
     cCodePage.value.clear();
     partNumber.value.clear();
     partDetails.value.clear();
@@ -294,7 +296,7 @@ class SparepartList extends GetxController {
     changeonPM.value.clear();
   }
 
-  void sparePartWrite() {
+  void additSparePartWrite() {
     String cCodePageValue =
         cCodePage.value.text != '' ? cCodePage.value.text : '-';
     String partNumberValue =
@@ -305,17 +307,17 @@ class SparepartList extends GetxController {
         changeNow.value.text != '' ? changeNow.value.text : '-';
     String changeOnPMValue =
         changeonPM.value.text != '' ? changeonPM.value.text : '-';
-    sparePartList.add(SparePartModel(
+    additSparePartList.add(SparePartModel(
         cCodePage: cCodePageValue,
         partNumber: partNumberValue,
         partDetails: partDetailsValue,
         quantity: quantity.value,
         changeNow: changeNowValue,
         changeOnPM: changeOnPMValue,
-        additional: 0));
+        additional: 1));
   }
 
-  void sparePartUpdate(SparePartModel part) {
+  void additSparePartUpdate(SparePartModel part) {
     String cCodePageValue =
         cCodePage.value.text != '' ? cCodePage.value.text : '-';
     String partNumberValue =

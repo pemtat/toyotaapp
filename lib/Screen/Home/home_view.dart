@@ -211,7 +211,7 @@ class HomeView extends StatelessWidget {
                         return InkWell(
                           onTap: () {
                             Get.to(() => JobDetailViewPM(
-                                  ticketId: '99',
+                                  ticketId: job.id.toString(),
                                   data: job,
                                 ));
                           },
@@ -219,7 +219,7 @@ class HomeView extends StatelessWidget {
                             job: job,
                             expandedIndex: jobController.expandedIndex2,
                             jobController: jobController,
-                            sidebar: SidebarColor.getColor(job.pmStatus ?? ''),
+                            sidebar: SidebarColor.getColor(job.status ?? ''),
                           ),
                         );
                       },

@@ -75,17 +75,15 @@ class PmAssignedJobsView extends StatelessWidget {
                           final filteredJobs =
                               jobController.pmItems.where((job) {
                             final jobDate =
-                                formatDateTimeString(job.pmPlan ?? '');
-                            final searchQueryMatch = job.jobId
-                                    .toString()
-                                    .contains(pmAssignedController
-                                        .searchQuery.value) ||
+                                formatDateTimeString(job.dueDate ?? '');
+                            final searchQueryMatch = job.id.toString().contains(
+                                    pmAssignedController.searchQuery.value) ||
                                 job.description!.contains(
                                     pmAssignedController.searchQuery.value);
                             final statusMatch =
                                 pmAssignedController.selectedStatus.isEmpty ||
                                     pmAssignedController.selectedStatus
-                                        .contains(job.pmStatus);
+                                        .contains(job.status);
                             final dateMatch =
                                 pmAssignedController.selectedDate.value ==
                                         null ||
@@ -101,10 +99,10 @@ class PmAssignedJobsView extends StatelessWidget {
                             return searchQueryMatch &&
                                 statusMatch &&
                                 dateMatch &&
-                                job.pmStatus != 'closed';
+                                job.status != 'closed';
                           }).toList();
-                          filteredJobs.sort((a, b) =>
-                              b.pmStatus!.compareTo(a.pmStatus ?? ''));
+                          filteredJobs.sort(
+                              (a, b) => b.status!.compareTo(a.status ?? ''));
 
                           if (filteredJobs.isEmpty) {
                             return Center(
@@ -121,7 +119,7 @@ class PmAssignedJobsView extends StatelessWidget {
                               return InkWell(
                                 onTap: () {
                                   Get.to(() => JobDetailViewPM(
-                                        ticketId: '99',
+                                        ticketId: job.id.toString(),
                                         data: job,
                                       ));
                                 },
@@ -131,7 +129,7 @@ class PmAssignedJobsView extends StatelessWidget {
                                       pmAssignedController.expandedIndex,
                                   jobController: jobController,
                                   sidebar:
-                                      SidebarColor.getColor(job.pmStatus ?? ''),
+                                      SidebarColor.getColor(job.status ?? ''),
                                 ),
                               );
                             },

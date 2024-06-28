@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
+import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
+import 'package:toyotamobile/Screen/FillForm3/fillform3_view.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -15,6 +17,7 @@ import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/intruction_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
@@ -63,9 +66,9 @@ class JobDetailViewPM extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(data.description ?? '',
+                          Text(jobController.issueData.first.description ?? '',
                               style: TextStyleList.title1),
-                          Text('JobID: 0001', style: TextStyleList.text16),
+                          Text('JobID: $ticketId', style: TextStyleList.text16),
                         ],
                       );
                     }
@@ -76,8 +79,7 @@ class JobDetailViewPM extends StatelessWidget {
                   right: 15.0,
                   top: 15,
                   bottom: 0,
-                  child:
-                      Center(child: StatusButton(status: data.pmStatus ?? '')),
+                  child: Center(child: StatusButton(status: data.status ?? '')),
                 ),
               ],
             ),
@@ -119,9 +121,9 @@ class JobDetailViewPM extends StatelessWidget {
                                 child: BoxContainer(
                                   children: [
                                     PMJobInfo(
-                                      ticketId: 1,
-                                      dateTime: data.pmPlan ?? '',
-                                      reporter: data.customerNo ?? '',
+                                      ticketId: issue.id,
+                                      dateTime: data.dueDate ?? '',
+                                      reporter: issue.reporter.name,
                                       summary: 'ช่าง ${data.resourceName}',
                                       description:
                                           'Service Zone :  ${data.serviceZoneCode ?? ''}',
@@ -270,6 +272,10 @@ class JobDetailViewPM extends StatelessWidget {
                                           ],
                                         )
                                       : Container()),
+                                  TextFieldType(
+                                    hintText: 'Add Comment',
+                                    textSet: jobController.comment.value,
+                                  ),
                                 ],
                               ),
                               8.kH,
@@ -279,21 +285,85 @@ class JobDetailViewPM extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const TitleApp(text: 'Repair Report*'),
-                                      AddButton(
-                                        onTap: () {
-                                          Get.to(() => FillFormView(
-                                                ticketId: ticketId,
-                                                jobId: jobId ?? '',
-                                              ));
-                                        },
-                                      ),
+                                      const TitleApp(
+                                          text: 'Battery Maintenance Report'),
+                                      Obx(() =>
+                                          !jobController.addAttatchments.isEmpty
+                                              ? EditButton(
+                                                  onTap: () {
+                                                    Get.to(() => FillFormView2(
+                                                        // ticketId: ticketId,
+                                                        // jobId: jobId ?? '',
+                                                        ));
+                                                  },
+                                                )
+                                              : AddButton(
+                                                  onTap: () {
+                                                    Get.to(() => FillFormView2(
+                                                        // ticketId: ticketId,
+                                                        // jobId: jobId ?? '',
+                                                        ));
+                                                  },
+                                                )),
                                     ],
                                   ),
                                   Text(
-                                    'Please fill the field service report',
+                                    'Please fill the bettery maintenance report',
                                     style: TextStyleList.text16,
-                                  )
+                                  ),
+                                  // Obx(() => jobController
+                                  //             .reportList.isNotEmpty ||
+                                  //         jobController
+                                  //             .additionalReportList.isNotEmpty
+                                  //     ? ShowRepairReport(
+                                  //         reportData: jobController.reportList,
+                                  //         additionalReportData: jobController
+                                  //             .additionalReportList)
+                                  //     : Container())
+                                ],
+                              ),
+                              8.kH,
+                              BoxContainer(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleApp(
+                                          text: 'Periodic Maintenance Report'),
+                                      Obx(() =>
+                                          !jobController.addAttatchments.isEmpty
+                                              ? EditButton(
+                                                  onTap: () {
+                                                    Get.to(() => FillFormView3(
+                                                        // ticketId: ticketId,
+                                                        // jobId: jobId ?? '',
+                                                        ));
+                                                  },
+                                                )
+                                              : AddButton(
+                                                  onTap: () {
+                                                    Get.to(() => FillFormView3(
+                                                        // ticketId: ticketId,
+                                                        // jobId: jobId ?? '',
+                                                        ));
+                                                  },
+                                                )),
+                                    ],
+                                  ),
+                                  Text(
+                                    'Please fill the periodic maintenance report',
+                                    style: TextStyleList.text16,
+                                  ),
+                                  // Obx(() => jobController
+                                  //             .reportList.isNotEmpty ||
+                                  //         jobController
+                                  //             .additionalReportList.isNotEmpty
+                                  //     ? ShowRepairReport(
+                                  //         reportData: jobController.reportList,
+                                  //         additionalReportData: jobController
+                                  //             .additionalReportList)
+                                  //     : Container())
                                 ],
                               ),
                             ],

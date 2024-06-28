@@ -1,4 +1,5 @@
 import 'package:toyotamobile/Function/refresh.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -195,22 +196,22 @@ class AssignedjobsNew extends StatelessWidget {
                                         .selectedStatus.isEmpty ||
                                     assignedController.selectedStatus.contains(
                                         stringToStatus(job.status ?? ''));
-                                // final jobDate =
-                                //     formatDateTimeString(job.pmPlan ?? '');
-                                // final dateMatch = assignedController
-                                //             .selectedDate.value ==
-                                //         null ||
-                                //     (jobDate.year ==
-                                //             assignedController
-                                //                 .selectedDate.value!.year &&
-                                //         jobDate.month ==
-                                //             assignedController
-                                //                 .selectedDate.value!.month &&
-                                //         jobDate.day ==
-                                //             assignedController
-                                //                 .selectedDate.value!.day);
+                                final jobDate =
+                                    formatDateTimeString(job.dueDate ?? '');
+                                final dateMatch = assignedController
+                                            .selectedDate.value ==
+                                        null ||
+                                    (jobDate.year ==
+                                            assignedController
+                                                .selectedDate.value!.year &&
+                                        jobDate.month ==
+                                            assignedController
+                                                .selectedDate.value!.month &&
+                                        jobDate.day ==
+                                            assignedController
+                                                .selectedDate.value!.day);
                                 return searchQueryMatch &&
-                                    // dateMatch &&
+                                    dateMatch &&
                                     job.status == '101' &&
                                     statusMatch;
                               }).toList();
@@ -272,23 +273,22 @@ class AssignedjobsNew extends StatelessWidget {
                                         .selectedStatus.isEmpty ||
                                     assignedController.selectedStatus.contains(
                                         stringToStatus(job.status ?? ''));
-                                // final jobDate =
-                                //     formatDateTimeString(job.pmPlan ?? '');
-                                // final dateMatch = assignedController
-                                //             .selectedDate.value ==
-                                //         null ||
-                                //     (jobDate.year ==
-                                //             assignedController
-                                //                 .selectedDate.value!.year &&
-                                //         jobDate.month ==
-                                //             assignedController
-                                //                 .selectedDate.value!.month &&
-                                //         jobDate.day ==
-                                //             assignedController
-                                //                 .selectedDate.value!.day);
+                                final jobDate =
+                                    formatDateTimeString(job.dueDate ?? '');
+                                final dateMatch = assignedController
+                                            .selectedDate.value ==
+                                        null ||
+                                    (jobDate.year ==
+                                            assignedController
+                                                .selectedDate.value!.year &&
+                                        jobDate.month ==
+                                            assignedController
+                                                .selectedDate.value!.month &&
+                                        jobDate.day ==
+                                            assignedController
+                                                .selectedDate.value!.day);
                                 return searchQueryMatch &&
-                                    // dateMatch &&
-
+                                    dateMatch &&
                                     job.status == '102' &&
                                     statusMatch;
                               }).toList();
@@ -350,23 +350,22 @@ class AssignedjobsNew extends StatelessWidget {
                                         .selectedStatus.isEmpty ||
                                     assignedController.selectedStatus.contains(
                                         stringToStatus(job.status ?? ''));
-                                // final jobDate =
-                                //     formatDateTimeString(job.pmPlan ?? '');
-                                // final dateMatch = assignedController
-                                //             .selectedDate.value ==
-                                //         null ||
-                                //     (jobDate.year ==
-                                //             assignedController
-                                //                 .selectedDate.value!.year &&
-                                //         jobDate.month ==
-                                //             assignedController
-                                //                 .selectedDate.value!.month &&
-                                //         jobDate.day ==
-                                //             assignedController
-                                //                 .selectedDate.value!.day);
+                                final jobDate =
+                                    formatDateTimeString(job.dueDate ?? '');
+                                final dateMatch = assignedController
+                                            .selectedDate.value ==
+                                        null ||
+                                    (jobDate.year ==
+                                            assignedController
+                                                .selectedDate.value!.year &&
+                                        jobDate.month ==
+                                            assignedController
+                                                .selectedDate.value!.month &&
+                                        jobDate.day ==
+                                            assignedController
+                                                .selectedDate.value!.day);
                                 return searchQueryMatch &&
-                                    // dateMatch &&
-
+                                    dateMatch &&
                                     job.status == '103' &&
                                     statusMatch;
                               }).toList();

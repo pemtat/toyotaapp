@@ -170,9 +170,9 @@ class HomeController extends GetxController {
         List<dynamic> responseData = jsonDecode(response.body);
         List<PmModel> itemList =
             responseData.map((job) => PmModel.fromJson(job)).toList();
-        itemList.sort((a, b) => a.pmPlan!.compareTo(b.pmPlan!));
+        itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
         List<PmModel> closedPmItems =
-            itemList.where((pm) => pm.pmStatus == 'closed').toList();
+            itemList.where((pm) => pm.dueDate == 'closed').toList();
 
         pmItems.value = itemList;
         pmjobList.value = pmItems.length;
@@ -241,7 +241,7 @@ class HomeController extends GetxController {
         'location': customerInfo.customerAddress ?? ''
       };
     } else {
-      print('Failed to load data: ${response.statusCode}');
+      print('Failed to load data: ${response.statusCode} $id ');
       return {};
     }
   }

@@ -20,6 +20,8 @@ import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 class JobDetailControllerPM extends GetxController {
   final notes = TextEditingController().obs;
   var notesFiles = <Notes>[].obs;
+  final comment = TextEditingController().obs;
+
   var isPicking = false.obs;
   var issueData = [].obs;
   var attatchments = <Map<String, dynamic>>[].obs;

@@ -101,6 +101,14 @@ class BatteryCondition extends GetxController {
                 space2.kH,
                 CheckBoxWidget2(
                   text: "Sp.Gr.",
+                  listItem: spGrChoose,
+                  itemSet: spGrChoose,
+                  optionList: optionList,
+                  description: spGrDescriptionChoose,
+                ),
+                space2.kH,
+                CheckBoxWidget2(
+                  text: "Temperature",
                   listItem: temperatureChoose,
                   itemSet: temperatureChoose,
                   optionList: optionList,
@@ -127,10 +135,44 @@ class BatteryCondition extends GetxController {
         space.kH,
         EndButton(
           onPressed: () {
-            listClear();
-            descriptionAdd();
-            listAdd();
-            Navigator.pop(context);
+            if (checkAllFieldsFilled()) {
+              listClear();
+              descriptionAdd();
+              listAdd();
+              Navigator.pop(context);
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Center(
+                        child: Text(
+                      'เเจ้งเตือน',
+                      style: TextStyleList.subtitle1,
+                    )),
+                    content: Row(
+                      children: [
+                        Text(
+                          'โปรดกรอกข้อมูลให้ครบถ้วน',
+                          style: TextStyleList.text2,
+                        ),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text(
+                          'ตกลง',
+                          style: TextStyleList.subtext3,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
           },
           text: 'Confirm',
         ),
@@ -138,37 +180,40 @@ class BatteryCondition extends GetxController {
     ).showModal(context);
   }
 
-  void checkAllFieldsFilled() {
-    isAllFieldsFilled.value = trayDescription.value.text.isNotEmpty ||
-        containerDescription.value.text.isNotEmpty ||
-        ventPlugDescription.value.text.isNotEmpty ||
-        connectorDescription.value.text.isNotEmpty ||
-        covertDescription.value.text.isNotEmpty ||
-        terminalDescription.value.text.isNotEmpty ||
-        cablePlugDescriptionPlug.value.text.isNotEmpty ||
-        voltageDescription.value.text.isNotEmpty ||
-        spGrDescription.value.text.isNotEmpty ||
-        temperatureDescription.value.text.isNotEmpty ||
-        acidDescription.value.text.isNotEmpty ||
-        platesDescription.value.text.isNotEmpty ||
-        trayChoose.isNotEmpty ||
-        container.isNotEmpty ||
-        ventPug.isNotEmpty ||
-        connector.isNotEmpty ||
-        cover.isNotEmpty ||
-        terminal.isNotEmpty ||
-        cablePlug.isNotEmpty ||
-        voltage.isNotEmpty ||
-        spGr.isNotEmpty ||
-        temperature.isNotEmpty ||
-        acid.isNotEmpty ||
-        plates.isNotEmpty;
+  bool checkAllFieldsFilled() {
+    return isAllFieldsFilled.value =
+        trayDescriptionChoose.value.text.isNotEmpty &&
+            containerDescriptionChoose.value.text.isNotEmpty &&
+            ventPlugDescriptionChoose.value.text.isNotEmpty &&
+            connectorDescriptionChoose.value.text.isNotEmpty &&
+            covertDescriptionChoose.value.text.isNotEmpty &&
+            terminalDescriptionChoose.value.text.isNotEmpty &&
+            cablePlugChooseDescription.value.text.isNotEmpty &&
+            voltageChooseDescription.value.text.isNotEmpty &&
+            spGrDescriptionChoose.value.text.isNotEmpty &&
+            temperatureDescriptionChoose.value.text.isNotEmpty &&
+            acidDescriptionChoose.value.text.isNotEmpty &&
+            platesDescriptionChoose.value.text.isNotEmpty &&
+            trayChoose.isNotEmpty &&
+            containerChoose.isNotEmpty &&
+            ventPugChoose.isNotEmpty &&
+            ventPugOptionChoose.isNotEmpty &&
+            connectorChoose.isNotEmpty &&
+            coverChoose.isNotEmpty &&
+            terminalChoose.isNotEmpty &&
+            cablePlugChoose.isNotEmpty &&
+            voltageChoose.isNotEmpty &&
+            spGrChoose.isNotEmpty &&
+            temperatureChoose.isNotEmpty &&
+            acidChoose.isNotEmpty &&
+            platesChoose.isNotEmpty;
   }
 
   void chooseAdd() {
     trayChoose.addAll(tray);
     containerChoose.addAll(container);
     ventPugChoose.addAll(ventPug);
+    ventPugOptionChoose.addAll(ventPugOption);
     connectorChoose.addAll(connector);
     coverChoose.addAll(cover);
     terminalChoose.addAll(terminal);
@@ -186,6 +231,7 @@ class BatteryCondition extends GetxController {
     trayChoose.clear();
     containerChoose.clear();
     ventPugChoose.clear();
+    ventPugOptionChoose.clear();
     connectorChoose.clear();
     coverChoose.clear();
     terminalChoose.clear();
@@ -206,8 +252,8 @@ class BatteryCondition extends GetxController {
     ventPlugDescription.value = ventPlugDescriptionChoose.value;
     covertDescription.value = covertDescriptionChoose.value;
     terminalDescription.value = terminalDescriptionChoose.value;
-    cablePlugChooseDescription.value = cablePlugChooseDescription.value;
-    voltageChooseDescription.value = voltageChooseDescription.value;
+    cablePlugDescriptionPlug.value = cablePlugChooseDescription.value;
+    voltageDescription.value = voltageChooseDescription.value;
     spGrDescription.value = spGrDescriptionChoose.value;
     temperatureDescription.value = temperatureDescriptionChoose.value;
     acidDescription.value = acidDescriptionChoose.value;
@@ -215,10 +261,27 @@ class BatteryCondition extends GetxController {
     description.value = descriptionChoose.value;
   }
 
+  void descriptionClear() {
+    trayDescription.value.clear();
+    containerDescription.value.clear();
+    connectorDescription.value.clear();
+    ventPlugDescription.value.clear();
+    covertDescription.value.clear();
+    terminalDescription.value.clear();
+    cablePlugDescriptionPlug.value.clear();
+    voltageDescription.value.clear();
+    spGrDescription.value.clear();
+    temperatureDescription.value.clear();
+    acidDescription.value.clear();
+    platesDescription.value.clear();
+    description.value.clear();
+  }
+
   void listAdd() {
     tray.addAll(trayChoose);
     container.addAll(containerChoose);
     ventPug.addAll(ventPugChoose);
+    ventPugOption.addAll(ventPugOptionChoose);
     connector.addAll(connectorChoose);
     cover.addAll(coverChoose);
     terminal.addAll(terminalChoose);
@@ -236,6 +299,7 @@ class BatteryCondition extends GetxController {
     tray.clear();
     container.clear();
     ventPug.clear();
+    ventPugOption.clear();
     connector.clear();
     cover.clear();
     terminal.clear();
@@ -305,34 +369,4 @@ class BatteryCondition extends GetxController {
   var platesDescriptionChoose = TextEditingController().obs;
   final description = TextEditingController().obs;
   final descriptionChoose = TextEditingController().obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    trayDescription.value.addListener(checkAllFieldsFilled);
-    containerDescription.value.addListener(checkAllFieldsFilled);
-    ventPlugDescription.value.addListener(checkAllFieldsFilled);
-    connectorDescription.value.addListener(checkAllFieldsFilled);
-    covertDescription.value.addListener(checkAllFieldsFilled);
-    terminalDescription.value.addListener(checkAllFieldsFilled);
-    cablePlugDescriptionPlug.value.addListener(checkAllFieldsFilled);
-    voltageDescription.value.addListener(checkAllFieldsFilled);
-    spGrDescription.value.addListener(checkAllFieldsFilled);
-    temperatureDescription.value.addListener(checkAllFieldsFilled);
-    acidDescription.value.addListener(checkAllFieldsFilled);
-    platesDescription.value.addListener(checkAllFieldsFilled);
-
-    tray.listen((_) => checkAllFieldsFilled());
-    container.listen((_) => checkAllFieldsFilled());
-    ventPug.listen((_) => checkAllFieldsFilled());
-    connector.listen((_) => checkAllFieldsFilled());
-    cover.listen((_) => checkAllFieldsFilled());
-    terminal.listen((_) => checkAllFieldsFilled());
-    cablePlug.listen((_) => checkAllFieldsFilled());
-    voltage.listen((_) => checkAllFieldsFilled());
-    spGr.listen((_) => checkAllFieldsFilled());
-    temperature.listen((_) => checkAllFieldsFilled());
-    acid.listen((_) => checkAllFieldsFilled());
-    plates.listen((_) => checkAllFieldsFilled());
-  }
 }

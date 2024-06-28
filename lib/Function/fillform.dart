@@ -52,3 +52,7 @@ void updateCheckbox2(String label, RxList<String> data) {
     data.add(label);
   }
 }
+
+void updateSelection(int index, String value, RxList<String> selectionsChoose) {
+  selectionsChoose[index] = value;
+}

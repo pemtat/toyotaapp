@@ -37,7 +37,7 @@ class PmCompleteJobsView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('My Jobs', style: TextStyleList.title1),
+                title: Text('Completed Jobs', style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,
@@ -75,17 +75,15 @@ class PmCompleteJobsView extends StatelessWidget {
                           final filteredJobs =
                               jobController.pmItems.where((job) {
                             final jobDate =
-                                formatDateTimeString(job.pmPlan ?? '');
-                            final searchQueryMatch = job.jobId
-                                    .toString()
-                                    .contains(pmCompleteController
-                                        .searchQuery.value) ||
+                                formatDateTimeString(job.dueDate ?? '');
+                            final searchQueryMatch = job.id.toString().contains(
+                                    pmCompleteController.searchQuery.value) ||
                                 job.description!.contains(
                                     pmCompleteController.searchQuery.value);
                             final statusMatch =
                                 pmCompleteController.selectedStatus.isEmpty ||
                                     pmCompleteController.selectedStatus
-                                        .contains(job.pmStatus);
+                                        .contains(job.status);
                             final dateMatch =
                                 pmCompleteController.selectedDate.value ==
                                         null ||
@@ -101,10 +99,10 @@ class PmCompleteJobsView extends StatelessWidget {
                             return searchQueryMatch &&
                                 statusMatch &&
                                 dateMatch &&
-                                job.pmStatus == 'closed';
+                                job.status == 'closed';
                           }).toList();
-                          filteredJobs.sort((a, b) =>
-                              b.pmStatus!.compareTo(a.pmStatus ?? ''));
+                          filteredJobs.sort(
+                              (a, b) => b.status!.compareTo(a.status ?? ''));
 
                           if (filteredJobs.isEmpty) {
                             return Center(
@@ -131,7 +129,7 @@ class PmCompleteJobsView extends StatelessWidget {
                                       pmCompleteController.expandedIndex,
                                   jobController: jobController,
                                   sidebar:
-                                      SidebarColor.getColor(job.pmStatus ?? ''),
+                                      SidebarColor.getColor(job.status ?? ''),
                                 ),
                               );
                             },

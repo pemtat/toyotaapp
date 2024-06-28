@@ -124,7 +124,7 @@ class PendingTaskView extends StatelessWidget {
                             8.kH,
                             CustomerInformation(
                                 contactName: issue.reporter.name,
-                                email: '-',
+                                email: issue.reporter.email,
                                 phoneNumber: '-',
                                 location: 'Onnut, Bangkok, Thailand',
                                 onTap: () {}),
