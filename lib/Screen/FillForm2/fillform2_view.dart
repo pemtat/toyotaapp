@@ -3,7 +3,7 @@ import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/repair_result.dart';
-import 'package:toyotamobile/Screen/FillForm2/adddetail/battery_condition.dart';
+import 'package:toyotamobile/Screen/FillForm2/adddetail/batterycondition.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/forklife_information.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/repairpm.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/sparepartlist.dart';
@@ -16,10 +16,10 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/FIllForm2_widget/batteryCondition_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/batteryInformation_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/batteryusage_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/forkliftinformation_widget.dart';
+import 'package:toyotamobile/Widget/FIllForm2_widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/sparepart_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/specicgravity_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
@@ -45,7 +45,7 @@ class FillFormView2 extends StatelessWidget {
     final SparepartList sparePartListController = Get.put(SparepartList());
     final AdditSparepartList additSparePartListController =
         Get.put(AdditSparepartList());
-    final RepairResult repairResultController = Get.put(RepairResult());
+    Get.put(RepairResult());
     final BatteryCondition batteryConditionController =
         Get.put(BatteryCondition());
     final FillformController2 fillformController2 =
@@ -210,19 +210,24 @@ class FillFormView2 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Bettery Conditions',
-                    button: Obx(() =>
-                        !batteryConditionController.isAllFieldsFilled.value
-                            ? AddButton(
-                                onTap: () {
-                                  batteryConditionController
-                                      .batteryConditionModal(context);
-                                },
-                              )
-                            : Container())),
+                    titleText: 'Battery Condition',
+                    button: Obx(() => !batteryConditionController
+                            .isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              batteryConditionController.checkModal(context);
+                            },
+                          )
+                        : Container())),
                 Obx(() => batteryConditionController.isAllFieldsFilled.value
-                    ? BatteryConditionWidget(
-                        controller: batteryConditionController,
+                    ? ListChecksWidget(
+                        selection: batteryConditionController.selections,
+                        remarkSelection: batteryConditionController.remarks,
+                        listSelection: batteryConditionController.ListData,
+                        showModal: batteryConditionController.checkModal,
+                        show: batteryConditionController.isAllFieldsFilled,
+                        additional: batteryConditionController.additional,
+                        unit: '',
                       )
                     : const SizedBox())
               ],

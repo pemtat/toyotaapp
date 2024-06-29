@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Models/batteryusage_model.dart';
+import 'package:toyotamobile/Models/maintenance_model.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -8,7 +8,7 @@ import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 
-class BatteryUsage extends GetxController {
+class Maintenance extends GetxController {
   int space = 24;
   void batteryUsageModal(BuildContext context) {
     ShowModalWidget(
@@ -17,7 +17,7 @@ class BatteryUsage extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Battery Usage",
+              "Maintenance and Service Result",
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -29,33 +29,6 @@ class BatteryUsage extends GetxController {
           ],
         ),
         space.kH,
-        TextFieldWidget(
-          text: 'Shift time',
-          textSet: shiftTime.value,
-          number: TextInputType.number,
-        ),
-        space.kH,
-        TextFieldWidget(
-          text: 'Hrs. per shift',
-          textSet: hrsPerShift.value,
-          number: TextInputType.number,
-        ),
-        space.kH,
-        TextFieldWidget(
-          text: 'Ratio',
-          textSet: ratio.value,
-          number: TextInputType.number,
-        ),
-        space.kH,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Charging Type',
-              style: TextStyleList.subtitle3,
-            ),
-          ],
-        ),
         ListView.builder(
           shrinkWrap: true,
           itemCount: chargingTypeList.length,
@@ -68,6 +41,18 @@ class BatteryUsage extends GetxController {
                   itemSet: chargingTypeChoose,
                 ));
           },
+        ),
+        space.kH,
+        TextFieldWidget(
+          text: 'ประมาณการซ่อมชั่วโมง (HR)',
+          textSet: people.value,
+          number: TextInputType.number,
+        ),
+        8.kH,
+        TextFieldWidget(
+          text: 'จำนวนคน (M)',
+          textSet: hr.value,
+          number: TextInputType.number,
         ),
         space.kH,
         EndButton(
@@ -83,7 +68,7 @@ class BatteryUsage extends GetxController {
   }
 
   void batteryUsageModalEditModal(
-      BuildContext context, BatteryUsageModel batteryInfo) {
+      BuildContext context, MaintenanceModel batteryInfo) {
     batteryUsageRead(batteryInfo);
     ShowModalWidget(
       children: [
@@ -101,30 +86,6 @@ class BatteryUsage extends GetxController {
                 child: Image.asset("assets/x.png"))
           ],
         ),
-        space.kH,
-        TextFieldEditWidget(
-          text: 'Shift time',
-          textSet: shiftTime.value,
-        ),
-        space.kH,
-        TextFieldEditWidget(
-          text: 'Hrs. per shift',
-          textSet: hrsPerShift.value,
-        ),
-        space.kH,
-        TextFieldEditWidget(
-          text: 'Ratio',
-          textSet: ratio.value,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Charging Type',
-              style: TextStyleList.subtitle3,
-            ),
-          ],
-        ),
         ListView.builder(
           shrinkWrap: true,
           itemCount: chargingTypeList.length,
@@ -139,10 +100,20 @@ class BatteryUsage extends GetxController {
           },
         ),
         space.kH,
+        TextFieldEditWidget(
+          text: 'ประมาณการซ่อม ชั่วโมง (HR)',
+          textSet: people.value,
+        ),
+        8.kH,
+        TextFieldEditWidget(
+          text: 'จำนวนคน (M)',
+          textSet: people.value,
+        ),
+        space.kH,
         EndButton(
             onPressed: () {
               batteryUsageUpdate(batteryInfo);
-              batteryUsageList.refresh();
+              maintenanceList.refresh();
               batteryUsageClear();
               Navigator.pop(context);
             },
@@ -154,42 +125,38 @@ class BatteryUsage extends GetxController {
   var chargingTypeChoose = <String>[].obs;
   List<String> chargingType = [];
   List<String> chargingTypeList = [
-    'Charge when needed',
-    'Only 1 time/day',
+    'พร้อมใช้งาน(Run)',
+    'ใช้งานได้ชั่วคราว(Temporary)',
+    'ใช้งานได้ชั่วคราว(Stop)',
   ];
-  var batteryUsageList = <BatteryUsageModel>[].obs;
-  final shiftTime = TextEditingController().obs;
-  final hrsPerShift = TextEditingController().obs;
-  final ratio = TextEditingController().obs;
+  var maintenanceList = <MaintenanceModel>[].obs;
+  final people = TextEditingController().obs;
+  final hr = TextEditingController().obs;
 
-  void batteryUsageRead(BatteryUsageModel batteryInfo) {
-    shiftTime.value.text = batteryInfo.shiftTime.toString();
-    hrsPerShift.value.text = batteryInfo.hrsPerShift.toString();
-    ratio.value.text = batteryInfo.ratio.toString();
-    chargingTypeChoose.value = batteryInfo.chargingType.toList();
+  void batteryUsageRead(MaintenanceModel batteryInfo) {
+    people.value.text = batteryInfo.people.toString();
+    hr.value.text = batteryInfo.hr.toString();
+    chargingTypeChoose.addAll(chargingType);
   }
 
   void batteryUsageClear() {
-    shiftTime.value.clear();
-    hrsPerShift.value.clear();
-    ratio.value.clear();
+    people.value.clear();
+    hr.value.clear();
     chargingTypeChoose.clear();
   }
 
   void batteryUsageWrite() {
     final chosenChargingTypes = chargingTypeChoose.toList();
-    final newBatteryInfo = BatteryUsageModel(
-        shiftTime: double.tryParse(shiftTime.value.text) ?? 0,
-        hrsPerShift: double.tryParse(hrsPerShift.value.text) ?? 0,
-        ratio: double.tryParse(ratio.value.text) ?? 0,
+    final newBatteryInfo = MaintenanceModel(
+        people: double.tryParse(hr.value.text) ?? 0,
+        hr: double.tryParse(people.value.text) ?? 0,
         chargingType: chosenChargingTypes);
-    batteryUsageList.add(newBatteryInfo);
+    maintenanceList.add(newBatteryInfo);
   }
 
-  void batteryUsageUpdate(BatteryUsageModel batteryInfo) {
-    batteryInfo.shiftTime = double.tryParse(shiftTime.value.text) ?? 0;
-    batteryInfo.hrsPerShift = double.tryParse(hrsPerShift.value.text) ?? 0;
-    batteryInfo.ratio = double.tryParse(ratio.value.text) ?? 0;
+  void batteryUsageUpdate(MaintenanceModel batteryInfo) {
+    batteryInfo.people = double.tryParse(people.value.text) ?? 0;
+    batteryInfo.hr = double.tryParse(hr.value.text) ?? 0;
     batteryInfo.chargingType = chargingTypeChoose.toList();
   }
 }

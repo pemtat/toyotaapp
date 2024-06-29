@@ -544,16 +544,16 @@ class CustomFields {
   CustomFields({this.field, this.value});
 
   CustomFields.fromJson(Map<String, dynamic> json) {
-    field = json['field'] != null ? new Project.fromJson(json['field']) : null;
+    field = json['field'] != null ? Project.fromJson(json['field']) : null;
     value = json['value'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.field != null) {
-      data['field'] = this.field!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (field != null) {
+      data['field'] = field!.toJson();
     }
-    data['value'] = this.value;
+    data['value'] = value;
     return data;
   }
 }

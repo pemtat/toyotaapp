@@ -4,7 +4,6 @@ import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
-import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
@@ -297,7 +296,7 @@ class TicketView extends StatelessWidget {
                                     dateMatch;
                               }).toList();
                               // filteredJobs.sort(
-                              //     (a, b) => b.dueDate!.compareTo(a.dueDate!));
+                              //     (a, b) => b.dueDate  !.compareTo(a.dueDate!));
 
                               if (filteredJobs.isEmpty) {
                                 return Center(
@@ -397,7 +396,6 @@ class TicketView extends StatelessWidget {
                                             ticketId: job.bugId ?? '',
                                             jobId: job.id.toString()));
                                       }
-                                      ;
                                     },
                                     child: SubJobsTicket(
                                       index: index,

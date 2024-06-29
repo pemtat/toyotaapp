@@ -1,21 +1,22 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Models/specigravity_model.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/specic_gravity.dart';
+import 'package:toyotamobile/Function/fillform.dart';
+import 'package:toyotamobile/Models/maintenance_model.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/maintenance.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class SpecicGravityWidget extends StatelessWidget {
-  final SpecicGravityModel info;
+class MaintenanceWidget extends StatelessWidget {
+  final MaintenanceModel info;
   final int index;
-  final SpecicGravity specicGravityController;
-  const SpecicGravityWidget({
+  final Maintenance batteryUsageController;
+  const MaintenanceWidget({
     super.key,
     required this.info,
     required this.index,
-    required this.specicGravityController,
+    required this.batteryUsageController,
   });
 
   @override
@@ -42,32 +43,30 @@ class SpecicGravityWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (info.chargingType.isNotEmpty)
+                  Text(
+                    getDisplayString2(info.chargingType),
+                    style: TextStyleList.text12,
+                  ),
+                8.kH,
                 Text(
-                  'Temperature',
+                  'ประมาณการซ่อม ชั่วโมง (HR)',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  "${info.temperature}",
+                  "${info.people}",
                   style: TextStyleList.text15,
                 ),
                 8.kH,
                 Text(
-                  'TH.P',
+                  'จำนวนคน',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  "${info.thp}",
+                  "${info.hr}",
                   style: TextStyleList.text15,
                 ),
                 8.kH,
-                Text(
-                  'Voltage',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  "${info.voltage}",
-                  style: TextStyleList.text15,
-                ),
               ],
             ),
           ),
@@ -102,10 +101,10 @@ class SpecicGravityWidget extends StatelessWidget {
                 ),
                 onSelected: (value) {
                   if (value == 'edit') {
-                    specicGravityController.specicGravityEditModal(
+                    batteryUsageController.batteryUsageModalEditModal(
                         context, info);
                   } else if (value == 'delete') {
-                    specicGravityController.specicGravityList.removeAt(index);
+                    batteryUsageController.maintenanceList.removeAt(index);
                   }
                 },
               ),

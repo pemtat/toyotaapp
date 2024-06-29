@@ -8,7 +8,6 @@ import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
-import 'package:toyotamobile/Widget/textfield_widget.dart';
 
 class ShowRepairReport extends StatelessWidget {
   final RxList<RepairReportModel> reportData;
@@ -73,13 +72,14 @@ class ShowRepairReport extends StatelessWidget {
                 reportData.first.cCode != '-' &&
                         reportData.first.partNumber != '-' &&
                         reportData.first.description != '-' &&
+                        // ignore: unrelated_type_equality_checks
                         reportData.first.quantity != 0 &&
                         reportData.first.changeNow != '-' &&
                         reportData.first.changeOnPm != '-'
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          BoxInfo2(title: 'Spare part List', value: ''),
+                          const BoxInfo2(title: 'Spare part List', value: ''),
                           4.kH,
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
@@ -120,18 +120,19 @@ class ShowRepairReport extends StatelessWidget {
                           ),
                         ],
                       )
-                    : BoxInfo2(title: 'Spare part List', value: '-'),
+                    : const BoxInfo2(title: 'Spare part List', value: '-'),
                 8.kH,
                 if (additionalReportData.isNotEmpty)
                   additionalReportData.first.cCode != '-' &&
                           additionalReportData.first.partNumber != '-' &&
                           additionalReportData.first.description != '-' &&
+                          // ignore: unrelated_type_equality_checks
                           additionalReportData.first.quantity != 0 &&
                           additionalReportData.first.changeNow != '-' &&
                           additionalReportData.first.changeOnPm != '-'
                       ? Column(
                           children: [
-                            BoxInfo2(
+                            const BoxInfo2(
                                 title: 'Additional spare part list', value: ''),
                             ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
@@ -174,7 +175,7 @@ class ShowRepairReport extends StatelessWidget {
                             ),
                           ],
                         )
-                      : BoxInfo2(
+                      : const BoxInfo2(
                           title: 'Additional spare part list', value: '-'),
                 space.kH,
                 BoxInfo2(
@@ -188,7 +189,7 @@ class ShowRepairReport extends StatelessWidget {
                       child: Column(
                     children: [
                       5.kH,
-                      Container(
+                      SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,
                           child: Base64ImageWidget(data.signaturePad ?? '')),

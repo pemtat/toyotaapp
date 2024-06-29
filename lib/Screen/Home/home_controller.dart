@@ -264,7 +264,7 @@ class HomeController extends GetxController {
           CustomerById customer = CustomerById.fromJson(responseData);
           return customer;
         } else {
-          throw FormatException('Unexpected response format');
+          throw const FormatException('Unexpected response format');
         }
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');
@@ -305,7 +305,7 @@ class HomeController extends GetxController {
         //     .where((subJob) => stringToStatus(subJob.status ?? '') == 'closed')
         //     .toList();
 
-        Set<String> uniqueBugIds = Set();
+        Set<String> uniqueBugIds = {};
         List<String> allIds = [];
         List<SubJobAssgined> filteredItemList = [];
 

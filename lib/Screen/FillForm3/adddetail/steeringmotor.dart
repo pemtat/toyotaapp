@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/fillform.dart';
-import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/inputdecoraton.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -38,7 +36,7 @@ class SteeringMotor extends GetxController {
         8.kH,
         ListView(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: List.generate(ListData.length, (index) {
             return Obx(() {
               final TextEditingController controller =
@@ -118,7 +116,7 @@ class SteeringMotor extends GetxController {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return AlertDialog1();
+                  return const AlertDialog1();
                 },
               );
             }

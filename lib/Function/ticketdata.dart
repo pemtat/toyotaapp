@@ -403,10 +403,7 @@ void updateStatusSubjobs(String jobId, String comment, String ticketId) async {
     if (response.statusCode == 200) {
       print('Update status done');
       jobDetailController.fetchData(ticketId, jobId);
-    } else {
-      print('Failed to update status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-    }
+    } else {}
   } catch (e) {
     print('Error: $e');
   }
@@ -429,11 +426,9 @@ void updateAcceptStatusSubjobs(
     );
 
     if (response.statusCode == 200) {
-      print('Update status done');
       jobDetailController.fetchData(ticketId, jobId);
     } else {
       print('Failed to update status: ${response.statusCode}');
-      print('Response body: ${response.body}');
     }
   } catch (e) {
     print('Error: $e');
@@ -467,10 +462,8 @@ Future<void> updateImgSubjobs(String jobId, String ticketId,
     );
 
     if (response.statusCode == 200) {
-      print('Update Img done');
     } else {
       print('Failed to update status: ${response.statusCode}');
-      print(body);
     }
   } catch (e) {
     print('Error: $e');
@@ -504,10 +497,8 @@ Future<void> deleteImgSubJob(
     );
 
     if (response.statusCode == 200) {
-      print('Delete Img done');
     } else {
       print('Failed to update status: ${response.statusCode}');
-      print(body);
     }
   } catch (e) {
     print('Error: $e');

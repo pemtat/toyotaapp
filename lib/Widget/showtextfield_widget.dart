@@ -28,7 +28,7 @@ class ShowTextFieldWidget extends StatelessWidget {
               readOnly: true,
               keyboardType: number ?? TextInputType.text,
               decoration: InputDecoration(
-                hintText: '$hintText',
+                hintText: hintText,
                 hintStyle: TextStyleList.text11,
                 filled: true,
                 fillColor: black5,

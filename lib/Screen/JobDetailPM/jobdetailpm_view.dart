@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/FillForm3/fillform3_view.dart';
-import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -287,24 +285,26 @@ class JobDetailViewPM extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Battery Maintenance Report'),
-                                      Obx(() =>
-                                          !jobController.addAttatchments.isEmpty
-                                              ? EditButton(
-                                                  onTap: () {
-                                                    Get.to(() => FillFormView2(
+                                      Obx(() => jobController
+                                              .addAttatchments.isNotEmpty
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(
+                                                    () => const FillFormView2(
                                                         // ticketId: ticketId,
                                                         // jobId: jobId ?? '',
                                                         ));
-                                                  },
-                                                )
-                                              : AddButton(
-                                                  onTap: () {
-                                                    Get.to(() => FillFormView2(
+                                              },
+                                            )
+                                          : AddButton(
+                                              onTap: () {
+                                                Get.to(
+                                                    () => const FillFormView2(
                                                         // ticketId: ticketId,
                                                         // jobId: jobId ?? '',
                                                         ));
-                                                  },
-                                                )),
+                                              },
+                                            )),
                                     ],
                                   ),
                                   Text(
@@ -331,24 +331,26 @@ class JobDetailViewPM extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Periodic Maintenance Report'),
-                                      Obx(() =>
-                                          !jobController.addAttatchments.isEmpty
-                                              ? EditButton(
-                                                  onTap: () {
-                                                    Get.to(() => FillFormView3(
+                                      Obx(() => jobController
+                                              .addAttatchments.isNotEmpty
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(
+                                                    () => const FillFormView3(
                                                         // ticketId: ticketId,
                                                         // jobId: jobId ?? '',
                                                         ));
-                                                  },
-                                                )
-                                              : AddButton(
-                                                  onTap: () {
-                                                    Get.to(() => FillFormView3(
+                                              },
+                                            )
+                                          : AddButton(
+                                              onTap: () {
+                                                Get.to(
+                                                    () => const FillFormView3(
                                                         // ticketId: ticketId,
                                                         // jobId: jobId ?? '',
                                                         ));
-                                                  },
-                                                )),
+                                              },
+                                            )),
                                     ],
                                   ),
                                   Text(

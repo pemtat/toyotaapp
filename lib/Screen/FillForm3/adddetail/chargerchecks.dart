@@ -9,7 +9,7 @@ import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class InitialChecks extends GetxController {
+class ChargerChecks extends GetxController {
   int space = 24;
   int space2 = 8;
 
@@ -22,7 +22,7 @@ class InitialChecks extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Initial Checks",
+              "Charger Checks",
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -96,24 +96,16 @@ class InitialChecks extends GetxController {
     ).showModal(context);
   }
 
-  var selectionsChoose = List<String>.filled(9, '').obs;
-  var remarksChoose = List<String>.filled(9, '').obs;
+  var selectionsChoose = List<String>.filled(1, '').obs;
+  var remarksChoose = List<String>.filled(1, '').obs;
 
-  var selections = List<String>.filled(9, '').obs;
-  var remarks = List<String>.filled(9, '').obs;
+  var selections = List<String>.filled(1, '').obs;
+  var remarks = List<String>.filled(1, '').obs;
 
   var isAllFieldsFilled = false.obs;
 
   List<String> ListData = [
-    'การทำงานระบบแตร, และระบบพัดลมระบายอากาศ',
-    'ป้ายเเละสติ๊กเกอร์ อุปกรณ์เซฟตี้(ไฟ Warning, Head เเละ Safety Belt',
-    'การบังคับเลี้ยว, พวงมาลัยเเละขับเคลื่อนหลัก',
-    'ปุ่ม Emergency เบรก/ประสิทธิภาพเบรก',
-    "แป้นเหยียบเซฟตี้/ เบรกมือ/ Dead man's handle",
-    'ฟังชั่นระบบไฮดรอลิค,ยก,สไลด์,กระดก,เลื่อนงานซ้าย-ขวา,หมุนงา(Mini mast)',
-    'ทดสอบ ระบบ Parking brake',
-    'เช็คสภาพไฟ, Cover',
-    'สภาพเเละความสะอาดโดยทั่วไปรอบตัวรถ',
+    'ตรวจเช็คสภาพปลั๊กแบตฯ สภาพสายไฟ เเละการทำงานของตู้ชาร์จ',
   ];
   List<String> typeData = ['I'];
   bool checkAllFieldsFilled() {

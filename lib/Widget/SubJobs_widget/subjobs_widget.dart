@@ -38,7 +38,7 @@ class SubJobsTicket extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return index == 0
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : Container();
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));

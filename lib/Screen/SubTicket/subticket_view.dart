@@ -118,7 +118,6 @@ class SubTicketView extends StatelessWidget {
                                           ticketId: ticketId,
                                           jobId: job.id.toString()));
                                     }
-                                    ;
                                   },
                                   child: SubJobsTicket(
                                       index: index,

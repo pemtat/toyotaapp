@@ -47,7 +47,7 @@ class ForkliftinformationWidget extends StatelessWidget {
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  "${info.forkLifeBrand}",
+                  info.forkLifeBrand,
                   style: TextStyleList.text15,
                 ),
                 8.kH,
@@ -56,7 +56,7 @@ class ForkliftinformationWidget extends StatelessWidget {
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  "${info.forkLifeModel}",
+                  info.forkLifeModel,
                   style: TextStyleList.text15,
                 ),
                 8.kH,
@@ -66,7 +66,7 @@ class ForkliftinformationWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  "${info.serialNo}",
+                  info.serialNo,
                   style: TextStyleList.text15,
                 ),
                 8.kH,

@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -11,14 +10,12 @@ class PartDetailWidget2 extends StatelessWidget {
   final SparePartModel part;
   final int index;
   final SparepartList sparePartListController;
-  final AdditSparepartList additSparePartListController;
   final bool additional;
   const PartDetailWidget2({
     super.key,
     required this.part,
     required this.index,
     required this.sparePartListController,
-    required this.additSparePartListController,
     required this.additional,
   });
 
@@ -116,20 +113,10 @@ class PartDetailWidget2 extends StatelessWidget {
                 ),
                 onSelected: (value) {
                   if (value == 'edit') {
-                    if (additional) {
-                      additSparePartListController.additSparePartListEditModal(
-                          context, part);
-                    } else {
-                      sparePartListController.sparePartListEditModal(
-                          context, part);
-                    }
+                    sparePartListController.sparePartListEditModal(
+                        context, part);
                   } else if (value == 'delete') {
-                    if (additional) {
-                      additSparePartListController.additSparePartList
-                          .removeAt(index);
-                    } else {
-                      sparePartListController.sparePartList.removeAt(index);
-                    }
+                    sparePartListController.sparePartList.removeAt(index);
                   }
                 },
               ),

@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/fillform.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/additional_spare.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/auxiliarymotor.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/batterychecks.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/brakesystemchecks.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/chargerchecks.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/chassischeck.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/forklife_information.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/controllerlogic.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/drivemotorchecks.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/forspecial.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/hydraulicmotor.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/initialchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/repairpm.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/maintenance.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/mastchecks.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/meterialhandling.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/powertrainchecks.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/process_staff.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/ptpsos.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/safety.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/sparepartlist.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/batteryusage_widget.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/corrective_action.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/specic_gravity.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/steeringmotor.dart';
+import 'package:toyotamobile/Screen/FillForm3/adddetail/vnaom.dart';
 import 'package:toyotamobile/Screen/FillForm3/fillform3_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/FIllForm3_widget/listcheck_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm3_widget/batteryusage_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm3_widget/forkliftinformation_widget.dart';
+import 'package:toyotamobile/Widget/FIllForm3_widget/maintenance_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm3_widget/sparepart_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm3_widget/specicgravity_widget.dart';
+import 'package:toyotamobile/Widget/FIllForm3_widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -36,20 +43,33 @@ class FillFormView3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BatteryUsage batteryUsageController = Get.put(BatteryUsage());
-    final SpecicGravity specicGravityController = Get.put(SpecicGravity());
-    final CorrectiveAction correctiveActionController =
-        Get.put(CorrectiveAction());
-    final SparepartList sparePartListController = Get.put(SparepartList());
-    final AdditSparepartList additSparePartListController =
-        Get.put(AdditSparepartList());
+    final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());
+    final DriveMotorChecks driveMotorChecks = Get.put(DriveMotorChecks());
+    Get.put(SparepartList());
+
     final InitialChecks initialChecks = Get.put(InitialChecks());
+    final BatteryChecks batteryChecks = Get.put(BatteryChecks());
+    final MeterialHandling meterialHandling = Get.put(MeterialHandling());
+    final MastChecks mastChecks = Get.put(MastChecks());
+    final PtPsOm ptPsOm = Get.put(PtPsOm());
+    final VnaOm vnaOm = Get.put(VnaOm());
+    final ForSpecial forSpecial = Get.put(ForSpecial());
+    final Safety safety = Get.put(Safety());
+    final SparepartList sparepartList = Get.put(SparepartList());
+    final ProcessStaff processStaff = Get.put(ProcessStaff());
+
+    final PowertrainChecks powertrainChecks = Get.put(PowertrainChecks());
+    final BreakSystemChecks breakSystemChecks = Get.put(BreakSystemChecks());
     final ChassisChecks chassisChecks = Get.put(ChassisChecks());
     final HydraulicmMotor hydraulicmMotor = Get.put(HydraulicmMotor());
+    final ControllerLogic controllerLogic = Get.put(ControllerLogic());
+    final ChargerChecks chargerChecks = Get.put(ChargerChecks());
+    final Maintenance maintenance = Get.put(Maintenance());
+
     final FillformController3 fillformController3 =
         Get.put(FillformController3());
     final SteeringMotor steeringMotor = Get.put(SteeringMotor());
-    final RepairPM repairPmController = Get.put(RepairPM());
+
     int space = 8;
 
     return Scaffold(
@@ -202,80 +222,347 @@ class FillFormView3 extends StatelessWidget {
               ],
             ),
             space.kH,
-            Obx(
-              () => BoxContainer(
-                children: [
-                  TitleWithButton(
-                    titleText: 'Specic Gravity and Voltage Check',
-                    button: AddButton(
-                      onTap: () {
-                        specicGravityController.specicGravityModal(context);
-                      },
-                    ),
-                  ),
-                  specicGravityController.specicGravityList.isNotEmpty
-                      ? ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount:
-                              specicGravityController.specicGravityList.length,
-                          itemBuilder: (context, index) {
-                            final info = specicGravityController
-                                .specicGravityList[index];
-                            return SpecicGravityWidget(
-                              info: info,
-                              index: index,
-                              specicGravityController: specicGravityController,
-                            );
-                          },
-                        )
-                      : const SizedBox()
-                ],
-              ),
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Auxiliary Motor Checks (Raymond)',
+                    button: Obx(() => !auxiliaryMotor.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              auxiliaryMotor.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => auxiliaryMotor.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: auxiliaryMotor.selections,
+                        remarkSelection: auxiliaryMotor.remarks,
+                        listSelection: auxiliaryMotor.ListData,
+                        showModal: auxiliaryMotor.checkModal,
+                        show: auxiliaryMotor.isAllFieldsFilled,
+                        additional: auxiliaryMotor.additional,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Drive Motor Checks',
+                    button: Obx(() => !driveMotorChecks.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              driveMotorChecks.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => driveMotorChecks.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: driveMotorChecks.selections,
+                        remarkSelection: driveMotorChecks.remarks,
+                        listSelection: driveMotorChecks.ListData,
+                        showModal: driveMotorChecks.checkModal,
+                        show: driveMotorChecks.isAllFieldsFilled,
+                        additional: driveMotorChecks.additional,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Brake System Checks',
+                    button: Obx(() => !breakSystemChecks.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              breakSystemChecks.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => breakSystemChecks.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: breakSystemChecks.selections,
+                        remarkSelection: breakSystemChecks.remarks,
+                        listSelection: breakSystemChecks.ListData,
+                        showModal: breakSystemChecks.checkModal,
+                        show: breakSystemChecks.isAllFieldsFilled,
+                        additional: breakSystemChecks.additional,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Controller, Logic Box Checks',
+                    button: Obx(() => !controllerLogic.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              controllerLogic.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => controllerLogic.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: controllerLogic.selections,
+                        remarkSelection: controllerLogic.remarks,
+                        listSelection: controllerLogic.ListData,
+                        showModal: controllerLogic.checkModal,
+                        show: controllerLogic.isAllFieldsFilled,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Powertrain Checks',
+                    button: Obx(() => !powertrainChecks.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              powertrainChecks.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => powertrainChecks.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: powertrainChecks.selections,
+                        remarkSelection: powertrainChecks.remarks,
+                        listSelection: powertrainChecks.ListData,
+                        showModal: powertrainChecks.checkModal,
+                        show: powertrainChecks.isAllFieldsFilled,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Battery Checks',
+                    button: Obx(() => !batteryChecks.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              batteryChecks.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => batteryChecks.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: batteryChecks.selections,
+                        remarkSelection: batteryChecks.remarks,
+                        listSelection: batteryChecks.ListData,
+                        showModal: batteryChecks.checkModal,
+                        show: batteryChecks.isAllFieldsFilled,
+                        additional: batteryChecks.additional,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Charger Checks',
+                    button: Obx(() => !chargerChecks.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              chargerChecks.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => chargerChecks.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: chargerChecks.selections,
+                        remarkSelection: chargerChecks.remarks,
+                        listSelection: chargerChecks.ListData,
+                        showModal: chargerChecks.checkModal,
+                        show: chargerChecks.isAllFieldsFilled,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Meterial Handling System Checks',
+                    button: Obx(() => !meterialHandling.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              meterialHandling.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => meterialHandling.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: meterialHandling.selections,
+                        remarkSelection: meterialHandling.remarks,
+                        listSelection: meterialHandling.ListData,
+                        showModal: meterialHandling.checkModal,
+                        show: meterialHandling.isAllFieldsFilled,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'Mast Checks',
+                    button: Obx(() => !mastChecks.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              mastChecks.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => mastChecks.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: mastChecks.selections,
+                        remarkSelection: mastChecks.remarks,
+                        listSelection: mastChecks.ListData,
+                        showModal: mastChecks.checkModal,
+                        show: mastChecks.isAllFieldsFilled,
+                        additional: mastChecks.additional,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: 'PT/PS เเละ OS / List for MHE class 3',
+                    button: Obx(() => !ptPsOm.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              ptPsOm.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => ptPsOm.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: ptPsOm.selections,
+                        remarkSelection: ptPsOm.remarks,
+                        listSelection: ptPsOm.ListData,
+                        showModal: ptPsOm.checkModal,
+                        show: ptPsOm.isAllFieldsFilled,
+                        additional: ptPsOm.additional,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: "VNA เเละ OM / List for VNA & OME model",
+                    button: Obx(() => !vnaOm.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              vnaOm.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => vnaOm.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: vnaOm.selections,
+                        remarkSelection: vnaOm.remarks,
+                        listSelection: vnaOm.ListData,
+                        showModal: vnaOm.checkModal,
+                        show: vnaOm.isAllFieldsFilled,
+                        additional: vnaOm.additional,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: "For Special equipment",
+                    button: Obx(() => !forSpecial.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              forSpecial.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => forSpecial.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: forSpecial.selections,
+                        remarkSelection: forSpecial.remarks,
+                        listSelection: forSpecial.ListData,
+                        showModal: forSpecial.checkModal,
+                        show: forSpecial.isAllFieldsFilled,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
+            ),
+            space.kH,
+            BoxContainer(
+              children: [
+                TitleWithButton(
+                    titleText: "Safty",
+                    button: Obx(() => !safety.isAllFieldsFilled.value
+                        ? AddButton(
+                            onTap: () {
+                              safety.checkModal(context);
+                            },
+                          )
+                        : Container())),
+                Obx(() => safety.isAllFieldsFilled.value
+                    ? ListChecksWidget(
+                        selection: safety.selections,
+                        remarkSelection: safety.remarks,
+                        listSelection: safety.ListData,
+                        showModal: safety.checkModal,
+                        show: safety.isAllFieldsFilled,
+                        unit: '',
+                      )
+                    : const SizedBox())
+              ],
             ),
             space.kH,
             Obx(() => BoxContainer(
                   children: [
-                    AddEditBox(
-                      titleText: 'Corrective Action',
-                      list: correctiveActionController.correctiveAction,
-                      onTap: () => correctiveActionController
-                          .correctiveActionModal(context),
-                      moreText: getDisplayString3(
-                          correctiveActionController.correctiveAction),
-                      other: correctiveActionController.other,
-                    )
-                  ],
-                )),
-            space.kH,
-            Obx(() => BoxContainer(
-                  children: [
                     TitleWithButton(
-                        titleText: 'Recommanded spare Part',
-                        button: sparePartListController.sparePartList.length < 3
+                        titleText:
+                            'Description Problem / Action and Result \nRecommend spare part chaged',
+                        button: sparepartList.sparePartList.length < 8
                             ? AddButton(
                                 onTap: () {
-                                  sparePartListController
-                                      .sparePartListModal(context);
+                                  sparepartList.sparePartListModal(context);
                                 },
                               )
                             : Container()),
-                    sparePartListController.sparePartList.isNotEmpty
+                    sparepartList.sparePartList.isNotEmpty
                         ? ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount:
-                                sparePartListController.sparePartList.length,
+                            itemCount: sparepartList.sparePartList.length,
                             itemBuilder: (context, index) {
-                              final part =
-                                  sparePartListController.sparePartList[index];
+                              final part = sparepartList.sparePartList[index];
                               return PartDetailWidget2(
                                 part: part,
                                 index: index,
-                                sparePartListController:
-                                    sparePartListController,
-                                additSparePartListController:
-                                    additSparePartListController,
+                                sparePartListController: sparepartList,
                                 additional: false,
                               );
                             },
@@ -284,59 +571,49 @@ class FillFormView3 extends StatelessWidget {
                   ],
                 )),
             space.kH,
+            Obx(
+              () => BoxContainer(
+                children: [
+                  TitleWithButton(
+                      titleText: 'Maintenance and Service Result',
+                      button: maintenance.maintenanceList.isEmpty
+                          ? AddButton(
+                              onTap: () {
+                                maintenance.batteryUsageModal(context);
+                              },
+                            )
+                          : Container()),
+                  maintenance.maintenanceList.isNotEmpty
+                      ? ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: maintenance.maintenanceList.length,
+                          itemBuilder: (context, index) {
+                            final info = maintenance.maintenanceList[index];
+                            return MaintenanceWidget(
+                              info: info,
+                              index: index,
+                              batteryUsageController: maintenance,
+                            );
+                          },
+                        )
+                      : const SizedBox()
+                ],
+              ),
+            ),
+            space.kH,
             BoxContainer(
               children: [
                 Obx(
                   () => AddEditBox(
-                    titleText: 'Repair P.M Battery',
-                    list: repairPmController.repairPm,
-                    onTap: () => repairPmController.repairPMModal(context),
-                    moreText: getDisplayString(repairPmController.repairPm),
-                    other: repairPmController.other,
-                  ),
+                      titleText: 'Process Staff',
+                      list: processStaff.repairStaff,
+                      onTap: () => processStaff.repairStaffModal(context),
+                      moreText: getDisplayString(processStaff.repairStaff)),
                 ),
               ],
             ),
             space.kH,
-            Obx(() => BoxContainer(
-                  children: [
-                    TitleWithButton(
-                      titleText: 'Action & Result / Change spare parts',
-                      button: additSparePartListController
-                                  .additSparePartList.length <
-                              7
-                          ? AddButton(
-                              onTap: () {
-                                additSparePartListController
-                                    .additSparePartListModal(context);
-                              },
-                            )
-                          : Container(),
-                    ),
-                    additSparePartListController.additSparePartList.isNotEmpty
-                        ? ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: additSparePartListController
-                                .additSparePartList.length,
-                            itemBuilder: (context, index) {
-                              final part = additSparePartListController
-                                  .additSparePartList[index];
-                              return PartDetailWidget2(
-                                part: part,
-                                index: index,
-                                sparePartListController:
-                                    sparePartListController,
-                                additSparePartListController:
-                                    additSparePartListController,
-                                additional: true,
-                              );
-                            },
-                          )
-                        : const SizedBox()
-                  ],
-                )),
-            8.kH,
             BoxContainer(
               children: [
                 Container(

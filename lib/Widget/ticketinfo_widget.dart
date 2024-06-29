@@ -105,17 +105,17 @@ class PMJobInfo extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '$dateTime\nReported by $reporter',
+              '$dateTime',
               style: TextStyleList.subtext1,
             ),
             const SizedBox(height: 4),
             Text(
-              '$summary',
+              summary,
               style: TextStyleList.subtext3,
             ),
             const SizedBox(height: 4),
             Text(
-              '$description',
+              description,
               style: TextStyleList.subtext3,
             ),
             const SizedBox(height: 4),
@@ -239,7 +239,7 @@ class JobInfo extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '$description',
+                  description,
                   style: TextStyleList.text10,
                 ),
                 4.kH,

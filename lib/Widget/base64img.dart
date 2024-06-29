@@ -9,7 +9,7 @@ class AttachmentsListWidget extends StatelessWidget {
   final String? jobid;
   final bool? edit;
 
-  AttachmentsListWidget(
+  const AttachmentsListWidget(
       {super.key,
       required this.attachments,
       this.option,

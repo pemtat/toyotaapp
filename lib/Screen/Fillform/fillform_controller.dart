@@ -200,9 +200,7 @@ class FillformController extends GetxController {
 
                 if (response.statusCode == 201) {
                   print('Sparepart saved successfully');
-                } else {
-                  print('Failed to save sparepart: ${response.body}');
-                }
+                } else {}
               } catch (e) {
                 print('Error occurred while saving sparepart: $e');
               }
@@ -218,15 +216,12 @@ class FillformController extends GetxController {
                 body: jsonEncode(data));
 
             if (response.statusCode == 201) {
-              print('Report saved successfully');
               jobDetailController.fetchData(
                   ticketId.toString(), jobId.toString());
             } else {
               print('Failed to save report: ${response.statusCode}');
             }
-          } catch (e) {
-            print('Error occurred while saving report: $e');
-          }
+          } catch (e) {}
         }
       }
     } catch (e) {

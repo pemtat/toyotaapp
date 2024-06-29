@@ -9,7 +9,7 @@ import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class InitialChecks extends GetxController {
+class BatteryCondition extends GetxController {
   int space = 24;
   int space2 = 8;
 
@@ -22,7 +22,7 @@ class InitialChecks extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Initial Checks",
+              "Battery Condition",
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -43,26 +43,56 @@ class InitialChecks extends GetxController {
                   TextEditingController(text: remarksChoose[index]);
               controller.selection = TextSelection.fromPosition(
                   TextPosition(offset: controller.text.length));
+              controller.selection = TextSelection.fromPosition(
+                  TextPosition(offset: controller.text.length));
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '(${typeData[0]}) ${ListData[index]}',
-                    style: TextStyleList.subtitle3,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${ListData[index]}',
+                                style: TextStyleList.subtitle3,
+                              ),
+                            ]),
+                      ),
+                      if (index == 3)
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            children: [
+                              CheckBoxList(
+                                  selectionsChoose: additionalChoose,
+                                  index: index,
+                                  text: 'Auto Filter'),
+                              CheckBoxList(
+                                  selectionsChoose: additionalChoose,
+                                  index: index,
+                                  text: 'Manual'),
+                            ],
+                          ),
+                        ),
+                    ],
                   ),
                   5.kH,
                   CheckBoxList(
                       selectionsChoose: selectionsChoose,
                       index: index,
-                      text: 'Ok'),
+                      text: 'Normal/Good'),
                   CheckBoxList(
                       selectionsChoose: selectionsChoose,
                       index: index,
-                      text: 'Poor'),
+                      text: 'Not normal/Poor'),
                   8.kH,
                   TextField(
                     controller: controller,
-                    decoration: InputDecoration1(text: 'Remark'),
+                    decoration: InputDecoration1(text: 'Description'),
                     onChanged: (value) {
                       updateSelection(index, value, remarksChoose);
                     },
@@ -80,6 +110,7 @@ class InitialChecks extends GetxController {
               listClear();
               descriptionAdd();
               listAdd();
+
               Navigator.pop(context);
             } else {
               showDialog(
@@ -96,29 +127,36 @@ class InitialChecks extends GetxController {
     ).showModal(context);
   }
 
-  var selectionsChoose = List<String>.filled(9, '').obs;
-  var remarksChoose = List<String>.filled(9, '').obs;
+  var selectionsChoose = List<String>.filled(12, '').obs;
+  var remarksChoose = List<String>.filled(12, '').obs;
+  var additionalChoose = List<String>.filled(12, '').obs;
 
-  var selections = List<String>.filled(9, '').obs;
-  var remarks = List<String>.filled(9, '').obs;
+  var selections = List<String>.filled(12, '').obs;
+  var remarks = List<String>.filled(12, '').obs;
+  var additional = List<String>.filled(12, '').obs;
 
   var isAllFieldsFilled = false.obs;
 
   List<String> ListData = [
-    'การทำงานระบบแตร, และระบบพัดลมระบายอากาศ',
-    'ป้ายเเละสติ๊กเกอร์ อุปกรณ์เซฟตี้(ไฟ Warning, Head เเละ Safety Belt',
-    'การบังคับเลี้ยว, พวงมาลัยเเละขับเคลื่อนหลัก',
-    'ปุ่ม Emergency เบรก/ประสิทธิภาพเบรก',
-    "แป้นเหยียบเซฟตี้/ เบรกมือ/ Dead man's handle",
-    'ฟังชั่นระบบไฮดรอลิค,ยก,สไลด์,กระดก,เลื่อนงานซ้าย-ขวา,หมุนงา(Mini mast)',
-    'ทดสอบ ระบบ Parking brake',
-    'เช็คสภาพไฟ, Cover',
-    'สภาพเเละความสะอาดโดยทั่วไปรอบตัวรถ',
+    'Tray',
+    'Container',
+    'Connector',
+    'Vent Plug',
+    'Cover',
+    'Terminal',
+    'Cable+Plug',
+    'Voltage',
+    'Sp.Gr.',
+    'Temperature',
+    'Acid',
+    'Plates',
   ];
-  List<String> typeData = ['I'];
+  List<String> typeData = [''];
   bool checkAllFieldsFilled() {
     for (int i = 0; i < selectionsChoose.length; i++) {
-      if (selectionsChoose[i] != '' || remarksChoose[i] != '') {
+      if (selectionsChoose[i] != '' ||
+          remarksChoose[i] != '' ||
+          additionalChoose[i] != '') {
         isAllFieldsFilled.value = true;
         break;
       }
@@ -129,10 +167,12 @@ class InitialChecks extends GetxController {
 
   void chooseAdd() {
     selectionsChoose.addAll(selections);
+    additionalChoose.addAll(additional);
   }
 
   void chooseClear() {
     selectionsChoose.clear();
+    additionalChoose.clear();
   }
 
   void descriptionAdd() {
@@ -145,9 +185,11 @@ class InitialChecks extends GetxController {
 
   void listAdd() {
     selections.assignAll(selectionsChoose);
+    additional.assignAll(additionalChoose);
   }
 
   void listClear() {
     selections.clear();
+    additional.clear();
   }
 }

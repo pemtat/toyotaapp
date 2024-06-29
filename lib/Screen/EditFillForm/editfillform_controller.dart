@@ -67,8 +67,9 @@ class EditFillformController extends GetxController {
       fault.value.text = reportData.faultReport ?? '';
       errorCode.value.text = reportData.errorCodeReport ?? '';
       workorderNumber.value.text = reportData.orderNo ?? '';
-      if (reportData.rCode!.isNotEmpty)
+      if (reportData.rCode!.isNotEmpty) {
         rcodeController.rCode.add(reportData.rCode ?? '');
+      }
       fieldServiceReport.add(reportData.fieldReport ?? '');
       List<String> newList = reportData.rCode!.split(',');
       rcodeController.rCodeChoose.addAll(newList);
@@ -80,8 +81,9 @@ class EditFillformController extends GetxController {
 
       newList = reportData.processStaff!.split(',');
       repairStaffController.repairStaffChoose.addAll(newList);
-      if (reportData.wCode!.isNotEmpty)
+      if (reportData.wCode!.isNotEmpty) {
         wcodeController.wCode.add(reportData.wCode ?? '');
+      }
       rPController.repairProcedureList.add(RepairProcedureModel(
         repairProcedure: reportData.produre ?? '',
         causeProblem: reportData.problem ?? '',
@@ -114,10 +116,12 @@ class EditFillformController extends GetxController {
                 additional: 1));
           }
         }
-      if (reportData.repairResult!.isNotEmpty)
+      if (reportData.repairResult!.isNotEmpty) {
         repairResultController.repairResult.add(reportData.repairResult ?? '');
-      if (reportData.processStaff!.isNotEmpty)
+      }
+      if (reportData.processStaff!.isNotEmpty) {
         repairStaffController.repairStaff.add(reportData.processStaff ?? '');
+      }
       signatureController.value =
           TextEditingValue(text: reportData.signature ?? '');
     }

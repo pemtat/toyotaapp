@@ -33,7 +33,7 @@ class InputDecoration1 extends InputDecoration {
                   ),
                 ),
           focusedBorder: addtionalText
-              ? OutlineInputBorder(
+              ? const OutlineInputBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8),
                     bottomLeft: Radius.circular(8),

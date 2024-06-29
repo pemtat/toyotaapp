@@ -3,7 +3,6 @@ import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editfillform_view.dart';
-import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -97,9 +96,6 @@ class JobDetailView extends StatelessWidget {
             var issue = jobController.issueData.first;
             var subJob = jobController.subJobs.isNotEmpty
                 ? jobController.subJobs.first
-                : null;
-            var userData = jobController.userData.first.users!.isNotEmpty
-                ? jobController.userData.first.users!.first
                 : null;
             return SingleChildScrollView(
               child: Column(

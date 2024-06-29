@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Styles/inputdecoraton.dart';
@@ -9,7 +10,7 @@ import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class HydraulicmMotor extends GetxController {
+class MastChecks extends GetxController {
   int space = 24;
   int space2 = 8;
 
@@ -22,7 +23,7 @@ class HydraulicmMotor extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Hydraulic motor & Pump checks",
+              "Battery Checks",
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -36,13 +37,15 @@ class HydraulicmMotor extends GetxController {
         8.kH,
         ListView(
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           children: List.generate(ListData.length, (index) {
             return Obx(() {
               final TextEditingController controller =
                   TextEditingController(text: remarksChoose[index]);
               controller.selection = TextSelection.fromPosition(
                   TextPosition(offset: controller.text.length));
+              final TextEditingController additionalController =
+                  TextEditingController(text: additionalChoose[index]);
               controller.selection = TextSelection.fromPosition(
                   TextPosition(offset: controller.text.length));
               return Column(
@@ -62,19 +65,38 @@ class HydraulicmMotor extends GetxController {
                               ),
                             ]),
                       ),
-                      if (index == 1)
+                      6.wH,
+                      if (index == 0)
                         Expanded(
                           flex: 2,
                           child: Column(
                             children: [
-                              CheckBoxList(
-                                  selectionsChoose: additionalChoose,
-                                  index: index,
-                                  text: 'AC motor'),
-                              CheckBoxList(
-                                  selectionsChoose: additionalChoose,
-                                  index: index,
-                                  text: 'DC motor'),
+                              TextField(
+                                controller: additionalController,
+                                keyboardType: TextInputType.numberWithOptions(),
+                                decoration: InputDecoration1(text: 's.g.'),
+                                onChanged: (value) {
+                                  updateSelection(
+                                      index, value, additionalChoose);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (index == 2)
+                        Expanded(
+                          flex: 4,
+                          child: Column(
+                            children: [
+                              TextField(
+                                controller: additionalController,
+                                keyboardType: TextInputType.numberWithOptions(),
+                                decoration: InputDecoration1(text: 'mm'),
+                                onChanged: (value) {
+                                  updateSelection(
+                                      index, value, additionalChoose);
+                                },
+                              ),
                             ],
                           ),
                         ),
@@ -116,7 +138,7 @@ class HydraulicmMotor extends GetxController {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return const AlertDialog1();
+                  return AlertDialog1();
                 },
               );
             }
@@ -127,22 +149,22 @@ class HydraulicmMotor extends GetxController {
     ).showModal(context);
   }
 
-  var selectionsChoose = List<String>.filled(2, '').obs;
-  var remarksChoose = List<String>.filled(2, '').obs;
-  var additionalChoose = List<String>.filled(2, '').obs;
+  var selectionsChoose = List<String>.filled(3, '').obs;
+  var remarksChoose = List<String>.filled(3, '').obs;
+  var additionalChoose = List<String>.filled(3, '').obs;
 
-  var selections = List<String>.filled(2, '').obs;
-  var remarks = List<String>.filled(2, '').obs;
-  var additional = List<String>.filled(2, '').obs;
+  var selections = List<String>.filled(3, '').obs;
+  var remarks = List<String>.filled(3, '').obs;
+  var additional = List<String>.filled(3, '').obs;
 
   var isAllFieldsFilled = false.obs;
 
-  // ignore: non_constant_identifier_names
   List<String> ListData = [
-    'เป่าฝุ่นทำความสะอาด พร้อมขันแน่นจุดยึดที่เกี่ยวข้องมอเตอร์',
-    'ตรวจเช็คแปรงถ่าน, การสึกหรอหน้าคอมมิวฯ'
+    'การยึดของโซ่ ระยะโซ่ยึดที่วัดได้',
+    'เช็คตัวยึดโซ่ทั้งสองด้าน ทุกเส้น เเละทำความสะอาดโซ่ทุกเส้น',
+    'ตรวจเช็ค สภาพ/ความหนาที่โคนงา',
   ];
-  List<String> typeData = ['W,T,H', 'I'];
+  List<String> typeData = ['M', 'I,W', 'I,M'];
   bool checkAllFieldsFilled() {
     for (int i = 0; i < selectionsChoose.length; i++) {
       if (selectionsChoose[i] != '' ||
@@ -158,29 +180,27 @@ class HydraulicmMotor extends GetxController {
 
   void chooseAdd() {
     selectionsChoose.addAll(selections);
-    additionalChoose.addAll(additional);
   }
 
   void chooseClear() {
     selectionsChoose.clear();
-    additionalChoose.clear();
   }
 
   void descriptionAdd() {
     remarks.assignAll(remarksChoose);
+    additional.assignAll(additionalChoose);
   }
 
   void descriptionClear() {
     remarks.clear();
+    additional.clear();
   }
 
   void listAdd() {
     selections.assignAll(selectionsChoose);
-    additional.assignAll(additionalChoose);
   }
 
   void listClear() {
     selections.clear();
-    additional.clear();
   }
 }

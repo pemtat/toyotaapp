@@ -250,7 +250,7 @@ class CheckBoxList extends StatelessWidget {
     return Obx(() => Row(
           children: [
             Checkbox(
-              visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+              visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
               activeColor: red1,
               value: selectionsChoose[index] == text,
               onChanged: (value) {

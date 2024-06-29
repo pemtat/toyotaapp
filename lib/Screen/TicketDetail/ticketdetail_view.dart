@@ -13,7 +13,6 @@ import 'package:toyotamobile/Widget/moredetail.widget.dart';
 import 'package:toyotamobile/Widget/noteItem_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
-import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
@@ -65,9 +64,6 @@ class TicketDetailView extends StatelessWidget {
             var issue = ticketController.issueData.first;
             var subJob = ticketController.subJobs.isNotEmpty
                 ? ticketController.subJobs.first
-                : null;
-            var userData = ticketController.userData.first.users!.isNotEmpty
-                ? ticketController.userData.first.users!.first
                 : null;
             return SingleChildScrollView(
               child: Column(
@@ -248,7 +244,7 @@ class TicketDetailView extends StatelessWidget {
                               BoxContainer(
                                 children: [
                                   Text(
-                                    "Start Time : ${subJob.timeStart == null ? '- ' : subJob.timeStart}",
+                                    "Start Time : ${subJob.timeStart ?? '- '}",
                                     style: TextStyleList.text6,
                                   ),
                                   8.kH,
@@ -266,7 +262,7 @@ class TicketDetailView extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "End Time : ${subJob.timeEnd == null ? '-' : subJob.timeEnd}",
+                                        "End Time : ${subJob.timeEnd ?? '-'}",
                                         style: TextStyleList.text6,
                                       ),
                                       8.kH,
