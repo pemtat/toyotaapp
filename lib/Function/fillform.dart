@@ -64,4 +64,5 @@ void updateSelectionSub(
   int subIndex,
 ) {
   selectionsChoose[index][subIndex] = value;
+  selectionsChoose.refresh();
 }

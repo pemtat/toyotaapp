@@ -22,7 +22,7 @@ class DriveMotorChecks extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Auxiliary Motor (Raymond)",
+              "Drive Motor Checks",
               style: TextStyleList.subheading,
             ),
             InkWell(

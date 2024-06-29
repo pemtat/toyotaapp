@@ -17,24 +17,9 @@ class VnaOm extends GetxController {
   void checkModal(BuildContext context) {
     chooseClear();
     chooseAdd();
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: 'VNA เเละ OM / List for VNA & OME model',
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "VNA เเละ OM / List for VNA & OME model",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset("assets/x.png"),
-            ),
-          ],
-        ),
-        8.kH,
         ListView(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),

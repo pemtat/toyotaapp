@@ -17,23 +17,9 @@ class ChassisChecks extends GetxController {
   void checkModal(BuildContext context) {
     chooseClear();
     chooseAdd();
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: "Chassis Checks",
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Chassis Checks",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset("assets/x.png"),
-            ),
-          ],
-        ),
         8.kH,
         ListView(
           shrinkWrap: true,

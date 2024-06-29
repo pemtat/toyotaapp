@@ -11,10 +11,12 @@ class ListChecksWidget extends StatelessWidget {
   final RxList<String> selection;
   final RxList<String> remarkSelection;
   final List<String> listSelection;
+  final List<String>? unitList;
   final RxBool show;
   final RxList<String>? additional;
   final Function(BuildContext) showModal;
   final String? unit;
+  final RxList<List<String>>? additional2;
 
   const ListChecksWidget(
       {super.key,
@@ -22,6 +24,8 @@ class ListChecksWidget extends StatelessWidget {
       required this.remarkSelection,
       required this.listSelection,
       required this.showModal,
+      this.unitList,
+      this.additional2,
       this.additional,
       this.unit,
       required this.show});
@@ -61,19 +65,31 @@ class ListChecksWidget extends StatelessWidget {
                   final part = selection[index];
                   final remark = remarkSelection[index];
 
-                  return additional != null
+                  return additional2 != null && additional != null
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             if (part != '' ||
                                 remark != '' ||
-                                additional![index] != '')
+                                additional![index] != '' ||
+                                additional2![index][0] != '' ||
+                                additional2![index][1] != '')
                               Row(
                                 children: [
                                   Text(
                                     list,
                                     style: TextStyleList.subtext1,
                                   ),
+                                  if (additional2![index][0] != '')
+                                    Text(
+                                      ' (${additional2![index][0]}${unitList![0]})',
+                                      style: TextStyleList.subtext7,
+                                    ),
+                                  if (additional2![index][1] != '')
+                                    Text(
+                                      ' (${additional2![index][1]}${unitList![1]})',
+                                      style: TextStyleList.subtext7,
+                                    ),
                                   if (additional![index] != '')
                                     Text(
                                       ' (${additional![index]}$unit)',
@@ -83,7 +99,9 @@ class ListChecksWidget extends StatelessWidget {
                               ),
                             if (part != '' ||
                                 remark != '' ||
-                                additional![index] != '')
+                                additional![index] != '' ||
+                                additional2![index][0] != '' ||
+                                additional2![index][1] != '')
                               space2.kH,
                             if (part != '')
                               Text(
@@ -97,27 +115,63 @@ class ListChecksWidget extends StatelessWidget {
                             if (remark != '') space.kH,
                           ],
                         )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (part != '' || remark != '')
-                              Text(
-                                list,
-                                style: TextStyleList.subtext1,
-                              ),
-                            if (part != '' || remark != '') space2.kH,
-                            if (part != '')
-                              Text(
-                                part,
-                                style: TextStyleList.text15,
-                              ),
-                            if (part != '') space2.kH,
-                            if (remark != '')
-                              ShowTextFieldWidget(
-                                  text: remark, hintText: remark),
-                            if (remark != '') space.kH,
-                          ],
-                        );
+                      : additional != null
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (part != '' ||
+                                    remark != '' ||
+                                    additional![index] != '')
+                                  Row(
+                                    children: [
+                                      Text(
+                                        list,
+                                        style: TextStyleList.subtext1,
+                                      ),
+                                      if (additional![index] != '')
+                                        Text(
+                                          ' (${additional![index]}$unit)',
+                                          style: TextStyleList.subtext7,
+                                        ),
+                                    ],
+                                  ),
+                                if (part != '' ||
+                                    remark != '' ||
+                                    additional![index] != '')
+                                  space2.kH,
+                                if (part != '')
+                                  Text(
+                                    part,
+                                    style: TextStyleList.text15,
+                                  ),
+                                if (part != '') space2.kH,
+                                if (remark != '')
+                                  ShowTextFieldWidget(
+                                      text: remark, hintText: remark),
+                                if (remark != '') space.kH,
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (part != '' || remark != '')
+                                  Text(
+                                    list,
+                                    style: TextStyleList.subtext1,
+                                  ),
+                                if (part != '' || remark != '') space2.kH,
+                                if (part != '')
+                                  Text(
+                                    part,
+                                    style: TextStyleList.text15,
+                                  ),
+                                if (part != '') space2.kH,
+                                if (remark != '')
+                                  ShowTextFieldWidget(
+                                      text: remark, hintText: remark),
+                                if (remark != '') space.kH,
+                              ],
+                            );
                 },
               ),
             ),

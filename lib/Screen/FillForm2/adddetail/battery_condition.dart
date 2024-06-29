@@ -13,23 +13,9 @@ class BatteryCondition extends GetxController {
   void batteryConditionModal(BuildContext context) {
     chooseClear();
     chooseAdd();
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: 'Battery Condition',
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Battery Condition",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset("assets/x.png"),
-            ),
-          ],
-        ),
         16.kH,
         Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),

@@ -23,7 +23,7 @@ class MastChecks extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Battery Checks",
+              "Mast Checks",
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -46,6 +46,10 @@ class MastChecks extends GetxController {
                   TextPosition(offset: controller.text.length));
               final TextEditingController additionalController =
                   additionalControllers[index];
+              final TextEditingController subController1 =
+                  index == 1 ? subControllers1[index] : TextEditingController();
+              final TextEditingController subController2 =
+                  index == 1 ? subControllers2[index] : TextEditingController();
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -70,12 +74,22 @@ class MastChecks extends GetxController {
                           child: Column(
                             children: [
                               TextField(
-                                controller: additionalController,
+                                controller: subController1,
                                 keyboardType: TextInputType.number,
-                                decoration: InputDecoration1(text: 's.g.'),
+                                decoration: InputDecoration1(text: unitList[0]),
                                 onChanged: (value) {
-                                  updateSelection(
-                                      index, value, additionalChoose);
+                                  updateSelectionSub(
+                                      index, value, additionalChoose2, 0);
+                                },
+                              ),
+                              6.kH,
+                              TextField(
+                                controller: subController2,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration1(text: unitList[1]),
+                                onChanged: (value) {
+                                  updateSelectionSub(
+                                      index, value, additionalChoose2, 1);
                                 },
                               ),
                             ],
@@ -150,16 +164,31 @@ class MastChecks extends GetxController {
   var selectionsChoose = List<String>.filled(3, '').obs;
   var remarksChoose = List<String>.filled(3, '').obs;
   var additionalChoose = List<String>.filled(3, '').obs;
-
+  var additionalChoose2 =
+      List<List<String>>.generate(6, (_) => List.filled(2, '')).obs;
   var selections = List<String>.filled(3, '').obs;
   var remarks = List<String>.filled(3, '').obs;
   var additional = List<String>.filled(3, '').obs;
-
+  var additional2 =
+      List<List<String>>.generate(6, (_) => List.filled(2, '')).obs;
   var isAllFieldsFilled = false.obs;
+  final List<TextEditingController> subControllers1 = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
+
+  final List<TextEditingController> subControllers2 = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
   final List<TextEditingController> additionalControllers = List.generate(
     6,
     (index) => TextEditingController(),
   );
+  List<String> unitList = [
+    '% Free lift',
+    '% Main lift',
+  ];
   List<String> ListData = [
     'การยึดของโซ่ ระยะโซ่ยึดที่วัดได้',
     'เช็คตัวยึดโซ่ทั้งสองด้าน ทุกเส้น เเละทำความสะอาดโซ่ทุกเส้น',
@@ -170,7 +199,9 @@ class MastChecks extends GetxController {
     for (int i = 0; i < selectionsChoose.length; i++) {
       if (selectionsChoose[i] != '' ||
           remarksChoose[i] != '' ||
-          additionalChoose[i] != '') {
+          additionalChoose[i] != '' ||
+          additionalChoose2[i][0] != '' ||
+          additionalChoose2[i][1] != '') {
         isAllFieldsFilled.value = true;
         break;
       }
@@ -190,11 +221,13 @@ class MastChecks extends GetxController {
   void descriptionAdd() {
     remarks.assignAll(remarksChoose);
     additional.assignAll(additionalChoose);
+    additional2.assignAll(additionalChoose2);
   }
 
   void descriptionClear() {
     remarks.clear();
     additional.clear();
+    additional2.clear();
   }
 
   void listAdd() {

@@ -17,24 +17,9 @@ class BatteryChecks extends GetxController {
   void checkModal(BuildContext context) {
     chooseClear();
     chooseAdd();
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: 'Battery Checks',
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Battery Checks",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset("assets/x.png"),
-            ),
-          ],
-        ),
-        8.kH,
         ListView(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
@@ -47,6 +32,10 @@ class BatteryChecks extends GetxController {
 
               final TextEditingController additionalController =
                   additionalControllers[index];
+              final TextEditingController subController1 =
+                  index == 1 ? subControllers1[index] : TextEditingController();
+              final TextEditingController subController2 =
+                  index == 1 ? subControllers2[index] : TextEditingController();
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -87,22 +76,22 @@ class BatteryChecks extends GetxController {
                           child: Column(
                             children: [
                               TextField(
-                                controller: additionalController,
+                                controller: subController1,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration1(text: 'v. Unload'),
                                 onChanged: (value) {
-                                  updateSelection(
-                                      index, value, additionalChoose);
+                                  updateSelectionSub(
+                                      index, value, additionalChoose2, 0);
                                 },
                               ),
                               6.kH,
                               TextField(
-                                controller: additionalController,
+                                controller: subController2,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration1(text: 'v. Load'),
                                 onChanged: (value) {
-                                  updateSelection(
-                                      index, value, additionalChoose);
+                                  updateSelectionSub(
+                                      index, value, additionalChoose2, 1);
                                 },
                               ),
                             ],
@@ -160,13 +149,25 @@ class BatteryChecks extends GetxController {
   var selectionsChoose = List<String>.filled(6, '').obs;
   var remarksChoose = List<String>.filled(6, '').obs;
   var additionalChoose = List<String>.filled(6, '').obs;
+  var additionalChoose2 =
+      List<List<String>>.generate(6, (_) => List.filled(2, '')).obs;
 
   var selections = List<String>.filled(6, '').obs;
   var remarks = List<String>.filled(6, '').obs;
   var additional = List<String>.filled(6, '').obs;
+  var additional2 =
+      List<List<String>>.generate(6, (_) => List.filled(2, '')).obs;
 
   var isAllFieldsFilled = false.obs;
+  final List<TextEditingController> subControllers1 = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
 
+  final List<TextEditingController> subControllers2 = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
   final List<TextEditingController> additionalControllers = List.generate(
     6,
     (index) => TextEditingController(),
@@ -180,12 +181,19 @@ class BatteryChecks extends GetxController {
     "สภาพสายเคเบิ้ล, ทำความสะอาด ขั้วเเละถังแบตฯ",
     "ตรวจเช็คสภาพตัวล็อกแบตฯ",
   ];
+  List<String> unitList = [
+    'v. Unload',
+    'v. Load',
+  ];
+
   List<String> typeData = ['I,M', 'M', 'I', 'I', 'I,W', 'I'];
   bool checkAllFieldsFilled() {
     for (int i = 0; i < selectionsChoose.length; i++) {
       if (selectionsChoose[i] != '' ||
           remarksChoose[i] != '' ||
-          additionalChoose[i] != '') {
+          additionalChoose[i] != '' ||
+          additionalChoose2[i][0] != '' ||
+          additionalChoose2[i][1] != '') {
         isAllFieldsFilled.value = true;
         break;
       }
@@ -205,11 +213,13 @@ class BatteryChecks extends GetxController {
   void descriptionAdd() {
     remarks.assignAll(remarksChoose);
     additional.assignAll(additionalChoose);
+    additional2.assignAll(additionalChoose2);
   }
 
   void descriptionClear() {
     remarks.clear();
     additional.clear();
+    additional2.clear();
   }
 
   void listAdd() {

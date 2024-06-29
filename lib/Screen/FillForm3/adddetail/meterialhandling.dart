@@ -17,24 +17,9 @@ class MeterialHandling extends GetxController {
   void checkModal(BuildContext context) {
     chooseClear();
     chooseAdd();
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: 'Meterial Handling System Checks',
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Meterial Handling System Checks",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset("assets/x.png"),
-            ),
-          ],
-        ),
-        8.kH,
         ListView(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),

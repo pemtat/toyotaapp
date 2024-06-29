@@ -22,7 +22,7 @@ class SteeringMotor extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Hydraulic motor & Pump checks",
+              "Steering Motor & Hydraulic\nsteering system checks (CBE)",
               style: TextStyleList.subheading,
             ),
             InkWell(

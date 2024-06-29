@@ -18,7 +18,7 @@ class SparepartList extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Recommanded spare part ",
+              "Description Problem\n / Action and Result / \nRecommend spare part chaged",
               style: TextStyleList.subheading,
             ),
             InkWell(

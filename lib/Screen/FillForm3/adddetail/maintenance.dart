@@ -28,7 +28,7 @@ class Maintenance extends GetxController {
             ),
           ],
         ),
-        space.kH,
+        6.kH,
         ListView.builder(
           shrinkWrap: true,
           itemCount: chargingTypeList.length,

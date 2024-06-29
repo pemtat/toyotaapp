@@ -17,24 +17,9 @@ class PtPsOm extends GetxController {
   void checkModal(BuildContext context) {
     chooseClear();
     chooseAdd();
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: 'PT/PS เเละ OS / List for MHE class 3',
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "PT/PS เเละ OS / List for MHE class 3",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset("assets/x.png"),
-            ),
-          ],
-        ),
-        8.kH,
         ListView(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
