@@ -45,9 +45,7 @@ class MastChecks extends GetxController {
               controller.selection = TextSelection.fromPosition(
                   TextPosition(offset: controller.text.length));
               final TextEditingController additionalController =
-                  TextEditingController(text: additionalChoose[index]);
-              controller.selection = TextSelection.fromPosition(
-                  TextPosition(offset: controller.text.length));
+                  additionalControllers[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -73,7 +71,7 @@ class MastChecks extends GetxController {
                             children: [
                               TextField(
                                 controller: additionalController,
-                                keyboardType: TextInputType.numberWithOptions(),
+                                keyboardType: TextInputType.number,
                                 decoration: InputDecoration1(text: 's.g.'),
                                 onChanged: (value) {
                                   updateSelection(
@@ -90,7 +88,7 @@ class MastChecks extends GetxController {
                             children: [
                               TextField(
                                 controller: additionalController,
-                                keyboardType: TextInputType.numberWithOptions(),
+                                keyboardType: TextInputType.number,
                                 decoration: InputDecoration1(text: 'mm'),
                                 onChanged: (value) {
                                   updateSelection(
@@ -158,7 +156,10 @@ class MastChecks extends GetxController {
   var additional = List<String>.filled(3, '').obs;
 
   var isAllFieldsFilled = false.obs;
-
+  final List<TextEditingController> additionalControllers = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
   List<String> ListData = [
     'การยึดของโซ่ ระยะโซ่ยึดที่วัดได้',
     'เช็คตัวยึดโซ่ทั้งสองด้าน ทุกเส้น เเละทำความสะอาดโซ่ทุกเส้น',

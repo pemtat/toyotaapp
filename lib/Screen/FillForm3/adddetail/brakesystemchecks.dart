@@ -45,9 +45,7 @@ class BreakSystemChecks extends GetxController {
               controller.selection = TextSelection.fromPosition(
                   TextPosition(offset: controller.text.length));
               final TextEditingController additionalController =
-                  TextEditingController(text: additionalChoose[index]);
-              controller.selection = TextSelection.fromPosition(
-                  TextPosition(offset: controller.text.length));
+                  additionalControllers[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -71,7 +69,7 @@ class BreakSystemChecks extends GetxController {
                           flex: 2,
                           child: TextField(
                             controller: additionalController,
-                            keyboardType: TextInputType.numberWithOptions(),
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration1(text: 'mm'),
                             onChanged: (value) {
                               updateSelection(index, value, additionalChoose);
@@ -136,7 +134,10 @@ class BreakSystemChecks extends GetxController {
   var additional = List<String>.filled(2, '').obs;
 
   var isAllFieldsFilled = false.obs;
-
+  final List<TextEditingController> additionalControllers = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
   List<String> ListData = [
     'เป่าฝุ่นทำความสะอาด พร้อมขันแน่นจุดยึดที่เกี่ยวข้องชุดเบรก',
     'การทำงานเบรก ความหนาของผ้าเบรก',

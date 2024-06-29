@@ -291,7 +291,7 @@ class FillFormView3 extends StatelessWidget {
                         showModal: breakSystemChecks.checkModal,
                         show: breakSystemChecks.isAllFieldsFilled,
                         additional: breakSystemChecks.additional,
-                        unit: '',
+                        unit: 'mm',
                       )
                     : const SizedBox())
               ],
@@ -364,7 +364,7 @@ class FillFormView3 extends StatelessWidget {
                         showModal: batteryChecks.checkModal,
                         show: batteryChecks.isAllFieldsFilled,
                         additional: batteryChecks.additional,
-                        unit: '',
+                        unit: 's.g.',
                       )
                     : const SizedBox())
               ],
@@ -437,7 +437,7 @@ class FillFormView3 extends StatelessWidget {
                         showModal: mastChecks.checkModal,
                         show: mastChecks.isAllFieldsFilled,
                         additional: mastChecks.additional,
-                        unit: '',
+                        unit: 'mm',
                       )
                     : const SizedBox())
               ],
@@ -461,7 +461,7 @@ class FillFormView3 extends StatelessWidget {
                         showModal: ptPsOm.checkModal,
                         show: ptPsOm.isAllFieldsFilled,
                         additional: ptPsOm.additional,
-                        unit: '',
+                        unit: 'mm',
                       )
                     : const SizedBox())
               ],
@@ -486,7 +486,7 @@ class FillFormView3 extends StatelessWidget {
                         showModal: vnaOm.checkModal,
                         show: vnaOm.isAllFieldsFilled,
                         additional: vnaOm.additional,
-                        unit: '',
+                        unit: 'mm',
                       )
                     : const SizedBox())
               ],

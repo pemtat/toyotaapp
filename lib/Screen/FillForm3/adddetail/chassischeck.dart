@@ -44,10 +44,9 @@ class ChassisChecks extends GetxController {
                   TextEditingController(text: remarksChoose[index]);
               controller.selection = TextSelection.fromPosition(
                   TextPosition(offset: controller.text.length));
+
               final TextEditingController additionalController =
-                  TextEditingController(text: additionalChoose[index]);
-              controller.selection = TextSelection.fromPosition(
-                  TextPosition(offset: controller.text.length));
+                  additionalControllers[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -71,7 +70,7 @@ class ChassisChecks extends GetxController {
                           flex: 2,
                           child: TextField(
                             controller: additionalController,
-                            keyboardType: TextInputType.numberWithOptions(),
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration1(text: 'mm'),
                             onChanged: (value) {
                               updateSelection(index, value, additionalChoose);
@@ -136,7 +135,10 @@ class ChassisChecks extends GetxController {
   var additional = List<String>.filled(5, '').obs;
 
   var isAllFieldsFilled = false.obs;
-
+  final List<TextEditingController> additionalControllers = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
   List<String> ListData = [
     'ตรวจเช็คสกรู,นอต, ยึด, Cover เเละชุดล้อ พร้อมหล่อลื่น',
     'สภาพตัวรถ(บุบ,ฉึก,ถลอก)',

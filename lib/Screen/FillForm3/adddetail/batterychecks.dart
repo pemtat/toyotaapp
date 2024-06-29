@@ -44,10 +44,9 @@ class BatteryChecks extends GetxController {
                   TextEditingController(text: remarksChoose[index]);
               controller.selection = TextSelection.fromPosition(
                   TextPosition(offset: controller.text.length));
+
               final TextEditingController additionalController =
-                  TextEditingController(text: additionalChoose[index]);
-              controller.selection = TextSelection.fromPosition(
-                  TextPosition(offset: controller.text.length));
+                  additionalControllers[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -73,7 +72,6 @@ class BatteryChecks extends GetxController {
                             children: [
                               TextField(
                                 controller: additionalController,
-                                keyboardType: TextInputType.numberWithOptions(),
                                 decoration: InputDecoration1(text: 's.g.'),
                                 onChanged: (value) {
                                   updateSelection(
@@ -90,7 +88,7 @@ class BatteryChecks extends GetxController {
                             children: [
                               TextField(
                                 controller: additionalController,
-                                keyboardType: TextInputType.numberWithOptions(),
+                                keyboardType: TextInputType.number,
                                 decoration: InputDecoration1(text: 'v. Unload'),
                                 onChanged: (value) {
                                   updateSelection(
@@ -100,7 +98,7 @@ class BatteryChecks extends GetxController {
                               6.kH,
                               TextField(
                                 controller: additionalController,
-                                keyboardType: TextInputType.numberWithOptions(),
+                                keyboardType: TextInputType.number,
                                 decoration: InputDecoration1(text: 'v. Load'),
                                 onChanged: (value) {
                                   updateSelection(
@@ -168,6 +166,11 @@ class BatteryChecks extends GetxController {
   var additional = List<String>.filled(6, '').obs;
 
   var isAllFieldsFilled = false.obs;
+
+  final List<TextEditingController> additionalControllers = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
 
   List<String> ListData = [
     'ตรวจเช็คระดับ น้ำกลั่น ค่า ถ.พ,',

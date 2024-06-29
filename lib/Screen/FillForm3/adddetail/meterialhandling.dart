@@ -44,8 +44,6 @@ class MeterialHandling extends GetxController {
                   TextEditingController(text: remarksChoose[index]);
               controller.selection = TextSelection.fromPosition(
                   TextPosition(offset: controller.text.length));
-              final TextEditingController additionalController =
-                  TextEditingController(text: additionalChoose[index]);
               controller.selection = TextSelection.fromPosition(
                   TextPosition(offset: controller.text.length));
               return Column(
