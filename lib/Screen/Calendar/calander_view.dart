@@ -252,8 +252,6 @@ class CalendarView extends StatelessWidget {
                                               ticketId: event['ticketid'],
                                             ))
                                         : Get.to(() => JobDetailViewPM(
-                                              data:
-                                                  jobController.pmItems[index],
                                               ticketId: jobController
                                                   .pmItems[index].id
                                                   .toString(),

@@ -5,11 +5,11 @@ import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
-import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -21,7 +21,7 @@ class JobDetailControllerPM extends GetxController {
   final notes = TextEditingController().obs;
   var notesFiles = <Notes>[].obs;
   final comment = TextEditingController().obs;
-
+  var reportList = <BatteryReportModel>[].obs;
   var isPicking = false.obs;
   var issueData = [].obs;
   var attatchments = <Map<String, dynamic>>[].obs;
@@ -31,6 +31,8 @@ class JobDetailControllerPM extends GetxController {
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
+  var jobId;
+
   PmModel? pmData;
   var pdfList = <Map<String, dynamic>>[].obs;
   var status = RxString('');
@@ -44,9 +46,12 @@ class JobDetailControllerPM extends GetxController {
   final HomeController jobController = Get.put(HomeController());
   final BottomBarController bottomController = Get.put(BottomBarController());
 
-  void fetchData(String ticketId, PmModel data) async {
+  void fetchData(String ticketId) async {
+    jobId = ticketId;
     final String apiUrl = getTicketbyId(ticketId);
+
     String? token = await getToken();
+    fetchBatteryReportData(jobId, token ?? '', reportList);
     fetchPdfData(ticketId, token ?? '', pdfList);
     final response = await http.get(
       Uri.parse(apiUrl),
@@ -54,7 +59,6 @@ class JobDetailControllerPM extends GetxController {
         'Authorization': '$token',
       },
     );
-    pmData = data;
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
@@ -62,11 +66,8 @@ class JobDetailControllerPM extends GetxController {
       List<Issues>? issuesList = ticketModel.issues;
       issuesList!.map((issue) {
         issueId = issue.id;
-        fetchReadAttachment(issueId, token ?? '', issue.attachments,
-            attachmentsData, attatchments);
-
-        fetchNotesPic(issue.notes, notesFiles, notePic);
-        checkWarranty(pmData!.serialNo ?? '', warrantyInfoList);
+        checkWarranty(
+            issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
       }).toList();
       issueData.value = issuesList;
     } else {}
@@ -91,7 +92,6 @@ class JobDetailControllerPM extends GetxController {
     if (response.statusCode == 200) {
       jobController.fetchDataFromAssignJob();
       bottomController.currentIndex.value = 0;
-      Get.offAll(() => BottomBarView());
     }
   }
 

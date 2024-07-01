@@ -22,7 +22,7 @@ class BatteryChecks extends GetxController {
       children: [
         ListView(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: List.generate(ListData.length, (index) {
             return Obx(() {
               final TextEditingController controller =
@@ -135,7 +135,7 @@ class BatteryChecks extends GetxController {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return AlertDialog1();
+                  return const AlertDialog1();
                 },
               );
             }

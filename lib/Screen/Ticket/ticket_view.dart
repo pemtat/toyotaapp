@@ -234,8 +234,8 @@ class TicketView extends StatelessWidget {
                                   return InkWell(
                                     onTap: () {
                                       Get.to(() => JobDetailViewPM(
-                                          ticketId: job.id.toString(),
-                                          data: job));
+                                            ticketId: job.id.toString(),
+                                          ));
                                     },
                                     child: PmItemWidget(
                                       job: job,

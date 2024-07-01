@@ -105,7 +105,7 @@ class Issues {
         : null;
     eta = json['eta'] != null ? Resolution.fromJson(json['eta']) : null;
     sticky = json['sticky'];
-    dueDate = json['dueDate'];
+    dueDate = json['due_date'];
     serialNo = 'CE389879';
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -182,6 +182,16 @@ class Issues {
       data['history'] = history!.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  String? getCustomFieldValue(String fieldName) {
+    if (customFields == null) return null;
+    for (var field in customFields!) {
+      if (field.field?.name == fieldName) {
+        return field.value;
+      }
+    }
+    return null;
   }
 }
 

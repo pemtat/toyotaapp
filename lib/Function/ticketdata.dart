@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
+import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
@@ -177,6 +178,66 @@ Future<void> fetchReportData(
       }).toList();
 
       additionalReportList.value = loadedReports;
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> fetchBatteryReportData(
+  String id,
+  String token,
+  RxList<BatteryReportModel> reportList,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getBatteryReportById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      String responseBody = response.body;
+      Map<String, dynamic>? responseData = jsonDecode(responseBody);
+      BtrMaintenance? btrMaintenance;
+      List<BtrSpareparts>? btrSpareparts;
+      List<BtrConditions>? btrConditions;
+      List<SpecicVoltageCheck>? specicVoltageCheck;
+
+      if (responseData != null) {
+        btrMaintenance = responseData['btr_maintenance'] != null
+            ? BtrMaintenance.fromJson(responseData['btr_maintenance'])
+            : null;
+
+        btrSpareparts = responseData['btr_spareparts'] != null
+            ? List<BtrSpareparts>.from(responseData['btr_spareparts']
+                .map((x) => BtrSpareparts.fromJson(x)))
+            : [];
+
+        btrConditions = responseData['btr_conditions'] != null
+            ? List<BtrConditions>.from(responseData['btr_conditions']
+                .map((x) => BtrConditions.fromJson(x)))
+            : [];
+
+        specicVoltageCheck = responseData['specic_voltage_check'] != null
+            ? List<SpecicVoltageCheck>.from(responseData['specic_voltage_check']
+                .map((x) => SpecicVoltageCheck.fromJson(x)))
+            : [];
+      } else {
+        print('No data found');
+      }
+
+      BatteryReportModel batteryReport = BatteryReportModel(
+        btrMaintenance: btrMaintenance,
+        btrSpareparts: btrSpareparts,
+        btrConditions: btrConditions,
+        specicVoltageCheck: specicVoltageCheck,
+      );
+
+      reportList.add(batteryReport);
     } else {
       print('Failed to load data: ${response.statusCode}');
     }

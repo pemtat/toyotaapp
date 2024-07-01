@@ -397,7 +397,7 @@ class JobDetailView extends StatelessWidget {
                     'Not yet',
                     'Yes, Completed');
               },
-              text: 'Complete Investigating'),
+              text: 'Complete'),
         ),
       ),
     );

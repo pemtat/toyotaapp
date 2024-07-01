@@ -212,7 +212,6 @@ class HomeView extends StatelessWidget {
                           onTap: () {
                             Get.to(() => JobDetailViewPM(
                                   ticketId: job.id.toString(),
-                                  data: job,
                                 ));
                           },
                           child: PmItemWidget(

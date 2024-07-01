@@ -43,7 +43,7 @@ class BatteryCondition extends GetxController {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${ListData[index]}',
+                                ListData[index],
                                 style: TextStyleList.subtitle3,
                               ),
                             ]),

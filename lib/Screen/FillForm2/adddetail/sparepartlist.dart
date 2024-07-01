@@ -312,6 +312,7 @@ class SparepartList extends GetxController {
         quantity: quantity.value,
         changeNow: changeNowValue,
         changeOnPM: changeOnPMValue,
+        relationId: '',
         additional: 0));
   }
 

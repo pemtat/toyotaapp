@@ -63,6 +63,7 @@ class LoginController extends GetxController {
         final tokenResponseData = json.decode(response.body);
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.clear();
         prefs.setString('access_token', accessToken);
         prefs.setString('token_response', json.encode(tokenResponseData));
         String? tokenResponse = prefs.getString('token_response');

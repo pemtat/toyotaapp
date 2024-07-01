@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/additional_spare.dart';
-import 'package:toyotamobile/Screen/FillForm/adddetail/repair_result.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/batterycondition.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/forklife_information.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/repairpm.dart';
@@ -32,27 +31,29 @@ import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 
 class FillFormView2 extends StatelessWidget {
-  const FillFormView2({super.key});
+  final String jobId;
+  FillFormView2({super.key, required this.jobId}) {
+    fillformController2.fetchData(jobId);
+  }
+  final BatteryInformation batteryInfoController =
+      Get.put(BatteryInformation());
+  final BatteryUsage batteryUsageController = Get.put(BatteryUsage());
+  final SpecicGravity specicGravityController = Get.put(SpecicGravity());
+  final CorrectiveAction correctiveActionController =
+      Get.put(CorrectiveAction());
+  final SparepartList sparePartListController = Get.put(SparepartList());
+  final AdditSparepartList additSparePartListController =
+      Get.put(AdditSparepartList());
+  final BatteryCondition batteryConditionController =
+      Get.put(BatteryCondition());
+  final FillformController2 fillformController2 =
+      Get.put(FillformController2());
+  final ForklifeInformation forkLifeInformation =
+      Get.put(ForklifeInformation());
+  final RepairPM repairPmController = Get.put(RepairPM());
 
   @override
   Widget build(BuildContext context) {
-    final BatteryInformation batteryInfoController =
-        Get.put(BatteryInformation());
-    final BatteryUsage batteryUsageController = Get.put(BatteryUsage());
-    final SpecicGravity specicGravityController = Get.put(SpecicGravity());
-    final CorrectiveAction correctiveActionController =
-        Get.put(CorrectiveAction());
-    final SparepartList sparePartListController = Get.put(SparepartList());
-    final AdditSparepartList additSparePartListController =
-        Get.put(AdditSparepartList());
-    Get.put(RepairResult());
-    final BatteryCondition batteryConditionController =
-        Get.put(BatteryCondition());
-    final FillformController2 fillformController2 =
-        Get.put(FillformController2());
-    final ForklifeInformation forkLifeInformation =
-        Get.put(ForklifeInformation());
-    final RepairPM repairPmController = Get.put(RepairPM());
     int space = 8;
 
     return Scaffold(
@@ -379,10 +380,7 @@ class FillFormView2 extends StatelessWidget {
           child: EndButton(
               onPressed: () {
                 fillformController2.showSaveDialog(
-                    context,
-                    'Successfully finished job on investigating!',
-                    'Not yet',
-                    'Yes, Completed');
+                    context, 'Are you confirm to save report?', 'No', 'Yes');
               },
               text: 'Save'),
         ),

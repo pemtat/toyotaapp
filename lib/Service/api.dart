@@ -28,6 +28,14 @@ String getCustomerInfoById(String customerId) {
   return '$urlFSM/api/customer/search/$customerId';
 }
 
+String createPeriodicReport() {
+  return '$url/api/rest/pm_jobs/create_pvt_maintenance';
+}
+
+String createBatteryReport() {
+  return '$url/api/rest/pm_jobs/create_btr_maintenance';
+}
+
 String updateIssueStatusById(int issueId) {
   return '$issue/$issueId';
 }
@@ -74,6 +82,10 @@ String getSubJobsByHandler(String id) {
 
 String getRepairReportById(String id) {
   return '$url/api/rest/jobs/jobs_report?id=$id';
+}
+
+String getBatteryReportById(String id) {
+  return '$url/api/rest/pm_jobs/btr_maintenance_data?job_id=$id';
 }
 
 String updateReportById(String id) {

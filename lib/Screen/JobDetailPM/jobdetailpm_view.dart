@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
-import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/FillForm3/fillform3_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
@@ -8,6 +8,7 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
@@ -25,18 +26,11 @@ import 'package:toyotamobile/Widget/warranty_widget.dart';
 // ignore: use_key_in_widget_constructors
 class JobDetailViewPM extends StatelessWidget {
   final String ticketId;
-  final String? jobId;
   final String? status;
-  final PmModel data;
   final JobDetailControllerPM jobController = Get.put(JobDetailControllerPM());
 
-  JobDetailViewPM(
-      {super.key,
-      required this.ticketId,
-      this.jobId,
-      this.status,
-      required this.data}) {
-    jobController.fetchData(ticketId, data);
+  JobDetailViewPM({super.key, required this.ticketId, this.status}) {
+    jobController.fetchData(ticketId);
   }
 
   @override
@@ -73,12 +67,17 @@ class JobDetailViewPM extends StatelessWidget {
                   }),
                   leading: const BackIcon(),
                 ),
-                Positioned(
-                  right: 15.0,
-                  top: 15,
-                  bottom: 0,
-                  child: Center(child: StatusButton(status: data.status ?? '')),
-                ),
+                Obx(() => jobController.issueData.isNotEmpty
+                    ? Positioned(
+                        right: 15.0,
+                        top: 15,
+                        bottom: 0,
+                        child: Center(
+                            child: StatusButton(
+                                status:
+                                    jobController.issueData.first.status.name)),
+                      )
+                    : Container()),
               ],
             ),
           ],
@@ -120,11 +119,13 @@ class JobDetailViewPM extends StatelessWidget {
                                   children: [
                                     PMJobInfo(
                                       ticketId: issue.id,
-                                      dateTime: data.dueDate ?? '',
+                                      dateTime: issue.dueDate ??
+                                          getFormattedDate(DateTime.now()),
                                       reporter: issue.reporter.name,
-                                      summary: 'ช่าง ${data.resourceName}',
+                                      summary:
+                                          'ช่าง ${issue.getCustomFieldValue("Customer Name")}',
                                       description:
-                                          'Service Zone :  ${data.serviceZoneCode ?? ''}',
+                                          'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
                                       more:
                                           jobController.moreTicketDetail.value,
                                     ),
@@ -147,8 +148,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                 var warrantyInfo = jobController
                                                     .warrantyInfoList.first;
                                                 return WarrantyBox(
-                                                    model: '-',
-                                                    serial: "415822",
+                                                    model: warrantyInfo.model,
+                                                    serial: warrantyInfo.serial,
                                                     status: warrantyInfo
                                                         .warrantyStatus,
                                                     filePdf: filePdf);
@@ -197,7 +198,7 @@ class JobDetailViewPM extends StatelessWidget {
                                               attachments:
                                                   jobController.imagesBefore,
                                               edit: true,
-                                              jobid: jobId ?? '',
+                                              jobid: ticketId,
                                               option: 'before',
                                             )
                                           : Container()),
@@ -208,7 +209,7 @@ class JobDetailViewPM extends StatelessWidget {
                                         jobController.isPicking,
                                         'before',
                                         ticketId,
-                                        jobId ?? ''),
+                                        ''),
                                   ),
                                   18.kH,
                                   Obx(() => jobController
@@ -253,7 +254,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                     attachments: jobController
                                                         .imagesAfter,
                                                     edit: true,
-                                                    jobid: jobId ?? '',
+                                                    jobid: ticketId,
                                                     option: 'after',
                                                   )
                                                 : Container()),
@@ -264,7 +265,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                   jobController.isPicking,
                                                   'after',
                                                   ticketId,
-                                                  jobId ?? ''),
+                                                  ''),
                                             ),
                                             6.kH,
                                           ],
@@ -285,41 +286,33 @@ class JobDetailViewPM extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Battery Maintenance Report'),
-                                      Obx(() => jobController
-                                              .addAttatchments.isNotEmpty
-                                          ? EditButton(
-                                              onTap: () {
-                                                Get.to(
-                                                    () => const FillFormView2(
-                                                        // ticketId: ticketId,
-                                                        // jobId: jobId ?? '',
+                                      Obx(() =>
+                                          jobController.reportList.isNotEmpty
+                                              ? EditButton(
+                                                  onTap: () {
+                                                    Get.to(() => FillFormView2(
+                                                          jobId: ticketId,
                                                         ));
-                                              },
-                                            )
-                                          : AddButton(
-                                              onTap: () {
-                                                Get.to(
-                                                    () => const FillFormView2(
-                                                        // ticketId: ticketId,
-                                                        // jobId: jobId ?? '',
+                                                  },
+                                                )
+                                              : AddButton(
+                                                  onTap: () {
+                                                    Get.to(() => FillFormView2(
+                                                          jobId: ticketId,
                                                         ));
-                                              },
-                                            )),
+                                                  },
+                                                )),
                                     ],
                                   ),
                                   Text(
                                     'Please fill the bettery maintenance report',
                                     style: TextStyleList.text16,
                                   ),
-                                  // Obx(() => jobController
-                                  //             .reportList.isNotEmpty ||
-                                  //         jobController
-                                  //             .additionalReportList.isNotEmpty
-                                  //     ? ShowRepairReport(
-                                  //         reportData: jobController.reportList,
-                                  //         additionalReportData: jobController
-                                  //             .additionalReportList)
-                                  //     : Container())
+                                  Obx(() => jobController.reportList.isNotEmpty
+                                      ? ShowBatteryReportWidget(
+                                          reportData: jobController.reportList,
+                                        )
+                                      : Container())
                                 ],
                               ),
                               8.kH,
@@ -392,7 +385,7 @@ class JobDetailViewPM extends StatelessWidget {
                     'Not yet',
                     'Yes, Completed');
               },
-              text: 'Complete Investigating'),
+              text: 'Complete'),
         ),
       ),
     );
