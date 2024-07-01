@@ -7,6 +7,7 @@ import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
+import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
@@ -22,6 +23,8 @@ class JobDetailControllerPM extends GetxController {
   var notesFiles = <Notes>[].obs;
   final comment = TextEditingController().obs;
   var reportList = <BatteryReportModel>[].obs;
+  var reportPreventiveList = <PreventivereportModel>[].obs;
+
   var isPicking = false.obs;
   var issueData = [].obs;
   var attatchments = <Map<String, dynamic>>[].obs;
@@ -47,11 +50,13 @@ class JobDetailControllerPM extends GetxController {
   final BottomBarController bottomController = Get.put(BottomBarController());
 
   void fetchData(String ticketId) async {
+    reportList = <BatteryReportModel>[].obs;
     jobId = ticketId;
     final String apiUrl = getTicketbyId(ticketId);
 
     String? token = await getToken();
     fetchBatteryReportData(jobId, token ?? '', reportList);
+    fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     fetchPdfData(ticketId, token ?? '', pdfList);
     final response = await http.get(
       Uri.parse(apiUrl),

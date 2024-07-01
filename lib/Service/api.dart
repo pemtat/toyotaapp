@@ -36,6 +36,10 @@ String createBatteryReport() {
   return '$url/api/rest/pm_jobs/create_btr_maintenance';
 }
 
+String createPreventiveReport() {
+  return '$url/api/rest/pm_jobs/create_pvt_maintenance';
+}
+
 String updateIssueStatusById(int issueId) {
   return '$issue/$issueId';
 }
@@ -86,6 +90,10 @@ String getRepairReportById(String id) {
 
 String getBatteryReportById(String id) {
   return '$url/api/rest/pm_jobs/btr_maintenance_data?job_id=$id';
+}
+
+String getPreventiveReportById(String id) {
+  return '$url/api/rest/pm_jobs/pvt_maintenance_data?job_id=$id';
 }
 
 String updateReportById(String id) {

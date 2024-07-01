@@ -87,7 +87,7 @@ class InitialChecks extends GetxController {
 
   var selections = List<String>.filled(9, '').obs;
   var remarks = List<String>.filled(9, '').obs;
-
+  var additional = List<String>.filled(9, '').obs;
   var isAllFieldsFilled = false.obs;
 
   List<String> ListData = [

@@ -9,6 +9,7 @@ import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
+import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
@@ -238,6 +239,66 @@ Future<void> fetchBatteryReportData(
       );
 
       reportList.add(batteryReport);
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> fetchPreventiveReportData(
+  String id,
+  String token,
+  RxList<PreventivereportModel> reportList,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getPreventiveReportById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      String responseBody = response.body;
+      Map<String, dynamic>? responseData = jsonDecode(responseBody);
+      PvtMaintenance? pvtMaintenance;
+      List<PvtCheckingTypeMaster>? pvtCheckingTypeMaster;
+      List<DarDetails>? darDetails;
+      List<MaintenanceRecords>? maintenanceRecords;
+
+      if (responseData != null) {
+        pvtMaintenance = responseData['pvt_maintenance'] is Map<String, dynamic>
+            ? PvtMaintenance.fromJson(responseData['pvt_maintenance'])
+            : null;
+
+        pvtCheckingTypeMaster = responseData['pvt_checking_type_master'] is List
+            ? List<PvtCheckingTypeMaster>.from(
+                responseData['pvt_checking_type_master']
+                    .map((x) => PvtCheckingTypeMaster.fromJson(x)))
+            : [];
+
+        darDetails = responseData['dar_details'] is List
+            ? List<DarDetails>.from(
+                responseData['dar_details'].map((x) => DarDetails.fromJson(x)))
+            : [];
+
+        maintenanceRecords = responseData['maintenance_records'] is List
+            ? List<MaintenanceRecords>.from(responseData['maintenance_records']
+                .map((x) => MaintenanceRecords.fromJson(x)))
+            : [];
+      } else {
+        print('No data found');
+      }
+
+      PreventivereportModel preventiveReport = PreventivereportModel(
+          pvtMaintenance: pvtMaintenance,
+          pvtCheckingTypeMaster: pvtCheckingTypeMaster,
+          darDetails: darDetails,
+          maintenanceRecords: maintenanceRecords);
+
+      reportList.add(preventiveReport);
     } else {
       print('Failed to load data: ${response.statusCode}');
     }

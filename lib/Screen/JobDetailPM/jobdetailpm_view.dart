@@ -9,6 +9,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.dart';
+import 'package:toyotamobile/Widget/JobDetail_widget/showpreventive_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
@@ -325,23 +326,19 @@ class JobDetailViewPM extends StatelessWidget {
                                       const TitleApp(
                                           text: 'Periodic Maintenance Report'),
                                       Obx(() => jobController
-                                              .addAttatchments.isNotEmpty
+                                              .reportPreventiveList.isNotEmpty
                                           ? EditButton(
                                               onTap: () {
-                                                Get.to(
-                                                    () => const FillFormView3(
-                                                        // ticketId: ticketId,
-                                                        // jobId: jobId ?? '',
-                                                        ));
+                                                Get.to(() => FillFormView3(
+                                                      jobId: ticketId,
+                                                    ));
                                               },
                                             )
                                           : AddButton(
                                               onTap: () {
-                                                Get.to(
-                                                    () => const FillFormView3(
-                                                        // ticketId: ticketId,
-                                                        // jobId: jobId ?? '',
-                                                        ));
+                                                Get.to(() => FillFormView3(
+                                                      jobId: ticketId,
+                                                    ));
                                               },
                                             )),
                                     ],
@@ -350,15 +347,13 @@ class JobDetailViewPM extends StatelessWidget {
                                     'Please fill the periodic maintenance report',
                                     style: TextStyleList.text16,
                                   ),
-                                  // Obx(() => jobController
-                                  //             .reportList.isNotEmpty ||
-                                  //         jobController
-                                  //             .additionalReportList.isNotEmpty
-                                  //     ? ShowRepairReport(
-                                  //         reportData: jobController.reportList,
-                                  //         additionalReportData: jobController
-                                  //             .additionalReportList)
-                                  //     : Container())
+                                  Obx(() => jobController
+                                          .reportPreventiveList.isNotEmpty
+                                      ? ShowPreventiveReportWidget(
+                                          reportData: jobController
+                                              .reportPreventiveList,
+                                        )
+                                      : Container())
                                 ],
                               ),
                             ],

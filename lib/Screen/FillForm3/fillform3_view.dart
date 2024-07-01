@@ -39,37 +39,35 @@ import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 
 class FillFormView3 extends StatelessWidget {
-  const FillFormView3({super.key});
+  final String jobId;
+  FillFormView3({super.key, required this.jobId}) {
+    fillformController3.fetchData(jobId);
+  }
+  final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());
+  final DriveMotorChecks driveMotorChecks = Get.put(DriveMotorChecks());
+  final InitialChecks initialChecks = Get.put(InitialChecks());
+  final BatteryChecks batteryChecks = Get.put(BatteryChecks());
+  final MeterialHandling meterialHandling = Get.put(MeterialHandling());
+  final MastChecks mastChecks = Get.put(MastChecks());
+  final PtPsOm ptPsOm = Get.put(PtPsOm());
+  final VnaOm vnaOm = Get.put(VnaOm());
+  final ForSpecial forSpecial = Get.put(ForSpecial());
+  final Safety safety = Get.put(Safety());
+  final SparepartList sparepartList = Get.put(SparepartList());
+  final ProcessStaff processStaff = Get.put(ProcessStaff());
+  final PowertrainChecks powertrainChecks = Get.put(PowertrainChecks());
+  final BreakSystemChecks breakSystemChecks = Get.put(BreakSystemChecks());
+  final ChassisChecks chassisChecks = Get.put(ChassisChecks());
+  final HydraulicmMotor hydraulicmMotor = Get.put(HydraulicmMotor());
+  final ControllerLogic controllerLogic = Get.put(ControllerLogic());
+  final ChargerChecks chargerChecks = Get.put(ChargerChecks());
+  final Maintenance maintenance = Get.put(Maintenance());
 
+  final FillformController3 fillformController3 =
+      Get.put(FillformController3());
+  final SteeringMotor steeringMotor = Get.put(SteeringMotor());
   @override
   Widget build(BuildContext context) {
-    final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());
-    final DriveMotorChecks driveMotorChecks = Get.put(DriveMotorChecks());
-    Get.put(SparepartList());
-
-    final InitialChecks initialChecks = Get.put(InitialChecks());
-    final BatteryChecks batteryChecks = Get.put(BatteryChecks());
-    final MeterialHandling meterialHandling = Get.put(MeterialHandling());
-    final MastChecks mastChecks = Get.put(MastChecks());
-    final PtPsOm ptPsOm = Get.put(PtPsOm());
-    final VnaOm vnaOm = Get.put(VnaOm());
-    final ForSpecial forSpecial = Get.put(ForSpecial());
-    final Safety safety = Get.put(Safety());
-    final SparepartList sparepartList = Get.put(SparepartList());
-    final ProcessStaff processStaff = Get.put(ProcessStaff());
-
-    final PowertrainChecks powertrainChecks = Get.put(PowertrainChecks());
-    final BreakSystemChecks breakSystemChecks = Get.put(BreakSystemChecks());
-    final ChassisChecks chassisChecks = Get.put(ChassisChecks());
-    final HydraulicmMotor hydraulicmMotor = Get.put(HydraulicmMotor());
-    final ControllerLogic controllerLogic = Get.put(ControllerLogic());
-    final ChargerChecks chargerChecks = Get.put(ChargerChecks());
-    final Maintenance maintenance = Get.put(Maintenance());
-
-    final FillformController3 fillformController3 =
-        Get.put(FillformController3());
-    final SteeringMotor steeringMotor = Get.put(SteeringMotor());
-
     int space = 8;
 
     return Scaffold(

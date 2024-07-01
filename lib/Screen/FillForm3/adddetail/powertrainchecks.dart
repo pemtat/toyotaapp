@@ -101,6 +101,7 @@ class PowertrainChecks extends GetxController {
 
   var selections = List<String>.filled(2, '').obs;
   var remarks = List<String>.filled(2, '').obs;
+  var additional = List<String>.filled(3, '').obs;
 
   var isAllFieldsFilled = false.obs;
 

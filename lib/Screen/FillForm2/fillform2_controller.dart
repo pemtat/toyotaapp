@@ -139,6 +139,8 @@ class FillformController2 extends GetxController {
         "voltage_check": specic.voltage
       };
     }).toList();
+    double sumVoltageCheck = specicGravity.fold(
+        0, (sum, item) => sum + (item["voltage_check"] ?? 0));
     List<Map<String, dynamic>> sparePartList =
         sparePartListController.sparePartList.map((sparePart) {
       return {
@@ -178,6 +180,11 @@ class FillformController2 extends GetxController {
       };
     }).toList();
 
+    var chargingType = (batteryusage.chargingType.isNotEmpty &&
+            batteryusage.chargingType.first == 'Charge when needed')
+        ? 1
+        : 0;
+
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
       "battery_band": batteryinformation.batteryBand,
@@ -194,8 +201,8 @@ class FillformController2 extends GetxController {
       "shift_time": batteryusage.shiftTime,
       "hrs": batteryusage.hrsPerShift,
       "ratio": batteryusage.ratio,
-      "charging_type": 10,
-      "total_voltage": 25,
+      "charging_type": chargingType,
+      "total_voltage": sumVoltageCheck,
       "corrective_action": correctiveActionController.correctiveAction.isEmpty
           ? ''
           : correctiveActionController.correctiveAction.first,

@@ -96,7 +96,12 @@ class ShowBatteryReportWidget extends StatelessWidget {
                 BoxInfo2(title: 'Ratio', value: info1.ratio ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: 'Charging Type', value: info1.chargingType ?? '-'),
+                    title: 'Charging Type',
+                    value: info1.chargingType == '1'
+                        ? 'Charge when needed'
+                        : info1.chargingType == '0'
+                            ? 'Only 1 time/day'
+                            : '-'),
                 4.kH,
                 10.kH,
                 Column(
@@ -259,11 +264,11 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                space.kH,
                 if (info1.signaturePad != '')
                   Center(
                       child: Column(
                     children: [
+                      space.kH,
                       5.kH,
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
@@ -272,9 +277,13 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       5.kH,
                     ],
                   )),
-                space.kH,
-                ShowTextFieldWidget(
-                    text: 'ลงชื่อ', hintText: info1.signature ?? ''),
+                Column(
+                  children: [
+                    space.kH,
+                    ShowTextFieldWidget(
+                        text: 'ลงชื่อ', hintText: info1.signature ?? ''),
+                  ],
+                ),
               ],
             ),
           ),
