@@ -96,6 +96,10 @@ String getPreventiveReportById(String id) {
   return '$url/api/rest/pm_jobs/pvt_maintenance_data?job_id=$id';
 }
 
+String getSparePartbySearch(String partNumber) {
+  return '$urlFSM/api/sparepart/search/$partNumber';
+}
+
 String updateReportById(String id) {
   return "$url/api/rest/jobs/job_report_update?job_issue_id='$id'";
 }

@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
-import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
@@ -52,9 +51,8 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                     final data = fullMaintenanceRecords[index];
                     return Container(
                       margin: const EdgeInsets.only(bottom: 8),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(6))),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(6))),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -99,7 +97,8 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                   },
                 ),
                 space.kH,
-                TitleApp(text: 'ความสมบูรณ์ของอุปกรณ์ Safety ตามกฎกระทราวง'),
+                const TitleApp(
+                    text: 'ความสมบูรณ์ของอุปกรณ์ Safety ตามกฎกระทราวง'),
                 BoxInfo(
                     title: 'Travel Alarm',
                     value: maintenance!.safetyTravelAlarm!.isEmpty
@@ -208,7 +207,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           height: 200,
                           child: Base64ImageWidget(
-                              maintenance!.signaturePad ?? '')),
+                              maintenance.signaturePad ?? '')),
                       5.kH,
                     ],
                   )),
@@ -218,7 +217,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                       space.kH,
                       ShowTextFieldWidget(
                           text: 'ลงชื่อ',
-                          hintText: maintenance!.signature ?? ''),
+                          hintText: maintenance.signature ?? ''),
                     ],
                   ),
               ],

@@ -149,12 +149,7 @@ class HomeView extends StatelessWidget {
                         .toList();
 
                     if (filteredJobs.isEmpty) {
-                      return Center(
-                        child: Text(
-                          'No new jobs available.',
-                          style: TextStyleList.text3,
-                        ),
-                      );
+                      return Center(child: CircularProgressIndicator());
                     }
 
                     return ListView.builder(
@@ -184,7 +179,7 @@ class HomeView extends StatelessWidget {
                   }),
                 ),
                 JobTitle(
-                  headerText: 'PM Incoming Jobs',
+                  headerText: 'PM Pending Jobs',
                   buttonText: 'View All',
                   buttonOnPressed: () {
                     Get.to(() => PmAssignedJobsView());
@@ -218,7 +213,8 @@ class HomeView extends StatelessWidget {
                             job: job,
                             expandedIndex: jobController.expandedIndex2,
                             jobController: jobController,
-                            sidebar: SidebarColor.getColor(job.status ?? ''),
+                            sidebar: SidebarColor.getColor(
+                                stringToStatus(job.status ?? '')),
                           ),
                         );
                       },

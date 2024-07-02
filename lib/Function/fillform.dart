@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:toyotamobile/Models/sparepartseach.dart';
+import 'package:toyotamobile/Service/api.dart';
+import 'package:http/http.dart' as http;
 
 String getDisplayString(RxList<String> data) {
   int displayCount = 3;
@@ -65,4 +70,32 @@ void updateSelectionSub(
 ) {
   selectionsChoose[index][subIndex] = value;
   selectionsChoose.refresh();
+}
+
+Future<void> fetchProducts(
+    String placeNumber, RxBool isLoading, RxList<Product> products) async {
+  isLoading(true);
+  String username = usernameProduct;
+  String password = passwordProduct;
+
+  String basicAuth =
+      'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+
+  try {
+    final response = await http.get(
+      Uri.parse(getSparePartbySearch(placeNumber)),
+      headers: {'Authorization': basicAuth},
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = jsonDecode(response.body);
+
+      products.value =
+          responseData.map((job) => Product.fromJson(job)).toList();
+    } else {
+      print('type search');
+    }
+  } finally {
+    isLoading(false);
+  }
 }

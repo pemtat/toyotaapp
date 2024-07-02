@@ -1,11 +1,10 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
-import 'package:toyotamobile/Models/home_model.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
-import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 
 enum EventType {
@@ -27,7 +26,7 @@ class CalendarController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    jobController.jobList.listen((_) {
+    jobController.subJobAssigned.listen((_) {
       updateEvents();
     });
     jobController.pmItems.listen((_) {
@@ -43,7 +42,7 @@ class CalendarController extends GetxController {
     final tempEvents = <DateTime, List<Map<String, dynamic>>>{};
 
     await Future.wait([
-      updateEventsFromJobs(jobController.jobList, tempEvents),
+      updateEventsFromJobs(jobController.subJobAssigned, tempEvents),
       updateEventsFromPM(jobController.pmItems, tempEvents),
     ]);
 
@@ -52,7 +51,7 @@ class CalendarController extends GetxController {
 
   Future<void> updateEventsFromPM(List<PmModel> pmList,
       Map<DateTime, List<Map<String, dynamic>>> tempEvents) async {
-    var pmListCopy = List<PmModel>.from(pmList); // Create a copy of the list
+    var pmListCopy = List<PmModel>.from(pmList);
 
     for (var pm in pmListCopy) {
       try {
@@ -67,9 +66,6 @@ class CalendarController extends GetxController {
         }
         final formattedHour = hour > 12 ? hour - 12 : hour;
         final formattedTime = '$formattedHour:${timeParts[1]} $period';
-        var warrantyInfoList = <WarrantyInfo>[].obs;
-        // warrantyInfoList =
-        //     await checkWarrantyReturn(pm.serialNo ?? '', warrantyInfoList);
 
         final eventData = {
           "ticketid": pm.id,
@@ -78,9 +74,7 @@ class CalendarController extends GetxController {
           "task": pm.dueDate,
           "description": pm.description,
           "location": pm.serviceZoneCode,
-          "serialNo": "415822",
-          "warrantyStatus": 0,
-          "nameModel": '-',
+          "serialNo": pm.serialNo,
           "type": EventType.PM,
         };
 
@@ -102,9 +96,9 @@ class CalendarController extends GetxController {
     }
   }
 
-  Future<void> updateEventsFromJobs(List<Issues> jobList,
+  Future<void> updateEventsFromJobs(List<SubJobAssgined> jobList,
       Map<DateTime, List<Map<String, dynamic>>> tempEvents) async {
-    var jobListCopy = List<Issues>.from(jobList);
+    var jobListCopy = List<SubJobAssgined>.from(jobList);
 
     for (var job in jobListCopy) {
       try {
@@ -120,20 +114,17 @@ class CalendarController extends GetxController {
         }
         final formattedHour = hour > 12 ? hour - 12 : hour;
         final formattedTime = '$formattedHour:${timeParts[1]} $period';
-        var warrantyInfoList = <WarrantyInfo>[].obs;
-        warrantyInfoList =
-            await checkWarrantyReturn(job.serialNo ?? '', warrantyInfoList);
-
+        // var warrantyInfoList = <WarrantyInfo>[].obs;
+        // warrantyInfoList =
+        //     await checkWarrantyReturn(job.serialNo ?? '', warrantyInfoList);
         final eventData = {
           "ticketid": job.id.toString(),
           "time": formattedTime,
-          "status": job.status!.name,
-          "task": job.summary,
-          "description": job.description,
-          "location": job.location,
-          "serialNo": warrantyInfoList.first.serial,
-          "warrantyStatus": warrantyInfoList.first.warrantyStatus,
-          "nameModel": warrantyInfoList.first.model,
+          "status": stringToStatus(job.status ?? ''),
+          "task": job.description,
+          "description": '',
+          "location": 'Bangkok',
+          "serialNo": 'SOOPSM',
           "type": EventType.Job,
         };
 

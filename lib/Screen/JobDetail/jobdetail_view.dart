@@ -60,11 +60,14 @@ class JobDetailView extends StatelessWidget {
                       );
                     } else {
                       var job = jobController.subJobs.first;
+                      String description = job.description ?? '';
+                      if (description.length > 30) {
+                        description = '${description.substring(0, 30)}...';
+                      }
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${job.description}',
-                              style: TextStyleList.title1),
+                          Text(description, style: TextStyleList.title1),
                           Text('JobID: ${job.id}', style: TextStyleList.text16),
                         ],
                       );

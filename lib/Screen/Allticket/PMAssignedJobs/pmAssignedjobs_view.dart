@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/Allticket/PMAssignedJobs/pmAssignedjobs_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
@@ -15,7 +16,6 @@ import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
-import 'package:toyotamobile/Widget/titleheader_widget.dart';
 
 class PmAssignedJobsView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -37,7 +37,7 @@ class PmAssignedJobsView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('My Jobs', style: TextStyleList.title1),
+                title: Text('PM Jobs', style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,
@@ -59,11 +59,6 @@ class PmAssignedJobsView extends StatelessWidget {
                   statusCheckboxes: statusCheckboxes(),
                   selectedDate: pmAssignedController.selectedDate,
                   clearFilters: pmAssignedController.clearFilters),
-              JobTitle(
-                headerText: 'Incoming Jobs',
-                buttonText: '',
-                buttonOnPressed: () {},
-              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(paddingApp),
@@ -80,10 +75,10 @@ class PmAssignedJobsView extends StatelessWidget {
                                     pmAssignedController.searchQuery.value) ||
                                 job.description!.contains(
                                     pmAssignedController.searchQuery.value);
-                            final statusMatch =
-                                pmAssignedController.selectedStatus.isEmpty ||
-                                    pmAssignedController.selectedStatus
-                                        .contains(job.status);
+                            final statusMatch = pmAssignedController
+                                    .selectedStatus.isEmpty ||
+                                pmAssignedController.selectedStatus
+                                    .contains(stringToStatus(job.status ?? ''));
                             final dateMatch =
                                 pmAssignedController.selectedDate.value ==
                                         null ||
@@ -99,7 +94,7 @@ class PmAssignedJobsView extends StatelessWidget {
                             return searchQueryMatch &&
                                 statusMatch &&
                                 dateMatch &&
-                                job.status != 'closed';
+                                job.status != '103';
                           }).toList();
                           filteredJobs.sort(
                               (a, b) => b.status!.compareTo(a.status ?? ''));
@@ -127,8 +122,8 @@ class PmAssignedJobsView extends StatelessWidget {
                                   expandedIndex:
                                       pmAssignedController.expandedIndex,
                                   jobController: jobController,
-                                  sidebar:
-                                      SidebarColor.getColor(job.status ?? ''),
+                                  sidebar: SidebarColor.getColor(
+                                      stringToStatus(job.status ?? '')),
                                 ),
                               );
                             },
@@ -149,18 +144,13 @@ class PmAssignedJobsView extends StatelessWidget {
   List<Widget> statusCheckboxes() {
     return [
       buildCheckbox(
-          status: 'assigned',
+          status: 'pending',
           selectedStatus: pmAssignedController.selectedStatus),
       buildCheckbox(
-          status: 'new', selectedStatus: pmAssignedController.selectedStatus),
+          status: 'confirmed',
+          selectedStatus: pmAssignedController.selectedStatus),
       buildCheckbox(
           status: 'closed',
-          selectedStatus: pmAssignedController.selectedStatus),
-      buildCheckbox(
-          status: 'feedback',
-          selectedStatus: pmAssignedController.selectedStatus),
-      buildCheckbox(
-          status: 'planning',
           selectedStatus: pmAssignedController.selectedStatus),
     ];
   }

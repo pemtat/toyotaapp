@@ -4,7 +4,6 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
-import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -78,15 +77,14 @@ class CalendarView extends StatelessWidget {
               ),
               calendarBuilders:
                   CalendarBuilders(markerBuilder: (context, day, events) {
-                if (events is List<Map<String, dynamic>> &&
-                    events.isNotEmpty &&
-                    !isSameDay(day, DateTime.now())) {
+                if (events is List<Map<String, dynamic>> && events.isNotEmpty) {
                   final jobEvents = events
                       .where((event) => event['type'] == EventType.Job)
                       .toList();
                   final pmEvents = events
                       .where((event) => event['type'] == EventType.PM)
                       .toList();
+
                   if (jobEvents.isNotEmpty && pmEvents.isNotEmpty) {
                     return Stack(
                       children: [
@@ -115,11 +113,41 @@ class CalendarView extends StatelessWidget {
                                 decoration: const BoxDecoration(
                                     color: red6, shape: BoxShape.circle),
                               ),
+                            ],
+                          ),
+                        )
+                      ],
+                    );
+                  }
+                  if (jobEvents.isNotEmpty &&
+                      pmEvents.isNotEmpty &&
+                      (isSameDay(day, DateTime.now()))) {
+                    return Stack(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(6.0),
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 251, 98, 3),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${day.day}',
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 2,
+                          right: 2,
+                          child: Row(
+                            children: [
                               Container(
                                 width: 8,
                                 height: 8,
                                 decoration: const BoxDecoration(
-                                    color: blue3, shape: BoxShape.circle),
+                                    color: red6, shape: BoxShape.circle),
                               ),
                             ],
                           ),
@@ -150,7 +178,7 @@ class CalendarView extends StatelessWidget {
                             width: 8,
                             height: 8,
                             decoration: const BoxDecoration(
-                                color: red6, shape: BoxShape.circle),
+                                color: red5, shape: BoxShape.circle),
                           ),
                         )
                       ],
@@ -179,7 +207,7 @@ class CalendarView extends StatelessWidget {
                             width: 8,
                             height: 8,
                             decoration: const BoxDecoration(
-                                color: blue3, shape: BoxShape.circle),
+                                color: blue2, shape: BoxShape.circle),
                           ),
                         )
                       ],
@@ -245,17 +273,17 @@ class CalendarView extends StatelessWidget {
                               itemCount: events.length,
                               itemBuilder: (context, index) {
                                 final event = events[index];
+
                                 return InkWell(
                                   onTap: () {
-                                    event['type'] == EventType.Job
-                                        ? Get.to(() => SubTicketView(
-                                              ticketId: event['ticketid'],
-                                            ))
-                                        : Get.to(() => JobDetailViewPM(
-                                              ticketId: jobController
-                                                  .pmItems[index].id
-                                                  .toString(),
-                                            ));
+                                    if (event['type'] == EventType.Job) {
+                                    } else {
+                                      Get.to(() => JobDetailViewPM(
+                                            ticketId: jobController
+                                                .pmItems[index].id
+                                                .toString(),
+                                          ));
+                                    }
                                   },
                                   child: CalendarItem(
                                     event: event,

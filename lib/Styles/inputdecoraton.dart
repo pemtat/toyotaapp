@@ -56,3 +56,25 @@ class InputDecoration1 extends InputDecoration {
           ),
         );
 }
+
+class InputDecoration2 extends InputDecoration {
+  InputDecoration2({
+    super.labelText,
+  }) : super(
+          labelStyle: TextStyleList.text11,
+          fillColor: black5,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: const BorderSide(
+              color: white2,
+              width: 1,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: const BorderSide(
+              color: Color.fromARGB(86, 110, 110, 110),
+            ),
+          ),
+        );
+}

@@ -559,7 +559,7 @@ class CustomFields {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (field != null) {
       data['field'] = field!.toJson();
     }

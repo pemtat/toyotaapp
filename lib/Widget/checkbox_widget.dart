@@ -187,7 +187,7 @@ class SingleCheckBoxWidget2 extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: 8),
                 Text(item, style: TextStyleList.text9),
               ],
             ),
@@ -239,32 +239,50 @@ class CheckBoxList extends StatelessWidget {
   final RxList<String> selectionsChoose;
   final int index;
   final String text;
-  const CheckBoxList(
-      {super.key,
-      required this.selectionsChoose,
-      required this.index,
-      required this.text});
+
+  const CheckBoxList({
+    super.key,
+    required this.selectionsChoose,
+    required this.index,
+    required this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Row(
-          children: [
-            Checkbox(
-              visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-              activeColor: red1,
-              value: selectionsChoose[index] == text,
-              onChanged: (value) {
-                if (value == true) {
-                  updateSelection(index, text, selectionsChoose);
-                }
-              },
-            ),
-            5.kH,
-            Text(
-              text,
-              style: TextStyleList.text9,
-            ),
-          ],
+    return Obx(() => Padding(
+          padding: const EdgeInsets.only(bottom: 6.0),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  if (selectionsChoose[index] != text) {
+                    updateSelection(index, text, selectionsChoose);
+                  }
+                },
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: selectionsChoose[index] == text
+                        ? red1
+                        : Colors.transparent,
+                    border: selectionsChoose[index] != text
+                        ? Border.all(color: Colors.grey)
+                        : Border.all(color: Colors.transparent),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: selectionsChoose[index] == text
+                      ? const Icon(Icons.check, color: Colors.white, size: 20)
+                      : null,
+                ),
+              ),
+              8.wH,
+              Text(
+                text,
+                style: TextStyleList.text9,
+              ),
+            ],
+          ),
         ));
   }
 }

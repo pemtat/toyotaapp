@@ -9,12 +9,12 @@ String stringToStatus(String status) {
     case '102':
       return 'confirmed';
     case '50':
-      return 'assigned';
+      return 'confirmed';
     case '80':
       return 'resolved';
     case '103':
       return 'closed';
     default:
-      return 'new';
+      return 'pending';
   }
 }

@@ -15,7 +15,6 @@ import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
-import 'package:toyotamobile/Widget/titleheader_widget.dart';
 
 class PmCompleteJobsView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -37,7 +36,7 @@ class PmCompleteJobsView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('Completed Jobs', style: TextStyleList.title1),
+                title: Text('PM Completed Jobs', style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,
@@ -59,11 +58,6 @@ class PmCompleteJobsView extends StatelessWidget {
                   statusCheckboxes: statusCheckboxes(),
                   selectedDate: pmCompleteController.selectedDate,
                   clearFilters: pmCompleteController.clearFilters),
-              JobTitle(
-                headerText: 'Incoming Jobs',
-                buttonText: '',
-                buttonOnPressed: () {},
-              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(paddingApp),

@@ -9,6 +9,7 @@ import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
@@ -23,6 +24,7 @@ import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
+import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 
 final BottomBarController bottomController = Get.put(BottomBarController());
 final HomeController jobController = Get.put(HomeController());
@@ -624,5 +626,77 @@ Future<void> deleteImgSubJob(
     }
   } catch (e) {
     print('Error: $e');
+  }
+}
+
+Future<Map<String, String>> fetchTicketById(String id) async {
+  String? token = await getToken();
+  final response = await http.get(
+    Uri.parse(getTicketbyId(id)),
+    headers: {
+      'Authorization': '$token',
+    },
+  );
+  if (response.statusCode == 200) {
+    var userInfo = <UserById>[].obs;
+    Map<String, dynamic> data = json.decode(response.body);
+    ticket.TicketByIdModel ticketModel = ticket.TicketByIdModel.fromJson(data);
+
+    List<ticket.Issues>? issuesList = ticketModel.issues;
+    final response2 = await http.get(
+      Uri.parse(getUserInfoById(issuesList!.first.reporter!.id.toString())),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+    if (response2.statusCode == 200) {
+      final dynamic responseData = jsonDecode(response2.body);
+
+      if (responseData is Map<String, dynamic>) {
+        UserById user = UserById.fromJson(responseData);
+        userInfo.value = [user];
+      } else {
+        print('Invalid data format');
+      }
+    }
+    CustomerById customerInfo = await fetchCustomerInfo(
+        userInfo.first.users!.first.companyId.toString());
+
+    return {
+      'name': issuesList.first.reporter!.name ?? '',
+      'location': customerInfo.customerAddress ?? ''
+    };
+  } else {
+    print('Failed to load data: ${response.statusCode} $id ');
+    return {};
+  }
+}
+
+Future<CustomerById> fetchCustomerInfo(String id) async {
+  String username = usernameProduct;
+  String password = passwordProduct;
+
+  String basicAuth =
+      'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+
+  try {
+    final response = await http.get(
+      Uri.parse(getCustomerInfoById(id.toString())),
+      headers: {'Authorization': basicAuth},
+    );
+    if (response.statusCode == 200) {
+      final dynamic responseData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        CustomerById customer = CustomerById.fromJson(responseData);
+        return customer;
+      } else {
+        throw const FormatException('Unexpected response format');
+      }
+    } else {
+      throw Exception('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+    rethrow; // Rethrow the caught error
   }
 }

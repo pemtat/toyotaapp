@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/checkwarranty.dart';
+import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -24,147 +26,169 @@ class CalendarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      decoration: Decoration1(
-        sideBorderColor: SidebarColor.getColor(event['status']),
-      ),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Text(
-                  event['time'],
-                  style: TextStyleList.text2,
-                ),
-                const SizedBox(height: 4),
-                StatusButton(status: event['status']),
-              ],
+    var warrantyInfoList = <WarrantyInfo>[].obs;
+    return FutureBuilder<RxList<WarrantyInfo>>(
+        future: checkWarrantyReturn(event['serialNo'], warrantyInfoList),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Container();
+          }
+          var warrantyInfo = <WarrantyInfo>[].obs;
+          warrantyInfo = snapshot.data!;
+
+          return Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            decoration: Decoration1(
+              sideBorderColor: SidebarColor.getColor(event['status']),
             ),
-          ),
-          Expanded(
-            flex: 8,
-            child: Container(
-              padding: const EdgeInsets.only(left: 10),
-              decoration: const BoxDecoration(
-                border: Border(
-                  left: BorderSide(width: 1, color: white1),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
                     children: [
-                      event['type'] == EventType.Job
-                          ? Text(
-                              'Ticket ID : ${event['ticketid'].toString().padLeft(7, '0')}',
-                              style: TextStyleList.text16,
-                            )
-                          : Text(
-                              'PM ID : ${event['ticketid'].toString().padLeft(7, '0')}',
-                              style: TextStyleList.text16,
-                            ),
-                      const SizedBox(width: 10),
-                      const Spacer(),
-                      Obx(
-                        () => Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: InkWell(
-                            onTap: () {
-                              if (expandedTicketId.value == event['ticketid']) {
-                                expandedIndex.value = !expandedIndex.value;
-                              } else {
-                                expandedIndex.value = true;
-                                expandedTicketId.value = event['ticketid'];
-                              }
-                            },
-                            child: expandedIndex.value &&
-                                    expandedTicketId.value == event['ticketid']
-                                ? const ArrowUp()
-                                : const ArrowDown(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    event['task'],
-                    style: TextStyleList.text15,
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      const Icon(Icons.location_on_outlined),
-                      const SizedBox(width: 5),
                       Text(
-                        event['location'],
-                        style: TextStyleList.subtext1,
+                        event['time'],
+                        style: TextStyleList.text2,
                       ),
-                      const SizedBox(width: 5),
-                      GoogleMapButton(
-                        onTap: () {},
-                      ),
+                      const SizedBox(height: 4),
+                      StatusButton(status: event['status']),
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  Obx(
-                    () => expandedIndex.value &&
-                            expandedTicketId.value == event['ticketid']
-                        ? Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10.0, right: 8, bottom: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 0.5,
-                                  color: const Color(0xFFEAEAEA),
+                ),
+                Expanded(
+                  flex: 8,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        left: BorderSide(width: 1, color: white1),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            event['type'] == EventType.Job
+                                ? Text(
+                                    'Job ID : ${event['ticketid'].toString().padLeft(7, '0')}',
+                                    style: TextStyleList.text16,
+                                  )
+                                : Text(
+                                    'PM ID : ${event['ticketid'].toString().padLeft(7, '0')}',
+                                    style: TextStyleList.text16,
+                                  ),
+                            const SizedBox(width: 10),
+                            const Spacer(),
+                            Obx(
+                              () => Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    if (expandedTicketId.value ==
+                                        event['ticketid']) {
+                                      expandedIndex.value =
+                                          !expandedIndex.value;
+                                    } else {
+                                      expandedIndex.value = true;
+                                      expandedTicketId.value =
+                                          event['ticketid'];
+                                    }
+                                  },
+                                  child: expandedIndex.value &&
+                                          expandedTicketId.value ==
+                                              event['ticketid']
+                                      ? const ArrowUp()
+                                      : const ArrowDown(),
                                 ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  event['description'],
-                                  style: TextStyleList.text15,
-                                ),
-                                const SizedBox(height: 8),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: Decoration2(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          event['task'],
+                          style: TextStyleList.text15,
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          children: [
+                            const Icon(Icons.location_on_outlined),
+                            const SizedBox(width: 5),
+                            Text(
+                              event['location'],
+                              style: TextStyleList.subtext1,
+                            ),
+                            const SizedBox(width: 5),
+                            GoogleMapButton(
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Obx(
+                          () => expandedIndex.value &&
+                                  expandedTicketId.value == event['ticketid']
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, right: 8, bottom: 8),
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      BoxInfo(
-                                        title: "Name/Model",
-                                        value: event['nameModel'],
+                                      Container(
+                                        height: 0.5,
+                                        color: const Color(0xFFEAEAEA),
                                       ),
-                                      const SizedBox(height: 3),
-                                      BoxInfo(
-                                        title: "Serial Number",
-                                        value: event['serialNo'],
-                                      ),
-                                      const SizedBox(height: 3),
-                                      BoxInfo(
-                                        title: "Warranty Status",
-                                        value: '',
-                                        trailing: CheckStatus(
-                                          status: event['warrantyStatus'],
+                                      const SizedBox(height: 8),
+                                      if (event['description'] != '')
+                                        Text(
+                                          event['description'],
+                                          style: TextStyleList.text15,
+                                        ),
+                                      const SizedBox(height: 8),
+                                      Container(
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: Decoration2(),
+                                        child: Column(
+                                          children: [
+                                            BoxInfo(
+                                              title: "Name/Model",
+                                              value: warrantyInfo.first.model,
+                                            ),
+                                            const SizedBox(height: 3),
+                                            BoxInfo(
+                                              title: "Serial Number",
+                                              value: event['serialNo'],
+                                            ),
+                                            const SizedBox(height: 3),
+                                            BoxInfo(
+                                              title: "Warranty Status",
+                                              value: '',
+                                              trailing: CheckStatus(
+                                                status: warrantyInfo
+                                                    .first.warrantyStatus,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : const SizedBox(),
+                                )
+                              : const SizedBox(),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }

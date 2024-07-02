@@ -56,11 +56,15 @@ class JobDetailViewPM extends StatelessWidget {
                         ],
                       );
                     } else {
+                      String description =
+                          jobController.issueData.first.description ?? '';
+                      if (description.length > 22) {
+                        description = '${description.substring(0, 22)}...';
+                      }
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(jobController.issueData.first.description ?? '',
-                              style: TextStyleList.title1),
+                          Text(description, style: TextStyleList.title1),
                           Text('JobID: $ticketId', style: TextStyleList.text16),
                         ],
                       );
@@ -150,7 +154,9 @@ class JobDetailViewPM extends StatelessWidget {
                                                     .warrantyInfoList.first;
                                                 return WarrantyBox(
                                                     model: warrantyInfo.model,
-                                                    serial: warrantyInfo.serial,
+                                                    serial: issue
+                                                        .getCustomFieldValue(
+                                                            "Serial No"),
                                                     status: warrantyInfo
                                                         .warrantyStatus,
                                                     filePdf: filePdf);

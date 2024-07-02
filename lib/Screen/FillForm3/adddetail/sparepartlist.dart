@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
+import 'package:toyotamobile/Models/sparepartseach.dart';
 import 'package:toyotamobile/Styles/color.dart';
+import 'package:toyotamobile/Styles/inputdecoraton.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -12,6 +15,7 @@ import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 class SparepartList extends GetxController {
   int space = 24;
   void sparePartListModal(BuildContext context) {
+    sparePartClear();
     ShowModalWidget(
       children: [
         Row(
@@ -34,9 +38,50 @@ class SparepartList extends GetxController {
           textSet: cCodePage.value,
         ),
         space.kH,
-        TextFieldWidget(
-          text: 'Part Number',
-          textSet: partNumber.value,
+        Column(
+          children: [
+            TextField(
+                controller: searchPartNumber.value,
+                onChanged: (String value) {
+                  if (value == '') {
+                    products.clear();
+                  }
+                  fetchProducts(
+                      searchPartNumber.value.text, isLoading, products);
+                },
+                decoration: InputDecoration2(labelText: 'Enter Part Number')),
+            Obx(() {
+              if (isLoading.value) {
+                return const Padding(
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Center(child: const CircularProgressIndicator()),
+                );
+              }
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return ListTile(
+                    title: Text(
+                      product.model,
+                      style: TextStyleList.text6,
+                    ),
+                    subtitle: Text(
+                      'No: ${product.no}',
+                      style: TextStyleList.text3,
+                    ),
+                    onTap: () {
+                      partNumber.value.text = product.no;
+                      searchPartNumber.value.text = product.no;
+                      products.clear();
+                    },
+                  );
+                },
+              );
+            })
+          ],
         ),
         space.kH,
         TextFieldType(
@@ -158,9 +203,50 @@ class SparepartList extends GetxController {
           textSet: cCodePage.value,
         ),
         space.kH,
-        TextFieldEditWidget(
-          text: 'Part Number',
-          textSet: partNumber.value,
+        Column(
+          children: [
+            TextField(
+                controller: searchPartNumber.value,
+                onChanged: (String value) {
+                  if (value == '') {
+                    products.clear();
+                  }
+                  fetchProducts(
+                      searchPartNumber.value.text, isLoading, products);
+                },
+                decoration: InputDecoration2(labelText: 'Enter Part Number')),
+            Obx(() {
+              if (isLoading.value) {
+                return const Padding(
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return ListTile(
+                    title: Text(
+                      product.model,
+                      style: TextStyleList.text6,
+                    ),
+                    subtitle: Text(
+                      'No: ${product.no}',
+                      style: TextStyleList.text3,
+                    ),
+                    onTap: () {
+                      partNumber.value.text = product.no;
+                      searchPartNumber.value.text = product.no;
+                      products.clear();
+                    },
+                  );
+                },
+              );
+            })
+          ],
         ),
         space.kH,
         TextFieldEditType(
@@ -266,6 +352,10 @@ class SparepartList extends GetxController {
   final partDetails = TextEditingController().obs;
   final changeNow = TextEditingController().obs;
   final changeonPM = TextEditingController().obs;
+  final searchPartNumber = TextEditingController().obs;
+
+  var products = <Product>[].obs;
+  var isLoading = false.obs;
   void increment() {
     quantity++;
   }
@@ -283,6 +373,7 @@ class SparepartList extends GetxController {
     quantity.value = part.quantity;
     changeNow.value.text = part.changeNow ?? '-';
     changeonPM.value.text = part.changeOnPM ?? '-';
+    searchPartNumber.value.text = part.partNumber;
   }
 
   void sparePartClear() {
@@ -292,6 +383,7 @@ class SparepartList extends GetxController {
     quantity.value = 1;
     changeNow.value.clear();
     changeonPM.value.clear();
+    searchPartNumber.value.clear();
   }
 
   void sparePartWrite() {
