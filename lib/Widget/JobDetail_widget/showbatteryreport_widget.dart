@@ -277,13 +277,14 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       5.kH,
                     ],
                   )),
-                Column(
-                  children: [
-                    space.kH,
-                    ShowTextFieldWidget(
-                        text: 'ลงชื่อ', hintText: info1.signature ?? ''),
-                  ],
-                ),
+                if (info1.signature != '')
+                  Column(
+                    children: [
+                      space.kH,
+                      ShowTextFieldWidget(
+                          text: 'ลงชื่อ', hintText: info1.signature ?? ''),
+                    ],
+                  ),
               ],
             ),
           ),

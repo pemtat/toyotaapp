@@ -422,15 +422,11 @@ class AssignedjobsNew extends StatelessWidget {
   List<Widget> statusCheckboxes() {
     return [
       buildCheckbox(
-          status: 'resolved',
-          selectedStatus: assignedController.selectedStatus),
+          status: 'pending', selectedStatus: assignedController.selectedStatus),
       buildCheckbox(
           status: 'confirm', selectedStatus: assignedController.selectedStatus),
       buildCheckbox(
           status: 'closed', selectedStatus: assignedController.selectedStatus),
-      buildCheckbox(
-          status: 'feedback',
-          selectedStatus: assignedController.selectedStatus),
     ];
   }
 }

@@ -26,6 +26,8 @@ import 'package:toyotamobile/Screen/FillForm3/adddetail/safety.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/steeringmotor.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/vnaom.dart';
+import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
+import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
@@ -44,6 +46,8 @@ class FillformController3 extends GetxController {
   final VnaOm vnaOm = Get.put(VnaOm());
   final ForSpecial forSpecial = Get.put(ForSpecial());
   final Safety safety = Get.put(Safety());
+  final JobDetailControllerPM jobDetailControllerPM =
+      Get.put(JobDetailControllerPM());
   final SparepartList sparepartList = Get.put(SparepartList());
   final ProcessStaff processStaff = Get.put(ProcessStaff());
   final PowertrainChecks powertrainChecks = Get.put(PowertrainChecks());
@@ -56,6 +60,7 @@ class FillformController3 extends GetxController {
   final SteeringMotor steeringMotor = Get.put(SteeringMotor());
   final TextEditingController signatureController = TextEditingController();
   final GlobalKey<SfSignaturePadState> signature = GlobalKey();
+  final UserController userController = Get.put(UserController());
 
   var saveCompletedtime = ''.obs;
   void clearSignature() {
@@ -65,6 +70,7 @@ class FillformController3 extends GetxController {
 
   void fetchData(String jobId) async {
     this.jobId.value = jobId;
+    await userController.fetchData();
   }
 
   Future<void> saveSignature() async {
@@ -392,7 +398,7 @@ class FillformController3 extends GetxController {
         ? maintenance.batteryUsageWrite()
         : maintenance.maintenanceList.first;
     maintenance.maintenanceList.first.chargingType.isEmpty
-        ? ['']
+        ? maintenance.maintenanceList.first.chargingType.add('')
         : maintenance.maintenanceList.first.chargingType.first;
     var officer =
         processStaff.repairStaff.isEmpty ? '' : processStaff.repairStaff.first;
@@ -410,7 +416,7 @@ class FillformController3 extends GetxController {
       "m": maintenance.maintenanceList.first.people,
       "signature": signatureController.value.text,
       "signature_pad": signaturePad.value,
-      "created_by": 33,
+      "created_by": userController.userInfo.first.id,
       "pvt_maintenance_details": combinedList,
       "dar_details": sparePartList
     };
@@ -424,7 +430,7 @@ class FillformController3 extends GetxController {
 
       if (response.statusCode == 201) {
         print('yes');
-        // jobDetailController.fetchData(jobId.toString(), '');
+        jobDetailControllerPM.fetchData(jobId.toString());
       } else {
         print('Failed to save report: ${response.statusCode}');
       }

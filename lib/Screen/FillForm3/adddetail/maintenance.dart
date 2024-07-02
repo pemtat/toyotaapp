@@ -102,7 +102,7 @@ class Maintenance extends GetxController {
         space.kH,
         TextFieldEditWidget(
           text: 'ประมาณการซ่อม ชั่วโมง (HR)',
-          textSet: people.value,
+          textSet: hr.value,
         ),
         8.kH,
         TextFieldEditWidget(
@@ -148,8 +148,8 @@ class Maintenance extends GetxController {
   void batteryUsageWrite() {
     final chosenChargingTypes = chargingTypeChoose.toList();
     final newBatteryInfo = MaintenanceModel(
-        people: double.tryParse(hr.value.text) ?? 0,
-        hr: double.tryParse(people.value.text) ?? 0,
+        people: double.tryParse(people.value.text) ?? 0,
+        hr: double.tryParse(hr.value.text) ?? 0,
         chargingType: chosenChargingTypes);
     maintenanceList.add(newBatteryInfo);
   }

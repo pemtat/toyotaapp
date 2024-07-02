@@ -51,12 +51,13 @@ class JobDetailControllerPM extends GetxController {
 
   void fetchData(String ticketId) async {
     reportList = <BatteryReportModel>[].obs;
+    reportPreventiveList = <PreventivereportModel>[].obs;
     jobId = ticketId;
     final String apiUrl = getTicketbyId(ticketId);
 
     String? token = await getToken();
-    fetchBatteryReportData(jobId, token ?? '', reportList);
-    fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
+    await fetchBatteryReportData(jobId, token ?? '', reportList);
+    await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     fetchPdfData(ticketId, token ?? '', pdfList);
     final response = await http.get(
       Uri.parse(apiUrl),

@@ -16,6 +16,8 @@ import 'package:toyotamobile/Screen/FillForm2/adddetail/forklife_information.dar
 import 'package:toyotamobile/Screen/FillForm2/adddetail/repairpm.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/specic_gravity.dart';
+import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
+import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
@@ -30,6 +32,8 @@ class FillformController2 extends GetxController {
       Get.put(AdditSparepartList());
   final BatteryInformation batteryInfoController =
       Get.put(BatteryInformation());
+  final JobDetailControllerPM jobDetailControllerPM =
+      Get.put(JobDetailControllerPM());
   final BatteryUsage batteryUsageController = Get.put(BatteryUsage());
   final SpecicGravity specicGravityController = Get.put(SpecicGravity());
   final CorrectiveAction correctiveActionController =
@@ -40,6 +44,8 @@ class FillformController2 extends GetxController {
       Get.put(ForklifeInformation());
   final RepairPM repairPmController = Get.put(RepairPM());
   final GlobalKey<SfSignaturePadState> signature = GlobalKey();
+  final UserController userController = Get.put(UserController());
+
   var saveCompletedtime = ''.obs;
   void clearSignature() {
     isSignatureEmpty.value = true;
@@ -81,6 +87,7 @@ class FillformController2 extends GetxController {
 
   void fetchData(String jobId) async {
     this.jobId.value = jobId;
+    await userController.fetchData();
   }
 
   Future<void> saveReport(BuildContext context) async {
@@ -214,7 +221,7 @@ class FillformController2 extends GetxController {
       "signature_pad": signaturePad.value,
       "save_time": saveCompletedtime.value,
       "relation_id": "",
-      "created_by": 33,
+      "created_by": userController.userInfo.first.id,
       "btr_sparepart": combinedList,
       "specic_voltage_check": specicGravity,
       "btr_conditions": batteryCondition
@@ -228,7 +235,7 @@ class FillformController2 extends GetxController {
           body: jsonEncode(data));
 
       if (response.statusCode == 201) {
-        jobDetailController.fetchData(jobId.toString(), '');
+        jobDetailControllerPM.fetchData(jobId.toString());
       } else {
         print('Failed to save report: ${response.statusCode}');
       }

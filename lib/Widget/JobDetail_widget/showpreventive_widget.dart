@@ -23,11 +23,13 @@ class ShowPreventiveReportWidget extends StatelessWidget {
     var data = reportData.first;
     var fullMaintenanceRecords = data.pvtCheckingTypeMaster;
     var maintenance = data.pvtMaintenance;
+    var sparePart = data.darDetails;
     bool checksignaturePad =
         maintenance?.signaturePad != null && maintenance?.signaturePad != '';
     bool checksignature =
         maintenance?.signature != null && maintenance?.signature != '';
     var space = 8;
+    var space2 = 10;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
       child: Stack(
@@ -54,50 +56,148 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(6))),
                       child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TitleApp(text: data.nameEn ?? ''),
-                            10.kH,
-                            ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: data.maintenanceRecords!.length,
-                              itemBuilder: (context, index) {
-                                final subData = data.maintenanceRecords![index];
-                                return Container(
-                                  margin: const EdgeInsets.only(bottom: 8),
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(width: 1, color: black3),
-                                      color: white1,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(6))),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        BoxInfo(
-                                            title:
-                                                '[${subData.pvtCategoryCode}] ${subData.fullName}',
-                                            value: subData.ok ?? '-'),
-                                        if (subData.data1 != '')
-                                          Text(subData.data1 ?? ''),
-                                        if (subData.data2 != '')
-                                          Text(subData.data2 ?? ''),
-                                        BoxInfo(
-                                            title: 'Remark',
-                                            value: subData.remark == ''
-                                                ? '-'
-                                                : subData.remark ?? ''),
-                                      ]),
-                                );
-                              },
-                            ),
-                          ]),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TitleApp(text: data.nameEn ?? ''),
+                          10.kH,
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: data.maintenanceRecords!.length,
+                            itemBuilder: (context, index) {
+                              final subData = data.maintenanceRecords![index];
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border.all(width: 1, color: black3),
+                                    color: white1,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      BoxInfo(
+                                        title:
+                                            '[${subData.pvtCategoryCode}] ${subData.fullName}',
+                                        value: checkStatus(subData.ok ?? '',
+                                            subData.poor ?? ''),
+                                      ),
+                                      BoxInfo(
+                                          title: 'Remark',
+                                          value: subData.remark == ''
+                                              ? '-'
+                                              : subData.remark ?? ''),
+                                    ]),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
+                space.kH,
+                TitleApp(text: 'ความสมบูรณ์ของอุปกรณ์ Safety ตามกฎกระทราวง'),
+                BoxInfo(
+                    title: 'Travel Alarm',
+                    value: maintenance!.safetyTravelAlarm!.isEmpty
+                        ? '-'
+                        : maintenance.safetyTravelAlarm ?? ''),
+                BoxInfo(
+                    title: 'กระจกมองหลัง/ข้าง',
+                    value: maintenance.safetyRearviewMirror == ''
+                        ? '-'
+                        : maintenance.safetyRearviewMirror ?? ''),
+                BoxInfo(
+                    title: 'เข็มขัดนิรภัย',
+                    value: maintenance.safetySeatBelt == ''
+                        ? '-'
+                        : maintenance.safetySeatBelt ?? ''),
+                sparePart!.first.pageCode != '-' &&
+                        sparePart.first.partNumber != '-' &&
+                        sparePart.first.description != '-' &&
+                        // ignore: unrelated_type_equality_checks
+                        sparePart.first.qty != 0
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          space.kH,
+                          const BoxInfo2(
+                              title:
+                                  'Description Problem / Action and Result / Recommend spare part changed',
+                              value: ''),
+                          4.kH,
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: sparePart.length,
+                            itemBuilder: (context, index) {
+                              final data = sparePart[index];
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border.all(width: 1, color: black3),
+                                    color: white1,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: Column(children: [
+                                  BoxInfo(
+                                      title: 'C-Code',
+                                      value: data.pageCode ?? '-'),
+                                  BoxInfo(
+                                      title: 'Part Number',
+                                      value: data.partNumber ?? '-'),
+                                  BoxInfo(
+                                      title: 'Description',
+                                      value: data.description ?? '-'),
+                                  BoxInfo(
+                                      title: 'Quantity',
+                                      value: data.qty ?? '-'),
+                                ]),
+                              );
+                            },
+                          ),
+                          space.kH,
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          space.kH,
+                          const TitleApp(
+                            text:
+                                'Description Problem / Action and Result / Recommend spare part changed',
+                          ),
+                        ],
+                      ),
+                space2.kH,
+                TitleApp2(
+                  text:
+                      'ผลการตรวจเช็คเเละการบำรุงรักษา\n(Maintenance and service resul)',
+                  moreText: maintenance.mtServiceResult == ''
+                      ? '-'
+                      : maintenance.mtServiceResult,
+                ),
+                space2.kH,
+                TitleApp2(
+                  text: 'ประมาณการซ่อม ชั่วโมง(HR)',
+                  moreText: maintenance.hr == '0' ? '-' : maintenance.hr,
+                ),
+                space2.kH,
+                TitleApp2(
+                  text: 'จำนวนคน(M)',
+                  moreText: maintenance.m == '0' ? '-' : maintenance.m,
+                ),
+                space2.kH,
+                TitleApp2(
+                  text: 'สำหรับเจ้าหน้าที่',
+                  moreText: maintenance.officerChecking == ''
+                      ? '-'
+                      : maintenance.officerChecking,
+                ),
+                space.kH,
                 if (checksignaturePad)
                   Center(
                       child: Column(
@@ -127,6 +227,17 @@ class ShowPreventiveReportWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String checkStatus(String ok, String poor) {
+    if (ok == '1' && poor == '0') {
+      return 'Ok';
+    } else if (ok == '0' && poor == '1') {
+      return 'Poor';
+    } else if (ok == '0' && poor == '0') {
+      return '-';
+    } else
+      return '-';
   }
 
   String formatWCode(String? wCode) {

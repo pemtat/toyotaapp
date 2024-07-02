@@ -15,6 +15,32 @@ class TitleApp extends StatelessWidget {
   }
 }
 
+class TitleApp2 extends StatelessWidget {
+  final String text;
+  final String? moreText;
+
+  const TitleApp2({super.key, required this.text, this.moreText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          text,
+          style: TextStyleList.subtitle1,
+        ),
+        if (moreText != null)
+          Text(
+            moreText ?? '',
+            style: TextStyleList.text10,
+          ),
+      ],
+    );
+  }
+}
+
 class TitleWithButton extends StatelessWidget {
   final String titleText;
   final Widget button;

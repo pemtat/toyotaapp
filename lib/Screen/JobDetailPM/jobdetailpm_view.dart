@@ -326,7 +326,10 @@ class JobDetailViewPM extends StatelessWidget {
                                       const TitleApp(
                                           text: 'Periodic Maintenance Report'),
                                       Obx(() => jobController
-                                              .reportPreventiveList.isNotEmpty
+                                              .reportPreventiveList
+                                              .first
+                                              .maintenanceRecords!
+                                              .isNotEmpty
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => FillFormView3(
@@ -347,8 +350,8 @@ class JobDetailViewPM extends StatelessWidget {
                                     'Please fill the periodic maintenance report',
                                     style: TextStyleList.text16,
                                   ),
-                                  Obx(() => jobController
-                                          .reportPreventiveList.isNotEmpty
+                                  Obx(() => jobController.reportPreventiveList
+                                          .first.maintenanceRecords!.isNotEmpty
                                       ? ShowPreventiveReportWidget(
                                           reportData: jobController
                                               .reportPreventiveList,
