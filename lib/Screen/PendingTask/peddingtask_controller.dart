@@ -82,7 +82,7 @@ class PeddingtaskController extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
-            changeIssueStatus(issueId, 'confirmed');
+            // changeIssueStatus(issueId, 'confirmed');
             updateAcceptStatusSubjobs(jobId, issueId.toString(), '102');
           },
         );

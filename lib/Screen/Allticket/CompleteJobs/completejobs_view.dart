@@ -34,7 +34,7 @@ class CompleteJobsView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('Pending Jobs', style: TextStyleList.title1),
+                title: Text('On Process Jobs', style: TextStyleList.title1),
                 leading: const BackIcon(),
               ),
               Container(

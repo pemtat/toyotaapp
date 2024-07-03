@@ -120,8 +120,8 @@ class HomeView extends StatelessWidget {
                         onTap: () {
                           Get.to(() => PmCompleteJobsView());
                         },
-                        count: jobController.pmjobListClosed,
-                        title: 'PM\nCompleted Jobs',
+                        count: jobController.pmjobListConfirmed,
+                        title: 'PM\nOn Process Jobs',
                         countColor: const Color(0xff323232),
                         titleColor: const Color(0xff434343),
                         containerColor: const Color(0xffEAEAEA),

@@ -7,24 +7,22 @@ import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
-import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
-class JobDetailControllerPM extends GetxController {
+class PendingTaskControllerPM extends GetxController {
   final notes = TextEditingController().obs;
   var notesFiles = <Notes>[].obs;
   final comment = TextEditingController().obs;
   var reportList = <BatteryReportModel>[].obs;
-  var pmInfo = <PMJobInfoModel>[].obs;
-
   var reportPreventiveList = <PreventivereportModel>[].obs;
 
   var isPicking = false.obs;
@@ -58,43 +56,8 @@ class JobDetailControllerPM extends GetxController {
     final String apiUrl = getTicketbyId(ticketId);
 
     String? token = await getToken();
-
-    imagesBefore.refresh();
-    imagesAfter.refresh();
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
-    await fetchPmJobInfo(jobId, token ?? '', pmInfo);
-    savedDateStartTime.value = pmInfo.first.tStart ?? '';
-    savedDateEndTime.value = pmInfo.first.tEnd ?? '';
-    imagesBefore.clear();
-    imagesAfter.clear();
-    try {
-      if (pmInfo.first.jobImageStart!.isNotEmpty) {
-        List<dynamic> imageBeforeList = pmInfo.first.jobImageStart!;
-
-        for (int i = 0; i < imageBeforeList.length; i++) {
-          imagesBefore.add({
-            'id': imageBeforeList[i].id,
-            'filename': imageBeforeList[i].name,
-            'content': imageBeforeList[i].content,
-          });
-        }
-      }
-
-      if (pmInfo.first.jobImageEnd!.isNotEmpty) {
-        List<dynamic> imageAfterList = pmInfo.first.jobImageEnd!;
-
-        for (int i = 0; i < imageAfterList.length; i++) {
-          imagesAfter.add({
-            'id': imageAfterList[i].id,
-            'filename': imageAfterList[i].name,
-            'content': imageAfterList[i].content,
-          });
-        }
-      }
-    } catch (e) {
-      print("Error: $e");
-    }
     fetchPdfData(ticketId, token ?? '', pdfList);
     final response = await http.get(
       Uri.parse(apiUrl),
@@ -136,6 +99,29 @@ class JobDetailControllerPM extends GetxController {
       jobController.fetchDataFromAssignJob();
       bottomController.currentIndex.value = 0;
     }
+  }
+
+  void showTimeDialog(
+    BuildContext context,
+    String title,
+    String left,
+    String right,
+    Rx<String> datetime,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogAlert(
+          title: title,
+          leftButton: left,
+          rightButton: right,
+          rightColor: red1,
+          onRightButtonPressed: () {
+            saveCurrentDateTime(datetime);
+          },
+        );
+      },
+    );
   }
 
   void addNote(Rx<TextEditingController> textControllerRx) async {
@@ -192,17 +178,19 @@ class JobDetailControllerPM extends GetxController {
     }
   }
 
-  void showCompletedDialog(
+  void showAcceptDialog(
       BuildContext context, String title, String left, String right) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return DialogAlert(
+          rightColor: red1,
           title: title,
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
-            changeIssueStatusPM(jobId, 103, comment.value.text);
+            // changeIssueStatus(issueId, 'confirmed');
+            changeIssueStatusPM(jobId, 102, '-');
           },
         );
       },

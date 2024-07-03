@@ -121,7 +121,8 @@ class PMJobInfo extends StatelessWidget {
             const SizedBox(height: 4),
           ],
         ),
-        if (more == false) const ArrowRight() else const ArrowDown(),
+        if (more != null)
+          if (more == false) const ArrowRight() else const ArrowDown(),
       ],
     );
   }

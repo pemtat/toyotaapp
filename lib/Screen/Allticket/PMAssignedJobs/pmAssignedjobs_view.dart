@@ -4,8 +4,10 @@ import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/Allticket/PMAssignedJobs/pmAssignedjobs_controller.dart';
+import 'package:toyotamobile/Screen/Allticket/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
+import 'package:toyotamobile/Screen/PendingTaskPM/pendingtaskpm_view.dart';
 import 'package:toyotamobile/Screen/Ticket/ticket_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
@@ -27,12 +29,11 @@ class PmAssignedJobsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => true,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(preferredSize),
+          preferredSize: const Size.fromHeight(60.0),
           child: Column(
             children: [
               AppBar(
@@ -59,83 +60,257 @@ class PmAssignedJobsView extends StatelessWidget {
                   statusCheckboxes: statusCheckboxes(),
                   selectedDate: pmAssignedController.selectedDate,
                   clearFilters: pmAssignedController.clearFilters),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(paddingApp),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Obx(() {
-                          final filteredJobs =
-                              jobController.pmItems.where((job) {
-                            final jobDate =
-                                formatDateTimeString(job.dueDate ?? '');
-                            final searchQueryMatch = job.id.toString().contains(
-                                    pmAssignedController.searchQuery.value) ||
-                                job.description!.contains(
-                                    pmAssignedController.searchQuery.value);
-                            final statusMatch = pmAssignedController
-                                    .selectedStatus.isEmpty ||
-                                pmAssignedController.selectedStatus
-                                    .contains(stringToStatus(job.status ?? ''));
-                            final dateMatch =
-                                pmAssignedController.selectedDate.value ==
-                                        null ||
-                                    (jobDate.year ==
-                                            pmAssignedController
-                                                .selectedDate.value!.year &&
-                                        jobDate.month ==
-                                            pmAssignedController
-                                                .selectedDate.value!.month &&
-                                        jobDate.day ==
-                                            pmAssignedController
-                                                .selectedDate.value!.day);
-                            return searchQueryMatch &&
-                                statusMatch &&
-                                dateMatch &&
-                                job.status != '103';
-                          }).toList();
-                          filteredJobs.sort(
-                              (a, b) => b.status!.compareTo(a.status ?? ''));
-
-                          if (filteredJobs.isEmpty) {
-                            return Center(
-                                child: Text(
-                              'No new jobs available.',
-                              style: TextStyleList.subtitle2,
-                            ));
-                          }
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: filteredJobs.length,
-                            itemBuilder: (context, index) {
-                              var job = filteredJobs[index];
-                              return InkWell(
-                                onTap: () {
-                                  Get.to(() => JobDetailViewPM(
-                                        ticketId: job.id.toString(),
-                                      ));
-                                },
-                                child: PmItemWidget(
-                                  job: job,
-                                  expandedIndex:
-                                      pmAssignedController.expandedIndex,
-                                  jobController: jobController,
-                                  sidebar: SidebarColor.getColor(
-                                      stringToStatus(job.status ?? '')),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          pmAssignedController.isSelected.value = 1;
+                        },
+                        child: Obx(() => Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color:
+                                    pmAssignedController.isSelected.value == 1
+                                        ? red4
+                                        : white5,
+                                border: const Border(
+                                  bottom: BorderSide(
+                                    width: 2,
+                                    color: Color.fromARGB(255, 162, 160, 160),
+                                  ),
                                 ),
-                              );
-                            },
-                          );
-                        }),
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    bottomLeft: Radius.circular(8)),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Pending (${jobController.pmjobList.value})',
+                                  style:
+                                      pmAssignedController.isSelected.value == 1
+                                          ? TextStyleList.text7
+                                          : TextStyleList.text6,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )),
                       ),
-                    ],
-                  ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          pmAssignedController.isSelected.value = 2;
+                        },
+                        child: Obx(() => Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color:
+                                    pmAssignedController.isSelected.value == 2
+                                        ? red4
+                                        : white5,
+                                border: const Border(
+                                    bottom: BorderSide(
+                                      width: 2,
+                                      color: Color.fromARGB(255, 162, 160, 160),
+                                    ),
+                                    left: BorderSide(
+                                      width: 1,
+                                      color: Color.fromARGB(255, 218, 214, 214),
+                                    ),
+                                    right: BorderSide(
+                                      width: 1,
+                                      color: Color.fromARGB(255, 218, 214, 214),
+                                    )),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Confirmed (${jobController.pmjobListConfirmed.value})',
+                                  style:
+                                      pmAssignedController.isSelected.value == 2
+                                          ? TextStyleList.text7
+                                          : TextStyleList.text6,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )),
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          pmAssignedController.isSelected.value = 3;
+                        },
+                        child: Obx(() => Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color:
+                                    pmAssignedController.isSelected.value == 3
+                                        ? red4
+                                        : white5,
+                                border: const Border(
+                                  bottom: BorderSide(
+                                    width: 2,
+                                    color: Color.fromARGB(255, 162, 160, 160),
+                                  ),
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(8),
+                                    bottomRight: Radius.circular(8)),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Completed (${jobController.pmCompletedList.value})',
+                                  style:
+                                      pmAssignedController.isSelected.value == 3
+                                          ? TextStyleList.text7
+                                          : TextStyleList.text6,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              16.kH,
+              Obx(() {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List.generate(
+                          (jobController.pmItems.length /
+                                  pmAssignedController.itemsPerPage)
+                              .ceil(), (index) {
+                        final pageIndex = index + 1;
+                        return InkWell(
+                          onTap: () {
+                            pmAssignedController.currentPage.value = pageIndex;
+                          },
+                          child: Obx(() {
+                            final isSelected =
+                                pmAssignedController.currentPage.value ==
+                                    pageIndex;
+                            return Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 7.0, horizontal: 12.0),
+                              decoration: BoxDecoration(
+                                  color: isSelected ? red4 : white8,
+                                  border: Border.all(
+                                      color:
+                                          Color.fromARGB(136, 218, 213, 213))),
+                              child: Text(
+                                '$pageIndex',
+                                style: isSelected
+                                    ? TextStyleList.text7
+                                    : TextStyleList.text6,
+                              ),
+                            );
+                          }),
+                        );
+                      }),
+                    ),
+                  ),
+                );
+              }),
+              Obx(() {
+                if (pmAssignedController.isSelected.value == 1) {
+                  return buildJobList(context, 'pending');
+                } else if (pmAssignedController.isSelected.value == 2) {
+                  return buildJobList(context, 'confirmed');
+                } else if (pmAssignedController.isSelected.value == 3) {
+                  return buildJobList(context, 'closed');
+                } else {
+                  return const SizedBox();
+                }
+              }),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildJobList(BuildContext context, String status) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(paddingApp),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            5.kH,
+            Expanded(
+              child: Obx(() {
+                final filteredJobs = jobController.pmItems.where((job) {
+                  final searchQueryMatch = job.id!
+                          .contains(pmAssignedController.searchQuery.value) ||
+                      job.description!
+                          .contains(pmAssignedController.searchQuery.value);
+                  final statusMatch =
+                      pmAssignedController.selectedStatus.isEmpty ||
+                          pmAssignedController.selectedStatus
+                              .contains(stringToStatus(job.status ?? ''));
+                  final jobDate = formatDateTimeString(job.dueDate ?? '');
+                  final dateMatch = pmAssignedController.selectedDate.value ==
+                          null ||
+                      (jobDate.year ==
+                              pmAssignedController.selectedDate.value!.year &&
+                          jobDate.month ==
+                              pmAssignedController.selectedDate.value!.month &&
+                          jobDate.day ==
+                              pmAssignedController.selectedDate.value!.day);
+                  return searchQueryMatch &&
+                      dateMatch &&
+                      stringToStatus(job.status ?? '') == status &&
+                      statusMatch;
+                }).toList();
+
+                final pagedJobs =
+                    pmAssignedController.getPagedItems(filteredJobs);
+
+                if (pagedJobs.isEmpty) {
+                  return Center(
+                      child: Text(
+                    'No jobs available.',
+                    style: TextStyleList.subtitle2,
+                  ));
+                }
+
+                return ListView.builder(
+                  itemCount: pagedJobs.length,
+                  itemBuilder: (context, index) {
+                    final job = pagedJobs[index];
+                    return InkWell(
+                      onTap: () {
+                        if (status == 'pending') {
+                          Get.to(
+                              () => PendingTaskViewPM(ticketId: job.id ?? ''));
+                        } else if (status == 'confirmed') {
+                          Get.to(() => JobDetailViewPM(ticketId: job.id ?? ''));
+                        } else if (status == 'closed') {
+                          Get.to(
+                              () => TicketPMDetailView(ticketId: job.id ?? ''));
+                        }
+                      },
+                      child: PmItemWidget(
+                        job: job,
+                        expandedIndex: pmAssignedController.expandedIndex,
+                        jobController: jobController,
+                        sidebar: SidebarColor.getColor(
+                            stringToStatus(job.status ?? '')),
+                      ),
+                    );
+                  },
+                );
+              }),
+            ),
+          ],
         ),
       ),
     );

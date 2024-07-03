@@ -42,7 +42,7 @@ class SubJobsTicket extends StatelessWidget {
               ? const Center(child: CircularProgressIndicator())
               : Container();
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(child: Text('Error: ${bugId}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return Container();
         }

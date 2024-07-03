@@ -4,10 +4,12 @@ import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Screen/Allticket/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
 import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
+import 'package:toyotamobile/Screen/PendingTaskPM/pendingtaskpm_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_view.dart';
 import 'package:toyotamobile/Screen/Ticket/ticket_controller.dart';
@@ -233,9 +235,19 @@ class TicketView extends StatelessWidget {
                                   var job = filteredJobs[index];
                                   return InkWell(
                                     onTap: () {
-                                      Get.to(() => JobDetailViewPM(
-                                            ticketId: job.id.toString(),
-                                          ));
+                                      if (stringToStatus(job.status ?? '') ==
+                                          'pending') {
+                                        Get.to(() => PendingTaskViewPM(
+                                            ticketId: job.id ?? ''));
+                                      } else if (stringToStatus(
+                                              job.status ?? '') ==
+                                          'confirmed') {
+                                        Get.to(() => JobDetailViewPM(
+                                            ticketId: job.id ?? ''));
+                                      } else {
+                                        Get.to(() => TicketPMDetailView(
+                                            ticketId: job.id ?? ''));
+                                      }
                                     },
                                     child: PmItemWidget(
                                       job: job,
@@ -243,7 +255,7 @@ class TicketView extends StatelessWidget {
                                           ticketController.expandedIndex2,
                                       jobController: jobController,
                                       sidebar: SidebarColor.getColor(
-                                          job.status ?? ''),
+                                          stringToStatus(job.status ?? '')),
                                     ),
                                   );
                                 },

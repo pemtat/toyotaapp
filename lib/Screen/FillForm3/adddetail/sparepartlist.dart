@@ -54,7 +54,7 @@ class SparepartList extends GetxController {
               if (isLoading.value) {
                 return const Padding(
                   padding: EdgeInsets.only(top: 16.0),
-                  child: Center(child: const CircularProgressIndicator()),
+                  child: Center(child: CircularProgressIndicator()),
                 );
               }
               return ListView.builder(

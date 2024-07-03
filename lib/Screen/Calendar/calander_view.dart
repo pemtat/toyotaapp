@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Screen/Allticket/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
+import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
+import 'package:toyotamobile/Screen/PendingTaskPM/pendingtaskpm_view.dart';
+import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -277,12 +281,32 @@ class CalendarView extends StatelessWidget {
                                 return InkWell(
                                   onTap: () {
                                     if (event['type'] == EventType.Job) {
+                                      if (event['status'] == 'pending') {
+                                        Get.to(() => PendingTaskView(
+                                            ticketId: event['bugid'] ?? '',
+                                            jobId: event['jobid']));
+                                      } else if (event['status'] ==
+                                          'confirmed') {
+                                        Get.to(() => JobDetailView(
+                                            ticketId: event['bugid'] ?? '',
+                                            jobId: event['jobid']));
+                                      } else {
+                                        Get.to(() => TicketDetailView(
+                                            ticketId: event['bugid'] ?? '',
+                                            jobId: event['jobid']));
+                                      }
                                     } else {
-                                      Get.to(() => JobDetailViewPM(
-                                            ticketId: jobController
-                                                .pmItems[index].id
-                                                .toString(),
-                                          ));
+                                      if (event['status'] == 'pending') {
+                                        Get.to(() => PendingTaskViewPM(
+                                            ticketId: event['jobid']));
+                                      } else if (event['status'] ==
+                                          'confirmed') {
+                                        Get.to(() => JobDetailViewPM(
+                                            ticketId: event['jobid']));
+                                      } else {
+                                        Get.to(() => TicketPMDetailView(
+                                            ticketId: event['jobid']));
+                                      }
                                     }
                                   },
                                   child: CalendarItem(

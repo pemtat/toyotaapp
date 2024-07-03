@@ -10,6 +10,7 @@ import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
+import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
@@ -19,6 +20,7 @@ import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
+import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Styles/color.dart';
@@ -29,6 +31,8 @@ import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 final BottomBarController bottomController = Get.put(BottomBarController());
 final HomeController jobController = Get.put(HomeController());
 final JobDetailController jobDetailController = Get.put(JobDetailController());
+final JobDetailControllerPM jobDetailControllerPM =
+    Get.put(JobDetailControllerPM());
 
 Future<void> fetchSubJob(
     String subjobId, String token, RxList<SubJobDetail> subJobs) async {
@@ -309,6 +313,29 @@ Future<void> fetchPreventiveReportData(
   }
 }
 
+Future<void> fetchPmJobInfo(
+  String id,
+  String token,
+  RxList<PMJobInfoModel> reportList,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getPmJobInfoById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      var pmJobInfo = PMJobInfoModel.fromJson(data);
+      reportList.add(pmJobInfo);
+    } else {}
+  } catch (e) {
+    print(e);
+  }
+}
+
 void addAttachment(
     Map<String, String> file, RxList<Map<String, dynamic>> addAttatchments) {
   addAttatchments.add(file);
@@ -423,6 +450,34 @@ Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
   }
 }
 
+Future<void> pickImagePM(RxList<Map<String, String>> file, Rx<bool> isPicking,
+    String option, String jobId, String createById) async {
+  if (isPicking.value) return;
+  isPicking.value = true;
+  try {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      io.File imageFile = io.File(pickedFile.path);
+      String fileName = pickedFile.name;
+      String base64Content = base64Encode(await imageFile.readAsBytes());
+      file.add({
+        'filename': fileName,
+        'content': base64Content,
+      });
+
+      Map<String, String> newImg = ({
+        'filename': fileName,
+        'content': base64Content,
+      });
+
+      await updateImgPMjobs(jobId, newImg, option, createById);
+    }
+  } finally {
+    isPicking.value = false;
+  }
+}
+
 void showTimeDialog(
     BuildContext context,
     String title,
@@ -442,6 +497,32 @@ void showTimeDialog(
         rightColor: red1,
         onRightButtonPressed: () {
           saveCurrentDateTimeToSubJob(datetime, jobId, option, ticketId);
+        },
+      );
+    },
+  );
+}
+
+void showTimeDialogPM(
+  BuildContext context,
+  String title,
+  String left,
+  String right,
+  Rx<String> datetime,
+  String jobId,
+  String option,
+  String createById,
+) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return DialogAlert(
+        title: title,
+        leftButton: left,
+        rightButton: right,
+        rightColor: red1,
+        onRightButtonPressed: () {
+          saveCurrentDateTimeToPMJob(datetime, jobId, option, createById);
         },
       );
     },
@@ -468,6 +549,36 @@ void changeIssueStatus(int issueId, String status) async {
     jobController.fetchDataFromAssignJob();
     bottomController.currentIndex.value = 0;
     Get.offAll(() => BottomBarView());
+  }
+}
+
+void changeIssueStatusPM(String issueId, int status, String comment) async {
+  final String updateStatus = updateJobStatusByIdPM();
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {};
+    if (comment != '-') {
+      body = {"job_id": issueId, "status": status, "comment": comment};
+    } else {
+      body = {"job_id": issueId, "status": status};
+    }
+    final response = await http.post(
+      Uri.parse(updateStatus),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+    if (response.statusCode == 201) {
+      jobController.fetchDataFromAssignJob();
+      bottomController.currentIndex.value = 0;
+      Get.offAll(() => BottomBarView());
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print(e);
   }
 }
 
@@ -500,6 +611,42 @@ void saveCurrentDateTimeToSubJob(
     if (response.statusCode == 200) {
       print('Update time done');
       jobDetailController.fetchData(ticketId, jobId);
+    } else {
+      print('Failed to update time: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+void saveCurrentDateTimeToPMJob(
+    Rx<String> datetime, String jobId, String option, String createById) async {
+  try {
+    DateTime now = DateTime.now();
+    String? token = await getToken();
+    datetime.value = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+    Map<String, dynamic> body = {
+      'job_id': jobId,
+      'created_by': createById,
+      if (option == 'timestart') 'status': 'start',
+      'time_start': datetime.value,
+      if (option == 'timeend') 'status': 'end',
+      'time_end': datetime.value,
+    };
+
+    final response = await http.post(
+      Uri.parse(updateJobIssueByIdPM()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 201) {
+      print('Update time done');
+      // jobDetailController.fetchData(ticketId, jobId);
     } else {
       print('Failed to update time: ${response.statusCode}');
       print('Response body: ${response.body}');
@@ -586,6 +733,77 @@ Future<void> updateImgSubjobs(String jobId, String ticketId,
     );
 
     if (response.statusCode == 200) {
+    } else {
+      print('Failed to update status: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> updateImgPMjobs(String jobId, Map<String, dynamic> imageData,
+    String option, String createById) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {};
+
+    if (option == 'before') {
+      body = {
+        'job_code': jobId,
+        'name': imageData['filename'],
+        'content': imageData['content'],
+        'status': 'start',
+        'created_by': createById
+      };
+    } else {
+      body = {
+        'job_code': jobId,
+        'name': imageData['filename'],
+        'content': imageData['content'],
+        'status': 'end',
+        'created_by': createById
+      };
+    }
+    final response = await http.post(
+      Uri.parse(updatePmJobImage()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 201) {
+      print('Image Updated ');
+    } else {
+      print('Failed to update status: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> deletePMImage(
+    String jobId, String imageId, String option, String createById) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {};
+
+    body = {
+      'id': imageId,
+    };
+
+    final response = await http.post(
+      Uri.parse(deletePmJobImage()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 201) {
+      print('Image Deleted ');
     } else {
       print('Failed to update status: ${response.statusCode}');
     }

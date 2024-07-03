@@ -164,7 +164,7 @@ class PendingTaskView extends StatelessWidget {
                 'Yes',
               );
             },
-            text: 'Accept Ticket',
+            text: 'Accept',
           ),
         ),
       ),

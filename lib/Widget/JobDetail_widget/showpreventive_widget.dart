@@ -23,10 +23,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
     var fullMaintenanceRecords = data.pvtCheckingTypeMaster;
     var maintenance = data.pvtMaintenance;
     var sparePart = data.darDetails;
-    bool checksignaturePad =
-        maintenance?.signaturePad != null && maintenance?.signaturePad != '';
-    bool checksignature =
-        maintenance?.signature != null && maintenance?.signature != '';
+
     var space = 8;
     var space2 = 10;
     return Padding(
@@ -125,9 +122,9 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                           space.kH,
                           const BoxInfo2(
                               title:
-                                  'Description Problem / Action and Result / Recommend spare part changed',
+                                  'Description Problem / Action and Result\nRecommend spare part changed',
                               value: ''),
-                          4.kH,
+                          6.kH,
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -167,7 +164,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                           space.kH,
                           const TitleApp(
                             text:
-                                'Description Problem / Action and Result / Recommend spare part changed',
+                                'Description Problem / Action and Result\nRecommend spare part changed',
                           ),
                         ],
                       ),
@@ -197,7 +194,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                       : maintenance.officerChecking,
                 ),
                 space.kH,
-                if (checksignaturePad)
+                if (maintenance.signaturePad != '')
                   Center(
                       child: Column(
                     children: [
@@ -211,7 +208,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                       5.kH,
                     ],
                   )),
-                if (checksignature)
+                if (maintenance.signature != '')
                   Column(
                     children: [
                       space.kH,

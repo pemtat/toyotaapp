@@ -68,9 +68,10 @@ class CalendarController extends GetxController {
         final formattedTime = '$formattedHour:${timeParts[1]} $period';
 
         final eventData = {
-          "ticketid": pm.id,
+          "jobid": pm.id,
+          "bugid": '',
           "time": formattedTime,
-          "status": pm.status,
+          "status": stringToStatus(pm.status ?? ''),
           "task": pm.dueDate,
           "description": pm.description,
           "location": pm.serviceZoneCode,
@@ -118,7 +119,8 @@ class CalendarController extends GetxController {
         // warrantyInfoList =
         //     await checkWarrantyReturn(job.serialNo ?? '', warrantyInfoList);
         final eventData = {
-          "ticketid": job.id.toString(),
+          "jobid": job.id.toString(),
+          "bugid": job.bugId.toString(),
           "time": formattedTime,
           "status": stringToStatus(job.status ?? ''),
           "task": job.description,

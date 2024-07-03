@@ -210,7 +210,6 @@ class JobDetailController extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
-            print(jobId);
             updateStatusSubjobs(jobId, comment.value.text, issueId.toString());
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);

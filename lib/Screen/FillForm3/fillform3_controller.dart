@@ -407,7 +407,7 @@ class FillformController3 extends GetxController {
       "safety_travel_alarm": safety.selections[0],
       "safety_rearview_mirror": safety.selections[1],
       "safety_seat_belt": safety.selections[2],
-      "mt_service_result": maintenance.maintenanceList.first.chargingType,
+      "mt_service_result": maintenance.maintenanceList.first.chargingType.first,
       "officer_checking": officer,
       "customer_checking": "",
       "customer_score": 0,

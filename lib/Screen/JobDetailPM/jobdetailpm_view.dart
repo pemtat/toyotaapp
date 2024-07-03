@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/FillForm3/fillform3_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
+import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
@@ -29,6 +31,7 @@ class JobDetailViewPM extends StatelessWidget {
   final String ticketId;
   final String? status;
   final JobDetailControllerPM jobController = Get.put(JobDetailControllerPM());
+  final UserController userController = Get.put(UserController());
 
   JobDetailViewPM({super.key, required this.ticketId, this.status}) {
     jobController.fetchData(ticketId);
@@ -79,8 +82,9 @@ class JobDetailViewPM extends StatelessWidget {
                         bottom: 0,
                         child: Center(
                             child: StatusButton(
-                                status:
-                                    jobController.issueData.first.status.name)),
+                                status: stringToStatus(jobController
+                                    .issueData.first.status.id
+                                    .toString()))),
                       )
                     : Container()),
               ],
@@ -97,7 +101,7 @@ class JobDetailViewPM extends StatelessWidget {
                 ? jobController.addAttatchments
                 : null;
             var issue = jobController.issueData.first;
-
+            var userData = userController.userInfo.first;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -176,13 +180,15 @@ class JobDetailViewPM extends StatelessWidget {
                                             ''
                                         ? ButtonTime(
                                             saveTime: (datetime) {
-                                              jobController.showTimeDialog(
-                                                context,
-                                                'Are you sure to confirm?',
-                                                'No',
-                                                'Yes',
-                                                datetime,
-                                              );
+                                              showTimeDialogPM(
+                                                  context,
+                                                  'Are you sure to confirm?',
+                                                  'No',
+                                                  'Yes',
+                                                  datetime,
+                                                  ticketId,
+                                                  'timestart',
+                                                  userData.id.toString());
                                             },
                                             time: jobController
                                                 .savedDateStartTime,
@@ -205,18 +211,19 @@ class JobDetailViewPM extends StatelessWidget {
                                               attachments:
                                                   jobController.imagesBefore,
                                               edit: true,
-                                              jobid: ticketId,
                                               option: 'before',
+                                              pmjobid: ticketId,
+                                              createdBy: userData.id.toString(),
                                             )
                                           : Container()),
                                   10.kH,
                                   UploadImageWidget(
-                                    pickImage: () => pickImage(
+                                    pickImage: () => pickImagePM(
                                         jobController.imagesBefore,
                                         jobController.isPicking,
                                         'before',
                                         ticketId,
-                                        ''),
+                                        userData.id.toString()),
                                   ),
                                   18.kH,
                                   Obx(() => jobController
@@ -232,14 +239,16 @@ class JobDetailViewPM extends StatelessWidget {
                                                     ''
                                                 ? ButtonTime(
                                                     saveTime: (datetime) {
-                                                      jobController
-                                                          .showTimeDialog(
-                                                        context,
-                                                        'Are you sure to confirm?',
-                                                        'No',
-                                                        'Yes',
-                                                        datetime,
-                                                      );
+                                                      showTimeDialogPM(
+                                                          context,
+                                                          'Are you sure to confirm?',
+                                                          'No',
+                                                          'Yes',
+                                                          datetime,
+                                                          ticketId,
+                                                          'timeend',
+                                                          userData.id
+                                                              .toString());
                                                     },
                                                     time: jobController
                                                         .savedDateEndTime,
@@ -261,23 +270,26 @@ class JobDetailViewPM extends StatelessWidget {
                                                     attachments: jobController
                                                         .imagesAfter,
                                                     edit: true,
-                                                    jobid: ticketId,
                                                     option: 'after',
+                                                    pmjobid: ticketId,
+                                                    createdBy:
+                                                        userData.id.toString(),
                                                   )
                                                 : Container()),
                                             10.kH,
                                             UploadImageWidget(
-                                              pickImage: () => pickImage(
+                                              pickImage: () => pickImagePM(
                                                   jobController.imagesAfter,
                                                   jobController.isPicking,
                                                   'after',
                                                   ticketId,
-                                                  ''),
+                                                  userData.id.toString()),
                                             ),
                                             6.kH,
                                           ],
                                         )
                                       : Container()),
+                                  6.kH,
                                   TextFieldType(
                                     hintText: 'Add Comment',
                                     textSet: jobController.comment.value,

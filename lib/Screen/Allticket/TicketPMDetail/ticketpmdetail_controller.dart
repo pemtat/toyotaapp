@@ -18,7 +18,7 @@ import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
-class JobDetailControllerPM extends GetxController {
+class TicketPmDetailController extends GetxController {
   final notes = TextEditingController().obs;
   var notesFiles = <Notes>[].obs;
   final comment = TextEditingController().obs;
@@ -58,16 +58,12 @@ class JobDetailControllerPM extends GetxController {
     final String apiUrl = getTicketbyId(ticketId);
 
     String? token = await getToken();
-
-    imagesBefore.refresh();
-    imagesAfter.refresh();
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     await fetchPmJobInfo(jobId, token ?? '', pmInfo);
     savedDateStartTime.value = pmInfo.first.tStart ?? '';
     savedDateEndTime.value = pmInfo.first.tEnd ?? '';
-    imagesBefore.clear();
-    imagesAfter.clear();
+
     try {
       if (pmInfo.first.jobImageStart!.isNotEmpty) {
         List<dynamic> imageBeforeList = pmInfo.first.jobImageStart!;

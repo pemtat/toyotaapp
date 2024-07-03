@@ -7,13 +7,17 @@ class AttachmentsListWidget extends StatelessWidget {
   final List<Map<String, dynamic>> attachments;
   final String? option;
   final String? jobid;
+  final String? pmjobid;
   final bool? edit;
+  final String? createdBy;
 
   const AttachmentsListWidget(
       {super.key,
       required this.attachments,
       this.option,
       this.jobid,
+      this.pmjobid,
+      this.createdBy,
       this.edit});
 
   @override
@@ -40,7 +44,17 @@ class AttachmentsListWidget extends StatelessWidget {
                     top: 0,
                     child: GestureDetector(
                       onTap: () {
-                        if (jobid != null && option != null) {
+                        if (pmjobid != null &&
+                            option != null &&
+                            createdBy != null) {
+                          attachments.removeAt(index);
+                          try {
+                            deletePMImage(jobid ?? '', attachment['id'],
+                                option ?? '', createdBy ?? '');
+                          } catch (e) {
+                            print('sucessful');
+                          }
+                        } else if (jobid != null && option != null) {
                           attachments.removeAt(index);
                           deleteImgSubJob(
                               jobid ?? '', attachments, option ?? '');

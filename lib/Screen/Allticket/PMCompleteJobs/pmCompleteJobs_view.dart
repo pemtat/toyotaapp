@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/Allticket/PMCompleteJobs/pmCompleteJobs_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
@@ -36,7 +37,7 @@ class PmCompleteJobsView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('PM Completed Jobs', style: TextStyleList.title1),
+                title: Text('PM On Process Jobs', style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,
@@ -93,7 +94,7 @@ class PmCompleteJobsView extends StatelessWidget {
                             return searchQueryMatch &&
                                 statusMatch &&
                                 dateMatch &&
-                                job.status == 'closed';
+                                stringToStatus(job.status ?? '') == 'confirmed';
                           }).toList();
                           filteredJobs.sort(
                               (a, b) => b.status!.compareTo(a.status ?? ''));
@@ -121,8 +122,8 @@ class PmCompleteJobsView extends StatelessWidget {
                                   expandedIndex:
                                       pmCompleteController.expandedIndex,
                                   jobController: jobController,
-                                  sidebar:
-                                      SidebarColor.getColor(job.status ?? ''),
+                                  sidebar: SidebarColor.getColor(
+                                      stringToStatus(job.status ?? '')),
                                 ),
                               );
                             },

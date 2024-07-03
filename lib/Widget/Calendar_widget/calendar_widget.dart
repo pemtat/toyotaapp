@@ -76,11 +76,11 @@ class CalendarItem extends StatelessWidget {
                           children: [
                             event['type'] == EventType.Job
                                 ? Text(
-                                    'Job ID : ${event['ticketid'].toString().padLeft(7, '0')}',
+                                    'Job ID : ${event['jobid'].toString().padLeft(4, '0')}',
                                     style: TextStyleList.text16,
                                   )
                                 : Text(
-                                    'PM ID : ${event['ticketid'].toString().padLeft(7, '0')}',
+                                    'PM ID : ${event['jobid'].toString().padLeft(4, '0')}',
                                     style: TextStyleList.text16,
                                   ),
                             const SizedBox(width: 10),
@@ -91,18 +91,17 @@ class CalendarItem extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () {
                                     if (expandedTicketId.value ==
-                                        event['ticketid']) {
+                                        event['jobid']) {
                                       expandedIndex.value =
                                           !expandedIndex.value;
                                     } else {
                                       expandedIndex.value = true;
-                                      expandedTicketId.value =
-                                          event['ticketid'];
+                                      expandedTicketId.value = event['jobid'];
                                     }
                                   },
                                   child: expandedIndex.value &&
                                           expandedTicketId.value ==
-                                              event['ticketid']
+                                              event['jobid']
                                       ? const ArrowUp()
                                       : const ArrowDown(),
                                 ),
@@ -132,7 +131,7 @@ class CalendarItem extends StatelessWidget {
                         const SizedBox(height: 8),
                         Obx(
                           () => expandedIndex.value &&
-                                  expandedTicketId.value == event['ticketid']
+                                  expandedTicketId.value == event['jobid']
                               ? Padding(
                                   padding: const EdgeInsets.only(
                                       top: 10.0, right: 8, bottom: 8),

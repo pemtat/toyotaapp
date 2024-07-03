@@ -40,8 +40,32 @@ String createPreventiveReport() {
   return '$url/api/rest/pm_jobs/create_pvt_maintenance';
 }
 
+String getPmJobInfoById(String id) {
+  return '$url/api/rest/pm_jobs/job_working_details?job_id=$id';
+}
+
+String getPmJobPage(String resorceNo, String page) {
+  return '$url/api/rest/pm/:resourceNo/page/:page/';
+}
+
+String updatePmJobImage() {
+  return '$url/api/rest/pm_jobs/update_image_job';
+}
+
+String deletePmJobImage() {
+  return '$url/api/rest/pm_jobs/delete_image';
+}
+
 String updateIssueStatusById(int issueId) {
   return '$issue/$issueId';
+}
+
+String updateJobStatusByIdPM() {
+  return '$url/api/rest/pm_jobs/update_status_job';
+}
+
+String updateJobIssueByIdPM() {
+  return '$url/api/rest/pm_jobs/update_working';
 }
 
 String getAttachmentFileById(int issueId, int attachmentId) {

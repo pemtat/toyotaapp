@@ -1,4 +1,5 @@
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/home_model.dart';
@@ -31,6 +32,7 @@ class HomeController extends GetxController {
   var pmItems = <PmModel>[].obs;
   RxBool isLoading = true.obs;
   final RxInt pmjobList = 0.obs;
+  final RxInt pmjobListConfirmed = 0.obs;
   final RxInt pmjobListClosed = 0.obs;
   final RxInt subjobList = 0.obs;
   final RxInt subjobListPending = 0.obs;
@@ -170,13 +172,20 @@ class HomeController extends GetxController {
         List<dynamic> responseData = jsonDecode(response.body);
         List<PmModel> itemList =
             responseData.map((job) => PmModel.fromJson(job)).toList();
-        itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
-        List<PmModel> closedPmItems =
-            itemList.where((pm) => pm.dueDate == 'closed').toList();
-
+        // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
+        List<PmModel> pendingPmItems = itemList
+            .where((pm) => stringToStatus(pm.status ?? '') == 'pending')
+            .toList();
+        pmjobList.value = pendingPmItems.length;
+        List<PmModel> confirmPmItems = itemList
+            .where((pm) => stringToStatus(pm.status ?? '') == 'confirmed')
+            .toList();
+        pmjobListConfirmed.value = confirmPmItems.length;
+        List<PmModel> closedPmItems = itemList
+            .where((pm) => stringToStatus(pm.status ?? '') == 'closed')
+            .toList();
+        pmCompletedList.value = closedPmItems.length;
         pmItems.value = itemList;
-        pmjobList.value = pmItems.length;
-        pmjobListClosed.value = closedPmItems.length;
       } else {
         print('Failed to load data: ${response.statusCode}');
       }
