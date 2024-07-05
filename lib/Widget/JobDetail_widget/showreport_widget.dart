@@ -69,13 +69,9 @@ class ShowRepairReport extends StatelessWidget {
                 ),
                 space.kH,
                 4.kH,
-                reportData.first.cCode != '-' &&
-                        reportData.first.partNumber != '-' &&
-                        reportData.first.description != '-' &&
-                        // ignore: unrelated_type_equality_checks
-                        reportData.first.quantity != 0 &&
-                        reportData.first.changeNow != '-' &&
-                        reportData.first.changeOnPm != '-'
+
+                // ignore: unrelated_type_equality_checks
+                reportData.first.quantity != '0'
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -123,13 +119,8 @@ class ShowRepairReport extends StatelessWidget {
                     : const BoxInfo2(title: 'Spare part List', value: '-'),
                 8.kH,
                 if (additionalReportData.isNotEmpty)
-                  additionalReportData.first.cCode != '-' &&
-                          additionalReportData.first.partNumber != '-' &&
-                          additionalReportData.first.description != '-' &&
-                          // ignore: unrelated_type_equality_checks
-                          additionalReportData.first.quantity != 0 &&
-                          additionalReportData.first.changeNow != '-' &&
-                          additionalReportData.first.changeOnPm != '-'
+                  // ignore: unrelated_type_equality_checks
+                  additionalReportData.first.quantity != '0'
                       ? Column(
                           children: [
                             const BoxInfo2(

@@ -20,6 +20,10 @@ String getTicketbyId(String issueId) {
   return '$issue/$issueId';
 }
 
+String getWarrantyInfoByTicketId(String issueId) {
+  return '$url/api/rest/issues/$issueId/warranty';
+}
+
 String attatchNoteFile(String issueId) {
   return '$issueId/files';
 }
@@ -44,8 +48,8 @@ String getPmJobInfoById(String id) {
   return '$url/api/rest/pm_jobs/job_working_details?job_id=$id';
 }
 
-String getPmJobPage(String resorceNo, String page) {
-  return '$url/api/rest/pm/:resourceNo/page/:page/';
+String getPmJobPage(String resorceNo, int page) {
+  return '$url/api/rest/pm/$resorceNo/page/$page/';
 }
 
 String updatePmJobImage() {

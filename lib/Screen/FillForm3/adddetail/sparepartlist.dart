@@ -72,9 +72,14 @@ class SparepartList extends GetxController {
                       'No: ${product.no}',
                       style: TextStyleList.text3,
                     ),
+                    trailing: Text(
+                      product.inventory.toString(),
+                      style: TextStyleList.text3,
+                    ),
                     onTap: () {
                       partNumber.value.text = product.no;
                       searchPartNumber.value.text = product.no;
+                      partDetails.value.text = product.model;
                       products.clear();
                     },
                   );
@@ -235,6 +240,10 @@ class SparepartList extends GetxController {
                     ),
                     subtitle: Text(
                       'No: ${product.no}',
+                      style: TextStyleList.text3,
+                    ),
+                    trailing: Text(
+                      product.inventory.toString(),
                       style: TextStyleList.text3,
                     ),
                     onTap: () {

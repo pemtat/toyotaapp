@@ -132,11 +132,12 @@ class JobDetailViewPM extends StatelessWidget {
                                           getFormattedDate(DateTime.now()),
                                       reporter: issue.reporter.name,
                                       summary:
-                                          'ช่าง ${issue.getCustomFieldValue("Customer Name")}',
+                                          '${issue.getCustomFieldValue("Customer Name")}',
                                       description:
                                           'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
                                       more:
                                           jobController.moreTicketDetail.value,
+                                      detail: issue.description,
                                     ),
                                   ],
                                 ),
@@ -395,11 +396,8 @@ class JobDetailViewPM extends StatelessWidget {
           decoration: Decoration2(),
           child: EndButton(
               onPressed: () {
-                jobController.showCompletedDialog(
-                    context,
-                    'Successfully finished job on investigating!',
-                    'Not yet',
-                    'Yes, Completed');
+                jobController.showCompletedDialog(context,
+                    'Are you sure to complete?', 'Not yet', 'Yes, Completed');
               },
               text: 'Complete'),
         ),

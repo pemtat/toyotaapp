@@ -118,9 +118,10 @@ class PendingTaskViewPM extends StatelessWidget {
                                           getFormattedDate(DateTime.now()),
                                       reporter: issue.reporter.name,
                                       summary:
-                                          'ช่าง ${issue.getCustomFieldValue("Customer Name")}',
+                                          '${issue.getCustomFieldValue("Customer Name")}',
                                       description:
                                           'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
+                                      detail: issue.description,
                                     ),
                                   ],
                                 ),

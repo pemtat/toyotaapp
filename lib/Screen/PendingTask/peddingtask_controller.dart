@@ -6,10 +6,13 @@ import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
+import 'package:toyotamobile/Models/warrantybyid_model.dart';
+import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
@@ -24,7 +27,8 @@ class PeddingtaskController extends GetxController {
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var userData = <UserById>[].obs;
-
+  var warrantyInfo = <WarrantybyIdModel>[].obs;
+  var customerInfo = <CustomerById>[].obs;
   var issueId;
   var jobId;
   var subJobs = <SubJobDetail>[].obs;
@@ -41,7 +45,9 @@ class PeddingtaskController extends GetxController {
     await fetchPdfData(ticketId, token ?? '', pdfList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
     await fetchUserById(subJobs.first.reporterId ?? '', userData);
-
+    await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
+    await fetchgetCustomerInfo(
+        userData.first.users!.first.companyId ?? '', customerInfo);
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {
@@ -55,7 +61,7 @@ class PeddingtaskController extends GetxController {
       issuesList!.map((issue) {
         issueId = issue.id;
         jobId = subjobId;
-
+        attatchments.clear;
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);
 
@@ -84,6 +90,8 @@ class PeddingtaskController extends GetxController {
           onRightButtonPressed: () {
             // changeIssueStatus(issueId, 'confirmed');
             updateAcceptStatusSubjobs(jobId, issueId.toString(), '102');
+            jobController.fetchDataFromAssignJob();
+            Navigator.pop(context);
           },
         );
       },

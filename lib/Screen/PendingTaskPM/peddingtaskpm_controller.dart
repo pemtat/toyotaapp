@@ -191,6 +191,8 @@ class PendingTaskControllerPM extends GetxController {
           onRightButtonPressed: () {
             // changeIssueStatus(issueId, 'confirmed');
             changeIssueStatusPM(jobId, 102, '-');
+            jobController.fetchDataFromAssignJob();
+            Navigator.pop(context);
           },
         );
       },

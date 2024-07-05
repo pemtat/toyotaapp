@@ -39,7 +39,6 @@ class LoginController extends GetxController {
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         final accessToken = responseData['access_token'] as String;
-
         await fetchAndStoreTokenData(accessToken);
       } else {
         Get.snackbar('Login Failed', 'Invalid username or password');
@@ -64,6 +63,7 @@ class LoginController extends GetxController {
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.clear();
+        prefs.setString('verify', 'pass');
         prefs.setString('access_token', accessToken);
         prefs.setString('token_response', json.encode(tokenResponseData));
         String? tokenResponse = prefs.getString('token_response');

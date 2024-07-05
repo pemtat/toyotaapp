@@ -13,13 +13,15 @@ class StatusButton extends StatelessWidget {
       case 'new':
         return const StatusNewButton();
       case 'assigned':
-        return const StatusAssignedButton();
+        return const StatusPendingButton();
       case 'closed':
         return const StatusCompletedButton();
       case 'confirmed':
         return const StatusOnprocessButton();
       case 'feedback':
         return const StatusFeedBackButton();
+      case 'acknowledged':
+        return const StatusAcknowledged();
       case 'resolved':
         return const StatusResolved();
       case 'pending':

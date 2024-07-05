@@ -3,6 +3,7 @@ import 'dart:io' as io;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:toyotamobile/Function/checklevel.dart';
@@ -16,6 +17,7 @@ import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
+import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -50,6 +52,31 @@ Future<void> fetchSubJob(
       List<SubJobDetail> dataList =
           jsonResponse.map((json) => SubJobDetail.fromJson(json)).toList();
       subJobs.assignAll(dataList);
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> fetchWarrantyById(
+    String ticketId, String token, RxList<WarrantybyIdModel> info) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getWarrantyInfoByTicketId(ticketId)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+
+      List<WarrantybyIdModel> dataList =
+          jsonResponse.map((json) => WarrantybyIdModel.fromJson(json)).toList();
+      info.assignAll(dataList);
+      print(info.first.contractnumber);
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
@@ -571,9 +598,6 @@ void changeIssueStatusPM(String issueId, int status, String comment) async {
       body: jsonEncode(body),
     );
     if (response.statusCode == 201) {
-      jobController.fetchDataFromAssignJob();
-      bottomController.currentIndex.value = 0;
-      Get.offAll(() => BottomBarView());
     } else {
       print(response.statusCode);
     }
@@ -907,6 +931,36 @@ Future<CustomerById> fetchCustomerInfo(String id) async {
       if (response.statusCode == 200) {
         CustomerById customer = CustomerById.fromJson(responseData);
         return customer;
+      } else {
+        throw const FormatException('Unexpected response format');
+      }
+    } else {
+      throw Exception('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+    rethrow; // Rethrow the caught error
+  }
+}
+
+Future<void> fetchgetCustomerInfo(
+    String id, RxList<CustomerById> customerInfo) async {
+  String username = usernameProduct;
+  String password = passwordProduct;
+
+  String basicAuth =
+      'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+
+  try {
+    final response = await http.get(
+      Uri.parse(getCustomerInfoById(id.toString())),
+      headers: {'Authorization': basicAuth},
+    );
+    if (response.statusCode == 200) {
+      final dynamic responseData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        CustomerById customer = CustomerById.fromJson(responseData);
+        customerInfo.add(customer);
       } else {
         throw const FormatException('Unexpected response format');
       }

@@ -14,6 +14,7 @@ import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
@@ -51,7 +52,7 @@ class JobDetailControllerPM extends GetxController {
   final HomeController jobController = Get.put(HomeController());
   final BottomBarController bottomController = Get.put(BottomBarController());
 
-  void fetchData(String ticketId) async {
+  Future<void> fetchData(String ticketId) async {
     reportList = <BatteryReportModel>[].obs;
     reportPreventiveList = <PreventivereportModel>[].obs;
     jobId = ticketId;
@@ -59,19 +60,18 @@ class JobDetailControllerPM extends GetxController {
 
     String? token = await getToken();
 
-    imagesBefore.refresh();
-    imagesAfter.refresh();
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     await fetchPmJobInfo(jobId, token ?? '', pmInfo);
-    savedDateStartTime.value = pmInfo.first.tStart ?? '';
-    savedDateEndTime.value = pmInfo.first.tEnd ?? '';
-    imagesBefore.clear();
-    imagesAfter.clear();
+
+    if (pmInfo.first.tStart != '' && pmInfo.first.tStart != null)
+      savedDateStartTime.value = pmInfo.first.tStart ?? '';
+    if (pmInfo.first.tEnd != '' && pmInfo.first.tEnd != null)
+      savedDateEndTime.value = pmInfo.first.tEnd ?? '';
     try {
       if (pmInfo.first.jobImageStart!.isNotEmpty) {
         List<dynamic> imageBeforeList = pmInfo.first.jobImageStart!;
-
+        imagesBefore.clear;
         for (int i = 0; i < imageBeforeList.length; i++) {
           imagesBefore.add({
             'id': imageBeforeList[i].id,
@@ -83,7 +83,7 @@ class JobDetailControllerPM extends GetxController {
 
       if (pmInfo.first.jobImageEnd!.isNotEmpty) {
         List<dynamic> imageAfterList = pmInfo.first.jobImageEnd!;
-
+        imagesAfter.clear;
         for (int i = 0; i < imageAfterList.length; i++) {
           imagesAfter.add({
             'id': imageAfterList[i].id,
@@ -199,10 +199,13 @@ class JobDetailControllerPM extends GetxController {
       builder: (BuildContext context) {
         return DialogAlert(
           title: title,
+          rightColor: red1,
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
             changeIssueStatusPM(jobId, 103, comment.value.text);
+            jobController.fetchDataFromAssignJob();
+            Navigator.pop(context);
           },
         );
       },

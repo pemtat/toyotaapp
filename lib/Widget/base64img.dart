@@ -70,7 +70,7 @@ class AttachmentsListWidget extends StatelessWidget {
                         child: const Icon(
                           Icons.close,
                           color: Colors.white,
-                          size: 12,
+                          size: 18,
                         ),
                       ),
                     ),
@@ -91,7 +91,12 @@ class Base64ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Uint8List imageBytes = base64Decode(base64String);
+    Uint8List imageBytes = base64Decode('ZXJyb3I=');
+    try {
+      imageBytes = base64Decode(base64String);
+    } catch (e) {
+      print(e);
+    }
     return Container(
       width: 58,
       height: 58,

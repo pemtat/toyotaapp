@@ -63,6 +63,9 @@ class PendingTaskView extends StatelessWidget {
           var subJob = penddingTaskController.subJobs.isNotEmpty
               ? penddingTaskController.subJobs.first
               : null;
+          var customerInfo = penddingTaskController.customerInfo.isNotEmpty
+              ? penddingTaskController.customerInfo.first
+              : null;
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -103,17 +106,19 @@ class PendingTaskView extends StatelessWidget {
                             Obx(
                               () {
                                 if (penddingTaskController
-                                    .warrantyInfoList.isEmpty) {
+                                    .warrantyInfo.isEmpty) {
                                   return const Center(
                                     child: Text('No Data'),
                                   );
                                 } else {
-                                  var warrantyInfo = penddingTaskController
-                                      .warrantyInfoList.first;
+                                  var warrantyInfo =
+                                      penddingTaskController.warrantyInfo.first;
                                   return WarrantyBox(
-                                      model: warrantyInfo.model,
-                                      serial: warrantyInfo.serial,
-                                      status: warrantyInfo.warrantyStatus,
+                                      model: warrantyInfo.model ?? '',
+                                      serial: warrantyInfo.serial ?? '',
+                                      status: warrantyInfo.warrantystatus == '1'
+                                          ? 1
+                                          : 0,
                                       filePdf: filePdf);
                                 }
                               },
@@ -123,7 +128,7 @@ class PendingTaskView extends StatelessWidget {
                                 contactName: issue.reporter.name,
                                 email: issue.reporter.email,
                                 phoneNumber: '-',
-                                location: 'Onnut, Bangkok, Thailand',
+                                location: customerInfo!.customerAddress ?? '-',
                                 onTap: () {}),
                             8.kH,
                             BoxContainer(

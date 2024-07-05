@@ -58,6 +58,7 @@ class AccountController extends GetxController {
     prefs.setString('access_token', "");
     prefs.setString('token_response', "");
     prefs.setString('token', "");
+    prefs.setString('verify', "");
     controller.currentIndex.value = 0;
     jobController.mostRecentNewJob.value = null;
     jobController.mostRecentCompleteJob.value = null;

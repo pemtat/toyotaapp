@@ -5,11 +5,13 @@ import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
+import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -25,9 +27,12 @@ class JobDetailController extends GetxController {
   var reportList = <RepairReportModel>[].obs;
   var pdfList = <Map<String, dynamic>>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
+  var warrantyInfo = <WarrantybyIdModel>[].obs;
   var notesFiles = <Notes>[].obs;
   var isPicking = false.obs;
   var issueData = [].obs;
+  var customerInfo = <CustomerById>[].obs;
+
   List<String> notePic = [];
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
@@ -57,14 +62,19 @@ class JobDetailController extends GetxController {
 
       issueId = ticketId;
       jobId = subjobId;
+
       fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
       fetchPdfData(ticketId, token ?? '', pdfList);
       await fetchSubJob(subjobId, token ?? '', subJobs);
       await fetchUserById(subJobs.first.reporterId ?? '', userData);
+      await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
+      await fetchgetCustomerInfo(
+          userData.first.users!.first.companyId ?? '', customerInfo);
+      print(warrantyInfo.first.bugId);
       savedDateStartTime.value = subJobs.first.timeStart ?? '';
       savedDateEndTime.value = subJobs.first.timeEnd ?? '';
-      imagesBefore.clear();
-      imagesAfter.clear();
+      if (imagesBefore.isNotEmpty) imagesBefore.clear();
+      if (imagesAfter.isNotEmpty) imagesAfter.clear();
       try {
         if (subJobs.first.imageBefore != '' &&
             subJobs.first.contentBefore != '') {
@@ -110,6 +120,8 @@ class JobDetailController extends GetxController {
         List<Issues>? issuesList = ticketModel.issues;
         issuesList!.map((issue) {
           issueId = issue.id;
+          attatchments.clear();
+
           fetchReadAttachment(issueId, token ?? '', issue.attachments,
               attachmentsData, attatchments);
           fetchNotesPic(issue.notes, notesFiles, notePic);

@@ -111,11 +111,9 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                     value: maintenance.safetySeatBelt == ''
                         ? '-'
                         : maintenance.safetySeatBelt ?? ''),
-                sparePart!.first.pageCode != '-' &&
-                        sparePart.first.partNumber != '-' &&
-                        sparePart.first.description != '-' &&
-                        // ignore: unrelated_type_equality_checks
-                        sparePart.first.qty != 0
+
+                // ignore: unrelated_type_equality_checks
+                sparePart!.first.qty != '0'
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -162,9 +160,10 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                     : Column(
                         children: [
                           space.kH,
-                          const TitleApp(
+                          const TitleApp2(
                             text:
                                 'Description Problem / Action and Result\nRecommend spare part changed',
+                            moreText: '-',
                           ),
                         ],
                       ),

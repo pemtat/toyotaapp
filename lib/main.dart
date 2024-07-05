@@ -14,9 +14,8 @@ void main() async {
 }
 
 Future<Widget> getHomeWidget(SharedPreferences prefs) async {
-  String? getStr = prefs.getString('access_token');
-
-  return getStr != "" ? BottomBarView() : LoginView();
+  String? getStr = prefs.getString('verify');
+  return getStr == "pass" ? BottomBarView() : LoginView();
 }
 
 class MyApp extends StatelessWidget {

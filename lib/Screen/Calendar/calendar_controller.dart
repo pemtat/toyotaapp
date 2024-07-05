@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
+import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 
 enum EventType {
@@ -73,8 +76,10 @@ class CalendarController extends GetxController {
           "time": formattedTime,
           "status": stringToStatus(pm.status ?? ''),
           "task": pm.dueDate,
+          "customerName": pm.customerName,
+          'warrantyStatus': '',
           "description": pm.description,
-          "location": pm.serviceZoneCode,
+          "location": 'Service Zone ${pm.serviceZoneCode}',
           "serialNo": pm.serialNo,
           "type": EventType.PM,
         };
@@ -113,6 +118,11 @@ class CalendarController extends GetxController {
         if (hour >= 12) {
           period = 'PM';
         }
+        String? token = await getToken();
+        var warrantyInfo = <WarrantybyIdModel>[].obs;
+        await fetchWarrantyById(
+            job.bugId.toString(), token ?? '', warrantyInfo);
+
         final formattedHour = hour > 12 ? hour - 12 : hour;
         final formattedTime = '$formattedHour:${timeParts[1]} $period';
         // var warrantyInfoList = <WarrantyInfo>[].obs;
@@ -123,10 +133,12 @@ class CalendarController extends GetxController {
           "bugid": job.bugId.toString(),
           "time": formattedTime,
           "status": stringToStatus(job.status ?? ''),
+          "customerName": '',
           "task": job.description,
+          'warrantyStatus': warrantyInfo.first.warrantystatus == '1' ? 1 : 0,
           "description": '',
           "location": 'Bangkok',
-          "serialNo": 'SOOPSM',
+          "serialNo": warrantyInfo.first.serial,
           "type": EventType.Job,
         };
 

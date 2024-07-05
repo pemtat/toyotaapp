@@ -27,9 +27,11 @@ class HomeController extends GetxController {
   var subJobAssigned = <SubJobAssgined>[].obs;
   final BottomBarController notificationController =
       Get.put(BottomBarController());
+  int currentPage = 1; // Initial page
   final mostRecentNewJob = Rx<Issues?>(null);
   final mostRecentCompleteJob = Rx<Issues?>(null);
   var pmItems = <PmModel>[].obs;
+  var pmItemsPage = <PmModel>[].obs;
   RxBool isLoading = true.obs;
   final RxInt pmjobList = 0.obs;
   final RxInt pmjobListConfirmed = 0.obs;
@@ -57,8 +59,8 @@ class HomeController extends GetxController {
       String? accessToken = tokenData['token'];
       int handlerId = tokenData['user']['id'];
       await userController.fetchData();
-      fetchPMdata(handlerId);
-      fetchSubJobsdata(handlerId);
+      await fetchPMdata(handlerId);
+      await fetchSubJobsdata(handlerId);
       final response = await http.get(
         Uri.parse(getAssignJob),
         headers: {
@@ -72,10 +74,14 @@ class HomeController extends GetxController {
         jobList.assignAll(issues.map((data) => Issues.fromJson(data)).toList());
       }
 
-      fetchAndProcessJobs(handlerId, accessToken ?? '');
+      await fetchAndProcessJobs(handlerId, accessToken ?? '');
 
       // ignore: empty_catches
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> fetchAndProcessJobs(int handlerId, String accessToken) async {
@@ -192,6 +198,37 @@ class HomeController extends GetxController {
     } catch (e) {
       print('Error: $e');
     }
+  }
+
+  Future<void> fetchPMdataPage(int page) async {
+    await userController.fetchData();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    try {
+      final response = await http.get(
+        Uri.parse(getPmJobPage(userController.userInfo.first.resourceNo, page)),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+        List<PmModel> itemList =
+            responseData.map((job) => PmModel.fromJson(job)).toList();
+
+        pmItemsPage.addAll(itemList);
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> loadMore() async {
+    currentPage++;
+    await fetchPMdataPage(currentPage);
   }
 
   Future<void> fetchTicketJobs(String id) async {

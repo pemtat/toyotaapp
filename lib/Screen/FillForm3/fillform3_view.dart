@@ -660,10 +660,7 @@ class FillFormView3 extends StatelessWidget {
           child: EndButton(
               onPressed: () {
                 fillformController3.showSaveDialog(
-                    context,
-                    'Successfully finished job on investigating!',
-                    'Not yet',
-                    'Yes, Completed');
+                    context, 'Are you confirm to save report?', 'No', 'Yes');
               },
               text: 'Save'),
         ),

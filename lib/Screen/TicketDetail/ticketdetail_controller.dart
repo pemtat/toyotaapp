@@ -6,12 +6,14 @@ import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/jobprogress_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
+import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
@@ -24,6 +26,9 @@ class TicketDetailController extends GetxController {
   var reportList = <RepairReportModel>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
   var savedDateStartTime = ''.obs;
+  var warrantyInfo = <WarrantybyIdModel>[].obs;
+  var customerInfo = <CustomerById>[].obs;
+
   var savedDateEndTime = ''.obs;
   var imagesBefore = <Map<String, String>>[].obs;
   var imagesAfter = <Map<String, String>>[].obs;
@@ -68,6 +73,9 @@ class TicketDetailController extends GetxController {
     fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
     await fetchUserById(subJobs.first.reporterId ?? '', userData);
+    await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
+    await fetchgetCustomerInfo(
+        userData.first.users!.first.companyId ?? '', customerInfo);
     savedDateStartTime.value = subJobs.first.timeStart ?? '';
     savedDateEndTime.value = subJobs.first.timeEnd ?? '';
     try {
@@ -100,6 +108,7 @@ class TicketDetailController extends GetxController {
     } catch (e) {
       print("Error: $e");
     }
+    pdfList.clear;
     fetchPdfData(ticketId, token ?? '', pdfList);
     final response = await http.get(
       Uri.parse(apiUrl),
@@ -114,6 +123,7 @@ class TicketDetailController extends GetxController {
       List<Issues>? issuesList = ticketModel.issues;
       issuesList!.map((issue) {
         issueId = issue.id;
+        attatchments.clear;
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);
         fetchNotes(issue.notes, notesFiles);

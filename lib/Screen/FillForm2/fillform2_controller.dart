@@ -76,7 +76,7 @@ class FillformController2 extends GetxController {
           title: title,
           leftButton: left,
           rightButton: right,
-          onRightButtonPressed: () {
+          onRightButtonPressed: () async {
             saveReport(context);
             Navigator.pop(context);
           },
@@ -235,7 +235,7 @@ class FillformController2 extends GetxController {
           body: jsonEncode(data));
 
       if (response.statusCode == 201) {
-        jobDetailControllerPM.fetchData(jobId.toString());
+        await jobDetailControllerPM.fetchData(jobId.toString());
       } else {
         print('Failed to save report: ${response.statusCode}');
       }

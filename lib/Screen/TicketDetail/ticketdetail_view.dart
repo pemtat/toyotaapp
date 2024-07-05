@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -65,6 +66,9 @@ class TicketDetailView extends StatelessWidget {
             var subJob = ticketController.subJobs.isNotEmpty
                 ? ticketController.subJobs.first
                 : null;
+            var customerInfo = ticketController.customerInfo.isNotEmpty
+                ? ticketController.customerInfo.first
+                : null;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -86,7 +90,7 @@ class TicketDetailView extends StatelessWidget {
                                 child: BoxContainer(children: [
                                   TicketInfoStatus(
                                     ticketId: issue.id,
-                                    dateTime: '2024-06-07',
+                                    dateTime: formatDateTime(issue.createdAt),
                                     reporter: issue.reporter.name,
                                     status: issue.status.name,
                                     more:
@@ -155,19 +159,25 @@ class TicketDetailView extends StatelessWidget {
                                           Obx(
                                             () {
                                               if (ticketController
-                                                  .warrantyInfoList.isEmpty) {
+                                                  .warrantyInfo.isEmpty) {
                                                 return const Center(
                                                   child: Text('No Data'),
                                                 );
                                               } else {
                                                 var warrantyInfo =
                                                     ticketController
-                                                        .warrantyInfoList.first;
+                                                        .warrantyInfo.first;
                                                 return WarrantyBox(
-                                                    model: warrantyInfo.model,
-                                                    serial: warrantyInfo.serial,
+                                                    model: warrantyInfo.model ??
+                                                        '',
+                                                    serial:
+                                                        warrantyInfo.serial ??
+                                                            '',
                                                     status: warrantyInfo
-                                                        .warrantyStatus,
+                                                                .warrantystatus ==
+                                                            '1'
+                                                        ? 1
+                                                        : 0,
                                                     filePdf: filePdf);
                                               }
                                             },
@@ -177,8 +187,9 @@ class TicketDetailView extends StatelessWidget {
                                               contactName: issue.reporter.name,
                                               email: issue.reporter.email,
                                               phoneNumber: '-',
-                                              location:
-                                                  'Onnut, Bangkok, Thailand',
+                                              location: customerInfo!
+                                                      .customerAddress ??
+                                                  '-',
                                               onTap: () {}),
                                           8.kH,
                                           BoxContainer(

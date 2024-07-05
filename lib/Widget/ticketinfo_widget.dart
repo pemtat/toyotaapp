@@ -66,6 +66,7 @@ class PMJobInfo extends StatelessWidget {
   final String reporter;
   final String description;
   final String summary;
+  final String detail;
   final bool? more;
 
   const PMJobInfo(
@@ -73,6 +74,7 @@ class PMJobInfo extends StatelessWidget {
       required this.ticketId,
       required this.dateTime,
       required this.reporter,
+      required this.detail,
       required this.description,
       required this.summary,
       this.more});
@@ -82,44 +84,53 @@ class PMJobInfo extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                TitleApp(
-                    text: 'JobID: #${ticketId.toString().padLeft(4, '0')}'),
-                5.wH,
-                GestureDetector(
-                  onTap: () {
-                    Clipboard.setData(ClipboardData(text: ticketId.toString()));
-                    Fluttertoast.showToast(
-                        msg: "คัดลอกข้อความ",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        fontSize: 12.0);
-                  },
-                  child: Image.asset('assets/ticketblock.png'),
-                )
-              ],
-            ),
-            const SizedBox(height: 4),
-            Text(
-              dateTime,
-              style: TextStyleList.subtext1,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              summary,
-              style: TextStyleList.subtext3,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              description,
-              style: TextStyleList.subtext3,
-            ),
-            const SizedBox(height: 4),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  TitleApp(
+                      text: 'JobID: #${ticketId.toString().padLeft(4, '0')}'),
+                  5.wH,
+                  GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(
+                          ClipboardData(text: ticketId.toString()));
+                      Fluttertoast.showToast(
+                          msg: "คัดลอกข้อความ",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          fontSize: 12.0);
+                    },
+                    child: Image.asset('assets/ticketblock.png'),
+                  )
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                dateTime,
+                style: TextStyleList.subtext1,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                summary,
+                style: TextStyleList.subtext3,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                description,
+                style: TextStyleList.subtext3,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                detail,
+                style: TextStyleList.text2,
+                overflow: TextOverflow.visible, // Ensure text wraps to next lin
+              ),
+              const SizedBox(height: 4),
+            ],
+          ),
         ),
         if (more != null)
           if (more == false) const ArrowRight() else const ArrowDown(),

@@ -75,6 +75,7 @@ class AdditSparepartList extends GetxController {
                     onTap: () {
                       partNumber.value.text = product.no;
                       searchPartNumber.value.text = product.no;
+                      partDetails.value.text = product.model;
                       products.clear();
                     },
                   );
@@ -250,6 +251,7 @@ class AdditSparepartList extends GetxController {
                     onTap: () {
                       partNumber.value.text = product.no;
                       searchPartNumber.value.text = product.no;
+                      partDetails.value.text = product.model;
                       products.clear();
                     },
                   );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -8,7 +9,6 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
-import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 
@@ -31,7 +31,7 @@ class CalendarItem extends StatelessWidget {
         future: checkWarrantyReturn(event['serialNo'], warrantyInfoList),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Container();
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -109,6 +109,12 @@ class CalendarItem extends StatelessWidget {
                             ),
                           ],
                         ),
+                        if (event['customerName'] != '')
+                          Text(
+                            event['customerName'],
+                            style: TextStyleList.text15,
+                          ),
+                        const SizedBox(height: 5),
                         Text(
                           event['task'],
                           style: TextStyleList.text15,
@@ -118,13 +124,35 @@ class CalendarItem extends StatelessWidget {
                           children: [
                             const Icon(Icons.location_on_outlined),
                             const SizedBox(width: 5),
-                            Text(
-                              event['location'],
-                              style: TextStyleList.subtext1,
-                            ),
-                            const SizedBox(width: 5),
-                            GoogleMapButton(
-                              onTap: () {},
+                            Expanded(
+                              child: FutureBuilder<Map<String, String>>(
+                                future: fetchTicketById(event['bugid'] == ''
+                                    ? event['jobid']
+                                    : event['bugid']),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Center(
+                                        child: Container(
+                                            width: 20,
+                                            height: 20,
+                                            child:
+                                                const CircularProgressIndicator()));
+                                  } else if (snapshot.hasError) {
+                                    return const Center(child: Text('Error:'));
+                                  } else if (!snapshot.hasData ||
+                                      snapshot.data!.isEmpty) {
+                                    return const Text('-');
+                                  }
+
+                                  Map<String, String> userData = snapshot.data!;
+                                  return Text(
+                                    userData['location'] ?? '-',
+                                    style: TextStyleList.subtext1,
+                                    overflow: TextOverflow.visible,
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),

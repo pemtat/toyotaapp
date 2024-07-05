@@ -61,7 +61,7 @@ class PmAssignedJobsView extends StatelessWidget {
                   selectedDate: pmAssignedController.selectedDate,
                   clearFilters: pmAssignedController.clearFilters),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -203,8 +203,8 @@ class PmAssignedJobsView extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: isSelected ? red4 : white8,
                                   border: Border.all(
-                                      color:
-                                          Color.fromARGB(136, 218, 213, 213))),
+                                      color: const Color.fromARGB(
+                                          136, 218, 213, 213))),
                               child: Text(
                                 '$pageIndex',
                                 style: isSelected

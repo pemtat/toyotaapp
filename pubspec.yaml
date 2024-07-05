@@ -55,6 +55,7 @@ dependencies:
   change_app_package_name: ^1.1.0
   get: ^4.6.6
   flutter_pdfview: ^1.3.2
+  flutter_launcher_icons: ^0.13.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -89,6 +90,7 @@ flutter:
     - assets/briefcase.png
     - assets/arrowleft.png
     - assets/profileedit.png
+    - assets/toyota.png
     - assets/pdf.png
     - assets/man.jpg
     - assets/english.png

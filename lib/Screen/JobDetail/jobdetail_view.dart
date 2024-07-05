@@ -12,7 +12,6 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
 import 'package:toyotamobile/Widget/addnote_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
-import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -75,12 +74,6 @@ class JobDetailView extends StatelessWidget {
                   }),
                   leading: const BackIcon(),
                 ),
-                Positioned(
-                  right: 15.0,
-                  top: 15,
-                  bottom: 0,
-                  child: Center(child: StatusButton(status: status ?? '')),
-                ),
               ],
             ),
           ],
@@ -100,6 +93,9 @@ class JobDetailView extends StatelessWidget {
             var subJob = jobController.subJobs.isNotEmpty
                 ? jobController.subJobs.first
                 : null;
+            var customerInfo = jobController.customerInfo.isNotEmpty
+                ? jobController.customerInfo.first
+                : null;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -113,9 +109,10 @@ class JobDetailView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Intruction(
-                                  phoneNumber: '0823424234',
-                                  location: 'Bangkok'),
+                              Intruction(
+                                  phoneNumber: '-',
+                                  location:
+                                      customerInfo!.customerAddress ?? ''),
                               8.kH,
                               InkWell(
                                 onTap: () {
@@ -124,9 +121,10 @@ class JobDetailView extends StatelessWidget {
                                 },
                                 child: BoxContainer(
                                   children: [
-                                    TicketInfo(
+                                    TicketInfoStatus(
                                       ticketId: issue.id,
                                       dateTime: formatDateTime(issue.createdAt),
+                                      status: issue.status.name,
                                       reporter: issue.reporter.name,
                                       more:
                                           jobController.moreTicketDetail.value,
@@ -156,18 +154,24 @@ class JobDetailView extends StatelessWidget {
                                           Obx(
                                             () {
                                               if (jobController
-                                                  .warrantyInfoList.isEmpty) {
+                                                  .warrantyInfo.isEmpty) {
                                                 return const Center(
                                                   child: Text('No Data'),
                                                 );
                                               } else {
                                                 var warrantyInfo = jobController
-                                                    .warrantyInfoList.first;
+                                                    .warrantyInfo.first;
                                                 return WarrantyBox(
-                                                    model: warrantyInfo.model,
-                                                    serial: warrantyInfo.serial,
+                                                    model: warrantyInfo.model ??
+                                                        '',
+                                                    serial:
+                                                        warrantyInfo.serial ??
+                                                            '',
                                                     status: warrantyInfo
-                                                        .warrantyStatus,
+                                                                .warrantystatus ==
+                                                            '1'
+                                                        ? 1
+                                                        : 0,
                                                     filePdf: filePdf);
                                               }
                                             },
@@ -394,11 +398,8 @@ class JobDetailView extends StatelessWidget {
           decoration: Decoration2(),
           child: EndButton(
               onPressed: () {
-                jobController.showCompletedDialog(
-                    context,
-                    'Successfully finished job on investigating!',
-                    'Not yet',
-                    'Yes, Completed');
+                jobController.showCompletedDialog(context,
+                    'Are you sure to complete?', 'Not yet', 'Yes, Completed');
               },
               text: 'Complete'),
         ),

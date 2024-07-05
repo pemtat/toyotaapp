@@ -13,6 +13,22 @@ class TicketController extends GetxController {
   final HomeController jobController = Get.put(HomeController());
   final selectedStatus = <String>{}.obs;
   final RxInt displayedPmItems = 10.obs;
+  final ScrollController scrollController = ScrollController();
+  var loading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    scrollController.addListener(_onScroll);
+    jobController.fetchPMdataPage(1);
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(_onScroll);
+    scrollController.dispose();
+    super.dispose();
+  }
 
   void showAcceptDialog(
       BuildContext context, String title, String left, String right) {
@@ -27,6 +43,13 @@ class TicketController extends GetxController {
         );
       },
     );
+  }
+
+  void _onScroll() {
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      jobController.loadMore();
+    }
   }
 
   void clearFilters() {
