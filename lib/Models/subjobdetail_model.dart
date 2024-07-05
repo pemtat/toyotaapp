@@ -57,7 +57,7 @@ class SubJobDetail {
 
   SubJobDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    reporterId = json['reporter_id'];
+    reporterId = json['reportjob_id'];
     priority = json['priority'];
     severity = json['severity'];
     profileId = json['profile_id'];
@@ -87,7 +87,7 @@ class SubJobDetail {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['reporter_id'] = reporterId;
+    data['reportjob_id'] = reporterId;
     data['priority'] = priority;
     data['severity'] = severity;
     data['profile_id'] = profileId;

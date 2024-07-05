@@ -66,6 +66,9 @@ class PendingTaskView extends StatelessWidget {
           var customerInfo = penddingTaskController.customerInfo.isNotEmpty
               ? penddingTaskController.customerInfo.first
               : null;
+          var userData = penddingTaskController.userData.isNotEmpty
+              ? penddingTaskController.userData.first.users!.first
+              : null;
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -127,7 +130,7 @@ class PendingTaskView extends StatelessWidget {
                             CustomerInformation(
                                 contactName: issue.reporter.name,
                                 email: issue.reporter.email,
-                                phoneNumber: '-',
+                                phoneNumber: userData!.phoneNo ?? '-',
                                 location: customerInfo!.customerAddress ?? '-',
                                 onTap: () {}),
                             8.kH,
@@ -164,7 +167,7 @@ class PendingTaskView extends StatelessWidget {
             onPressed: () {
               penddingTaskController.showAcceptDialog(
                 context,
-                'Do you confirm you will accept this job?',
+                'Do you confirm to accept this job?',
                 'No',
                 'Yes',
               );

@@ -62,7 +62,7 @@ class JobDetailController extends GetxController {
 
       issueId = ticketId;
       jobId = subjobId;
-
+      pdfList.clear;
       fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
       fetchPdfData(ticketId, token ?? '', pdfList);
       await fetchSubJob(subjobId, token ?? '', subJobs);

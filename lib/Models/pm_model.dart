@@ -2,6 +2,7 @@ class PmModel {
   String? id;
   String? handlerId;
   String? status;
+  String? reporterId;
   String? dueDate;
   String? serialNo;
   String? description;
@@ -17,6 +18,7 @@ class PmModel {
   PmModel(
       {this.id,
       this.handlerId,
+      this.reporterId,
       this.serialNo,
       this.status,
       this.dueDate,
@@ -35,6 +37,7 @@ class PmModel {
     handlerId = json['handler_id'];
     serialNo = json['serial_no'];
     status = json['status'];
+    reporterId = json['reporter_id'];
     dueDate = json['due_date_formatted'];
     actual = json['actual'];
     description = json['description'];
@@ -52,6 +55,7 @@ class PmModel {
     data['handler_id'] = handlerId;
     data['serial_no'] = serialNo;
     data['status'] = status;
+    data['reporter_id'] = reporterId;
     data['due_date_formatted'] = dueDate;
     data['actual'] = actual;
     data['description'] = description;

@@ -171,7 +171,7 @@ class PendingTaskViewPM extends StatelessWidget {
             onPressed: () {
               jobController.showAcceptDialog(
                 context,
-                'Do you confirm?',
+                'Are you sure to confirm?',
                 'No',
                 'Yes',
               );

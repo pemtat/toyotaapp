@@ -396,8 +396,8 @@ class JobDetailViewPM extends StatelessWidget {
           decoration: Decoration2(),
           child: EndButton(
               onPressed: () {
-                jobController.showCompletedDialog(context,
-                    'Are you sure to complete?', 'Not yet', 'Yes, Completed');
+                jobController.showCompletedDialog(
+                    context, 'Are you sure to complete?', 'No', 'Yes');
               },
               text: 'Complete'),
         ),

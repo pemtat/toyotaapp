@@ -60,7 +60,7 @@ class SubJobAssgined {
 
   SubJobAssgined.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    reporterId = json['reporter_id'];
+    reporterId = json['reportjob_id'];
     priority = json['priority'];
     severity = json['severity'];
     profileId = json['profile_id'];

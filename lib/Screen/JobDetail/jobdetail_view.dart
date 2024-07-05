@@ -96,6 +96,9 @@ class JobDetailView extends StatelessWidget {
             var customerInfo = jobController.customerInfo.isNotEmpty
                 ? jobController.customerInfo.first
                 : null;
+            var userData = jobController.userData.isNotEmpty
+                ? jobController.userData.first.users!.first
+                : null;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -110,7 +113,7 @@ class JobDetailView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Intruction(
-                                  phoneNumber: '-',
+                                  phoneNumber: userData!.phoneNo ?? '',
                                   location:
                                       customerInfo!.customerAddress ?? ''),
                               8.kH,
@@ -398,8 +401,8 @@ class JobDetailView extends StatelessWidget {
           decoration: Decoration2(),
           child: EndButton(
               onPressed: () {
-                jobController.showCompletedDialog(context,
-                    'Are you sure to complete?', 'Not yet', 'Yes, Completed');
+                jobController.showCompletedDialog(
+                    context, 'Are you sure to complete?', 'No', 'Yes');
               },
               text: 'Complete'),
         ),

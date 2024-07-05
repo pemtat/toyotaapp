@@ -33,7 +33,7 @@ class CalendarItem extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container();
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Text('-');
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Container();
           }
@@ -110,11 +110,15 @@ class CalendarItem extends StatelessWidget {
                           ],
                         ),
                         if (event['customerName'] != '')
-                          Text(
-                            event['customerName'],
-                            style: TextStyleList.text15,
+                          Column(
+                            children: [
+                              Text(
+                                event['customerName'],
+                                style: TextStyleList.text15,
+                              ),
+                              const SizedBox(height: 5),
+                            ],
                           ),
-                        const SizedBox(height: 5),
                         Text(
                           event['task'],
                           style: TextStyleList.text15,
@@ -126,9 +130,7 @@ class CalendarItem extends StatelessWidget {
                             const SizedBox(width: 5),
                             Expanded(
                               child: FutureBuilder<Map<String, String>>(
-                                future: fetchTicketById(event['bugid'] == ''
-                                    ? event['jobid']
-                                    : event['bugid']),
+                                future: fetchLocationById(event['reporterId']),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -139,7 +141,7 @@ class CalendarItem extends StatelessWidget {
                                             child:
                                                 const CircularProgressIndicator()));
                                   } else if (snapshot.hasError) {
-                                    return const Center(child: Text('Error:'));
+                                    return Text('-');
                                   } else if (!snapshot.hasData ||
                                       snapshot.data!.isEmpty) {
                                     return const Text('-');

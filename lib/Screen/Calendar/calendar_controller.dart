@@ -78,6 +78,7 @@ class CalendarController extends GetxController {
           "task": pm.dueDate,
           "customerName": pm.customerName,
           'warrantyStatus': '',
+          'reporterId': pm.reporterId,
           "description": pm.description,
           "location": 'Service Zone ${pm.serviceZoneCode}',
           "serialNo": pm.serialNo,
@@ -125,9 +126,7 @@ class CalendarController extends GetxController {
 
         final formattedHour = hour > 12 ? hour - 12 : hour;
         final formattedTime = '$formattedHour:${timeParts[1]} $period';
-        // var warrantyInfoList = <WarrantyInfo>[].obs;
-        // warrantyInfoList =
-        //     await checkWarrantyReturn(job.serialNo ?? '', warrantyInfoList);
+
         final eventData = {
           "jobid": job.id.toString(),
           "bugid": job.bugId.toString(),
@@ -136,6 +135,7 @@ class CalendarController extends GetxController {
           "customerName": '',
           "task": job.description,
           'warrantyStatus': warrantyInfo.first.warrantystatus == '1' ? 1 : 0,
+          'reporterId': job.reporterId,
           "description": '',
           "location": 'Bangkok',
           "serialNo": warrantyInfo.first.serial,

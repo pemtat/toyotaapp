@@ -69,6 +69,9 @@ class TicketDetailView extends StatelessWidget {
             var customerInfo = ticketController.customerInfo.isNotEmpty
                 ? ticketController.customerInfo.first
                 : null;
+            var userData = ticketController.userData.isNotEmpty
+                ? ticketController.userData.first.users!.first
+                : null;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -186,7 +189,8 @@ class TicketDetailView extends StatelessWidget {
                                           CustomerInformation(
                                               contactName: issue.reporter.name,
                                               email: issue.reporter.email,
-                                              phoneNumber: '-',
+                                              phoneNumber:
+                                                  userData!.phoneNo ?? '-',
                                               location: customerInfo!
                                                       .customerAddress ??
                                                   '-',

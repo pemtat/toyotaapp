@@ -29,6 +29,7 @@ import 'package:toyotamobile/Screen/FillForm3/adddetail/vnaom.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 
@@ -96,6 +97,7 @@ class FillformController3 extends GetxController {
         return DialogAlert(
           title: title,
           leftButton: left,
+          rightColor: red1,
           rightButton: right,
           onRightButtonPressed: () {
             saveReport(context);

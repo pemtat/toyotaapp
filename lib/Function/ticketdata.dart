@@ -914,6 +914,32 @@ Future<Map<String, String>> fetchTicketById(String id) async {
   }
 }
 
+Future<Map<String, String>> fetchLocationById(String id) async {
+  String? token = await getToken();
+  var userInfo = <UserById>[].obs;
+
+  final response2 = await http.get(
+    Uri.parse(getUserInfoById(id)),
+    headers: {
+      'Authorization': '$token',
+    },
+  );
+  if (response2.statusCode == 200) {
+    final dynamic responseData = jsonDecode(response2.body);
+
+    if (responseData is Map<String, dynamic>) {
+      UserById user = UserById.fromJson(responseData);
+      userInfo.value = [user];
+    } else {
+      print('Invalid data format');
+    }
+  }
+  CustomerById customerInfo =
+      await fetchCustomerInfo(userInfo.first.users!.first.companyId.toString());
+
+  return {'location': customerInfo.customerAddress ?? ''};
+}
+
 Future<CustomerById> fetchCustomerInfo(String id) async {
   String username = usernameProduct;
   String password = passwordProduct;
@@ -962,13 +988,16 @@ Future<void> fetchgetCustomerInfo(
         CustomerById customer = CustomerById.fromJson(responseData);
         customerInfo.add(customer);
       } else {
-        throw const FormatException('Unexpected response format');
+        Get.offAll(BottomBarView());
+        bottomController.currentIndex.value = 0;
       }
     } else {
-      throw Exception('Failed to load data: ${response.statusCode}');
+      Get.offAll(BottomBarView());
+      bottomController.currentIndex.value = 0;
     }
   } catch (e) {
     print('Error: $e');
-    rethrow; // Rethrow the caught error
+    Get.offAll(BottomBarView());
+    bottomController.currentIndex.value = 0;
   }
 }
