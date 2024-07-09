@@ -3,8 +3,22 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:toyotamobile/Styles/color.dart';
 
 // 40px line height / 25px font size = 1.6
-//25
+
 class TextStyleList {
+  //34
+  static final TextStyle headingbar = GoogleFonts.kanit(
+    fontSize: 34,
+    fontWeight: FontWeight.w600,
+    color: black13,
+    height: 1.6,
+  );
+  static final TextStyle headingbar2 = GoogleFonts.kanit(
+    fontSize: 34,
+    fontWeight: FontWeight.w600,
+    color: red7,
+    height: 1.6,
+  );
+  //25
   static final TextStyle heading = GoogleFonts.kanit(
     fontSize: 25,
     fontWeight: FontWeight.bold,
@@ -18,12 +32,24 @@ class TextStyleList {
     fontWeight: FontWeight.w500,
     color: black8,
   );
+  //20
+
+  static final TextStyle headtitle = GoogleFonts.kanit(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    color: black8,
+  );
 
 //18
   static final TextStyle title1 = GoogleFonts.kanit(
       fontSize: 18, fontWeight: FontWeight.w500, color: black);
   static final TextStyle title2 = GoogleFonts.kanit(
       fontSize: 18, fontWeight: FontWeight.w500, color: black4);
+  static final TextStyle title3 = GoogleFonts.kanit(
+      fontSize: 18, fontWeight: FontWeight.w400, color: black4);
+  static final TextStyle title4 = GoogleFonts.kanit(
+      fontSize: 18, fontWeight: FontWeight.w600, color: black4);
+
 //16
   static final TextStyle subtitle1 = GoogleFonts.kanit(
       fontSize: 16, fontWeight: FontWeight.w500, color: black4);
@@ -31,6 +57,12 @@ class TextStyleList {
       fontSize: 16, fontWeight: FontWeight.w400, color: black7);
   static final TextStyle subtitle3 = GoogleFonts.kanit(
       fontSize: 16, fontWeight: FontWeight.w500, color: black7);
+  static final TextStyle subtitle4 = GoogleFonts.kanit(
+      fontSize: 16, fontWeight: FontWeight.w600, color: black7);
+  static final TextStyle subtitle5 =
+      GoogleFonts.kanit(fontSize: 16, fontWeight: FontWeight.w600, color: red1);
+  static final TextStyle subtitle6 = GoogleFonts.kanit(
+      fontSize: 16, fontWeight: FontWeight.w600, color: white3);
 
 //15
   static final TextStyle detail1 = GoogleFonts.kanit(
@@ -115,6 +147,7 @@ class TextStyleList {
     color: black12,
     decoration: TextDecoration.underline,
   );
+
   //12
   static final TextStyle subtext1 = GoogleFonts.kanit(
       fontSize: 12, fontWeight: FontWeight.w400, color: black6);

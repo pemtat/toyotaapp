@@ -50,11 +50,11 @@ class Safety extends GetxController {
                     style: TextStyleList.subtitle3,
                   ),
                   5.kH,
-                  CheckBoxList(
+                  OldCheckBoxList(
                       selectionsChoose: selectionsChoose,
                       index: index,
                       text: 'ผ่าน'),
-                  CheckBoxList(
+                  OldCheckBoxList(
                       selectionsChoose: selectionsChoose,
                       index: index,
                       text: 'ไม่ผ่าน'),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
@@ -67,6 +68,8 @@ class PMJobInfo extends StatelessWidget {
   final String description;
   final String summary;
   final String detail;
+  final String? status;
+  final String? location;
   final bool? more;
 
   const PMJobInfo(
@@ -77,6 +80,8 @@ class PMJobInfo extends StatelessWidget {
       required this.detail,
       required this.description,
       required this.summary,
+      required this.status,
+      required this.location,
       this.more});
 
   @override
@@ -91,7 +96,8 @@ class PMJobInfo extends StatelessWidget {
               Row(
                 children: [
                   TitleApp(
-                      text: 'JobID: #${ticketId.toString().padLeft(4, '0')}'),
+                    text: 'JobID: #${ticketId.toString().padLeft(4, '0')}',
+                  ),
                   5.wH,
                   GestureDetector(
                     onTap: () {
@@ -104,7 +110,9 @@ class PMJobInfo extends StatelessWidget {
                           fontSize: 12.0);
                     },
                     child: Image.asset('assets/ticketblock.png'),
-                  )
+                  ),
+                  const Spacer(),
+                  StatusButton(status: status ?? ''),
                 ],
               ),
               const SizedBox(height: 4),
@@ -123,12 +131,35 @@ class PMJobInfo extends StatelessWidget {
                 style: TextStyleList.subtext3,
               ),
               const SizedBox(height: 4),
-              Text(
-                detail,
-                style: TextStyleList.text2,
-                overflow: TextOverflow.visible, // Ensure text wraps to next lin
+              // Text(
+              //   detail.substring(0, detail.indexOf('บริษัท')),
+              //   style: TextStyleList.text2,
+              //   overflow: TextOverflow.visible,
+              // ),
+              // const SizedBox(height: 4),
+              FutureBuilder<Map<String, String>>(
+                future: fetchLocationById(location ?? ''),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                        child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator()));
+                  } else if (snapshot.hasError) {
+                    return const Text('-');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('-');
+                  }
+
+                  Map<String, String> userData = snapshot.data!;
+                  return Text(
+                    userData['location'] ?? '-',
+                    style: TextStyleList.subtext1,
+                    overflow: TextOverflow.visible,
+                  );
+                },
               ),
-              const SizedBox(height: 4),
             ],
           ),
         ),

@@ -6,10 +6,12 @@ import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
+import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -27,6 +29,7 @@ class JobDetailControllerPM extends GetxController {
   var pmInfo = <PMJobInfoModel>[].obs;
 
   var reportPreventiveList = <PreventivereportModel>[].obs;
+  var customerInfo = <CustomerById>[].obs;
 
   var isPicking = false.obs;
   var issueData = [].obs;
@@ -38,7 +41,7 @@ class JobDetailControllerPM extends GetxController {
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
   var jobId;
-
+  var userData = <UserById>[].obs;
   PmModel? pmData;
   var pdfList = <Map<String, dynamic>>[].obs;
   var status = RxString('');

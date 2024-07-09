@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:toyotamobile/Screen/Allticket/TicketPMDetail/ticketpmdetail_view.dart';
+import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';

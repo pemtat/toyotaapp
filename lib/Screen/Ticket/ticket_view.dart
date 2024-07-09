@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
-import 'package:toyotamobile/Screen/Allticket/TicketPMDetail/ticketpmdetail_view.dart';
+import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';

@@ -7,6 +7,7 @@ class Decoration1 extends BoxDecoration {
       Color borderColor = white1,
       double width = 1})
       : super(
+          color: white3,
           border: Border(
             left: BorderSide(width: 3.0, color: sideBorderColor),
             right: BorderSide(width: width, color: borderColor),

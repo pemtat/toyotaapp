@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/base64pdf.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
-import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 
@@ -35,13 +34,13 @@ class WarrantyBox extends StatelessWidget {
           value: serial,
         ),
         3.kH,
-        BoxInfo(
-          title: "Warranty Status",
-          value: status.toString(),
-          trailing: CheckStatus(
-            status: status,
-          ),
-        ),
+        // BoxInfo(
+        //   title: "Warranty Status",
+        //   value: status.toString(),
+        //   trailing: CheckStatus(
+        //     status: status,
+        //   ),
+        // ),
         3.kH,
         if (filePdf != null)
           Column(

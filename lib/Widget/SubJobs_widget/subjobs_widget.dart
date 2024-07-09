@@ -59,7 +59,7 @@ class SubJobsTicket extends StatelessWidget {
                   topRight: Radius.circular(10),
                   bottomRight: Radius.circular(0),
                 ),
-                color: white5,
+                color: white1,
               ),
               child: Row(
                 children: [

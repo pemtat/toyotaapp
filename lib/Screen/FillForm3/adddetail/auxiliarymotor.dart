@@ -67,11 +67,11 @@ class AuxiliaryMotor extends GetxController {
                           flex: 2,
                           child: Column(
                             children: [
-                              CheckBoxList(
+                              OldCheckBoxList(
                                   selectionsChoose: additionalChoose,
                                   index: index,
                                   text: 'AC motor'),
-                              CheckBoxList(
+                              OldCheckBoxList(
                                   selectionsChoose: additionalChoose,
                                   index: index,
                                   text: 'DC motor'),
@@ -80,15 +80,19 @@ class AuxiliaryMotor extends GetxController {
                         ),
                     ],
                   ),
-                  5.kH,
-                  CheckBoxList(
-                      selectionsChoose: selectionsChoose,
-                      index: index,
-                      text: 'Ok'),
-                  CheckBoxList(
-                      selectionsChoose: selectionsChoose,
-                      index: index,
-                      text: 'Poor'),
+                  10.kH,
+                  Row(
+                    children: [
+                      CheckBoxList(
+                          selectionsChoose: selectionsChoose,
+                          index: index,
+                          text: 'Good'),
+                      CheckBoxList(
+                          selectionsChoose: selectionsChoose,
+                          index: index,
+                          text: 'Poor'),
+                    ],
+                  ),
                   8.kH,
                   TextField(
                     controller: controller,

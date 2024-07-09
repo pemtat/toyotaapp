@@ -43,6 +43,12 @@ class HomeController extends GetxController {
   final RxInt expandedIndex = (-2).obs;
   final RxInt expandedIndex2 = (-2).obs;
   final UserController userController = Get.put(UserController());
+  var totalJobs = 0.obs;
+  var closedJobs = 0.obs;
+  var incomingJobs = 0.obs;
+  var overdueJobs = 0.obs;
+  var onProcessJobs = 0.obs;
+  var serviceZoneSet = <String>{}.obs;
 
   @override
   void onInit() {
@@ -52,29 +58,34 @@ class HomeController extends GetxController {
 
   Future<void> fetchDataFromAssignJob() async {
     isLoading.value = true;
+    totalJobs = 0.obs;
+    closedJobs = 0.obs;
+    incomingJobs = 0.obs;
+    overdueJobs = 0.obs;
+    onProcessJobs = 0.obs;
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? tokenResponse = prefs.getString('token_response');
       Map<String, dynamic> tokenData = json.decode(tokenResponse ?? '');
-      String? accessToken = tokenData['token'];
+      // String? accessToken = tokenData['token'];
       int handlerId = tokenData['user']['id'];
       await userController.fetchData();
       await fetchPMdata(handlerId);
       await fetchSubJobsdata(handlerId);
-      final response = await http.get(
-        Uri.parse(getAssignJob),
-        headers: {
-          'Authorization': '$accessToken',
-        },
-      );
+      // final response = await http.get(
+      //   Uri.parse(getAssignJob),
+      //   headers: {
+      //     'Authorization': '$accessToken',
+      //   },
+      // );
 
-      if (response.statusCode == 200) {
-        Map<String, dynamic> responseData = json.decode(response.body);
-        List<dynamic> issues = responseData['issues'];
-        jobList.assignAll(issues.map((data) => Issues.fromJson(data)).toList());
-      }
+      // if (response.statusCode == 200) {
+      //   Map<String, dynamic> responseData = json.decode(response.body);
+      //   List<dynamic> issues = responseData['issues'];
+      //   jobList.assignAll(issues.map((data) => Issues.fromJson(data)).toList());
+      // }
 
-      await fetchAndProcessJobs(handlerId, accessToken ?? '');
+      // await fetchAndProcessJobs(handlerId, accessToken ?? '');
 
       // ignore: empty_catches
     } catch (e) {
@@ -178,11 +189,13 @@ class HomeController extends GetxController {
         List<dynamic> responseData = jsonDecode(response.body);
         List<PmModel> itemList =
             responseData.map((job) => PmModel.fromJson(job)).toList();
+        totalJobs.value = totalJobs.value + itemList.length;
         // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
         List<PmModel> pendingPmItems = itemList
             .where((pm) => stringToStatus(pm.status ?? '') == 'pending')
             .toList();
         pmjobList.value = pendingPmItems.length;
+        incomingJobs.value = incomingJobs.value + pmjobList.value;
         List<PmModel> confirmPmItems = itemList
             .where((pm) => stringToStatus(pm.status ?? '') == 'confirmed')
             .toList();
@@ -190,6 +203,15 @@ class HomeController extends GetxController {
         List<PmModel> closedPmItems = itemList
             .where((pm) => stringToStatus(pm.status ?? '') == 'closed')
             .toList();
+        serviceZoneSet.assignAll(
+          itemList
+              .where((pm) => pm.serviceZoneCode != null)
+              .map((pm) => pm.serviceZoneCode!)
+              .toSet(),
+        );
+
+        closedJobs.value = closedJobs.value + closedPmItems.length;
+        overdueJobs.value = overdueJobs.value + closedPmItems.length;
         pmCompletedList.value = closedPmItems.length;
         pmItems.value = itemList;
       } else {
@@ -264,33 +286,37 @@ class HomeController extends GetxController {
         List<dynamic> responseData = jsonDecode(response.body);
         List<SubJobAssgined> itemList =
             responseData.map((job) => SubJobAssgined.fromJson(job)).toList();
-
+        totalJobs.value = totalJobs.value + itemList.length;
         List<SubJobAssgined> newSubJobs =
             itemList.where((subJob) => subJob.status == '101').toList();
         subjobList.value = newSubJobs.length;
         List<SubJobAssgined> pendingSubJobs =
             itemList.where((subJob) => subJob.status == '102').toList();
         subjobListPending.value = pendingSubJobs.length;
+        onProcessJobs.value = onProcessJobs.value + pendingSubJobs.length;
         List<SubJobAssgined> completedSubJobs =
             itemList.where((subJob) => subJob.status == '103').toList();
         subjobListClosed.value = completedSubJobs.length;
+        overdueJobs.value = overdueJobs.value + completedSubJobs.length;
+
         // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
         // List<SubJobAssgined> closedSubJob = itemList
         //     .where((subJob) => stringToStatus(subJob.status ?? '') == 'closed')
         //     .toList();
+        closedJobs.value = closedJobs.value + completedSubJobs.length;
 
-        Set<String> uniqueBugIds = {};
-        List<String> allIds = [];
-        List<SubJobAssgined> filteredItemList = [];
+        // Set<String> uniqueBugIds = {};
+        // List<String> allIds = [];
+        // List<SubJobAssgined> filteredItemList = [];
 
-        for (var subJob in itemList) {
-          if (!uniqueBugIds.contains(subJob.bugId)) {
-            uniqueBugIds.add(subJob.bugId ?? '');
-            allIds.add(subJob.id ?? '');
-            filteredItemList.add(subJob);
-            await fetchTicketJobs(subJob.bugId ?? '');
-          }
-        }
+        // for (var subJob in itemList) {
+        //   if (!uniqueBugIds.contains(subJob.bugId)) {
+        //     uniqueBugIds.add(subJob.bugId ?? '');
+        //     allIds.add(subJob.id ?? '');
+        //     filteredItemList.add(subJob);
+        //     await fetchTicketJobs(subJob.bugId ?? '');
+        //   }
+        // }
 
         subJobAssigned.value = itemList;
       } else {

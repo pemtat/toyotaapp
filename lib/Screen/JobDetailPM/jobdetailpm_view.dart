@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
-import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/FillForm3/fillform3_view.dart';
@@ -13,7 +12,6 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showpreventive_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
-import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -67,7 +65,14 @@ class JobDetailViewPM extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(description, style: TextStyleList.title1),
+                          Text(
+                              jobController.issueData.first.description
+                                  .substring(
+                                0,
+                                jobController.issueData.first.description
+                                    .indexOf('บริษัท'),
+                              ),
+                              style: TextStyleList.title1),
                           Text('JobID: $ticketId', style: TextStyleList.text16),
                         ],
                       );
@@ -75,18 +80,6 @@ class JobDetailViewPM extends StatelessWidget {
                   }),
                   leading: const BackIcon(),
                 ),
-                Obx(() => jobController.issueData.isNotEmpty
-                    ? Positioned(
-                        right: 15.0,
-                        top: 15,
-                        bottom: 0,
-                        child: Center(
-                            child: StatusButton(
-                                status: stringToStatus(jobController
-                                    .issueData.first.status.id
-                                    .toString()))),
-                      )
-                    : Container()),
               ],
             ),
           ],
@@ -102,6 +95,7 @@ class JobDetailViewPM extends StatelessWidget {
                 : null;
             var issue = jobController.issueData.first;
             var userData = userController.userInfo.first;
+
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -115,9 +109,6 @@ class JobDetailViewPM extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Intruction(
-                                  phoneNumber: '0823424234',
-                                  location: 'Bangkok'),
                               8.kH,
                               InkWell(
                                 onTap: () {
@@ -127,21 +118,25 @@ class JobDetailViewPM extends StatelessWidget {
                                 child: BoxContainer(
                                   children: [
                                     PMJobInfo(
-                                      ticketId: issue.id,
-                                      dateTime: issue.dueDate ??
-                                          getFormattedDate(DateTime.now()),
-                                      reporter: issue.reporter.name,
-                                      summary:
-                                          '${issue.getCustomFieldValue("Customer Name")}',
-                                      description:
-                                          'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
-                                      more:
-                                          jobController.moreTicketDetail.value,
-                                      detail: issue.description,
-                                    ),
+                                        ticketId: issue.id,
+                                        dateTime: issue.dueDate ??
+                                            getFormattedDate(DateTime.now()),
+                                        reporter: issue.reporter.name,
+                                        summary:
+                                            '${issue.getCustomFieldValue("Customer Name")}',
+                                        description:
+                                            'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
+                                        detail: issue.description,
+                                        status: issue.status.name,
+                                        location: issue.reporter.id.toString()),
                                   ],
                                 ),
                               ),
+                              8.kH,
+                              const Intruction(
+                                  phoneNumber: '0823424234',
+                                  location: 'Bangkok'),
+                              8.kH,
                               Obx(
                                 () => jobController.moreTicketDetail.value
                                     ? Column(

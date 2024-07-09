@@ -19,12 +19,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AssignedjobsNew extends StatelessWidget {
+  final int? selectIndex;
   final HomeController jobController = Get.put(HomeController());
   final AssignedjobsController assignedController =
       Get.put(AssignedjobsController());
   final SubTicketController subticketController =
       Get.put(SubTicketController());
-  AssignedjobsNew({super.key});
+  AssignedjobsNew({super.key, this.selectIndex}) {
+    if (selectIndex != null) {
+      assignedController.isSelected.value = 2;
+    }
+  }
   final isSelected = 1.obs;
 
   @override

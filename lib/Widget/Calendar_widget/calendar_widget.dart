@@ -33,7 +33,7 @@ class CalendarItem extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container();
           } else if (snapshot.hasError) {
-            return Text('-');
+            return const Text('-');
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Container();
           }
@@ -134,14 +134,14 @@ class CalendarItem extends StatelessWidget {
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
-                                    return Center(
-                                        child: Container(
+                                    return const Center(
+                                        child: SizedBox(
                                             width: 20,
                                             height: 20,
                                             child:
-                                                const CircularProgressIndicator()));
+                                                CircularProgressIndicator()));
                                   } else if (snapshot.hasError) {
-                                    return Text('-');
+                                    return const Text('-');
                                   } else if (!snapshot.hasData ||
                                       snapshot.data!.isEmpty) {
                                     return const Text('-');

@@ -94,10 +94,10 @@ class BottomBarView extends StatelessWidget {
                       const ImageIcon(
                         AssetImage('assets/bell.png'),
                       ),
-                      if (controller.hasNotification.value)
+                      if (!controller.hasNotification.value)
                         Positioned(
                           top: 0,
-                          right: 0,
+                          right: 2,
                           child: Container(
                             padding: const EdgeInsets.all(2),
                             decoration: const BoxDecoration(
@@ -105,8 +105,8 @@ class BottomBarView extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                             constraints: const BoxConstraints(
-                              minWidth: 10,
-                              minHeight: 10,
+                              minWidth: 8,
+                              minHeight: 8,
                             ),
                           ),
                         ),

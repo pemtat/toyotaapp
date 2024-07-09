@@ -64,15 +64,19 @@ class ChassisChecks extends GetxController {
                         ),
                     ],
                   ),
-                  5.kH,
-                  CheckBoxList(
-                      selectionsChoose: selectionsChoose,
-                      index: index,
-                      text: 'Ok'),
-                  CheckBoxList(
-                      selectionsChoose: selectionsChoose,
-                      index: index,
-                      text: 'Poor'),
+                  10.kH,
+                  Row(
+                    children: [
+                      CheckBoxList(
+                          selectionsChoose: selectionsChoose,
+                          index: index,
+                          text: 'Good'),
+                      CheckBoxList(
+                          selectionsChoose: selectionsChoose,
+                          index: index,
+                          text: 'Poor'),
+                    ],
+                  ),
                   8.kH,
                   TextField(
                     controller: controller,

@@ -25,12 +25,12 @@ class LoginView extends StatelessWidget {
               children: [
                 const Spacer(),
                 Center(
-                    child: Text(
-                  "T-Service Connect",
-                  style: GoogleFonts.kanit(
-                      fontSize: 25, fontWeight: FontWeight.w500),
+                    child: Image.asset(
+                  'assets/toyota.png',
+                  width: 180,
+                  height: 180,
                 )),
-                40.kH,
+                30.kH,
                 TextFieldBar(
                   label: 'Username',
                   onChanged: controller.setEmail,

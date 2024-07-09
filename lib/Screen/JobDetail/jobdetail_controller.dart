@@ -70,7 +70,6 @@ class JobDetailController extends GetxController {
       await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
       await fetchgetCustomerInfo(
           userData.first.users!.first.companyId ?? '', customerInfo);
-      print(warrantyInfo.first.bugId);
       savedDateStartTime.value = subJobs.first.timeStart ?? '';
       savedDateEndTime.value = subJobs.first.timeEnd ?? '';
       if (imagesBefore.isNotEmpty) imagesBefore.clear();

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
-import 'package:toyotamobile/Function/stringtostatus.dart';
-import 'package:toyotamobile/Screen/Allticket/TicketPMDetail/ticketpmdetail_controller.dart';
+import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
@@ -9,7 +8,6 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showpreventive_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
-import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
@@ -62,7 +60,14 @@ class TicketPMDetailView extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(description, style: TextStyleList.title1),
+                          Text(
+                              jobController.issueData.first.description
+                                  .substring(
+                                0,
+                                jobController.issueData.first.description
+                                    .indexOf('บริษัท'),
+                              ),
+                              style: TextStyleList.title1),
                           Text('JobID: $ticketId', style: TextStyleList.text16),
                         ],
                       );
@@ -70,18 +75,6 @@ class TicketPMDetailView extends StatelessWidget {
                   }),
                   leading: const BackIcon(),
                 ),
-                Obx(() => jobController.issueData.isNotEmpty
-                    ? Positioned(
-                        right: 15.0,
-                        top: 15,
-                        bottom: 0,
-                        child: Center(
-                            child: StatusButton(
-                                status: stringToStatus(jobController
-                                    .issueData.first.status.id
-                                    .toString()))),
-                      )
-                    : Container()),
               ],
             ),
           ],
@@ -127,6 +120,8 @@ class TicketPMDetailView extends StatelessWidget {
                                       description:
                                           'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")} ',
                                       detail: issue.description,
+                                      status: issue.status.name,
+                                      location: issue.reporter.id.toString(),
                                     )
                                   ],
                                 ),

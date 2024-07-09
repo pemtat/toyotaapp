@@ -66,16 +66,18 @@ class VnaOm extends GetxController {
                         ),
                     ],
                   ),
-                  5.kH,
-                  CheckBoxList(
-                      selectionsChoose: selectionsChoose,
-                      index: index,
-                      text: 'Ok'),
-                  CheckBoxList(
-                      selectionsChoose: selectionsChoose,
-                      index: index,
-                      text: 'Poor'),
-                  8.kH,
+                  Row(
+                    children: [
+                      CheckBoxList(
+                          selectionsChoose: selectionsChoose,
+                          index: index,
+                          text: 'Good'),
+                      CheckBoxList(
+                          selectionsChoose: selectionsChoose,
+                          index: index,
+                          text: 'Poor'),
+                    ],
+                  ),
                   TextField(
                     controller: controller,
                     decoration: InputDecoration1(text: 'Remark'),

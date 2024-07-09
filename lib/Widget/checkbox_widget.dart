@@ -26,6 +26,85 @@ class CheckBoxWidget extends StatelessWidget {
             updateCheckbox(text, itemSet);
           },
           child: Obx(
+            () => SizedBox(
+              width: 70,
+              height: 30,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: !listItem.contains(text) ? 30 : 0,
+                    child: Container(
+                      width: 35,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: listItem.contains(text)
+                            ? const BorderRadius.only(
+                                topLeft: Radius.circular(6),
+                                bottomLeft: Radius.circular(6),
+                                bottomRight: Radius.circular(0),
+                                topRight: Radius.circular(0))
+                            : BorderRadius.all(Radius.circular(6)),
+                        border: listItem.contains(text)
+                            ? Border.all(color: Colors.grey)
+                            : Border.all(color: Colors.transparent),
+                        color: listItem.contains(text) ? white3 : black1,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: listItem.contains(text) ? 30 : 0,
+                    child: Container(
+                      width: 35,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: listItem.contains(text)
+                            ? const BorderRadius.only(
+                                topLeft: Radius.circular(6),
+                                bottomLeft: Radius.circular(6),
+                                bottomRight: Radius.circular(6),
+                                topRight: Radius.circular(6))
+                            : BorderRadius.all(Radius.circular(6)),
+                        border: !listItem.contains(text)
+                            ? Border.all(color: Colors.grey)
+                            : Border.all(color: Colors.transparent),
+                        color: !listItem.contains(text) ? white3 : red7,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(text, style: TextStyleList.text9),
+        ),
+      ],
+    );
+  }
+}
+
+class OldCheckBoxWidget extends StatelessWidget {
+  final String text;
+  final RxList<String> listItem;
+  final RxList<String> itemSet;
+  const OldCheckBoxWidget({
+    super.key,
+    required this.text,
+    required this.listItem,
+    required this.itemSet,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            updateCheckbox(text, itemSet);
+          },
+          child: Obx(
             () => Container(
               width: 24,
               height: 24,
@@ -241,6 +320,66 @@ class CheckBoxList extends StatelessWidget {
   final String text;
 
   const CheckBoxList({
+    super.key,
+    required this.selectionsChoose,
+    required this.index,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Padding(
+          padding: const EdgeInsets.only(bottom: 6.0),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  if (selectionsChoose[index] != text) {
+                    updateSelection(index, text, selectionsChoose);
+                  }
+                },
+                child: Container(
+                    width: 85,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: selectionsChoose[index] == text
+                          ? text == 'Good'
+                              ? red1
+                              : black1
+                          : Colors.transparent,
+                      border: selectionsChoose[index] != text
+                          ? text == 'Good'
+                              ? Border.all(color: red1)
+                              : Border.all(color: black6)
+                          : Border.all(color: Colors.transparent),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Center(
+                      child: Text(
+                        text,
+                        style: selectionsChoose[index] == text
+                            ? text == 'Good'
+                                ? TextStyleList.subtitle6
+                                : TextStyleList.subtitle6
+                            : text == 'Good'
+                                ? TextStyleList.subtitle5
+                                : TextStyleList.subtitle3,
+                      ),
+                    )),
+              ),
+              8.wH,
+            ],
+          ),
+        ));
+  }
+}
+
+class OldCheckBoxList extends StatelessWidget {
+  final RxList<String> selectionsChoose;
+  final int index;
+  final String text;
+
+  const OldCheckBoxList({
     super.key,
     required this.selectionsChoose,
     required this.index,

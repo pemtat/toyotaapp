@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
-import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 
@@ -92,8 +92,46 @@ class PmItemWidget extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 2),
+                Row(
+                  children: [
+                    const Icon(Icons.location_on_outlined),
+                    const SizedBox(width: 5),
+                    FutureBuilder<Map<String, String>>(
+                      future: fetchLocationById(
+                        job.reporterId,
+                      ),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator()),
+                          ));
+                        } else if (snapshot.hasError) {
+                          return const Text('-');
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
+                          return const Text('-');
+                        }
+
+                        Map<String, String> userData = snapshot.data!;
+                        return Text(
+                          userData['location'] ?? '-',
+                          style: TextStyleList.subtext1,
+                          overflow: TextOverflow.visible,
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 2),
+                  ],
+                ),
                 Text(
-                  job.description,
+                  job.description
+                      .substring(0, job.description.indexOf('บริษัท')),
                   style: TextStyleList.subtext1,
                 ),
                 Obx(() =>
@@ -122,13 +160,6 @@ class PmItemWidget extends StatelessWidget {
                                           value: job.serialNo,
                                         ),
                                         const SizedBox(height: 3),
-                                        BoxInfo(
-                                          title: "Warranty Status",
-                                          value: '',
-                                          trailing: CheckStatus(
-                                              status: warrantyInfo
-                                                  .first.warrantyStatus),
-                                        )
                                       ],
                                     )),
                               ],
