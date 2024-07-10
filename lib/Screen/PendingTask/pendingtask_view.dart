@@ -11,9 +11,11 @@ import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/moredetail.widget.dart';
+import 'package:toyotamobile/Widget/noteItem_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
 
 class PendingTaskView extends StatelessWidget {
@@ -134,6 +136,41 @@ class PendingTaskView extends StatelessWidget {
                                 location: customerInfo!.customerAddress ?? '-',
                                 onTap: () {}),
                             8.kH,
+                            if (penddingTaskController.notesFiles.isNotEmpty)
+                              BoxContainer(
+                                children: [
+                                  Obx(() {
+                                    if (penddingTaskController
+                                        .notesFiles.isEmpty) {
+                                      return Center(child: Container());
+                                    } else {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TitleApp(text: 'Notes'),
+                                          8.kH,
+                                          ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemCount: penddingTaskController
+                                                .notesFiles.length,
+                                            itemBuilder: (context, index) {
+                                              final note =
+                                                  penddingTaskController
+                                                      .notesFiles[index];
+                                              return NoteItem(note: note);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                  }),
+                                ],
+                              ),
+                            if (penddingTaskController.notesFiles.isNotEmpty)
+                              8.kH,
                             BoxContainer(
                               children: [
                                 JobInfo(

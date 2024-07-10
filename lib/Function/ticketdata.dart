@@ -155,8 +155,8 @@ void fetchNotes(List<Notes>? notes, RxList<Notes> notesFiles) {
   }
 }
 
-void fetchNotesPic(
-    List<Notes>? notes, RxList<Notes> notesFiles, List<String> notePic) {
+Future<void> fetchNotesPic(
+    List<Notes>? notes, RxList<Notes> notesFiles, List<String> notePic) async {
   if (notes != null) {
     // ignore: unnecessary_cast
     var issueNotes = notes as List<Notes>;
@@ -880,6 +880,7 @@ Future<Map<String, String>> fetchTicketById(String id) async {
   );
   if (response.statusCode == 200) {
     var userInfo = <UserById>[].obs;
+    var truckInfo = <WarrantybyIdModel>[].obs;
     Map<String, dynamic> data = json.decode(response.body);
     ticket.TicketByIdModel ticketModel = ticket.TicketByIdModel.fromJson(data);
 
@@ -903,9 +904,27 @@ Future<Map<String, String>> fetchTicketById(String id) async {
     CustomerById customerInfo = await fetchCustomerInfo(
         userInfo.first.users!.first.companyId.toString());
 
+    final response3 = await http.get(
+      Uri.parse(getWarrantyInfoByTicketId(id)),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+    if (response3.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response3.body);
+
+      List<WarrantybyIdModel> dataList =
+          jsonResponse.map((json) => WarrantybyIdModel.fromJson(json)).toList();
+      truckInfo.assignAll(dataList);
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+
     return {
       'name': issuesList.first.reporter!.name ?? '',
-      'location': customerInfo.customerAddress ?? ''
+      'location': customerInfo.customerAddress ?? '',
+      'model': truckInfo.first.model ?? '',
+      'serial': truckInfo.first.serial ?? '',
     };
   } else {
     print('Failed to load data: ${response.statusCode} $id ');

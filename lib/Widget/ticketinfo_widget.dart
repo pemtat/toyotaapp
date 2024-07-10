@@ -66,6 +66,7 @@ class PMJobInfo extends StatelessWidget {
   final String dateTime;
   final String reporter;
   final String description;
+  final String contact;
   final String summary;
   final String detail;
   final String? status;
@@ -77,6 +78,7 @@ class PMJobInfo extends StatelessWidget {
       required this.ticketId,
       required this.dateTime,
       required this.reporter,
+      required this.contact,
       required this.detail,
       required this.description,
       required this.summary,
@@ -153,13 +155,31 @@ class PMJobInfo extends StatelessWidget {
                   }
 
                   Map<String, String> userData = snapshot.data!;
-                  return Text(
-                    userData['location'] ?? '-',
-                    style: TextStyleList.subtext1,
-                    overflow: TextOverflow.visible,
+                  return Row(
+                    children: [
+                      Icon(Icons.location_on_outlined),
+                      5.wH,
+                      Text(
+                        userData['location'] ?? '-',
+                        style: TextStyleList.subtext1,
+                        overflow: TextOverflow.visible,
+                      ),
+                    ],
                   );
                 },
               ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Icon(Icons.quick_contacts_dialer),
+                  5.wH,
+                  Text(
+                    contact,
+                    style: TextStyleList.subtext3,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
             ],
           ),
         ),

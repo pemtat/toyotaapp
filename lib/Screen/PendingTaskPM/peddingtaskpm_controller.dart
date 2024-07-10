@@ -6,9 +6,11 @@ import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
+import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -24,7 +26,8 @@ class PendingTaskControllerPM extends GetxController {
   final comment = TextEditingController().obs;
   var reportList = <BatteryReportModel>[].obs;
   var reportPreventiveList = <PreventivereportModel>[].obs;
-
+  var customerInfo = <CustomerById>[].obs;
+  var userData = <UserById>[].obs;
   var isPicking = false.obs;
   var issueData = [].obs;
   var attatchments = <Map<String, dynamic>>[].obs;
@@ -59,6 +62,7 @@ class PendingTaskControllerPM extends GetxController {
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     fetchPdfData(ticketId, token ?? '', pdfList);
+
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {
@@ -70,13 +74,17 @@ class PendingTaskControllerPM extends GetxController {
       Map<String, dynamic> data = json.decode(response.body);
       TicketByIdModel ticketModel = TicketByIdModel.fromJson(data);
       List<Issues>? issuesList = ticketModel.issues;
-      issuesList!.map((issue) {
+      issuesList!.map((issue) async {
         issueId = issue.id;
         checkWarranty(
             issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
+        fetchReadAttachment(issueId, token ?? '', issue.attachments,
+            attachmentsData, attatchments);
       }).toList();
       issueData.value = issuesList;
     } else {}
+    await fetchUserById(issueData.first.reporter.id.toString(), userData);
+    await fetchNotesPic(issueData.first.notes, notesFiles, notePic);
   }
 
   void completeJob() async {
@@ -153,7 +161,7 @@ class PendingTaskControllerPM extends GetxController {
       );
 
       if (response.statusCode == 201) {
-        // fetchData(issueId.toString(), pmData ?? {null});
+        fetchData(issueId.toString());
         notes.value.clear();
       }
     } else if (addAttatchments.isNotEmpty && noteText == '') {
@@ -172,7 +180,7 @@ class PendingTaskControllerPM extends GetxController {
         body: jsonEncode(body),
       );
       if (response.statusCode == 201) {
-        // fetchData(issueId.toString());
+        fetchData(issueId.toString());
         notes.value.clear();
       }
     }

@@ -179,6 +179,8 @@ class TextStyleList {
   );
   static final TextStyle subtext7 = GoogleFonts.kanit(
       fontSize: 12, fontWeight: FontWeight.w500, color: black6);
+  static final TextStyle subtext8 = GoogleFonts.kanit(
+      fontSize: 12, fontWeight: FontWeight.w400, color: white3);
   //11
   static final TextStyle detailtext1 = GoogleFonts.kanit(
     fontSize: 11,

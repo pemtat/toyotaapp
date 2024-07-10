@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:toyotamobile/Screen/Calendar/calendar_view2.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
@@ -28,7 +29,23 @@ class CalendarView extends StatelessWidget {
           children: [
             AppBar(
               backgroundColor: white3,
-              title: Text('Calendar', style: TextStyleList.title1),
+              title: InkWell(
+                  onTap: () {
+                    Get.to(
+                      () => CalendarView2(),
+                      transition: Transition.rightToLeft,
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Calendar', style: TextStyleList.title1),
+                      5.wH,
+                      Icon(Icons.calendar_month),
+                    ],
+                  )),
             ),
             Container(
               height: 0.5,

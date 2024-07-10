@@ -165,8 +165,8 @@ class JobDetailController extends GetxController {
     String noteText = textController.text;
     if (addAttatchments.isNotEmpty && noteText != '') {
       var file = addAttatchments.first;
-      String name = file['name'];
-      String content = file['base64'];
+      String name = file['filename'];
+      String content = file['content'];
 
       Map<String, dynamic> body = {
         "text": noteText,
@@ -204,7 +204,7 @@ class JobDetailController extends GetxController {
         body: jsonEncode(body),
       );
       if (response.statusCode == 201) {
-        fetchData(issueId.toString(), issueId);
+        fetchData(issueId.toString(), jobId.toString());
         notes.value.clear();
       }
     }

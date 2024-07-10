@@ -24,6 +24,10 @@ String getWarrantyInfoByTicketId(String issueId) {
   return '$url/api/rest/issues/$issueId/warranty';
 }
 
+String getTrickdetailById(String id) {
+  return '$urlFSM/api/serial/search/$id';
+}
+
 String attatchNoteFile(String issueId) {
   return '$issueId/files';
 }

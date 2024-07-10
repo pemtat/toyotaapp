@@ -195,8 +195,8 @@ class TicketView extends StatelessWidget {
                                       ticketController.searchQuery.value);
                               final statusMatch =
                                   ticketController.selectedStatus.isEmpty ||
-                                      ticketController.selectedStatus
-                                          .contains(job.status);
+                                      ticketController.selectedStatus.contains(
+                                          stringToStatus(job.status ?? ''));
                               final jobDate =
                                   formatDateTimeString(job.dueDate ?? '');
                               final dateMatch =
@@ -369,10 +369,10 @@ class TicketView extends StatelessWidget {
                                       ticketController.selectedStatus.contains(
                                           stringToStatus(job.status ?? ''));
                               return searchQueryMatch &&
-                                      statusMatch &&
-                                      job.status == '101' ||
-                                  job.status == '102' ||
-                                  job.status == '103';
+                                  statusMatch &&
+                                  (job.status == '101' ||
+                                      job.status == '102' ||
+                                      job.status == '103');
                             }).toList();
                             filteredJobs.sort(
                                 (a, b) => b.status!.compareTo(a.status ?? ''));
@@ -439,13 +439,11 @@ class TicketView extends StatelessWidget {
   List<Widget> statusCheckboxes() {
     return [
       buildCheckbox(
-          status: 'assigned', selectedStatus: ticketController.selectedStatus),
+          status: 'pending', selectedStatus: ticketController.selectedStatus),
       buildCheckbox(
-          status: 'new', selectedStatus: ticketController.selectedStatus),
+          status: 'confirmed', selectedStatus: ticketController.selectedStatus),
       buildCheckbox(
           status: 'closed', selectedStatus: ticketController.selectedStatus),
-      buildCheckbox(
-          status: 'feedback', selectedStatus: ticketController.selectedStatus),
     ];
   }
 }

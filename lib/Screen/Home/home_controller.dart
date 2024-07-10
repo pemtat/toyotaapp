@@ -203,7 +203,7 @@ class HomeController extends GetxController {
         List<PmModel> closedPmItems = itemList
             .where((pm) => stringToStatus(pm.status ?? '') == 'closed')
             .toList();
-        serviceZoneSet.assignAll(
+        serviceZoneSet.addAll(
           itemList
               .where((pm) => pm.serviceZoneCode != null)
               .map((pm) => pm.serviceZoneCode!)

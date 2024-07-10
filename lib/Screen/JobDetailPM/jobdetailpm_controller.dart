@@ -117,6 +117,7 @@ class JobDetailControllerPM extends GetxController {
       }).toList();
       issueData.value = issuesList;
     } else {}
+    await fetchUserById(issueData.first.reporter.id.toString(), userData);
   }
 
   void completeJob() async {

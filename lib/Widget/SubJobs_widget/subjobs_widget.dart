@@ -8,6 +8,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class SubJobsTicket extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -122,6 +123,18 @@ class SubJobsTicket extends StatelessWidget {
                             onTap: () {},
                           )
                         ],
+                      ),
+                    ],
+                  ),
+                  2.kH,
+                  Row(
+                    children: [
+                      2.wH,
+                      const Icon(Icons.forklift),
+                      5.wH,
+                      Text(
+                        '${userData['model'] ?? ''} / ${userData['serial']}',
+                        style: TextStyleList.subtext1,
                       ),
                     ],
                   ),

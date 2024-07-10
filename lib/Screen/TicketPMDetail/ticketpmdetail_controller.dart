@@ -10,6 +10,7 @@ import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
+import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -26,6 +27,7 @@ class TicketPmDetailController extends GetxController {
   var pmInfo = <PMJobInfoModel>[].obs;
 
   var reportPreventiveList = <PreventivereportModel>[].obs;
+  var userData = <UserById>[].obs;
 
   var isPicking = false.obs;
   var issueData = [].obs;
@@ -110,6 +112,7 @@ class TicketPmDetailController extends GetxController {
       }).toList();
       issueData.value = issuesList;
     } else {}
+    await fetchUserById(issueData.first.reporter.id.toString(), userData);
   }
 
   void completeJob() async {

@@ -47,6 +47,7 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   google_fonts: ^6.2.1
   fluttertoast: ^8.2.5
+  cell_calendar: ^0.8.0
   syncfusion_flutter_charts: ^25.2.3+1
   permission_handler: ^11.3.1
   table_calendar: ^3.1.1

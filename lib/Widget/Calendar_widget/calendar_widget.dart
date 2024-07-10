@@ -11,6 +11,7 @@ import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class CalendarItem extends StatelessWidget {
   final Map<String, dynamic> event;
@@ -119,9 +120,16 @@ class CalendarItem extends StatelessWidget {
                               const SizedBox(height: 5),
                             ],
                           ),
-                        Text(
-                          event['task'],
-                          style: TextStyleList.text15,
+                        Row(
+                          children: [
+                            if (event['description'] != '')
+                              Icon(Icons.calendar_month),
+                            5.wH,
+                            Text(
+                              event['task'],
+                              style: TextStyleList.text15,
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 5),
                         Row(
@@ -158,13 +166,67 @@ class CalendarItem extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 5),
+                        if (event['bugid'] != '')
+                          FutureBuilder<Map<String, String>>(
+                              future: fetchTicketById(event['bugid']),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Container();
+                                } else if (snapshot.hasError) {
+                                  return Center(child: Text('Error: '));
+                                } else if (!snapshot.hasData ||
+                                    snapshot.data!.isEmpty) {
+                                  return Container();
+                                }
+
+                                Map<String, String> userData = snapshot.data!;
+                                return Row(
+                                  children: [
+                                    2.wH,
+                                    const Icon(Icons.forklift),
+                                    5.wH,
+                                    Text(
+                                      '${userData['model'] ?? ''} / ${userData['serial']}',
+                                      style: TextStyleList.subtext1,
+                                    ),
+                                  ],
+                                );
+                              }),
+                        if (event['bugid'] != '') 3.kH,
+                        if (event['date'] != '')
+                          Row(
+                            children: [
+                              const SizedBox(height: 2),
+                              const Icon(Icons.calendar_month_outlined),
+                              const SizedBox(width: 5),
+                              Text(
+                                '${event['date'] ?? 'ยังไม่มีกำหนดการ'}',
+                                style: TextStyleList.subtext1,
+                              ),
+                              const SizedBox(height: 2),
+                            ],
+                          ),
+                        if (event['description'] != '')
+                          Row(
+                            children: [
+                              Icon(Icons.person_search_sharp),
+                              5.wH,
+                              Text(
+                                event['description'].substring(
+                                    0, event['description'].indexOf('บริษัท')),
+                                style: TextStyleList.subtext1,
+                              ),
+                            ],
+                          ),
+                        10.kH,
                         Obx(
                           () => expandedIndex.value &&
                                   expandedTicketId.value == event['jobid']
                               ? Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 10.0, right: 8, bottom: 8),
+                                      top: 0.0, right: 8, bottom: 8),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -173,12 +235,6 @@ class CalendarItem extends StatelessWidget {
                                         height: 0.5,
                                         color: const Color(0xFFEAEAEA),
                                       ),
-                                      const SizedBox(height: 8),
-                                      if (event['description'] != '')
-                                        Text(
-                                          event['description'],
-                                          style: TextStyleList.text15,
-                                        ),
                                       const SizedBox(height: 8),
                                       Container(
                                         padding: const EdgeInsets.all(10),
@@ -195,14 +251,14 @@ class CalendarItem extends StatelessWidget {
                                               value: event['serialNo'],
                                             ),
                                             const SizedBox(height: 3),
-                                            BoxInfo(
-                                              title: "Warranty Status",
-                                              value: '',
-                                              trailing: CheckStatus(
-                                                status: warrantyInfo
-                                                    .first.warrantyStatus,
-                                              ),
-                                            ),
+                                            // BoxInfo(
+                                            //   title: "Warranty Status",
+                                            //   value: '',
+                                            //   trailing: CheckStatus(
+                                            //     status: warrantyInfo
+                                            //         .first.warrantyStatus,
+                                            //   ),
+                                            // ),
                                           ],
                                         ),
                                       ),

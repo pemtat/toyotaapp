@@ -5,7 +5,7 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-
+import 'package:toyotamobile/Widget/addnote_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -103,23 +103,34 @@ class PendingTaskViewPM extends StatelessWidget {
                                   jobController.moreTicketDetail.value =
                                       !jobController.moreTicketDetail.value;
                                 },
-                                child: BoxContainer(
-                                  children: [
-                                    PMJobInfo(
-                                      ticketId: issue.id,
-                                      dateTime: issue.dueDate ??
-                                          getFormattedDate(DateTime.now()),
-                                      reporter: issue.reporter.name,
-                                      summary:
-                                          '${issue.getCustomFieldValue("Customer Name")}',
-                                      description:
-                                          'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
-                                      detail: issue.description,
-                                      status: issue.status.name,
-                                      location: issue.reporter.id.toString(),
-                                    ),
-                                  ],
-                                ),
+                                child:
+                                    Obx(() => jobController.userData.isNotEmpty
+                                        ? BoxContainer(
+                                            children: [
+                                              PMJobInfo(
+                                                  ticketId: issue.id,
+                                                  dateTime: issue.dueDate ??
+                                                      getFormattedDate(
+                                                          DateTime.now()),
+                                                  reporter: issue.reporter.name,
+                                                  summary:
+                                                      '${issue.getCustomFieldValue("Customer Name")}',
+                                                  description:
+                                                      'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
+                                                  detail: issue.description,
+                                                  status: issue.status.name,
+                                                  location: issue.reporter.id
+                                                      .toString(),
+                                                  contact: jobController
+                                                          .userData
+                                                          .first
+                                                          .users!
+                                                          .first
+                                                          .phoneNo ??
+                                                      ''),
+                                            ],
+                                          )
+                                        : Container()),
                               ),
                               Column(
                                 children: [
@@ -146,6 +157,14 @@ class PendingTaskViewPM extends StatelessWidget {
                                 ],
                               ),
                               8.kH,
+                              AddNote(
+                                  notePic: jobController.notePic,
+                                  notesFiles: jobController.notesFiles,
+                                  notes: jobController.notes,
+                                  addAttatchments:
+                                      jobController.addAttatchments,
+                                  isPicking: jobController.isPicking,
+                                  addNote: jobController.addNote)
                             ],
                           ),
                         ),

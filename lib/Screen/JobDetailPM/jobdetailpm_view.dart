@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Screen/EditFillForm2/editfillform2_view.dart';
 import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/FillForm3/fillform3_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
@@ -115,27 +116,43 @@ class JobDetailViewPM extends StatelessWidget {
                                   jobController.moreTicketDetail.value =
                                       !jobController.moreTicketDetail.value;
                                 },
-                                child: BoxContainer(
-                                  children: [
-                                    PMJobInfo(
-                                        ticketId: issue.id,
-                                        dateTime: issue.dueDate ??
-                                            getFormattedDate(DateTime.now()),
-                                        reporter: issue.reporter.name,
-                                        summary:
-                                            '${issue.getCustomFieldValue("Customer Name")}',
-                                        description:
-                                            'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
-                                        detail: issue.description,
-                                        status: issue.status.name,
-                                        location: issue.reporter.id.toString()),
-                                  ],
-                                ),
+                                child:
+                                    Obx(() => jobController.userData.isNotEmpty
+                                        ? BoxContainer(
+                                            children: [
+                                              PMJobInfo(
+                                                  ticketId: issue.id,
+                                                  dateTime: issue.dueDate ??
+                                                      getFormattedDate(
+                                                          DateTime.now()),
+                                                  reporter: issue.reporter.name,
+                                                  summary:
+                                                      '${issue.getCustomFieldValue("Customer Name")}',
+                                                  description:
+                                                      'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
+                                                  detail: issue.description,
+                                                  status: issue.status.name,
+                                                  location: issue.reporter.id
+                                                      .toString(),
+                                                  contact: jobController
+                                                          .userData
+                                                          .first
+                                                          .users!
+                                                          .first
+                                                          .phoneNo ??
+                                                      ''),
+                                            ],
+                                          )
+                                        : Container()),
                               ),
                               8.kH,
-                              const Intruction(
-                                  phoneNumber: '0823424234',
-                                  location: 'Bangkok'),
+                              Obx(() => jobController.userData.isNotEmpty
+                                  ? Intruction(
+                                      phoneNumber: jobController.userData.first
+                                              .users!.first.phoneNo ??
+                                          '',
+                                      location: 'Bangkok')
+                                  : Container()),
                               8.kH,
                               Obx(
                                 () => jobController.moreTicketDetail.value
@@ -301,22 +318,22 @@ class JobDetailViewPM extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Battery Maintenance Report'),
-                                      Obx(() =>
-                                          jobController.reportList.isNotEmpty
-                                              ? EditButton(
-                                                  onTap: () {
-                                                    Get.to(() => FillFormView2(
-                                                          jobId: ticketId,
-                                                        ));
-                                                  },
-                                                )
-                                              : AddButton(
-                                                  onTap: () {
-                                                    Get.to(() => FillFormView2(
-                                                          jobId: ticketId,
-                                                        ));
-                                                  },
-                                                )),
+                                      Obx(() => jobController
+                                              .reportList.isNotEmpty
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(() => EditFillFormView2(
+                                                      jobId: ticketId,
+                                                    ));
+                                              },
+                                            )
+                                          : AddButton(
+                                              onTap: () {
+                                                Get.to(() => FillFormView2(
+                                                      jobId: ticketId,
+                                                    ));
+                                              },
+                                            )),
                                     ],
                                   ),
                                   Text(

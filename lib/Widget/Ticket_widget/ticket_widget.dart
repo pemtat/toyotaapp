@@ -10,6 +10,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
+import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class PmItemWidget extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -129,10 +130,16 @@ class PmItemWidget extends StatelessWidget {
                     const SizedBox(height: 2),
                   ],
                 ),
-                Text(
-                  job.description
-                      .substring(0, job.description.indexOf('บริษัท')),
-                  style: TextStyleList.subtext1,
+                Row(
+                  children: [
+                    Icon(Icons.person_search_sharp),
+                    5.wH,
+                    Text(
+                      job.description
+                          .substring(0, job.description.indexOf('บริษัท')),
+                      style: TextStyleList.subtext1,
+                    ),
+                  ],
                 ),
                 Obx(() =>
                     expandedIndex.value == jobController.pmItems.indexOf(job)

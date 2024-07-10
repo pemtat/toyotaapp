@@ -46,8 +46,11 @@ class CheckBoxWidget extends StatelessWidget {
                             : BorderRadius.all(Radius.circular(6)),
                         border: listItem.contains(text)
                             ? Border.all(color: Colors.grey)
-                            : Border.all(color: Colors.transparent),
-                        color: listItem.contains(text) ? white3 : black1,
+                            : Border(
+                                top: BorderSide(color: Colors.grey),
+                                bottom: BorderSide(color: Colors.grey),
+                                right: BorderSide(color: Colors.grey)),
+                        color: listItem.contains(text) ? white3 : white3,
                       ),
                     ),
                   ),
@@ -67,7 +70,7 @@ class CheckBoxWidget extends StatelessWidget {
                         border: !listItem.contains(text)
                             ? Border.all(color: Colors.grey)
                             : Border.all(color: Colors.transparent),
-                        color: !listItem.contains(text) ? white3 : red7,
+                        color: !listItem.contains(text) ? black1 : red7,
                       ),
                     ),
                   ),

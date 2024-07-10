@@ -1,3 +1,4 @@
+import 'package:cell_calendar/cell_calendar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -25,7 +26,11 @@ class CalendarController extends GetxController {
   final HomeController jobController = Get.put(HomeController());
   final RxMap<DateTime, List<Map<String, dynamic>>> events =
       <DateTime, List<Map<String, dynamic>>>{}.obs;
+  final RxMap<DateTime, List<Map<String, dynamic>>> events2 =
+      <DateTime, List<Map<String, dynamic>>>{}.obs;
 
+  final CellCalendarPageController cellCalendarPageController =
+      CellCalendarPageController(); // Define the controller here
   @override
   void onInit() {
     super.onInit();
@@ -43,23 +48,30 @@ class CalendarController extends GetxController {
 
   void updateEvents() async {
     final tempEvents = <DateTime, List<Map<String, dynamic>>>{};
+    final tempEvents2 = <DateTime, List<Map<String, dynamic>>>{};
 
     await Future.wait([
-      updateEventsFromJobs(jobController.subJobAssigned, tempEvents),
-      updateEventsFromPM(jobController.pmItems, tempEvents),
+      updateEventsFromJobs(
+          jobController.subJobAssigned, tempEvents, tempEvents2),
+      updateEventsFromPM(jobController.pmItems, tempEvents, tempEvents2),
     ]);
 
     events.value = tempEvents;
+    events2.value = tempEvents2;
   }
 
-  Future<void> updateEventsFromPM(List<PmModel> pmList,
-      Map<DateTime, List<Map<String, dynamic>>> tempEvents) async {
+  Future<void> updateEventsFromPM(
+      List<PmModel> pmList,
+      Map<DateTime, List<Map<String, dynamic>>> tempEvents,
+      Map<DateTime, List<Map<String, dynamic>>> tempEvents2) async {
     var pmListCopy = List<PmModel>.from(pmList);
 
     for (var pm in pmListCopy) {
       try {
         final pmDate = formatDateTimeString(pm.dueDate ?? '');
         final dayKey = DateTime.utc(pmDate.year, pmDate.month, pmDate.day);
+        final dayKey2 = DateTime(pmDate.year, pmDate.month, pmDate.day);
+
         final timeParts = pmDate.toLocal().toString().split(' ')[1].split(':');
         final hour = int.parse(timeParts[0]);
 
@@ -78,6 +90,7 @@ class CalendarController extends GetxController {
           "task": pm.dueDate,
           "customerName": pm.customerName,
           'warrantyStatus': '',
+          "date": '',
           'reporterId': pm.reporterId,
           "description": pm.description,
           "location": 'Service Zone ${pm.serviceZoneCode}',
@@ -86,7 +99,7 @@ class CalendarController extends GetxController {
         };
 
         bool isDuplicate = tempEvents[dayKey]?.any((event) =>
-                event['ticketid'] == pm.id && event['type'] == EventType.PM) ??
+                event['jobid'] == pm.id && event['type'] == EventType.PM) ??
             false;
 
         if (!isDuplicate) {
@@ -97,14 +110,30 @@ class CalendarController extends GetxController {
             tempEvents[dayKey] = [eventData];
           }
         }
+
+        bool isDuplicate2 = tempEvents2[dayKey2]?.any((event) =>
+                event['jobid'] == pm.id && event['type'] == EventType.PM) ??
+            false;
+
+        if (!isDuplicate2) {
+          if (tempEvents2.containsKey(dayKey2)) {
+            tempEvents2[dayKey2]!.add(eventData);
+            tempEvents2[dayKey2]!
+                .sort((a, b) => a['time'].compareTo(b['time']));
+          } else {
+            tempEvents2[dayKey2] = [eventData];
+          }
+        }
       } catch (e) {
         print('Error processing PM event: $e');
       }
     }
   }
 
-  Future<void> updateEventsFromJobs(List<SubJobAssgined> jobList,
-      Map<DateTime, List<Map<String, dynamic>>> tempEvents) async {
+  Future<void> updateEventsFromJobs(
+      List<SubJobAssgined> jobList,
+      Map<DateTime, List<Map<String, dynamic>>> tempEvents,
+      Map<DateTime, List<Map<String, dynamic>>> tempEvents2) async {
     var jobListCopy = List<SubJobAssgined>.from(jobList);
 
     for (var job in jobListCopy) {
@@ -112,6 +141,7 @@ class CalendarController extends GetxController {
         final jobDate = formatDateTimeString(job.dueDate ?? '');
 
         final dayKey = DateTime.utc(jobDate.year, jobDate.month, jobDate.day);
+        final dayKey2 = DateTime(jobDate.year, jobDate.month, jobDate.day);
         final timeParts = jobDate.toLocal().toString().split(' ')[1].split(':');
         final hour = int.parse(timeParts[0]);
 
@@ -119,13 +149,13 @@ class CalendarController extends GetxController {
         if (hour >= 12) {
           period = 'PM';
         }
+        final formattedHour = hour > 12 ? hour - 12 : hour;
+        final formattedTime = '$formattedHour:${timeParts[1]} $period';
+
         String? token = await getToken();
         var warrantyInfo = <WarrantybyIdModel>[].obs;
         await fetchWarrantyById(
             job.bugId.toString(), token ?? '', warrantyInfo);
-
-        final formattedHour = hour > 12 ? hour - 12 : hour;
-        final formattedTime = '$formattedHour:${timeParts[1]} $period';
 
         final eventData = {
           "jobid": job.id.toString(),
@@ -134,7 +164,8 @@ class CalendarController extends GetxController {
           "status": stringToStatus(job.status ?? ''),
           "customerName": '',
           "task": job.description,
-          'warrantyStatus': warrantyInfo.first.warrantystatus == '1' ? 1 : 0,
+          "date": jobDate,
+          'warrantyStatus': '',
           'reporterId': job.reporterId,
           "description": '',
           "location": 'Bangkok',
@@ -143,8 +174,7 @@ class CalendarController extends GetxController {
         };
 
         bool isDuplicate = tempEvents[dayKey]?.any((event) =>
-                event['ticketid'] == job.id &&
-                event['type'] == EventType.Job) ??
+                event['bugid'] == job.id && event['type'] == EventType.Job) ??
             false;
 
         if (!isDuplicate) {
@@ -153,6 +183,19 @@ class CalendarController extends GetxController {
             tempEvents[dayKey]!.sort((a, b) => a['time'].compareTo(b['time']));
           } else {
             tempEvents[dayKey] = [eventData];
+          }
+        }
+        bool isDuplicate2 = tempEvents2[dayKey2]?.any((event) =>
+                event['bugid'] == job.id && event['type'] == EventType.Job) ??
+            false;
+
+        if (!isDuplicate2) {
+          if (tempEvents2.containsKey(dayKey2)) {
+            tempEvents2[dayKey2]!.add(eventData);
+            tempEvents2[dayKey2]!
+                .sort((a, b) => a['time'].compareTo(b['time']));
+          } else {
+            tempEvents2[dayKey2] = [eventData];
           }
         }
       } catch (e) {
@@ -163,5 +206,9 @@ class CalendarController extends GetxController {
 
   List<Map<String, dynamic>> getEventsForDay(DateTime day) {
     return events[day] ?? [];
+  }
+
+  List<Map<String, dynamic>> getEventsForDay2(DateTime day) {
+    return events2[day] ?? [];
   }
 }
