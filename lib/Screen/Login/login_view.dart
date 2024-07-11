@@ -1,4 +1,3 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:toyotamobile/Screen/ForgetPassword/forgetpassword_view.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/login_widget.dart';
@@ -17,6 +16,15 @@ class LoginView extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            Image.asset(
+              'assets/toyotalogo.png',
+              width: 150,
+              height: 100,
+            ),
+          ],
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),

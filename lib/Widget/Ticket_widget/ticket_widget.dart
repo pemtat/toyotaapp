@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -97,37 +98,37 @@ class PmItemWidget extends StatelessWidget {
                   children: [
                     const Icon(Icons.location_on_outlined),
                     const SizedBox(width: 5),
-                    FutureBuilder<Map<String, String>>(
-                      future: fetchLocationById(
-                        job.reporterId,
-                      ),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
+                    Expanded(
+                      child: FutureBuilder<CustomerById>(
+                        future: fetchCustomerInfo(job.customerNo),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
                               child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator()),
-                          ));
-                        } else if (snapshot.hasError) {
-                          return const Text('-');
-                        } else if (!snapshot.hasData ||
-                            snapshot.data!.isEmpty) {
-                          return const Text('-');
-                        }
+                                padding: EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return const Text('-');
+                          } else if (!snapshot.hasData) {
+                            return const Text('-');
+                          }
 
-                        Map<String, String> userData = snapshot.data!;
-                        return Text(
-                          userData['location'] ?? '-',
-                          style: TextStyleList.subtext1,
-                          overflow: TextOverflow.visible,
-                        );
-                      },
+                          CustomerById customer = snapshot.data!;
+                          return Text(
+                            customer.customerAddress ?? '-',
+                            style: TextStyleList.subtext1,
+                            overflow: TextOverflow.visible,
+                          );
+                        },
+                      ),
                     ),
-                    const SizedBox(height: 2),
                   ],
                 ),
                 Row(

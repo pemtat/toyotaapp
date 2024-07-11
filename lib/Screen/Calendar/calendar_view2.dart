@@ -8,13 +8,13 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/Calendar_widget/fullcalendar_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
+import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class CalendarView2 extends StatelessWidget {
+  final String? other;
   final CalendarController calendarController = Get.put(CalendarController());
-  CalendarView2({
-    super.key,
-  });
+  CalendarView2({super.key, this.other});
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +26,29 @@ class CalendarView2 extends StatelessWidget {
             AppBar(
               backgroundColor: white3,
               automaticallyImplyLeading: false,
-              title: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Calendar', style: TextStyleList.title1),
-                      5.wH,
-                      const Icon(Icons.calendar_today),
-                    ],
-                  )),
+              title: other == null
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Calendar', style: TextStyleList.title1),
+                        5.wH,
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(Icons.calendar_today)),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: CloseIcon())
+                      ],
+                    ),
             ),
             Container(
               height: 0.5,
@@ -50,62 +61,58 @@ class CalendarView2 extends StatelessWidget {
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.all(16.0),
-          child: CellCalendar(
-            events: _mapEvents(calendarController.events),
-            daysOfTheWeekBuilder: (dayIndex) {
-              final labels = ["S", "M", "T", "W", "T", "F", "S"];
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 4.0),
-                child: Text(
-                  labels[dayIndex],
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: black4))),
+            child: CellCalendar(
+              todayMarkColor: Colors.blue,
+              dateTextStyle: TextStyleList.text2,
+              events: _mapEvents(calendarController.events),
+              daysOfTheWeekBuilder: (dayIndex) {
+                final labels = ["S", "M", "T", "W", "T", "F", "S"];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 4.0),
+                  child: Container(
+                    child: Text(
+                      labels[dayIndex],
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              );
-            },
-            monthYearLabelBuilder: (datetime) {
-              final year = datetime!.year.toString();
-              final month = _getMonthName(datetime.month);
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Row(
-                  children: [
-                    const SizedBox(width: 16),
-                    Text("$month $year", style: TextStyleList.title2),
-                    // const Spacer(),
-                    // IconButton(
-                    //   padding: EdgeInsets.zero,
-                    //   icon: const Icon(Icons.calendar_today),
-                    //   onPressed: () {
-                    //     calendarController.cellCalendarPageController
-                    //         .animateToDate(
-                    //       DateTime.now(),
-                    //       curve: Curves.linear,
-                    //       duration: const Duration(milliseconds: 300),
-                    //     );
-                    //   },
-                    // )
-                  ],
-                ),
-              );
-            },
-            onCellTapped: (day) {
-              final eventsOnTheDate = calendarController.getEventsForDay2(day);
-              final selectedDay = day;
-              final isToday = isSameDay(selectedDay, DateTime.now());
-              final formattedDate =
-                  calendarController.formatDateTime(selectedDay);
-              final displayDate =
-                  isToday ? 'Today, $formattedDate' : formattedDate;
-              Get.to(() => FullCalendarWidget(
-                  eventsOnTheDate: eventsOnTheDate,
-                  expandedIndex: calendarController.expandedIndex,
-                  displayDate: displayDate,
-                  expandedTicketId: calendarController.expandedTicketId));
-            },
-            onPageChanged: (firstDate, lastDate) {},
+                );
+              },
+              monthYearLabelBuilder: (datetime) {
+                final year = datetime!.year.toString();
+                final month = _getMonthName(datetime.month);
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 16),
+                      Text("$month $year", style: TextStyleList.title2),
+                    ],
+                  ),
+                );
+              },
+              onCellTapped: (day) {
+                final eventsOnTheDate =
+                    calendarController.getEventsForDay2(day);
+                final selectedDay = day;
+                final isToday = isSameDay(selectedDay, DateTime.now());
+                final formattedDate =
+                    calendarController.formatDateTime(selectedDay);
+                final displayDate =
+                    isToday ? 'Today, $formattedDate' : formattedDate;
+                Get.to(() => FullCalendarWidget(
+                    eventsOnTheDate: eventsOnTheDate,
+                    expandedIndex: calendarController.expandedIndex,
+                    displayDate: displayDate,
+                    expandedTicketId: calendarController.expandedTicketId));
+              },
+              onPageChanged: (firstDate, lastDate) {},
+            ),
           ),
         ),
       ),

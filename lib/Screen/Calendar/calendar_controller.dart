@@ -91,7 +91,7 @@ class CalendarController extends GetxController {
           "customerName": pm.customerName,
           'warrantyStatus': '',
           "date": '',
-          'reporterId': pm.reporterId,
+          'reporterId': pm.customerNo,
           "description": pm.description,
           "location": 'Service Zone ${pm.serviceZoneCode}',
           "serialNo": pm.serialNo,

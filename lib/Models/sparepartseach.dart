@@ -9,7 +9,7 @@ class Product {
   final String vendorNo;
   final String productGroupCode;
   final String serviceItemGroup;
-  final String productImage;
+  // final String productImage;
 
   Product({
     required this.no,
@@ -22,7 +22,7 @@ class Product {
     required this.vendorNo,
     required this.productGroupCode,
     required this.serviceItemGroup,
-    required this.productImage,
+    // required this.productImage,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -37,7 +37,7 @@ class Product {
       vendorNo: json['Vendor_No'],
       productGroupCode: json['Product_Group_Code'],
       serviceItemGroup: json['Service_Item_Group'],
-      productImage: json['Product_Image'],
+      // productImage: json['Product_Image'],
     );
   }
 
@@ -53,7 +53,7 @@ class Product {
       'Vendor_No': vendorNo,
       'Product_Group_Code': productGroupCode,
       'Service_Item_Group': serviceItemGroup,
-      'Product_Image': productImage,
+      // 'Product_Image': productImage,
     };
   }
 }

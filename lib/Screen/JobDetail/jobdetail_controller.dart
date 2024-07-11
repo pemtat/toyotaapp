@@ -159,6 +159,8 @@ class JobDetailController extends GetxController {
   void addNote(Rx<TextEditingController> textControllerRx) async {
     final String addNoteUrl = createNoteById(issueId);
 
+    fetchData(issueId.toString(), jobId.toString());
+
     String? token = await getToken();
     TextEditingController textController = textControllerRx.value;
 
@@ -183,11 +185,6 @@ class JobDetailController extends GetxController {
         },
         body: jsonEncode(body),
       );
-
-      if (response.statusCode == 201) {
-        fetchData(issueId.toString(), jobId.toString());
-        notes.value.clear();
-      }
     } else if (addAttatchments.isNotEmpty && noteText == '') {
       showMessage('โปรดเพิ่ม Note');
     } else {
@@ -203,10 +200,6 @@ class JobDetailController extends GetxController {
         },
         body: jsonEncode(body),
       );
-      if (response.statusCode == 201) {
-        fetchData(issueId.toString(), jobId.toString());
-        notes.value.clear();
-      }
     }
   }
 

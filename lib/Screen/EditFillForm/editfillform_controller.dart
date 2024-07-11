@@ -187,64 +187,59 @@ class EditFillformController extends GetxController {
           'signature': signatureController.value.text,
           'signature_pad': signaturePad.value
         };
-        // List<SparePartModel> allSpareParts =
-        //     List.from(sparePartListController.sparePartList);
-        // allSpareParts.addAll(additSparePartListController.additSparePartList);
-        // if (sparePartListController.sparePartList.isEmpty) {
-        //   final SparePartModel defaultSparePart = SparePartModel(
-        //     relationId: relationId.value,
-        //     cCodePage: "-",
-        //     partNumber: "-",
-        //     partDetails: "-",
-        //     quantity: 0,
-        //     changeNow: "-",
-        //     changeOnPM: "-",
-        //     additional: 0,
-        //   );
+        List<SparePartModel> allSpareParts =
+            List.from(sparePartListController.sparePartList);
+        allSpareParts.addAll(additSparePartListController.additSparePartList);
+        if (sparePartListController.sparePartList.isEmpty) {
+          final SparePartModel defaultSparePart = SparePartModel(
+            cCodePage: "-",
+            partNumber: "-",
+            partDetails: "-",
+            quantity: 0,
+            changeNow: "-",
+            changeOnPM: "-",
+            additional: 0,
+          );
 
-        //   allSpareParts.add(defaultSparePart);
-        // }
-        // if (additSparePartListController.additSparePartList.isEmpty) {
-        //   final SparePartModel defaultSparePart = SparePartModel(
-        //     relationId: relationId.value,
-        //     cCodePage: "-",
-        //     partNumber: "-",
-        //     partDetails: "-",
-        //     quantity: 0,
-        //     changeNow: "-",
-        //     changeOnPM: "-",
-        //     additional: 1,
-        //   );
+          allSpareParts.add(defaultSparePart);
+        }
+        if (additSparePartListController.additSparePartList.isEmpty) {
+          final SparePartModel defaultSparePart = SparePartModel(
+            cCodePage: "-",
+            partNumber: "-",
+            partDetails: "-",
+            quantity: 0,
+            changeNow: "-",
+            changeOnPM: "-",
+            additional: 1,
+          );
 
-        //   allSpareParts.add(defaultSparePart);
-        // }
+          allSpareParts.add(defaultSparePart);
+        }
 
-        // if (allSpareParts.isNotEmpty) {
-        //   for (var sparePart in allSpareParts) {
-        //     final sparePartData = {
-        //       ...sparePart.toJson(),
-        //       'relation_id': relationId.value,
-        //     };
+        if (allSpareParts.isNotEmpty) {
+          final body = {
+            'relation_id': relationId.value.toString(),
+            'sparepart':
+                allSpareParts.map((sparePart) => sparePart.toJson()).toList(),
+          };
+          try {
+            final response = await http.post(Uri.parse(updateSparepart()),
+                headers: {
+                  'Authorization': '$token',
+                  'Content-Type': 'application/json',
+                },
+                body: jsonEncode(body));
 
-        //     try {
-        //       final response =
-        //           await http.post(Uri.parse(createJobReportAdditional()),
-        //               headers: {
-        //                 'Authorization': '$token',
-        //                 'Content-Type': 'application/json',
-        //               },
-        //               body: jsonEncode(sparePartData));
-
-        //       if (response.statusCode == 201) {
-        //         print('Sparepart saved successfully');
-        //       } else {
-        //         print('Failed to save sparepart: ${response.body}');
-        //       }
-        //     } catch (e) {
-        //       print('Error occurred while saving sparepart: $e');
-        //     }
-        //   }
-        // }
+            if (response.statusCode == 200) {
+              print('Sparepart Updated successfully');
+            } else {
+              print('Failed to save sparepart: ${response.body}');
+            }
+          } catch (e) {
+            print('Error occurred while saving sparepart: $e');
+          }
+        }
 
         try {
           final response =

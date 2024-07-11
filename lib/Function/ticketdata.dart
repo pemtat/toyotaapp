@@ -958,6 +958,47 @@ Future<Map<String, String>> fetchLocationById(String id) async {
   return {'location': customerInfo.customerAddress ?? ''};
 }
 
+Future<Map<String, String>> fetchLocationByCustomerId(String id) async {
+  CustomerById customerInfo = await fetchCustomerInfo(id);
+
+  return {'location': customerInfo.customerAddress ?? ''};
+}
+
+Future<void> selectDate(
+    BuildContext context, Rx<DateTime?> selectedDateTime) async {
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2101),
+  );
+  if (picked != null) {
+    selectTime(context, picked, selectedDateTime);
+  }
+}
+
+void setDateTime(DateTime dateTime, Rx<DateTime?> selectedDateTime) {
+  selectedDateTime.value = dateTime;
+}
+
+Future<void> selectTime(BuildContext context, DateTime pickedDate,
+    Rx<DateTime?> selectedDateTime) async {
+  final TimeOfDay? pickedTime = await showTimePicker(
+    context: context,
+    initialTime: TimeOfDay.now(),
+  );
+  if (pickedTime != null) {
+    final DateTime pickedDateTime = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+    setDateTime(pickedDateTime, selectedDateTime);
+  }
+}
+
 Future<CustomerById> fetchCustomerInfo(String id) async {
   String username = usernameProduct;
   String password = passwordProduct;

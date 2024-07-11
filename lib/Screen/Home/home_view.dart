@@ -1,5 +1,4 @@
 import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
@@ -205,28 +204,21 @@ class HomeView extends StatelessWidget {
                                 Get.to(() => PmAssignedJobsView());
                               },
                               child: Container(
-                                margin: const EdgeInsets.only(right: 5),
-                                child: Expanded(
-                                  child: _buildInfoCard(
-                                    icon: Icons.inbox,
-                                    value: jobController.incomingJobs.value,
-                                    label: 'Incoming',
-                                  ),
+                                child: _buildInfoCard(
+                                  icon: Icons.inbox,
+                                  value: jobController.incomingJobs.value,
+                                  label: 'Incoming',
                                 ),
                               ),
                             ),
                             InkWell(
                               onTap: () {},
                               child: Container(
-                                margin:
-                                    const EdgeInsets.only(right: 5, left: 5),
-                                child: Expanded(
-                                  child: _buildInfoCard(
-                                    icon: Icons.warning,
-                                    value: jobController.overdueJobs.value,
-                                    label: 'Overdue',
-                                    labelColor: Colors.red,
-                                  ),
+                                child: _buildInfoCard(
+                                  icon: Icons.warning,
+                                  value: jobController.overdueJobs.value,
+                                  label: 'Overdue',
+                                  labelColor: Colors.red,
                                 ),
                               ),
                             ),
@@ -237,13 +229,10 @@ class HomeView extends StatelessWidget {
                                     ));
                               },
                               child: Container(
-                                margin: const EdgeInsets.only(left: 5),
-                                child: Expanded(
-                                  child: _buildInfoCard(
-                                    icon: Icons.build,
-                                    value: jobController.onProcessJobs.value,
-                                    label: 'On Process',
-                                  ),
+                                child: _buildInfoCard(
+                                  icon: Icons.build,
+                                  value: jobController.onProcessJobs.value,
+                                  label: 'On Process',
                                 ),
                               ),
                             ),
@@ -474,19 +463,21 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCard(
-      {required IconData icon,
-      required String label,
-      required int value,
-      Color? labelColor}) {
+  Widget _buildInfoCard({
+    required IconData icon,
+    required String label,
+    required int value,
+    Color? labelColor,
+  }) {
     return Container(
-      width: 115,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-          color: white3,
-          border: Border.all(color: black1),
-          borderRadius: BorderRadius.circular(7)),
+        color: white3,
+        border: Border.all(color: black1),
+        borderRadius: BorderRadius.circular(7),
+      ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -496,7 +487,7 @@ class HomeView extends StatelessWidget {
                 size: 28,
                 color: const Color.fromARGB(255, 129, 129, 129),
               ),
-              5.wH,
+              const SizedBox(width: 5),
               Text(
                 value.toString(),
                 style: labelColor != null

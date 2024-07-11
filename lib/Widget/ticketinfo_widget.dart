@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
@@ -139,34 +140,42 @@ class PMJobInfo extends StatelessWidget {
               //   overflow: TextOverflow.visible,
               // ),
               // const SizedBox(height: 4),
-              FutureBuilder<Map<String, String>>(
-                future: fetchLocationById(location ?? ''),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                        child: SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator()));
-                  } else if (snapshot.hasError) {
-                    return const Text('-');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('-');
-                  }
+              Row(
+                children: [
+                  const Icon(Icons.location_on_outlined),
+                  const SizedBox(width: 5),
+                  Expanded(
+                    child: FutureBuilder<CustomerById>(
+                      future: fetchCustomerInfo(location ?? ''),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return const Text('-');
+                        } else if (!snapshot.hasData) {
+                          return const Text('-');
+                        }
 
-                  Map<String, String> userData = snapshot.data!;
-                  return Row(
-                    children: [
-                      Icon(Icons.location_on_outlined),
-                      5.wH,
-                      Text(
-                        userData['location'] ?? '-',
-                        style: TextStyleList.subtext1,
-                        overflow: TextOverflow.visible,
-                      ),
-                    ],
-                  );
-                },
+                        CustomerById customer = snapshot.data!;
+                        return Text(
+                          customer.customerAddress ?? '-',
+                          style: TextStyleList.subtext1,
+                          overflow: TextOverflow.visible,
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 4),
               Row(

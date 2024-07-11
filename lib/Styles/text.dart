@@ -39,6 +39,11 @@ class TextStyleList {
     fontWeight: FontWeight.w500,
     color: black8,
   );
+  static final TextStyle headtitle2 = GoogleFonts.kanit(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: black8,
+  );
 
 //18
   static final TextStyle title1 = GoogleFonts.kanit(

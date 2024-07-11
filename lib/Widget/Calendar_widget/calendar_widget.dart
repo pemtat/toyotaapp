@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -9,7 +10,6 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
-import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
@@ -123,7 +123,7 @@ class CalendarItem extends StatelessWidget {
                         Row(
                           children: [
                             if (event['description'] != '')
-                              Icon(Icons.calendar_month),
+                              const Icon(Icons.calendar_month),
                             5.wH,
                             Text(
                               event['task'],
@@ -132,40 +132,82 @@ class CalendarItem extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 5),
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on_outlined),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              child: FutureBuilder<Map<String, String>>(
-                                future: fetchLocationById(event['reporterId']),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                        child: SizedBox(
-                                            width: 20,
-                                            height: 20,
-                                            child:
-                                                CircularProgressIndicator()));
-                                  } else if (snapshot.hasError) {
-                                    return const Text('-');
-                                  } else if (!snapshot.hasData ||
-                                      snapshot.data!.isEmpty) {
-                                    return const Text('-');
-                                  }
+                        event['type'] == EventType.Job
+                            ? Row(
+                                children: [
+                                  const Icon(Icons.location_on_outlined),
+                                  const SizedBox(width: 5),
+                                  Expanded(
+                                    child: FutureBuilder<Map<String, String>>(
+                                      future: fetchLocationById(
+                                          event['reporterId']),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                              child: SizedBox(
+                                                  width: 20,
+                                                  height: 20,
+                                                  child:
+                                                      CircularProgressIndicator()));
+                                        } else if (snapshot.hasError) {
+                                          return const Text('-');
+                                        } else if (!snapshot.hasData ||
+                                            snapshot.data!.isEmpty) {
+                                          return const Text('-');
+                                        }
 
-                                  Map<String, String> userData = snapshot.data!;
-                                  return Text(
-                                    userData['location'] ?? '-',
-                                    style: TextStyleList.subtext1,
-                                    overflow: TextOverflow.visible,
-                                  );
-                                },
+                                        Map<String, String> userData =
+                                            snapshot.data!;
+                                        return Text(
+                                          userData['location'] ?? '-',
+                                          style: TextStyleList.subtext1,
+                                          overflow: TextOverflow.visible,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                children: [
+                                  const Icon(Icons.location_on_outlined),
+                                  const SizedBox(width: 5),
+                                  Expanded(
+                                    child: FutureBuilder<CustomerById>(
+                                      future: fetchCustomerInfo(
+                                          event['reporterId']),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: SizedBox(
+                                                width: 20,
+                                                height: 20,
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              ),
+                                            ),
+                                          );
+                                        } else if (snapshot.hasError) {
+                                          return const Text('-');
+                                        } else if (!snapshot.hasData) {
+                                          return const Text('-');
+                                        }
+
+                                        CustomerById customer = snapshot.data!;
+                                        return Text(
+                                          customer.customerAddress ?? '-',
+                                          style: TextStyleList.subtext1,
+                                          overflow: TextOverflow.visible,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
                         const SizedBox(height: 5),
                         if (event['bugid'] != '')
                           FutureBuilder<Map<String, String>>(
@@ -175,7 +217,7 @@ class CalendarItem extends StatelessWidget {
                                     ConnectionState.waiting) {
                                   return Container();
                                 } else if (snapshot.hasError) {
-                                  return Center(child: Text('Error: '));
+                                  return const Center(child: Text('Error: '));
                                 } else if (!snapshot.hasData ||
                                     snapshot.data!.isEmpty) {
                                   return Container();
@@ -211,7 +253,7 @@ class CalendarItem extends StatelessWidget {
                         if (event['description'] != '')
                           Row(
                             children: [
-                              Icon(Icons.person_search_sharp),
+                              const Icon(Icons.person_search_sharp),
                               5.wH,
                               Text(
                                 event['description'].substring(

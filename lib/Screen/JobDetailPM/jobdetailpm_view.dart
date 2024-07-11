@@ -132,7 +132,9 @@ class JobDetailViewPM extends StatelessWidget {
                                                       'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
                                                   detail: issue.description,
                                                   status: issue.status.name,
-                                                  location: issue.reporter.id
+                                                  location: issue
+                                                      .getCustomFieldValue(
+                                                          "Customer No")
                                                       .toString(),
                                                   contact: jobController
                                                           .userData

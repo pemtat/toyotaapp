@@ -28,8 +28,11 @@ class PendingTaskControllerPM extends GetxController {
   var reportPreventiveList = <PreventivereportModel>[].obs;
   var customerInfo = <CustomerById>[].obs;
   var userData = <UserById>[].obs;
+  Rx<DateTime?> selectedDateTime = Rx<DateTime?>(null);
   var isPicking = false.obs;
   var issueData = [].obs;
+  var confirm = false.obs;
+  var moreHistory = false.obs;
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
@@ -47,6 +50,8 @@ class PendingTaskControllerPM extends GetxController {
   var imagesAfter = <Map<String, String>>[].obs;
   var savedDateStartTime = ''.obs;
   var savedDateEndTime = ''.obs;
+  final RxInt expandedIndex = (-2).obs;
+
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
 
   final HomeController jobController = Get.put(HomeController());
@@ -139,6 +144,7 @@ class PendingTaskControllerPM extends GetxController {
     TextEditingController textController = textControllerRx.value;
 
     String noteText = textController.text;
+    fetchData(issueId.toString());
     if (addAttatchments.isNotEmpty && noteText != '') {
       var file = addAttatchments.first;
       String name = file['filename'];
@@ -159,11 +165,6 @@ class PendingTaskControllerPM extends GetxController {
         },
         body: jsonEncode(body),
       );
-
-      if (response.statusCode == 201) {
-        fetchData(issueId.toString());
-        notes.value.clear();
-      }
     } else if (addAttatchments.isNotEmpty && noteText == '') {
       showMessage('โปรดเพิ่ม Note');
     } else {
@@ -179,10 +180,6 @@ class PendingTaskControllerPM extends GetxController {
         },
         body: jsonEncode(body),
       );
-      if (response.statusCode == 201) {
-        fetchData(issueId.toString());
-        notes.value.clear();
-      }
     }
   }
 
