@@ -57,7 +57,7 @@ class JobDetailController extends GetxController {
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
   final BottomBarController bottomController = Get.put(BottomBarController());
 
-  void fetchData(String ticketId, String subjobId) async {
+  Future<void> fetchData(String ticketId, String subjobId) async {
     try {
       final String apiUrl = getTicketbyId(ticketId);
       String? token = await getToken();

@@ -78,12 +78,13 @@ class SignatureWidget extends StatelessWidget {
       ),
       actions: <Widget>[
         TextButton(
-          onPressed: () {
+          onPressed: () async {
             saveCurrentDateTime(saveCompletedtime);
             if (ticketId != null) {
               updateSignatureJob(jobId, ticketId ?? '', saveCompletedtime.value,
                   signatureController.value.text, signaturePad.value);
-              jobController.fetchData(ticketId.toString(), jobId.toString());
+              await jobController.fetchData(
+                  ticketId.toString(), jobId.toString());
             } else {
               if (option == 'battery') {
                 changeIssueSignaturePM(
@@ -92,6 +93,8 @@ class SignatureWidget extends StatelessWidget {
                     signatureController.value.text,
                     signaturePad.value,
                     'battery');
+                await jobControllerPM.fetchData(jobId.toString());
+                await jobControllerPM.fetchData(jobId.toString());
               } else {
                 changeIssueSignaturePM(
                     jobId,
@@ -99,6 +102,7 @@ class SignatureWidget extends StatelessWidget {
                     signatureController.value.text,
                     signaturePad.value,
                     'preventive');
+                await jobControllerPM.fetchData(jobId.toString());
               }
             }
             Navigator.pop(context);
