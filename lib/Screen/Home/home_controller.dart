@@ -43,6 +43,7 @@ class HomeController extends GetxController {
   final RxInt expandedIndex = (-2).obs;
   final RxInt expandedIndex2 = (-2).obs;
   final UserController userController = Get.put(UserController());
+
   var totalJobs = 0.obs;
   var closedJobs = 0.obs;
   var incomingJobs = 0.obs;
@@ -203,15 +204,20 @@ class HomeController extends GetxController {
         List<PmModel> closedPmItems = itemList
             .where((pm) => stringToStatus(pm.status ?? '') == 'closed')
             .toList();
+        List<PmModel> closedPmItemsOver = itemList
+            .where((pm) =>
+                stringToStatus(pm.status ?? '') == 'closed' &&
+                DateTime.parse(pm.dueDate ?? '').isBefore(DateTime.now()))
+            .toList();
+
         serviceZoneSet.addAll(
           itemList
               .where((pm) => pm.serviceZoneCode != null)
               .map((pm) => pm.serviceZoneCode!)
               .toSet(),
         );
-
+        overdueJobs.value = overdueJobs.value + closedPmItemsOver.length;
         closedJobs.value = closedJobs.value + closedPmItems.length;
-        overdueJobs.value = overdueJobs.value + closedPmItems.length;
         pmCompletedList.value = closedPmItems.length;
         pmItems.value = itemList;
       } else {
@@ -297,8 +303,12 @@ class HomeController extends GetxController {
         List<SubJobAssgined> completedSubJobs =
             itemList.where((subJob) => subJob.status == '103').toList();
         subjobListClosed.value = completedSubJobs.length;
-        overdueJobs.value = overdueJobs.value + completedSubJobs.length;
-
+        List<SubJobAssgined> closedSubJobsOver = itemList
+            .where((subJob) =>
+                subJob.status == '103' &&
+                DateTime.parse(subJob.dueDate ?? '').isBefore(DateTime.now()))
+            .toList();
+        overdueJobs.value = overdueJobs.value + closedSubJobsOver.length;
         // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
         // List<SubJobAssgined> closedSubJob = itemList
         //     .where((subJob) => stringToStatus(subJob.status ?? '') == 'closed')

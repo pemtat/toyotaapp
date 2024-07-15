@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/openmap.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -10,6 +11,8 @@ class CustomerInformation extends StatelessWidget {
   final String email;
   final String phoneNumber;
   final String location;
+  final String companyName;
+  final BuildContext context;
   final VoidCallback onTap;
   const CustomerInformation(
       {super.key,
@@ -17,6 +20,8 @@ class CustomerInformation extends StatelessWidget {
       required this.email,
       required this.phoneNumber,
       required this.location,
+      required this.companyName,
+      required this.context,
       required this.onTap});
 
   @override
@@ -48,8 +53,24 @@ class CustomerInformation extends StatelessWidget {
           children: [
             const Spacer(),
             GoogleMapButton(
-              onTap: () {
-                onTap;
+              onTap: () async {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                );
+
+                try {
+                  await openGoogleMaps(location);
+                } catch (e) {
+                  print(e);
+                } finally {
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ],

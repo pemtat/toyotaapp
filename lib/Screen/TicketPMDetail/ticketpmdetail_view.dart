@@ -167,7 +167,7 @@ class TicketPMDetailView extends StatelessWidget {
                               BoxContainer(
                                 children: [
                                   Text(
-                                    "Start Time : ${pmData.tStart ?? '- '}",
+                                    "Start Time : ${formatDateTimeCut(pmData.tStart ?? '- ')}",
                                     style: TextStyleList.text6,
                                   ),
                                   8.kH,
@@ -184,7 +184,7 @@ class TicketPMDetailView extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "End Time : ${pmData.tEnd ?? '-'}",
+                                        "End Time : ${formatDateTimeCut(pmData.tEnd ?? '- ')}",
                                         style: TextStyleList.text6,
                                       ),
                                       8.kH,

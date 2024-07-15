@@ -113,6 +113,7 @@ class JobDetailView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Intruction(
+                                  context: context,
                                   phoneNumber: userData!.phoneNo ?? '',
                                   location:
                                       customerInfo!.customerAddress ?? ''),
@@ -141,15 +142,17 @@ class JobDetailView extends StatelessWidget {
                                         children: [
                                           8.kH,
                                           MoreDetail(
-                                              file: file,
-                                              description: issue.description,
-                                              moreDetail:
-                                                  jobController.moreDetail,
-                                              ediefile: false,
-                                              summary: issue.summary,
-                                              category: issue.category.name,
-                                              relations: '-',
-                                              severity: issue.severity.name),
+                                            file: file,
+                                            description: issue.description,
+                                            moreDetail:
+                                                jobController.moreDetail,
+                                            ediefile: false,
+                                            summary: issue.summary,
+                                            category: issue.category.name,
+                                            relations: '-',
+                                            severity: issue.severity.name,
+                                            errorCode: issue.errorCode,
+                                          ),
                                           MoreDetailArrow(
                                               moreDetail:
                                                   jobController.moreDetail),
@@ -168,13 +171,13 @@ class JobDetailView extends StatelessWidget {
                                                     model: warrantyInfo.model ??
                                                         '',
                                                     serial:
-                                                        warrantyInfo.serial ??
+                                                        warrantyInfo.serialNo ??
                                                             '',
-                                                    status: warrantyInfo
-                                                                .warrantystatus ==
-                                                            '1'
-                                                        ? 1
-                                                        : 0,
+                                                    status:
+                                                        warrantyInfo.warranty ==
+                                                                '1'
+                                                            ? 1
+                                                            : 0,
                                                     filePdf: filePdf);
                                               }
                                             },
@@ -379,8 +382,13 @@ class JobDetailView extends StatelessWidget {
                                       ? ShowRepairReport(
                                           reportData: jobController.reportList,
                                           additionalReportData: jobController
-                                              .additionalReportList)
-                                      : Container())
+                                              .additionalReportList,
+                                          signaturePad:
+                                              jobController.signaturePad,
+                                          signatureController:
+                                              jobController.signatureController,
+                                        )
+                                      : Container()),
                                 ],
                               ),
                             ],

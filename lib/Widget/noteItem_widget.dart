@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -10,9 +9,11 @@ import 'package:toyotamobile/Widget/divider_widget.dart';
 
 class NoteItem extends StatelessWidget {
   final Notes note;
-  final String? notePic;
 
-  const NoteItem({super.key, required this.note, this.notePic});
+  const NoteItem({
+    super.key,
+    required this.note,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,31 +25,12 @@ class NoteItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: CircleAvatar(
-                backgroundColor: red3,
-                radius: 12,
-                child: notePic != null
-                    ? Text(
-                        notePic ?? '',
-                        style: TextStyleList.text13,
-                      )
-                    : FutureBuilder<String>(
-                        future: checkLevel(note.reporter!.id ?? 0),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return const Text('Error');
-                          } else {
-                            String accessLevel = snapshot.data!;
-                            return Text(
-                              accessLevel,
-                              style: TextStyleList.text13,
-                            );
-                          }
-                        },
-                      ),
-              ),
+                  backgroundColor: Colors.white,
+                  radius: 12,
+                  child: Image.asset(
+                    'assets/profile.png',
+                    color: red3,
+                  )),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +43,7 @@ class NoteItem extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      formatDateTime(note.createdAt ?? ''),
+                      formatDateTimePlus(note.createdAt ?? ''),
                       style: TextStyleList.subtext1,
                     ),
                   ],

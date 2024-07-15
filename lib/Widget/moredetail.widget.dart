@@ -14,6 +14,7 @@ class MoreDetail extends StatelessWidget {
   final String summary;
   final String severity;
   final RxBool moreDetail;
+  final String? errorCode;
   final bool ediefile;
   const MoreDetail(
       {super.key,
@@ -22,6 +23,7 @@ class MoreDetail extends StatelessWidget {
       required this.moreDetail,
       required this.ediefile,
       required this.category,
+      this.errorCode,
       required this.summary,
       required this.relations,
       required this.severity});
@@ -82,6 +84,10 @@ class MoreDetail extends StatelessWidget {
                     BoxInfo(
                       title: "Relations",
                       value: relations,
+                    ),
+                    BoxInfo(
+                      title: "Error Code",
+                      value: errorCode ?? '-',
                     ),
                   ],
                 ),

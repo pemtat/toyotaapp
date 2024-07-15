@@ -11,11 +11,12 @@ import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
-import 'package:toyotamobile/Models/warrantybyid_model.dart';
+import 'package:toyotamobile/Models/warrantytruckbyid.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
 class PeddingtaskController extends GetxController {
   var issueData = [].obs;
@@ -26,13 +27,15 @@ class PeddingtaskController extends GetxController {
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var userData = <UserById>[].obs;
-  var warrantyInfo = <WarrantybyIdModel>[].obs;
+  var warrantyInfo = <WarrantyTruckbyId>[].obs;
   var customerInfo = <CustomerById>[].obs;
   var issueId;
   var jobId;
   var subJobs = <SubJobDetail>[].obs;
   var notesFiles = <Notes>[].obs;
-
+  final notes = TextEditingController().obs;
+  var isPicking = false.obs;
+  List<String> notePic = [];
   var attatchments = <Map<String, dynamic>>[].obs;
 
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
@@ -40,7 +43,7 @@ class PeddingtaskController extends GetxController {
   void fetchData(String ticketId, String subjobId) async {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
-    pdfList.clear;
+
     await fetchPdfData(ticketId, token ?? '', pdfList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
     await fetchUserById(subJobs.first.reporterId ?? '', userData);
@@ -74,6 +77,55 @@ class PeddingtaskController extends GetxController {
   String formatDateTime(String dateTime) {
     DateTime parsedDate = DateTime.parse(dateTime);
     return DateFormat('dd MMMM yyyy, HH:mm').format(parsedDate);
+  }
+
+  void addNote(Rx<TextEditingController> textControllerRx) async {
+    final String addNoteUrl = createNoteById(issueId);
+
+    String? token = await getToken();
+    TextEditingController textController = textControllerRx.value;
+
+    String noteText = textController.text;
+    if (addAttatchments.isNotEmpty && noteText != '') {
+      var file = addAttatchments.first;
+      String name = file['filename'];
+      String content = file['content'];
+
+      Map<String, dynamic> body = {
+        "text": noteText,
+        "view_state": {"name": "public"},
+        "files": [
+          {"name": name, "content": content}
+        ]
+      };
+      http.post(
+        Uri.parse(addNoteUrl),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body),
+      );
+      fetchData(issueId.toString(), jobId.toString());
+      notes.value.clear();
+    } else if (addAttatchments.isNotEmpty && noteText == '') {
+      showMessage('โปรดเพิ่ม Note');
+    } else {
+      Map<String, dynamic> body = {
+        "text": noteText,
+        "view_state": {"name": "public"},
+      };
+      http.post(
+        Uri.parse(addNoteUrl),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body),
+      );
+      fetchData(issueId.toString(), jobId.toString());
+      notes.value.clear();
+    }
   }
 
   void showAcceptDialog(

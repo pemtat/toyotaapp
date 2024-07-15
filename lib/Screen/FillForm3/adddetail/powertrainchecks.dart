@@ -50,7 +50,9 @@ class PowertrainChecks extends GetxController {
                     '(${typeData[0]}) ${ListData[index]}',
                     style: TextStyleList.subtitle3,
                   ),
+                  10.kH,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CheckBoxList(
                           selectionsChoose: selectionsChoose,
@@ -62,6 +64,7 @@ class PowertrainChecks extends GetxController {
                           text: 'Poor'),
                     ],
                   ),
+                  8.kH,
                   TextField(
                     controller: controller,
                     decoration: InputDecoration1(text: 'Remark'),

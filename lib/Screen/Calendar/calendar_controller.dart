@@ -8,7 +8,8 @@ import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
-import 'package:toyotamobile/Models/warrantybyid_model.dart';
+import 'package:toyotamobile/Models/userinfobyid_model.dart';
+import 'package:toyotamobile/Models/warrantytruckbyid.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 
 enum EventType {
@@ -34,6 +35,7 @@ class CalendarController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     jobController.subJobAssigned.listen((_) {
       updateEvents();
     });
@@ -71,16 +73,7 @@ class CalendarController extends GetxController {
         final pmDate = formatDateTimeString(pm.dueDate ?? '');
         final dayKey = DateTime.utc(pmDate.year, pmDate.month, pmDate.day);
         final dayKey2 = DateTime(pmDate.year, pmDate.month, pmDate.day);
-
-        final timeParts = pmDate.toLocal().toString().split(' ')[1].split(':');
-        final hour = int.parse(timeParts[0]);
-
-        String period = 'AM';
-        if (hour >= 12) {
-          period = 'PM';
-        }
-        final formattedHour = hour > 12 ? hour - 12 : hour;
-        final formattedTime = '$formattedHour:${timeParts[1]} $period';
+        final formattedTime = DateFormat('hh:mm a').format(pmDate);
 
         final eventData = {
           "jobid": pm.id,
@@ -90,7 +83,7 @@ class CalendarController extends GetxController {
           "task": pm.dueDate,
           "customerName": pm.customerName,
           'warrantyStatus': '',
-          "date": '',
+          "date": formatDateTimeCut(pm.dueDate ?? ''),
           'reporterId': pm.customerNo,
           "description": pm.description,
           "location": 'Service Zone ${pm.serviceZoneCode}',
@@ -125,7 +118,7 @@ class CalendarController extends GetxController {
           }
         }
       } catch (e) {
-        print('Error processing PM event: $e');
+        // print('Error processing PM event: $e');
       }
     }
   }
@@ -142,34 +135,30 @@ class CalendarController extends GetxController {
 
         final dayKey = DateTime.utc(jobDate.year, jobDate.month, jobDate.day);
         final dayKey2 = DateTime(jobDate.year, jobDate.month, jobDate.day);
-        final timeParts = jobDate.toLocal().toString().split(' ')[1].split(':');
-        final hour = int.parse(timeParts[0]);
 
-        String period = 'AM';
-        if (hour >= 12) {
-          period = 'PM';
-        }
-        final formattedHour = hour > 12 ? hour - 12 : hour;
-        final formattedTime = '$formattedHour:${timeParts[1]} $period';
+        final formattedTime = DateFormat('hh:mm a').format(jobDate);
 
         String? token = await getToken();
-        var warrantyInfo = <WarrantybyIdModel>[].obs;
+        var warrantyInfo = <WarrantyTruckbyId>[].obs;
+
+        var userData = <UserById>[].obs;
+        await fetchUserById(job.reporterId ?? '', userData);
         await fetchWarrantyById(
             job.bugId.toString(), token ?? '', warrantyInfo);
-
+        var jobDateString = job.dueDate == null ? DateTime.now() : job.dueDate;
         final eventData = {
           "jobid": job.id.toString(),
           "bugid": job.bugId.toString(),
           "time": formattedTime,
           "status": stringToStatus(job.status ?? ''),
-          "customerName": '',
+          "customerName": userData.first.users!.first.name,
           "task": job.description,
-          "date": jobDate,
+          "date": jobDateString,
           'warrantyStatus': '',
           'reporterId': job.reporterId,
           "description": '',
           "location": 'Bangkok',
-          "serialNo": warrantyInfo.first.serial,
+          "serialNo": warrantyInfo.first.serialNo,
           "type": EventType.Job,
         };
 
@@ -199,7 +188,7 @@ class CalendarController extends GetxController {
           }
         }
       } catch (e) {
-        print('Error processing job event: $e');
+        // print('Error processing job event: $e');
       }
     }
   }

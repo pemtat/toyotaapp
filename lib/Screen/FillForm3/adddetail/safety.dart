@@ -49,15 +49,21 @@ class Safety extends GetxController {
                     '(${typeData[index]}) ${ListData[index]}',
                     style: TextStyleList.subtitle3,
                   ),
-                  5.kH,
-                  OldCheckBoxList(
-                      selectionsChoose: selectionsChoose,
-                      index: index,
-                      text: 'ผ่าน'),
-                  OldCheckBoxList(
-                      selectionsChoose: selectionsChoose,
-                      index: index,
-                      text: 'ไม่ผ่าน'),
+                  10.kH,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CheckBoxList(
+                          selectionsChoose: selectionsChoose,
+                          index: index,
+                          text: 'ผ่าน'),
+                      3.wH,
+                      CheckBoxList(
+                          selectionsChoose: selectionsChoose,
+                          index: index,
+                          text: 'ไม่ผ่าน'),
+                    ],
+                  ),
                   20.kH,
                 ],
               );

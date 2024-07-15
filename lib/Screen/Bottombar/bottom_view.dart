@@ -24,6 +24,7 @@ class BottomBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BottomBarController controller = Get.put(BottomBarController());
+
     return Scaffold(
       body: PageView(
         controller: _pageController,

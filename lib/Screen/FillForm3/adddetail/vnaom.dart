@@ -66,7 +66,9 @@ class VnaOm extends GetxController {
                         ),
                     ],
                   ),
+                  10.kH,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CheckBoxList(
                           selectionsChoose: selectionsChoose,
@@ -78,6 +80,7 @@ class VnaOm extends GetxController {
                           text: 'Poor'),
                     ],
                   ),
+                  8.kH,
                   TextField(
                     controller: controller,
                     decoration: InputDecoration1(text: 'Remark'),

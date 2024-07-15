@@ -5,6 +5,20 @@ String formatDateTime(String dateTime) {
   return DateFormat('dd MMMM yyyy, hh:mm a').format(parsedDate);
 }
 
+String formatDateTimePlus(String dateTime) {
+  DateTime parsedDate = DateTime.parse(dateTime).add(const Duration(hours: 7));
+  return DateFormat('dd MMMM yyyy HH:mm').format(parsedDate);
+}
+
+String formatDateTimeCut(String dateTimeString) {
+  int offsetIndex = dateTimeString.indexOf('+');
+  String formattedDateTime = offsetIndex != -1
+      ? dateTimeString.substring(0, offsetIndex)
+      : dateTimeString;
+
+  return formattedDateTime;
+}
+
 DateTime formatDateTimeString(String dateTime) {
   try {
     DateTime parsedDate = DateTime.parse(dateTime);

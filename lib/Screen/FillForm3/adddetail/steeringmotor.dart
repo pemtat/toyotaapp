@@ -67,11 +67,11 @@ class SteeringMotor extends GetxController {
                           flex: 2,
                           child: Column(
                             children: [
-                              OldCheckBoxList(
+                              CheckBoxList(
                                   selectionsChoose: additionalChoose,
                                   index: index,
                                   text: 'AC motor'),
-                              OldCheckBoxList(
+                              CheckBoxList(
                                   selectionsChoose: additionalChoose,
                                   index: index,
                                   text: 'DC motor'),
@@ -80,7 +80,9 @@ class SteeringMotor extends GetxController {
                         ),
                     ],
                   ),
+                  10.kH,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CheckBoxList(
                           selectionsChoose: selectionsChoose,
@@ -92,6 +94,7 @@ class SteeringMotor extends GetxController {
                           text: 'Poor'),
                     ],
                   ),
+                  8.kH,
                   TextField(
                     controller: controller,
                     decoration: InputDecoration1(text: 'Remark'),

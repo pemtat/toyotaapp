@@ -6,6 +6,7 @@ import 'package:toyotamobile/Service/api.dart';
 
 Future<void> fetchPdfData(
     String id, String token, RxList<Map<String, dynamic>> pdfList) async {
+  pdfList.clear();
   try {
     final response = await http.get(
       Uri.parse(getPdfById(id)),

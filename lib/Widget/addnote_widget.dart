@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -46,37 +45,9 @@ class AddNote extends StatelessWidget {
                   itemCount: notesFiles.length,
                   itemBuilder: (context, index) {
                     final note = notesFiles[index];
-                    if (index < notePic.length) {
-                      final notePicShow = notePic[index];
-                      return NoteItem(
-                        note: note,
-                        notePic: notePicShow,
-                      );
-                    } else {
-                      return FutureBuilder<String>(
-                        future: checkLevel(note.reporter!.id ?? 0),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return index == 0
-                                ? Center(
-                                    child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: const CircularProgressIndicator(),
-                                  ))
-                                : Container();
-                          } else if (snapshot.hasError) {
-                            return const Text('Error');
-                          } else {
-                            String accessLevel = snapshot.data!;
-                            return NoteItem(
-                              note: note,
-                              notePic: accessLevel,
-                            );
-                          }
-                        },
-                      );
-                    }
+                    return NoteItem(
+                      note: note,
+                    );
                   },
                 ),
               ],

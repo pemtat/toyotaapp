@@ -16,7 +16,7 @@ import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
-import 'package:toyotamobile/Models/warrantybyid_model.dart';
+import 'package:toyotamobile/Models/warrantytruckbyid.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -60,10 +60,10 @@ Future<void> fetchSubJob(
 }
 
 Future<void> fetchWarrantyById(
-    String ticketId, String token, RxList<WarrantybyIdModel> info) async {
+    String ticketId, String token, RxList<WarrantyTruckbyId> info) async {
   try {
     final response = await http.get(
-      Uri.parse(getWarrantyInfoByTicketId(ticketId)),
+      Uri.parse(getWarrantyTruckByTicketId(ticketId)),
       headers: {
         'Authorization': token,
       },
@@ -72,10 +72,10 @@ Future<void> fetchWarrantyById(
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
 
-      List<WarrantybyIdModel> dataList =
-          jsonResponse.map((json) => WarrantybyIdModel.fromJson(json)).toList();
+      List<WarrantyTruckbyId> dataList =
+          jsonResponse.map((json) => WarrantyTruckbyId.fromJson(json)).toList();
       info.assignAll(dataList);
-      print(info.first.contractnumber);
+      print(info.first.serialNo);
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
@@ -112,6 +112,8 @@ void fetchReadAttachment(
     List<Attachments>? getAttachments,
     List<Map<String, dynamic>> attachmentsData,
     List<Map<String, dynamic>> attatchments) async {
+  attatchments.clear();
+  attachmentsData.clear();
   if (getAttachments != null) {
     var attachments = getAttachments as List<dynamic>;
     for (var attachment in attachments) {
@@ -578,7 +580,11 @@ void changeIssueStatus(int issueId, String status) async {
   }
 }
 
-void changeIssueStatusPM(String issueId, int status, String comment) async {
+void changeIssueStatusPM(
+  String issueId,
+  int status,
+  String comment,
+) async {
   final String updateStatus = updateJobStatusByIdPM();
   try {
     String? token = await getToken();
@@ -597,6 +603,83 @@ void changeIssueStatusPM(String issueId, int status, String comment) async {
       body: jsonEncode(body),
     );
     if (response.statusCode == 201) {
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print(e);
+  }
+}
+
+void changeIssueStatusNotePM(
+    String issueId,
+    int status,
+    String comment,
+    String saveCompletedtime,
+    String signature,
+    String signaturePad,
+    String saveCompletedtime2,
+    String signature2,
+    String signaturePad2) async {
+  final String updateStatus = updateJobStatusByIdPM();
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {};
+    if (comment != '-') {
+      body = {"job_id": issueId, "status": status, "comment": comment};
+    } else {
+      body = {"job_id": issueId, "status": status};
+    }
+    final response = await http.post(
+      Uri.parse(updateStatus),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+    if (response.statusCode == 201) {
+      Map<String, dynamic> body2 = {
+        "job_id": issueId,
+        "signature": signature,
+        "signature_pad": signaturePad,
+        "save_time": saveCompletedtime
+      };
+      Map<String, dynamic> body3 = {
+        "job_id": issueId,
+        "signature": signature2,
+        "signature_pad": signaturePad2,
+        "save_time": 0
+      };
+
+      final response2 = await http.post(
+        Uri.parse(updateBatterySignature()),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body2),
+      );
+
+      if (response2.statusCode == 200) {
+        print('update succesful');
+      } else {
+        return;
+      }
+      final response3 = await http.post(
+        Uri.parse(updatePreventiveSignature()),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body3),
+      );
+
+      if (response3.statusCode == 200) {
+        print('update succesful');
+      } else {
+        return;
+      }
     } else {
       print(response.statusCode);
     }
@@ -679,7 +762,8 @@ void saveCurrentDateTimeToPMJob(
   }
 }
 
-void updateStatusSubjobs(String jobId, String comment, String ticketId) async {
+void updateStatusSubjobs(String jobId, String comment, String ticketId,
+    String saveCompletedtime, String signature, String signaturePad) async {
   try {
     String? token = await getToken();
 
@@ -695,8 +779,26 @@ void updateStatusSubjobs(String jobId, String comment, String ticketId) async {
     );
 
     if (response.statusCode == 200) {
-      print('Update status done');
-      jobDetailController.fetchData(ticketId, jobId);
+      Map<String, dynamic> body2 = {
+        'save_time': saveCompletedtime,
+        'signature_pad': signaturePad,
+        'signature': signature
+      };
+      final response2 = await http.put(
+        Uri.parse(updateReportById(jobId)),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body2),
+      );
+
+      if (response2.statusCode == 200) {
+        print('Update status done');
+        jobDetailController.fetchData(ticketId, jobId);
+      } else {
+        return;
+      }
     } else {}
   } catch (e) {
     print('Error: $e');
@@ -880,7 +982,7 @@ Future<Map<String, String>> fetchTicketById(String id) async {
   );
   if (response.statusCode == 200) {
     var userInfo = <UserById>[].obs;
-    var truckInfo = <WarrantybyIdModel>[].obs;
+    var truckInfo = <WarrantyTruckbyId>[].obs;
     Map<String, dynamic> data = json.decode(response.body);
     ticket.TicketByIdModel ticketModel = ticket.TicketByIdModel.fromJson(data);
 
@@ -905,7 +1007,7 @@ Future<Map<String, String>> fetchTicketById(String id) async {
         userInfo.first.users!.first.companyId.toString());
 
     final response3 = await http.get(
-      Uri.parse(getWarrantyInfoByTicketId(id)),
+      Uri.parse(getWarrantyTruckByTicketId(id)),
       headers: {
         'Authorization': '$token',
       },
@@ -913,8 +1015,8 @@ Future<Map<String, String>> fetchTicketById(String id) async {
     if (response3.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response3.body);
 
-      List<WarrantybyIdModel> dataList =
-          jsonResponse.map((json) => WarrantybyIdModel.fromJson(json)).toList();
+      List<WarrantyTruckbyId> dataList =
+          jsonResponse.map((json) => WarrantyTruckbyId.fromJson(json)).toList();
       truckInfo.assignAll(dataList);
     } else {
       print('Failed to load data: ${response.statusCode}');
@@ -924,7 +1026,7 @@ Future<Map<String, String>> fetchTicketById(String id) async {
       'name': issuesList.first.reporter!.name ?? '',
       'location': customerInfo.customerAddress ?? '',
       'model': truckInfo.first.model ?? '',
-      'serial': truckInfo.first.serial ?? '',
+      'serial': truckInfo.first.serialNo ?? '',
     };
   } else {
     print('Failed to load data: ${response.statusCode} $id ');

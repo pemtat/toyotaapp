@@ -110,7 +110,7 @@ class CalendarItem extends StatelessWidget {
                             ),
                           ],
                         ),
-                        if (event['customerName'] != '')
+                        if (event['type'] == EventType.PM)
                           Column(
                             children: [
                               Text(
@@ -120,18 +120,16 @@ class CalendarItem extends StatelessWidget {
                               const SizedBox(height: 5),
                             ],
                           ),
-                        Row(
-                          children: [
-                            if (event['description'] != '')
-                              const Icon(Icons.calendar_month),
-                            5.wH,
-                            Text(
-                              event['task'],
-                              style: TextStyleList.text15,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 5),
+                        if (event['type'] == EventType.Job)
+                          Column(
+                            children: [
+                              Text(
+                                'Reported by ${event['customerName']}',
+                                style: TextStyleList.subtext1,
+                              ),
+                              const SizedBox(height: 5),
+                            ],
+                          ),
                         event['type'] == EventType.Job
                             ? Row(
                                 children: [
@@ -229,9 +227,12 @@ class CalendarItem extends StatelessWidget {
                                     2.wH,
                                     const Icon(Icons.forklift),
                                     5.wH,
-                                    Text(
-                                      '${userData['model'] ?? ''} / ${userData['serial']}',
-                                      style: TextStyleList.subtext1,
+                                    Expanded(
+                                      child: Text(
+                                        '${userData['model'] ?? ''} / ${userData['serial']}',
+                                        style: TextStyleList.subtext1,
+                                        overflow: TextOverflow.visible,
+                                      ),
                                     ),
                                   ],
                                 );
@@ -284,7 +285,7 @@ class CalendarItem extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             BoxInfo(
-                                              title: "Name/Model",
+                                              title: "Model",
                                               value: warrantyInfo.first.model,
                                             ),
                                             const SizedBox(height: 3),

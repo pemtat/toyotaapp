@@ -132,7 +132,6 @@ class FillformController extends GetxController {
           var currentRelationId = highRelationData.first['relation_id'];
           var highRelation = (int.parse(currentRelationId) + 1).toString();
           saveCurrentDateTime(saveCompletedtime);
-          print(signatureController.value.text);
           final Map<String, dynamic> data = {
             'job_issue_id': '$jobId',
             'field_report': fieldServiceReport.join(', '),
@@ -146,9 +145,7 @@ class FillformController extends GetxController {
             'repair_result': repairResultController.repairResult.join(','),
             'process_staff': processStaffController.repairStaff.join(','),
             'relation_id': highRelation,
-            'save_time': saveCompletedtime.value,
-            'signature': signatureController.value.text,
-            'signature_pad': signaturePad.value
+            'bugid': ticketId.value
           };
           List<SparePartModel> allSpareParts =
               List.from(sparePartListController.sparePartList);

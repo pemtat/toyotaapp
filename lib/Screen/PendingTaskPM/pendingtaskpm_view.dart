@@ -12,7 +12,6 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
 import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
 import 'package:toyotamobile/Widget/addnote_widget.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
@@ -251,7 +250,6 @@ class PendingTaskViewPM extends StatelessWidget {
                                                                 job.id ?? ''));
                                                   }
                                                 }
-                                                ;
                                               },
                                               child: PmItemWidget(
                                                 job: job,

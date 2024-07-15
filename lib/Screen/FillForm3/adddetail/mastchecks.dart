@@ -115,6 +115,7 @@ class MastChecks extends GetxController {
                   ),
                   10.kH,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CheckBoxList(
                           selectionsChoose: selectionsChoose,

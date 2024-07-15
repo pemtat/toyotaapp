@@ -46,7 +46,7 @@ class CalendarView2 extends StatelessWidget {
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: CloseIcon())
+                            child: const CloseIcon())
                       ],
                     ),
             ),
@@ -62,7 +62,7 @@ class CalendarView2 extends StatelessWidget {
         () => Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 border: Border(bottom: BorderSide(color: black4))),
             child: CellCalendar(
               todayMarkColor: Colors.blue,
@@ -72,14 +72,12 @@ class CalendarView2 extends StatelessWidget {
                 final labels = ["S", "M", "T", "W", "T", "F", "S"];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 4.0),
-                  child: Container(
-                    child: Text(
-                      labels[dayIndex],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
+                  child: Text(
+                    labels[dayIndex],
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 );
               },
@@ -127,11 +125,26 @@ class CalendarView2 extends StatelessWidget {
       for (var eventData in value) {
         events.add(
           CalendarEvent(
-              eventName: eventData['task'],
+              eventName: eventData['type'] == EventType.Job
+                  ? eventData['customerName']
+                  : eventData['customerName']?.replaceAll("บริษัท", ""),
               eventDate: key,
-              eventBackgroundColor:
-                  eventData['type'] == EventType.Job ? red5 : blue2,
-              eventTextStyle: TextStyleList.subtext8),
+              eventBackgroundColor: eventData['status'] != 'closed' &&
+                      DateTime.parse(eventData['date']).isBefore(DateTime.now())
+                  ? red1
+                  : eventData['status'] == 'pending'
+                      ? white2
+                      : eventData['status'] == 'confirmed'
+                          ? blue4
+                          : eventData['status'] == 'closed'
+                              ? green4
+                              : red1,
+              eventTextStyle: eventData['status'] != 'closed' &&
+                      DateTime.parse(eventData['date']).isBefore(DateTime.now())
+                  ? TextStyleList.detailtext2
+                  : eventData['status'] == 'pending'
+                      ? TextStyleList.detailtext3
+                      : TextStyleList.detailtext2),
         );
       }
     });

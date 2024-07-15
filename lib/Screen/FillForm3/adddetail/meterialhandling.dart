@@ -50,7 +50,9 @@ class MeterialHandling extends GetxController {
                       6.wH,
                     ],
                   ),
+                  10.kH,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CheckBoxList(
                           selectionsChoose: selectionsChoose,
@@ -62,6 +64,7 @@ class MeterialHandling extends GetxController {
                           text: 'Poor'),
                     ],
                   ),
+                  8.kH,
                   TextField(
                     controller: controller,
                     decoration: InputDecoration1(text: 'Remark'),

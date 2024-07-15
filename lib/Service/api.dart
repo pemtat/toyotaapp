@@ -20,8 +20,8 @@ String getTicketbyId(String issueId) {
   return '$issue/$issueId';
 }
 
-String getWarrantyInfoByTicketId(String issueId) {
-  return '$url/api/rest/issues/$issueId/warranty';
+String getWarrantyTruckByTicketId(String issueId) {
+  return '$url/api/rest/issues/$issueId/warrantytruck';
 }
 
 String getTrickdetailById(String id) {
@@ -130,6 +130,14 @@ String getPreventiveReportById(String id) {
 
 String getSparePartbySearch(String partNumber) {
   return '$urlFSM/api/sparepart/search/$partNumber';
+}
+
+String updateBatterySignature() {
+  return "$url/api/rest/pm_jobs/update_btr_maintenance_signature";
+}
+
+String updatePreventiveSignature() {
+  return "$url/api/rest/pm_jobs/update_pvt_maintenance_signature";
 }
 
 String updateReportById(String id) {

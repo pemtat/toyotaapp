@@ -201,7 +201,7 @@ class TicketPmDetailController extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
-            changeIssueStatusPM(jobId, 103, comment.value.text);
+            // changeIssueStatusPM(jobId, 103, comment.value.text);
           },
         );
       },

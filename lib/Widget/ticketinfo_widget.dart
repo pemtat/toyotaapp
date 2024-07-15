@@ -180,7 +180,7 @@ class PMJobInfo extends StatelessWidget {
               const SizedBox(height: 4),
               Row(
                 children: [
-                  Icon(Icons.quick_contacts_dialer),
+                  const Icon(Icons.quick_contacts_dialer),
                   5.wH,
                   Text(
                     contact,

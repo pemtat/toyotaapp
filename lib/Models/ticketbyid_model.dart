@@ -25,6 +25,7 @@ class Issues {
   int? id;
   String? summary;
   String? description;
+  String? errorCode;
   Project? project;
   Project? category;
   Reporter? reporter;
@@ -52,6 +53,7 @@ class Issues {
       this.description,
       this.project,
       this.category,
+      this.errorCode,
       this.reporter,
       this.handler,
       this.status,
@@ -74,6 +76,7 @@ class Issues {
   Issues.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     summary = json['summary'];
+    errorCode = json['error_code'];
     description = json['description'];
     project =
         json['project'] != null ? Project.fromJson(json['project']) : null;
@@ -134,6 +137,7 @@ class Issues {
     data['id'] = id;
     data['summary'] = summary;
     data['description'] = description;
+    data['error_code'] = errorCode;
     if (project != null) {
       data['project'] = project!.toJson();
     }

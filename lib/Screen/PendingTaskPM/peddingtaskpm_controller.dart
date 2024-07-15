@@ -37,11 +37,12 @@ class PendingTaskControllerPM extends GetxController {
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
   var moreTicketDetail = false.obs;
+
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
   var jobId;
-
+  CustomerById? customer;
   PmModel? pmData;
   var pdfList = <Map<String, dynamic>>[].obs;
   var status = RxString('');
@@ -144,7 +145,7 @@ class PendingTaskControllerPM extends GetxController {
     TextEditingController textController = textControllerRx.value;
 
     String noteText = textController.text;
-    fetchData(issueId.toString());
+
     if (addAttatchments.isNotEmpty && noteText != '') {
       var file = addAttatchments.first;
       String name = file['filename'];
@@ -157,7 +158,7 @@ class PendingTaskControllerPM extends GetxController {
           {"name": name, "content": content}
         ]
       };
-      final response = await http.post(
+      http.post(
         Uri.parse(addNoteUrl),
         headers: {
           'Authorization': '$token',
@@ -165,6 +166,8 @@ class PendingTaskControllerPM extends GetxController {
         },
         body: jsonEncode(body),
       );
+      fetchData(issueId.toString());
+      notes.value.clear();
     } else if (addAttatchments.isNotEmpty && noteText == '') {
       showMessage('โปรดเพิ่ม Note');
     } else {
@@ -172,7 +175,7 @@ class PendingTaskControllerPM extends GetxController {
         "text": noteText,
         "view_state": {"name": "public"},
       };
-      final response = await http.post(
+      http.post(
         Uri.parse(addNoteUrl),
         headers: {
           'Authorization': '$token',
@@ -180,6 +183,8 @@ class PendingTaskControllerPM extends GetxController {
         },
         body: jsonEncode(body),
       );
+      fetchData(issueId.toString());
+      notes.value.clear();
     }
   }
 
@@ -195,7 +200,11 @@ class PendingTaskControllerPM extends GetxController {
           rightButton: right,
           onRightButtonPressed: () {
             // changeIssueStatus(issueId, 'confirmed');
-            changeIssueStatusPM(jobId, 102, '-');
+            changeIssueStatusPM(
+              jobId,
+              102,
+              '-',
+            );
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
           },

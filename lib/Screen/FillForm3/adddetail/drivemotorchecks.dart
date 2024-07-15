@@ -67,11 +67,11 @@ class DriveMotorChecks extends GetxController {
                           flex: 2,
                           child: Column(
                             children: [
-                              OldCheckBoxList(
+                              CheckBoxList(
                                   selectionsChoose: additionalChoose,
                                   index: index,
                                   text: 'AC motor'),
-                              OldCheckBoxList(
+                              CheckBoxList(
                                   selectionsChoose: additionalChoose,
                                   index: index,
                                   text: 'DC motor'),
@@ -82,6 +82,7 @@ class DriveMotorChecks extends GetxController {
                   ),
                   10.kH,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CheckBoxList(
                           selectionsChoose: selectionsChoose,

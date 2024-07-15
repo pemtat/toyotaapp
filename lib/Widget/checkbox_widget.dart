@@ -21,6 +21,9 @@ class CheckBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        Expanded(
+          child: Text(text, style: TextStyleList.text9),
+        ),
         GestureDetector(
           onTap: () {
             updateCheckbox(text, itemSet);
@@ -70,7 +73,7 @@ class CheckBoxWidget extends StatelessWidget {
                         border: !listItem.contains(text)
                             ? Border.all(color: Colors.grey)
                             : Border.all(color: Colors.transparent),
-                        color: !listItem.contains(text) ? black1 : red7,
+                        color: !listItem.contains(text) ? black15 : red7,
                       ),
                     ),
                   ),
@@ -78,10 +81,6 @@ class CheckBoxWidget extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text(text, style: TextStyleList.text9),
         ),
       ],
     );
@@ -342,16 +341,17 @@ class CheckBoxList extends StatelessWidget {
                   }
                 },
                 child: Container(
-                    width: 85,
-                    height: 45,
+                    width: 110,
+                    height: 55,
                     decoration: BoxDecoration(
                       color: selectionsChoose[index] == text
-                          ? text == 'Good'
-                              ? red1
-                              : black1
+                          ? red1
                           : Colors.transparent,
                       border: selectionsChoose[index] != text
-                          ? text == 'Good'
+                          ? text == 'Good' ||
+                                  text == 'Auto Filter' ||
+                                  text == 'AC motor' ||
+                                  text == 'ผ่าน'
                               ? Border.all(color: red1)
                               : Border.all(color: black6)
                           : Border.all(color: Colors.transparent),
@@ -361,10 +361,16 @@ class CheckBoxList extends StatelessWidget {
                       child: Text(
                         text,
                         style: selectionsChoose[index] == text
-                            ? text == 'Good'
+                            ? text == 'Good' ||
+                                    text == 'Auto Filter' ||
+                                    text == 'AC motor' ||
+                                    text == 'ผ่าน'
                                 ? TextStyleList.subtitle6
                                 : TextStyleList.subtitle6
-                            : text == 'Good'
+                            : text == 'Good' ||
+                                    text == 'Auto Filter' ||
+                                    text == 'AC motor' ||
+                                    text == 'ผ่าน'
                                 ? TextStyleList.subtitle5
                                 : TextStyleList.subtitle3,
                       ),

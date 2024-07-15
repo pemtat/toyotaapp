@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
@@ -27,12 +28,16 @@ class JobDetailControllerPM extends GetxController {
   final comment = TextEditingController().obs;
   var reportList = <BatteryReportModel>[].obs;
   var pmInfo = <PMJobInfoModel>[].obs;
-
+  var signaturePad = ''.obs;
+  final TextEditingController signatureController = TextEditingController();
   var reportPreventiveList = <PreventivereportModel>[].obs;
   var customerInfo = <CustomerById>[].obs;
-
+  var saveCompletedtime = ''.obs;
   var isPicking = false.obs;
   var issueData = [].obs;
+  var signaturePad2 = ''.obs;
+  var saveCompletedtime2 = ''.obs;
+  final TextEditingController signatureController2 = TextEditingController();
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
@@ -67,10 +72,25 @@ class JobDetailControllerPM extends GetxController {
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     await fetchPmJobInfo(jobId, token ?? '', pmInfo);
 
-    if (pmInfo.first.tStart != '' && pmInfo.first.tStart != null)
-      savedDateStartTime.value = pmInfo.first.tStart ?? '';
-    if (pmInfo.first.tEnd != '' && pmInfo.first.tEnd != null)
-      savedDateEndTime.value = pmInfo.first.tEnd ?? '';
+    if (pmInfo.first.tStart != null && pmInfo.first.tStart != '') {
+      DateTime startTime = DateTime.parse(pmInfo.first.tStart!);
+      DateTime adjustedStartTime = startTime.add(Duration(hours: 7));
+
+      String formattedStartTime =
+          DateFormat('yyyy-MM-dd HH:mm:ss').format(adjustedStartTime);
+
+      savedDateStartTime.value = formattedStartTime;
+    }
+    if (pmInfo.first.tEnd != null && pmInfo.first.tEnd != '') {
+      DateTime endTime = DateTime.parse(pmInfo.first.tEnd!);
+      DateTime adjustedEndTime = endTime.add(Duration(hours: 7));
+
+      String formattedEndTime =
+          DateFormat('yyyy-MM-dd HH:mm:ss').format(adjustedEndTime);
+
+      savedDateEndTime.value = formattedEndTime;
+    }
+
     try {
       if (pmInfo.first.jobImageStart!.isNotEmpty) {
         List<dynamic> imageBeforeList = pmInfo.first.jobImageStart!;
@@ -161,7 +181,7 @@ class JobDetailControllerPM extends GetxController {
           {"name": name, "content": content}
         ]
       };
-      final response = await http.post(
+      http.post(
         Uri.parse(addNoteUrl),
         headers: {
           'Authorization': '$token',
@@ -170,10 +190,8 @@ class JobDetailControllerPM extends GetxController {
         body: jsonEncode(body),
       );
 
-      if (response.statusCode == 201) {
-        // fetchData(issueId.toString(), pmData ?? {null});
-        notes.value.clear();
-      }
+      fetchData(issueId.toString());
+      notes.value.clear();
     } else if (addAttatchments.isNotEmpty && noteText == '') {
       showMessage('โปรดเพิ่ม Note');
     } else {
@@ -181,7 +199,7 @@ class JobDetailControllerPM extends GetxController {
         "text": noteText,
         "view_state": {"name": "public"},
       };
-      final response = await http.post(
+      http.post(
         Uri.parse(addNoteUrl),
         headers: {
           'Authorization': '$token',
@@ -189,10 +207,8 @@ class JobDetailControllerPM extends GetxController {
         },
         body: jsonEncode(body),
       );
-      if (response.statusCode == 201) {
-        // fetchData(issueId.toString());
-        notes.value.clear();
-      }
+      fetchData(issueId.toString());
+      notes.value.clear();
     }
   }
 
@@ -207,7 +223,17 @@ class JobDetailControllerPM extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
-            changeIssueStatusPM(jobId, 103, comment.value.text);
+            saveCurrentDateTime(saveCompletedtime);
+            changeIssueStatusNotePM(
+                jobId,
+                103,
+                comment.value.text,
+                saveCompletedtime.value,
+                signatureController.value.text,
+                signaturePad.value,
+                saveCompletedtime2.value,
+                signatureController2.value.text,
+                signaturePad2.value);
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
           },

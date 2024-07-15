@@ -133,7 +133,7 @@ class PmItemWidget extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(Icons.person_search_sharp),
+                    const Icon(Icons.person_search_sharp),
                     5.wH,
                     Text(
                       job.description

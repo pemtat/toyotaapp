@@ -53,11 +53,11 @@ class BatteryCondition extends GetxController {
                           flex: 2,
                           child: Column(
                             children: [
-                              OldCheckBoxList(
+                              CheckBoxList(
                                   selectionsChoose: additionalChoose,
                                   index: index,
                                   text: 'Auto Filter'),
-                              OldCheckBoxList(
+                              CheckBoxList(
                                   selectionsChoose: additionalChoose,
                                   index: index,
                                   text: 'Manual'),
@@ -68,6 +68,7 @@ class BatteryCondition extends GetxController {
                   ),
                   10.kH,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CheckBoxList(
                           selectionsChoose: selectionsChoose,

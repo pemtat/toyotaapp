@@ -1,22 +1,34 @@
 // ignore_for_file: file_names
+import 'dart:convert';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
+import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/textfield_widget.dart';
 
 class ShowRepairReport extends StatelessWidget {
   final RxList<RepairReportModel> reportData;
   final RxList<RepairReportModel> additionalReportData;
-  const ShowRepairReport(
+  final TextEditingController? signatureController;
+  final Rx<String>? signaturePad;
+
+  ShowRepairReport(
       {super.key,
       required this.reportData,
-      required this.additionalReportData});
+      required this.additionalReportData,
+      this.signatureController,
+      this.signaturePad});
 
+  final GlobalKey<SfSignaturePadState> signature = GlobalKey();
   @override
   Widget build(BuildContext context) {
     var data = reportData.first;
@@ -175,27 +187,79 @@ class ShowRepairReport extends StatelessWidget {
                 BoxInfo2(
                     title: 'Process staff', value: data.processStaff ?? ''),
                 space.kH,
-                if (data.signaturePad != '')
+                if (signaturePad != null && signatureController != null)
+                  Column(
+                    children: [
+                      Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          child: SfSignaturePad(
+                              key: signature,
+                              onDrawEnd: saveSignature,
+                              backgroundColor: Colors.white,
+                              strokeColor: Colors.black,
+                              minimumStrokeWidth: 1.0,
+                              maximumStrokeWidth: 4.0)),
+                      5.kH,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: clearSignature,
+                            child: Text(
+                              'Clear',
+                              style: TextStyleList.text20,
+                            ),
+                          ),
+                        ],
+                      ),
+                      5.kH,
+                      TextFieldWidget(
+                          text: 'ลงชื่อ', textSet: signatureController!),
+                    ],
+                  ),
+
+                if (signatureController == null && signaturePad == null)
                   Center(
                       child: Column(
                     children: [
+                      space.kH,
                       5.kH,
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,
                           child: Base64ImageWidget(data.signaturePad ?? '')),
-                      5.kH,
+                      12.kH,
+                      ShowTextFieldWidget(
+                          text: 'ลงชื่อ', hintText: data.signature ?? ''),
                     ],
                   )),
-                space.kH,
-                ShowTextFieldWidget(
-                    text: 'ลงชื่อ', hintText: data.signature ?? ''),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  void clearSignature() {
+    signature.currentState!.clear();
+  }
+
+  Future<void> saveSignature() async {
+    if (signature.currentState != null) {
+      try {
+        final data = await signature.currentState!.toImage(pixelRatio: 3.0);
+        final byteData = await data.toByteData(format: ImageByteFormat.png);
+        String base64String = base64Encode(byteData!.buffer.asUint8List());
+        signaturePad!.value = base64String;
+      } catch (e) {
+        print('Error saving signature: $e');
+      }
+    } else {
+      print('Signature pad not initialized');
+    }
   }
 
   String formatWCode(String? wCode) {

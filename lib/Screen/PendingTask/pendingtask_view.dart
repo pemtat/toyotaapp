@@ -6,16 +6,15 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/addnote_widget.dart';
 import 'package:toyotamobile/Widget/customerinfo_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/moredetail.widget.dart';
-import 'package:toyotamobile/Widget/noteItem_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
 
 class PendingTaskView extends StatelessWidget {
@@ -97,14 +96,16 @@ class PendingTaskView extends StatelessWidget {
                             ),
                             8.kH,
                             MoreDetail(
-                                file: file,
-                                description: issue.description,
-                                moreDetail: penddingTaskController.moreDetail,
-                                ediefile: false,
-                                summary: issue.summary,
-                                category: issue.category.name,
-                                relations: '-',
-                                severity: issue.severity.name),
+                              file: file,
+                              description: issue.description,
+                              moreDetail: penddingTaskController.moreDetail,
+                              ediefile: false,
+                              summary: issue.summary,
+                              category: issue.category.name,
+                              relations: '-',
+                              severity: issue.severity.name,
+                              errorCode: issue.errorCode,
+                            ),
                             MoreDetailArrow(
                                 moreDetail: penddingTaskController.moreDetail),
                             8.kH,
@@ -120,57 +121,33 @@ class PendingTaskView extends StatelessWidget {
                                       penddingTaskController.warrantyInfo.first;
                                   return WarrantyBox(
                                       model: warrantyInfo.model ?? '',
-                                      serial: warrantyInfo.serial ?? '',
-                                      status: warrantyInfo.warrantystatus == '1'
-                                          ? 1
-                                          : 0,
+                                      serial: warrantyInfo.serialNo ?? '',
+                                      status:
+                                          warrantyInfo.warranty == '1' ? 1 : 0,
                                       filePdf: filePdf);
                                 }
                               },
                             ),
                             8.kH,
                             CustomerInformation(
+                                context: context,
                                 contactName: issue.reporter.name,
                                 email: issue.reporter.email,
                                 phoneNumber: userData!.phoneNo ?? '-',
                                 location: customerInfo!.customerAddress ?? '-',
+                                companyName: customerInfo.customerName ?? '',
                                 onTap: () {}),
                             8.kH,
-                            if (penddingTaskController.notesFiles.isNotEmpty)
-                              BoxContainer(
-                                children: [
-                                  Obx(() {
-                                    if (penddingTaskController
-                                        .notesFiles.isEmpty) {
-                                      return Center(child: Container());
-                                    } else {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const TitleApp(text: 'Notes'),
-                                          8.kH,
-                                          ListView.builder(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemCount: penddingTaskController
-                                                .notesFiles.length,
-                                            itemBuilder: (context, index) {
-                                              final note =
-                                                  penddingTaskController
-                                                      .notesFiles[index];
-                                              return NoteItem(note: note);
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    }
-                                  }),
-                                ],
-                              ),
-                            if (penddingTaskController.notesFiles.isNotEmpty)
-                              8.kH,
+                            AddNote(
+                              notePic: penddingTaskController.notePic,
+                              notesFiles: penddingTaskController.notesFiles,
+                              notes: penddingTaskController.notes,
+                              addAttatchments:
+                                  penddingTaskController.addAttatchments,
+                              isPicking: penddingTaskController.isPicking,
+                              addNote: penddingTaskController.addNote,
+                            ),
+                            8.kH,
                             BoxContainer(
                               children: [
                                 JobInfo(

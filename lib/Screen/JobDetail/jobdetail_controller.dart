@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
@@ -11,7 +12,7 @@ import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
-import 'package:toyotamobile/Models/warrantybyid_model.dart';
+import 'package:toyotamobile/Models/warrantytruckbyid.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -27,18 +28,20 @@ class JobDetailController extends GetxController {
   var reportList = <RepairReportModel>[].obs;
   var pdfList = <Map<String, dynamic>>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
-  var warrantyInfo = <WarrantybyIdModel>[].obs;
+  var warrantyInfo = <WarrantyTruckbyId>[].obs;
   var notesFiles = <Notes>[].obs;
   var isPicking = false.obs;
   var issueData = [].obs;
   var customerInfo = <CustomerById>[].obs;
+  var signaturePad = ''.obs;
 
+  var saveCompletedtime = ''.obs;
   List<String> notePic = [];
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
   var userData = <UserById>[].obs;
-
+  var isSignatureEmpty = true.obs;
   var subJobs = <SubJobDetail>[].obs;
   var moreTicketDetail = false.obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
@@ -50,6 +53,7 @@ class JobDetailController extends GetxController {
   var imagesAfter = <Map<String, String>>[].obs;
   var savedDateStartTime = ''.obs;
   var savedDateEndTime = ''.obs;
+  final TextEditingController signatureController = TextEditingController();
 
   final HomeController jobController = Get.put(HomeController());
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
@@ -70,9 +74,11 @@ class JobDetailController extends GetxController {
       await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
       await fetchgetCustomerInfo(
           userData.first.users!.first.companyId ?? '', customerInfo);
-      savedDateStartTime.value = subJobs.first.timeStart ?? '';
-      savedDateEndTime.value = subJobs.first.timeEnd ?? '';
+      savedDateStartTime.value =
+          formatDateTimeCut(subJobs.first.timeStart ?? '');
+      savedDateEndTime.value = formatDateTimeCut(subJobs.first.timeEnd ?? '');
       if (imagesBefore.isNotEmpty) imagesBefore.clear();
+
       if (imagesAfter.isNotEmpty) imagesAfter.clear();
       try {
         if (subJobs.first.imageBefore != '' &&
@@ -159,8 +165,6 @@ class JobDetailController extends GetxController {
   void addNote(Rx<TextEditingController> textControllerRx) async {
     final String addNoteUrl = createNoteById(issueId);
 
-    fetchData(issueId.toString(), jobId.toString());
-
     String? token = await getToken();
     TextEditingController textController = textControllerRx.value;
 
@@ -177,7 +181,7 @@ class JobDetailController extends GetxController {
           {"name": name, "content": content}
         ]
       };
-      final response = await http.post(
+      http.post(
         Uri.parse(addNoteUrl),
         headers: {
           'Authorization': '$token',
@@ -185,6 +189,8 @@ class JobDetailController extends GetxController {
         },
         body: jsonEncode(body),
       );
+      fetchData(issueId.toString(), jobId.toString());
+      notes.value.clear();
     } else if (addAttatchments.isNotEmpty && noteText == '') {
       showMessage('โปรดเพิ่ม Note');
     } else {
@@ -192,7 +198,7 @@ class JobDetailController extends GetxController {
         "text": noteText,
         "view_state": {"name": "public"},
       };
-      final response = await http.post(
+      http.post(
         Uri.parse(addNoteUrl),
         headers: {
           'Authorization': '$token',
@@ -200,6 +206,8 @@ class JobDetailController extends GetxController {
         },
         body: jsonEncode(body),
       );
+      fetchData(issueId.toString(), jobId.toString());
+      notes.value.clear();
     }
   }
 
@@ -214,7 +222,14 @@ class JobDetailController extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
-            updateStatusSubjobs(jobId, comment.value.text, issueId.toString());
+            saveCurrentDateTime(saveCompletedtime);
+            updateStatusSubjobs(
+                jobId,
+                comment.value.text,
+                issueId.toString(),
+                saveCompletedtime.value,
+                signatureController.value.text,
+                signaturePad.value);
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
           },

@@ -13,7 +13,7 @@ import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
-import 'package:toyotamobile/Models/warrantybyid_model.dart';
+import 'package:toyotamobile/Models/warrantytruckbyid.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
@@ -26,7 +26,7 @@ class TicketDetailController extends GetxController {
   var reportList = <RepairReportModel>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
   var savedDateStartTime = ''.obs;
-  var warrantyInfo = <WarrantybyIdModel>[].obs;
+  var warrantyInfo = <WarrantyTruckbyId>[].obs;
   var customerInfo = <CustomerById>[].obs;
 
   var savedDateEndTime = ''.obs;

@@ -25,7 +25,7 @@ class WarrantyBox extends StatelessWidget {
         const TitleApp(text: "Machine Detail"),
         8.kH,
         BoxInfo(
-          title: "Name/Model",
+          title: "Model",
           value: model,
         ),
         3.kH,

@@ -150,10 +150,15 @@ class JobDetailViewPM extends StatelessWidget {
                               8.kH,
                               Obx(() => jobController.userData.isNotEmpty
                                   ? Intruction(
+                                      context: context,
                                       phoneNumber: jobController.userData.first
                                               .users!.first.phoneNo ??
                                           '',
-                                      location: 'Bangkok')
+                                      location: issue
+                                          .getCustomFieldValue("Customer No")
+                                          .toString(),
+                                      fetchLocation: 'yes',
+                                    )
                                   : Container()),
                               8.kH,
                               Obx(
@@ -345,6 +350,10 @@ class JobDetailViewPM extends StatelessWidget {
                                   Obx(() => jobController.reportList.isNotEmpty
                                       ? ShowBatteryReportWidget(
                                           reportData: jobController.reportList,
+                                          signatureController:
+                                              jobController.signatureController,
+                                          signaturePad:
+                                              jobController.signaturePad,
                                         )
                                       : Container())
                                 ],
@@ -388,6 +397,10 @@ class JobDetailViewPM extends StatelessWidget {
                                       ? ShowPreventiveReportWidget(
                                           reportData: jobController
                                               .reportPreventiveList,
+                                          signatureController: jobController
+                                              .signatureController2,
+                                          signaturePad:
+                                              jobController.signaturePad2,
                                         )
                                       : Container())
                                 ],

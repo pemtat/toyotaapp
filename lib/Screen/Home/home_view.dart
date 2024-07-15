@@ -2,6 +2,8 @@ import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
 import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
+import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_view.dart';
 import 'package:toyotamobile/Screen/Allticket/PMAssignedJobs/pmAssignedjobs_view.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_view.dart';
@@ -321,58 +323,36 @@ class HomeView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(paddingApp),
                       child: Obx(() {
-                        final filteredJobs = jobController.subJobAssigned
-                            .where((job) => job.status == '101')
-                            .toList();
+                        final List<dynamic> combinedData = [];
 
-                        if (filteredJobs.isEmpty) {
-                          return Center(
-                            child: Text(
-                              'No new jobs available.',
-                              style: TextStyleList.text3,
-                            ),
-                          );
-                        }
-
-                        return ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: filteredJobs.length,
-                          itemBuilder: (context, index) {
-                            final job = filteredJobs[index];
-                            return InkWell(
-                              onTap: () {
-                                Get.to(() => PendingTaskView(
-                                    ticketId: job.bugId ?? '',
-                                    jobId: job.id.toString()));
-                              },
-                              child: SubJobsTicket(
-                                  index: index,
-                                  jobsHome: jobController,
-                                  bugId: job.bugId ?? '',
-                                  reporter: job.reporterId ?? '',
-                                  job: job,
-                                  expandedIndex: jobController.expandedIndex,
-                                  jobController: subticketController,
-                                  status: stringToStatus(job.status ?? '')),
-                            );
-                          },
-                        );
-                      }),
-                    ),
-                    const JobTitle(
-                      headerText: 'PM Recently Jobs',
-                      buttonText: '',
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(paddingApp),
-                      child: Obx(() {
-                        final jobData = jobController.pmItems
+                        final pmJobData = jobController.pmItems
                             .where((job) =>
                                 stringToStatus(job.status ?? '') == 'pending')
-                            .toList();
+                            .toList()
+                            .take(3);
 
-                        if (jobData.isEmpty) {
+                        combinedData.addAll(pmJobData);
+
+                        final jobData = jobController.subJobAssigned
+                            .where((job) => job.status == '101')
+                            .toList()
+                            .take(3);
+                        combinedData.addAll(jobData);
+                        combinedData.sort((a, b) {
+                          final DateTime aDate = (a is PmModel)
+                              ? DateTime.parse(
+                                  a.dueDate ?? getFormattedDate(DateTime.now()))
+                              : DateTime.parse((a as SubJobAssgined).dueDate ??
+                                  getFormattedDate(DateTime.now()));
+                          final DateTime bDate = (b is PmModel)
+                              ? DateTime.parse(
+                                  b.dueDate ?? getFormattedDate(DateTime.now()))
+                              : DateTime.parse((b as SubJobAssgined).dueDate ??
+                                  getFormattedDate(DateTime.now()));
+                          return bDate.compareTo(aDate); // Sort descending
+                        });
+
+                        if (combinedData.isEmpty) {
                           return Center(
                             child: Text(
                               'No new jobs available.',
@@ -380,40 +360,66 @@ class HomeView extends StatelessWidget {
                             ),
                           );
                         }
+
                         return ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: 3,
+                          itemCount:
+                              combinedData.length > 3 ? 3 : combinedData.length,
                           itemBuilder: (context, index) {
-                            var job = jobData[index];
-                            return InkWell(
-                              onTap: () {
-                                if (stringToStatus(job.status ?? '') ==
-                                    'pending') {
-                                  Get.to(() => PendingTaskViewPM(
-                                      ticketId: job.id ?? ''));
-                                } else if (stringToStatus(job.status ?? '') ==
-                                    'confirmed') {
-                                  Get.to(() =>
-                                      JobDetailViewPM(ticketId: job.id ?? ''));
-                                } else if (stringToStatus(job.status ?? '') ==
-                                    'closed') {
-                                  Get.to(() => TicketPMDetailView(
-                                      ticketId: job.id ?? ''));
-                                }
-                              },
-                              child: PmItemWidget(
-                                job: job,
-                                expandedIndex: jobController.expandedIndex2,
-                                jobController: jobController,
-                                sidebar: SidebarColor.getColor(
-                                    stringToStatus(job.status ?? '')),
-                              ),
-                            );
+                            final item = combinedData[index];
+                            if (item is PmModel) {
+                              return InkWell(
+                                onTap: () {
+                                  if (stringToStatus(item.status ?? '') ==
+                                      'pending') {
+                                    Get.to(() => PendingTaskViewPM(
+                                        ticketId: item.id ?? ''));
+                                  } else if (stringToStatus(
+                                          item.status ?? '') ==
+                                      'confirmed') {
+                                    Get.to(() => JobDetailViewPM(
+                                        ticketId: item.id ?? ''));
+                                  } else if (stringToStatus(
+                                          item.status ?? '') ==
+                                      'closed') {
+                                    Get.to(() => TicketPMDetailView(
+                                        ticketId: item.id ?? ''));
+                                  }
+                                },
+                                child: PmItemWidget(
+                                  job: item,
+                                  expandedIndex: jobController.expandedIndex2,
+                                  jobController: jobController,
+                                  sidebar: SidebarColor.getColor(
+                                      stringToStatus(item.status ?? '')),
+                                ),
+                              );
+                            } else {
+                              // Display Job Item
+                              final job = item as SubJobAssgined;
+                              return InkWell(
+                                onTap: () {
+                                  Get.to(() => PendingTaskView(
+                                      ticketId: job.bugId ?? '',
+                                      jobId: job.id.toString()));
+                                },
+                                child: SubJobsTicket(
+                                    index: index,
+                                    jobsHome: jobController,
+                                    bugId: job.bugId ?? '',
+                                    reporter: job.reporterId ?? '',
+                                    job: job,
+                                    expandedIndex: jobController.expandedIndex,
+                                    jobController: subticketController,
+                                    status: stringToStatus(job.status ?? '')),
+                              );
+                            }
                           },
                         );
                       }),
                     ),
+
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6),

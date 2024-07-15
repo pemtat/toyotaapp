@@ -146,15 +146,17 @@ class TicketDetailView extends StatelessWidget {
                                         children: [
                                           8.kH,
                                           MoreDetail(
-                                              file: file,
-                                              description: issue.description,
-                                              moreDetail:
-                                                  ticketController.moreDetail,
-                                              ediefile: false,
-                                              summary: issue.summary,
-                                              category: issue.category.name,
-                                              relations: '-',
-                                              severity: issue.severity.name),
+                                            file: file,
+                                            description: issue.description,
+                                            moreDetail:
+                                                ticketController.moreDetail,
+                                            ediefile: false,
+                                            summary: issue.summary,
+                                            category: issue.category.name,
+                                            relations: '-',
+                                            severity: issue.severity.name,
+                                            errorCode: issue.errorCode,
+                                          ),
                                           MoreDetailArrow(
                                               moreDetail:
                                                   ticketController.moreDetail),
@@ -174,19 +176,20 @@ class TicketDetailView extends StatelessWidget {
                                                     model: warrantyInfo.model ??
                                                         '',
                                                     serial:
-                                                        warrantyInfo.serial ??
+                                                        warrantyInfo.serialNo ??
                                                             '',
-                                                    status: warrantyInfo
-                                                                .warrantystatus ==
-                                                            '1'
-                                                        ? 1
-                                                        : 0,
+                                                    status:
+                                                        warrantyInfo.warranty ==
+                                                                '1'
+                                                            ? 1
+                                                            : 0,
                                                     filePdf: filePdf);
                                               }
                                             },
                                           ),
                                           8.kH,
                                           CustomerInformation(
+                                              context: context,
                                               contactName: issue.reporter.name,
                                               email: issue.reporter.email,
                                               phoneNumber:
@@ -194,6 +197,9 @@ class TicketDetailView extends StatelessWidget {
                                               location: customerInfo!
                                                       .customerAddress ??
                                                   '-',
+                                              companyName:
+                                                  customerInfo.customerName ??
+                                                      '',
                                               onTap: () {}),
                                           8.kH,
                                           BoxContainer(
@@ -259,7 +265,7 @@ class TicketDetailView extends StatelessWidget {
                               BoxContainer(
                                 children: [
                                   Text(
-                                    "Start Time : ${subJob.timeStart ?? '- '}",
+                                    "Start Time : ${formatDateTimeCut(subJob.timeStart ?? '- ')}",
                                     style: TextStyleList.text6,
                                   ),
                                   8.kH,
@@ -277,7 +283,7 @@ class TicketDetailView extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "End Time : ${subJob.timeEnd ?? '-'}",
+                                        "End Time : ${formatDateTimeCut(subJob.timeEnd ?? '-')}",
                                         style: TextStyleList.text6,
                                       ),
                                       8.kH,
