@@ -133,16 +133,16 @@ class HomeView extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                'Last 90 days',
-                                style: TextStyleList.subtext3,
-                              ),
-                              const ArrowDown()
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     Text(
+                          //       'Last 90 days',
+                          //       style: TextStyleList.subtext3,
+                          //     ),
+                          //     const ArrowDown()
+                          //   ],
+                          // ),
                           Padding(
                             padding:
                                 EdgeInsets.symmetric(horizontal: marginInside),

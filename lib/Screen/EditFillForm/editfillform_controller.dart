@@ -183,9 +183,7 @@ class EditFillformController extends GetxController {
           'repair_result': repairResultController.repairResult.join(','),
           'process_staff': repairStaffController.repairStaff.join(','),
           'relation_id': relationId.value,
-          'save_time': saveCompletedtime.value,
-          'signature': signatureController.value.text,
-          'signature_pad': signaturePad.value
+          'bugid': ticketId.value
         };
         List<SparePartModel> allSpareParts =
             List.from(sparePartListController.sparePartList);

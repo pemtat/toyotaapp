@@ -85,8 +85,10 @@ class SignatureWidget extends StatelessWidget {
                   signatureController.value.text, signaturePad.value);
               await jobController.fetchData(
                   ticketId.toString(), jobId.toString());
+              Navigator.pop(context);
             } else {
               if (option == 'battery') {
+                Navigator.pop(context);
                 changeIssueSignaturePM(
                     jobId,
                     saveCompletedtime.value,
@@ -96,6 +98,7 @@ class SignatureWidget extends StatelessWidget {
                 await jobControllerPM.fetchData(jobId.toString());
                 await jobControllerPM.fetchData(jobId.toString());
               } else {
+                Navigator.pop(context);
                 changeIssueSignaturePM(
                     jobId,
                     saveCompletedtime.value,
@@ -105,7 +108,6 @@ class SignatureWidget extends StatelessWidget {
                 await jobControllerPM.fetchData(jobId.toString());
               }
             }
-            Navigator.pop(context);
           },
           child: Text(
             'บันทึก',

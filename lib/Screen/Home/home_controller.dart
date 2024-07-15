@@ -206,7 +206,7 @@ class HomeController extends GetxController {
             .toList();
         List<PmModel> closedPmItemsOver = itemList
             .where((pm) =>
-                stringToStatus(pm.status ?? '') == 'closed' &&
+                stringToStatus(pm.status ?? '') != 'closed' &&
                 DateTime.parse(pm.dueDate ?? '').isBefore(DateTime.now()))
             .toList();
 
@@ -216,6 +216,7 @@ class HomeController extends GetxController {
               .map((pm) => pm.serviceZoneCode!)
               .toSet(),
         );
+
         overdueJobs.value = overdueJobs.value + closedPmItemsOver.length;
         closedJobs.value = closedJobs.value + closedPmItems.length;
         pmCompletedList.value = closedPmItems.length;

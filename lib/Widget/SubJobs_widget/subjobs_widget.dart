@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/openmap.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
@@ -87,8 +88,13 @@ class SubJobsTicket extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
+                    job.summaryBug ?? '',
+                    style: TextStyleList.detail2,
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
                     job.description ?? '',
-                    style: TextStyleList.text15,
+                    style: TextStyleList.text2,
                   ),
                   const SizedBox(height: 2),
                   Text(
@@ -101,7 +107,7 @@ class SubJobsTicket extends StatelessWidget {
                       const Icon(Icons.calendar_month_outlined),
                       const SizedBox(width: 5),
                       Text(
-                        '${job.dueDate ?? 'ยังไม่มีกำหนดการ'}',
+                        '${formatDateTime(job.dueDate)}',
                         style: TextStyleList.subtext1,
                       ),
                     ],

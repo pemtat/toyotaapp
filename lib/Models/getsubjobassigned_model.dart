@@ -27,6 +27,7 @@ class SubJobAssgined {
   String? contentAfter;
   String? location;
   String? serialNo;
+  String? summaryBug;
 
   SubJobAssgined(
       {this.id,
@@ -56,7 +57,8 @@ class SubJobAssgined {
       this.imageAfter,
       this.contentAfter,
       this.location,
-      this.serialNo});
+      this.serialNo,
+      this.summaryBug});
 
   SubJobAssgined.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -85,6 +87,7 @@ class SubJobAssgined {
     imageBefore = json['image_before'];
     imageAfter = json['image_after'];
     contentAfter = json['content_after'];
+    summaryBug = json['summary_bug'];
   }
 
   Map<String, dynamic> toJson() {
@@ -115,6 +118,7 @@ class SubJobAssgined {
     data['image_before'] = imageBefore;
     data['image_after'] = imageAfter;
     data['content_after'] = contentAfter;
+    data['summary_bug'] = summaryBug;
     return data;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -120,7 +121,7 @@ class PMJobInfo extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                dateTime,
+                formatDateTime(dateTime),
                 style: TextStyleList.subtext1,
               ),
               const SizedBox(height: 4),
@@ -316,7 +317,7 @@ class JobInfo extends StatelessWidget {
                 ),
                 4.kH,
                 Text(
-                  '$dateTime\nReported by $reporter',
+                  '${formatDateTime(dateTime)}\nReported by $reporter',
                   style: TextStyleList.subtext1,
                 ),
               ],

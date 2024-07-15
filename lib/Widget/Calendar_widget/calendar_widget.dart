@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
@@ -73,6 +74,8 @@ class CalendarItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        5.kH,
+                        if (event['type'] == EventType.Job) 5.kH,
                         Row(
                           children: [
                             event['type'] == EventType.Job
@@ -86,8 +89,8 @@ class CalendarItem extends StatelessWidget {
                                   ),
                             const SizedBox(width: 10),
                             const Spacer(),
-                            Obx(
-                              () => Padding(
+                            if (event['type'] == EventType.PM)
+                              Padding(
                                 padding: const EdgeInsets.all(6.0),
                                 child: InkWell(
                                   onTap: () {
@@ -107,7 +110,6 @@ class CalendarItem extends StatelessWidget {
                                       : const ArrowDown(),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                         if (event['type'] == EventType.PM)
@@ -122,7 +124,25 @@ class CalendarItem extends StatelessWidget {
                           ),
                         if (event['type'] == EventType.Job)
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              3.kH,
+                              Text(
+                                event['description'] ?? '',
+                                style: TextStyleList.detail2,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                event['task'] ?? '',
+                                style: TextStyleList.text2,
+                              ),
+                              const SizedBox(height: 3),
+                            ],
+                          ),
+                        if (event['type'] == EventType.Job)
+                          Column(
+                            children: [
+                              3.kH,
                               Text(
                                 'Reported by ${event['customerName']}',
                                 style: TextStyleList.subtext1,
@@ -130,6 +150,21 @@ class CalendarItem extends StatelessWidget {
                               const SizedBox(height: 5),
                             ],
                           ),
+                        if (event['bugid'] != '') 3.kH,
+                        if (event['date'] != '')
+                          Row(
+                            children: [
+                              const SizedBox(height: 2),
+                              const Icon(Icons.calendar_month_outlined),
+                              const SizedBox(width: 5),
+                              Text(
+                                '${formatDateTime(event['date'])}',
+                                style: TextStyleList.subtext1,
+                              ),
+                              const SizedBox(height: 2),
+                            ],
+                          ),
+                        const SizedBox(height: 4),
                         event['type'] == EventType.Job
                             ? Row(
                                 children: [
@@ -206,7 +241,7 @@ class CalendarItem extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 3),
                         if (event['bugid'] != '')
                           FutureBuilder<Map<String, String>>(
                               future: fetchTicketById(event['bugid']),
@@ -237,21 +272,7 @@ class CalendarItem extends StatelessWidget {
                                   ],
                                 );
                               }),
-                        if (event['bugid'] != '') 3.kH,
-                        if (event['date'] != '')
-                          Row(
-                            children: [
-                              const SizedBox(height: 2),
-                              const Icon(Icons.calendar_month_outlined),
-                              const SizedBox(width: 5),
-                              Text(
-                                '${event['date'] ?? 'ยังไม่มีกำหนดการ'}',
-                                style: TextStyleList.subtext1,
-                              ),
-                              const SizedBox(height: 2),
-                            ],
-                          ),
-                        if (event['description'] != '')
+                        if (event['type'] == EventType.PM)
                           Row(
                             children: [
                               const Icon(Icons.person_search_sharp),
@@ -264,52 +285,53 @@ class CalendarItem extends StatelessWidget {
                             ],
                           ),
                         10.kH,
-                        Obx(
-                          () => expandedIndex.value &&
-                                  expandedTicketId.value == event['jobid']
-                              ? Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 0.0, right: 8, bottom: 8),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: 0.5,
-                                        color: const Color(0xFFEAEAEA),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Container(
-                                        padding: const EdgeInsets.all(10),
-                                        decoration: Decoration2(),
-                                        child: Column(
-                                          children: [
-                                            BoxInfo(
-                                              title: "Model",
-                                              value: warrantyInfo.first.model,
-                                            ),
-                                            const SizedBox(height: 3),
-                                            BoxInfo(
-                                              title: "Serial Number",
-                                              value: event['serialNo'],
-                                            ),
-                                            const SizedBox(height: 3),
-                                            // BoxInfo(
-                                            //   title: "Warranty Status",
-                                            //   value: '',
-                                            //   trailing: CheckStatus(
-                                            //     status: warrantyInfo
-                                            //         .first.warrantyStatus,
-                                            //   ),
-                                            // ),
-                                          ],
+                        if (event['type'] == EventType.PM)
+                          Obx(
+                            () => expandedIndex.value &&
+                                    expandedTicketId.value == event['jobid']
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 0.0, right: 8, bottom: 8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 0.5,
+                                          color: const Color(0xFFEAEAEA),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : const SizedBox(),
-                        ),
+                                        const SizedBox(height: 8),
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: Decoration2(),
+                                          child: Column(
+                                            children: [
+                                              BoxInfo(
+                                                title: "Model",
+                                                value: warrantyInfo.first.model,
+                                              ),
+                                              const SizedBox(height: 3),
+                                              BoxInfo(
+                                                title: "Serial Number",
+                                                value: event['serialNo'],
+                                              ),
+                                              const SizedBox(height: 3),
+                                              // BoxInfo(
+                                              //   title: "Warranty Status",
+                                              //   value: '',
+                                              //   trailing: CheckStatus(
+                                              //     status: warrantyInfo
+                                              //         .first.warrantyStatus,
+                                              //   ),
+                                              // ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : const SizedBox(),
+                          ),
                       ],
                     ),
                   ),

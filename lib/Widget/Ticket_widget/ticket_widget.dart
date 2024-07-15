@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
@@ -88,7 +89,9 @@ class PmItemWidget extends StatelessWidget {
                     const Icon(Icons.calendar_month_outlined),
                     const SizedBox(width: 5),
                     Text(
-                      job.dueDate,
+                      formatDateTime(formatDateTimeCut(
+                        job.dueDate,
+                      )),
                       style: TextStyleList.subtext1,
                     ),
                   ],

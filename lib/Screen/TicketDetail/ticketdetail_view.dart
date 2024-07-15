@@ -201,47 +201,43 @@ class TicketDetailView extends StatelessWidget {
                                                   customerInfo.customerName ??
                                                       '',
                                               onTap: () {}),
-                                          8.kH,
-                                          BoxContainer(
-                                            children: [
-                                              Obx(() {
-                                                if (ticketController
-                                                    .notesFiles.isEmpty) {
-                                                  return Center(
-                                                      child: Container());
-                                                } else {
-                                                  return Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      const TitleApp(
-                                                          text: 'Notes'),
-                                                      8.kH,
-                                                      ListView.builder(
-                                                        physics:
-                                                            const NeverScrollableScrollPhysics(),
-                                                        shrinkWrap: true,
-                                                        itemCount:
+                                          if (ticketController
+                                              .notesFiles.isNotEmpty)
+                                            8.kH,
+                                          if (ticketController
+                                              .notesFiles.isNotEmpty)
+                                            BoxContainer(
+                                              children: [
+                                                8.kH,
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const TitleApp(
+                                                        text: 'Notes'),
+                                                    8.kH,
+                                                    ListView.builder(
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      shrinkWrap: true,
+                                                      itemCount:
+                                                          ticketController
+                                                              .notesFiles
+                                                              .length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        final note =
                                                             ticketController
-                                                                .notesFiles
-                                                                .length,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          final note =
-                                                              ticketController
-                                                                      .notesFiles[
-                                                                  index];
-                                                          return NoteItem(
-                                                              note: note);
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                }
-                                              }),
-                                            ],
-                                          ),
+                                                                    .notesFiles[
+                                                                index];
+                                                        return NoteItem(
+                                                            note: note);
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                         ],
                                       )
                                     : Container(),

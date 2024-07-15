@@ -75,6 +75,11 @@ class TextStyleList {
     fontWeight: FontWeight.w500,
     color: const Color.fromARGB(140, 112, 112, 112),
   );
+  static final TextStyle detail2 = GoogleFonts.kanit(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    color: black4,
+  );
 
 //14
   static final TextStyle text1 = GoogleFonts.kanit(

@@ -156,7 +156,7 @@ class CalendarController extends GetxController {
           "date": jobDateString,
           'warrantyStatus': '',
           'reporterId': job.reporterId,
-          "description": '',
+          "description": job.summaryBug,
           "location": 'Bangkok',
           "serialNo": warrantyInfo.first.serialNo,
           "type": EventType.Job,
