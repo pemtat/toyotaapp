@@ -28,16 +28,15 @@ class JobDetailControllerPM extends GetxController {
   final comment = TextEditingController().obs;
   var reportList = <BatteryReportModel>[].obs;
   var pmInfo = <PMJobInfoModel>[].obs;
-  var signaturePad = ''.obs;
-  final TextEditingController signatureController = TextEditingController();
+
   var reportPreventiveList = <PreventivereportModel>[].obs;
   var customerInfo = <CustomerById>[].obs;
   var saveCompletedtime = ''.obs;
   var isPicking = false.obs;
   var issueData = [].obs;
-  var signaturePad2 = ''.obs;
+
   var saveCompletedtime2 = ''.obs;
-  final TextEditingController signatureController2 = TextEditingController();
+
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
@@ -224,16 +223,7 @@ class JobDetailControllerPM extends GetxController {
           rightButton: right,
           onRightButtonPressed: () {
             saveCurrentDateTime(saveCompletedtime);
-            changeIssueStatusNotePM(
-                jobId,
-                103,
-                comment.value.text,
-                saveCompletedtime.value,
-                signatureController.value.text,
-                signaturePad.value,
-                saveCompletedtime2.value,
-                signatureController2.value.text,
-                signaturePad2.value);
+            changeIssueStatusPM(jobId, 103, comment.value.text);
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
           },

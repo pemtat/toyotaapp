@@ -17,6 +17,7 @@ import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/intruction_widget.dart';
 import 'package:toyotamobile/Widget/moredetail.widget.dart';
+import 'package:toyotamobile/Widget/signature_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
@@ -379,14 +380,37 @@ class JobDetailView extends StatelessWidget {
                                               .reportList.isNotEmpty ||
                                           jobController
                                               .additionalReportList.isNotEmpty
-                                      ? ShowRepairReport(
-                                          reportData: jobController.reportList,
-                                          additionalReportData: jobController
-                                              .additionalReportList,
-                                          signaturePad:
-                                              jobController.signaturePad,
-                                          signatureController:
-                                              jobController.signatureController,
+                                      ? Column(
+                                          children: [
+                                            ShowRepairReport(
+                                              reportData:
+                                                  jobController.reportList,
+                                              additionalReportData:
+                                                  jobController
+                                                      .additionalReportList,
+                                            ),
+                                            if (jobController.reportList.first
+                                                        .signature ==
+                                                    '' &&
+                                                jobController.reportList.first
+                                                        .signaturePad ==
+                                                    '')
+                                              ButtonRed(
+                                                title: 'บันทึกลายเซ็น',
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        SignatureWidget(
+                                                      jobId: jobId.toString(),
+                                                      ticketId:
+                                                          ticketId.toString(),
+                                                    ),
+                                                  );
+                                                },
+                                              )
+                                          ],
                                         )
                                       : Container()),
                                 ],

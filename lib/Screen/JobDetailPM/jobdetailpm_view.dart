@@ -17,6 +17,7 @@ import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/intruction_widget.dart';
+import 'package:toyotamobile/Widget/signature_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
@@ -348,12 +349,40 @@ class JobDetailViewPM extends StatelessWidget {
                                     style: TextStyleList.text16,
                                   ),
                                   Obx(() => jobController.reportList.isNotEmpty
-                                      ? ShowBatteryReportWidget(
-                                          reportData: jobController.reportList,
-                                          signatureController:
-                                              jobController.signatureController,
-                                          signaturePad:
-                                              jobController.signaturePad,
+                                      ? Column(
+                                          children: [
+                                            ShowBatteryReportWidget(
+                                              reportData:
+                                                  jobController.reportList,
+                                            ),
+                                            if (jobController
+                                                        .reportList
+                                                        .first
+                                                        .btrMaintenance!
+                                                        .signature ==
+                                                    '' &&
+                                                jobController
+                                                        .reportList
+                                                        .first
+                                                        .btrMaintenance!
+                                                        .signaturePad ==
+                                                    '')
+                                              ButtonRed(
+                                                title: 'บันทึกลายเซ็น',
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        SignatureWidget(
+                                                      jobId:
+                                                          ticketId.toString(),
+                                                      option: 'battery',
+                                                    ),
+                                                  );
+                                                },
+                                              )
+                                          ],
                                         )
                                       : Container())
                                 ],
@@ -394,13 +423,40 @@ class JobDetailViewPM extends StatelessWidget {
                                   ),
                                   Obx(() => jobController.reportPreventiveList
                                           .first.maintenanceRecords!.isNotEmpty
-                                      ? ShowPreventiveReportWidget(
-                                          reportData: jobController
-                                              .reportPreventiveList,
-                                          signatureController: jobController
-                                              .signatureController2,
-                                          signaturePad:
-                                              jobController.signaturePad2,
+                                      ? Column(
+                                          children: [
+                                            ShowPreventiveReportWidget(
+                                              reportData: jobController
+                                                  .reportPreventiveList,
+                                            ),
+                                            if (jobController
+                                                        .reportPreventiveList
+                                                        .first
+                                                        .pvtMaintenance!
+                                                        .signature ==
+                                                    '' &&
+                                                jobController
+                                                        .reportPreventiveList
+                                                        .first
+                                                        .pvtMaintenance!
+                                                        .signaturePad ==
+                                                    '')
+                                              ButtonRed(
+                                                title: 'บันทึกลายเซ็น',
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        SignatureWidget(
+                                                      jobId:
+                                                          ticketId.toString(),
+                                                      option: 'preventive',
+                                                    ),
+                                                  );
+                                                },
+                                              )
+                                          ],
                                         )
                                       : Container())
                                 ],

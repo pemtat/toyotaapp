@@ -33,7 +33,6 @@ class JobDetailController extends GetxController {
   var isPicking = false.obs;
   var issueData = [].obs;
   var customerInfo = <CustomerById>[].obs;
-  var signaturePad = ''.obs;
 
   var saveCompletedtime = ''.obs;
   List<String> notePic = [];
@@ -53,7 +52,6 @@ class JobDetailController extends GetxController {
   var imagesAfter = <Map<String, String>>[].obs;
   var savedDateStartTime = ''.obs;
   var savedDateEndTime = ''.obs;
-  final TextEditingController signatureController = TextEditingController();
 
   final HomeController jobController = Get.put(HomeController());
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
@@ -223,13 +221,7 @@ class JobDetailController extends GetxController {
           rightButton: right,
           onRightButtonPressed: () {
             saveCurrentDateTime(saveCompletedtime);
-            updateStatusSubjobs(
-                jobId,
-                comment.value.text,
-                issueId.toString(),
-                saveCompletedtime.value,
-                signatureController.value.text,
-                signaturePad.value);
+            updateStatusSubjobs(jobId, comment.value.text, issueId.toString());
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
           },

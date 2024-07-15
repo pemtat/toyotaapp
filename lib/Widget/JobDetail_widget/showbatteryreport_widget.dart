@@ -18,15 +18,11 @@ import 'package:toyotamobile/Widget/title_widget.dart';
 
 class ShowBatteryReportWidget extends StatelessWidget {
   final RxList<BatteryReportModel> reportData;
-  final TextEditingController? signatureController;
-  final Rx<String>? signaturePad;
-  ShowBatteryReportWidget(
-      {super.key,
-      required this.reportData,
-      this.signatureController,
-      this.signaturePad});
+  ShowBatteryReportWidget({
+    super.key,
+    required this.reportData,
+  });
 
-  final GlobalKey<SfSignaturePadState> signature = GlobalKey();
   @override
   Widget build(BuildContext context) {
     var data = reportData.first;
@@ -289,42 +285,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                             '-',
                             style: TextStyleList.text3,
                           )),
-                if (signaturePad != null && signatureController != null)
-                  Column(
-                    children: [
-                      10.kH,
-                      Container(
-                          height: 200,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey)),
-                          child: SfSignaturePad(
-                              key: signature,
-                              onDrawEnd: saveSignature,
-                              backgroundColor: Colors.white,
-                              strokeColor: Colors.black,
-                              minimumStrokeWidth: 1.0,
-                              maximumStrokeWidth: 4.0)),
-                      5.kH,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          InkWell(
-                            onTap: clearSignature,
-                            child: Text(
-                              'Clear',
-                              style: TextStyleList.text20,
-                            ),
-                          ),
-                        ],
-                      ),
-                      5.kH,
-                      TextFieldWidget(
-                          text: 'ลงชื่อ', textSet: signatureController!),
-                    ],
-                  ),
-                if (info1.signaturePad != '' &&
-                    signaturePad == null &&
-                    signatureController == null)
+                if (info1.signaturePad != '')
                   Center(
                       child: Column(
                     children: [
@@ -337,9 +298,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       5.kH,
                     ],
                   )),
-                if (info1.signature != '' &&
-                    signaturePad == null &&
-                    signatureController == null)
+                if (info1.signature != '')
                   Column(
                     children: [
                       space.kH,
@@ -353,25 +312,6 @@ class ShowBatteryReportWidget extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  void clearSignature() {
-    signature.currentState!.clear();
-  }
-
-  Future<void> saveSignature() async {
-    if (signature.currentState != null) {
-      try {
-        final data = await signature.currentState!.toImage(pixelRatio: 3.0);
-        final byteData = await data.toByteData(format: ImageByteFormat.png);
-        String base64String = base64Encode(byteData!.buffer.asUint8List());
-        signaturePad!.value = base64String;
-      } catch (e) {
-        print('Error saving signature: $e');
-      }
-    } else {
-      print('Signature pad not initialized');
-    }
   }
 
   String formatWCode(String? wCode) {

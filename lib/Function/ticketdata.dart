@@ -611,45 +611,22 @@ void changeIssueStatusPM(
   }
 }
 
-void changeIssueStatusNotePM(
-    String issueId,
-    int status,
-    String comment,
-    String saveCompletedtime,
-    String signature,
-    String signaturePad,
-    String saveCompletedtime2,
-    String signature2,
-    String signaturePad2) async {
-  final String updateStatus = updateJobStatusByIdPM();
+void changeIssueSignaturePM(
+  String issueId,
+  String saveCompletedtime,
+  String signature,
+  String signaturePad,
+  String option,
+) async {
   try {
     String? token = await getToken();
     Map<String, dynamic> body = {};
-    if (comment != '-') {
-      body = {"job_id": issueId, "status": status, "comment": comment};
-    } else {
-      body = {"job_id": issueId, "status": status};
-    }
-    final response = await http.post(
-      Uri.parse(updateStatus),
-      headers: {
-        'Authorization': '$token',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(body),
-    );
-    if (response.statusCode == 201) {
-      Map<String, dynamic> body2 = {
+    if (option == 'battery') {
+      body = {
         "job_id": issueId,
         "signature": signature,
         "signature_pad": signaturePad,
         "save_time": saveCompletedtime
-      };
-      Map<String, dynamic> body3 = {
-        "job_id": issueId,
-        "signature": signature2,
-        "signature_pad": signaturePad2,
-        "save_time": 0
       };
 
       final response2 = await http.post(
@@ -658,30 +635,33 @@ void changeIssueStatusNotePM(
           'Authorization': '$token',
           'Content-Type': 'application/json',
         },
-        body: jsonEncode(body2),
+        body: jsonEncode(body),
       );
-
       if (response2.statusCode == 200) {
         print('update succesful');
       } else {
         return;
       }
-      final response3 = await http.post(
+    } else {
+      body = {
+        "job_id": issueId,
+        "signature": signature,
+        "signature_pad": signaturePad,
+        "save_time": 0
+      };
+      final response2 = await http.post(
         Uri.parse(updatePreventiveSignature()),
         headers: {
           'Authorization': '$token',
           'Content-Type': 'application/json',
         },
-        body: jsonEncode(body3),
+        body: jsonEncode(body),
       );
-
-      if (response3.statusCode == 200) {
+      if (response2.statusCode == 200) {
         print('update succesful');
       } else {
         return;
       }
-    } else {
-      print(response.statusCode);
     }
   } catch (e) {
     print(e);
@@ -716,7 +696,6 @@ void saveCurrentDateTimeToSubJob(
 
     if (response.statusCode == 200) {
       print('Update time done');
-      jobDetailController.fetchData(ticketId, jobId);
     } else {
       print('Failed to update time: ${response.statusCode}');
       print('Response body: ${response.body}');
@@ -762,8 +741,11 @@ void saveCurrentDateTimeToPMJob(
   }
 }
 
-void updateStatusSubjobs(String jobId, String comment, String ticketId,
-    String saveCompletedtime, String signature, String signaturePad) async {
+void updateStatusSubjobs(
+  String jobId,
+  String comment,
+  String ticketId,
+) async {
   try {
     String? token = await getToken();
 
@@ -779,27 +761,39 @@ void updateStatusSubjobs(String jobId, String comment, String ticketId,
     );
 
     if (response.statusCode == 200) {
-      Map<String, dynamic> body2 = {
-        'save_time': saveCompletedtime,
-        'signature_pad': signaturePad,
-        'signature': signature
-      };
-      final response2 = await http.put(
-        Uri.parse(updateReportById(jobId)),
-        headers: {
-          'Authorization': '$token',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(body2),
-      );
-
-      if (response2.statusCode == 200) {
-        print('Update status done');
-        jobDetailController.fetchData(ticketId, jobId);
-      } else {
-        return;
-      }
+      print('Update status done');
+      jobDetailController.fetchData(ticketId, jobId);
     } else {}
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+void updateSignatureJob(String jobId, String ticketId, String saveCompletedtime,
+    String signature, String signaturePad) async {
+  try {
+    String? token = await getToken();
+
+    Map<String, dynamic> body = {
+      'save_time': saveCompletedtime,
+      'signature_pad': signaturePad,
+      'signature': signature
+    };
+    final response = await http.put(
+      Uri.parse(updateReportById(jobId)),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Update status done');
+      jobDetailController.fetchData(ticketId, jobId);
+    } else {
+      return;
+    }
   } catch (e) {
     print('Error: $e');
   }

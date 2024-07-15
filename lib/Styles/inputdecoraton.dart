@@ -62,6 +62,10 @@ class InputDecoration2 extends InputDecoration {
     super.labelText,
   }) : super(
           labelStyle: TextStyleList.text11,
+          suffixIcon: const Icon(
+            Icons.search_sharp,
+            color: Colors.grey,
+          ),
           fillColor: black5,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),

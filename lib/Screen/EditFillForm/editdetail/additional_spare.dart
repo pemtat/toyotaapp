@@ -43,11 +43,12 @@ class AdditSparepartList extends GetxController {
             TextField(
                 controller: searchPartNumber.value,
                 onChanged: (String value) {
-                  if (value == '') {
+                  if (value.length >= 4) {
+                    fetchProducts(
+                        searchPartNumber.value.text, isLoading, products);
+                  } else {
                     products.clear();
                   }
-                  fetchProducts(
-                      searchPartNumber.value.text, isLoading, products);
                 },
                 decoration: InputDecoration2(labelText: 'Enter Part Number')),
             Obx(() {
@@ -60,7 +61,7 @@ class AdditSparepartList extends GetxController {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: products.length,
+                itemCount: products.length > 20 ? 20 : products.length,
                 itemBuilder: (context, index) {
                   final product = products[index];
                   return ListTile(
@@ -219,11 +220,12 @@ class AdditSparepartList extends GetxController {
             TextField(
                 controller: searchPartNumber.value,
                 onChanged: (String value) {
-                  if (value == '') {
+                  if (value.length >= 4) {
+                    fetchProducts(
+                        searchPartNumber.value.text, isLoading, products);
+                  } else {
                     products.clear();
                   }
-                  fetchProducts(
-                      searchPartNumber.value.text, isLoading, products);
                 },
                 decoration: InputDecoration2(labelText: 'Enter Part Number')),
             Obx(() {
@@ -236,7 +238,7 @@ class AdditSparepartList extends GetxController {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: products.length,
+                itemCount: products.length > 20 ? 20 : products.length,
                 itemBuilder: (context, index) {
                   final product = products[index];
                   return ListTile(
