@@ -190,7 +190,7 @@ class TicketView extends StatelessWidget {
                           Expanded(
                             child: Obx(() {
                               final filteredJobs =
-                                  jobController.pmItemsPage.where((job) {
+                                  jobController.pmItems.where((job) {
                                 final searchQueryMatch = job.customerName!
                                         .contains(ticketController
                                             .searchQuery.value) ||
@@ -228,7 +228,7 @@ class TicketView extends StatelessWidget {
                                 ));
                               }
                               return ListView.builder(
-                                controller: ticketController.scrollController,
+                                // controller: ticketController.scrollController,
                                 shrinkWrap: true,
                                 itemCount: filteredJobs.length,
                                 itemBuilder: (context, index) {

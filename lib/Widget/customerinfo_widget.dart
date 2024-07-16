@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/openmap.dart';
+import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -44,37 +45,58 @@ class CustomerInformation extends StatelessWidget {
           title: "Phone number",
           value: phoneNumber,
         ),
-        BoxInfo(
-          title: "Location",
-          value: location,
-        ),
         5.kH,
-        Row(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Spacer(),
-            GoogleMapButton(
-              onTap: () async {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                );
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    'Location',
+                    style: TextStyleList.text3,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    location,
+                    style: TextStyleList.text3,
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Align(
+              alignment: Alignment.centerRight,
+              child: GoogleMapButton(
+                onTap: () async {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  );
 
-                try {
-                  await openGoogleMaps(location);
-                } catch (e) {
-                  print(e);
-                } finally {
-                  Navigator.of(context).pop();
-                }
-              },
+                  try {
+                    await openGoogleMaps(location);
+                  } catch (e) {
+                    print(e);
+                  } finally {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
             ),
           ],
-        ),
+        )
       ],
     );
   }

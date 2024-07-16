@@ -16,19 +16,19 @@ class TicketController extends GetxController {
   final ScrollController scrollController = ScrollController();
   var loading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    scrollController.addListener(_onScroll);
-    jobController.fetchPMdataPage(1);
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   scrollController.addListener(_onScroll);
+  //   jobController.fetchPMdataPage(1);
+  // }
 
-  @override
-  void dispose() {
-    scrollController.removeListener(_onScroll);
-    scrollController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   scrollController.removeListener(_onScroll);
+  //   scrollController.dispose();
+  //   super.dispose();
+  // }
 
   void showAcceptDialog(
       BuildContext context, String title, String left, String right) {
