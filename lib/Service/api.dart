@@ -44,6 +44,10 @@ String createBatteryReport() {
   return '$url/api/rest/pm_jobs/create_btr_maintenance';
 }
 
+String updateBatteryReport() {
+  return '$url/api/rest/pm_jobs/update_btr_maintenance';
+}
+
 String createPreventiveReport() {
   return '$url/api/rest/pm_jobs/create_pvt_maintenance';
 }

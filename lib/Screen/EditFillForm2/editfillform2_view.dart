@@ -336,40 +336,7 @@ class EditFillFormView2 extends StatelessWidget {
                         : const SizedBox()
                   ],
                 )),
-            8.kH,
-            BoxContainer(
-              children: [
-                Container(
-                    height: 200,
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.grey)),
-                    child: SfSignaturePad(
-                        key: fillformController2.signature,
-                        onDrawEnd: fillformController2.saveSignature,
-                        backgroundColor: Colors.white,
-                        strokeColor: Colors.black,
-                        minimumStrokeWidth: 1.0,
-                        maximumStrokeWidth: 4.0)),
-                10.kH,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: fillformController2.clearSignature,
-                      child: Text(
-                        'Clear',
-                        style: TextStyleList.text20,
-                      ),
-                    ),
-                  ],
-                ),
-                8.kH,
-                TextFieldWidget(
-                    text: 'ลงชื่อ',
-                    textSet: fillformController2.signatureController),
-              ],
-            ),
-            130.kH,
+            100.kH,
           ],
         ),
       ),

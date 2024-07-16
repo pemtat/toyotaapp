@@ -48,6 +48,7 @@ class JobDetailView extends StatelessWidget {
             Stack(
               children: [
                 AppBar(
+                  centerTitle: false,
                   backgroundColor: white3,
                   title: Obx(() {
                     if (jobController.subJobs.isEmpty) {

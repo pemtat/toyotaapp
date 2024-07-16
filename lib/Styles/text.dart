@@ -214,4 +214,9 @@ class TextStyleList {
     fontWeight: FontWeight.w400,
     color: black6,
   );
+  static final TextStyle subdetail2 = GoogleFonts.kanit(
+    fontSize: 10,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
 }

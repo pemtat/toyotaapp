@@ -180,7 +180,7 @@ class HomeController extends GetxController {
     String? token = prefs.getString('token');
     try {
       final response = await http.get(
-        Uri.parse(getPMticketById(userController.userInfo.first.resourceNo)),
+        Uri.parse(getPMticketById(userController.userInfo.first.id.toString())),
         headers: {
           'Authorization': '$token',
         },
@@ -235,7 +235,8 @@ class HomeController extends GetxController {
     String? token = prefs.getString('token');
     try {
       final response = await http.get(
-        Uri.parse(getPmJobPage(userController.userInfo.first.resourceNo, page)),
+        Uri.parse(
+            getPmJobPage(userController.userInfo.first.id.toString(), page)),
         headers: {
           'Authorization': '$token',
         },

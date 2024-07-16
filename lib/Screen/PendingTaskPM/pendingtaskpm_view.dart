@@ -48,6 +48,7 @@ class PendingTaskViewPM extends StatelessWidget {
             Stack(
               children: [
                 AppBar(
+                  centerTitle: false,
                   backgroundColor: white3,
                   title: Obx(() {
                     if (jobController.issueData.isEmpty) {
@@ -204,8 +205,8 @@ class PendingTaskViewPM extends StatelessWidget {
                                       if (filteredJobs.isEmpty) {
                                         return Center(
                                             child: Text(
-                                          'No jobs available.',
-                                          style: TextStyleList.subtitle2,
+                                          'No jobs history',
+                                          style: TextStyleList.text1,
                                         ));
                                       }
                                       filteredJobs.sort((a, b) => b.dueDate!

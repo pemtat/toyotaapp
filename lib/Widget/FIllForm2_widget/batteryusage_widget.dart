@@ -44,7 +44,7 @@ class BatteryUsageWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Battery Lifespan',
+                  'Shift Time',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -53,7 +53,7 @@ class BatteryUsageWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'Voltage',
+                  'Hrs. per shift',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -62,7 +62,7 @@ class BatteryUsageWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'Capacity',
+                  'Ratio',
                   style: TextStyleList.subtext1,
                 ),
                 Text(

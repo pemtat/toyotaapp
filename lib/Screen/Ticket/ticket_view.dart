@@ -227,7 +227,6 @@ class TicketView extends StatelessWidget {
                                   style: TextStyleList.subtitle2,
                                 ));
                               }
-
                               return ListView.builder(
                                 controller: ticketController.scrollController,
                                 shrinkWrap: true,

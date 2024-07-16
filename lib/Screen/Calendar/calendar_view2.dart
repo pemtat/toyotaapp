@@ -60,10 +60,13 @@ class CalendarView2 extends StatelessWidget {
       ),
       body: Obx(
         () => Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(0.0),
           child: Container(
             decoration: const BoxDecoration(
-                border: Border(bottom: BorderSide(color: black4))),
+                border: Border(
+                    bottom: BorderSide(
+              color: black4,
+            ))),
             child: CellCalendar(
               todayMarkColor: Colors.blue,
               dateTextStyle: TextStyleList.text2,

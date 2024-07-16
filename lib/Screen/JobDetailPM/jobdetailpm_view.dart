@@ -48,6 +48,7 @@ class JobDetailViewPM extends StatelessWidget {
             Stack(
               children: [
                 AppBar(
+                  centerTitle: false,
                   backgroundColor: white3,
                   title: Obx(() {
                     if (jobController.issueData.isEmpty) {
@@ -360,13 +361,13 @@ class JobDetailViewPM extends StatelessWidget {
                                                         .first
                                                         .btrMaintenance!
                                                         .signature ==
-                                                    '' &&
+                                                    null &&
                                                 jobController
                                                         .reportList
                                                         .first
                                                         .btrMaintenance!
                                                         .signaturePad ==
-                                                    '')
+                                                    null)
                                               ButtonRed(
                                                 title: 'บันทึกลายเซ็น',
                                                 onTap: () {
@@ -434,13 +435,13 @@ class JobDetailViewPM extends StatelessWidget {
                                                         .first
                                                         .pvtMaintenance!
                                                         .signature ==
-                                                    '' &&
+                                                    null &&
                                                 jobController
                                                         .reportPreventiveList
                                                         .first
                                                         .pvtMaintenance!
                                                         .signaturePad ==
-                                                    '')
+                                                    null)
                                               ButtonRed(
                                                 title: 'บันทึกลายเซ็น',
                                                 onTap: () {

@@ -143,46 +143,53 @@ class ShowBatteryReportWidget extends StatelessWidget {
                   ],
                 ),
                 10.kH,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TitleApp(text: "Battery Condition"),
-                    4.kH,
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: filteredBatteryCondition.length,
-                      itemBuilder: (context, index) {
-                        final data = filteredBatteryCondition[index];
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: black3),
-                              color: white1,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(6))),
-                          child: Column(children: [
-                            BoxInfo(title: 'Name', value: data.nameEn ?? '-'),
-                            BoxInfo(title: 'Option', value: data.status ?? '-'),
-                            BoxInfo(
-                                title: 'Description',
-                                value: data.description ?? '-'),
-                          ]),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                filteredBatteryCondition.isNotEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TitleApp(text: "Battery Condition"),
+                          4.kH,
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: filteredBatteryCondition.length,
+                            itemBuilder: (context, index) {
+                              final data = filteredBatteryCondition[index];
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border.all(width: 1, color: black3),
+                                    color: white1,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: Column(children: [
+                                  BoxInfo(
+                                      title: 'Name', value: data.nameEn ?? '-'),
+                                  BoxInfo(
+                                      title: 'Option',
+                                      value: data.status ?? '-'),
+                                  BoxInfo(
+                                      title: 'Description',
+                                      value: data.description ?? '-'),
+                                ]),
+                              );
+                            },
+                          ),
+                        ],
+                      )
+                    : const TitleApp2(
+                        text: "Battery Conditsion",
+                        moreText: '-',
+                      ),
                 space.kH,
                 TitleWithButton(
-                    titleText: 'Repair P.M Battery',
+                    titleText: 'Corrective Action',
                     button: Text(
                       info1.correctiveAction ?? '',
                       style: TextStyleList.text3,
                     )),
                 space.kH,
-                4.kH,
                 if (recommendedSpareparts.isNotEmpty)
                   recommendedSpareparts.first.quantity != '0'
                       ? Column(
@@ -222,15 +229,20 @@ class ShowBatteryReportWidget extends StatelessWidget {
                                 );
                               },
                             ),
+                            space.kH,
                           ],
                         )
-                      : TitleWithButton(
-                          titleText: 'Recommanded Spare Part',
-                          button: Text(
-                            '-',
-                            style: TextStyleList.text3,
-                          )),
-                space.kH,
+                      : Column(
+                          children: [
+                            TitleWithButton(
+                                titleText: 'Recommanded Spare Part',
+                                button: Text(
+                                  '-',
+                                  style: TextStyleList.text3,
+                                )),
+                            space.kH,
+                          ],
+                        ),
                 TitleWithButton(
                     titleText: 'Repair P.M Battery',
                     button: Text(
@@ -285,7 +297,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                             '-',
                             style: TextStyleList.text3,
                           )),
-                if (info1.signaturePad != '')
+                if (info1.signaturePad != null)
                   Center(
                       child: Column(
                     children: [
@@ -298,7 +310,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       5.kH,
                     ],
                   )),
-                if (info1.signature != '')
+                if (info1.signature != null)
                   Column(
                     children: [
                       space.kH,

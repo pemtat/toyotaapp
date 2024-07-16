@@ -53,25 +53,6 @@ class EditFillformController2 extends GetxController {
   var batteryReportList = <BatteryReportModel>[].obs;
 
   var saveCompletedtime = ''.obs;
-  void clearSignature() {
-    isSignatureEmpty.value = true;
-    signature.currentState!.clear();
-  }
-
-  Future<void> saveSignature() async {
-    if (signature.currentState != null) {
-      try {
-        final data = await signature.currentState!.toImage(pixelRatio: 3.0);
-        final byteData = await data.toByteData(format: ImageByteFormat.png);
-        String base64String = base64Encode(byteData!.buffer.asUint8List());
-        signaturePad.value = base64String;
-      } catch (e) {
-        print('Error saving signature: $e');
-      }
-    } else {
-      print('Signature pad not initialized');
-    }
-  }
 
   void showSaveDialog(
       BuildContext context, String title, String left, String right) {
@@ -122,7 +103,15 @@ class EditFillformController2 extends GetxController {
       voltage: double.parse(info1.informationVoltage ?? '0.0'),
       capacity: double.parse(info1.capacity ?? '0.0'),
     );
-    batteryInfoController.batteryInformationList.add(newBatteryInfo);
+
+    if (info1.batteryBand != '-' ||
+        info1.batteryModel != '-' ||
+        info1.manufacturerNo != '-' ||
+        info1.serialNo != '-' ||
+        info1.batteryLifespan != '0' ||
+        info1.informationVoltage != '0' ||
+        info1.capacity != '0')
+      batteryInfoController.batteryInformationList.add(newBatteryInfo);
 
     final newForklife = ForkliftInformationModel(
       forkLifeBrand: info1.forkliftBrand ?? '',
@@ -130,7 +119,11 @@ class EditFillformController2 extends GetxController {
       serialNo: info1.forkliftSerial ?? '',
       forkLifeOperation: double.tryParse(info1.forkliftOperation ?? '') ?? 0,
     );
-    forkLifeInformation.forklifeList.add(newForklife);
+    if (info1.forkliftBrand != '-' ||
+        info1.forkliftModel != '-' ||
+        info1.forkliftSerial != '-' ||
+        info1.forkliftOperation != '0')
+      forkLifeInformation.forklifeList.add(newForklife);
 
     List<String> chosenChargingTypes = [];
     chosenChargingTypes.add(info1.chargingType ?? '');
@@ -139,7 +132,9 @@ class EditFillformController2 extends GetxController {
         hrsPerShift: double.tryParse(info1.hrs ?? '') ?? 0,
         ratio: double.tryParse(info1.ratio ?? '') ?? 0,
         chargingType: chosenChargingTypes);
-    batteryUsageController.batteryUsageList.add(newBatteryUseInfo);
+
+    if (info1.shiftTime != '0' || info1.hrs != '0' || info1.ratio != '0')
+      batteryUsageController.batteryUsageList.add(newBatteryUseInfo);
 
     List<SpecicGravityModel> newSpecicGravityList = specicGravity!
         .map((item) => SpecicGravityModel(
@@ -149,12 +144,70 @@ class EditFillformController2 extends GetxController {
             ))
         .toList();
 
-    specicGravityController.specicGravityList.addAll(newSpecicGravityList);
+    if (specicGravity.first.temperature != '0' ||
+        specicGravity.first.thp != '0' ||
+        specicGravity.first.voltageCheck != '0')
+      specicGravityController.specicGravityList.addAll(newSpecicGravityList);
+
+    if (info1.correctiveAction != '')
+      correctiveActionController.correctiveAction
+          .add(info1.correctiveAction ?? '');
+
+    var sparePartList = <SparePartModel>[].obs;
+    if (recommendedSpareparts.first.quantity != '0') {
+      for (var i = 0; i < recommendedSpareparts.length; i++) {
+        {
+          sparePartList.add(SparePartModel(
+              cCodePage: recommendedSpareparts[i].cCode ?? '',
+              partNumber: recommendedSpareparts[i].partNumber ?? '',
+              partDetails: recommendedSpareparts[i].description ?? '',
+              quantity:
+                  int.tryParse(recommendedSpareparts[i].quantity ?? '') ?? 0,
+              changeNow: "",
+              changeOnPM: "",
+              relationId: "",
+              additional: 0));
+        }
+      }
+      sparePartListController.sparePartList.addAll(sparePartList);
+    }
+
+    var additionalSparePartList = <SparePartModel>[].obs;
+    if (changeSpareparts.first.quantity != '0') {
+      for (var i = 0; i < changeSpareparts.length; i++) {
+        {
+          additionalSparePartList.add(SparePartModel(
+              cCodePage: changeSpareparts[i].cCode ?? '',
+              partNumber: changeSpareparts[i].partNumber ?? '',
+              partDetails: changeSpareparts[i].description ?? '',
+              quantity: int.tryParse(changeSpareparts[i].quantity ?? '') ?? 0,
+              changeNow: "",
+              changeOnPM: "",
+              relationId: "",
+              additional: 1));
+        }
+      }
+      additSparePartListController.additSparePartList
+          .addAll(additionalSparePartList);
+    }
+    if (info1.repairPm != '')
+      repairPmController.repairPm.add(info1.repairPm ?? '');
+
+    bool areAllDescriptionsEmpty = condition.every((item) =>
+        item.description == '' || item.checking == '' || item.status == '');
+
+    if (areAllDescriptionsEmpty)
+      for (var i = 0; i < condition.length; i++) {
+        batteryConditionController.selections[i] = condition[i].status ?? '';
+        batteryConditionController.additional[i] = condition[i].checking ?? '';
+        batteryConditionController.remarks[i] = condition[i].description ?? '';
+        batteryConditionController.isAllFieldsFilled.value = true;
+      }
   }
 
   Future<void> saveReport(BuildContext context) async {
     String? token = await getToken();
-    String apiUrl = createBatteryReport();
+    String apiUrl = updateBatteryReport();
 
     saveCurrentDateTime(saveCompletedtime);
 
@@ -279,9 +332,6 @@ class EditFillformController2 extends GetxController {
       "repair_pm": repairPmController.repairPm.isEmpty
           ? ''
           : repairPmController.repairPm.first,
-      "signature": signatureController.value.text,
-      "signature_pad": signaturePad.value,
-      "save_time": saveCompletedtime.value,
       "relation_id": "",
       "created_by": userController.userInfo.first.id,
       "btr_sparepart": combinedList,
@@ -296,7 +346,7 @@ class EditFillformController2 extends GetxController {
           },
           body: jsonEncode(data));
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         await jobDetailControllerPM.fetchData(jobId.toString());
       } else {
         print('Failed to save report: ${response.statusCode}');

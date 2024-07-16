@@ -1,19 +1,13 @@
 // ignore_for_file: file_names
-import 'dart:convert';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
-import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
-import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 
 class ShowPreventiveReportWidget extends StatelessWidget {
@@ -200,7 +194,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 ),
                 space.kH,
 
-                if (maintenance.signaturePad != '')
+                if (maintenance.signaturePad != null)
                   Center(
                       child: Column(
                     children: [
@@ -214,7 +208,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                       5.kH,
                     ],
                   )),
-                if (maintenance.signature != '')
+                if (maintenance.signature != null)
                   Column(
                     children: [
                       space.kH,

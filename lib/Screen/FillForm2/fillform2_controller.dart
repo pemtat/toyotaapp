@@ -219,9 +219,7 @@ class FillformController2 extends GetxController {
       "repair_pm": repairPmController.repairPm.isEmpty
           ? ''
           : repairPmController.repairPm.first,
-      "signature": signatureController.value.text,
-      "signature_pad": signaturePad.value,
-      "save_time": saveCompletedtime.value,
+      "bug_id": jobId.toString(),
       "relation_id": "",
       "created_by": userController.userInfo.first.id,
       "btr_sparepart": combinedList,

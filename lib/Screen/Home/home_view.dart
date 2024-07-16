@@ -420,44 +420,44 @@ class HomeView extends StatelessWidget {
                       }),
                     ),
 
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: white3,
-                      ),
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'My Rating',
-                            style: TextStyleList.title4,
-                          ),
-                          5.wH,
-                          PannableRatingBar.builder(
-                            rate: 3,
-                            alignment: WrapAlignment.center,
-                            spacing: 2,
-                            runSpacing: 5,
-                            itemCount: 5,
-                            direction: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return const RatingWidget(
-                                selectedColor: orange2,
-                                unSelectedColor: white1,
-                                child: Icon(
-                                  Icons.star,
-                                  size: 30,
-                                ),
-                              );
-                            },
-                            onChanged: (value) {},
-                          )
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(6),
+                    //     color: white3,
+                    //   ),
+                    //   margin: const EdgeInsets.symmetric(horizontal: 16),
+                    //   padding: const EdgeInsets.symmetric(vertical: 6),
+                    //   width: MediaQuery.of(context).size.width,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         'My Rating',
+                    //         style: TextStyleList.title4,
+                    //       ),
+                    //       5.wH,
+                    //       PannableRatingBar.builder(
+                    //         rate: 3,
+                    //         alignment: WrapAlignment.center,
+                    //         spacing: 2,
+                    //         runSpacing: 5,
+                    //         itemCount: 5,
+                    //         direction: Axis.horizontal,
+                    //         itemBuilder: (context, index) {
+                    //           return const RatingWidget(
+                    //             selectedColor: orange2,
+                    //             unSelectedColor: white1,
+                    //             child: Icon(
+                    //               Icons.star,
+                    //               size: 30,
+                    //             ),
+                    //           );
+                    //         },
+                    //         onChanged: (value) {},
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     10.kH,
                   ],
                 ),
@@ -476,6 +476,8 @@ class HomeView extends StatelessWidget {
     Color? labelColor,
   }) {
     return Container(
+      width: 112,
+      height: 108,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         color: white3,
