@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -66,7 +67,7 @@ class TicketPMDetailView extends StatelessWidget {
                                   .substring(
                                 0,
                                 jobController.issueData.first.description
-                                    .indexOf('บริษัท'),
+                                    .indexOf('.CD'),
                               ),
                               style: TextStyleList.title1),
                           Text('JobID: $ticketId', style: TextStyleList.text16),
@@ -124,7 +125,9 @@ class TicketPMDetailView extends StatelessWidget {
                                                   description:
                                                       'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")} ',
                                                   detail: issue.description,
-                                                  status: issue.status.name,
+                                                  status: stringToStatus(issue
+                                                      .status.id
+                                                      .toString()),
                                                   location: issue
                                                       .getCustomFieldValue(
                                                           "Customer No")
@@ -147,9 +150,12 @@ class TicketPMDetailView extends StatelessWidget {
                                     () {
                                       if (jobController
                                           .warrantyInfoList.isEmpty) {
-                                        return const Center(
-                                          child: Text('No Data'),
-                                        );
+                                        return Center(
+                                            child: WarrantyBox(
+                                                model: '-',
+                                                serial: '-',
+                                                status: 0,
+                                                filePdf: filePdf));
                                       } else {
                                         var warrantyInfo = jobController
                                             .warrantyInfoList.first;

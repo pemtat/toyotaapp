@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
@@ -11,7 +10,7 @@ import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
-import 'package:toyotamobile/Models/warrantytruckbyid.dart';
+import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
@@ -27,7 +26,7 @@ class PeddingtaskController extends GetxController {
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var userData = <UserById>[].obs;
-  var warrantyInfo = <WarrantyTruckbyId>[].obs;
+  var warrantyInfo = <WarrantybyIdModel>[].obs;
   var customerInfo = <CustomerById>[].obs;
   var issueId;
   var jobId;
@@ -68,7 +67,6 @@ class PeddingtaskController extends GetxController {
             attachmentsData, attatchments);
 
         fetchNotes(issue.notes, notesFiles);
-        checkWarranty(issue.serialNo ?? '', warrantyInfoList);
       }).toList();
       issueData.value = issuesList;
     } else {}

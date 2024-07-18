@@ -165,9 +165,12 @@ class TicketDetailView extends StatelessWidget {
                                             () {
                                               if (ticketController
                                                   .warrantyInfo.isEmpty) {
-                                                return const Center(
-                                                  child: Text('No Data'),
-                                                );
+                                                return Center(
+                                                    child: WarrantyBox(
+                                                        model: '-',
+                                                        serial: '-',
+                                                        status: 0,
+                                                        filePdf: filePdf));
                                               } else {
                                                 var warrantyInfo =
                                                     ticketController
@@ -176,13 +179,13 @@ class TicketDetailView extends StatelessWidget {
                                                     model: warrantyInfo.model ??
                                                         '',
                                                     serial:
-                                                        warrantyInfo.serialNo ??
+                                                        warrantyInfo.serial ??
                                                             '',
-                                                    status:
-                                                        warrantyInfo.warranty ==
-                                                                '1'
-                                                            ? 1
-                                                            : 0,
+                                                    status: warrantyInfo
+                                                                .warrantystatus ==
+                                                            '1'
+                                                        ? 1
+                                                        : 0,
                                                     filePdf: filePdf);
                                               }
                                             },

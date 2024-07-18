@@ -9,7 +9,7 @@ import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
-import 'package:toyotamobile/Models/warrantytruckbyid.dart';
+import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 
 enum EventType {
@@ -80,7 +80,7 @@ class CalendarController extends GetxController {
           "bugid": '',
           "time": formattedTime,
           "status": stringToStatus(pm.status ?? ''),
-          "task": pm.dueDate,
+          "task": '',
           "customerName": pm.customerName,
           'warrantyStatus': '',
           "date": formatDateTimeCut(pm.dueDate ?? ''),
@@ -139,7 +139,7 @@ class CalendarController extends GetxController {
         final formattedTime = DateFormat('hh:mm a').format(jobDate);
 
         String? token = await getToken();
-        var warrantyInfo = <WarrantyTruckbyId>[].obs;
+        var warrantyInfo = <WarrantybyIdModel>[].obs;
 
         var userData = <UserById>[].obs;
         await fetchUserById(job.reporterId ?? '', userData);
@@ -153,12 +153,17 @@ class CalendarController extends GetxController {
           "status": stringToStatus(job.status ?? ''),
           "customerName": userData.first.users!.first.name,
           "task": job.description,
+          "model": warrantyInfo.isEmpty || warrantyInfo.first.model == null
+              ? '-'
+              : warrantyInfo.first.model,
           "date": jobDateString,
           'warrantyStatus': '',
           'reporterId': job.reporterId,
           "description": job.summaryBug,
           "location": 'Bangkok',
-          "serialNo": warrantyInfo.first.serialNo,
+          "serialNo": warrantyInfo.isEmpty || warrantyInfo.first.serial == null
+              ? '-'
+              : warrantyInfo.first.serial,
           "type": EventType.Job,
         };
 
@@ -187,9 +192,7 @@ class CalendarController extends GetxController {
             tempEvents2[dayKey2] = [eventData];
           }
         }
-      } catch (e) {
-        // print('Error processing job event: $e');
-      }
+      } catch (e) {}
     }
   }
 

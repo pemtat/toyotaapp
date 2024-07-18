@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Screen/ForgetPassword/forgetpassword_view.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/login_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'login_controller.dart';
@@ -16,8 +15,7 @@ class LoginView extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        resizeToAvoidBottomInset: false, // Add this line
-
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           actions: [
             Padding(

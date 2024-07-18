@@ -43,7 +43,7 @@ class CalendarView extends StatelessWidget {
                     children: [
                       Text('Calendar', style: TextStyleList.title1),
                       5.wH,
-                      Icon(Icons.calendar_month),
+                      const Icon(Icons.calendar_month),
                     ],
                   )),
             ),

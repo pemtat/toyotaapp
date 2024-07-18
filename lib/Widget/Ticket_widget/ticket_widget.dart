@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
+import 'package:toyotamobile/Function/openmap.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
@@ -10,6 +11,7 @@ import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
+import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
@@ -97,40 +99,83 @@ class PmItemWidget extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 2),
-                Row(
+                Wrap(
                   children: [
-                    const Icon(Icons.location_on_outlined),
-                    const SizedBox(width: 5),
-                    Expanded(
-                      child: FutureBuilder<CustomerById>(
-                        future: fetchCustomerInfo(job.customerNo),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(),
+                    FutureBuilder<CustomerById>(
+                      future: fetchCustomerInfo(job.customerNo ?? ''),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return const Text('-');
+                        } else if (!snapshot.hasData) {
+                          return const Text('-');
+                        }
+
+                        CustomerById customer = snapshot.data!;
+                        String customerAddress =
+                            customer.customerAddress ?? '-';
+
+                        return Row(
+                          children: [
+                            const Icon(Icons.location_on_outlined),
+                            const SizedBox(width: 5),
+                            Expanded(
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'Location: $customerAddress   ',
+                                      style: TextStyleList.subtext3,
+                                    ),
+                                    WidgetSpan(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          GoogleMapButton(
+                                            onTap: () async {
+                                              showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return const Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                },
+                                              );
+
+                                              try {
+                                                await openGoogleMaps(
+                                                    customerAddress);
+                                              } catch (e) {
+                                                print(e);
+                                              } finally {
+                                                Navigator.of(context).pop();
+                                              }
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            );
-                          } else if (snapshot.hasError) {
-                            return const Text('-');
-                          } else if (!snapshot.hasData) {
-                            return const Text('-');
-                          }
-
-                          CustomerById customer = snapshot.data!;
-                          return Text(
-                            customer.customerAddress ?? '-',
-                            style: TextStyleList.subtext1,
-                            overflow: TextOverflow.visible,
-                          );
-                        },
-                      ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -140,7 +185,7 @@ class PmItemWidget extends StatelessWidget {
                     5.wH,
                     Text(
                       job.description
-                          .substring(0, job.description.indexOf('บริษัท')),
+                          .substring(0, job.description.indexOf('.CD')),
                       style: TextStyleList.subtext1,
                     ),
                   ],
@@ -163,7 +208,7 @@ class PmItemWidget extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         BoxInfo(
-                                            title: "Name/Model",
+                                            title: "Model",
                                             value: warrantyInfo.first.model),
                                         const SizedBox(height: 3),
                                         BoxInfo(

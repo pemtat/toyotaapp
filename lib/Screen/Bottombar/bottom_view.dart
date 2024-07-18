@@ -95,7 +95,7 @@ class BottomBarView extends StatelessWidget {
                       const ImageIcon(
                         AssetImage('assets/bell.png'),
                       ),
-                      if (!controller.hasNotification.value)
+                      if (controller.hasNotification.value)
                         Positioned(
                           top: 0,
                           right: 2,

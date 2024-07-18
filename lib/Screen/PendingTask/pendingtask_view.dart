@@ -57,8 +57,8 @@ class PendingTaskView extends StatelessWidget {
           var file = penddingTaskController.attatchments.isNotEmpty
               ? penddingTaskController.attatchments
               : null;
-          var filePdf = penddingTaskController.addAttatchments.isNotEmpty
-              ? penddingTaskController.addAttatchments
+          var filePdf = penddingTaskController.pdfList.isNotEmpty
+              ? penddingTaskController.pdfList
               : null;
           var issue = penddingTaskController.issueData.first;
           var subJob = penddingTaskController.subJobs.isNotEmpty
@@ -113,17 +113,21 @@ class PendingTaskView extends StatelessWidget {
                               () {
                                 if (penddingTaskController
                                     .warrantyInfo.isEmpty) {
-                                  return const Center(
-                                    child: Text('No Data'),
-                                  );
+                                  return Center(
+                                      child: WarrantyBox(
+                                          model: '-',
+                                          serial: '-',
+                                          status: 0,
+                                          filePdf: filePdf));
                                 } else {
                                   var warrantyInfo =
                                       penddingTaskController.warrantyInfo.first;
                                   return WarrantyBox(
                                       model: warrantyInfo.model ?? '',
-                                      serial: warrantyInfo.serialNo ?? '',
-                                      status:
-                                          warrantyInfo.warranty == '1' ? 1 : 0,
+                                      serial: warrantyInfo.serial ?? '',
+                                      status: warrantyInfo.warrantystatus == '1'
+                                          ? 1
+                                          : 0,
                                       filePdf: filePdf);
                                 }
                               },

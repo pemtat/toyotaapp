@@ -1,11 +1,8 @@
 // ignore_for_file: file_names
-import 'dart:convert';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -13,12 +10,11 @@ import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
-import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 
 class ShowBatteryReportWidget extends StatelessWidget {
   final RxList<BatteryReportModel> reportData;
-  ShowBatteryReportWidget({
+  const ShowBatteryReportWidget({
     super.key,
     required this.reportData,
   });

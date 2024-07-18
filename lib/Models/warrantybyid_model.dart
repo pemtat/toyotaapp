@@ -5,9 +5,9 @@ class WarrantybyIdModel {
   String? warrantytype;
   String? warrantystatus;
   String? coverageexpired;
-  Null contractnumber;
-  Null contractstart;
-  Null contractend;
+  String? contractnumber;
+  String? contractstart;
+  String? contractend;
   String? orderno;
   String? orderdate;
   String? userId;

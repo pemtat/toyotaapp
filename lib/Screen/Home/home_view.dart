@@ -1,4 +1,3 @@
-import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
 import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
@@ -14,7 +13,6 @@ import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
 import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
-import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/titleheader_widget.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -187,8 +185,11 @@ class HomeView extends StatelessWidget {
                               border: Border.all(color: white2, width: 1.5),
                             ),
                             child: Obx(() => LinearProgressIndicator(
-                                value: jobController.closedJobs.value /
-                                    jobController.totalJobs.value,
+                                value: jobController.closedJobs.value == 0 &&
+                                        jobController.totalJobs.value == 0
+                                    ? 0
+                                    : jobController.closedJobs.value /
+                                        jobController.totalJobs.value,
                                 backgroundColor: Colors.transparent,
                                 color: red7)),
                           ),

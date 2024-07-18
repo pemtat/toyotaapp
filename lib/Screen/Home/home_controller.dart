@@ -64,6 +64,7 @@ class HomeController extends GetxController {
     incomingJobs = 0.obs;
     overdueJobs = 0.obs;
     onProcessJobs = 0.obs;
+    serviceZoneSet = <String>{}.obs;
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? tokenResponse = prefs.getString('token_response');
@@ -191,6 +192,7 @@ class HomeController extends GetxController {
         List<PmModel> itemList =
             responseData.map((job) => PmModel.fromJson(job)).toList();
         totalJobs.value = totalJobs.value + itemList.length;
+
         // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
         List<PmModel> pendingPmItems = itemList
             .where((pm) => stringToStatus(pm.status ?? '') == 'pending')
@@ -216,6 +218,8 @@ class HomeController extends GetxController {
               .map((pm) => pm.serviceZoneCode!)
               .toSet(),
         );
+
+        if (serviceZoneSet.isEmpty) serviceZoneSet.add('-');
 
         overdueJobs.value = overdueJobs.value + closedPmItemsOver.length;
         closedJobs.value = closedJobs.value + closedPmItems.length;
@@ -295,6 +299,7 @@ class HomeController extends GetxController {
         List<SubJobAssgined> itemList =
             responseData.map((job) => SubJobAssgined.fromJson(job)).toList();
         totalJobs.value = totalJobs.value + itemList.length;
+
         List<SubJobAssgined> newSubJobs =
             itemList.where((subJob) => subJob.status == '101').toList();
         subjobList.value = newSubJobs.length;

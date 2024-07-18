@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:toyotamobile/Service/api.dart';
 import 'dart:io';
 
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AttachmentsListPdfWidget extends StatelessWidget {
   final List<Map<String, dynamic>> attachments;
@@ -24,10 +25,11 @@ class AttachmentsListPdfWidget extends StatelessWidget {
             padding: const EdgeInsets.only(right: 4.0),
             child: GestureDetector(
               onTap: () async {
-                String pdfFilePath =
-                    await _createPdfFile(attachment['content']);
-                Get.to(
-                    () => PdfViewerScreen(pdfFilePath, attachment['filename']));
+                // String pdfFilePath =
+                //     await _createPdfFile(attachment['content']);
+                openPdf(attachment['filepath']);
+                // Get.to(
+                //     () => PdfViewerScreen(pdfFilePath, attachment['filename']));
               },
               child: Column(
                 children: [
@@ -59,6 +61,16 @@ class AttachmentsListPdfWidget extends StatelessWidget {
         '${directory.path}/temp_${DateTime.now().millisecondsSinceEpoch}.pdf');
     await pdfFile.writeAsBytes(pdfBytes);
     return pdfFile.path;
+  }
+}
+
+Future<void> openPdf(String path) async {
+  String googleUrl = "$url/$path";
+
+  if (await canLaunchUrlString(googleUrl)) {
+    await launchUrlString(googleUrl);
+  } else {
+    print('Could not launch $googleUrl');
   }
 }
 

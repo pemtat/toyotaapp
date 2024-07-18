@@ -82,10 +82,6 @@ class MoreDetail extends StatelessWidget {
                       value: severity,
                     ),
                     BoxInfo(
-                      title: "Relations",
-                      value: relations,
-                    ),
-                    BoxInfo(
                       title: "Error Code",
                       value: errorCode ?? '-',
                     ),

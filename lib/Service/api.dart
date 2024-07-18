@@ -21,7 +21,7 @@ String getTicketbyId(String issueId) {
 }
 
 String getWarrantyTruckByTicketId(String issueId) {
-  return '$url/api/rest/issues/$issueId/warrantytruck';
+  return '$url/api/rest/issues/$issueId/warranty';
 }
 
 String getTrickdetailById(String id) {
@@ -113,7 +113,7 @@ String getSubJobByTicketId(String ticketId) {
 }
 
 String getPMticketById(String id) {
-  return '$url/api/rest/pm?resource_no=$id';
+  return '$url/api/rest/pm?handler_id=$id';
 }
 
 String getSubJobsByHandler(String id) {

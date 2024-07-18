@@ -58,7 +58,7 @@ class SignatureWidget extends StatelessWidget {
                 maximumStrokeWidth: 4.0,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -71,7 +71,7 @@ class SignatureWidget extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFieldWidget(text: 'ลงชื่อ', textSet: signatureController),
           ],
         ),
@@ -81,25 +81,28 @@ class SignatureWidget extends StatelessWidget {
           onPressed: () async {
             saveCurrentDateTime(saveCompletedtime);
             if (ticketId != null) {
-              updateSignatureJob(jobId, ticketId ?? '', saveCompletedtime.value,
-                  signatureController.value.text, signaturePad.value);
+              Navigator.pop(context);
+              await updateSignatureJob(
+                  jobId,
+                  ticketId ?? '',
+                  saveCompletedtime.value,
+                  signatureController.value.text,
+                  signaturePad.value);
               await jobController.fetchData(
                   ticketId.toString(), jobId.toString());
-              Navigator.pop(context);
             } else {
               if (option == 'battery') {
                 Navigator.pop(context);
-                changeIssueSignaturePM(
+                await changeIssueSignaturePM(
                     jobId,
                     saveCompletedtime.value,
                     signatureController.value.text,
                     signaturePad.value,
                     'battery');
                 await jobControllerPM.fetchData(jobId.toString());
-                await jobControllerPM.fetchData(jobId.toString());
               } else {
                 Navigator.pop(context);
-                changeIssueSignaturePM(
+                await changeIssueSignaturePM(
                     jobId,
                     saveCompletedtime.value,
                     signatureController.value.text,

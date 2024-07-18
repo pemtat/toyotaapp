@@ -16,7 +16,7 @@ import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
-import 'package:toyotamobile/Models/warrantytruckbyid.dart';
+import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -60,7 +60,7 @@ Future<void> fetchSubJob(
 }
 
 Future<void> fetchWarrantyById(
-    String ticketId, String token, RxList<WarrantyTruckbyId> info) async {
+    String ticketId, String token, RxList<WarrantybyIdModel> info) async {
   try {
     final response = await http.get(
       Uri.parse(getWarrantyTruckByTicketId(ticketId)),
@@ -72,10 +72,9 @@ Future<void> fetchWarrantyById(
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
 
-      List<WarrantyTruckbyId> dataList =
-          jsonResponse.map((json) => WarrantyTruckbyId.fromJson(json)).toList();
+      List<WarrantybyIdModel> dataList =
+          jsonResponse.map((json) => WarrantybyIdModel.fromJson(json)).toList();
       info.assignAll(dataList);
-      print(info.first.serialNo);
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
@@ -103,6 +102,32 @@ Future<void> fetchUserById(String id, RxList<UserById> userData) async {
     }
   } else {
     print('Failed to load data: ${response.statusCode}');
+  }
+}
+
+Future<String> getReportById(
+  String id,
+) async {
+  String? token = await getToken();
+  final response = await http.get(
+    Uri.parse(getUserInfoById(id)),
+    headers: {
+      'Authorization': '$token',
+    },
+  );
+  if (response.statusCode == 200) {
+    final dynamic responseData = jsonDecode(response.body);
+
+    if (responseData is Map<String, dynamic>) {
+      UserById user = UserById.fromJson(responseData);
+      return user.users!.first.name ?? '';
+    } else {
+      print('Invalid data format');
+      return '-';
+    }
+  } else {
+    print('Failed to load data: ${response.statusCode}');
+    return '-';
   }
 }
 
@@ -611,7 +636,7 @@ void changeIssueStatusPM(
   }
 }
 
-void changeIssueSignaturePM(
+Future<void> changeIssueSignaturePM(
   String issueId,
   String saveCompletedtime,
   String signature,
@@ -769,8 +794,8 @@ void updateStatusSubjobs(
   }
 }
 
-void updateSignatureJob(String jobId, String ticketId, String saveCompletedtime,
-    String signature, String signaturePad) async {
+Future<void> updateSignatureJob(String jobId, String ticketId,
+    String saveCompletedtime, String signature, String signaturePad) async {
   try {
     String? token = await getToken();
 
@@ -976,7 +1001,7 @@ Future<Map<String, String>> fetchTicketById(String id) async {
   );
   if (response.statusCode == 200) {
     var userInfo = <UserById>[].obs;
-    var truckInfo = <WarrantyTruckbyId>[].obs;
+    var truckInfo = <WarrantybyIdModel>[].obs;
     Map<String, dynamic> data = json.decode(response.body);
     ticket.TicketByIdModel ticketModel = ticket.TicketByIdModel.fromJson(data);
 
@@ -1009,8 +1034,8 @@ Future<Map<String, String>> fetchTicketById(String id) async {
     if (response3.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response3.body);
 
-      List<WarrantyTruckbyId> dataList =
-          jsonResponse.map((json) => WarrantyTruckbyId.fromJson(json)).toList();
+      List<WarrantybyIdModel> dataList =
+          jsonResponse.map((json) => WarrantybyIdModel.fromJson(json)).toList();
       truckInfo.assignAll(dataList);
     } else {
       print('Failed to load data: ${response.statusCode}');
@@ -1020,10 +1045,79 @@ Future<Map<String, String>> fetchTicketById(String id) async {
       'name': issuesList.first.reporter!.name ?? '',
       'location': customerInfo.customerAddress ?? '',
       'model': truckInfo.first.model ?? '',
-      'serial': truckInfo.first.serialNo ?? '',
+      'serial': truckInfo.first.serial ?? '',
     };
   } else {
     print('Failed to load data: ${response.statusCode} $id ');
+    return {};
+  }
+}
+
+Future<Map<String, String>> fetchTicketById2(String id, String serialNo) async {
+  String? token = await getToken();
+  try {
+    final response = await http.get(
+      Uri.parse(getTicketbyId(id)),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var userInfo = <UserById>[].obs;
+      var truckInfo = <WarrantybyIdModel>[].obs;
+      Map<String, dynamic> data = json.decode(response.body);
+      ticket.TicketByIdModel ticketModel =
+          ticket.TicketByIdModel.fromJson(data);
+
+      List<ticket.Issues>? issuesList = ticketModel.issues;
+      final response2 = await http.get(
+        Uri.parse(getUserInfoById(issuesList!.first.reporter!.id.toString())),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+      if (response2.statusCode == 200) {
+        final dynamic responseData = jsonDecode(response2.body);
+
+        if (responseData is Map<String, dynamic>) {
+          UserById user = UserById.fromJson(responseData);
+          userInfo.value = [user];
+        } else {
+          print('Invalid data format');
+        }
+      }
+      CustomerById customerInfo = await fetchCustomerInfo(
+          userInfo.first.users!.first.companyId.toString());
+
+      final response3 = await http.get(
+        Uri.parse(getTrickdetailById(serialNo)),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+      if (response3.statusCode == 200) {
+        List<dynamic> jsonResponse = jsonDecode(response3.body);
+
+        List<WarrantybyIdModel> dataList = jsonResponse
+            .map((json) => WarrantybyIdModel.fromJson(json))
+            .toList();
+        truckInfo.assignAll(dataList);
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+      }
+
+      return {
+        'name': issuesList.first.reporter!.name ?? '',
+        'location': customerInfo.customerAddress ?? '',
+        'model': truckInfo.first.model ?? '',
+        'serial': truckInfo.first.serial ?? '',
+      };
+    } else {
+      print('Failed to load data: ${response.statusCode} $id ');
+      return {};
+    }
+  } catch (e) {
+    print(e);
     return {};
   }
 }

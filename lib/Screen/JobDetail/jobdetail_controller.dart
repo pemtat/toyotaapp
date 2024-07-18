@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
@@ -12,7 +11,7 @@ import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
-import 'package:toyotamobile/Models/warrantytruckbyid.dart';
+import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -28,7 +27,7 @@ class JobDetailController extends GetxController {
   var reportList = <RepairReportModel>[].obs;
   var pdfList = <Map<String, dynamic>>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
-  var warrantyInfo = <WarrantyTruckbyId>[].obs;
+  var warrantyInfo = <WarrantybyIdModel>[].obs;
   var notesFiles = <Notes>[].obs;
   var isPicking = false.obs;
   var issueData = [].obs;
@@ -67,6 +66,7 @@ class JobDetailController extends GetxController {
       pdfList.clear;
       fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
       fetchPdfData(ticketId, token ?? '', pdfList);
+
       await fetchSubJob(subjobId, token ?? '', subJobs);
       await fetchUserById(subJobs.first.reporterId ?? '', userData);
       await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
@@ -128,7 +128,6 @@ class JobDetailController extends GetxController {
           fetchReadAttachment(issueId, token ?? '', issue.attachments,
               attachmentsData, attatchments);
           fetchNotesPic(issue.notes, notesFiles, notePic);
-          checkWarranty(issue.serialNo ?? '', warrantyInfoList);
         }).toList();
         issueData.value = issuesList;
       } else {}

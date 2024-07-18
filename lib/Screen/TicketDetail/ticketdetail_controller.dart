@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
@@ -13,7 +12,7 @@ import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
-import 'package:toyotamobile/Models/warrantytruckbyid.dart';
+import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
@@ -26,7 +25,7 @@ class TicketDetailController extends GetxController {
   var reportList = <RepairReportModel>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
   var savedDateStartTime = ''.obs;
-  var warrantyInfo = <WarrantyTruckbyId>[].obs;
+  var warrantyInfo = <WarrantybyIdModel>[].obs;
   var customerInfo = <CustomerById>[].obs;
 
   var savedDateEndTime = ''.obs;
@@ -74,6 +73,7 @@ class TicketDetailController extends GetxController {
     await fetchSubJob(subjobId, token ?? '', subJobs);
     await fetchUserById(subJobs.first.reporterId ?? '', userData);
     await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
+
     await fetchgetCustomerInfo(
         userData.first.users!.first.companyId ?? '', customerInfo);
     savedDateStartTime.value = subJobs.first.timeStart ?? '';
@@ -110,6 +110,7 @@ class TicketDetailController extends GetxController {
     }
     pdfList.clear;
     fetchPdfData(ticketId, token ?? '', pdfList);
+
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {
@@ -127,7 +128,6 @@ class TicketDetailController extends GetxController {
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);
         fetchNotes(issue.notes, notesFiles);
-        checkWarranty(issue.serialNo ?? '', warrantyInfoList);
       }).toList();
 
       issueData.value = issuesList;
