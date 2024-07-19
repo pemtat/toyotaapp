@@ -75,7 +75,7 @@ class BatteryInformation extends GetxController {
             batteryInfoClear();
             Navigator.pop(context);
           },
-          text: 'Confirm',
+          text: 'Save',
         ),
       ],
     ).showModal(context);
@@ -149,7 +149,7 @@ class BatteryInformation extends GetxController {
               batteryInfoClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }

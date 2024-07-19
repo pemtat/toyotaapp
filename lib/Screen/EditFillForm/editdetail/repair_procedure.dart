@@ -45,7 +45,7 @@ class RepairProcedure extends GetxController {
               rPClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }
@@ -86,7 +86,7 @@ class RepairProcedure extends GetxController {
               rPClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }

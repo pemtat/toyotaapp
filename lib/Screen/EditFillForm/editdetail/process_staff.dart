@@ -48,7 +48,7 @@ class RepairStaff extends GetxController {
 
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }

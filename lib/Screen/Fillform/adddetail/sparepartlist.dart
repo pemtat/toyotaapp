@@ -191,7 +191,7 @@ class SparepartList extends GetxController {
               sparePartClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }
@@ -374,7 +374,7 @@ class SparepartList extends GetxController {
               sparePartClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }

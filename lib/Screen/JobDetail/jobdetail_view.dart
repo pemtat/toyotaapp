@@ -354,7 +354,8 @@ class JobDetailView extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const TitleApp(text: 'Repair Report*'),
+                                      const TitleApp(
+                                          text: 'Field Service Report*'),
                                       Obx(() => jobController
                                               .reportList.isNotEmpty
                                           ? EditButton(

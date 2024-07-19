@@ -177,7 +177,7 @@ class PMJobInfo extends StatelessWidget {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'Location: $customerAddress   ',
+                                    text: customerAddress,
                                     style: TextStyleList.subtext3,
                                   ),
                                   WidgetSpan(

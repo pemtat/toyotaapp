@@ -52,7 +52,8 @@ class FillFormView extends StatelessWidget {
           children: [
             AppBar(
                 backgroundColor: white3,
-                title: Text('Repair Report', style: TextStyleList.title1),
+                title:
+                    Text('Field Service Report', style: TextStyleList.title1),
                 leading: const CloseIcon()),
           ],
         ),
@@ -63,7 +64,6 @@ class FillFormView extends StatelessWidget {
             6.kH,
             BoxContainer(
               children: [
-                const TitleApp(text: 'Field Service Report'),
                 ListView.builder(
                   shrinkWrap: true,
                   itemCount: fillFormController.fieldServiceReportList.length,

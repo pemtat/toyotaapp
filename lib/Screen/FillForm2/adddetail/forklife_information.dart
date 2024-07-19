@@ -56,7 +56,7 @@ class ForklifeInformation extends GetxController {
             forklifeClear();
             Navigator.pop(context);
           },
-          text: 'Confirm',
+          text: 'Save',
         ),
       ],
     ).showModal(context);
@@ -111,7 +111,7 @@ class ForklifeInformation extends GetxController {
               forklifeClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }

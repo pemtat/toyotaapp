@@ -61,7 +61,7 @@ class Maintenance extends GetxController {
             batteryUsageClear();
             Navigator.pop(context);
           },
-          text: 'Confirm',
+          text: 'Save',
         ),
       ],
     ).showModal(context);
@@ -117,7 +117,7 @@ class Maintenance extends GetxController {
               batteryUsageClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }

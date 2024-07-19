@@ -182,7 +182,7 @@ class AdditSparepartList extends GetxController {
               additSparePartClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }
@@ -354,7 +354,7 @@ class AdditSparepartList extends GetxController {
               additSparePartClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }

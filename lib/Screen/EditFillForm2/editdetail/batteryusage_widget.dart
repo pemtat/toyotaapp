@@ -76,7 +76,7 @@ class BatteryUsage extends GetxController {
             batteryUsageClear();
             Navigator.pop(context);
           },
-          text: 'Confirm',
+          text: 'Save',
         ),
       ],
     ).showModal(context);
@@ -146,7 +146,7 @@ class BatteryUsage extends GetxController {
               batteryUsageClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }

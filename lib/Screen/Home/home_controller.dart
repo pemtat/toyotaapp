@@ -191,40 +191,49 @@ class HomeController extends GetxController {
         List<dynamic> responseData = jsonDecode(response.body);
         List<PmModel> itemList =
             responseData.map((job) => PmModel.fromJson(job)).toList();
-        totalJobs.value = totalJobs.value + itemList.length;
 
-        // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
-        List<PmModel> pendingPmItems = itemList
-            .where((pm) => stringToStatus(pm.status ?? '') == 'pending')
-            .toList();
+        totalJobs.value += itemList.length;
+
+        List<PmModel> pendingPmItems = [];
+        List<PmModel> confirmPmItems = [];
+        List<PmModel> closedPmItems = [];
+        List<PmModel> closedPmItemsOver = [];
+
+        for (var pm in itemList) {
+          String status = stringToStatus(pm.status ?? '');
+          switch (status) {
+            case 'pending':
+              pendingPmItems.add(pm);
+              break;
+            case 'confirmed':
+              confirmPmItems.add(pm);
+              break;
+            case 'closed':
+              closedPmItems.add(pm);
+              break;
+            default:
+              if (DateTime.parse(pm.dueDate ?? '').isBefore(DateTime.now())) {
+                closedPmItemsOver.add(pm);
+              }
+              break;
+          }
+
+          if (pm.serviceZoneCode != null) {
+            serviceZoneSet.add(pm.serviceZoneCode!);
+          }
+        }
+
         pmjobList.value = pendingPmItems.length;
-        incomingJobs.value = incomingJobs.value + pmjobList.value;
-        List<PmModel> confirmPmItems = itemList
-            .where((pm) => stringToStatus(pm.status ?? '') == 'confirmed')
-            .toList();
+        incomingJobs.value += pmjobList.value;
         pmjobListConfirmed.value = confirmPmItems.length;
-        List<PmModel> closedPmItems = itemList
-            .where((pm) => stringToStatus(pm.status ?? '') == 'closed')
-            .toList();
-        List<PmModel> closedPmItemsOver = itemList
-            .where((pm) =>
-                stringToStatus(pm.status ?? '') != 'closed' &&
-                DateTime.parse(pm.dueDate ?? '').isBefore(DateTime.now()))
-            .toList();
-
-        serviceZoneSet.addAll(
-          itemList
-              .where((pm) => pm.serviceZoneCode != null)
-              .map((pm) => pm.serviceZoneCode!)
-              .toSet(),
-        );
-
-        if (serviceZoneSet.isEmpty) serviceZoneSet.add('-');
-
-        overdueJobs.value = overdueJobs.value + closedPmItemsOver.length;
-        closedJobs.value = closedJobs.value + closedPmItems.length;
+        overdueJobs.value += closedPmItemsOver.length;
+        closedJobs.value += closedPmItems.length;
         pmCompletedList.value = closedPmItems.length;
         pmItems.value = itemList;
+
+        if (serviceZoneSet.isEmpty) {
+          serviceZoneSet.add('-');
+        }
       } else {
         print('Failed to load data: ${response.statusCode}');
       }
@@ -294,53 +303,47 @@ class HomeController extends GetxController {
           'Authorization': '$token',
         },
       );
+
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(response.body);
         List<SubJobAssgined> itemList =
             responseData.map((job) => SubJobAssgined.fromJson(job)).toList();
-        totalJobs.value = totalJobs.value + itemList.length;
 
-        List<SubJobAssgined> newSubJobs =
-            itemList.where((subJob) => subJob.status == '101').toList();
+        totalJobs.value += itemList.length;
+
+        List<SubJobAssgined> newSubJobs = [];
+        List<SubJobAssgined> pendingSubJobs = [];
+        List<SubJobAssgined> completedSubJobs = [];
+        List<SubJobAssgined> closedSubJobsOver = [];
+
+        for (var subJob in itemList) {
+          switch (subJob.status) {
+            case '101':
+              newSubJobs.add(subJob);
+              break;
+            case '102':
+              pendingSubJobs.add(subJob);
+              break;
+            case '103':
+              completedSubJobs.add(subJob);
+              if (DateTime.parse(subJob.dueDate ?? '')
+                  .isBefore(DateTime.now())) {
+                closedSubJobsOver.add(subJob);
+              }
+              break;
+          }
+        }
+
         subjobList.value = newSubJobs.length;
-        List<SubJobAssgined> pendingSubJobs =
-            itemList.where((subJob) => subJob.status == '102').toList();
         subjobListPending.value = pendingSubJobs.length;
-        onProcessJobs.value = onProcessJobs.value + pendingSubJobs.length;
-        List<SubJobAssgined> completedSubJobs =
-            itemList.where((subJob) => subJob.status == '103').toList();
+        onProcessJobs.value += pendingSubJobs.length;
         subjobListClosed.value = completedSubJobs.length;
-        List<SubJobAssgined> closedSubJobsOver = itemList
-            .where((subJob) =>
-                subJob.status == '103' &&
-                DateTime.parse(subJob.dueDate ?? '').isBefore(DateTime.now()))
-            .toList();
-        overdueJobs.value = overdueJobs.value + closedSubJobsOver.length;
-        // itemList.sort((a, b) => a.dueDate!.compareTo(b.dueDate!));
-        // List<SubJobAssgined> closedSubJob = itemList
-        //     .where((subJob) => stringToStatus(subJob.status ?? '') == 'closed')
-        //     .toList();
-        closedJobs.value = closedJobs.value + completedSubJobs.length;
-
-        // Set<String> uniqueBugIds = {};
-        // List<String> allIds = [];
-        // List<SubJobAssgined> filteredItemList = [];
-
-        // for (var subJob in itemList) {
-        //   if (!uniqueBugIds.contains(subJob.bugId)) {
-        //     uniqueBugIds.add(subJob.bugId ?? '');
-        //     allIds.add(subJob.id ?? '');
-        //     filteredItemList.add(subJob);
-        //     await fetchTicketJobs(subJob.bugId ?? '');
-        //   }
-        // }
-
+        overdueJobs.value += closedSubJobsOver.length;
+        closedJobs.value += completedSubJobs.length;
         subJobAssigned.value = itemList;
-      } else {
-        print('Failed to load data: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error: $e');
+      print(e.toString());
     }
   }
 }

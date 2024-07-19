@@ -53,7 +53,7 @@ class SpecicGravity extends GetxController {
             specicGravityClear();
             Navigator.pop(context);
           },
-          text: 'Confirm',
+          text: 'Save',
         ),
       ],
     ).showModal(context);
@@ -103,7 +103,7 @@ class SpecicGravity extends GetxController {
               specicGravityClear();
               Navigator.pop(context);
             },
-            text: 'Confirm')
+            text: 'Save')
       ],
     ).showModal(context);
   }
