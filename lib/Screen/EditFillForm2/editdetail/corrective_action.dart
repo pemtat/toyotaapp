@@ -66,7 +66,7 @@ class CorrectiveAction extends GetxController {
             correctiveAction.addAll(correctiveActionChoose);
             Navigator.pop(context);
           },
-          text: 'Confirm',
+          text: 'Save',
         ),
       ],
     ).showModal(context);

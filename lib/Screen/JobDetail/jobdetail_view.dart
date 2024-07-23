@@ -17,6 +17,7 @@ import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/intruction_widget.dart';
 import 'package:toyotamobile/Widget/moredetail.widget.dart';
+import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/signature_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
@@ -226,32 +227,6 @@ class JobDetailView extends StatelessWidget {
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  Obx(
-                                    () => jobController
-                                                .savedDateStartTime.value ==
-                                            ''
-                                        ? ButtonTime(
-                                            saveTime: (datetime) {
-                                              showTimeDialog(
-                                                  context,
-                                                  'Are you sure to confirm?',
-                                                  'No',
-                                                  'Yes',
-                                                  datetime,
-                                                  jobId ?? '',
-                                                  'timestart',
-                                                  ticketId);
-                                            },
-                                            time: jobController
-                                                .savedDateStartTime,
-                                            title: 'Start Time',
-                                          )
-                                        : Text(
-                                            "Start Time : ${jobController.savedDateStartTime.value}",
-                                            style: TextStyleList.text6,
-                                          ),
-                                  ),
-                                  10.kH,
                                   Text(
                                     'ภาพก่อนการเเก้ไข',
                                     style: TextStyleList.text11,
@@ -275,6 +250,35 @@ class JobDetailView extends StatelessWidget {
                                           'before',
                                           ticketId,
                                           jobId ?? '')),
+                                  10.kH,
+                                  Obx(() => jobController
+                                          .imagesBefore.isNotEmpty
+                                      ? Obx(
+                                          () => jobController.savedDateStartTime
+                                                      .value ==
+                                                  ''
+                                              ? ButtonTime(
+                                                  saveTime: (datetime) {
+                                                    showTimeDialog(
+                                                        context,
+                                                        'Are you sure to confirm?',
+                                                        'No',
+                                                        'Yes',
+                                                        datetime,
+                                                        jobId ?? '',
+                                                        'timestart',
+                                                        ticketId);
+                                                  },
+                                                  time: jobController
+                                                      .savedDateStartTime,
+                                                  title: 'Start Time',
+                                                )
+                                              : Text(
+                                                  "Start Time : ${jobController.savedDateStartTime.value}",
+                                                  style: TextStyleList.text6,
+                                                ),
+                                        )
+                                      : Container()),
                                   18.kH,
                                   Container(
                                     height: 0.5,
@@ -289,6 +293,87 @@ class JobDetailView extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
+                                            Text(
+                                              'ภาพหลังการเเก้ไข',
+                                              style: TextStyleList.text11,
+                                            ),
+                                            10.kH,
+                                            Obx(() => jobController
+                                                    .imagesAfter.isNotEmpty
+                                                ? AttachmentsListWidget(
+                                                    attachments: jobController
+                                                        .imagesAfter,
+                                                    edit: true,
+                                                    jobid: jobId ?? '',
+                                                    option: 'after',
+                                                  )
+                                                : Container()),
+                                            8.kH,
+                                            UploadImageWidget(
+                                              pickImage: () => pickImage(
+                                                  jobController.imagesAfter,
+                                                  jobController.isPicking,
+                                                  'after',
+                                                  ticketId,
+                                                  jobId ?? ''),
+                                            ),
+                                            10.kH,
+                                          ],
+                                        )
+                                      : Container()),
+                                  4.kH,
+                                  Obx(() => jobController.comment.value.text ==
+                                          ''
+                                      ? Column(
+                                          children: [
+                                            TextFieldType(
+                                              hintText: 'Add Comment',
+                                              textSet:
+                                                  jobController.comment.value,
+                                            ),
+                                            6.kH,
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () async {
+                                                    if (jobController.comment
+                                                            .value.text !=
+                                                        '') {
+                                                      await updateCommentJobs(
+                                                          jobId.toString(),
+                                                          jobController.comment
+                                                              .value.text,
+                                                          ticketId.toString());
+                                                      jobController.fetchData(
+                                                          ticketId.toString(),
+                                                          jobId.toString());
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    child: Text(
+                                                      'Submit',
+                                                      style:
+                                                          TextStyleList.text5,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        )
+                                      : ShowTextFieldType(
+                                          hintText: jobController
+                                              .comment.value.text)),
+                                  Obx(() => jobController
+                                              .imagesAfter.isNotEmpty &&
+                                          jobController.comment.value.text != ''
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            6.kH,
                                             Obx(() => jobController
                                                         .savedDateEndTime
                                                         .value ==
@@ -313,39 +398,10 @@ class JobDetailView extends StatelessWidget {
                                                     "End Time : ${jobController.savedDateEndTime.value}",
                                                     style: TextStyleList.text6,
                                                   )),
-                                            10.kH,
-                                            Text(
-                                              'ภาพหลังการเเก้ไข',
-                                              style: TextStyleList.text11,
-                                            ),
-                                            6.kH,
-                                            Obx(() => jobController
-                                                    .imagesAfter.isNotEmpty
-                                                ? AttachmentsListWidget(
-                                                    attachments: jobController
-                                                        .imagesAfter,
-                                                    edit: true,
-                                                    jobid: jobId ?? '',
-                                                    option: 'after',
-                                                  )
-                                                : Container()),
-                                            10.kH,
-                                            UploadImageWidget(
-                                              pickImage: () => pickImage(
-                                                  jobController.imagesAfter,
-                                                  jobController.isPicking,
-                                                  'after',
-                                                  ticketId,
-                                                  jobId ?? ''),
-                                            ),
                                             16.kH,
                                           ],
                                         )
                                       : Container()),
-                                  TextFieldType(
-                                    hintText: 'Add Comment',
-                                    textSet: jobController.comment.value,
-                                  ),
                                 ],
                               ),
                               BoxContainer(

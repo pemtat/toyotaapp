@@ -112,7 +112,7 @@ class BatteryCondition extends GetxController {
               );
             }
           },
-          text: 'Confirm',
+          text: 'Save',
         ),
       ],
     ).showModal(context);

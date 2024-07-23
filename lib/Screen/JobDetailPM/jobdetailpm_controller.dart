@@ -70,7 +70,9 @@ class JobDetailControllerPM extends GetxController {
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     await fetchPmJobInfo(jobId, token ?? '', pmInfo);
-
+    if (pmInfo.first.comment != null) {
+      comment.value.text = pmInfo.first.comment ?? '';
+    }
     if (pmInfo.first.tStart != null && pmInfo.first.tStart != '') {
       DateTime startTime = DateTime.parse(pmInfo.first.tStart!);
       DateTime adjustedStartTime = startTime.add(Duration(hours: 7));
@@ -93,7 +95,7 @@ class JobDetailControllerPM extends GetxController {
     try {
       if (pmInfo.first.jobImageStart!.isNotEmpty) {
         List<dynamic> imageBeforeList = pmInfo.first.jobImageStart!;
-        imagesBefore.clear;
+        imagesBefore.clear();
         for (int i = 0; i < imageBeforeList.length; i++) {
           imagesBefore.add({
             'id': imageBeforeList[i].id,
@@ -105,7 +107,7 @@ class JobDetailControllerPM extends GetxController {
 
       if (pmInfo.first.jobImageEnd!.isNotEmpty) {
         List<dynamic> imageAfterList = pmInfo.first.jobImageEnd!;
-        imagesAfter.clear;
+        imagesAfter.clear();
         for (int i = 0; i < imageAfterList.length; i++) {
           imagesAfter.add({
             'id': imageAfterList[i].id,

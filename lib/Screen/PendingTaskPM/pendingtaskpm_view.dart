@@ -20,6 +20,7 @@ import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
@@ -283,127 +284,127 @@ class PendingTaskViewPM extends StatelessWidget {
                                   isPicking: jobController.isPicking,
                                   addNote: jobController.addNote),
                               8.kH,
-                              BoxContainer(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: InkWell(
-                                          onTap: () => Get.to(() =>
-                                              CalendarView2(other: 'yes')),
-                                          child: InputDecorator(
-                                            decoration: InputDecoration(
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: <Widget>[
-                                                Text(
-                                                  'My Tasks',
-                                                  style: TextStyleList.text16,
-                                                ),
-                                                const Icon(
-                                                  Icons.calendar_today,
-                                                  size: 22,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      10.wH,
-                                      Expanded(
-                                        child: InkWell(
-                                          onTap: () => selectDate(context,
-                                              jobController.selectedDateTime),
-                                          child: InputDecorator(
-                                            decoration: InputDecoration(
-                                              labelText: "Reschedule",
-                                              labelStyle:
-                                                  TextStyleList.headtitle2,
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: <Widget>[
-                                                Obx(() {
-                                                  return Text(
-                                                    jobController
-                                                                .selectedDateTime
-                                                                .value !=
-                                                            null
-                                                        ? DateFormat.yMMMd()
-                                                            .add_jms()
-                                                            .format(jobController
-                                                                .selectedDateTime
-                                                                .value!)
-                                                        : 'Select Date',
-                                                    style: TextStyleList.text5,
-                                                  );
-                                                }),
-                                                Obx(() => jobController
-                                                            .selectedDateTime
-                                                            .value ==
-                                                        null
-                                                    ? const Icon(
-                                                        Icons.calendar_today,
-                                                        size: 22,
-                                                      )
-                                                    : Container()),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  15.kH,
-                                  Row(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          jobController.confirm.value =
-                                              !jobController.confirm.value;
-                                        },
-                                        child: Container(
-                                          width: 24,
-                                          height: 24,
-                                          decoration: BoxDecoration(
-                                            color: jobController.confirm.value
-                                                ? red1
-                                                : Colors.transparent,
-                                            border: !jobController.confirm.value
-                                                ? Border.all(color: Colors.grey)
-                                                : Border.all(
-                                                    color: Colors.transparent),
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                          ),
-                                          child: jobController.confirm.value
-                                              ? const Icon(Icons.check,
-                                                  color: Colors.white, size: 20)
-                                              : null,
-                                        ),
-                                      ),
-                                      8.wH,
-                                      Text(
-                                        'Confirm schedule',
-                                        style: TextStyleList.text9,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                              // BoxContainer(
+                              //   children: [
+                              //     Row(
+                              //       children: [
+                              //         Expanded(
+                              //           child: InkWell(
+                              //             onTap: () => Get.to(() =>
+                              //                 CalendarView2(other: 'yes')),
+                              //             child: InputDecorator(
+                              //               decoration: InputDecoration(
+                              //                 border: OutlineInputBorder(
+                              //                   borderRadius:
+                              //                       BorderRadius.circular(10.0),
+                              //                 ),
+                              //               ),
+                              //               child: Row(
+                              //                 mainAxisAlignment:
+                              //                     MainAxisAlignment
+                              //                         .spaceBetween,
+                              //                 children: <Widget>[
+                              //                   Text(
+                              //                     'My Tasks',
+                              //                     style: TextStyleList.text16,
+                              //                   ),
+                              //                   const Icon(
+                              //                     Icons.calendar_today,
+                              //                     size: 22,
+                              //                   ),
+                              //                 ],
+                              //               ),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //         10.wH,
+                              //         Expanded(
+                              //           child: InkWell(
+                              //             onTap: () => selectDate(context,
+                              //                 jobController.selectedDateTime),
+                              //             child: InputDecorator(
+                              //               decoration: InputDecoration(
+                              //                 labelText: "Reschedule",
+                              //                 labelStyle:
+                              //                     TextStyleList.headtitle2,
+                              //                 border: OutlineInputBorder(
+                              //                   borderRadius:
+                              //                       BorderRadius.circular(10.0),
+                              //                 ),
+                              //               ),
+                              //               child: Row(
+                              //                 mainAxisAlignment:
+                              //                     MainAxisAlignment
+                              //                         .spaceBetween,
+                              //                 children: <Widget>[
+                              //                   Obx(() {
+                              //                     return Text(
+                              //                       jobController
+                              //                                   .selectedDateTime
+                              //                                   .value !=
+                              //                               null
+                              //                           ? DateFormat.yMMMd()
+                              //                               .add_jms()
+                              //                               .format(jobController
+                              //                                   .selectedDateTime
+                              //                                   .value!)
+                              //                           : 'Select Date',
+                              //                       style: TextStyleList.text5,
+                              //                     );
+                              //                   }),
+                              //                   Obx(() => jobController
+                              //                               .selectedDateTime
+                              //                               .value ==
+                              //                           null
+                              //                       ? const Icon(
+                              //                           Icons.calendar_today,
+                              //                           size: 22,
+                              //                         )
+                              //                       : Container()),
+                              //                 ],
+                              //               ),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //     15.kH,
+                              //     Row(
+                              //       children: [
+                              //         GestureDetector(
+                              //           onTap: () {
+                              //             jobController.confirm.value =
+                              //                 !jobController.confirm.value;
+                              //           },
+                              //           child: Container(
+                              //             width: 24,
+                              //             height: 24,
+                              //             decoration: BoxDecoration(
+                              //               color: jobController.confirm.value
+                              //                   ? red1
+                              //                   : Colors.transparent,
+                              //               border: !jobController.confirm.value
+                              //                   ? Border.all(color: Colors.grey)
+                              //                   : Border.all(
+                              //                       color: Colors.transparent),
+                              //               borderRadius:
+                              //                   BorderRadius.circular(4),
+                              //             ),
+                              //             child: jobController.confirm.value
+                              //                 ? const Icon(Icons.check,
+                              //                     color: Colors.white, size: 20)
+                              //                 : null,
+                              //           ),
+                              //         ),
+                              //         8.wH,
+                              //         Text(
+                              //           'Confirm schedule',
+                              //           style: TextStyleList.text9,
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),
@@ -418,19 +419,83 @@ class PendingTaskViewPM extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         color: white3,
-        child: Container(
-          decoration: Decoration2(),
-          child: EndButton(
-            onPressed: () {
-              jobController.showAcceptDialog(
-                context,
-                'Are you sure to confirm?',
-                'No',
-                'Yes',
-              );
-            },
-            text: 'Update',
-          ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: EndButton(
+                onPressed: () {
+                  jobController.showAcceptDialog(
+                    context,
+                    'Are you sure to confirm?',
+                    'No',
+                    'Yes',
+                  );
+                },
+                text: 'Confirm',
+              ),
+            ),
+            7.wH,
+            Expanded(
+              child: EndButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: AppBar(
+                          centerTitle: true,
+                          automaticallyImplyLeading: false,
+                          backgroundColor: white4,
+                          title:
+                              Text('Cancel Job', style: TextStyleList.title1),
+                        ),
+                        backgroundColor: white4,
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            6.kH,
+                            TextFieldType(
+                              hintText: 'Remark',
+                              textSet: jobController.cancelNote.value,
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              'No',
+                              style: TextStyleList.text1,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              await cancelJobPM(
+                                ticketId.toString(),
+                                2,
+                                jobController.cancelNote.value.text,
+                              );
+                              homeController.fetchDataFromAssignJob();
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              'Yes',
+                              style: TextStyleList.text1,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                text: 'Cancel',
+              ),
+            ),
+          ],
         ),
       ),
     );

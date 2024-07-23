@@ -11,24 +11,9 @@ class BatteryInformation extends GetxController {
   int space = 24;
   void batteryInformationModal(BuildContext context) {
     batteryInfoClear();
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: 'Battery Information',
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Battery Information",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset("assets/x.png"),
-            ),
-          ],
-        ),
-        space.kH,
         TextFieldWidget(
           text: 'Battery Band',
           textSet: batteryBand.value,
@@ -85,22 +70,9 @@ class BatteryInformation extends GetxController {
   void batteryInformationEditModal(
       BuildContext context, BatteryInformationModel batteryInfo) {
     batteryInfoRead(batteryInfo);
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: 'Battery Information',
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Battery Information",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Image.asset("assets/x.png"))
-          ],
-        ),
         space.kH,
         TextFieldEditWidget(
           text: 'Battery Band',

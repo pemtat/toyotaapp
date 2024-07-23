@@ -56,27 +56,25 @@ class ShowModalWidget2 extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(preferredSize),
-        child: Column(
-          children: [
-            AppBar(
-              automaticallyImplyLeading: false,
-              title: Text(
-                title,
-                style: TextStyleList.subheading,
-              ),
-              actions: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: Image.asset("assets/x.png"),
-                  ),
-                ),
-              ],
+        child: SafeArea(
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(
+              title,
+              style: TextStyleList.subheading,
             ),
-          ],
+            actions: [
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Image.asset("assets/x.png"),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(

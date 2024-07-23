@@ -108,8 +108,8 @@ class TicketDetailController extends GetxController {
     } catch (e) {
       print("Error: $e");
     }
-    pdfList.clear;
-    fetchPdfData(ticketId, token ?? '', pdfList);
+    // pdfList.clear;
+    // fetchPdfData(ticketId, token ?? '', pdfList);
 
     final response = await http.get(
       Uri.parse(apiUrl),

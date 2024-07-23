@@ -81,9 +81,18 @@ class PmItemWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
-                  job.customerName,
-                  style: TextStyleList.text15,
+                Row(
+                  children: [
+                    Text(
+                      job.customerName,
+                      style: TextStyleList.text15,
+                    ),
+                    4.wH,
+                    Text(
+                      '(Service Zone ${job.serviceZoneCode})',
+                      style: TextStyleList.subtext4,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 2),
                 Row(

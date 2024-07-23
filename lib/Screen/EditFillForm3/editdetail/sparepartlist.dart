@@ -7,24 +7,22 @@ import 'package:toyotamobile/Styles/inputdecoraton.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
-import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
-class AdditSparepartList extends GetxController {
+class SparepartList extends GetxController {
   int space = 24;
-  void additSparePartListModal(BuildContext context) {
-    additSparePartClear();
-    chooseClear();
+  void sparePartListModal(BuildContext context) {
+    sparePartClear();
     ShowModalWidget(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Additional spare part list",
+              "Description Problem\n / Action and Result / \nRecommend spare part chaged",
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -73,6 +71,10 @@ class AdditSparepartList extends GetxController {
                     ),
                     subtitle: Text(
                       'No: ${product.no}',
+                      style: TextStyleList.text3,
+                    ),
+                    trailing: Text(
+                      product.inventory.toString(),
                       style: TextStyleList.text3,
                     ),
                     onTap: () {
@@ -172,20 +174,10 @@ class AdditSparepartList extends GetxController {
           ],
         ),
         space.kH,
-        CheckBoxNew(
-          text: 'Change Now',
-          itemSet: selectionsChoose,
-        ),
-        space.kH,
-        CheckBoxNew(
-          text: 'Change on PM',
-          itemSet: selectionsChoose2,
-        ),
-        space.kH,
         EndButton(
             onPressed: () {
-              additSparePartWrite();
-              additSparePartClear();
+              sparePartWrite();
+              sparePartClear();
               Navigator.pop(context);
             },
             text: 'Save')
@@ -193,8 +185,8 @@ class AdditSparepartList extends GetxController {
     ).showModal(context);
   }
 
-  void additSparePartListEditModal(BuildContext context, SparePartModel part) {
-    additSparePartRead(part);
+  void sparePartListEditModal(BuildContext context, SparePartModel part) {
+    sparePartRead(part);
     ShowModalWidget(
       children: [
         Row(
@@ -252,10 +244,13 @@ class AdditSparepartList extends GetxController {
                       'No: ${product.no}',
                       style: TextStyleList.text3,
                     ),
+                    trailing: Text(
+                      product.inventory.toString(),
+                      style: TextStyleList.text3,
+                    ),
                     onTap: () {
                       partNumber.value.text = product.no;
                       searchPartNumber.value.text = product.no;
-                      partDetails.value.text = product.model;
                       products.clear();
                     },
                   );
@@ -349,21 +344,11 @@ class AdditSparepartList extends GetxController {
           ],
         ),
         space.kH,
-        CheckBoxNew(
-          text: 'Change Now',
-          itemSet: selectionsChoose,
-        ),
-        space.kH,
-        CheckBoxNew(
-          text: 'Change on PM',
-          itemSet: selectionsChoose2,
-        ),
-        space.kH,
         EndButton(
             onPressed: () {
-              additSparePartUpdate(part);
-              additSparePartList.refresh();
-              additSparePartClear();
+              sparePartUpdate(part);
+              sparePartList.refresh();
+              sparePartClear();
               Navigator.pop(context);
             },
             text: 'Save')
@@ -372,17 +357,14 @@ class AdditSparepartList extends GetxController {
   }
 
   var quantity = 1.obs;
-  var additSparePartList = <SparePartModel>[].obs;
+  var sparePartList = <SparePartModel>[].obs;
   final cCodePage = TextEditingController().obs;
   final partNumber = TextEditingController().obs;
   final partDetails = TextEditingController().obs;
   final changeNow = TextEditingController().obs;
   final changeonPM = TextEditingController().obs;
   final searchPartNumber = TextEditingController().obs;
-  var selections = List<String>.filled(2, '').obs;
-  var selections2 = List<String>.filled(2, '').obs;
-  var selectionsChoose = List<String>.filled(2, '').obs;
-  var selectionsChoose2 = List<String>.filled(2, '').obs;
+
   var products = <Product>[].obs;
   var isLoading = false.obs;
   void increment() {
@@ -395,47 +377,27 @@ class AdditSparepartList extends GetxController {
     }
   }
 
-  void chooseAdd() {
-    selectionsChoose.addAll(selections);
-    selectionsChoose2.addAll(selections2);
-  }
-
-  void chooseClear() {
-    selectionsChoose.clear();
-    selectionsChoose2.clear();
-  }
-
-  void listAdd() {
-    selections.assignAll(selectionsChoose);
-    selections2.assignAll(selectionsChoose2);
-  }
-
-  void listClear() {
-    selections.clear();
-    selections2.clear();
-  }
-
-  void additSparePartRead(SparePartModel part) {
+  void sparePartRead(SparePartModel part) {
     cCodePage.value.text = part.cCodePage;
     partNumber.value.text = part.partNumber;
     partDetails.value.text = part.partDetails;
     quantity.value = part.quantity;
-    chooseClear();
-    selectionsChoose.add(part.changeNow ?? '-');
-    selectionsChoose2.add(part.changeOnPM ?? '-');
+    changeNow.value.text = part.changeNow ?? '-';
+    changeonPM.value.text = part.changeOnPM ?? '-';
     searchPartNumber.value.text = part.partNumber;
   }
 
-  void additSparePartClear() {
+  void sparePartClear() {
     cCodePage.value.clear();
     partNumber.value.clear();
     partDetails.value.clear();
     quantity.value = 1;
-
+    changeNow.value.clear();
+    changeonPM.value.clear();
     searchPartNumber.value.clear();
   }
 
-  void additSparePartWrite() {
+  void sparePartWrite() {
     String cCodePageValue =
         cCodePage.value.text != '' ? cCodePage.value.text : '-';
     String partNumberValue =
@@ -443,20 +405,20 @@ class AdditSparepartList extends GetxController {
     String partDetailsValue =
         partDetails.value.text != '' ? partDetails.value.text : '-';
     String changeNowValue =
-        selectionsChoose.isEmpty ? '-' : selectionsChoose.first;
+        changeNow.value.text != '' ? changeNow.value.text : '-';
     String changeOnPMValue =
-        selectionsChoose2.isEmpty ? '-' : selectionsChoose2.first;
-    additSparePartList.add(SparePartModel(
+        changeonPM.value.text != '' ? changeonPM.value.text : '-';
+    sparePartList.add(SparePartModel(
         cCodePage: cCodePageValue,
         partNumber: partNumberValue,
         partDetails: partDetailsValue,
         quantity: quantity.value,
         changeNow: changeNowValue,
         changeOnPM: changeOnPMValue,
-        additional: 1));
+        additional: 0));
   }
 
-  void additSparePartUpdate(SparePartModel part) {
+  void sparePartUpdate(SparePartModel part) {
     String cCodePageValue =
         cCodePage.value.text != '' ? cCodePage.value.text : '-';
     String partNumberValue =
@@ -464,9 +426,9 @@ class AdditSparepartList extends GetxController {
     String partDetailsValue =
         partDetails.value.text != '' ? partDetails.value.text : '-';
     String changeNowValue =
-        selectionsChoose.isEmpty ? '-' : selectionsChoose.first;
+        changeNow.value.text != '' ? changeNow.value.text : '-';
     String changeOnPMValue =
-        selectionsChoose2.isEmpty ? '-' : selectionsChoose2.first;
+        changeonPM.value.text != '' ? changeonPM.value.text : '-';
     part.cCodePage = cCodePageValue;
     part.partNumber = partNumberValue;
     part.partDetails = partDetailsValue;

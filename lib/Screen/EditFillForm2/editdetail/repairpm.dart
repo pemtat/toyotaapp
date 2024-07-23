@@ -66,7 +66,7 @@ class RepairPM extends GetxController {
             repairPm.addAll(repairPmChoose);
             Navigator.pop(context);
           },
-          text: 'Confirm',
+          text: 'Save',
         ),
       ],
     ).showModal(context);

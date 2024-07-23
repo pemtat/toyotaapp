@@ -605,7 +605,7 @@ void changeIssueStatus(int issueId, String status) async {
   }
 }
 
-void changeIssueStatusPM(
+Future<void> changeIssueStatusPM(
   String issueId,
   int status,
   String comment,
@@ -628,6 +628,36 @@ void changeIssueStatusPM(
       body: jsonEncode(body),
     );
     if (response.statusCode == 201) {
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print(e);
+  }
+}
+
+Future<void> cancelJobPM(
+  String issueId,
+  int status,
+  String comment,
+) async {
+  final String updateStatus = updateTechInfoJob();
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {};
+
+    body = {"job_id": issueId, "tech_status": status, "tech_remark": comment};
+
+    final response = await http.post(
+      Uri.parse(updateStatus),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+    if (response.statusCode == 200) {
+      print('Update Done');
     } else {
       print(response.statusCode);
     }
@@ -768,13 +798,12 @@ void saveCurrentDateTimeToPMJob(
 
 void updateStatusSubjobs(
   String jobId,
-  String comment,
   String ticketId,
 ) async {
   try {
     String? token = await getToken();
 
-    Map<String, dynamic> body = {'comment': comment, 'status': '103'};
+    Map<String, dynamic> body = {'status': '103'};
 
     final response = await http.put(
       Uri.parse(updateSubJobs(jobId)),
@@ -788,6 +817,33 @@ void updateStatusSubjobs(
     if (response.statusCode == 200) {
       print('Update status done');
       jobDetailController.fetchData(ticketId, jobId);
+    } else {}
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> updateCommentJobs(
+  String jobId,
+  String comment,
+  String ticketId,
+) async {
+  try {
+    String? token = await getToken();
+
+    Map<String, dynamic> body = {'comment': comment};
+
+    final response = await http.put(
+      Uri.parse(updateSubJobs(jobId)),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Update comment done');
     } else {}
   } catch (e) {
     print('Error: $e');

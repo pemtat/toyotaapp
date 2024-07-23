@@ -36,21 +36,7 @@ class CalendarItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Text(
-                  event['time'],
-                  style: TextStyleList.text2,
-                ),
-                const SizedBox(height: 4),
-                StatusButton(status: event['status']),
-              ],
-            ),
-          ),
           Expanded(
-            flex: 8,
             child: Container(
               padding: const EdgeInsets.only(left: 10),
               decoration: const BoxDecoration(
@@ -61,47 +47,80 @@ class CalendarItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  5.kH,
-                  if (event['type'] == EventType.Job) 5.kH,
+                  10.kH,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       event['type'] == EventType.Job
-                          ? Text(
-                              'Job ID : ${event['jobid'].toString().padLeft(4, '0')}',
-                              style: TextStyleList.text16,
+                          ? Row(
+                              children: [
+                                Text(
+                                  'Job ID : ${event['jobid'].toString().padLeft(4, '0')}',
+                                  style: TextStyleList.text9,
+                                ),
+                                4.wH,
+                                Text(
+                                  '(Ticket #${event['bugid'].toString().padLeft(4, '0')})',
+                                  style: TextStyleList.text1,
+                                ),
+                              ],
                             )
                           : Text(
                               'PM ID : ${event['jobid'].toString().padLeft(4, '0')}',
-                              style: TextStyleList.text16,
+                              style: TextStyleList.text9,
                             ),
-                      Obx(() => Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: InkWell(
-                              onTap: () {
-                                if (expandedTicketId.value == event['jobid']) {
-                                  expandedIndex.value = !expandedIndex.value;
-                                } else {
-                                  expandedIndex.value = true;
-                                  expandedTicketId.value = event['jobid'];
-                                }
-                              },
-                              child: expandedIndex.value &&
-                                      expandedTicketId.value == event['jobid']
-                                  ? const ArrowUp()
-                                  : const ArrowDown(),
-                            ),
-                          )),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 6),
+                        child: StatusButton(status: event['status']),
+                      ),
                     ],
                   ),
                   if (event['type'] == EventType.PM)
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          event['customerName'],
-                          style: TextStyleList.text15,
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  event['customerName'],
+                                  style: TextStyleList.text15,
+                                ),
+                                4.wH,
+                                Text(
+                                  '(${event['location']})',
+                                  style: TextStyleList.subtext4,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                          ],
                         ),
-                        const SizedBox(height: 5),
+                        Obx(() => Padding(
+                              padding: const EdgeInsets.only(right: 6.0),
+                              child: InkWell(
+                                onTap: () {
+                                  if (expandedTicketId.value ==
+                                      event['jobid']) {
+                                    expandedIndex.value = !expandedIndex.value;
+                                  } else {
+                                    expandedIndex.value = true;
+                                    expandedTicketId.value = event['jobid'];
+                                  }
+                                },
+                                child: expandedIndex.value &&
+                                        expandedTicketId.value == event['jobid']
+                                    ? const ArrowUp(
+                                        width: 30,
+                                        height: 30,
+                                      )
+                                    : const ArrowDown(
+                                        width: 30,
+                                        height: 30,
+                                      ),
+                              ),
+                            )),
                       ],
                     ),
                   if (event['type'] == EventType.Job)
@@ -109,11 +128,41 @@ class CalendarItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         3.kH,
-                        Text(
-                          event['description'] ?? '',
-                          style: TextStyleList.detail2,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              event['description'] ?? '',
+                              style: TextStyleList.detail2,
+                            ),
+                            Obx(() => Padding(
+                                  padding: const EdgeInsets.only(right: 6.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      if (expandedTicketId.value ==
+                                          event['jobid']) {
+                                        expandedIndex.value =
+                                            !expandedIndex.value;
+                                      } else {
+                                        expandedIndex.value = true;
+                                        expandedTicketId.value = event['jobid'];
+                                      }
+                                    },
+                                    child: expandedIndex.value &&
+                                            expandedTicketId.value ==
+                                                event['jobid']
+                                        ? const ArrowUp(
+                                            width: 30,
+                                            height: 30,
+                                          )
+                                        : const ArrowDown(
+                                            width: 30,
+                                            height: 30,
+                                          ),
+                                  ),
+                                )),
+                          ],
                         ),
-                        const SizedBox(height: 4),
                         Text(
                           event['task'] ?? '',
                           style: TextStyleList.text2,
@@ -122,16 +171,19 @@ class CalendarItem extends StatelessWidget {
                       ],
                     ),
                   if (event['type'] == EventType.Job)
-                    Column(
-                      children: [
-                        3.kH,
-                        Text(
-                          'Reported by ${event['customerName']}',
-                          style: TextStyleList.subtext1,
-                        ),
-                        const SizedBox(height: 5),
-                      ],
-                    ),
+                    Obx(() => (expandedIndex.value &&
+                            expandedTicketId.value == event['jobid'])
+                        ? Column(
+                            children: [
+                              3.kH,
+                              Text(
+                                'Reported by ${event['customerName']}',
+                                style: TextStyleList.subtext1,
+                              ),
+                              const SizedBox(height: 5),
+                            ],
+                          )
+                        : Container()),
                   if (event['bugid'] != '') 3.kH,
                   if (event['date'] != '')
                     Row(

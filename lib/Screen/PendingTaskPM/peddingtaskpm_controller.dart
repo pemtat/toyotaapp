@@ -19,9 +19,11 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
+import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
 class PendingTaskControllerPM extends GetxController {
   final notes = TextEditingController().obs;
+  final cancelNote = TextEditingController().obs;
   var notesFiles = <Notes>[].obs;
   final comment = TextEditingController().obs;
   var reportList = <BatteryReportModel>[].obs;

@@ -36,7 +36,9 @@ class ArrowLeft extends StatelessWidget {
 }
 
 class ArrowDown extends StatelessWidget {
-  const ArrowDown({super.key});
+  final double? width;
+  final double? height;
+  const ArrowDown({super.key, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +46,17 @@ class ArrowDown extends StatelessWidget {
       colorFilter: const ColorFilter.mode(black7, BlendMode.srcIn),
       child: Image.asset(
         'assets/arrowdown.png',
-        width: 24,
-        height: 24,
+        width: width ?? 24,
+        height: height ?? 24,
       ),
     );
   }
 }
 
 class ArrowUp extends StatelessWidget {
-  const ArrowUp({super.key});
+  final double? width;
+  final double? height;
+  const ArrowUp({super.key, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +67,8 @@ class ArrowUp extends StatelessWidget {
       ),
       child: Image.asset(
         'assets/arrowup.png',
-        width: 24,
-        height: 24,
+        width: width ?? 24,
+        height: height ?? 24,
       ),
     );
   }

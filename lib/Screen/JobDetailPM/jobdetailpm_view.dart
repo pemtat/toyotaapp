@@ -3,6 +3,7 @@ import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editfillform2_view.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editfillform3_view.dart';
 import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/FillForm3/fillform3_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
@@ -18,6 +19,7 @@ import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/intruction_widget.dart';
+import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/signature_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
@@ -202,32 +204,6 @@ class JobDetailViewPM extends StatelessWidget {
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  Obx(
-                                    () => jobController
-                                                .savedDateStartTime.value ==
-                                            ''
-                                        ? ButtonTime(
-                                            saveTime: (datetime) {
-                                              showTimeDialogPM(
-                                                  context,
-                                                  'Are you sure to confirm?',
-                                                  'No',
-                                                  'Yes',
-                                                  datetime,
-                                                  ticketId,
-                                                  'timestart',
-                                                  userData.id.toString());
-                                            },
-                                            time: jobController
-                                                .savedDateStartTime,
-                                            title: 'Start Time',
-                                          )
-                                        : Text(
-                                            "Start Time : ${jobController.savedDateStartTime.value}",
-                                            style: TextStyleList.text6,
-                                          ),
-                                  ),
-                                  10.kH,
                                   Text(
                                     'ภาพก่อนการเเก้ไข',
                                     style: TextStyleList.text11,
@@ -253,7 +229,35 @@ class JobDetailViewPM extends StatelessWidget {
                                         ticketId,
                                         userData.id.toString()),
                                   ),
-                                  18.kH,
+                                  10.kH,
+                                  Obx(() => jobController
+                                          .imagesBefore.isNotEmpty
+                                      ? Obx(
+                                          () => jobController.savedDateStartTime
+                                                      .value ==
+                                                  ''
+                                              ? ButtonTime(
+                                                  saveTime: (datetime) {
+                                                    showTimeDialogPM(
+                                                        context,
+                                                        'Are you sure to confirm?',
+                                                        'No',
+                                                        'Yes',
+                                                        datetime,
+                                                        ticketId,
+                                                        'timestart',
+                                                        userData.id.toString());
+                                                  },
+                                                  time: jobController
+                                                      .savedDateStartTime,
+                                                  title: 'Start Time',
+                                                )
+                                              : Text(
+                                                  "Start Time : ${jobController.savedDateStartTime.value}",
+                                                  style: TextStyleList.text6,
+                                                ),
+                                        )
+                                      : Container()),
                                   Obx(() => jobController
                                               .savedDateStartTime.value !=
                                           ''
@@ -261,31 +265,6 @@ class JobDetailViewPM extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Obx(() => jobController
-                                                        .savedDateEndTime
-                                                        .value ==
-                                                    ''
-                                                ? ButtonTime(
-                                                    saveTime: (datetime) {
-                                                      showTimeDialogPM(
-                                                          context,
-                                                          'Are you sure to confirm?',
-                                                          'No',
-                                                          'Yes',
-                                                          datetime,
-                                                          ticketId,
-                                                          'timeend',
-                                                          userData.id
-                                                              .toString());
-                                                    },
-                                                    time: jobController
-                                                        .savedDateEndTime,
-                                                    title: 'End Time',
-                                                  )
-                                                : Text(
-                                                    "End Time : ${jobController.savedDateEndTime.value}",
-                                                    style: TextStyleList.text6,
-                                                  )),
                                             10.kH,
                                             Text(
                                               'ภาพหลังการเเก้ไข',
@@ -313,15 +292,92 @@ class JobDetailViewPM extends StatelessWidget {
                                                   ticketId,
                                                   userData.id.toString()),
                                             ),
-                                            6.kH,
+                                            8.kH,
                                           ],
                                         )
                                       : Container()),
-                                  6.kH,
-                                  TextFieldType(
-                                    hintText: 'Add Comment',
-                                    textSet: jobController.comment.value,
-                                  ),
+                                  4.kH,
+                                  Obx(() => jobController.comment.value.text ==
+                                          ''
+                                      ? Column(
+                                          children: [
+                                            6.kH,
+                                            TextFieldType(
+                                              hintText: 'Add Comment',
+                                              textSet:
+                                                  jobController.comment.value,
+                                            ),
+                                            8.kH,
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () async {
+                                                    if (jobController.comment
+                                                            .value.text !=
+                                                        '') {
+                                                      await changeIssueStatusPM(
+                                                          ticketId.toString(),
+                                                          103,
+                                                          jobController.comment
+                                                              .value.text);
+                                                      await jobController
+                                                          .fetchData(ticketId
+                                                              .toString());
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    child: Text(
+                                                      'Submit',
+                                                      style:
+                                                          TextStyleList.text5,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        )
+                                      : ShowTextFieldType(
+                                          hintText: jobController
+                                              .comment.value.text)),
+                                  Obx(() => jobController
+                                              .imagesAfter.isNotEmpty &&
+                                          jobController.comment.value.text != ''
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            6.kH,
+                                            Obx(() => jobController
+                                                        .savedDateEndTime
+                                                        .value ==
+                                                    ''
+                                                ? ButtonTime(
+                                                    saveTime: (datetime) {
+                                                      showTimeDialogPM(
+                                                          context,
+                                                          'Are you sure to confirm?',
+                                                          'No',
+                                                          'Yes',
+                                                          datetime,
+                                                          ticketId,
+                                                          'timeend',
+                                                          userData.id
+                                                              .toString());
+                                                    },
+                                                    time: jobController
+                                                        .savedDateEndTime,
+                                                    title: 'End Time',
+                                                  )
+                                                : Text(
+                                                    "End Time : ${jobController.savedDateEndTime.value}",
+                                                    style: TextStyleList.text6,
+                                                  )),
+                                          ],
+                                        )
+                                      : Container()),
                                 ],
                               ),
                               8.kH,
@@ -410,7 +466,7 @@ class JobDetailViewPM extends StatelessWidget {
                                               .isNotEmpty
                                           ? EditButton(
                                               onTap: () {
-                                                Get.to(() => FillFormView3(
+                                                Get.to(() => EditFillFormView3(
                                                       jobId: ticketId,
                                                     ));
                                               },

@@ -434,3 +434,82 @@ class OldCheckBoxList extends StatelessWidget {
         ));
   }
 }
+
+class CheckBoxNew extends StatelessWidget {
+  final String text;
+  final RxList<String> itemSet;
+  const CheckBoxNew({
+    super.key,
+    required this.text,
+    required this.itemSet,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(text, style: TextStyleList.text9),
+        ),
+        GestureDetector(
+          onTap: () {
+            updateCheckbox2(text, itemSet);
+          },
+          child: Obx(
+            () => SizedBox(
+              width: 70,
+              height: 30,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: !itemSet.contains(text) ? 30 : 0,
+                    child: Container(
+                      width: 35,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: itemSet.contains(text)
+                            ? const BorderRadius.only(
+                                topLeft: Radius.circular(6),
+                                bottomLeft: Radius.circular(6),
+                                bottomRight: Radius.circular(0),
+                                topRight: Radius.circular(0))
+                            : BorderRadius.all(Radius.circular(6)),
+                        border: itemSet.contains(text)
+                            ? Border.all(color: Colors.grey)
+                            : Border(
+                                top: BorderSide(color: Colors.grey),
+                                bottom: BorderSide(color: Colors.grey),
+                                right: BorderSide(color: Colors.grey)),
+                        color: itemSet.contains(text) ? white3 : white3,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: itemSet.contains(text) ? 30 : 0,
+                    child: Container(
+                      width: 35,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: itemSet.contains(text)
+                            ? const BorderRadius.only(
+                                topLeft: Radius.circular(6),
+                                bottomLeft: Radius.circular(6),
+                                bottomRight: Radius.circular(6),
+                                topRight: Radius.circular(6))
+                            : BorderRadius.all(Radius.circular(6)),
+                        border: !itemSet.contains(text)
+                            ? Border.all(color: Colors.grey)
+                            : Border.all(color: Colors.transparent),
+                        color: !itemSet.contains(text) ? black15 : red7,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

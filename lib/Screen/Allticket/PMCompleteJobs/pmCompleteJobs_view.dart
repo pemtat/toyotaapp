@@ -117,14 +117,14 @@ class PmCompleteJobsView extends StatelessWidget {
                                         ticketId: job.id.toString(),
                                       ));
                                 },
-                                child: PmItemWidget(
-                                  job: job,
-                                  expandedIndex:
-                                      pmCompleteController.expandedIndex,
-                                  jobController: jobController,
-                                  sidebar: SidebarColor.getColor(
-                                      stringToStatus(job.status ?? '')),
-                                ),
+                                // child: PmItemWidget(
+                                //   job: job,
+                                //   expandedIndex:
+                                //       pmCompleteController.expandedIndex,
+                                //   jobController: jobController,
+                                //   sidebar: SidebarColor.getColor(
+                                //       stringToStatus(job.status ?? '')),
+                                // ),
                               );
                             },
                           );

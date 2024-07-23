@@ -43,7 +43,7 @@ class PeddingtaskController extends GetxController {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
 
-    await fetchPdfData(ticketId, token ?? '', pdfList);
+    // await fetchPdfData(ticketId, token ?? '', pdfList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
     await fetchUserById(subJobs.first.reporterId ?? '', userData);
     await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);

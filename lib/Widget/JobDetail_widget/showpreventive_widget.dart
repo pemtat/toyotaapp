@@ -170,7 +170,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 space2.kH,
                 TitleApp2(
                   text:
-                      'ผลการตรวจเช็คเเละการบำรุงรักษา\n(Maintenance and service resul)',
+                      'ผลการตรวจเช็คเเละการบำรุงรักษา\n(Maintenance and service result)',
                   moreText: maintenance.mtServiceResult == ''
                       ? '-'
                       : maintenance.mtServiceResult,
@@ -227,7 +227,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
 
   String checkStatus(String ok, String poor) {
     if (ok == '1' && poor == '0') {
-      return 'Ok';
+      return 'Good';
     } else if (ok == '0' && poor == '1') {
       return 'Poor';
     } else if (ok == '0' && poor == '0') {

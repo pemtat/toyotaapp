@@ -102,17 +102,17 @@ class AccountView extends StatelessWidget {
                 ),
               ),
               8.kH,
-              BoxContainer(
-                children: [
-                  TitleWithButton2(
-                    titleText: 'My Task History',
-                    onTap: () {
-                      Get.to(() => const TaskHistoryView());
-                    },
-                    button: true,
-                  )
-                ],
-              ),
+              // BoxContainer(
+              //   children: [
+              //     TitleWithButton2(
+              //       titleText: 'My Task History',
+              //       onTap: () {
+              //         Get.to(() => const TaskHistoryView());
+              //       },
+              //       button: true,
+              //     )
+              //   ],
+              // ),
               BoxContainer(
                 children: [
                   TitleWithButton2(

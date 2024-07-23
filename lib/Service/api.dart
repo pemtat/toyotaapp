@@ -52,6 +52,10 @@ String createPreventiveReport() {
   return '$url/api/rest/pm_jobs/create_pvt_maintenance';
 }
 
+String updatePreventiveReport() {
+  return '$url/api/rest/pm_jobs/update_pvt_maintenance';
+}
+
 String getPmJobInfoById(String id) {
   return '$url/api/rest/pm_jobs/job_working_details?job_id=$id';
 }
@@ -74,6 +78,10 @@ String updateIssueStatusById(int issueId) {
 
 String updateJobStatusByIdPM() {
   return '$url/api/rest/pm_jobs/update_status_job';
+}
+
+String updateTechInfoJob() {
+  return '$url/api/rest/issues/update_tech';
 }
 
 String updateJobIssueByIdPM() {

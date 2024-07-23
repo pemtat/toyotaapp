@@ -192,16 +192,17 @@ class EditFillformController2 extends GetxController {
     if (info1.repairPm != '')
       repairPmController.repairPm.add(info1.repairPm ?? '');
 
-    bool areAllDescriptionsEmpty = condition.every((item) =>
-        item.description == '' || item.checking == '' || item.status == '');
-
-    if (areAllDescriptionsEmpty)
-      for (var i = 0; i < condition.length; i++) {
-        batteryConditionController.selections[i] = condition[i].status ?? '';
-        batteryConditionController.additional[i] = condition[i].checking ?? '';
-        batteryConditionController.remarks[i] = condition[i].description ?? '';
+    for (var i = 0; i < condition.length; i++) {
+      if (condition[i].status != '' ||
+          condition[i].checking != '' ||
+          condition[i].description != '') {
         batteryConditionController.isAllFieldsFilled.value = true;
       }
+
+      batteryConditionController.selections[i] = condition[i].status ?? '';
+      batteryConditionController.additional[i] = condition[i].checking ?? '';
+      batteryConditionController.remarks[i] = condition[i].description ?? '';
+    }
   }
 
   Future<void> saveReport(BuildContext context) async {
@@ -305,7 +306,8 @@ class EditFillformController2 extends GetxController {
             batteryusage.chargingType.first == 'Charge when needed')
         ? 1
         : 0;
-
+    print(specicGravity);
+    print(combinedList);
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
       "battery_band": batteryinformation.batteryBand,

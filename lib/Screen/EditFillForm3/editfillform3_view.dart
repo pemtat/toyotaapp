@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/auxiliarymotor.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/batterychecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/brakesystemchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/chargerchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/chassischeck.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/controllerlogic.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/drivemotorchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/forspecial.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/hydraulicmotor.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/initialchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/maintenance.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/mastchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/meterialhandling.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/powertrainchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/process_staff.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/ptpsos.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/safety.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/sparepartlist.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/steeringmotor.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/vnaom.dart';
-import 'package:toyotamobile/Screen/FillForm3/fillform3_controller.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/auxiliarymotor.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/batterychecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/brakesystemchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/chargerchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/chassischeck.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/controllerlogic.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/drivemotorchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/forspecial.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/hydraulicmotor.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/initialchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/maintenance.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/mastchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/meterialhandling.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/powertrainchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/process_staff.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/ptpsos.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/safety.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/sparepartlist.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/steeringmotor.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/vnaom.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/EditFillForm3_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/FIllForm3_widget/maintenance_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm3_widget/sparepart_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm3_widget/listcheck_widget.dart';
+import 'package:toyotamobile/Widget/EditFillForm3_widget/maintenance_widget.dart';
+import 'package:toyotamobile/Widget/EditFillForm3_widget/sparepart_widget.dart';
+import 'package:toyotamobile/Widget/EditFillForm3_widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -36,9 +36,9 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 
-class FillFormView3 extends StatelessWidget {
+class EditFillFormView3 extends StatelessWidget {
   final String jobId;
-  FillFormView3({super.key, required this.jobId}) {
+  EditFillFormView3({super.key, required this.jobId}) {
     fillformController3.fetchData(jobId);
   }
   final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());

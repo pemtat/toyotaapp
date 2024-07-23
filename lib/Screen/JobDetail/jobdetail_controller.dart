@@ -65,7 +65,7 @@ class JobDetailController extends GetxController {
       jobId = subjobId;
       pdfList.clear;
       fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
-      fetchPdfData(ticketId, token ?? '', pdfList);
+      // fetchPdfData(ticketId, token ?? '', pdfList);
 
       await fetchSubJob(subjobId, token ?? '', subJobs);
       await fetchUserById(subJobs.first.reporterId ?? '', userData);
@@ -75,6 +75,9 @@ class JobDetailController extends GetxController {
       savedDateStartTime.value =
           formatDateTimeCut(subJobs.first.timeStart ?? '');
       savedDateEndTime.value = formatDateTimeCut(subJobs.first.timeEnd ?? '');
+      if (subJobs.first.comment != null) {
+        comment.value.text = subJobs.first.comment ?? '';
+      }
       if (imagesBefore.isNotEmpty) imagesBefore.clear();
 
       if (imagesAfter.isNotEmpty) imagesAfter.clear();
@@ -220,7 +223,7 @@ class JobDetailController extends GetxController {
           rightButton: right,
           onRightButtonPressed: () {
             saveCurrentDateTime(saveCompletedtime);
-            updateStatusSubjobs(jobId, comment.value.text, issueId.toString());
+            updateStatusSubjobs(jobId, issueId.toString());
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
           },

@@ -189,8 +189,10 @@ class HomeController extends GetxController {
 
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(response.body);
-        List<PmModel> itemList =
-            responseData.map((job) => PmModel.fromJson(job)).toList();
+        List<PmModel> itemList = responseData
+            .map((job) => PmModel.fromJson(job))
+            .where((job) => job.techStatus == '0')
+            .toList();
 
         totalJobs.value += itemList.length;
 
@@ -217,10 +219,6 @@ class HomeController extends GetxController {
               }
               break;
           }
-
-          if (pm.serviceZoneCode != null) {
-            serviceZoneSet.add(pm.serviceZoneCode!);
-          }
         }
 
         pmjobList.value = pendingPmItems.length;
@@ -244,6 +242,7 @@ class HomeController extends GetxController {
 
   Future<void> fetchPMdataPage(int page) async {
     await userController.fetchData();
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     try {

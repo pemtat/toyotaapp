@@ -7,6 +7,7 @@ import 'package:toyotamobile/Styles/inputdecoraton.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
@@ -16,6 +17,7 @@ class SparepartList extends GetxController {
   int space = 24;
   void sparePartListModal(BuildContext context) {
     sparePartClear();
+    chooseClear();
     ShowModalWidget(
       children: [
         Row(
@@ -170,14 +172,14 @@ class SparepartList extends GetxController {
           ],
         ),
         space.kH,
-        TextFieldWidget(
+        CheckBoxNew(
           text: 'Change Now',
-          textSet: changeNow.value,
+          itemSet: selectionsChoose,
         ),
         space.kH,
-        TextFieldWidget(
+        CheckBoxNew(
           text: 'Change on PM',
-          textSet: changeonPM.value,
+          itemSet: selectionsChoose2,
         ),
         space.kH,
         EndButton(
@@ -347,14 +349,14 @@ class SparepartList extends GetxController {
           ],
         ),
         space.kH,
-        TextFieldEditWidget(
+        CheckBoxNew(
           text: 'Change Now',
-          textSet: changeNow.value,
+          itemSet: selectionsChoose,
         ),
         space.kH,
-        TextFieldEditWidget(
+        CheckBoxNew(
           text: 'Change on PM',
-          textSet: changeonPM.value,
+          itemSet: selectionsChoose2,
         ),
         space.kH,
         EndButton(
@@ -377,7 +379,10 @@ class SparepartList extends GetxController {
   final changeNow = TextEditingController().obs;
   final changeonPM = TextEditingController().obs;
   final searchPartNumber = TextEditingController().obs;
-
+  var selections = List<String>.filled(2, '').obs;
+  var selections2 = List<String>.filled(2, '').obs;
+  var selectionsChoose = List<String>.filled(2, '').obs;
+  var selectionsChoose2 = List<String>.filled(2, '').obs;
   var products = <Product>[].obs;
   var isLoading = false.obs;
   void increment() {
@@ -390,13 +395,34 @@ class SparepartList extends GetxController {
     }
   }
 
+  void chooseAdd() {
+    selectionsChoose.addAll(selections);
+    selectionsChoose2.addAll(selections2);
+  }
+
+  void chooseClear() {
+    selectionsChoose.clear();
+    selectionsChoose2.clear();
+  }
+
+  void listAdd() {
+    selections.assignAll(selectionsChoose);
+    selections2.assignAll(selectionsChoose2);
+  }
+
+  void listClear() {
+    selections.clear();
+    selections2.clear();
+  }
+
   void sparePartRead(SparePartModel part) {
     cCodePage.value.text = part.cCodePage;
     partNumber.value.text = part.partNumber;
     partDetails.value.text = part.partDetails;
     quantity.value = part.quantity;
-    changeNow.value.text = part.changeNow ?? '-';
-    changeonPM.value.text = part.changeOnPM ?? '-';
+    chooseClear();
+    selectionsChoose.add(part.changeNow ?? '-');
+    selectionsChoose2.add(part.changeOnPM ?? '-');
     searchPartNumber.value.text = part.partNumber;
   }
 
@@ -405,8 +431,6 @@ class SparepartList extends GetxController {
     partNumber.value.clear();
     partDetails.value.clear();
     quantity.value = 1;
-    changeNow.value.clear();
-    changeonPM.value.clear();
     searchPartNumber.value.clear();
   }
 
@@ -418,9 +442,9 @@ class SparepartList extends GetxController {
     String partDetailsValue =
         partDetails.value.text != '' ? partDetails.value.text : '-';
     String changeNowValue =
-        changeNow.value.text != '' ? changeNow.value.text : '-';
+        selectionsChoose.isEmpty ? '-' : selectionsChoose.first;
     String changeOnPMValue =
-        changeonPM.value.text != '' ? changeonPM.value.text : '-';
+        selectionsChoose2.isEmpty ? '-' : selectionsChoose2.first;
     sparePartList.add(SparePartModel(
         cCodePage: cCodePageValue,
         partNumber: partNumberValue,
@@ -439,9 +463,9 @@ class SparepartList extends GetxController {
     String partDetailsValue =
         partDetails.value.text != '' ? partDetails.value.text : '-';
     String changeNowValue =
-        changeNow.value.text != '' ? changeNow.value.text : '-';
+        selectionsChoose.isEmpty ? '-' : selectionsChoose.first;
     String changeOnPMValue =
-        changeonPM.value.text != '' ? changeonPM.value.text : '-';
+        selectionsChoose2.isEmpty ? '-' : selectionsChoose2.first;
     part.cCodePage = cCodePageValue;
     part.partNumber = partNumberValue;
     part.partDetails = partDetailsValue;

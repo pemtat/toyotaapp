@@ -10,6 +10,7 @@ import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
 import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
 import 'package:toyotamobile/Screen/PendingTaskPM/pendingtaskpm_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
+import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
 import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
@@ -96,22 +97,17 @@ class HomeView extends StatelessWidget {
                                 style: TextStyleList.title2,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'Service Zone : ',
-                                    style: TextStyleList.title3,
-                                  ),
-                                  Wrap(
-                                      children: jobController.serviceZoneSet
-                                          .map((zone) {
-                                    return Text(
-                                      '$zone ',
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'Service Zone : ',
                                       style: TextStyleList.title3,
-                                    );
-                                  }).toList()),
-                                ],
-                              ),
+                                    ),
+                                    Text(
+                                      userData.zone,
+                                      style: TextStyleList.title3,
+                                    ),
+                                  ]),
                             ],
                           ),
                         );

@@ -5,27 +5,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/maintenance_model.dart';
+import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/auxiliarymotor.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/batterychecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/brakesystemchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/chargerchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/chassischeck.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/controllerlogic.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/drivemotorchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/forspecial.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/hydraulicmotor.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/initialchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/maintenance.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/mastchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/meterialhandling.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/powertrainchecks.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/process_staff.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/ptpsos.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/safety.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/sparepartlist.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/steeringmotor.dart';
-import 'package:toyotamobile/Screen/FillForm3/adddetail/vnaom.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/auxiliarymotor.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/batterychecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/brakesystemchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/chargerchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/chassischeck.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/controllerlogic.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/drivemotorchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/forspecial.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/hydraulicmotor.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/initialchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/maintenance.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/mastchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/meterialhandling.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/powertrainchecks.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/process_staff.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/ptpsos.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/safety.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/sparepartlist.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/steeringmotor.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editdetail/vnaom.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
@@ -37,6 +40,7 @@ class FillformController3 extends GetxController {
   var jobId = ''.obs;
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
+  var reportPreventiveList = <PreventivereportModel>[].obs;
   final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());
   final DriveMotorChecks driveMotorChecks = Get.put(DriveMotorChecks());
   final InitialChecks initialChecks = Get.put(InitialChecks());
@@ -71,7 +75,217 @@ class FillformController3 extends GetxController {
 
   void fetchData(String jobId) async {
     this.jobId.value = jobId;
+    String? token = await getToken();
     await userController.fetchData();
+    await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
+    var data = reportPreventiveList.first;
+    var fullMaintenanceRecords = data.pvtCheckingTypeMaster;
+    var maintenances = data.pvtMaintenance;
+    var sparePart = data.darDetails;
+
+    if (fullMaintenanceRecords != []) {
+      for (var i = 0; i < fullMaintenanceRecords!.length; i++) {
+        final data = fullMaintenanceRecords[i];
+
+        for (var j = 0; j < data.maintenanceRecords!.length; j++) {
+          final subData = data.maintenanceRecords![j];
+          String choose = checkStatus(subData.ok ?? '', subData.poor ?? '');
+
+          if (choose != '' ||
+              subData.data1 != '' ||
+              subData.data2 != '' ||
+              subData.remark != '') {
+            if (i == 0) {
+              initialChecks.selections[j] = choose;
+              initialChecks.remarks[j] = subData.remark ?? '';
+              initialChecks.remarksChoose[j] = subData.remark ?? '';
+              initialChecks.isAllFieldsFilled.value = true;
+            } else if (i == 1) {
+              chassisChecks.selections[j] = choose;
+              chassisChecks.remarks[j] = subData.remark ?? '';
+              chassisChecks.remarksChoose[j] = subData.remark ?? '';
+              chassisChecks.additional[j] = subData.data1 ?? '';
+              chassisChecks.additionalChoose[j] = subData.data1 ?? '';
+              chassisChecks.isAllFieldsFilled.value = true;
+            } else if (i == 2) {
+              hydraulicmMotor.selections[j] = choose;
+              hydraulicmMotor.remarks[j] = subData.remark ?? '';
+              hydraulicmMotor.remarksChoose[j] = subData.remark ?? '';
+              hydraulicmMotor.additional[j] = subData.data1 ?? '';
+              hydraulicmMotor.additionalChoose[j] = subData.data1 ?? '';
+              hydraulicmMotor.isAllFieldsFilled.value = true;
+            } else if (i == 3) {
+              steeringMotor.selections[j] = choose;
+              steeringMotor.remarks[j] = subData.remark ?? '';
+              steeringMotor.remarksChoose[j] = subData.remark ?? '';
+              steeringMotor.additional[j] = subData.data1 ?? '';
+              steeringMotor.additionalChoose[j] = subData.data1 ?? '';
+              steeringMotor.isAllFieldsFilled.value = true;
+            } else if (i == 4) {
+              auxiliaryMotor.selections[j] = choose;
+              auxiliaryMotor.remarks[j] = subData.remark ?? '';
+              auxiliaryMotor.remarksChoose[j] = subData.remark ?? '';
+              auxiliaryMotor.additional[j] = subData.data1 ?? '';
+              auxiliaryMotor.additionalChoose[j] = subData.data1 ?? '';
+              auxiliaryMotor.isAllFieldsFilled.value = true;
+            } else if (i == 5) {
+              driveMotorChecks.selections[j] = choose;
+              driveMotorChecks.remarks[j] = subData.remark ?? '';
+              driveMotorChecks.remarksChoose[j] = subData.remark ?? '';
+              driveMotorChecks.additional[j] = subData.data1 ?? '';
+              driveMotorChecks.additionalChoose[j] = subData.data1 ?? '';
+              driveMotorChecks.isAllFieldsFilled.value = true;
+            } else if (i == 6) {
+              breakSystemChecks.selections[j] = choose;
+              breakSystemChecks.remarks[j] = subData.remark ?? '';
+              breakSystemChecks.remarksChoose[j] = subData.remark ?? '';
+              breakSystemChecks.additional[j] = subData.data1 ?? '';
+              breakSystemChecks.additionalChoose[j] = subData.data1 ?? '';
+              breakSystemChecks.isAllFieldsFilled.value = true;
+            } else if (i == 7) {
+              controllerLogic.selections[j] = choose;
+              controllerLogic.remarks[j] = subData.remark ?? '';
+              controllerLogic.remarksChoose[j] = subData.remark ?? '';
+              controllerLogic.additional[j] = subData.data1 ?? '';
+              controllerLogic.isAllFieldsFilled.value = true;
+            } else if (i == 8) {
+              powertrainChecks.selections[j] = choose;
+              powertrainChecks.remarks[j] = subData.remark ?? '';
+              powertrainChecks.remarksChoose[j] = subData.remark ?? '';
+              powertrainChecks.additional[j] = subData.data1 ?? '';
+              powertrainChecks.isAllFieldsFilled.value = true;
+            } else if (i == 9) {
+              batteryChecks.selections[j] = choose;
+              batteryChecks.remarks[j] = subData.remark ?? '';
+              batteryChecks.remarksChoose[j] = subData.remark ?? '';
+              batteryChecks.additional[j] = subData.data1 ?? '';
+              batteryChecks.additionalChoose[j] = subData.data1 ?? '';
+              if (choose != '' ||
+                  subData.data1 != '' ||
+                  subData.data2 != '' ||
+                  subData.remark != '') {
+                batteryChecks.isAllFieldsFilled.value = true;
+              }
+              if (subData.data2!.contains(',')) {
+                var splitData = subData.data2!.split(',');
+                batteryChecks.additional2[j][0] = splitData[0].trim();
+                batteryChecks.additional2[j][1] = splitData[1].trim();
+                batteryChecks.additionalChoose2[j][0] = splitData[0].trim();
+                batteryChecks.additionalChoose2[j][1] = splitData[1].trim();
+              } else {
+                batteryChecks.additional2[j][0] = subData.data2 ?? '';
+                batteryChecks.additional2[j][1] = subData.data2 ?? '';
+                batteryChecks.additionalChoose2[j][0] = subData.data2 ?? '';
+                batteryChecks.additionalChoose2[j][1] = subData.data2 ?? '';
+              }
+            } else if (i == 10) {
+              chargerChecks.selections[j] = choose;
+              chargerChecks.remarks[j] = subData.remark ?? '';
+              chargerChecks.remarksChoose[j] = subData.remark ?? '';
+              chargerChecks.isAllFieldsFilled.value = true;
+            } else if (i == 11) {
+              meterialHandling.selections[j] = choose;
+              meterialHandling.remarks[j] = subData.remark ?? '';
+              meterialHandling.remarksChoose[j] = subData.remark ?? '';
+              meterialHandling.additional[j] = subData.data1 ?? '';
+              meterialHandling.additionalChoose[j] = subData.data1 ?? '';
+              meterialHandling.isAllFieldsFilled.value = true;
+            } else if (i == 12) {
+              mastChecks.selections[j] = choose;
+              mastChecks.remarks[j] = subData.remark ?? '';
+              mastChecks.remarksChoose[j] = subData.remark ?? '';
+              mastChecks.additional[j] = subData.data1 ?? '';
+              mastChecks.additionalChoose[j] = subData.data1 ?? '';
+              if (choose != '' ||
+                  subData.data1 != '' ||
+                  subData.data2 != '' ||
+                  subData.remark != '') {
+                mastChecks.isAllFieldsFilled.value = true;
+              }
+              if (subData.data2!.contains(',')) {
+                var splitData = subData.data2!.split(',');
+                mastChecks.additional2[j][0] = splitData[0].trim();
+                mastChecks.additional2[j][1] = splitData[1].trim();
+                mastChecks.additionalChoose2[j][0] = splitData[0].trim();
+                mastChecks.additionalChoose2[j][1] = splitData[1].trim();
+              } else {
+                mastChecks.additional2[j][0] = subData.data2 ?? '';
+                mastChecks.additional2[j][1] = subData.data2 ?? '';
+                mastChecks.additionalChoose2[j][0] = subData.data2 ?? '';
+                mastChecks.additionalChoose2[j][1] = subData.data2 ?? '';
+              }
+            } else if (i == 13) {
+              ptPsOm.selections[j] = choose;
+              ptPsOm.remarks[j] = subData.remark ?? '';
+              ptPsOm.remarksChoose[j] = subData.remark ?? '';
+              ptPsOm.additional[j] = subData.data1 ?? '';
+              ptPsOm.additionalChoose[j] = subData.data1 ?? '';
+              ptPsOm.isAllFieldsFilled.value = true;
+            } else if (i == 14) {
+              vnaOm.selections[j] = choose;
+              vnaOm.remarks[j] = subData.remark ?? '';
+              vnaOm.remarksChoose[j] = subData.remark ?? '';
+              vnaOm.additional[j] = subData.data1 ?? '';
+              vnaOm.additionalChoose[j] = subData.data1 ?? '';
+              vnaOm.isAllFieldsFilled.value = true;
+            } else if (i == 15) {
+              forSpecial.selections[j] = choose;
+              forSpecial.remarks[j] = subData.remark ?? '';
+              forSpecial.remarksChoose[j] = subData.remark ?? '';
+              forSpecial.isAllFieldsFilled.value = true;
+            }
+          }
+        }
+      }
+    }
+    if (maintenances != []) {
+      if (maintenances!.safetyTravelAlarm == '' &&
+          maintenances.safetyRearviewMirror == '' &&
+          maintenances.safetySeatBelt == '') {
+        safety.isAllFieldsFilled.value = false;
+      } else {
+        safety.isAllFieldsFilled.value = true;
+      }
+
+      safety.selections[0] = maintenances!.safetyTravelAlarm ?? '';
+      safety.selections[1] = maintenances.safetyRearviewMirror ?? '';
+      safety.selections[2] = maintenances.safetySeatBelt ?? '';
+
+      var chargingTypeChoose = <String>[].obs;
+      if (maintenances.mtServiceResult != '') {
+        chargingTypeChoose.add(maintenances.mtServiceResult ?? '');
+      }
+
+      final newBatteryInfo = MaintenanceModel(
+          people: double.tryParse(maintenances.m ?? '0') ?? 0,
+          hr: double.tryParse(maintenances.hr ?? '0') ?? 0,
+          chargingType: chargingTypeChoose);
+      maintenance.maintenanceList.add(newBatteryInfo);
+
+      if (maintenances.officerChecking != '') {
+        processStaff.repairStaff.add(maintenances.officerChecking ?? '');
+      }
+    }
+
+    if (sparePart != []) {
+      var sparePartListData = <SparePartModel>[].obs;
+      if (sparePart!.first.qty != '0') {
+        for (var i = 0; i < sparePart.length; i++) {
+          {
+            sparePartListData.add(SparePartModel(
+                cCodePage: sparePart[i].pageCode ?? '',
+                partNumber: sparePart[i].partNumber ?? '',
+                partDetails: sparePart[i].description ?? '',
+                quantity: int.tryParse(sparePart[i].qty ?? '') ?? 0,
+                changeNow: "",
+                changeOnPM: "",
+                relationId: "",
+                additional: 0));
+          }
+        }
+        sparepartList.sparePartList.addAll(sparePartListData);
+      }
+    }
   }
 
   Future<void> saveSignature() async {
@@ -109,7 +323,7 @@ class FillformController3 extends GetxController {
   }
 
   int statusToInt(String status) {
-    if (status == 'Good') {
+    if (status == 'Ok') {
       return 1;
     } else if (status == 'Poor') {
       return 0;
@@ -120,7 +334,7 @@ class FillformController3 extends GetxController {
 
   Future<void> saveReport(BuildContext context) async {
     String? token = await getToken();
-    String apiUrl = createPreventiveReport();
+    String apiUrl = updatePreventiveReport();
     int index = 0;
     List<Map<String, dynamic>> intial =
         initialChecks.ListData.asMap().entries.map((entry) {
@@ -400,10 +614,8 @@ class FillformController3 extends GetxController {
         ? maintenance.batteryUsageWrite()
         : maintenance.maintenanceList.first;
     maintenance.maintenanceList.first.chargingType.isEmpty
-        ? maintenance.maintenanceList.first.chargingType.first = ''
+        ? maintenance.maintenanceList.first.chargingType.add('')
         : maintenance.maintenanceList.first.chargingType.first;
-
-    print(maintenance.maintenanceList.first.chargingType.first);
     var officer =
         processStaff.repairStaff.isEmpty ? '' : processStaff.repairStaff.first;
     final Map<String, dynamic> data = {
@@ -430,7 +642,7 @@ class FillformController3 extends GetxController {
           },
           body: jsonEncode(data));
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         print('yes');
         jobDetailControllerPM.fetchData(jobId.toString());
       } else {
@@ -439,5 +651,16 @@ class FillformController3 extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  String checkStatus(String ok, String poor) {
+    if (ok == '1' && poor == '0') {
+      return 'Good';
+    } else if (ok == '0' && poor == '1') {
+      return 'Poor';
+    } else if (ok == '0' && poor == '0') {
+      return '';
+    } else
+      return '';
   }
 }

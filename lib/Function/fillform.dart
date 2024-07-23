@@ -50,11 +50,12 @@ void updateCheckbox(String label, RxList<String> data) {
 }
 
 void updateCheckbox2(String label, RxList<String> data) {
-  if (data.isEmpty) {
-    data.add(label);
-  } else {
+  if (data.isEmpty || data.first == '-') {
     data.clear();
     data.add(label);
+  } else if (data.first != '-') {
+    data.clear();
+    data.add('-');
   }
 }
 
