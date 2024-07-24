@@ -14,6 +14,7 @@ class User {
   final String companyId;
   final String resourceNo;
   final String zone;
+  final String phoneNo;
   User(
       {required this.id,
       required this.name,
@@ -26,7 +27,8 @@ class User {
       required this.projects,
       required this.companyId,
       required this.resourceNo,
-      required this.zone});
+      required this.zone,
+      required this.phoneNo});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -45,6 +47,7 @@ class User {
       companyId: json['company_id'] ?? '',
       resourceNo: json['resource_no'] ?? '',
       zone: json['zone'] ?? '',
+      phoneNo: json['phone_no'] ?? '',
     );
   }
 }

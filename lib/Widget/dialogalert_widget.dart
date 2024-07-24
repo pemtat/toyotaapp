@@ -114,7 +114,7 @@ class AlertDialog1 extends StatelessWidget {
       content: Row(
         children: [
           Text(
-            'โปรดกรอกข้อมูลให้ครบถ้วน',
+            'โปรดกรอกข้อมูลอย่างน้อย 1 รายการ',
             style: TextStyleList.text2,
           ),
         ],

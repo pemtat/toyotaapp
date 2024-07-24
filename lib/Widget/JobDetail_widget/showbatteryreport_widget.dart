@@ -32,9 +32,8 @@ class ShowBatteryReportWidget extends StatelessWidget {
         sparepart.where((sp) => sp.additional == 'change').toList();
     var filteredBatteryCondition = condition!
         .where((item) =>
-            (item.status != null && item.status!.isNotEmpty) &&
-            (item.description != null && item.description!.isNotEmpty) &&
-            (item.nameEn != null))
+            (item.status != null && item.status!.isNotEmpty) ||
+            (item.description != null && item.description!.isNotEmpty))
         .toList();
     var space = 8;
     return Padding(
@@ -161,7 +160,8 @@ class ShowBatteryReportWidget extends StatelessWidget {
                                         Radius.circular(6))),
                                 child: Column(children: [
                                   BoxInfo(
-                                      title: 'Name', value: data.nameEn ?? '-'),
+                                      title: 'Name',
+                                      value: data.nameEn ?? 'Plates'),
                                   BoxInfo(
                                       title: 'Option',
                                       value: data.status ?? '-'),
@@ -180,6 +180,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       ),
                 space.kH,
                 TitleWithButton(
+                    space: true,
                     titleText: 'Corrective Action',
                     button: Text(
                       info1.correctiveAction ?? '',

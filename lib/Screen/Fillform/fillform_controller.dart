@@ -139,7 +139,7 @@ class FillformController extends GetxController {
             'error_code_report': errorCode.value.text,
             'order_no': workorderNumber.value.text,
             'r_code': rcodeController.rCode.join(','),
-            'w_code': wcodeController.wCode.join(','),
+            'w_code': wcodeController.wCode.join('%'),
             'produre': rPController.repairProcedureList.first.repairProcedure,
             'problem': rPController.repairProcedureList.first.causeProblem,
             'repair_result': repairResultController.repairResult.join(','),

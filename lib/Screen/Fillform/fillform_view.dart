@@ -115,7 +115,7 @@ class FillFormView extends StatelessWidget {
                       titleText: 'W Code',
                       list: wcodeController.wCode,
                       onTap: () => wcodeController.wCodeModal(context),
-                      moreText: getDisplayString(wcodeController.wCode)),
+                      moreText: getDisplayString4(wcodeController.wCode)),
                 ),
               ],
             ),

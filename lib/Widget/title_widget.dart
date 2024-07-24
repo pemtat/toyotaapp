@@ -44,22 +44,32 @@ class TitleApp2 extends StatelessWidget {
 class TitleWithButton extends StatelessWidget {
   final String titleText;
   final Widget button;
+  final bool? space;
 
   const TitleWithButton({
     super.key,
+    this.space,
     required this.titleText,
     required this.button,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        TitleApp(text: titleText),
-        button,
-      ],
-    );
+    return space == null
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TitleApp(text: titleText),
+              button,
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TitleApp(text: titleText),
+              button,
+            ],
+          );
   }
 }
 

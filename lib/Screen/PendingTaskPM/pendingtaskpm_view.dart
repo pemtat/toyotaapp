@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:toyotamobile/Function/checkcustomer.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
-import 'package:toyotamobile/Screen/Calendar/calendar_view2.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
 import 'package:toyotamobile/Screen/PendingTaskPM/peddingtaskpm_controller.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_view.dart';
-import 'package:toyotamobile/Styles/boxdecoration.dart';
+import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -37,6 +36,7 @@ class PendingTaskViewPM extends StatelessWidget {
   PendingTaskViewPM({super.key, required this.ticketId, this.status}) {
     jobController.fetchData(ticketId);
   }
+  final UserController userController = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +69,7 @@ class PendingTaskViewPM extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                              jobController.issueData.first.description
-                                  .substring(
-                                0,
-                                jobController.issueData.first.description
-                                    .indexOf('.CD'),
-                              ),
+                          Text(extractDescription(description),
                               style: TextStyleList.title1),
                           Text('JobID: $ticketId', style: TextStyleList.text16),
                         ],
@@ -116,38 +110,34 @@ class PendingTaskViewPM extends StatelessWidget {
                                   jobController.moreTicketDetail.value =
                                       !jobController.moreTicketDetail.value;
                                 },
-                                child:
-                                    Obx(() => jobController.userData.isNotEmpty
-                                        ? BoxContainer(
-                                            children: [
-                                              PMJobInfo(
-                                                  ticketId: issue.id,
-                                                  dateTime: issue.dueDate ??
-                                                      getFormattedDate(
-                                                          DateTime.now()),
-                                                  reporter: issue.reporter.name,
-                                                  summary:
-                                                      '${issue.getCustomFieldValue("Customer Name")}',
-                                                  description:
-                                                      'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")}',
-                                                  detail: issue.description,
-                                                  status: stringToStatus(issue
-                                                      .status.id
-                                                      .toString()),
-                                                  location: issue
-                                                      .getCustomFieldValue(
-                                                          "Customer No")
-                                                      .toString(),
-                                                  contact: jobController
-                                                          .userData
-                                                          .first
-                                                          .users!
-                                                          .first
-                                                          .phoneNo ??
-                                                      ''),
-                                            ],
-                                          )
-                                        : Container()),
+                                child: Obx(() => jobController
+                                            .userData.isNotEmpty &&
+                                        jobController.customer != null
+                                    ? BoxContainer(
+                                        children: [
+                                          PMJobInfo(
+                                              ticketId: issue.id,
+                                              dateTime: issue.dueDate ??
+                                                  getFormattedDate(
+                                                      DateTime.now()),
+                                              reporter: issue.reporter.name,
+                                              summary:
+                                                  '${issue.getCustomFieldValue("Customer Name")}',
+                                              description:
+                                                  'Service Zone :  ${userController.userInfo.first.zone} ',
+                                              detail: issue.description,
+                                              status: stringToStatus(
+                                                  issue.status.id.toString()),
+                                              location: issue
+                                                  .getCustomFieldValue(
+                                                      "Customer No")
+                                                  .toString(),
+                                              contact: jobController
+                                                      .customer!.phoneNo ??
+                                                  '-'),
+                                        ],
+                                      )
+                                    : Container()),
                               ),
                               Column(
                                 children: [
@@ -260,6 +250,7 @@ class PendingTaskViewPM extends StatelessWidget {
                                               },
                                               child: PmItemWidget(
                                                 job: job,
+                                                index: index,
                                                 expandedIndex:
                                                     jobController.expandedIndex,
                                                 jobController: homeController,
@@ -443,21 +434,15 @@ class PendingTaskViewPM extends StatelessWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: AppBar(
-                          centerTitle: true,
-                          automaticallyImplyLeading: false,
-                          backgroundColor: white4,
-                          title:
-                              Text('Cancel Job', style: TextStyleList.title1),
-                        ),
                         backgroundColor: white4,
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            6.kH,
+                            10.kH,
                             TextFieldType(
                               hintText: 'Remark',
                               textSet: jobController.cancelNote.value,
+                              maxLine: 5,
                             ),
                           ],
                         ),
@@ -473,11 +458,11 @@ class PendingTaskViewPM extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () async {
-                              await cancelJobPM(
-                                ticketId.toString(),
-                                2,
-                                jobController.cancelNote.value.text,
-                              );
+                              await updateJobPM(
+                                  ticketId.toString(),
+                                  2,
+                                  jobController.cancelNote.value.text,
+                                  jobController.issueData.first.customerStatus);
                               homeController.fetchDataFromAssignJob();
                               Navigator.pop(context);
                               Navigator.pop(context);

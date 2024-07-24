@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/checkcustomer.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
@@ -277,11 +278,8 @@ class CalendarItem extends StatelessWidget {
                       children: [
                         const Icon(Icons.person_search_sharp),
                         5.wH,
-                        Text(
-                          event['description'].substring(
-                              0, event['description'].indexOf('.CD')),
-                          style: TextStyleList.subtext1,
-                        ),
+                        Text(extractDescription(event['description']),
+                            style: TextStyleList.subtext1),
                       ],
                     ),
                   10.kH,

@@ -6,6 +6,7 @@ import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
+import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
@@ -39,7 +40,7 @@ class TicketPmDetailController extends GetxController {
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
   var jobId;
-
+  CustomerById? customer;
   PmModel? pmData;
   var pdfList = <Map<String, dynamic>>[].obs;
   var status = RxString('');
@@ -105,10 +106,12 @@ class TicketPmDetailController extends GetxController {
       Map<String, dynamic> data = json.decode(response.body);
       TicketByIdModel ticketModel = TicketByIdModel.fromJson(data);
       List<Issues>? issuesList = ticketModel.issues;
-      issuesList!.map((issue) {
+      issuesList!.map((issue) async {
         issueId = issue.id;
         checkWarranty(
             issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
+        customer = await fetchCustomerInfo(
+            issue.getCustomFieldValue('Customer No') ?? '');
       }).toList();
       issueData.value = issuesList;
     } else {}

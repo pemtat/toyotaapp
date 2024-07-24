@@ -69,12 +69,12 @@ class AddNote extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Image.asset('assets/link.png'),
-                  4.wH,
-                  Text(
-                    'Attach file',
-                    style: TextStyleList.text1,
-                  ),
+                  // Image.asset('assets/link.png'),
+                  // 4.wH,
+                  // Text(
+                  //   'Attach file',
+                  //   style: TextStyleList.text1,
+                  // ),
                   Obx(() {
                     if (addAttatchments.isNotEmpty) {
                       return Row(

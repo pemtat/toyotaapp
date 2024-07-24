@@ -222,6 +222,8 @@ class FillFormView2 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: batteryConditionController.selections,
                         remarkSelection: batteryConditionController.remarks,
+                        remarkSelectionChoose:
+                            batteryConditionController.remarksChoose,
                         listSelection: batteryConditionController.ListData,
                         showModal: batteryConditionController.checkModal,
                         show: batteryConditionController.isAllFieldsFilled,

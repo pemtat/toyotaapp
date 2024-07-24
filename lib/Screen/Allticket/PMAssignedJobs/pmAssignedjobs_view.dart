@@ -176,49 +176,49 @@ class PmAssignedJobsView extends StatelessWidget {
                   ],
                 ),
               ),
-              16.kH,
-              Obx(() {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(
-                          (jobController.pmItems.length /
-                                  pmAssignedController.itemsPerPage)
-                              .ceil(), (index) {
-                        final pageIndex = index + 1;
-                        return InkWell(
-                          onTap: () {
-                            pmAssignedController.currentPage.value = pageIndex;
-                          },
-                          child: Obx(() {
-                            final isSelected =
-                                pmAssignedController.currentPage.value ==
-                                    pageIndex;
-                            return Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 7.0, horizontal: 12.0),
-                              decoration: BoxDecoration(
-                                  color: isSelected ? red4 : white8,
-                                  border: Border.all(
-                                      color: const Color.fromARGB(
-                                          136, 218, 213, 213))),
-                              child: Text(
-                                '$pageIndex',
-                                style: isSelected
-                                    ? TextStyleList.text7
-                                    : TextStyleList.text6,
-                              ),
-                            );
-                          }),
-                        );
-                      }),
-                    ),
-                  ),
-                );
-              }),
+              // 16.kH,
+              // Obx(() {
+              //   return Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              //     child: SingleChildScrollView(
+              //       scrollDirection: Axis.horizontal,
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: List.generate(
+              //             (jobController.pmItems.length /
+              //                     pmAssignedController.itemsPerPage)
+              //                 .ceil(), (index) {
+              //           final pageIndex = index + 1;
+              //           return InkWell(
+              //             onTap: () {
+              //               pmAssignedController.currentPage.value = pageIndex;
+              //             },
+              //             child: Obx(() {
+              //               final isSelected =
+              //                   pmAssignedController.currentPage.value ==
+              //                       pageIndex;
+              //               return Container(
+              //                 padding: const EdgeInsets.symmetric(
+              //                     vertical: 7.0, horizontal: 12.0),
+              //                 decoration: BoxDecoration(
+              //                     color: isSelected ? red4 : white8,
+              //                     border: Border.all(
+              //                         color: const Color.fromARGB(
+              //                             136, 218, 213, 213))),
+              //                 child: Text(
+              //                   '$pageIndex',
+              //                   style: isSelected
+              //                       ? TextStyleList.text7
+              //                       : TextStyleList.text6,
+              //                 ),
+              //               );
+              //             }),
+              //           );
+              //         }),
+              //       ),
+              //     ),
+              //   );
+              // }),
               Obx(() {
                 if (pmAssignedController.isSelected.value == 1) {
                   return buildJobList(context, 'pending');
@@ -288,7 +288,9 @@ class PmAssignedJobsView extends StatelessWidget {
                     final job = pagedJobs[index];
                     return InkWell(
                       onTap: () {
-                        if (status == 'pending') {
+                        if (job.techStatus == '2' &&
+                            job.customerStatus == '1') {
+                        } else if (status == 'pending') {
                           Get.to(
                               () => PendingTaskViewPM(ticketId: job.id ?? ''));
                         } else if (status == 'confirmed') {
@@ -298,13 +300,24 @@ class PmAssignedJobsView extends StatelessWidget {
                               () => TicketPMDetailView(ticketId: job.id ?? ''));
                         }
                       },
-                      child: PmItemWidget(
-                        job: job,
-                        expandedIndex: pmAssignedController.expandedIndex,
-                        jobController: jobController,
-                        sidebar: SidebarColor.getColor(
-                            stringToStatus(job.status ?? '')),
-                      ),
+                      child: job.techStatus == '2' && job.customerStatus == '1'
+                          ? PmItemWidget(
+                              job: job,
+                              index: index,
+                              confirm: 'no',
+                              expandedIndex: pmAssignedController.expandedIndex,
+                              jobController: jobController,
+                              sidebar: SidebarColor.getColor(
+                                'notconfirm',
+                              ))
+                          : PmItemWidget(
+                              job: job,
+                              index: index,
+                              expandedIndex: pmAssignedController.expandedIndex,
+                              jobController: jobController,
+                              sidebar: SidebarColor.getColor(
+                                  stringToStatus(job.status ?? '')),
+                            ),
                     );
                   },
                 );

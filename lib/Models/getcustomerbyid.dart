@@ -8,6 +8,7 @@ class CustomerById {
   String? customerPostingGroup;
   String? paymentTerm;
   String? lastModify;
+  String? phoneNo;
 
   CustomerById(
       {this.customerNo,
@@ -18,7 +19,8 @@ class CustomerById {
       this.billToCustomerNo,
       this.customerPostingGroup,
       this.paymentTerm,
-      this.lastModify});
+      this.lastModify,
+      this.phoneNo});
 
   CustomerById.fromJson(Map<String, dynamic> json) {
     customerNo = json['CustomerNo'];
@@ -30,6 +32,7 @@ class CustomerById {
     customerPostingGroup = json['CustomerPostingGroup'];
     paymentTerm = json['PaymentTerm'];
     lastModify = json['LastModify'];
+    phoneNo = json['Phone_No'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +46,7 @@ class CustomerById {
     data['CustomerPostingGroup'] = customerPostingGroup;
     data['PaymentTerm'] = paymentTerm;
     data['LastModify'] = lastModify;
+    data['Phone_No'] = phoneNo;
     return data;
   }
 }

@@ -25,6 +25,7 @@ class HomeController extends GetxController {
   var customerUserInfo = <CustomerById>[].obs;
   var subJobAssignedList = <SubJobAssgined>[].obs;
   var subJobAssigned = <SubJobAssgined>[].obs;
+  var subJobAssignedPage = <SubJobAssgined>[].obs;
   final BottomBarController notificationController =
       Get.put(BottomBarController());
   int currentPage = 1; // Initial page
@@ -71,9 +72,12 @@ class HomeController extends GetxController {
       Map<String, dynamic> tokenData = json.decode(tokenResponse ?? '');
       // String? accessToken = tokenData['token'];
       int handlerId = tokenData['user']['id'];
+
       await userController.fetchData();
       await fetchPMdata(handlerId);
       await fetchSubJobsdata(handlerId);
+      isLoading.value = false;
+
       // final response = await http.get(
       //   Uri.parse(getAssignJob),
       //   headers: {
@@ -92,8 +96,6 @@ class HomeController extends GetxController {
       // ignore: empty_catches
     } catch (e) {
       print(e);
-    } finally {
-      isLoading.value = false;
     }
   }
 
@@ -191,7 +193,10 @@ class HomeController extends GetxController {
         List<dynamic> responseData = jsonDecode(response.body);
         List<PmModel> itemList = responseData
             .map((job) => PmModel.fromJson(job))
-            .where((job) => job.techStatus == '0')
+            .where((job) =>
+                (job.techStatus == '0' && job.customerStatus == '1') ||
+                (job.techStatus == '1' && job.customerStatus == '1') ||
+                (job.techStatus == '2' && job.customerStatus == '1'))
             .toList();
 
         totalJobs.value += itemList.length;
@@ -203,21 +208,23 @@ class HomeController extends GetxController {
 
         for (var pm in itemList) {
           String status = stringToStatus(pm.status ?? '');
-          switch (status) {
-            case 'pending':
-              pendingPmItems.add(pm);
-              break;
-            case 'confirmed':
-              confirmPmItems.add(pm);
-              break;
-            case 'closed':
-              closedPmItems.add(pm);
-              break;
-            default:
-              if (DateTime.parse(pm.dueDate ?? '').isBefore(DateTime.now())) {
-                closedPmItemsOver.add(pm);
-              }
-              break;
+          if (pm.techStatus != '2') {
+            switch (status) {
+              case 'pending':
+                pendingPmItems.add(pm);
+                break;
+              case 'confirmed':
+                confirmPmItems.add(pm);
+                break;
+              case 'closed':
+                closedPmItems.add(pm);
+                break;
+              default:
+                if (DateTime.parse(pm.dueDate ?? '').isBefore(DateTime.now())) {
+                  closedPmItemsOver.add(pm);
+                }
+                break;
+            }
           }
         }
 
@@ -240,15 +247,12 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> fetchPMdataPage(int page) async {
-    await userController.fetchData();
-
+  Future<void> fetchPMdataPage(int page, String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     try {
       final response = await http.get(
-        Uri.parse(
-            getPmJobPage(userController.userInfo.first.id.toString(), page)),
+        Uri.parse(getPmJobPage(userId, page)),
         headers: {
           'Authorization': '$token',
         },
@@ -268,9 +272,40 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> loadMore() async {
+  Future<void> fetchJobdataPage(int page, String userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    try {
+      final response = await http.get(
+        Uri.parse(getSubJobsByHandlerPage(userId, page)),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+        List<SubJobAssgined> itemList =
+            responseData.map((job) => SubJobAssgined.fromJson(job)).toList();
+
+        subJobAssignedPage.addAll(itemList);
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> loadMorePM(String userId) async {
     currentPage++;
-    await fetchPMdataPage(currentPage);
+    await fetchPMdataPage(currentPage, userId);
+    await fetchJobdataPage(currentPage, userId);
+  }
+
+  Future<void> loadMoreJob(String userId) async {
+    currentPage++;
+    await fetchJobdataPage(currentPage, userId);
   }
 
   Future<void> fetchTicketJobs(String id) async {

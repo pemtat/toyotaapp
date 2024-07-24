@@ -43,35 +43,40 @@ class Issues {
   String? dueDate;
   String? updatedAt;
   String? serialNo;
+  String? customerStatus;
+  String? techStatus;
   List<Attachments>? attachments;
   List<Notes>? notes;
   List<History>? history;
 
-  Issues(
-      {this.id,
-      this.summary,
-      this.description,
-      this.project,
-      this.category,
-      this.errorCode,
-      this.reporter,
-      this.handler,
-      this.status,
-      this.resolution,
-      this.viewState,
-      this.customFields,
-      this.priority,
-      this.severity,
-      this.reproducibility,
-      this.eta,
-      this.sticky,
-      this.dueDate,
-      this.serialNo,
-      this.createdAt,
-      this.updatedAt,
-      this.attachments,
-      this.notes,
-      this.history});
+  Issues({
+    this.id,
+    this.summary,
+    this.description,
+    this.project,
+    this.category,
+    this.errorCode,
+    this.reporter,
+    this.handler,
+    this.status,
+    this.resolution,
+    this.viewState,
+    this.customFields,
+    this.priority,
+    this.severity,
+    this.reproducibility,
+    this.eta,
+    this.sticky,
+    this.dueDate,
+    this.serialNo,
+    this.createdAt,
+    this.updatedAt,
+    this.attachments,
+    this.notes,
+    this.history,
+    this.customerStatus,
+    this.techStatus,
+  });
 
   Issues.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -111,6 +116,8 @@ class Issues {
     dueDate = json['due_date'];
     serialNo = 'CE389879';
     createdAt = json['created_at'];
+    customerStatus = json['customer_status'];
+    techStatus = json['tech_status'];
     updatedAt = json['updated_at'];
     if (json['attachments'] != null) {
       attachments = <Attachments>[];
@@ -175,6 +182,8 @@ class Issues {
     data['dueDate'] = dueDate;
     data['serialNo'] = serialNo;
     data['created_at'] = createdAt;
+    data['customer_status'] = customerStatus;
+    data['tech_status'] = techStatus;
     data['updated_at'] = updatedAt;
     if (attachments != null) {
       data['attachments'] = attachments!.map((v) => v.toJson()).toList();

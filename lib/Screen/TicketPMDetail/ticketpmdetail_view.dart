@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/checkcustomer.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
@@ -62,13 +63,7 @@ class TicketPMDetailView extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                              jobController.issueData.first.description
-                                  .substring(
-                                0,
-                                jobController.issueData.first.description
-                                    .indexOf('.CD'),
-                              ),
+                          Text(extractDescription(description),
                               style: TextStyleList.title1),
                           Text('JobID: $ticketId', style: TextStyleList.text16),
                         ],
@@ -92,6 +87,7 @@ class TicketPMDetailView extends StatelessWidget {
                 : null;
             var issue = jobController.issueData.first;
             var pmData = jobController.pmInfo.first;
+
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -110,38 +106,34 @@ class TicketPMDetailView extends StatelessWidget {
                                   jobController.moreTicketDetail.value =
                                       !jobController.moreTicketDetail.value;
                                 },
-                                child:
-                                    Obx(() => jobController.userData.isNotEmpty
-                                        ? BoxContainer(
-                                            children: [
-                                              PMJobInfo(
-                                                  ticketId: issue.id,
-                                                  dateTime: issue.dueDate ??
-                                                      getFormattedDate(
-                                                          DateTime.now()),
-                                                  reporter: issue.reporter.name,
-                                                  summary:
-                                                      '${issue.getCustomFieldValue("Customer Name")}',
-                                                  description:
-                                                      'Service Zone :  ${issue.getCustomFieldValue("Service Zone Code")} ',
-                                                  detail: issue.description,
-                                                  status: stringToStatus(issue
-                                                      .status.id
-                                                      .toString()),
-                                                  location: issue
-                                                      .getCustomFieldValue(
-                                                          "Customer No")
-                                                      .toString(),
-                                                  contact: jobController
-                                                          .userData
-                                                          .first
-                                                          .users!
-                                                          .first
-                                                          .phoneNo ??
-                                                      '')
-                                            ],
-                                          )
-                                        : Container()),
+                                child: Obx(() => jobController
+                                            .userData.isNotEmpty &&
+                                        jobController.customer != null
+                                    ? BoxContainer(
+                                        children: [
+                                          PMJobInfo(
+                                              ticketId: issue.id,
+                                              dateTime: issue.dueDate ??
+                                                  getFormattedDate(
+                                                      DateTime.now()),
+                                              reporter: issue.reporter.realName,
+                                              summary:
+                                                  '${issue.getCustomFieldValue("Customer Name")}',
+                                              description:
+                                                  'Service Zone :  ${userController.userInfo.first.zone} ',
+                                              detail: issue.description,
+                                              status: stringToStatus(
+                                                  issue.status.id.toString()),
+                                              location: issue
+                                                  .getCustomFieldValue(
+                                                      "Customer No")
+                                                  .toString(),
+                                              contact: jobController
+                                                      .customer!.phoneNo ??
+                                                  '')
+                                        ],
+                                      )
+                                    : Container()),
                               ),
                               Column(
                                 children: [

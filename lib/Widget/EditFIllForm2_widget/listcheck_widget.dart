@@ -10,6 +10,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 class ListChecksWidget extends StatelessWidget {
   final RxList<String> selection;
   final RxList<String> remarkSelection;
+  final RxList<String> remarkChooseSelection;
   final List<String> listSelection;
   final RxBool show;
   final RxList<String>? additional;
@@ -20,6 +21,7 @@ class ListChecksWidget extends StatelessWidget {
       {super.key,
       required this.selection,
       required this.remarkSelection,
+      required this.remarkChooseSelection,
       required this.listSelection,
       required this.showModal,
       this.additional,
@@ -158,6 +160,9 @@ class ListChecksWidget extends StatelessWidget {
                           List<String>.filled(selection.length, '').obs;
                       remarkSelection.value =
                           List<String>.filled(remarkSelection.length, '').obs;
+                      remarkChooseSelection.value =
+                          List<String>.filled(remarkChooseSelection.length, '')
+                              .obs;
                       if (additional != null) {
                         additional!.value =
                             List<String>.filled(additional!.length, '').obs;

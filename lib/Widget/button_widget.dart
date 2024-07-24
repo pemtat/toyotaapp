@@ -118,7 +118,7 @@ class EditButton2 extends StatelessWidget {
           ),
           const SizedBox(width: 4.0),
           Text(
-            'Edit Profile',
+            'View Profile',
             style: TextStyleList.text8,
           ),
         ],

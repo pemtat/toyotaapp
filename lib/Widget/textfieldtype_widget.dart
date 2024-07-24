@@ -4,17 +4,18 @@ import 'package:toyotamobile/Styles/text.dart'; // Adjust the import path as nee
 
 class TextFieldType extends StatelessWidget {
   final String hintText;
+  final int? maxLine;
   final TextEditingController textSet;
 
   const TextFieldType(
-      {super.key, required this.hintText, required this.textSet});
+      {super.key, required this.hintText, required this.textSet, this.maxLine});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: textSet,
       keyboardType: TextInputType.text,
-      maxLines: 3,
+      maxLines: maxLine ?? 3,
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderSide: BorderSide(

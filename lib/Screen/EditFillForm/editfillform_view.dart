@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/process_staff.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/rcode.dart';
@@ -8,6 +9,7 @@ import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_result.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/wcode.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editfillform_controller.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
@@ -47,6 +49,8 @@ class EditFillFormView extends StatelessWidget {
   final RepairStaff repairStaffController = Get.put(RepairStaff());
   final EditFillformController fillFormController =
       Get.put(EditFillformController());
+  final JobDetailController jobController = Get.put(JobDetailController());
+
   int space = 8;
   @override
   Widget build(BuildContext context) {
@@ -127,7 +131,7 @@ class EditFillFormView extends StatelessWidget {
                           titleText: 'W Code',
                           list: wcodeController.wCode,
                           onTap: () => wcodeController.wCodeModal(context),
-                          moreText: getDisplayString(wcodeController.wCode)),
+                          moreText: getDisplayString4(wcodeController.wCode)),
                     ),
                   ],
                 ),

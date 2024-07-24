@@ -24,7 +24,11 @@ class PendingTaskView extends StatelessWidget {
 
   final String ticketId;
   final String jobId;
-  PendingTaskView({super.key, required this.ticketId, required this.jobId}) {
+  PendingTaskView({
+    super.key,
+    required this.ticketId,
+    required this.jobId,
+  }) {
     penddingTaskController.fetchData(ticketId, jobId);
   }
 

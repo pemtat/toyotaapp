@@ -33,6 +33,7 @@ class Users {
   String? companyId;
   String? resourceNo;
   String? phoneNo;
+  String? zone;
   Users(
       {this.id,
       this.name,
@@ -44,7 +45,8 @@ class Users {
       this.createdAt,
       this.companyId,
       this.resourceNo,
-      this.phoneNo});
+      this.phoneNo,
+      this.zone});
 
   Users.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -60,6 +62,7 @@ class Users {
     companyId = json['company_id'];
     resourceNo = json['resource_no'];
     phoneNo = json['phone_no'];
+    zone = json['zone'];
   }
 
   Map<String, dynamic> toJson() {
@@ -77,6 +80,7 @@ class Users {
     data['company_id'] = companyId;
     data['resource_no'] = resourceNo;
     data['phone_no'] = phoneNo;
+    data['zone'] = zone;
     return data;
   }
 }

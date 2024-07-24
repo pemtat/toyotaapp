@@ -76,7 +76,7 @@ class Maintenance extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Battery Usage",
+              "Maintenance and Service Result",
               style: TextStyleList.subheading,
             ),
             InkWell(

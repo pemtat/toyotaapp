@@ -389,6 +389,26 @@ Future<void> fetchPmJobInfo(
   }
 }
 
+Future<void> fetchPmJobInfo2(
+    String id, String token, Rx<TextEditingController> comment) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getPmJobInfoById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      var pmJobInfo = PMJobInfoModel.fromJson(data);
+      comment.value.text = pmJobInfo.comment ?? '';
+    } else {}
+  } catch (e) {
+    print(e);
+  }
+}
+
 void addAttachment(
     Map<String, String> file, RxList<Map<String, dynamic>> addAttatchments) {
   addAttatchments.add(file);
@@ -636,18 +656,50 @@ Future<void> changeIssueStatusPM(
   }
 }
 
-Future<void> cancelJobPM(
+Future<void> changeIssueStatusPMComment(
   String issueId,
   int status,
   String comment,
+  Rx<TextEditingController> comment2,
 ) async {
+  final String updateStatus = updateJobStatusByIdPM();
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {};
+    if (comment != '-') {
+      body = {"job_id": issueId, "status": status, "comment": comment};
+    } else {
+      body = {"job_id": issueId, "status": status};
+    }
+    final response = await http.post(
+      Uri.parse(updateStatus),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+    if (response.statusCode == 201) {
+      await fetchPmJobInfo2(issueId, token ?? '', comment2);
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print(e);
+  }
+}
+
+Future<void> updateJobPM(
+    String issueId, int status, String comment, String customerStatus) async {
   final String updateStatus = updateTechInfoJob();
   try {
     String? token = await getToken();
     Map<String, dynamic> body = {};
-
-    body = {"job_id": issueId, "tech_status": status, "tech_remark": comment};
-
+    if (comment != '-') {
+      body = {"job_id": issueId, "tech_status": status, "tech_remark": comment};
+    } else {
+      body = {"job_id": issueId, "tech_status": status, "tech_remark": null};
+    }
     final response = await http.post(
       Uri.parse(updateStatus),
       headers: {
@@ -657,6 +709,14 @@ Future<void> cancelJobPM(
       body: jsonEncode(body),
     );
     if (response.statusCode == 200) {
+      if (status == 1) {
+        await changeIssueStatusPM(
+          issueId,
+          102,
+          '-',
+        );
+      }
+
       print('Update Done');
     } else {
       print(response.statusCode);

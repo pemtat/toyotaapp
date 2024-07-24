@@ -400,7 +400,7 @@ class FillformController3 extends GetxController {
         ? maintenance.batteryUsageWrite()
         : maintenance.maintenanceList.first;
     maintenance.maintenanceList.first.chargingType.isEmpty
-        ? maintenance.maintenanceList.first.chargingType.first = ''
+        ? maintenance.maintenanceList.first.chargingType.add('')
         : maintenance.maintenanceList.first.chargingType.first;
 
     print(maintenance.maintenanceList.first.chargingType.first);

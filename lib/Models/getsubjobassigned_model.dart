@@ -28,6 +28,7 @@ class SubJobAssgined {
   String? location;
   String? serialNo;
   String? summaryBug;
+  String? realName;
 
   SubJobAssgined(
       {this.id,
@@ -58,7 +59,8 @@ class SubJobAssgined {
       this.contentAfter,
       this.location,
       this.serialNo,
-      this.summaryBug});
+      this.summaryBug,
+      this.realName});
 
   SubJobAssgined.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -88,6 +90,7 @@ class SubJobAssgined {
     imageAfter = json['image_after'];
     contentAfter = json['content_after'];
     summaryBug = json['summary_bug'];
+    realName = json['realname'];
   }
 
   Map<String, dynamic> toJson() {
@@ -119,6 +122,7 @@ class SubJobAssgined {
     data['image_after'] = imageAfter;
     data['content_after'] = contentAfter;
     data['summary_bug'] = summaryBug;
+    data['realname'] = realName;
     return data;
   }
 }

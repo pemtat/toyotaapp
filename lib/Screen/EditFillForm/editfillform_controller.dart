@@ -67,22 +67,28 @@ class EditFillformController extends GetxController {
       fault.value.text = reportData.faultReport ?? '';
       errorCode.value.text = reportData.errorCodeReport ?? '';
       workorderNumber.value.text = reportData.orderNo ?? '';
-      if (reportData.rCode!.isNotEmpty) {
-        rcodeController.rCode.add(reportData.rCode ?? '');
-      }
+
       fieldServiceReport.add(reportData.fieldReport ?? '');
       List<String> newList = reportData.rCode!.split(',');
-      rcodeController.rCodeChoose.addAll(newList);
-      newList = reportData.wCode!.split(',');
-      wcodeController.wCodeChoose.addAll(newList);
 
       newList = reportData.repairResult!.split(',');
       repairResultController.repairResultChoose.addAll(newList);
 
       newList = reportData.processStaff!.split(',');
       repairStaffController.repairStaffChoose.addAll(newList);
+      if (reportData.rCode!.isNotEmpty) {
+        List<String> rCodeList = reportData.rCode!.split(',');
+
+        for (String rCode in rCodeList) {
+          rcodeController.rCode.add(rCode.trim());
+        }
+      }
       if (reportData.wCode!.isNotEmpty) {
-        wcodeController.wCode.add(reportData.wCode ?? '');
+        List<String> wCodeList = reportData.wCode!.split('%');
+
+        for (String wCode in wCodeList) {
+          wcodeController.wCode.add(wCode.trim());
+        }
       }
       rPController.repairProcedureList.add(RepairProcedureModel(
         repairProcedure: reportData.produre ?? '',
@@ -177,7 +183,7 @@ class EditFillformController extends GetxController {
           'error_code_report': errorCode.value.text,
           'order_no': workorderNumber.value.text,
           'r_code': rcodeController.rCode.join(','),
-          'w_code': wcodeController.wCode.join(','),
+          'w_code': wcodeController.wCode.join('%'),
           'produre': rPController.repairProcedureList.first.repairProcedure,
           'problem': rPController.repairProcedureList.first.causeProblem,
           'repair_result': repairResultController.repairResult.join(','),

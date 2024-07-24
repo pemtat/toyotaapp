@@ -19,7 +19,6 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
-import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
 class PendingTaskControllerPM extends GetxController {
   final notes = TextEditingController().obs;
@@ -28,7 +27,6 @@ class PendingTaskControllerPM extends GetxController {
   final comment = TextEditingController().obs;
   var reportList = <BatteryReportModel>[].obs;
   var reportPreventiveList = <PreventivereportModel>[].obs;
-  var customerInfo = <CustomerById>[].obs;
   var userData = <UserById>[].obs;
   Rx<DateTime?> selectedDateTime = Rx<DateTime?>(null);
   var isPicking = false.obs;
@@ -86,6 +84,9 @@ class PendingTaskControllerPM extends GetxController {
         issueId = issue.id;
         checkWarranty(
             issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
+        customer = await fetchCustomerInfo(
+            issue.getCustomFieldValue('Customer No') ?? '');
+
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);
       }).toList();
@@ -200,15 +201,10 @@ class PendingTaskControllerPM extends GetxController {
           title: title,
           leftButton: left,
           rightButton: right,
-          onRightButtonPressed: () {
-            // changeIssueStatus(issueId, 'confirmed');
-            changeIssueStatusPM(
-              jobId,
-              102,
-              '-',
-            );
-            jobController.fetchDataFromAssignJob();
+          onRightButtonPressed: () async {
+            updateJobPM(jobId, 1, '-', issueData.first.customerStatus);
             Navigator.pop(context);
+            jobController.fetchDataFromAssignJob();
           },
         );
       },

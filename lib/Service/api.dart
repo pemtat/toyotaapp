@@ -60,8 +60,8 @@ String getPmJobInfoById(String id) {
   return '$url/api/rest/pm_jobs/job_working_details?job_id=$id';
 }
 
-String getPmJobPage(String resorceNo, int page) {
-  return '$url/api/rest/pm/$resorceNo/page/$page/';
+String getPmJobPage(String handlerId, int page) {
+  return '$url/api/rest/pm/$handlerId/page/$page';
 }
 
 String updatePmJobImage() {
@@ -126,6 +126,10 @@ String getPMticketById(String id) {
 
 String getSubJobsByHandler(String id) {
   return '$url/api/rest/jobs/getByHandlerId?handler_id=$id';
+}
+
+String getSubJobsByHandlerPage(String id, int page) {
+  return '$url/api/rest/jobs/getByHandlerId/$page?handler_id=$id';
 }
 
 String getRepairReportById(String id) {

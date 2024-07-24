@@ -151,7 +151,7 @@ class CalendarController extends GetxController {
           "bugid": job.bugId.toString(),
           "time": formattedTime,
           "status": stringToStatus(job.status ?? ''),
-          "customerName": userData.first.users!.first.name,
+          "customerName": userData.first.users!.first.realName,
           "task": job.description,
           "model": warrantyInfo.isEmpty || warrantyInfo.first.model == null
               ? '-'

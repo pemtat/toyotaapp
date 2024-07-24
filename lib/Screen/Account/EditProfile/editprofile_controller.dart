@@ -6,10 +6,11 @@ import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 
 class EditProfileController extends GetxController {
   final HomeController jobController = Get.put(HomeController());
-  final name = TextEditingController();
-  final email = TextEditingController();
-  final phoneNumber = TextEditingController();
-  final password = TextEditingController();
+  final name = TextEditingController().obs;
+  final email = TextEditingController().obs;
+  final phoneNumber = TextEditingController().obs;
+  final password = TextEditingController().obs;
+  final resourceNo = TextEditingController().obs;
   var isTextHidden = false.obs;
 
   void toggleVisibility() {

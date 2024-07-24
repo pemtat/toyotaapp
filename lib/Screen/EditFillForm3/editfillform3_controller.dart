@@ -162,7 +162,7 @@ class FillformController3 extends GetxController {
               batteryChecks.additionalChoose[j] = subData.data1 ?? '';
               if (choose != '' ||
                   subData.data1 != '' ||
-                  subData.data2 != '' ||
+                  (subData.data2 != '' && subData.data2 != ',') ||
                   subData.remark != '') {
                 batteryChecks.isAllFieldsFilled.value = true;
               }
@@ -198,10 +198,11 @@ class FillformController3 extends GetxController {
               mastChecks.additionalChoose[j] = subData.data1 ?? '';
               if (choose != '' ||
                   subData.data1 != '' ||
-                  subData.data2 != '' ||
+                  (subData.data2 != '' && subData.data2 != ',') ||
                   subData.remark != '') {
                 mastChecks.isAllFieldsFilled.value = true;
               }
+
               if (subData.data2!.contains(',')) {
                 var splitData = subData.data2!.split(',');
                 mastChecks.additional2[j][0] = splitData[0].trim();
@@ -247,7 +248,7 @@ class FillformController3 extends GetxController {
         safety.isAllFieldsFilled.value = true;
       }
 
-      safety.selections[0] = maintenances!.safetyTravelAlarm ?? '';
+      safety.selections[0] = maintenances.safetyTravelAlarm ?? '';
       safety.selections[1] = maintenances.safetyRearviewMirror ?? '';
       safety.selections[2] = maintenances.safetySeatBelt ?? '';
 
@@ -255,12 +256,15 @@ class FillformController3 extends GetxController {
       if (maintenances.mtServiceResult != '') {
         chargingTypeChoose.add(maintenances.mtServiceResult ?? '');
       }
-
-      final newBatteryInfo = MaintenanceModel(
-          people: double.tryParse(maintenances.m ?? '0') ?? 0,
-          hr: double.tryParse(maintenances.hr ?? '0') ?? 0,
-          chargingType: chargingTypeChoose);
-      maintenance.maintenanceList.add(newBatteryInfo);
+      if (maintenances.m != '0' &&
+          maintenances.hr != '0' &&
+          chargingTypeChoose.isEmpty) {
+        final newBatteryInfo = MaintenanceModel(
+            people: double.tryParse(maintenances.m ?? '0') ?? 0,
+            hr: double.tryParse(maintenances.hr ?? '0') ?? 0,
+            chargingType: chargingTypeChoose);
+        maintenance.maintenanceList.add(newBatteryInfo);
+      }
 
       if (maintenances.officerChecking != '') {
         processStaff.repairStaff.add(maintenances.officerChecking ?? '');

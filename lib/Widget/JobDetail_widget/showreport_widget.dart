@@ -48,7 +48,11 @@ class ShowRepairReport extends StatelessWidget {
                 BoxInfo2(
                     title: 'Work Order Number', value: data.orderNo ?? '-'),
                 space.kH,
-                BoxInfo2(title: 'R Code', value: data.rCode ?? '-'),
+                BoxInfo2(
+                  title: 'R Code',
+                  value: data.rCode ?? '-',
+                  space: true,
+                ),
                 space.kH,
                 BoxInfo2(
                   title: 'W Code',
@@ -201,7 +205,7 @@ class ShowRepairReport extends StatelessWidget {
 
   String formatWCode(String? wCode) {
     if (wCode == null || wCode.isEmpty) return '-';
-    var items = wCode.split(',');
+    var items = wCode.split('%');
     return items.asMap().entries.map((entry) {
       int idx = entry.key + 1;
       String value = entry.value.trim();

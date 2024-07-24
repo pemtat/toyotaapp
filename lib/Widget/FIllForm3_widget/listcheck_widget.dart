@@ -10,23 +10,29 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 class ListChecksWidget extends StatelessWidget {
   final RxList<String> selection;
   final RxList<String> remarkSelection;
+  final RxList<String> remarkSelectionChoose;
   final List<String> listSelection;
   final List<String>? unitList;
   final RxBool show;
   final RxList<String>? additional;
+  final RxList<String>? additionalChoose;
   final Function(BuildContext) showModal;
   final String? unit;
   final RxList<List<String>>? additional2;
+  final RxList<List<String>>? additionalChoose2;
 
   const ListChecksWidget(
       {super.key,
       required this.selection,
       required this.remarkSelection,
+      required this.remarkSelectionChoose,
       required this.listSelection,
       required this.showModal,
       this.unitList,
       this.additional2,
       this.additional,
+      this.additionalChoose2,
+      this.additionalChoose,
       this.unit,
       required this.show});
 
@@ -212,9 +218,22 @@ class ListChecksWidget extends StatelessWidget {
                           List<String>.filled(selection.length, '').obs;
                       remarkSelection.value =
                           List<String>.filled(remarkSelection.length, '').obs;
+                      remarkSelectionChoose.value =
+                          List<String>.filled(remarkSelectionChoose.length, '')
+                              .obs;
                       if (additional != null) {
                         additional!.value =
                             List<String>.filled(additional!.length, '').obs;
+                        additionalChoose!.value =
+                            List<String>.filled(additionalChoose!.length, '')
+                                .obs;
+                      }
+                      if (additional2 != null) {
+                        additional2!.value = List<List<String>>.generate(
+                            additional2!.length, (_) => List.filled(2, '')).obs;
+                        additionalChoose2!.value = List<List<String>>.generate(
+                            additionalChoose2!.length,
+                            (_) => List.filled(2, '')).obs;
                       }
                       show.value = false;
                     }

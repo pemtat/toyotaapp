@@ -41,341 +41,226 @@ class JobDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white7,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight((preferredSize - 2.5)),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                AppBar(
-                  centerTitle: false,
-                  backgroundColor: white3,
-                  title: Obx(() {
-                    if (jobController.subJobs.isEmpty) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Loading...', style: TextStyleList.title1),
-                          Text('Loading...', style: TextStyleList.text16),
-                        ],
-                      );
-                    } else {
-                      var job = jobController.subJobs.first;
-                      String description = job.description ?? '';
-                      if (description.length > 30) {
-                        description = '${description.substring(0, 30)}...';
-                      }
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(description, style: TextStyleList.title1),
-                          Text('JobID: ${job.id}', style: TextStyleList.text16),
-                        ],
-                      );
-                    }
-                  }),
-                  leading: const BackIcon(),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      body: Obx(
-        () {
-          if (jobController.issueData.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            var file = jobController.attatchments.isNotEmpty
-                ? jobController.attatchments
-                : null;
-            var filePdf =
-                jobController.pdfList.isNotEmpty ? jobController.pdfList : null;
-            var issue = jobController.issueData.first;
-            var subJob = jobController.subJobs.isNotEmpty
-                ? jobController.subJobs.first
-                : null;
-            var customerInfo = jobController.customerInfo.isNotEmpty
-                ? jobController.customerInfo.first
-                : null;
-            var userData = jobController.userData.isNotEmpty
-                ? jobController.userData.first.users!.first
-                : null;
-            return SingleChildScrollView(
-              child: Column(
+        backgroundColor: white7,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight((preferredSize - 2.5)),
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  Container(
-                    color: white4,
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Intruction(
-                                  context: context,
-                                  phoneNumber: userData!.phoneNo ?? '',
-                                  location:
-                                      customerInfo!.customerAddress ?? ''),
-                              8.kH,
-                              InkWell(
-                                onTap: () {
-                                  jobController.moreTicketDetail.value =
-                                      !jobController.moreTicketDetail.value;
-                                },
-                                child: BoxContainer(
-                                  children: [
-                                    TicketInfoStatus(
-                                      ticketId: issue.id,
-                                      dateTime: formatDateTime(issue.createdAt),
-                                      status: issue.status.name,
-                                      reporter: issue.reporter.name,
-                                      more:
-                                          jobController.moreTicketDetail.value,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Obx(
-                                () => jobController.moreTicketDetail.value
-                                    ? Column(
-                                        children: [
-                                          8.kH,
-                                          MoreDetail(
-                                            file: file,
-                                            description: issue.description,
-                                            moreDetail:
-                                                jobController.moreDetail,
-                                            ediefile: false,
-                                            summary: issue.summary,
-                                            category: issue.category.name,
-                                            relations: '-',
-                                            severity: issue.severity.name,
-                                            errorCode: issue.errorCode,
-                                          ),
-                                          MoreDetailArrow(
-                                              moreDetail:
-                                                  jobController.moreDetail),
-                                          8.kH,
-                                          Obx(
-                                            () {
-                                              if (jobController
-                                                  .warrantyInfo.isEmpty) {
-                                                return Center(
-                                                    child: WarrantyBox(
-                                                        model: '-',
-                                                        serial: '-',
-                                                        status: 0,
-                                                        filePdf: filePdf));
-                                              } else {
-                                                var warrantyInfo = jobController
-                                                    .warrantyInfo.first;
-                                                return WarrantyBox(
-                                                    model: warrantyInfo.model ??
-                                                        '',
-                                                    serial:
-                                                        warrantyInfo.serial ??
-                                                            '',
-                                                    status: warrantyInfo
-                                                                .warrantystatus ==
-                                                            '1'
-                                                        ? 1
-                                                        : 0,
-                                                    filePdf: filePdf);
-                                              }
-                                            },
-                                          ),
-                                          8.kH,
-                                          AddNote(
-                                              notePic: jobController.notePic,
-                                              notesFiles:
-                                                  jobController.notesFiles,
-                                              notes: jobController.notes,
-                                              addAttatchments:
-                                                  jobController.addAttatchments,
-                                              isPicking:
-                                                  jobController.isPicking,
-                                              addNote: jobController.addNote)
-                                        ],
-                                      )
-                                    : Container(),
-                              ),
-                              Obx(() {
-                                if (jobController.subJobs.isNotEmpty) {
-                                  return BoxContainer(
+                  AppBar(
+                    centerTitle: false,
+                    backgroundColor: white3,
+                    title: Obx(() {
+                      if (jobController.subJobs.isEmpty) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Loading...', style: TextStyleList.title1),
+                            Text('Loading...', style: TextStyleList.text16),
+                          ],
+                        );
+                      } else {
+                        var job = jobController.subJobs.first;
+                        String description = job.description ?? '';
+                        if (description.length > 30) {
+                          description = '${description.substring(0, 30)}...';
+                        }
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(description, style: TextStyleList.title1),
+                            Text('JobID: ${job.id}',
+                                style: TextStyleList.text16),
+                          ],
+                        );
+                      }
+                    }),
+                    leading: const BackIcon(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        body: Obx(
+          () {
+            if (jobController.issueData.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              var file = jobController.attatchments.isNotEmpty
+                  ? jobController.attatchments
+                  : null;
+              var filePdf = jobController.pdfList.isNotEmpty
+                  ? jobController.pdfList
+                  : null;
+              var issue = jobController.issueData.first;
+              var subJob = jobController.subJobs.isNotEmpty
+                  ? jobController.subJobs.first
+                  : null;
+              var customerInfo = jobController.customerInfo.isNotEmpty
+                  ? jobController.customerInfo.first
+                  : null;
+              var userData = jobController.userData.isNotEmpty
+                  ? jobController.userData.first.users!.first
+                  : null;
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      color: white4,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Intruction(
+                                    context: context,
+                                    phoneNumber: userData!.phoneNo ?? '',
+                                    location:
+                                        customerInfo!.customerAddress ?? ''),
+                                8.kH,
+                                InkWell(
+                                  onTap: () {
+                                    jobController.moreTicketDetail.value =
+                                        !jobController.moreTicketDetail.value;
+                                  },
+                                  child: BoxContainer(
                                     children: [
-                                      JobInfo(
-                                        jobId: 0,
-                                        jobIdString: subJob!.id,
-                                        dateTime: subJob.dueDate ??
-                                            'ยังไม่มีกำหนดการ',
-                                        reporter: issue.reporter.name ?? '',
-                                        summary: subJob.summary ?? '',
-                                        description: subJob.description ?? '',
-                                        status: stringToStatus(
-                                            subJob.status.toString()),
-                                      )
+                                      TicketInfoStatus(
+                                        ticketId: issue.id,
+                                        dateTime:
+                                            formatDateTime(issue.createdAt),
+                                        status: issue.status.name,
+                                        reporter: issue.reporter.name,
+                                        more: jobController
+                                            .moreTicketDetail.value,
+                                      ),
                                     ],
-                                  );
-                                } else {
-                                  return Container();
-                                }
-                              }),
-                              8.kH,
-                              BoxContainer(
-                                children: [
-                                  Text(
-                                    'ภาพก่อนการเเก้ไข',
-                                    style: TextStyleList.text11,
                                   ),
-                                  6.kH,
-                                  Obx(() =>
-                                      jobController.imagesBefore.isNotEmpty
-                                          ? AttachmentsListWidget(
-                                              attachments:
-                                                  jobController.imagesBefore,
-                                              edit: true,
-                                              jobid: jobId ?? '',
-                                              option: 'before',
-                                            )
-                                          : Container()),
-                                  10.kH,
-                                  UploadImageWidget(
-                                      pickImage: () => pickImage(
-                                          jobController.imagesBefore,
-                                          jobController.isPicking,
-                                          'before',
-                                          ticketId,
-                                          jobId ?? '')),
-                                  10.kH,
-                                  Obx(() => jobController
-                                          .imagesBefore.isNotEmpty
-                                      ? Obx(
-                                          () => jobController.savedDateStartTime
-                                                      .value ==
-                                                  ''
-                                              ? ButtonTime(
-                                                  saveTime: (datetime) {
-                                                    showTimeDialog(
-                                                        context,
-                                                        'Are you sure to confirm?',
-                                                        'No',
-                                                        'Yes',
-                                                        datetime,
-                                                        jobId ?? '',
-                                                        'timestart',
-                                                        ticketId);
-                                                  },
-                                                  time: jobController
-                                                      .savedDateStartTime,
-                                                  title: 'Start Time',
-                                                )
-                                              : Text(
-                                                  "Start Time : ${jobController.savedDateStartTime.value}",
-                                                  style: TextStyleList.text6,
-                                                ),
-                                        )
-                                      : Container()),
-                                  18.kH,
-                                  Container(
-                                    height: 0.5,
-                                    color: const Color.fromARGB(
-                                        255, 224, 222, 222),
-                                  ),
-                                  14.kH,
-                                  Obx(() => jobController
-                                              .savedDateStartTime.value !=
-                                          ''
+                                ),
+                                Obx(
+                                  () => jobController.moreTicketDetail.value
                                       ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              'ภาพหลังการเเก้ไข',
-                                              style: TextStyleList.text11,
-                                            ),
-                                            10.kH,
-                                            Obx(() => jobController
-                                                    .imagesAfter.isNotEmpty
-                                                ? AttachmentsListWidget(
-                                                    attachments: jobController
-                                                        .imagesAfter,
-                                                    edit: true,
-                                                    jobid: jobId ?? '',
-                                                    option: 'after',
-                                                  )
-                                                : Container()),
                                             8.kH,
-                                            UploadImageWidget(
-                                              pickImage: () => pickImage(
-                                                  jobController.imagesAfter,
-                                                  jobController.isPicking,
-                                                  'after',
-                                                  ticketId,
-                                                  jobId ?? ''),
+                                            MoreDetail(
+                                              file: file,
+                                              description: issue.description,
+                                              moreDetail:
+                                                  jobController.moreDetail,
+                                              ediefile: false,
+                                              summary: issue.summary,
+                                              category: issue.category.name,
+                                              relations: '-',
+                                              severity: issue.severity.name,
+                                              errorCode: issue.errorCode,
                                             ),
-                                            10.kH,
+                                            MoreDetailArrow(
+                                                moreDetail:
+                                                    jobController.moreDetail),
+                                            8.kH,
+                                            Obx(
+                                              () {
+                                                if (jobController
+                                                    .warrantyInfo.isEmpty) {
+                                                  return Center(
+                                                      child: WarrantyBox(
+                                                          model: '-',
+                                                          serial: '-',
+                                                          status: 0,
+                                                          filePdf: filePdf));
+                                                } else {
+                                                  var warrantyInfo =
+                                                      jobController
+                                                          .warrantyInfo.first;
+                                                  return WarrantyBox(
+                                                      model:
+                                                          warrantyInfo.model ??
+                                                              '',
+                                                      serial:
+                                                          warrantyInfo.serial ??
+                                                              '',
+                                                      status: warrantyInfo
+                                                                  .warrantystatus ==
+                                                              '1'
+                                                          ? 1
+                                                          : 0,
+                                                      filePdf: filePdf);
+                                                }
+                                              },
+                                            ),
+                                            8.kH,
+                                            AddNote(
+                                                notePic: jobController.notePic,
+                                                notesFiles:
+                                                    jobController.notesFiles,
+                                                notes: jobController.notes,
+                                                addAttatchments: jobController
+                                                    .addAttatchments,
+                                                isPicking:
+                                                    jobController.isPicking,
+                                                addNote: jobController.addNote)
                                           ],
                                         )
-                                      : Container()),
-                                  4.kH,
-                                  Obx(() => jobController.comment.value.text ==
-                                          ''
-                                      ? Column(
-                                          children: [
-                                            TextFieldType(
-                                              hintText: 'Add Comment',
-                                              textSet:
-                                                  jobController.comment.value,
-                                            ),
-                                            6.kH,
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                InkWell(
-                                                  onTap: () async {
-                                                    if (jobController.comment
-                                                            .value.text !=
-                                                        '') {
-                                                      await updateCommentJobs(
-                                                          jobId.toString(),
-                                                          jobController.comment
-                                                              .value.text,
-                                                          ticketId.toString());
-                                                      jobController.fetchData(
-                                                          ticketId.toString(),
-                                                          jobId.toString());
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    child: Text(
-                                                      'Submit',
-                                                      style:
-                                                          TextStyleList.text5,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
+                                      : Container(),
+                                ),
+                                Obx(() {
+                                  if (jobController.subJobs.isNotEmpty) {
+                                    return BoxContainer(
+                                      children: [
+                                        JobInfo(
+                                          jobId: 0,
+                                          jobIdString: subJob!.id,
+                                          dateTime: subJob.dueDate ??
+                                              'ยังไม่มีกำหนดการ',
+                                          reporter: issue.reporter.name ?? '',
+                                          summary: subJob.summary ?? '',
+                                          description: subJob.description ?? '',
+                                          status: stringToStatus(
+                                              subJob.status.toString()),
                                         )
-                                      : ShowTextFieldType(
-                                          hintText: jobController
-                                              .comment.value.text)),
-                                  Obx(() => jobController
-                                              .imagesAfter.isNotEmpty &&
-                                          jobController.comment.value.text != ''
-                                      ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            6.kH,
-                                            Obx(() => jobController
-                                                        .savedDateEndTime
+                                      ],
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                }),
+                                8.kH,
+                                BoxContainer(
+                                  children: [
+                                    Text(
+                                      'ภาพก่อนการเเก้ไข',
+                                      style: TextStyleList.text11,
+                                    ),
+                                    6.kH,
+                                    Obx(() =>
+                                        jobController.imagesBefore.isNotEmpty
+                                            ? AttachmentsListWidget(
+                                                attachments:
+                                                    jobController.imagesBefore,
+                                                edit: true,
+                                                jobid: jobId ?? '',
+                                                option: 'before',
+                                              )
+                                            : Container()),
+                                    10.kH,
+                                    UploadImageWidget(
+                                        pickImage: () => pickImage(
+                                            jobController.imagesBefore,
+                                            jobController.isPicking,
+                                            'before',
+                                            ticketId,
+                                            jobId ?? '')),
+                                    10.kH,
+                                    Obx(() => jobController
+                                            .imagesBefore.isNotEmpty
+                                        ? Obx(
+                                            () => jobController
+                                                        .savedDateStartTime
                                                         .value ==
                                                     ''
                                                 ? ButtonTime(
@@ -387,119 +272,243 @@ class JobDetailView extends StatelessWidget {
                                                           'Yes',
                                                           datetime,
                                                           jobId ?? '',
-                                                          'timeend',
+                                                          'timestart',
                                                           ticketId);
                                                     },
                                                     time: jobController
-                                                        .savedDateEndTime,
-                                                    title: 'End Time',
+                                                        .savedDateStartTime,
+                                                    title: 'Start Time',
                                                   )
                                                 : Text(
-                                                    "End Time : ${jobController.savedDateEndTime.value}",
+                                                    "Start Time : ${jobController.savedDateStartTime.value}",
                                                     style: TextStyleList.text6,
-                                                  )),
-                                            16.kH,
-                                          ],
-                                        )
-                                      : Container()),
-                                ],
-                              ),
-                              BoxContainer(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const TitleApp(
-                                          text: 'Field Service Report*'),
-                                      Obx(() => jobController
-                                              .reportList.isNotEmpty
-                                          ? EditButton(
-                                              onTap: () {
-                                                Get.to(() => EditFillFormView(
-                                                      reportId: jobId ?? '',
-                                                      ticketId: ticketId,
-                                                      jobId: jobId.toString(),
-                                                    ));
-                                              },
-                                            )
-                                          : AddButton(
-                                              onTap: () {
-                                                Get.to(() => FillFormView(
-                                                      ticketId: ticketId,
-                                                      jobId: jobId ?? '',
-                                                    ));
-                                              },
-                                            )),
-                                    ],
-                                  ),
-                                  Text(
-                                    'Please fill the field service report',
-                                    style: TextStyleList.text16,
-                                  ),
-                                  Obx(() => jobController
-                                              .reportList.isNotEmpty ||
-                                          jobController
-                                              .additionalReportList.isNotEmpty
-                                      ? Column(
-                                          children: [
-                                            ShowRepairReport(
-                                              reportData:
-                                                  jobController.reportList,
-                                              additionalReportData:
-                                                  jobController
-                                                      .additionalReportList,
-                                            ),
-                                            if (jobController.reportList.first
-                                                        .signature ==
-                                                    '' &&
-                                                jobController.reportList.first
-                                                        .signaturePad ==
-                                                    '')
-                                              ButtonRed(
-                                                title: 'บันทึกลายเซ็น',
+                                                  ),
+                                          )
+                                        : Container()),
+                                    18.kH,
+                                    Container(
+                                      height: 0.5,
+                                      color: const Color.fromARGB(
+                                          255, 224, 222, 222),
+                                    ),
+                                    14.kH,
+                                    Obx(() => jobController
+                                                .savedDateStartTime.value !=
+                                            ''
+                                        ? Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'ภาพหลังการเเก้ไข',
+                                                style: TextStyleList.text11,
+                                              ),
+                                              10.kH,
+                                              Obx(() => jobController
+                                                      .imagesAfter.isNotEmpty
+                                                  ? AttachmentsListWidget(
+                                                      attachments: jobController
+                                                          .imagesAfter,
+                                                      edit: true,
+                                                      jobid: jobId ?? '',
+                                                      option: 'after',
+                                                    )
+                                                  : Container()),
+                                              8.kH,
+                                              UploadImageWidget(
+                                                pickImage: () => pickImage(
+                                                    jobController.imagesAfter,
+                                                    jobController.isPicking,
+                                                    'after',
+                                                    ticketId,
+                                                    jobId ?? ''),
+                                              ),
+                                              10.kH,
+                                            ],
+                                          )
+                                        : Container()),
+                                    4.kH,
+                                    Obx(() => jobController
+                                                .comment.value.text ==
+                                            ''
+                                        ? Column(
+                                            children: [
+                                              TextFieldType(
+                                                hintText: 'Add Comment',
+                                                textSet:
+                                                    jobController.comment.value,
+                                              ),
+                                              6.kH,
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  CustomElevatedButton(
+                                                    onPressed: () async {
+                                                      if (jobController.comment
+                                                              .value.text !=
+                                                          '') {
+                                                        await updateCommentJobs(
+                                                            jobId.toString(),
+                                                            jobController
+                                                                .comment
+                                                                .value
+                                                                .text,
+                                                            ticketId
+                                                                .toString());
+                                                        jobController.fetchData(
+                                                            ticketId.toString(),
+                                                            jobId.toString());
+                                                      }
+                                                    },
+                                                    text: 'Submit',
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          )
+                                        : ShowTextFieldType(
+                                            hintText: jobController
+                                                .comment.value.text)),
+                                    Obx(() => jobController
+                                                .imagesAfter.isNotEmpty &&
+                                            jobController.comment.value.text !=
+                                                ''
+                                        ? Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              6.kH,
+                                              Obx(() => jobController
+                                                          .savedDateEndTime
+                                                          .value ==
+                                                      ''
+                                                  ? ButtonTime(
+                                                      saveTime: (datetime) {
+                                                        showTimeDialog(
+                                                            context,
+                                                            'Are you sure to confirm?',
+                                                            'No',
+                                                            'Yes',
+                                                            datetime,
+                                                            jobId ?? '',
+                                                            'timeend',
+                                                            ticketId);
+                                                      },
+                                                      time: jobController
+                                                          .savedDateEndTime,
+                                                      title: 'End Time',
+                                                    )
+                                                  : Text(
+                                                      "End Time : ${jobController.savedDateEndTime.value}",
+                                                      style:
+                                                          TextStyleList.text6,
+                                                    )),
+                                              16.kH,
+                                            ],
+                                          )
+                                        : Container()),
+                                  ],
+                                ),
+                                BoxContainer(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const TitleApp(
+                                            text: 'Field Service Report*'),
+                                        Obx(() => jobController
+                                                .reportList.isNotEmpty
+                                            ? EditButton(
                                                 onTap: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        SignatureWidget(
-                                                      jobId: jobId.toString(),
-                                                      ticketId:
-                                                          ticketId.toString(),
-                                                    ),
-                                                  );
+                                                  Get.to(() => EditFillFormView(
+                                                        reportId: jobId ?? '',
+                                                        ticketId: ticketId,
+                                                        jobId: jobId.toString(),
+                                                      ));
                                                 },
                                               )
-                                          ],
-                                        )
-                                      : Container()),
-                                ],
-                              ),
-                            ],
+                                            : AddButton(
+                                                onTap: () {
+                                                  Get.to(() => FillFormView(
+                                                        ticketId: ticketId,
+                                                        jobId: jobId ?? '',
+                                                      ));
+                                                },
+                                              )),
+                                      ],
+                                    ),
+                                    Text(
+                                      'Please fill the field service report',
+                                      style: TextStyleList.text16,
+                                    ),
+                                    Obx(() => jobController
+                                                .reportList.isNotEmpty ||
+                                            jobController
+                                                .additionalReportList.isNotEmpty
+                                        ? Column(
+                                            children: [
+                                              ShowRepairReport(
+                                                reportData:
+                                                    jobController.reportList,
+                                                additionalReportData:
+                                                    jobController
+                                                        .additionalReportList,
+                                              ),
+                                              if (jobController.reportList.first
+                                                          .signature ==
+                                                      '' &&
+                                                  jobController.reportList.first
+                                                          .signaturePad ==
+                                                      '')
+                                                ButtonRed(
+                                                  title: 'บันทึกลายเซ็น',
+                                                  onTap: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          SignatureWidget(
+                                                        jobId: jobId.toString(),
+                                                        ticketId:
+                                                            ticketId.toString(),
+                                                      ),
+                                                    );
+                                                  },
+                                                )
+                                            ],
+                                          )
+                                        : Container()),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          }
-        },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: white3,
-        child: Container(
-          decoration: Decoration2(),
-          child: EndButton(
-              onPressed: () {
-                jobController.showCompletedDialog(
-                    context, 'Are you sure to complete?', 'No', 'Yes');
-              },
-              text: 'Complete'),
+                  ],
+                ),
+              );
+            }
+          },
         ),
-      ),
-    );
+        bottomNavigationBar: Obx(() {
+          return jobController.completeCheck.value
+              ? BottomAppBar(
+                  color: white3,
+                  child: Container(
+                    decoration: Decoration2(),
+                    child: EndButton(
+                        onPressed: () {
+                          jobController.showCompletedDialog(context,
+                              'Are you sure to complete?', 'No', 'Yes');
+                        },
+                        text: 'Complete'),
+                  ),
+                )
+              : SizedBox.shrink();
+        }));
   }
 }

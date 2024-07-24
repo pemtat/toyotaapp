@@ -16,6 +16,7 @@ class PmModel {
   String? pmPlan;
   String? techStatus;
   String? techRemark;
+  String? customerStatus;
 
   PmModel(
       {this.id,
@@ -34,7 +35,8 @@ class PmModel {
       this.pmPlan,
       this.serviceZoneCode,
       this.techRemark,
-      this.techStatus});
+      this.techStatus,
+      this.customerStatus});
 
   PmModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -54,6 +56,7 @@ class PmModel {
     serviceZoneCode = json['service_zone_code'];
     techRemark = json['tech_remark'];
     techStatus = json['tech_status'];
+    customerStatus = json['customer_status'];
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -74,6 +77,8 @@ class PmModel {
     data['service_zone_code'] = serviceZoneCode;
     data['tech_remark'] = techRemark;
     data['tech_status'] = techStatus;
+    data['customer_status'] = customerStatus;
+
     return data;
   }
 }

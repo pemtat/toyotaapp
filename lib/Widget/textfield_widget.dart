@@ -29,7 +29,10 @@ class TextFieldWidget extends StatelessWidget {
               keyboardType: number ?? TextInputType.text,
               controller: textSet,
               decoration: InputDecoration(
-                hintText: text,
+                label: Text(
+                  text,
+                  style: TextStyleList.text11,
+                ),
                 hintStyle: TextStyleList.text11,
                 filled: true,
                 fillColor: black5,
@@ -227,7 +230,10 @@ class TextFieldEditWidget extends StatelessWidget {
               controller: textSet,
               keyboardType: number ?? TextInputType.text,
               decoration: InputDecoration(
-                hintText: text,
+                label: Text(
+                  text,
+                  style: TextStyleList.text11,
+                ),
                 hintStyle: TextStyleList.text11,
                 filled: true,
                 fillColor: black5,
@@ -313,6 +319,7 @@ class TextFormFieldBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       obscureText: hidetext,
+      readOnly: true,
       keyboardType: type ?? TextInputType.text,
       style: TextStyleList.text11,
       controller: controller,

@@ -9,6 +9,7 @@ class AssignedjobsController extends GetxController {
   final RxString searchQuery = ''.obs;
   var selectedDate = Rx<DateTime?>(null);
   final selectedStatus = <String>{}.obs;
+
   void clearFilters() {
     selectedStatus.clear();
     selectedDate.value = null;

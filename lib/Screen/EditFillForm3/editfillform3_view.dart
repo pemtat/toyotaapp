@@ -134,6 +134,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: initialChecks.selections,
                         remarkSelection: initialChecks.remarks,
+                        remarkSelectionChoose: initialChecks.remarksChoose,
                         listSelection: initialChecks.ListData,
                         showModal: initialChecks.checkModal,
                         show: initialChecks.isAllFieldsFilled,
@@ -157,10 +158,12 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: chassisChecks.selections,
                         remarkSelection: chassisChecks.remarks,
+                        remarkSelectionChoose: chassisChecks.remarksChoose,
                         listSelection: chassisChecks.ListData,
                         showModal: chassisChecks.checkModal,
                         show: chassisChecks.isAllFieldsFilled,
                         additional: chassisChecks.additional,
+                        additionalChoose: chassisChecks.additionalChoose,
                         unit: 'mm',
                       )
                     : const SizedBox())
@@ -182,6 +185,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: hydraulicmMotor.selections,
                         remarkSelection: hydraulicmMotor.remarks,
+                        remarkSelectionChoose: hydraulicmMotor.remarksChoose,
                         listSelection: hydraulicmMotor.ListData,
                         showModal: hydraulicmMotor.checkModal,
                         show: hydraulicmMotor.isAllFieldsFilled,
@@ -208,6 +212,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: steeringMotor.selections,
                         remarkSelection: steeringMotor.remarks,
+                        remarkSelectionChoose: steeringMotor.remarksChoose,
                         listSelection: steeringMotor.ListData,
                         showModal: steeringMotor.checkModal,
                         show: steeringMotor.isAllFieldsFilled,
@@ -233,6 +238,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: auxiliaryMotor.selections,
                         remarkSelection: auxiliaryMotor.remarks,
+                        remarkSelectionChoose: auxiliaryMotor.remarksChoose,
                         listSelection: auxiliaryMotor.ListData,
                         showModal: auxiliaryMotor.checkModal,
                         show: auxiliaryMotor.isAllFieldsFilled,
@@ -258,6 +264,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: driveMotorChecks.selections,
                         remarkSelection: driveMotorChecks.remarks,
+                        remarkSelectionChoose: driveMotorChecks.remarksChoose,
                         listSelection: driveMotorChecks.ListData,
                         showModal: driveMotorChecks.checkModal,
                         show: driveMotorChecks.isAllFieldsFilled,
@@ -283,10 +290,12 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: breakSystemChecks.selections,
                         remarkSelection: breakSystemChecks.remarks,
+                        remarkSelectionChoose: breakSystemChecks.remarksChoose,
                         listSelection: breakSystemChecks.ListData,
                         showModal: breakSystemChecks.checkModal,
                         show: breakSystemChecks.isAllFieldsFilled,
                         additional: breakSystemChecks.additional,
+                        additionalChoose: breakSystemChecks.additionalChoose,
                         unit: 'mm',
                       )
                     : const SizedBox())
@@ -308,6 +317,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: controllerLogic.selections,
                         remarkSelection: controllerLogic.remarks,
+                        remarkSelectionChoose: controllerLogic.remarksChoose,
                         listSelection: controllerLogic.ListData,
                         showModal: controllerLogic.checkModal,
                         show: controllerLogic.isAllFieldsFilled,
@@ -332,6 +342,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: powertrainChecks.selections,
                         remarkSelection: powertrainChecks.remarks,
+                        remarkSelectionChoose: powertrainChecks.remarksChoose,
                         listSelection: powertrainChecks.ListData,
                         showModal: powertrainChecks.checkModal,
                         show: powertrainChecks.isAllFieldsFilled,
@@ -356,11 +367,14 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: batteryChecks.selections,
                         remarkSelection: batteryChecks.remarks,
+                        remarkSelectionChoose: batteryChecks.remarksChoose,
                         listSelection: batteryChecks.ListData,
                         showModal: batteryChecks.checkModal,
                         show: batteryChecks.isAllFieldsFilled,
                         additional: batteryChecks.additional,
                         additional2: batteryChecks.additional2,
+                        additionalChoose: batteryChecks.additionalChoose,
+                        additionalChoose2: batteryChecks.additionalChoose2,
                         unitList: batteryChecks.unitList,
                         unit: 's.g.',
                       )
@@ -383,6 +397,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: chargerChecks.selections,
                         remarkSelection: chargerChecks.remarks,
+                        remarkSelectionChoose: chargerChecks.remarksChoose,
                         listSelection: chargerChecks.ListData,
                         showModal: chargerChecks.checkModal,
                         show: chargerChecks.isAllFieldsFilled,
@@ -407,6 +422,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: meterialHandling.selections,
                         remarkSelection: meterialHandling.remarks,
+                        remarkSelectionChoose: meterialHandling.remarksChoose,
                         listSelection: meterialHandling.ListData,
                         showModal: meterialHandling.checkModal,
                         show: meterialHandling.isAllFieldsFilled,
@@ -431,11 +447,14 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: mastChecks.selections,
                         remarkSelection: mastChecks.remarks,
+                        remarkSelectionChoose: mastChecks.remarksChoose,
                         listSelection: mastChecks.ListData,
                         showModal: mastChecks.checkModal,
                         show: mastChecks.isAllFieldsFilled,
                         additional: mastChecks.additional,
                         additional2: mastChecks.additional2,
+                        additionalChoose: mastChecks.additionalChoose,
+                        additionalChoose2: mastChecks.additionalChoose2,
                         unitList: mastChecks.unitList,
                         unit: 'mm',
                       )
@@ -458,10 +477,12 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: ptPsOm.selections,
                         remarkSelection: ptPsOm.remarks,
+                        remarkSelectionChoose: ptPsOm.remarksChoose,
                         listSelection: ptPsOm.ListData,
                         showModal: ptPsOm.checkModal,
                         show: ptPsOm.isAllFieldsFilled,
                         additional: ptPsOm.additional,
+                        additionalChoose: ptPsOm.additionalChoose,
                         unit: 'mm',
                       )
                     : const SizedBox())
@@ -483,10 +504,12 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: vnaOm.selections,
                         remarkSelection: vnaOm.remarks,
+                        remarkSelectionChoose: vnaOm.remarksChoose,
                         listSelection: vnaOm.ListData,
                         showModal: vnaOm.checkModal,
                         show: vnaOm.isAllFieldsFilled,
                         additional: vnaOm.additional,
+                        additionalChoose: vnaOm.additionalChoose,
                         unit: 'mm',
                       )
                     : const SizedBox())
@@ -508,6 +531,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: forSpecial.selections,
                         remarkSelection: forSpecial.remarks,
+                        remarkSelectionChoose: forSpecial.remarksChoose,
                         listSelection: forSpecial.ListData,
                         showModal: forSpecial.checkModal,
                         show: forSpecial.isAllFieldsFilled,
@@ -532,6 +556,7 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: safety.selections,
                         remarkSelection: safety.remarks,
+                        remarkSelectionChoose: safety.remarksChoose,
                         listSelection: safety.ListData,
                         showModal: safety.checkModal,
                         show: safety.isAllFieldsFilled,

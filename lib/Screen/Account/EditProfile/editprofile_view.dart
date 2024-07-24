@@ -6,7 +6,6 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
-import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 
@@ -34,76 +33,90 @@ class EditProfileView extends StatelessWidget {
       ),
       body: Obx(() {
         if (userController.userInfo.isNotEmpty) {
+          var userData = userController.userInfo.first;
+          editProfileController.name.value.text = userData.name;
+          editProfileController.email.value.text =
+              userData.email == '' ? '-' : userData.email;
+          editProfileController.phoneNumber.value.text =
+              userData.phoneNo == '' ? '-' : userData.phoneNo;
+          editProfileController.resourceNo.value.text = userData.resourceNo;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BoxContainer(
-                children: [
-                  Center(
-                    child: CircleAvatar(
-                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                      radius: 27,
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/profile.png',
-                          fit: BoxFit.cover,
-                          width: 54,
-                          height: 54,
+              Expanded(
+                child: BoxContainer(
+                  children: [
+                    Center(
+                      child: CircleAvatar(
+                        backgroundColor:
+                            const Color.fromARGB(255, 255, 255, 255),
+                        radius: 32,
+                        child: ClipOval(
+                          child: Image.asset(
+                            'assets/profile.png',
+                            fit: BoxFit.cover,
+                            width: 64,
+                            height: 64,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  16.kH,
-                  Text(
-                    'User Information',
-                    style: TextStyleList.subtitle2,
-                  ),
-                  16.kH,
-                  TextFormFieldBar(
-                    label: 'Name',
-                    controller: editProfileController.name,
-                  ),
-                  12.kH,
-                  TextFormFieldBar(
-                    label: 'Email',
-                    controller: editProfileController.email,
-                  ),
-                  12.kH,
-                  TextFormFieldBar(
-                    label: 'Phone number',
-                    controller: editProfileController.phoneNumber,
-                    type: TextInputType.phone,
-                  ),
-                  12.kH,
-                  TextFormFieldVisible(
-                    label: 'Password',
-                    controller: editProfileController.password,
-                    isTextHidden: editProfileController.isTextHidden,
-                    hiddenChange: () =>
-                        editProfileController.toggleVisibility(),
-                  ),
-                  12.kH,
-                  CustomButton(
-                    onPressed: () => editProfileController.showEditDialog(
-                      context,
-                      'Are you sure to confirm?',
-                      'No',
-                      'Yes',
+                    16.kH,
+                    Text(
+                      'Tech Information',
+                      style: TextStyleList.subtitle2,
                     ),
-                    text: 'Save',
-                    background: red1,
-                    textStyle: TextStyleList.text13,
-                  ),
-                  2.kH,
-                  CustomButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    text: 'Cancel',
-                    background: white3,
-                    textStyle: TextStyleList.text19,
-                  ),
-                ],
+                    16.kH,
+                    TextFormFieldBar(
+                      label: 'Name',
+                      controller: editProfileController.name.value,
+                    ),
+                    16.kH,
+                    TextFormFieldBar(
+                      label: 'Email',
+                      controller: editProfileController.email.value,
+                    ),
+                    16.kH,
+                    TextFormFieldBar(
+                      label: 'Phone Number',
+                      controller: editProfileController.phoneNumber.value,
+                    ),
+                    16.kH,
+                    TextFormFieldBar(
+                      label: 'Resource No',
+                      controller: editProfileController.resourceNo.value,
+                    ),
+
+                    // TextFormFieldVisible(
+                    //   label: 'Password',
+                    //   controller: editProfileController.password,
+                    //   isTextHidden: editProfileController.isTextHidden,
+                    //   hiddenChange: () =>
+                    //       editProfileController.toggleVisibility(),
+                    // ),
+                    // 12.kH,
+                    // CustomButton(
+                    //   onPressed: () => editProfileController.showEditDialog(
+                    //     context,
+                    //     'Are you sure to confirm?',
+                    //     'No',
+                    //     'Yes',
+                    //   ),
+                    //   text: 'Save',
+                    //   background: red1,
+                    //   textStyle: TextStyleList.text13,
+                    // ),
+                    // 2.kH,
+                    // CustomButton(
+                    //   onPressed: () {
+                    //     Navigator.pop(context);
+                    //   },
+                    //   text: 'Cancel',
+                    //   background: white3,
+                    //   textStyle: TextStyleList.text19,
+                    // ),
+                  ],
+                ),
               ),
             ],
           );

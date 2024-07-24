@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
-import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
@@ -32,6 +31,7 @@ class JobDetailController extends GetxController {
   var isPicking = false.obs;
   var issueData = [].obs;
   var customerInfo = <CustomerById>[].obs;
+  var completeCheck = false.obs;
 
   var saveCompletedtime = ''.obs;
   List<String> notePic = [];
@@ -64,7 +64,11 @@ class JobDetailController extends GetxController {
       issueId = ticketId;
       jobId = subjobId;
       pdfList.clear;
-      fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
+      await fetchReportData(
+          subjobId, token ?? '', reportList, additionalReportList);
+      if (reportList.isNotEmpty || additionalReportList.isNotEmpty) {
+        completeCheck.value = true;
+      }
       // fetchPdfData(ticketId, token ?? '', pdfList);
 
       await fetchSubJob(subjobId, token ?? '', subJobs);
@@ -75,7 +79,7 @@ class JobDetailController extends GetxController {
       savedDateStartTime.value =
           formatDateTimeCut(subJobs.first.timeStart ?? '');
       savedDateEndTime.value = formatDateTimeCut(subJobs.first.timeEnd ?? '');
-      if (subJobs.first.comment != null) {
+      if (subJobs.first.comment != null && subJobs.first.comment != '') {
         comment.value.text = subJobs.first.comment ?? '';
       }
       if (imagesBefore.isNotEmpty) imagesBefore.clear();

@@ -10,7 +10,6 @@ import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
 import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
 import 'package:toyotamobile/Screen/PendingTaskPM/pendingtaskpm_view.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
-import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
 import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
@@ -324,16 +323,16 @@ class HomeView extends StatelessWidget {
 
                         final pmJobData = jobController.pmItems
                             .where((job) =>
-                                stringToStatus(job.status ?? '') == 'pending')
-                            .toList()
-                            .take(3);
+                                stringToStatus(job.status ?? '') == 'pending' &&
+                                job.techStatus != '2')
+                            .toList();
 
                         combinedData.addAll(pmJobData);
 
                         final jobData = jobController.subJobAssigned
                             .where((job) => job.status == '101')
-                            .toList()
-                            .take(3);
+                            .toList();
+
                         combinedData.addAll(jobData);
                         combinedData.sort((a, b) {
                           final DateTime aDate = (a is PmModel)
@@ -361,8 +360,7 @@ class HomeView extends StatelessWidget {
                         return ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount:
-                              combinedData.length > 3 ? 3 : combinedData.length,
+                          itemCount: combinedData.length,
                           itemBuilder: (context, index) {
                             final item = combinedData[index];
                             if (item is PmModel) {
@@ -386,6 +384,7 @@ class HomeView extends StatelessWidget {
                                 },
                                 child: PmItemWidget(
                                   job: item,
+                                  index: index,
                                   expandedIndex: jobController.expandedIndex2,
                                   jobController: jobController,
                                   sidebar: SidebarColor.getColor(

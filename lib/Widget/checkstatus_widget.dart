@@ -28,6 +28,8 @@ class StatusButton extends StatelessWidget {
         return const StatusPendingButton();
       case 'ongoing':
         return const StatusOngoingButton();
+      case 'notconfirm':
+        return const StatusNotConfirmButton();
       case 'planning':
         return const StatusPlanningButton();
       default:
@@ -48,6 +50,8 @@ class SidebarColor {
       case 'confirmed':
         return green3;
       case 'feedback':
+        return orange1;
+      case 'notconfirm':
         return orange1;
       case 'pending':
         return orange1;

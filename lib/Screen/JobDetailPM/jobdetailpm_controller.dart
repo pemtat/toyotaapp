@@ -33,6 +33,7 @@ class JobDetailControllerPM extends GetxController {
   var customerInfo = <CustomerById>[].obs;
   var saveCompletedtime = ''.obs;
   var isPicking = false.obs;
+  var commentCheck = false.obs;
   var issueData = [].obs;
 
   var saveCompletedtime2 = ''.obs;
@@ -40,6 +41,7 @@ class JobDetailControllerPM extends GetxController {
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
+  var completeCheck = false.obs;
   var moreTicketDetail = false.obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
@@ -47,6 +49,7 @@ class JobDetailControllerPM extends GetxController {
   var jobId;
   var userData = <UserById>[].obs;
   PmModel? pmData;
+  CustomerById? customer;
   var pdfList = <Map<String, dynamic>>[].obs;
   var status = RxString('');
   List<String> notePic = [];
@@ -70,8 +73,16 @@ class JobDetailControllerPM extends GetxController {
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     await fetchPmJobInfo(jobId, token ?? '', pmInfo);
-    if (pmInfo.first.comment != null) {
+    if (reportList.isNotEmpty ||
+        reportPreventiveList.first.maintenanceRecords!.isNotEmpty) {
+      completeCheck.value = true;
+    }
+    if (pmInfo.first.comment != null && pmInfo.first.comment != '') {
       comment.value.text = pmInfo.first.comment ?? '';
+      commentCheck.value = true;
+    } else {
+      comment.value.text = '';
+      commentCheck.value = false;
     }
     if (pmInfo.first.tStart != null && pmInfo.first.tStart != '') {
       DateTime startTime = DateTime.parse(pmInfo.first.tStart!);
@@ -131,10 +142,12 @@ class JobDetailControllerPM extends GetxController {
       Map<String, dynamic> data = json.decode(response.body);
       TicketByIdModel ticketModel = TicketByIdModel.fromJson(data);
       List<Issues>? issuesList = ticketModel.issues;
-      issuesList!.map((issue) {
+      issuesList!.map((issue) async {
         issueId = issue.id;
         checkWarranty(
             issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
+        customer = await fetchCustomerInfo(
+            issue.getCustomFieldValue('Customer No') ?? '');
       }).toList();
       issueData.value = issuesList;
     } else {}
