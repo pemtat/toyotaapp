@@ -24,10 +24,10 @@ class JobsController extends GetxController {
     super.onInit();
     await userController.fetchData();
     scrollController.addListener(onScroll);
-    jobLoading.value = true;
-    jobController
-        .fetchJobdataPage(1, userController.userInfo.first.id.toString())
-        .whenComplete(() => jobLoading.value = false);
+    jobLoading.value = false;
+    // jobController
+    //     .fetchJobdataPage(1, userController.userInfo.first.id.toString())
+    //     .whenComplete(() => jobLoading.value = false);
   }
 
   @override

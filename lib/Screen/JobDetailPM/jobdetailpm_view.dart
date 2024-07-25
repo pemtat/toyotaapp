@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/checkcustomer.dart';
-import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
@@ -75,7 +74,7 @@ class JobDetailViewPM extends StatelessWidget {
                           children: [
                             Text(extractDescription(description),
                                 style: TextStyleList.title1),
-                            Text('JobID: $ticketId',
+                            Text('PM ID: $ticketId',
                                 style: TextStyleList.text16),
                           ],
                         );
@@ -226,37 +225,51 @@ class JobDetailViewPM extends StatelessWidget {
                                           ticketId,
                                           userData.id.toString()),
                                     ),
-                                    10.kH,
-                                    Obx(() => jobController
-                                            .imagesBefore.isNotEmpty
-                                        ? Obx(
-                                            () => jobController
-                                                        .savedDateStartTime
-                                                        .value ==
-                                                    ''
-                                                ? ButtonTime(
-                                                    saveTime: (datetime) {
-                                                      showTimeDialogPM(
-                                                          context,
-                                                          'Are you sure to confirm?',
-                                                          'No',
-                                                          'Yes',
-                                                          datetime,
-                                                          ticketId,
-                                                          'timestart',
-                                                          userData.id
-                                                              .toString());
-                                                    },
-                                                    time: jobController
-                                                        .savedDateStartTime,
-                                                    title: 'Start Time',
-                                                  )
-                                                : Text(
-                                                    "Start Time : ${jobController.savedDateStartTime.value}",
-                                                    style: TextStyleList.text6,
-                                                  ),
-                                          )
-                                        : Container()),
+                                    12.kH,
+                                    Obx(() =>
+                                        jobController.imagesBefore.isNotEmpty
+                                            ? Obx(
+                                                () => jobController
+                                                            .savedDateStartTime
+                                                            .value ==
+                                                        ''
+                                                    ? ButtonTime(
+                                                        saveTime: (datetime) {
+                                                          showTimeDialogPM(
+                                                              context,
+                                                              'Are you sure to confirm?',
+                                                              'No',
+                                                              'Yes',
+                                                              datetime,
+                                                              ticketId,
+                                                              'timestart',
+                                                              userData.id
+                                                                  .toString());
+                                                        },
+                                                        time: jobController
+                                                            .savedDateStartTime,
+                                                        title: 'Start Time',
+                                                      )
+                                                    : Column(
+                                                        children: [
+                                                          6.kH,
+                                                          Row(
+                                                            children: [
+                                                              Icon(Icons
+                                                                  .access_time),
+                                                              4.wH,
+                                                              Text(
+                                                                "Start Time : ${jobController.savedDateStartTime.value}",
+                                                                style:
+                                                                    TextStyleList
+                                                                        .text6,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                              )
+                                            : Container()),
                                     Obx(() => jobController
                                                 .savedDateStartTime.value !=
                                             ''
@@ -295,7 +308,7 @@ class JobDetailViewPM extends StatelessWidget {
                                             ],
                                           )
                                         : Container()),
-                                    4.kH,
+                                    8.kH,
                                     Obx(() => jobController
                                                 .commentCheck.value ==
                                             false
@@ -341,7 +354,7 @@ class JobDetailViewPM extends StatelessWidget {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              8.kH,
+                                              9.kH,
                                               Obx(() => jobController
                                                           .savedDateEndTime
                                                           .value ==
@@ -363,10 +376,23 @@ class JobDetailViewPM extends StatelessWidget {
                                                           .savedDateEndTime,
                                                       title: 'End Time',
                                                     )
-                                                  : Text(
-                                                      "End Time : ${jobController.savedDateEndTime.value}",
-                                                      style:
-                                                          TextStyleList.text6,
+                                                  : Column(
+                                                      children: [
+                                                        4.kH,
+                                                        Row(
+                                                          children: [
+                                                            Icon(Icons
+                                                                .access_time),
+                                                            4.wH,
+                                                            Text(
+                                                              "End Time : ${jobController.savedDateEndTime.value}",
+                                                              style:
+                                                                  TextStyleList
+                                                                      .text6,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
                                                     )),
                                             ],
                                           )

@@ -24,10 +24,10 @@ class PmsController extends GetxController {
     super.onInit();
     await userController.fetchData();
     scrollController.addListener(onScroll);
-    jobLoading.value = true;
-    jobController
-        .fetchPMdataPage(1, userController.userInfo.first.id.toString())
-        .whenComplete(() => jobLoading.value = false);
+    jobLoading.value = false;
+    // jobController
+    //     .fetchPMdataPage(1, userController.userInfo.first.id.toString())
+    //     .whenComplete(() => jobLoading.value = false);
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_view2.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
@@ -30,245 +31,256 @@ class CalendarView extends StatelessWidget {
             AppBar(
               backgroundColor: white3,
               title: InkWell(
-                  onTap: () {
-                    Get.to(
-                      () => CalendarView2(),
-                      transition: Transition.rightToLeft,
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Calendar', style: TextStyleList.title1),
-                      5.wH,
-                      const Icon(Icons.calendar_month),
-                    ],
-                  )),
+                onTap: () {
+                  Get.to(
+                    () => CalendarView2(),
+                    transition: Transition.rightToLeft,
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Calendar', style: TextStyleList.title1),
+                    5.wH,
+                    const Icon(Icons.calendar_month),
+                  ],
+                ),
+              ),
             ),
             Container(
               height: 0.5,
               color: white5,
             ),
-            const AppDivider()
+            const AppDivider(),
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Obx(() {
-            return TableCalendar(
-              availableCalendarFormats: const {CalendarFormat.month: 'Month'},
-              daysOfWeekStyle: DaysOfWeekStyle(
-                  weekdayStyle: TextStyleList.subdetail1,
-                  weekendStyle: TextStyleList.subdetail1),
-              headerStyle: HeaderStyle(
-                  formatButtonTextStyle: TextStyleList.text9,
-                  titleTextStyle: TextStyleList.title2,
-                  titleCentered: true),
-              firstDay: DateTime.utc(2010, 10, 16),
-              lastDay: DateTime.utc(2030, 3, 14),
-              focusedDay: calendarController.focusedDay.value,
-              calendarFormat: calendarController.calendarFormat.value,
-              eventLoader: (day) {
-                return calendarController.getEventsForDay(day);
-              },
-              calendarStyle: CalendarStyle(
-                defaultTextStyle: TextStyleList.subtitle2,
-                todayDecoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 240, 147, 17),
-                  shape: BoxShape.circle,
-                  border: calendarController
-                          .getEventsForDay(DateTime.now())
-                          .isNotEmpty
-                      ? const Border(
-                          bottom: BorderSide(
-                            color: Color.fromARGB(255, 182, 164, 30),
-                            width: 3,
-                          ),
-                        )
-                      : null,
-                ),
-                selectedDecoration: const BoxDecoration(
-                  color: Colors.blue,
-                  shape: BoxShape.circle,
-                ),
-                markerDecoration: const BoxDecoration(),
-              ),
-              calendarBuilders:
-                  CalendarBuilders(markerBuilder: (context, day, events) {
-                if (events is List<Map<String, dynamic>> && events.isNotEmpty) {
-                  final jobEvents = events
-                      .where((event) => event['type'] == EventType.Job)
-                      .toList();
-                  final pmEvents = events
-                      .where((event) => event['type'] == EventType.PM)
-                      .toList();
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Obx(() {
+                return TableCalendar(
+                  availableCalendarFormats: const {
+                    CalendarFormat.month: 'Month'
+                  },
+                  daysOfWeekStyle: DaysOfWeekStyle(
+                    weekdayStyle: TextStyleList.subdetail1,
+                    weekendStyle: TextStyleList.subdetail1,
+                  ),
+                  headerStyle: HeaderStyle(
+                    formatButtonTextStyle: TextStyleList.text9,
+                    titleTextStyle: TextStyleList.title2,
+                    titleCentered: true,
+                  ),
+                  firstDay: DateTime.utc(2010, 10, 16),
+                  lastDay: DateTime.utc(2030, 3, 14),
+                  focusedDay: calendarController.focusedDay.value,
+                  calendarFormat: calendarController.calendarFormat.value,
+                  eventLoader: (day) {
+                    return calendarController.getEventsForDay(day);
+                  },
+                  calendarStyle: CalendarStyle(
+                    defaultTextStyle: TextStyleList.subtitle2,
+                    todayDecoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 240, 147, 17),
+                      shape: BoxShape.circle,
+                      border: calendarController
+                              .getEventsForDay(DateTime.now())
+                              .isNotEmpty
+                          ? const Border(
+                              bottom: BorderSide(
+                                color: Color.fromARGB(255, 182, 164, 30),
+                                width: 3,
+                              ),
+                            )
+                          : null,
+                    ),
+                    selectedDecoration: const BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                    ),
+                    markerDecoration: const BoxDecoration(),
+                  ),
+                  calendarBuilders: CalendarBuilders(
+                    markerBuilder: (context, day, events) {
+                      if (events is List<Map<String, dynamic>> &&
+                          events.isNotEmpty) {
+                        final jobEvents = events
+                            .where((event) => event['type'] == EventType.Job)
+                            .toList();
+                        final pmEvents = events
+                            .where((event) => event['type'] == EventType.PM)
+                            .toList();
 
-                  if (jobEvents.isNotEmpty && pmEvents.isNotEmpty) {
-                    return Stack(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(6.0),
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 251, 98, 3),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Text(
-                              '${day.day}',
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255)),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 2,
-                          right: 2,
-                          child: Row(
+                        if (jobEvents.isNotEmpty && pmEvents.isNotEmpty) {
+                          return Stack(
                             children: [
                               Container(
-                                width: 8,
-                                height: 8,
+                                margin: const EdgeInsets.all(6.0),
                                 decoration: const BoxDecoration(
-                                    color: red6, shape: BoxShape.circle),
+                                  color: Color.fromARGB(255, 251, 98, 3),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${day.day}',
+                                    style: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255)),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 2,
+                                right: 2,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 8,
+                                      height: 8,
+                                      decoration: const BoxDecoration(
+                                          color: red6, shape: BoxShape.circle),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
-                          ),
-                        )
-                      ],
-                    );
-                  }
-                  if (jobEvents.isNotEmpty &&
-                      pmEvents.isNotEmpty &&
-                      (isSameDay(day, DateTime.now()))) {
-                    return Stack(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(6.0),
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 251, 98, 3),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Text(
-                              '${day.day}',
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255)),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 2,
-                          right: 2,
-                          child: Row(
+                          );
+                        }
+                        if (jobEvents.isNotEmpty &&
+                            pmEvents.isNotEmpty &&
+                            (isSameDay(day, DateTime.now()))) {
+                          return Stack(
                             children: [
                               Container(
-                                width: 8,
-                                height: 8,
+                                margin: const EdgeInsets.all(6.0),
                                 decoration: const BoxDecoration(
-                                    color: red6, shape: BoxShape.circle),
+                                  color: Color.fromARGB(255, 251, 98, 3),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${day.day}',
+                                    style: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255)),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 2,
+                                right: 2,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 8,
+                                      height: 8,
+                                      decoration: const BoxDecoration(
+                                          color: red6, shape: BoxShape.circle),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
-                          ),
-                        )
-                      ],
-                    );
-                  }
-                  if (jobEvents.isNotEmpty) {
-                    return Stack(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(6.0),
-                          decoration: const BoxDecoration(
-                            color: red5,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Text(
-                              '${day.day}',
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 2,
-                          right: 2,
-                          child: Container(
-                            width: 8,
-                            height: 8,
-                            decoration: const BoxDecoration(
-                                color: red5, shape: BoxShape.circle),
-                          ),
-                        )
-                      ],
-                    );
-                  }
-                  if (pmEvents.isNotEmpty) {
-                    return Stack(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(6.0),
-                          decoration: const BoxDecoration(
-                            color: blue2,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Text(
-                              '${day.day}',
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 2,
-                          right: 2,
-                          child: Container(
-                            width: 8,
-                            height: 8,
-                            decoration: const BoxDecoration(
-                                color: blue2, shape: BoxShape.circle),
-                          ),
-                        )
-                      ],
-                    );
-                  }
+                          );
+                        }
+                        if (jobEvents.isNotEmpty) {
+                          return Stack(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.all(6.0),
+                                decoration: const BoxDecoration(
+                                  color: red5,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${day.day}',
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 2,
+                                right: 2,
+                                child: Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: const BoxDecoration(
+                                      color: red5, shape: BoxShape.circle),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                        if (pmEvents.isNotEmpty) {
+                          return Stack(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.all(6.0),
+                                decoration: const BoxDecoration(
+                                  color: blue2,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${day.day}',
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 2,
+                                right: 2,
+                                child: Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: const BoxDecoration(
+                                      color: blue2, shape: BoxShape.circle),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
 
-                  return null;
-                }
-                return null;
+                        return null;
+                      }
+                      return null;
+                    },
+                  ),
+                  selectedDayPredicate: (day) {
+                    return isSameDay(calendarController.selectedDay.value, day);
+                  },
+                  onDaySelected: (selectedDay, focusedDay) {
+                    calendarController.selectedDay.value = selectedDay;
+                    calendarController.focusedDay.value = focusedDay;
+                  },
+                  onFormatChanged: (format) {
+                    if (calendarController.calendarFormat.value != format) {
+                      calendarController.calendarFormat.value = format;
+                    }
+                  },
+                  onPageChanged: (focusedDay) {
+                    calendarController.focusedDay.value = focusedDay;
+                  },
+                );
               }),
-              selectedDayPredicate: (day) {
-                return isSameDay(calendarController.selectedDay.value, day);
-              },
-              onDaySelected: (selectedDay, focusedDay) {
-                calendarController.selectedDay.value = selectedDay;
-                calendarController.focusedDay.value = focusedDay;
-              },
-              onFormatChanged: (format) {
-                if (calendarController.calendarFormat.value != format) {
-                  calendarController.calendarFormat.value = format;
-                }
-              },
-              onPageChanged: (focusedDay) {
-                calendarController.focusedDay.value = focusedDay;
-              },
-            );
-          }),
-          Obx(() {
-            final events = calendarController
-                .getEventsForDay(calendarController.selectedDay.value);
-            final selectedDay = calendarController.selectedDay.value;
-            final isToday = isSameDay(selectedDay, DateTime.now());
-            final formattedDate =
-                calendarController.formatDateTime(selectedDay);
-            final displayDate =
-                isToday ? 'Today, $formattedDate' : formattedDate;
-            return Expanded(
-              child: Column(
-                children: [
-                  Container(
+              Obx(() {
+                final events = calendarController
+                    .getEventsForDay(calendarController.selectedDay.value);
+                final selectedDay = calendarController.selectedDay.value;
+                final isToday = isSameDay(selectedDay, DateTime.now());
+                final formattedDate =
+                    calendarController.formatDateTime(selectedDay);
+                final displayDate =
+                    isToday ? 'Today, $formattedDate' : formattedDate;
+                return Column(
+                  children: [
+                    Container(
                       width: MediaQuery.of(context).size.width,
                       decoration: const BoxDecoration(color: white5),
                       child: Padding(
@@ -278,19 +290,23 @@ class CalendarView extends StatelessWidget {
                           displayDate,
                           style: TextStyleList.subtitle1,
                         ),
-                      )),
-                  8.kH,
-                  events.isEmpty
-                      ? Center(
-                          child: Text(
-                          'No jobs for this day.',
-                          style: TextStyleList.subtitle2,
-                        ))
-                      : Flexible(
-                          child: Padding(
+                      ),
+                    ),
+                    8.kH,
+                    events.isEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Center(
+                                child: Text(
+                              'No jobs for this day.',
+                              style: TextStyleList.subtitle2,
+                            )),
+                          )
+                        : Padding(
                             padding: const EdgeInsets.all(paddingApp),
                             child: ListView.builder(
                               shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
                               itemCount: events.length,
                               itemBuilder: (context, index) {
                                 final event = events[index];
@@ -337,12 +353,12 @@ class CalendarView extends StatelessWidget {
                               },
                             ),
                           ),
-                        ),
-                ],
-              ),
-            );
-          }),
-        ],
+                  ],
+                );
+              }),
+            ],
+          ),
+        ),
       ),
     );
   }

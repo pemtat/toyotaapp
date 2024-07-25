@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
@@ -256,8 +257,22 @@ class EditFillformController extends GetxController {
 
           if (response.statusCode == 200) {
             print('Report updated successfully');
+            Fluttertoast.showToast(
+              msg: "กำลังบันทึกข้อมูล...",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 3,
+              fontSize: 12.0,
+            );
             jobDetailController.fetchData(
                 ticketId.toString(), jobId.toString());
+            Fluttertoast.showToast(
+              msg: "บันทึกข้อมูลสำเร็จ",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 3,
+              fontSize: 12.0,
+            );
           } else {
             print('Failed to save report: ${response.statusCode}');
           }

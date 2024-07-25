@@ -102,7 +102,7 @@ class PMJobInfo extends StatelessWidget {
               Row(
                 children: [
                   TitleApp(
-                    text: 'JobID: #${ticketId.toString().padLeft(4, '0')}',
+                    text: 'PM ID: #${ticketId.toString().padLeft(4, '0')}',
                   ),
                   5.wH,
                   GestureDetector(
@@ -184,6 +184,7 @@ class PMJobInfo extends StatelessWidget {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
+                                        3.wH,
                                         GoogleMapButton(
                                           onTap: () async {
                                             showDialog(

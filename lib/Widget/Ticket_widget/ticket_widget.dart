@@ -49,7 +49,7 @@ class PmItemWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                'JobID : ${job.id.toString().padLeft(4, '0')}',
+                'PM ID : ${job.id.toString().padLeft(4, '0')}',
                 style: TextStyleList.text16,
               ),
               const SizedBox(width: 10),
@@ -94,7 +94,7 @@ class PmItemWidget extends StatelessWidget {
                     ),
             ],
           ),
-          Row(
+          Wrap(
             children: [
               Text(
                 job.customerName,
@@ -160,6 +160,7 @@ class PmItemWidget extends StatelessWidget {
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
+                                    2.wH,
                                     GoogleMapButton(
                                       onTap: () async {
                                         showDialog(

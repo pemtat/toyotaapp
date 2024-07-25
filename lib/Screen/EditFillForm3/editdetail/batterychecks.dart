@@ -127,26 +127,23 @@ class BatteryChecks extends GetxController {
           }),
         ),
         space.kH,
-        EndButton(
-          onPressed: () {
-            if (checkAllFieldsFilled()) {
-              listClear();
-              descriptionAdd();
-              listAdd();
-
-              Navigator.pop(context);
-            } else {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const AlertDialog1();
-                },
-              );
-            }
-          },
-          text: 'Save',
-        ),
       ],
+      onPressed: () {
+        if (checkAllFieldsFilled()) {
+          listClear();
+          descriptionAdd();
+          listAdd();
+
+          Navigator.pop(context);
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertDialog1();
+            },
+          );
+        }
+      },
     ).showModal(context);
   }
 

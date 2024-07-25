@@ -203,10 +203,16 @@ class JobDetailView extends StatelessWidget {
                                                     .addAttatchments,
                                                 isPicking:
                                                     jobController.isPicking,
-                                                addNote: jobController.addNote)
+                                                addNote: jobController.addNote),
+                                            8.kH,
                                           ],
                                         )
-                                      : Container(),
+                                      : Column(
+                                          children: [
+                                            Container(),
+                                            8.kH,
+                                          ],
+                                        ),
                                 ),
                                 Obx(() {
                                   if (jobController.subJobs.isNotEmpty) {
@@ -256,35 +262,49 @@ class JobDetailView extends StatelessWidget {
                                             ticketId,
                                             jobId ?? '')),
                                     10.kH,
-                                    Obx(() => jobController
-                                            .imagesBefore.isNotEmpty
-                                        ? Obx(
-                                            () => jobController
-                                                        .savedDateStartTime
-                                                        .value ==
-                                                    ''
-                                                ? ButtonTime(
-                                                    saveTime: (datetime) {
-                                                      showTimeDialog(
-                                                          context,
-                                                          'Are you sure to confirm?',
-                                                          'No',
-                                                          'Yes',
-                                                          datetime,
-                                                          jobId ?? '',
-                                                          'timestart',
-                                                          ticketId);
-                                                    },
-                                                    time: jobController
-                                                        .savedDateStartTime,
-                                                    title: 'Start Time',
-                                                  )
-                                                : Text(
-                                                    "Start Time : ${jobController.savedDateStartTime.value}",
-                                                    style: TextStyleList.text6,
-                                                  ),
-                                          )
-                                        : Container()),
+                                    Obx(() =>
+                                        jobController.imagesBefore.isNotEmpty
+                                            ? Obx(
+                                                () => jobController
+                                                            .savedDateStartTime
+                                                            .value ==
+                                                        ''
+                                                    ? ButtonTime(
+                                                        saveTime: (datetime) {
+                                                          showTimeDialog(
+                                                              context,
+                                                              'Are you sure to confirm?',
+                                                              'No',
+                                                              'Yes',
+                                                              datetime,
+                                                              jobId ?? '',
+                                                              'timestart',
+                                                              ticketId);
+                                                        },
+                                                        time: jobController
+                                                            .savedDateStartTime,
+                                                        title: 'Start Time',
+                                                      )
+                                                    : Column(
+                                                        children: [
+                                                          6.kH,
+                                                          Row(
+                                                            children: [
+                                                              Icon(Icons
+                                                                  .access_time),
+                                                              4.wH,
+                                                              Text(
+                                                                "Start Time : ${jobController.savedDateStartTime.value}",
+                                                                style:
+                                                                    TextStyleList
+                                                                        .text6,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                              )
+                                            : Container()),
                                     18.kH,
                                     Container(
                                       height: 0.5,
@@ -399,10 +419,23 @@ class JobDetailView extends StatelessWidget {
                                                           .savedDateEndTime,
                                                       title: 'End Time',
                                                     )
-                                                  : Text(
-                                                      "End Time : ${jobController.savedDateEndTime.value}",
-                                                      style:
-                                                          TextStyleList.text6,
+                                                  : Column(
+                                                      children: [
+                                                        6.kH,
+                                                        Row(
+                                                          children: [
+                                                            Icon(Icons
+                                                                .access_time),
+                                                            4.wH,
+                                                            Text(
+                                                              "End Time : ${jobController.savedDateEndTime.value}",
+                                                              style:
+                                                                  TextStyleList
+                                                                      .text6,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
                                                     )),
                                               16.kH,
                                             ],
@@ -410,6 +443,7 @@ class JobDetailView extends StatelessWidget {
                                         : Container()),
                                   ],
                                 ),
+                                8.kH,
                                 BoxContainer(
                                   children: [
                                     Row(

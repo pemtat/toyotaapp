@@ -136,7 +136,10 @@ class Maintenance extends GetxController {
   void batteryUsageRead(MaintenanceModel batteryInfo) {
     people.value.text = batteryInfo.people.toString();
     hr.value.text = batteryInfo.hr.toString();
-    chargingTypeChoose.addAll(chargingType);
+
+    if (chargingType.isNotEmpty) {
+      chargingTypeChoose.add(chargingType.first);
+    }
   }
 
   void batteryUsageClear() {

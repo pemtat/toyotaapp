@@ -67,7 +67,7 @@ class PendingTaskControllerPM extends GetxController {
     String? token = await getToken();
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
-    fetchPdfData(ticketId, token ?? '', pdfList);
+    // fetchPdfData(ticketId, token ?? '', pdfList);
 
     final response = await http.get(
       Uri.parse(apiUrl),

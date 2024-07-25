@@ -71,7 +71,7 @@ class PendingTaskViewPM extends StatelessWidget {
                         children: [
                           Text(extractDescription(description),
                               style: TextStyleList.title1),
-                          Text('JobID: $ticketId', style: TextStyleList.text16),
+                          Text('PM ID: $ticketId', style: TextStyleList.text16),
                         ],
                       );
                     }
@@ -426,7 +426,7 @@ class PendingTaskViewPM extends StatelessWidget {
                 text: 'Confirm',
               ),
             ),
-            7.wH,
+            13.wH,
             Expanded(
               child: EndButton(
                 onPressed: () {

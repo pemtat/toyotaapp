@@ -10,6 +10,7 @@ import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
+import 'package:toyotamobile/Models/pmcommentjob_model.dart';
 import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
@@ -409,6 +410,26 @@ Future<void> fetchPmJobInfo2(
   }
 }
 
+Future<void> fetchCommentJobInfo(
+    String id, String token, Rx<TextEditingController> comment) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getPmJobCommentById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      var pmJobInfo = PmJobComment.fromJson(data);
+      comment.value.text = pmJobInfo.comment ?? '';
+    } else {}
+  } catch (e) {
+    print(e);
+  }
+}
+
 void addAttachment(
     Map<String, String> file, RxList<Map<String, dynamic>> addAttatchments) {
   addAttatchments.add(file);
@@ -680,7 +701,7 @@ Future<void> changeIssueStatusPMComment(
       body: jsonEncode(body),
     );
     if (response.statusCode == 201) {
-      await fetchPmJobInfo2(issueId, token ?? '', comment2);
+      await fetchCommentJobInfo(issueId, token ?? '', comment2);
     } else {
       print(response.statusCode);
     }

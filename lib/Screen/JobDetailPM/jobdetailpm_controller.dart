@@ -130,7 +130,7 @@ class JobDetailControllerPM extends GetxController {
     } catch (e) {
       print("Error: $e");
     }
-    fetchPdfData(ticketId, token ?? '', pdfList);
+    // fetchPdfData(ticketId, token ?? '', pdfList);
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {

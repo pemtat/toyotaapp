@@ -16,25 +16,9 @@ class AdditSparepartList extends GetxController {
   int space = 24;
   void additSparePartListModal(BuildContext context) {
     additSparePartClear();
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: 'Action & Result / Change spare parts',
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: Text(
-                "Action & Result / Change spare parts",
-                style: TextStyleList.subheading,
-              ),
-            ),
-            InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Image.asset("assets/x.png"))
-          ],
-        ),
-        space.kH,
         TextFieldWidget(
           text: 'C-Code/Page',
           textSet: cCodePage.value,
@@ -175,37 +159,20 @@ class AdditSparepartList extends GetxController {
             ),
           ],
         ),
-        space.kH,
-        EndButton(
-            onPressed: () {
-              additSparePartWrite();
-              additSparePartClear();
-              Navigator.pop(context);
-            },
-            text: 'Save')
       ],
+      onPressed: () {
+        additSparePartWrite();
+        additSparePartClear();
+        Navigator.pop(context);
+      },
     ).showModal(context);
   }
 
   void additSparePartListEditModal(BuildContext context, SparePartModel part) {
     additSparePartRead(part);
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: "Action & Result / Change spare parts",
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Spare part list",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Image.asset("assets/x.png"))
-          ],
-        ),
-        space.kH,
         TextFieldEditWidget(
           text: 'C-Code/Page',
           textSet: cCodePage.value,
@@ -346,16 +313,13 @@ class AdditSparepartList extends GetxController {
             ),
           ],
         ),
-        space.kH,
-        EndButton(
-            onPressed: () {
-              additSparePartUpdate(part);
-              additSparePartList.refresh();
-              additSparePartClear();
-              Navigator.pop(context);
-            },
-            text: 'Save')
       ],
+      onPressed: () {
+        additSparePartUpdate(part);
+        additSparePartList.refresh();
+        additSparePartClear();
+        Navigator.pop(context);
+      },
     ).showModal(context);
   }
 

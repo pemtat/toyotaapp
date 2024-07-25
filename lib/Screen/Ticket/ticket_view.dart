@@ -83,7 +83,7 @@ class TicketView extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'PM',
+                                  'PM (${jobController.totalJobsPM.value})',
                                   style: ticketController.isSelected.value == 1
                                       ? TextStyleList.text7
                                       : TextStyleList.text6,
@@ -116,7 +116,7 @@ class TicketView extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Job',
+                                  'Job (${jobController.totalJobsTicket.value})',
                                   style: ticketController.isSelected.value == 3
                                       ? TextStyleList.text7
                                       : TextStyleList.text6,

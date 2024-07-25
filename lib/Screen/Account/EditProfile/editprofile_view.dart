@@ -40,6 +40,7 @@ class EditProfileView extends StatelessWidget {
           editProfileController.phoneNumber.value.text =
               userData.phoneNo == '' ? '-' : userData.phoneNo;
           editProfileController.resourceNo.value.text = userData.resourceNo;
+          editProfileController.serviceZone.value.text = userData.zone;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -85,6 +86,11 @@ class EditProfileView extends StatelessWidget {
                     TextFormFieldBar(
                       label: 'Resource No',
                       controller: editProfileController.resourceNo.value,
+                    ),
+                    16.kH,
+                    TextFormFieldBar(
+                      label: 'Service Zone',
+                      controller: editProfileController.serviceZone.value,
                     ),
 
                     // TextFormFieldVisible(

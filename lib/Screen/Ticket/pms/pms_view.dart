@@ -59,15 +59,25 @@ class Pms extends StatelessWidget {
                                   ticketController.selectedDate.value!.month &&
                               jobDate.day ==
                                   ticketController.selectedDate.value!.day);
-                      return searchQueryMatch && dateMatch && statusMatch;
+                      return searchQueryMatch &&
+                          dateMatch &&
+                          job.customerStatus == '1' &&
+                          statusMatch;
                     }).toList();
                     // filteredJobs.sort((a, b) => b.id!.compareTo(a.id ?? ''));
+
                     if (filteredJobs.isEmpty) {
-                      return Center(
-                          child: Text(
-                        'No jobs available.',
-                        style: TextStyleList.subtitle2,
-                      ));
+                      return SingleChildScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        child: Container(
+                          margin: EdgeInsets.only(top: 15),
+                          child: Center(
+                              child: Text(
+                            'No jobs available.',
+                            style: TextStyleList.subtitle2,
+                          )),
+                        ),
+                      );
                     }
                     return Column(
                       children: [
@@ -80,8 +90,7 @@ class Pms extends StatelessWidget {
                               var job = filteredJobs[index];
                               return InkWell(
                                 onTap: () {
-                                  if (job.techStatus == '2' &&
-                                      job.customerStatus == '1') {
+                                  if (job.techStatus == '2') {
                                   } else if (stringToStatus(job.status ?? '') ==
                                       'pending') {
                                     Get.to(() => PendingTaskViewPM(
@@ -95,8 +104,7 @@ class Pms extends StatelessWidget {
                                         ticketId: job.id ?? ''));
                                   }
                                 },
-                                child: job.techStatus == '2' &&
-                                        job.customerStatus == '1'
+                                child: job.techStatus == '2'
                                     ? PmItemWidget(
                                         job: job,
                                         confirm: 'no',

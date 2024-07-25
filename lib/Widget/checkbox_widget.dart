@@ -297,6 +297,8 @@ class buildCheckbox extends StatelessWidget {
       return Row(
         children: [
           Checkbox(
+            checkColor: Colors.white,
+            activeColor: red1,
             value: isSelected,
             onChanged: (value) {
               if (value != null && value) {

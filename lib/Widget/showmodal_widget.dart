@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 
 class ShowModalWidget extends StatelessWidget {
   final List<Widget>? children;
@@ -42,6 +45,7 @@ class ShowModalWidget extends StatelessWidget {
 
 class ShowModalWidget2 extends StatelessWidget {
   final List<Widget>? children;
+  final VoidCallback onPressed;
   final double? paddingCustom;
   final String title;
 
@@ -49,6 +53,7 @@ class ShowModalWidget2 extends StatelessWidget {
     super.key,
     this.children,
     this.paddingCustom,
+    required this.onPressed,
     required this.title,
   });
 
@@ -90,6 +95,13 @@ class ShowModalWidget2 extends StatelessWidget {
               children: children ?? [],
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: EndButton(
+          onPressed: onPressed,
+          text: 'Save',
         ),
       ),
     );

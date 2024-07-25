@@ -275,11 +275,17 @@ class PmAssignedJobsView extends StatelessWidget {
                     pmAssignedController.getPagedItems(filteredJobs);
 
                 if (pagedJobs.isEmpty) {
-                  return Center(
-                      child: Text(
-                    'No jobs available.',
-                    style: TextStyleList.subtitle2,
-                  ));
+                  return SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    child: Container(
+                      margin: EdgeInsets.only(top: 15),
+                      child: Center(
+                          child: Text(
+                        'No jobs available.',
+                        style: TextStyleList.subtitle2,
+                      )),
+                    ),
+                  );
                 }
 
                 return ListView.builder(
@@ -288,8 +294,7 @@ class PmAssignedJobsView extends StatelessWidget {
                     final job = pagedJobs[index];
                     return InkWell(
                       onTap: () {
-                        if (job.techStatus == '2' &&
-                            job.customerStatus == '1') {
+                        if (job.techStatus == '2') {
                         } else if (status == 'pending') {
                           Get.to(
                               () => PendingTaskViewPM(ticketId: job.id ?? ''));
@@ -300,7 +305,7 @@ class PmAssignedJobsView extends StatelessWidget {
                               () => TicketPMDetailView(ticketId: job.id ?? ''));
                         }
                       },
-                      child: job.techStatus == '2' && job.customerStatus == '1'
+                      child: job.techStatus == '2'
                           ? PmItemWidget(
                               job: job,
                               index: index,

@@ -25,6 +25,7 @@ class AccountController extends GetxController {
       builder: (BuildContext context) {
         return DialogAlert(
           title: title,
+          rightColor: red1,
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {

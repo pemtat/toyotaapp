@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
@@ -235,7 +236,24 @@ class FillformController2 extends GetxController {
           body: jsonEncode(data));
 
       if (response.statusCode == 201) {
+        Fluttertoast.showToast(
+          msg: "กำลังบันทึกข้อมูล...",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 4,
+          fontSize: 12.0,
+        );
         await jobDetailControllerPM.fetchData(jobId.toString());
+        await fetchCommentJobInfo(
+            jobId.toString(), token ?? '', jobDetailControllerPM.comment);
+        jobDetailControllerPM.commentCheck.value = true;
+        Fluttertoast.showToast(
+          msg: "บันทึกข้อมูลสำเร็จ",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 3,
+          fontSize: 12.0,
+        );
       } else {
         print('Failed to save report: ${response.statusCode}');
       }

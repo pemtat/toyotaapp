@@ -80,23 +80,20 @@ class CalendarItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  event['customerName'],
-                                  style: TextStyleList.text15,
-                                ),
-                                4.wH,
-                                Text(
-                                  '(${event['location']})',
-                                  style: TextStyleList.subtext4,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                          ],
+                        Expanded(
+                          child: Wrap(
+                            spacing: 4.0, // ระยะห่างระหว่างวิดเจ็ตภายใน Wrap
+                            children: [
+                              Text(
+                                event['customerName'],
+                                style: TextStyleList.text15,
+                              ),
+                              Text(
+                                '(${event['location']})',
+                                style: TextStyleList.subtext4,
+                              ),
+                            ],
+                          ),
                         ),
                         Obx(() => Padding(
                               padding: const EdgeInsets.only(right: 6.0),
@@ -132,9 +129,15 @@ class CalendarItem extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              event['description'] ?? '',
-                              style: TextStyleList.detail2,
+                            Expanded(
+                              child: Wrap(
+                                children: [
+                                  Text(
+                                    event['description'] ?? '',
+                                    style: TextStyleList.detail2,
+                                  ),
+                                ],
+                              ),
                             ),
                             Obx(() => Padding(
                                   padding: const EdgeInsets.only(right: 6.0),

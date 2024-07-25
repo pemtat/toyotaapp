@@ -10,6 +10,7 @@ import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:toyotamobile/Screen/Ticket/jobs/jobs_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'dart:convert';
@@ -44,7 +45,8 @@ class HomeController extends GetxController {
   final RxInt expandedIndex = (-2).obs;
   final RxInt expandedIndex2 = (-2).obs;
   final UserController userController = Get.put(UserController());
-
+  var totalJobsTicket = 0.obs;
+  var totalJobsPM = 0.obs;
   var totalJobs = 0.obs;
   var closedJobs = 0.obs;
   var incomingJobs = 0.obs;
@@ -60,6 +62,8 @@ class HomeController extends GetxController {
 
   Future<void> fetchDataFromAssignJob() async {
     isLoading.value = true;
+    totalJobsTicket = 0.obs;
+    totalJobsPM = 0.obs;
     totalJobs = 0.obs;
     closedJobs = 0.obs;
     incomingJobs = 0.obs;
@@ -76,6 +80,10 @@ class HomeController extends GetxController {
       await userController.fetchData();
       await fetchPMdata(handlerId);
       await fetchSubJobsdata(handlerId);
+      pmItemsPage.clear();
+      subJobAssignedPage.clear();
+      await fetchPMdataPage(1, userController.userInfo.first.id.toString());
+      await fetchJobdataPage(1, userController.userInfo.first.id.toString());
       isLoading.value = false;
 
       // final response = await http.get(
@@ -191,14 +199,8 @@ class HomeController extends GetxController {
 
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(response.body);
-        List<PmModel> itemList = responseData
-            .map((job) => PmModel.fromJson(job))
-            .where((job) =>
-                (job.techStatus == '0' && job.customerStatus == '1') ||
-                (job.techStatus == '1' && job.customerStatus == '1') ||
-                (job.techStatus == '2' && job.customerStatus == '1'))
-            .toList();
-
+        List<PmModel> itemList =
+            responseData.map((job) => PmModel.fromJson(job)).toList();
         totalJobs.value += itemList.length;
 
         List<PmModel> pendingPmItems = [];
@@ -227,7 +229,7 @@ class HomeController extends GetxController {
             }
           }
         }
-
+        totalJobsPM.value = itemList.length;
         pmjobList.value = pendingPmItems.length;
         incomingJobs.value += pmjobList.value;
         pmjobListConfirmed.value = confirmPmItems.length;
@@ -367,7 +369,7 @@ class HomeController extends GetxController {
               break;
           }
         }
-
+        totalJobsTicket.value = itemList.length;
         subjobList.value = newSubJobs.length;
         subjobListPending.value = pendingSubJobs.length;
         onProcessJobs.value += pendingSubJobs.length;

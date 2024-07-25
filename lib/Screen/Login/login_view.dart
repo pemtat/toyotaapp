@@ -76,16 +76,16 @@ class LoginView extends StatelessWidget {
                         title: 'Login',
                         onPressed: controller.login,
                       ),
-                      10.kH,
-                      InkWell(
-                        onTap: () {
-                          Get.to(() => ForgetPasswordView());
-                        },
-                        child: Text(
-                          'Forget Password',
-                          style: TextStyleList.text9,
-                        ),
-                      ),
+                      // 10.kH,
+                      // InkWell(
+                      //   onTap: () {
+                      //     Get.to(() => ForgetPasswordView());
+                      //   },
+                      //   child: Text(
+                      //     'Forget Password',
+                      //     style: TextStyleList.text9,
+                      //   ),
+                      // ),
                       20.kH,
                     ],
                   ),

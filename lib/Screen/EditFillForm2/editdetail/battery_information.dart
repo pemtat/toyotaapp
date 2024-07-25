@@ -54,15 +54,12 @@ class BatteryInformation extends GetxController {
           addtionalText: 'Ah',
         ),
         space.kH,
-        EndButton(
-          onPressed: () {
-            batteryInfoWrite();
-            batteryInfoClear();
-            Navigator.pop(context);
-          },
-          text: 'Save',
-        ),
       ],
+      onPressed: () {
+        batteryInfoWrite();
+        batteryInfoClear();
+        Navigator.pop(context);
+      },
     ).showModal(context);
   }
 
@@ -114,15 +111,13 @@ class BatteryInformation extends GetxController {
           number: TextInputType.number,
         ),
         space.kH,
-        EndButton(
-            onPressed: () {
-              batteryInfoUpdate(batteryInfo);
-              batteryInformationList.refresh();
-              batteryInfoClear();
-              Navigator.pop(context);
-            },
-            text: 'Save')
       ],
+      onPressed: () {
+        batteryInfoUpdate(batteryInfo);
+        batteryInformationList.refresh();
+        batteryInfoClear();
+        Navigator.pop(context);
+      },
     ).showModal(context);
   }
 

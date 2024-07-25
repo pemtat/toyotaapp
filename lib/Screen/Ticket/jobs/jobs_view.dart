@@ -42,11 +42,17 @@ class Jobs extends StatelessWidget {
                 Expanded(
                   child: Obx(() {
                     if (jobController.subJobAssignedPage.isEmpty) {
-                      return Center(
-                          child: Text(
-                        'No jobs available.',
-                        style: TextStyleList.subtitle2,
-                      ));
+                      return SingleChildScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        child: Container(
+                          margin: EdgeInsets.only(top: 15),
+                          child: Center(
+                              child: Text(
+                            'No jobs available.',
+                            style: TextStyleList.subtitle2,
+                          )),
+                        ),
+                      );
                     }
                     final filteredJobs =
                         jobController.subJobAssignedPage.where((job) {

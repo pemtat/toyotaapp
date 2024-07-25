@@ -18,23 +18,9 @@ class SparepartList extends GetxController {
   void sparePartListModal(BuildContext context) {
     sparePartClear();
     chooseClear();
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: 'Spare part list',
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Spare part list",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Image.asset("assets/x.png"))
-          ],
-        ),
-        space.kH,
         TextFieldWidget(
           text: 'C-Code/Page',
           textSet: cCodePage.value,
@@ -186,38 +172,21 @@ class SparepartList extends GetxController {
           text: 'Change on PM',
           itemSet: selectionsChoose2,
         ),
-        space.kH,
-        EndButton(
-            onPressed: () {
-              sparePartWrite();
-              sparePartClear();
-              Navigator.pop(context);
-            },
-            text: 'Save')
       ],
+      onPressed: () {
+        sparePartWrite();
+        sparePartClear();
+        Navigator.pop(context);
+      },
     ).showModal(context);
   }
 
   void sparePartListEditModal(BuildContext context, SparePartModel part) {
     sparePartRead(part);
 
-    ShowModalWidget(
+    ShowModalWidget2(
+      title: "Spare part list",
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Spare part list",
-              style: TextStyleList.subheading,
-            ),
-            InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Image.asset("assets/x.png"))
-          ],
-        ),
-        space.kH,
         TextFieldEditWidget(
           text: 'C-Code/Page',
           textSet: cCodePage.value,
@@ -369,17 +338,14 @@ class SparepartList extends GetxController {
           text: 'Change on PM',
           itemSet: selectionsChoose2,
         ),
-        space.kH,
-        EndButton(
-            onPressed: () {
-              sparePartUpdate(part);
-              sparePartList.refresh();
-              sparePartClear();
-
-              Navigator.pop(context);
-            },
-            text: 'Save')
       ],
+      onPressed: () {
+        sparePartUpdate(part);
+        sparePartList.refresh();
+        sparePartClear();
+
+        Navigator.pop(context);
+      },
     ).showModal(context);
   }
 

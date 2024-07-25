@@ -221,11 +221,17 @@ class AssignedjobsNew extends StatelessWidget {
                                     statusMatch;
                               }).toList();
                               if (filteredJobs.isEmpty) {
-                                return Center(
-                                    child: Text(
-                                  'No jobs available.',
-                                  style: TextStyleList.subtitle2,
-                                ));
+                                return SingleChildScrollView(
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 15),
+                                    child: Center(
+                                        child: Text(
+                                      'No jobs available.',
+                                      style: TextStyleList.subtitle2,
+                                    )),
+                                  ),
+                                );
                               }
 
                               return ListView.builder(
@@ -298,13 +304,18 @@ class AssignedjobsNew extends StatelessWidget {
                                     statusMatch;
                               }).toList();
                               if (filteredJobs.isEmpty) {
-                                return Center(
-                                    child: Text(
-                                  'No jobs available.',
-                                  style: TextStyleList.subtitle2,
-                                ));
+                                return SingleChildScrollView(
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 15),
+                                    child: Center(
+                                        child: Text(
+                                      'No jobs available.',
+                                      style: TextStyleList.subtitle2,
+                                    )),
+                                  ),
+                                );
                               }
-
                               return ListView.builder(
                                 itemCount: filteredJobs.length,
                                 itemBuilder: (context, index) {
@@ -375,11 +386,17 @@ class AssignedjobsNew extends StatelessWidget {
                                     statusMatch;
                               }).toList();
                               if (filteredJobs.isEmpty) {
-                                return Center(
-                                    child: Text(
-                                  'No jobs available.',
-                                  style: TextStyleList.subtitle2,
-                                ));
+                                return SingleChildScrollView(
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 15),
+                                    child: Center(
+                                        child: Text(
+                                      'No jobs available.',
+                                      style: TextStyleList.subtitle2,
+                                    )),
+                                  ),
+                                );
                               }
 
                               return ListView.builder(

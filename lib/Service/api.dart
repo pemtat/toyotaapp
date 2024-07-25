@@ -60,6 +60,10 @@ String getPmJobInfoById(String id) {
   return '$url/api/rest/pm_jobs/job_working_details?job_id=$id';
 }
 
+String getPmJobCommentById(String id) {
+  return '$url/api/rest/pm_jobs/job_working_comment?job_id=$id';
+}
+
 String getPmJobPage(String handlerId, int page) {
   return '$url/api/rest/pm/$handlerId/page/$page';
 }

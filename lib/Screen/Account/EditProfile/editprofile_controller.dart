@@ -11,6 +11,7 @@ class EditProfileController extends GetxController {
   final phoneNumber = TextEditingController().obs;
   final password = TextEditingController().obs;
   final resourceNo = TextEditingController().obs;
+  final serviceZone = TextEditingController().obs;
   var isTextHidden = false.obs;
 
   void toggleVisibility() {
