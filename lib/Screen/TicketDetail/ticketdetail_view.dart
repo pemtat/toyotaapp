@@ -263,9 +263,15 @@ class TicketDetailView extends StatelessWidget {
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  Text(
-                                    "Start Time : ${formatDateTimeCut(subJob.timeStart ?? '- ')}",
-                                    style: TextStyleList.text6,
+                                  Row(
+                                    children: [
+                                      Icon(Icons.access_time),
+                                      4.wH,
+                                      Text(
+                                        "Start Time : ${formatDateTimeCut(subJob.timeStart ?? '- ')}",
+                                        style: TextStyleList.text6,
+                                      ),
+                                    ],
                                   ),
                                   8.kH,
                                   if (ticketController.imagesBefore.isNotEmpty)
@@ -281,9 +287,15 @@ class TicketDetailView extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "End Time : ${formatDateTimeCut(subJob.timeEnd ?? '-')}",
-                                        style: TextStyleList.text6,
+                                      Row(
+                                        children: [
+                                          Icon(Icons.access_time),
+                                          4.wH,
+                                          Text(
+                                            "End Time : ${formatDateTimeCut(subJob.timeEnd ?? '-')}",
+                                            style: TextStyleList.text6,
+                                          ),
+                                        ],
                                       ),
                                       8.kH,
                                       if (ticketController

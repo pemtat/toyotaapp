@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Models/batteryInformation_model.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';

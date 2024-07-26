@@ -5,10 +5,10 @@ class CustomBorderBox extends StatelessWidget {
   final Color fillColor;
 
   const CustomBorderBox({
-    Key? key,
+    super.key,
     required this.hasGreyBorder,
     required this.fillColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

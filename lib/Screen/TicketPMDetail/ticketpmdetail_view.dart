@@ -165,9 +165,15 @@ class TicketPMDetailView extends StatelessWidget {
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  Text(
-                                    "Start Time : ${formatDateTimeCut(pmData.tStart ?? '- ')}",
-                                    style: TextStyleList.text6,
+                                  Row(
+                                    children: [
+                                      Icon(Icons.access_time),
+                                      4.wH,
+                                      Text(
+                                        "Start Time : ${formatDateTimeCut(pmData.tStart ?? '- ')}",
+                                        style: TextStyleList.text6,
+                                      ),
+                                    ],
                                   ),
                                   8.kH,
                                   if (jobController.imagesBefore.isNotEmpty)
@@ -182,9 +188,15 @@ class TicketPMDetailView extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "End Time : ${formatDateTimeCut(pmData.tEnd ?? '- ')}",
-                                        style: TextStyleList.text6,
+                                      Row(
+                                        children: [
+                                          Icon(Icons.access_time),
+                                          4.wH,
+                                          Text(
+                                            "End Time : ${formatDateTimeCut(pmData.tEnd ?? '- ')}",
+                                            style: TextStyleList.text6,
+                                          ),
+                                        ],
                                       ),
                                       8.kH,
                                       if (jobController.imagesBefore.isNotEmpty)

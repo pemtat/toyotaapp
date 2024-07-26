@@ -10,7 +10,6 @@ import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:toyotamobile/Screen/Ticket/jobs/jobs_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'dart:convert';

@@ -8,8 +8,8 @@ class PmJobComment {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['comment'] = this.comment;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['comment'] = comment;
     return data;
   }
 }

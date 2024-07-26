@@ -196,7 +196,7 @@ class CalendarItem extends StatelessWidget {
                         const Icon(Icons.calendar_month_outlined),
                         const SizedBox(width: 5),
                         Text(
-                          '${formatDateTime(event['date'])}',
+                          formatDateTime(event['date']),
                           style: TextStyleList.subtext1,
                         ),
                         const SizedBox(height: 2),

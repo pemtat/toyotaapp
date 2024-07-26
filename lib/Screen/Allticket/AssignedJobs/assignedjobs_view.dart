@@ -222,9 +222,10 @@ class AssignedjobsNew extends StatelessWidget {
                               }).toList();
                               if (filteredJobs.isEmpty) {
                                 return SingleChildScrollView(
-                                  physics: AlwaysScrollableScrollPhysics(),
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
                                   child: Container(
-                                    margin: EdgeInsets.only(top: 15),
+                                    margin: const EdgeInsets.only(top: 15),
                                     child: Center(
                                         child: Text(
                                       'No jobs available.',
@@ -305,9 +306,10 @@ class AssignedjobsNew extends StatelessWidget {
                               }).toList();
                               if (filteredJobs.isEmpty) {
                                 return SingleChildScrollView(
-                                  physics: AlwaysScrollableScrollPhysics(),
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
                                   child: Container(
-                                    margin: EdgeInsets.only(top: 15),
+                                    margin: const EdgeInsets.only(top: 15),
                                     child: Center(
                                         child: Text(
                                       'No jobs available.',
@@ -387,9 +389,10 @@ class AssignedjobsNew extends StatelessWidget {
                               }).toList();
                               if (filteredJobs.isEmpty) {
                                 return SingleChildScrollView(
-                                  physics: AlwaysScrollableScrollPhysics(),
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
                                   child: Container(
-                                    margin: EdgeInsets.only(top: 15),
+                                    margin: const EdgeInsets.only(top: 15),
                                     child: Center(
                                         child: Text(
                                       'No jobs available.',

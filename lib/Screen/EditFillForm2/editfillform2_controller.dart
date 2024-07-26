@@ -110,8 +110,9 @@ class EditFillformController2 extends GetxController {
         info1.serialNo != '-' ||
         info1.batteryLifespan != '0' ||
         info1.informationVoltage != '0' ||
-        info1.capacity != '0')
+        info1.capacity != '0') {
       batteryInfoController.batteryInformationList.add(newBatteryInfo);
+    }
 
     final newForklife = ForkliftInformationModel(
       forkLifeBrand: info1.forkliftBrand ?? '',
@@ -122,8 +123,9 @@ class EditFillformController2 extends GetxController {
     if (info1.forkliftBrand != '-' ||
         info1.forkliftModel != '-' ||
         info1.forkliftSerial != '-' ||
-        info1.forkliftOperation != '0')
+        info1.forkliftOperation != '0') {
       forkLifeInformation.forklifeList.add(newForklife);
+    }
 
     List<String> chosenChargingTypes = [];
     chosenChargingTypes.add(info1.chargingType ?? '');
@@ -133,8 +135,9 @@ class EditFillformController2 extends GetxController {
         ratio: double.tryParse(info1.ratio ?? '') ?? 0,
         chargingType: chosenChargingTypes);
 
-    if (info1.shiftTime != '0' || info1.hrs != '0' || info1.ratio != '0')
+    if (info1.shiftTime != '0' || info1.hrs != '0' || info1.ratio != '0') {
       batteryUsageController.batteryUsageList.add(newBatteryUseInfo);
+    }
 
     List<SpecicGravityModel> newSpecicGravityList = specicGravity!
         .map((item) => SpecicGravityModel(
@@ -146,12 +149,14 @@ class EditFillformController2 extends GetxController {
 
     if (specicGravity.first.temperature != '0' ||
         specicGravity.first.thp != '0' ||
-        specicGravity.first.voltageCheck != '0')
+        specicGravity.first.voltageCheck != '0') {
       specicGravityController.specicGravityList.addAll(newSpecicGravityList);
+    }
 
-    if (info1.correctiveAction != '')
+    if (info1.correctiveAction != '') {
       correctiveActionController.correctiveAction
           .add(info1.correctiveAction ?? '');
+    }
 
     var sparePartList = <SparePartModel>[].obs;
     if (recommendedSpareparts.first.quantity != '0') {
@@ -190,8 +195,9 @@ class EditFillformController2 extends GetxController {
       additSparePartListController.additSparePartList
           .addAll(additionalSparePartList);
     }
-    if (info1.repairPm != '')
+    if (info1.repairPm != '') {
       repairPmController.repairPm.add(info1.repairPm ?? '');
+    }
 
     for (var i = 0; i < condition!.length; i++) {
       if (condition[i].status != '' ||

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Styles/boxdecoration.dart';
-import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
-import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 
 class ShowModalWidget extends StatelessWidget {
   final List<Widget>? children;

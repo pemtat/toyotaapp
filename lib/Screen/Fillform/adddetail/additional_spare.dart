@@ -6,7 +6,6 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/inputdecoraton.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
@@ -183,7 +182,7 @@ class AdditSparepartList extends GetxController {
   void additSparePartListEditModal(BuildContext context, SparePartModel part) {
     additSparePartRead(part);
     ShowModalWidget2(
-      title: "Spare part list",
+      title: "Additional spare part list",
       children: [
         TextFieldEditWidget(
           text: 'C-Code/Page',

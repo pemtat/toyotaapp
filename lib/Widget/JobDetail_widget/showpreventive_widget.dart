@@ -13,7 +13,7 @@ import 'package:toyotamobile/Widget/title_widget.dart';
 class ShowPreventiveReportWidget extends StatelessWidget {
   final RxList<PreventivereportModel> reportData;
 
-  ShowPreventiveReportWidget({
+  const ShowPreventiveReportWidget({
     super.key,
     required this.reportData,
   });

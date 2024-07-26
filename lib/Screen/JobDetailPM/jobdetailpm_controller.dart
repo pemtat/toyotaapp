@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
-import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
@@ -86,7 +85,7 @@ class JobDetailControllerPM extends GetxController {
     }
     if (pmInfo.first.tStart != null && pmInfo.first.tStart != '') {
       DateTime startTime = DateTime.parse(pmInfo.first.tStart!);
-      DateTime adjustedStartTime = startTime.add(Duration(hours: 7));
+      DateTime adjustedStartTime = startTime.add(const Duration(hours: 7));
 
       String formattedStartTime =
           DateFormat('yyyy-MM-dd HH:mm:ss').format(adjustedStartTime);
@@ -95,7 +94,7 @@ class JobDetailControllerPM extends GetxController {
     }
     if (pmInfo.first.tEnd != null && pmInfo.first.tEnd != '') {
       DateTime endTime = DateTime.parse(pmInfo.first.tEnd!);
-      DateTime adjustedEndTime = endTime.add(Duration(hours: 7));
+      DateTime adjustedEndTime = endTime.add(const Duration(hours: 7));
 
       String formattedEndTime =
           DateFormat('yyyy-MM-dd HH:mm:ss').format(adjustedEndTime);

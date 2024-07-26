@@ -54,7 +54,7 @@ class PmItemWidget extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               confirm != null
-                  ? StatusButton(status: 'notconfirm')
+                  ? const StatusButton(status: 'notconfirm')
                   : StatusButton(status: stringToStatus(job.status)),
               const Spacer(),
               index != null

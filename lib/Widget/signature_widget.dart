@@ -104,7 +104,7 @@ class SignatureWidget extends StatelessWidget {
                   context: context,
                   barrierDismissible: false,
                   builder: (BuildContext context) {
-                    return LoadingDialog();
+                    return const LoadingDialog();
                   });
 
               if (option == 'battery') {
