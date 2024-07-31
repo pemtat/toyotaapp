@@ -242,7 +242,7 @@ class JobDetailView extends StatelessWidget {
                                       'ภาพก่อนการเเก้ไข',
                                       style: TextStyleList.text11,
                                     ),
-                                    6.kH,
+                                    8.kH,
                                     Obx(() =>
                                         jobController.imagesBefore.isNotEmpty
                                             ? AttachmentsListWidget(
@@ -253,7 +253,7 @@ class JobDetailView extends StatelessWidget {
                                                 option: 'before',
                                               )
                                             : Container()),
-                                    10.kH,
+                                    14.kH,
                                     UploadImageWidget(
                                         pickImage: () => pickImage(
                                             jobController.imagesBefore,
@@ -261,7 +261,7 @@ class JobDetailView extends StatelessWidget {
                                             'before',
                                             ticketId,
                                             jobId ?? '')),
-                                    10.kH,
+                                    14.kH,
                                     Obx(() =>
                                         jobController.imagesBefore.isNotEmpty
                                             ? Obx(
@@ -334,7 +334,7 @@ class JobDetailView extends StatelessWidget {
                                                       option: 'after',
                                                     )
                                                   : Container()),
-                                              8.kH,
+                                              14.kH,
                                               UploadImageWidget(
                                                 pickImage: () => pickImage(
                                                     jobController.imagesAfter,
@@ -347,7 +347,7 @@ class JobDetailView extends StatelessWidget {
                                             ],
                                           )
                                         : Container()),
-                                    4.kH,
+                                    6.kH,
                                     Obx(() => jobController
                                                 .comment.value.text ==
                                             ''
@@ -398,7 +398,7 @@ class JobDetailView extends StatelessWidget {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              6.kH,
+                                              12.kH,
                                               Obx(() => jobController
                                                           .savedDateEndTime
                                                           .value ==
@@ -437,7 +437,7 @@ class JobDetailView extends StatelessWidget {
                                                         ),
                                                       ],
                                                     )),
-                                              16.kH,
+                                              12.kH,
                                             ],
                                           )
                                         : Container()),
@@ -496,20 +496,26 @@ class JobDetailView extends StatelessWidget {
                                                   jobController.reportList.first
                                                           .signaturePad ==
                                                       '')
-                                                ButtonRed(
-                                                  title: 'บันทึกลายเซ็น',
-                                                  onTap: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          SignatureWidget(
-                                                        jobId: jobId.toString(),
-                                                        ticketId:
-                                                            ticketId.toString(),
-                                                      ),
-                                                    );
-                                                  },
+                                                Column(
+                                                  children: [
+                                                    5.kH,
+                                                    ButtonRed(
+                                                      title: 'บันทึกลายเซ็น',
+                                                      onTap: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              SignatureWidget(
+                                                            jobId: jobId
+                                                                .toString(),
+                                                            ticketId: ticketId
+                                                                .toString(),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
                                                 )
                                             ],
                                           )

@@ -12,6 +12,11 @@ class LoginController extends GetxController {
   final LoginModel _loginModel = LoginModel();
   final HomeController jobController = Get.put(HomeController());
   final UserController userController = Get.put(UserController());
+  var isTextHidden = false.obs;
+
+  void toggleVisibility() {
+    isTextHidden.value = !isTextHidden.value;
+  }
 
   void setEmail(String username) {
     _loginModel.email.value = username;

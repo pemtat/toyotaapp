@@ -31,6 +31,7 @@ class ChassisChecks extends GetxController {
 
               final TextEditingController additionalController =
                   additionalControllers[index];
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -122,7 +123,7 @@ class ChassisChecks extends GetxController {
 
   var isAllFieldsFilled = false.obs;
   final List<TextEditingController> additionalControllers = List.generate(
-    6,
+    5,
     (index) => TextEditingController(),
   );
   List<String> ListData = [
@@ -148,6 +149,8 @@ class ChassisChecks extends GetxController {
 
   void chooseAdd() {
     selectionsChoose.addAll(selections);
+    remarksChoose.assignAll(remarks);
+    additionalChoose.assignAll(additional);
   }
 
   void chooseClear() {

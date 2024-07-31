@@ -162,6 +162,8 @@ class BreakSystemChecks extends GetxController {
 
   void chooseAdd() {
     selectionsChoose.addAll(selections);
+    remarksChoose.assignAll(remarks);
+    additionalChoose.assignAll(additional);
   }
 
   void chooseClear() {

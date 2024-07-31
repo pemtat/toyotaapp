@@ -65,10 +65,11 @@ class LoginView extends StatelessWidget {
                         onChanged: controller.setEmail,
                       ),
                       20.kH,
-                      TextFieldBar(
+                      TextFieldBarVisible(
                         label: 'Password',
                         onChanged: controller.setPassword,
-                        hidetext: true,
+                        isTextHidden: controller.isTextHidden,
+                        hiddenChange: () => controller.toggleVisibility(),
                       ),
                       20.kH,
                       AppButton(

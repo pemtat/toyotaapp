@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
@@ -9,6 +8,7 @@ import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 import 'package:toyotamobile/Widget/loadingdata.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 
@@ -98,13 +98,7 @@ class SignatureWidget extends StatelessWidget {
                   signaturePad.value);
               await jobController.fetchData(
                   ticketId.toString(), jobId.toString());
-              Fluttertoast.showToast(
-                msg: "บันทึกลายเซ็นสำเร็จ",
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 3,
-                fontSize: 12.0,
-              );
+              showSignatureSaveMessage();
               Navigator.pop(context);
               Navigator.pop(context);
             } else {
@@ -132,13 +126,7 @@ class SignatureWidget extends StatelessWidget {
                     signaturePad.value,
                     'preventive');
                 await jobControllerPM.fetchData(jobId.toString());
-                Fluttertoast.showToast(
-                  msg: "บันทึกลายเซ็นสำเร็จ",
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 3,
-                  fontSize: 12.0,
-                );
+                showSignatureSaveMessage();
               }
               Navigator.pop(context);
               Navigator.pop(context);

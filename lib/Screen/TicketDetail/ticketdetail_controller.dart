@@ -83,7 +83,7 @@ class TicketDetailController extends GetxController {
         List<dynamic> imageBeforeList = jsonDecode(subJobs.first.imageBefore!);
         List<dynamic> contentBeforeList =
             jsonDecode(subJobs.first.contentBefore!);
-
+        imagesBefore.clear();
         for (int i = 0; i < imageBeforeList.length; i++) {
           imagesBefore.add({
             'filename': imageBeforeList[i],
@@ -96,7 +96,7 @@ class TicketDetailController extends GetxController {
         List<dynamic> imageAfterList = jsonDecode(subJobs.first.imageAfter!);
         List<dynamic> contentAfterList =
             jsonDecode(subJobs.first.contentAfter!);
-
+        imagesAfter.clear();
         for (int i = 0; i < contentAfterList.length; i++) {
           imagesAfter.add({
             'filename': imageAfterList[i],

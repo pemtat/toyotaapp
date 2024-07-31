@@ -12,6 +12,7 @@ class RepairPM extends GetxController {
   void repairPMModal(BuildContext context) {
     repairPmChoose.clear();
     repairPmChoose.addAll(repairPm);
+    otherChoose.value = other.value;
     ShowModalWidget(
       children: [
         Row(
@@ -38,6 +39,7 @@ class RepairPM extends GetxController {
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: CheckBoxWidget(
                   option: 'yes',
+                  other: otherChoose,
                   text: repairPmList[index],
                   listItem: repairPmChoose,
                   itemSet: repairPmChoose,

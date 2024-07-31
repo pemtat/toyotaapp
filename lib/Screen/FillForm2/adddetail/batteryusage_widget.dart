@@ -11,6 +11,7 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 class BatteryUsage extends GetxController {
   int space = 24;
   void batteryUsageModal(BuildContext context) {
+    batteryUsageClear();
     ShowModalWidget(
       children: [
         Row(

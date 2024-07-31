@@ -204,6 +204,7 @@ class PendingTaskControllerPM extends GetxController {
             updateJobPM(jobId, 1, '-', issueData.first.customerStatus);
             Navigator.pop(context);
             jobController.fetchDataFromAssignJob();
+            showSaveMessage();
           },
         );
       },

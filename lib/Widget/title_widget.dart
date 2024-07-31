@@ -27,9 +27,11 @@ class TitleApp2 extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          text,
-          style: TextStyleList.subtitle1,
+        Expanded(
+          child: Text(
+            text,
+            style: TextStyleList.subtitle1,
+          ),
         ),
         if (moreText != null)
           Text(
@@ -59,7 +61,7 @@ class TitleWithButton extends StatelessWidget {
         ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TitleApp(text: titleText),
+              Expanded(child: TitleApp(text: titleText)),
               button,
             ],
           )

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:ui';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
@@ -20,6 +19,7 @@ import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
 class FillformController extends GetxController {
   final fault = TextEditingController().obs;
@@ -256,22 +256,10 @@ class FillformController extends GetxController {
                 body: jsonEncode(data));
 
             if (response.statusCode == 201) {
-              Fluttertoast.showToast(
-                msg: "กำลังบันทึกข้อมูล...",
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 4,
-                fontSize: 12.0,
-              );
+              showWaitMessage();
               jobDetailController.fetchData(
                   ticketId.toString(), jobId.toString());
-              Fluttertoast.showToast(
-                msg: "บันทึกข้อมูลสำเร็จ",
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 4,
-                fontSize: 12.0,
-              );
+              showSaveMessage();
             } else {
               print('Failed to save report: ${response.statusCode}');
             }

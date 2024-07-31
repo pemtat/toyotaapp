@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:get/get.dart';
 import 'package:toyotamobile/Styles/text.dart';
 
 //Using [ Login ]
@@ -39,6 +40,57 @@ class TextFieldBar extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class TextFieldBarVisible extends StatelessWidget {
+  final String label;
+  final Function(String) onChanged;
+  final RxBool isTextHidden;
+  final Function hiddenChange;
+
+  const TextFieldBarVisible({
+    super.key,
+    required this.label,
+    required this.onChanged,
+    required this.isTextHidden,
+    required this.hiddenChange,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.grey),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: TextField(
+              obscureText: !isTextHidden.value,
+              style: TextStyleList.text11,
+              onChanged: onChanged,
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    !isTextHidden.value
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    hiddenChange();
+                  },
+                ),
+                labelText: label,
+                labelStyle: TextStyleList.text11,
+                floatingLabelStyle: const TextStyle(color: Colors.black),
+                border: InputBorder.none,
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              ),
+            ),
+          ),
+        ));
   }
 }
 

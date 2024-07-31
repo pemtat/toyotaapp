@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
@@ -31,14 +30,18 @@ import 'package:toyotamobile/Screen/EditFillForm3/editdetail/sparepartlist.dart'
 import 'package:toyotamobile/Screen/EditFillForm3/editdetail/steeringmotor.dart';
 import 'package:toyotamobile/Screen/EditFillForm3/editdetail/vnaom.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
+import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
 class FillformController3 extends GetxController {
   var jobId = ''.obs;
+  var readOnly = ''.obs;
+
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
   var reportPreventiveList = <PreventivereportModel>[].obs;
@@ -67,6 +70,8 @@ class FillformController3 extends GetxController {
   final TextEditingController signatureController = TextEditingController();
   final GlobalKey<SfSignaturePadState> signature = GlobalKey();
   final UserController userController = Get.put(UserController());
+  final TicketPmDetailController ticketPmDetailController =
+      Get.put(TicketPmDetailController());
 
   var saveCompletedtime = ''.obs;
   void clearSignature() {
@@ -74,8 +79,14 @@ class FillformController3 extends GetxController {
     signature.currentState!.clear();
   }
 
-  void fetchData(String jobId) async {
+  void fetchData(String jobId, readOnly) async {
     this.jobId.value = jobId;
+    if (readOnly != null) {
+      this.readOnly.value = readOnly;
+    } else {
+      this.readOnly.value = 'no';
+    }
+
     String? token = await getToken();
     await userController.fetchData();
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
@@ -107,6 +118,7 @@ class FillformController3 extends GetxController {
               chassisChecks.remarksChoose[j] = subData.remark ?? '';
               chassisChecks.additional[j] = subData.data1 ?? '';
               chassisChecks.additionalChoose[j] = subData.data1 ?? '';
+              chassisChecks.additionalControllers[j].text = subData.data1 ?? '';
               chassisChecks.isAllFieldsFilled.value = true;
             } else if (i == 2) {
               hydraulicmMotor.selections[j] = choose;
@@ -114,6 +126,7 @@ class FillformController3 extends GetxController {
               hydraulicmMotor.remarksChoose[j] = subData.remark ?? '';
               hydraulicmMotor.additional[j] = subData.data1 ?? '';
               hydraulicmMotor.additionalChoose[j] = subData.data1 ?? '';
+
               hydraulicmMotor.isAllFieldsFilled.value = true;
             } else if (i == 3) {
               steeringMotor.selections[j] = choose;
@@ -142,6 +155,8 @@ class FillformController3 extends GetxController {
               breakSystemChecks.remarksChoose[j] = subData.remark ?? '';
               breakSystemChecks.additional[j] = subData.data1 ?? '';
               breakSystemChecks.additionalChoose[j] = subData.data1 ?? '';
+              breakSystemChecks.additionalControllers[j].text =
+                  subData.data1 ?? '';
               breakSystemChecks.isAllFieldsFilled.value = true;
             } else if (i == 7) {
               controllerLogic.selections[j] = choose;
@@ -161,6 +176,7 @@ class FillformController3 extends GetxController {
               batteryChecks.remarksChoose[j] = subData.remark ?? '';
               batteryChecks.additional[j] = subData.data1 ?? '';
               batteryChecks.additionalChoose[j] = subData.data1 ?? '';
+              batteryChecks.additionalControllers[j].text = subData.data1 ?? '';
               if (choose != '' ||
                   subData.data1 != '' ||
                   (subData.data2 != '' && subData.data2 != ',') ||
@@ -173,11 +189,15 @@ class FillformController3 extends GetxController {
                 batteryChecks.additional2[j][1] = splitData[1].trim();
                 batteryChecks.additionalChoose2[j][0] = splitData[0].trim();
                 batteryChecks.additionalChoose2[j][1] = splitData[1].trim();
+                batteryChecks.subControllers1[j].text = splitData[0].trim();
+                batteryChecks.subControllers2[j].text = splitData[1].trim();
               } else {
                 batteryChecks.additional2[j][0] = subData.data2 ?? '';
                 batteryChecks.additional2[j][1] = subData.data2 ?? '';
                 batteryChecks.additionalChoose2[j][0] = subData.data2 ?? '';
                 batteryChecks.additionalChoose2[j][1] = subData.data2 ?? '';
+                batteryChecks.subControllers1[j].text = subData.data2 ?? '';
+                batteryChecks.subControllers2[j].text = subData.data2 ?? '';
               }
             } else if (i == 10) {
               chargerChecks.selections[j] = choose;
@@ -197,6 +217,8 @@ class FillformController3 extends GetxController {
               mastChecks.remarksChoose[j] = subData.remark ?? '';
               mastChecks.additional[j] = subData.data1 ?? '';
               mastChecks.additionalChoose[j] = subData.data1 ?? '';
+              mastChecks.additionalControllers[j].text = subData.data1 ?? '';
+
               if (choose != '' ||
                   subData.data1 != '' ||
                   (subData.data2 != '' && subData.data2 != ',') ||
@@ -210,11 +232,15 @@ class FillformController3 extends GetxController {
                 mastChecks.additional2[j][1] = splitData[1].trim();
                 mastChecks.additionalChoose2[j][0] = splitData[0].trim();
                 mastChecks.additionalChoose2[j][1] = splitData[1].trim();
+                mastChecks.subControllers1[j].text = splitData[0].trim();
+                mastChecks.subControllers2[j].text = splitData[1].trim();
               } else {
                 mastChecks.additional2[j][0] = subData.data2 ?? '';
                 mastChecks.additional2[j][1] = subData.data2 ?? '';
                 mastChecks.additionalChoose2[j][0] = subData.data2 ?? '';
                 mastChecks.additionalChoose2[j][1] = subData.data2 ?? '';
+                mastChecks.subControllers1[j].text = subData.data2 ?? '';
+                mastChecks.subControllers2[j].text = subData.data2 ?? '';
               }
             } else if (i == 13) {
               ptPsOm.selections[j] = choose;
@@ -222,6 +248,8 @@ class FillformController3 extends GetxController {
               ptPsOm.remarksChoose[j] = subData.remark ?? '';
               ptPsOm.additional[j] = subData.data1 ?? '';
               ptPsOm.additionalChoose[j] = subData.data1 ?? '';
+              ptPsOm.additionalControllers[j].text = subData.data1 ?? '';
+
               ptPsOm.isAllFieldsFilled.value = true;
             } else if (i == 14) {
               vnaOm.selections[j] = choose;
@@ -229,6 +257,7 @@ class FillformController3 extends GetxController {
               vnaOm.remarksChoose[j] = subData.remark ?? '';
               vnaOm.additional[j] = subData.data1 ?? '';
               vnaOm.additionalChoose[j] = subData.data1 ?? '';
+              vnaOm.additionalControllers[j].text = subData.data1 ?? '';
               vnaOm.isAllFieldsFilled.value = true;
             } else if (i == 15) {
               forSpecial.selections[j] = choose;
@@ -259,7 +288,7 @@ class FillformController3 extends GetxController {
       }
       if (maintenances.m != '0' &&
           maintenances.hr != '0' &&
-          chargingTypeChoose.isEmpty) {
+          chargingTypeChoose.isNotEmpty) {
         final newBatteryInfo = MaintenanceModel(
             people: double.tryParse(maintenances.m ?? '0') ?? 0,
             hr: double.tryParse(maintenances.hr ?? '0') ?? 0,
@@ -328,7 +357,7 @@ class FillformController3 extends GetxController {
   }
 
   int statusToInt(String status) {
-    if (status == 'Ok') {
+    if (status == 'Good') {
       return 1;
     } else if (status == 'Poor') {
       return 0;
@@ -649,24 +678,16 @@ class FillformController3 extends GetxController {
 
       if (response.statusCode == 200) {
         print('yes');
-        Fluttertoast.showToast(
-          msg: "กำลังบันทึกข้อมูล...",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 4,
-          fontSize: 12.0,
-        );
-        await jobDetailControllerPM.fetchData(jobId.toString());
-        await fetchCommentJobInfo(
-            jobId.toString(), token ?? '', jobDetailControllerPM.comment);
-        jobDetailControllerPM.commentCheck.value = true;
-        Fluttertoast.showToast(
-          msg: "บันทึกข้อมูลสำเร็จ",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 4,
-          fontSize: 12.0,
-        );
+        showWaitMessage();
+        if (readOnly.value == 'yes') {
+          ticketPmDetailController.fetchData(jobId.toString());
+        } else {
+          await jobDetailControllerPM.fetchData(jobId.toString());
+          await fetchCommentJobInfo(
+              jobId.toString(), token ?? '', jobDetailControllerPM.comment);
+          jobDetailControllerPM.commentCheck.value = true;
+        }
+        showSaveMessage();
       } else {
         print('Failed to save report: ${response.statusCode}');
       }

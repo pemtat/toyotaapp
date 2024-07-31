@@ -12,6 +12,7 @@ class RepairProcedure extends GetxController {
   int space = 24;
 
   void rPModal(BuildContext context) {
+    rPClear();
     ShowModalWidget(
       children: [
         Row(

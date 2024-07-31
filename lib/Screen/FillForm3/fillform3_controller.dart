@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
@@ -34,6 +33,7 @@ import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
 class FillformController3 extends GetxController {
   var jobId = ''.obs;
@@ -434,24 +434,12 @@ class FillformController3 extends GetxController {
 
       if (response.statusCode == 201) {
         print('yes');
-        Fluttertoast.showToast(
-          msg: "กำลังบันทึกข้อมูล...",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 4,
-          fontSize: 12.0,
-        );
+        showWaitMessage();
         await jobDetailControllerPM.fetchData(jobId.toString());
         await fetchCommentJobInfo(
             jobId.toString(), token ?? '', jobDetailControllerPM.comment);
         jobDetailControllerPM.commentCheck.value = true;
-        Fluttertoast.showToast(
-          msg: "บันทึกข้อมูลสำเร็จ",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 4,
-          fontSize: 12.0,
-        );
+        showSaveMessage();
       } else {
         print('Failed to save report: ${response.statusCode}');
       }

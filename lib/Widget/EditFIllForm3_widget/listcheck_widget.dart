@@ -21,6 +21,9 @@ class ListChecksWidget extends StatelessWidget {
   final String? readOnly;
   final RxList<List<String>>? additional2;
   final RxList<List<String>>? additionalChoose2;
+  final List<TextEditingController>? additionalControllers;
+  final List<TextEditingController>? subControllers1;
+  final List<TextEditingController>? subControllers2;
   const ListChecksWidget(
       {super.key,
       required this.selection,
@@ -29,10 +32,13 @@ class ListChecksWidget extends StatelessWidget {
       required this.listSelection,
       required this.showModal,
       this.unitList,
+      this.additionalControllers,
       this.additional2,
       this.additional,
       this.additionalChoose2,
       this.additionalChoose,
+      this.subControllers1,
+      this.subControllers2,
       this.readOnly,
       this.unit,
       required this.show});
@@ -81,26 +87,26 @@ class ListChecksWidget extends StatelessWidget {
                                 additional![index] != '' ||
                                 additional2![index][0] != '' ||
                                 additional2![index][1] != '')
-                              Row(
+                              Wrap(
                                 children: [
                                   Text(
                                     list,
-                                    style: TextStyleList.subtext1,
+                                    style: TextStyleList.text1,
                                   ),
                                   if (additional2![index][0] != '')
                                     Text(
                                       ' (${additional2![index][0]}${unitList![0]})',
-                                      style: TextStyleList.subtext7,
+                                      style: TextStyleList.text9,
                                     ),
                                   if (additional2![index][1] != '')
                                     Text(
                                       ' (${additional2![index][1]}${unitList![1]})',
-                                      style: TextStyleList.subtext7,
+                                      style: TextStyleList.text9,
                                     ),
                                   if (additional![index] != '')
                                     Text(
                                       ' (${additional![index]}$unit)',
-                                      style: TextStyleList.subtext7,
+                                      style: TextStyleList.text9,
                                     ),
                                 ],
                               ),
@@ -129,16 +135,16 @@ class ListChecksWidget extends StatelessWidget {
                                 if (part != '' ||
                                     remark != '' ||
                                     additional![index] != '')
-                                  Row(
+                                  Wrap(
                                     children: [
                                       Text(
                                         list,
-                                        style: TextStyleList.subtext1,
+                                        style: TextStyleList.text1,
                                       ),
                                       if (additional![index] != '')
                                         Text(
                                           ' (${additional![index]}$unit)',
-                                          style: TextStyleList.subtext7,
+                                          style: TextStyleList.text9,
                                         ),
                                     ],
                                   ),
@@ -164,7 +170,7 @@ class ListChecksWidget extends StatelessWidget {
                                 if (part != '' || remark != '')
                                   Text(
                                     list,
-                                    style: TextStyleList.subtext1,
+                                    style: TextStyleList.text1,
                                   ),
                                 if (part != '' || remark != '') space2.kH,
                                 if (part != '')
@@ -238,6 +244,23 @@ class ListChecksWidget extends StatelessWidget {
                               List<List<String>>.generate(
                                   additionalChoose2!.length,
                                   (_) => List.filled(2, '')).obs;
+                        }
+                        if (additionalControllers != null) {
+                          additionalControllers!.assignAll(List.generate(
+                            additionalControllers!.length,
+                            (index) => TextEditingController(),
+                          ));
+                        }
+                        if (subControllers1 != null &&
+                            subControllers2 != null) {
+                          subControllers1!.assignAll(List.generate(
+                            subControllers1!.length,
+                            (index) => TextEditingController(),
+                          ));
+                          subControllers2!.assignAll(List.generate(
+                            subControllers2!.length,
+                            (index) => TextEditingController(),
+                          ));
                         }
                         show.value = false;
                       }

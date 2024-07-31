@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:toyotamobile/Function/checkcustomer.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editfillform2_view.dart';
@@ -46,33 +45,14 @@ class TicketPMDetailView extends StatelessWidget {
             Stack(
               children: [
                 AppBar(
-                  centerTitle: false,
+                  centerTitle: true,
                   backgroundColor: white3,
-                  title: Obx(() {
-                    if (jobController.issueData.isEmpty) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Loading...', style: TextStyleList.title1),
-                          Text('Loading...', style: TextStyleList.text16),
-                        ],
-                      );
-                    } else {
-                      String description =
-                          jobController.issueData.first.description ?? '';
-                      if (description.length > 22) {
-                        description = '${description.substring(0, 22)}...';
-                      }
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(extractDescription(description),
-                              style: TextStyleList.title1),
-                          Text('PM ID: $ticketId', style: TextStyleList.text16),
-                        ],
-                      );
-                    }
-                  }),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('View Detail', style: TextStyleList.title1),
+                    ],
+                  ),
                   leading: const BackIcon(),
                 ),
               ],
@@ -210,13 +190,13 @@ class TicketPMDetailView extends StatelessWidget {
                                           jobid: ticketId,
                                           option: 'after',
                                         ),
-                                      10.kH,
+                                      14.kH,
                                       Container(
                                         height: 0.5,
                                         color: const Color.fromARGB(
                                             255, 224, 222, 222),
                                       ),
-                                      12.kH,
+                                      14.kH,
                                       ShowTextFieldType(
                                           hintText: pmData.comment == ''
                                               ? '-'

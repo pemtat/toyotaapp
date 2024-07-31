@@ -11,6 +11,7 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 class Maintenance extends GetxController {
   int space = 24;
   void batteryUsageModal(BuildContext context) {
+    batteryUsageClear();
     ShowModalWidget(
       children: [
         Row(
@@ -140,7 +141,7 @@ class Maintenance extends GetxController {
     hr.value.text = batteryInfo.hr.toString();
 
     if (batteryInfo.chargingType.isNotEmpty) {
-      chargingTypeChoose.add(batteryInfo.chargingType.first);
+      chargingTypeChoose.assign(batteryInfo.chargingType.first);
     }
   }
 

@@ -16,7 +16,7 @@ class RepairStaff extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Process",
+              "Process Staff",
               style: TextStyleList.subheading,
             ),
             InkWell(

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
@@ -21,14 +20,18 @@ import 'package:toyotamobile/Screen/EditFillForm2/editdetail/repairpm.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/specic_gravity.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
+import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
 class EditFillformController2 extends GetxController {
   var jobId = ''.obs;
+  var readOnly = ''.obs;
+
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
   final TextEditingController signatureController = TextEditingController();
@@ -50,6 +53,9 @@ class EditFillformController2 extends GetxController {
   final RepairPM repairPmController = Get.put(RepairPM());
   final GlobalKey<SfSignaturePadState> signature = GlobalKey();
   final UserController userController = Get.put(UserController());
+  final TicketPmDetailController ticketPmDetailController =
+      Get.put(TicketPmDetailController());
+
   var batteryReportList = <BatteryReportModel>[].obs;
 
   var saveCompletedtime = ''.obs;
@@ -73,8 +79,14 @@ class EditFillformController2 extends GetxController {
     );
   }
 
-  void fetchData(String jobId) async {
+  void fetchData(String jobId, readOnly) async {
     this.jobId.value = jobId;
+    if (readOnly != null) {
+      this.readOnly.value = readOnly;
+    } else {
+      this.readOnly.value = 'no';
+    }
+
     String? token = await getToken();
     await userController.fetchData();
     await fetchBatteryReportData(jobId, token ?? '', batteryReportList);
@@ -128,7 +140,13 @@ class EditFillformController2 extends GetxController {
     }
 
     List<String> chosenChargingTypes = [];
-    chosenChargingTypes.add(info1.chargingType ?? '');
+    if (info1.chargingType != '-1') {
+      if (info1.chargingType == '1') {
+        chosenChargingTypes.add('Charge when needed');
+      } else {
+        chosenChargingTypes.add('Only 1 time/day');
+      }
+    }
     final newBatteryUseInfo = BatteryUsageModel(
         shiftTime: double.tryParse(info1.shiftTime ?? '') ?? 0,
         hrsPerShift: double.tryParse(info1.hrs ?? '') ?? 0,
@@ -154,8 +172,20 @@ class EditFillformController2 extends GetxController {
     }
 
     if (info1.correctiveAction != '') {
-      correctiveActionController.correctiveAction
-          .add(info1.correctiveAction ?? '');
+      if (info1.correctiveAction!.contains('Other')) {
+        correctiveActionController.correctiveAction.add('Other');
+
+        if (info1.correctiveAction!.contains(':')) {
+          List<String> parts = info1.correctiveAction!.split(':');
+
+          if (parts.length > 1) {
+            correctiveActionController.other.value.text = parts[1].trim();
+          }
+        }
+      } else {
+        correctiveActionController.correctiveAction
+            .add(info1.correctiveAction ?? '');
+      }
     }
 
     var sparePartList = <SparePartModel>[].obs;
@@ -195,10 +225,22 @@ class EditFillformController2 extends GetxController {
       additSparePartListController.additSparePartList
           .addAll(additionalSparePartList);
     }
-    if (info1.repairPm != '') {
-      repairPmController.repairPm.add(info1.repairPm ?? '');
-    }
 
+    if (info1.repairPm != '') {
+      if (info1.repairPm!.contains('Other')) {
+        repairPmController.repairPm.add('Other');
+
+        if (info1.repairPm!.contains(':')) {
+          List<String> parts = info1.repairPm!.split(':');
+
+          if (parts.length > 1) {
+            repairPmController.other.value.text = parts[1].trim();
+          }
+        }
+      } else {
+        repairPmController.repairPm.add(info1.repairPm ?? '');
+      }
+    }
     for (var i = 0; i < condition!.length; i++) {
       if (condition[i].status != '' ||
           condition[i].checking != '' ||
@@ -219,7 +261,20 @@ class EditFillformController2 extends GetxController {
     String apiUrl = updateBatteryReport();
 
     saveCurrentDateTime(saveCompletedtime);
-
+    if (correctiveActionController.correctiveAction.isNotEmpty) {
+      if (correctiveActionController.correctiveAction.first == 'Other') {
+        correctiveActionController.correctiveAction.clear();
+        correctiveActionController.correctiveAction
+            .add('Other : ${correctiveActionController.other.value.text}');
+      }
+    }
+    if (repairPmController.repairPm.isNotEmpty) {
+      if (repairPmController.repairPm.first == 'Other') {
+        repairPmController.repairPm.clear();
+        repairPmController.repairPm
+            .add('Other : ${repairPmController.other.value.text}');
+      }
+    }
     batteryInfoController.batteryInformationList.isEmpty
         ? batteryInfoController.batteryInfoWrite()
         : batteryInfoController.batteryInformationList.first;
@@ -302,9 +357,8 @@ class EditFillformController2 extends GetxController {
     List<Map<String, dynamic>> batteryCondition =
         batteryConditionController.ListData.asMap().entries.map((entry) {
       int index = entry.key;
-
       return {
-        "item_id": index,
+        "item_id": index + 1,
         "status": batteryConditionController.selections[index],
         "checking": batteryConditionController.additional[index],
         "description": batteryConditionController.remarks[index]
@@ -314,7 +368,10 @@ class EditFillformController2 extends GetxController {
     var chargingType = (batteryusage.chargingType.isNotEmpty &&
             batteryusage.chargingType.first == 'Charge when needed')
         ? 1
-        : 0;
+        : batteryusage.chargingType.isNotEmpty &&
+                batteryusage.chargingType.first == 'Only 1 time/day'
+            ? 0
+            : -1;
 
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
@@ -356,24 +413,16 @@ class EditFillformController2 extends GetxController {
           body: jsonEncode(data));
 
       if (response.statusCode == 200) {
-        Fluttertoast.showToast(
-          msg: "กำลังบันทึกข้อมูล...",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 5,
-          fontSize: 12.0,
-        );
-        await jobDetailControllerPM.fetchData(jobId.toString());
-        await fetchCommentJobInfo(
-            jobId.toString(), token ?? '', jobDetailControllerPM.comment);
-        jobDetailControllerPM.commentCheck.value = true;
-        Fluttertoast.showToast(
-          msg: "บันทึกข้อมูลสำเร็จ",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 3,
-          fontSize: 12.0,
-        );
+        showWaitMessage();
+        if (readOnly.value == 'yes') {
+          ticketPmDetailController.fetchData(jobId.toString());
+        } else {
+          await jobDetailControllerPM.fetchData(jobId.toString());
+          await fetchCommentJobInfo(
+              jobId.toString(), token ?? '', jobDetailControllerPM.comment);
+          jobDetailControllerPM.commentCheck.value = true;
+        }
+        showSaveMessage();
       } else {
         print('Failed to save report: ${response.statusCode}');
       }

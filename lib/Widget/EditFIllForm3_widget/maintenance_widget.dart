@@ -56,7 +56,7 @@ class MaintenanceWidget extends StatelessWidget {
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  "${info.people}",
+                  "${info.hr}",
                   style: TextStyleList.text15,
                 ),
                 8.kH,
@@ -65,7 +65,7 @@ class MaintenanceWidget extends StatelessWidget {
                   style: TextStyleList.subtext1,
                 ),
                 Text(
-                  "${info.hr}",
+                  "${info.people}",
                   style: TextStyleList.text15,
                 ),
                 8.kH,

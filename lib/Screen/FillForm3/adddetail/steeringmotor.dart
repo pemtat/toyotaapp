@@ -162,7 +162,8 @@ class SteeringMotor extends GetxController {
 
   void chooseAdd() {
     selectionsChoose.addAll(selections);
-    additionalChoose.addAll(additional);
+    remarksChoose.assignAll(remarks);
+    additionalChoose.assignAll(additional);
   }
 
   void chooseClear() {

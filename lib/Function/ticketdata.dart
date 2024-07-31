@@ -385,9 +385,55 @@ Future<void> fetchPmJobInfo(
     );
 
     if (response.statusCode == 200) {
+      reportList.clear();
       var data = jsonDecode(response.body);
       var pmJobInfo = PMJobInfoModel.fromJson(data);
       reportList.add(pmJobInfo);
+    } else {}
+  } catch (e) {
+    print(e);
+  }
+}
+
+Future<void> fetchPmJobImg(String id, RxList<Map<String, String>> imagesBefore,
+    RxList<Map<String, String>> imagesAfter, option) async {
+  String? token = await getToken();
+  try {
+    final response = await http.get(
+      Uri.parse(getPmJobInfoById(id)),
+      headers: {
+        'Authorization': token ?? '',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      var pmJobInfo = PMJobInfoModel.fromJson(data);
+      if (option == 'before') {
+        if (pmJobInfo.jobImageStart!.isNotEmpty) {
+          List<dynamic> imageBeforeList = pmJobInfo.jobImageStart!;
+          imagesBefore.clear();
+          for (int i = 0; i < imageBeforeList.length; i++) {
+            imagesBefore.add({
+              'id': imageBeforeList[i].id,
+              'filename': imageBeforeList[i].name,
+              'content': imageBeforeList[i].content,
+            });
+          }
+        }
+      } else {
+        if (pmJobInfo.jobImageEnd!.isNotEmpty) {
+          List<dynamic> imageAfterList = pmJobInfo.jobImageEnd!;
+          imagesAfter.clear();
+          for (int i = 0; i < imageAfterList.length; i++) {
+            imagesAfter.add({
+              'id': imageAfterList[i].id,
+              'filename': imageAfterList[i].name,
+              'content': imageAfterList[i].content,
+            });
+          }
+        }
+      }
     } else {}
   } catch (e) {
     print(e);
@@ -548,8 +594,14 @@ Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
   }
 }
 
-Future<void> pickImagePM(RxList<Map<String, String>> file, Rx<bool> isPicking,
-    String option, String jobId, String createById) async {
+Future<void> pickImagePM(
+    RxList<Map<String, String>> file,
+    Rx<bool> isPicking,
+    String option,
+    String jobId,
+    String createById,
+    RxList<Map<String, String>> imagesBefore,
+    RxList<Map<String, String>> imagesAfter) async {
   if (isPicking.value) return;
   isPicking.value = true;
   try {
@@ -559,10 +611,10 @@ Future<void> pickImagePM(RxList<Map<String, String>> file, Rx<bool> isPicking,
       io.File imageFile = io.File(pickedFile.path);
       String fileName = pickedFile.name;
       String base64Content = base64Encode(await imageFile.readAsBytes());
-      file.add({
-        'filename': fileName,
-        'content': base64Content,
-      });
+      // file.add({
+      //   'filename': fileName,
+      //   'content': base64Content,
+      // });
 
       Map<String, String> newImg = ({
         'filename': fileName,
@@ -570,6 +622,7 @@ Future<void> pickImagePM(RxList<Map<String, String>> file, Rx<bool> isPicking,
       });
 
       await updateImgPMjobs(jobId, newImg, option, createById);
+      await fetchPmJobImg(jobId, imagesBefore, imagesAfter, option);
     }
   } finally {
     isPicking.value = false;

@@ -35,7 +35,7 @@ class SpecicGravity extends GetxController {
         ),
         space.kH,
         TextFieldWidget(
-          text: 'TH.P',
+          text: 'Sp.Gr',
           textSet: thp.value,
           number: TextInputType.number,
         ),
@@ -84,7 +84,7 @@ class SpecicGravity extends GetxController {
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'TH.P',
+          text: 'Sp.Gr',
           textSet: thp.value,
           number: TextInputType.number,
         ),

@@ -157,6 +157,8 @@ class FillFormView3 extends StatelessWidget {
                 Obx(() => chassisChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
                         selection: chassisChecks.selections,
+                        additionalControllers:
+                            chassisChecks.additionalControllers,
                         remarkSelection: chassisChecks.remarks,
                         remarkSelectionChoose: chassisChecks.remarksChoose,
                         listSelection: chassisChecks.ListData,
@@ -290,6 +292,8 @@ class FillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         selection: breakSystemChecks.selections,
                         remarkSelection: breakSystemChecks.remarks,
+                        additionalControllers:
+                            breakSystemChecks.additionalControllers,
                         remarkSelectionChoose: breakSystemChecks.remarksChoose,
                         listSelection: breakSystemChecks.ListData,
                         showModal: breakSystemChecks.checkModal,
@@ -365,9 +369,13 @@ class FillFormView3 extends StatelessWidget {
                         : Container())),
                 Obx(() => batteryChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        subControllers1: batteryChecks.subControllers1,
+                        subControllers2: batteryChecks.subControllers2,
                         selection: batteryChecks.selections,
                         remarkSelection: batteryChecks.remarks,
                         listSelection: batteryChecks.ListData,
+                        additionalControllers:
+                            batteryChecks.additionalControllers,
                         remarkSelectionChoose: batteryChecks.remarksChoose,
                         showModal: batteryChecks.checkModal,
                         show: batteryChecks.isAllFieldsFilled,
@@ -445,6 +453,9 @@ class FillFormView3 extends StatelessWidget {
                         : Container())),
                 Obx(() => mastChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        additionalControllers: mastChecks.additionalControllers,
+                        subControllers1: mastChecks.subControllers1,
+                        subControllers2: mastChecks.subControllers2,
                         selection: mastChecks.selections,
                         remarkSelection: mastChecks.remarks,
                         remarkSelectionChoose: mastChecks.remarksChoose,
@@ -475,6 +486,7 @@ class FillFormView3 extends StatelessWidget {
                         : Container())),
                 Obx(() => ptPsOm.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        additionalControllers: ptPsOm.additionalControllers,
                         selection: ptPsOm.selections,
                         remarkSelection: ptPsOm.remarks,
                         remarkSelectionChoose: ptPsOm.remarksChoose,
@@ -502,6 +514,7 @@ class FillFormView3 extends StatelessWidget {
                         : Container())),
                 Obx(() => vnaOm.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        additionalControllers: vnaOm.additionalControllers,
                         selection: vnaOm.selections,
                         remarkSelection: vnaOm.remarks,
                         remarkSelectionChoose: vnaOm.remarksChoose,

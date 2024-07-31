@@ -54,7 +54,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TitleApp(text: data.nameEn ?? ''),
+                          TitleApp2(text: data.nameEn ?? ''),
                           10.kH,
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
@@ -95,8 +95,9 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                   },
                 ),
                 space.kH,
-                const TitleApp(
+                const TitleApp2(
                     text: 'ความสมบูรณ์ของอุปกรณ์ Safety ตามกฎกระทราวง'),
+                4.kH,
                 BoxInfo(
                     title: 'Travel Alarm',
                     value: maintenance!.safetyTravelAlarm!.isEmpty
@@ -119,10 +120,11 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           space.kH,
-                          const BoxInfo2(
-                              title:
-                                  'Description Problem / Action and Result\nRecommend spare part changed',
-                              value: ''),
+                          const TitleApp2(
+                            text:
+                                'Description Problem / Action and Result / Recommend spare part changed',
+                            moreText: '',
+                          ),
                           6.kH,
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
@@ -163,7 +165,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                           space.kH,
                           const TitleApp2(
                             text:
-                                'Description Problem / Action and Result\nRecommend spare part changed',
+                                'Description Problem / Action and Result / Recommend spare part changed',
                             moreText: '-',
                           ),
                         ],
@@ -172,7 +174,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 TitleWithButton(
                     space: true,
                     titleText:
-                        'ผลการตรวจเช็คเเละการบำรุงรักษา\n(Maintenance and service result)',
+                        'ผลการตรวจเช็คเเละการบำรุงรักษา (Maintenance and service result)',
                     button: Text(
                       maintenance.mtServiceResult == ''
                           ? '-'

@@ -204,7 +204,7 @@ class JobDetailViewPM extends StatelessWidget {
                                       'ภาพก่อนการเเก้ไข',
                                       style: TextStyleList.text11,
                                     ),
-                                    6.kH,
+                                    8.kH,
                                     Obx(() => jobController
                                             .imagesBefore.isNotEmpty
                                         ? AttachmentsListWidget(
@@ -216,16 +216,19 @@ class JobDetailViewPM extends StatelessWidget {
                                             createdBy: userData.id.toString(),
                                           )
                                         : Container()),
-                                    10.kH,
+                                    12.kH,
                                     UploadImageWidget(
                                       pickImage: () => pickImagePM(
-                                          jobController.imagesBefore,
-                                          jobController.isPicking,
-                                          'before',
-                                          ticketId,
-                                          userData.id.toString()),
+                                        jobController.imagesBefore,
+                                        jobController.isPicking,
+                                        'before',
+                                        ticketId,
+                                        userData.id.toString(),
+                                        jobController.imagesBefore,
+                                        jobController.imagesAfter,
+                                      ),
                                     ),
-                                    12.kH,
+                                    10.kH,
                                     Obx(() =>
                                         jobController.imagesBefore.isNotEmpty
                                             ? Obx(
@@ -282,7 +285,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                 'ภาพหลังการเเก้ไข',
                                                 style: TextStyleList.text11,
                                               ),
-                                              6.kH,
+                                              8.kH,
                                               Obx(() => jobController
                                                       .imagesAfter.isNotEmpty
                                                   ? AttachmentsListWidget(
@@ -295,14 +298,16 @@ class JobDetailViewPM extends StatelessWidget {
                                                           .toString(),
                                                     )
                                                   : Container()),
-                                              10.kH,
+                                              12.kH,
                                               UploadImageWidget(
                                                 pickImage: () => pickImagePM(
                                                     jobController.imagesAfter,
                                                     jobController.isPicking,
                                                     'after',
                                                     ticketId,
-                                                    userData.id.toString()),
+                                                    userData.id.toString(),
+                                                    jobController.imagesBefore,
+                                                    jobController.imagesAfter),
                                               ),
                                               8.kH,
                                             ],
@@ -354,7 +359,7 @@ class JobDetailViewPM extends StatelessWidget {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              9.kH,
+                                              12.kH,
                                               Obx(() => jobController
                                                           .savedDateEndTime
                                                           .value ==
@@ -451,20 +456,25 @@ class JobDetailViewPM extends StatelessWidget {
                                                           .btrMaintenance!
                                                           .signaturePad ==
                                                       null)
-                                                ButtonRed(
-                                                  title: 'บันทึกลายเซ็น',
-                                                  onTap: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          SignatureWidget(
-                                                        jobId:
-                                                            ticketId.toString(),
-                                                        option: 'battery',
-                                                      ),
-                                                    );
-                                                  },
+                                                Column(
+                                                  children: [
+                                                    5.kH,
+                                                    ButtonRed(
+                                                      title: 'บันทึกลายเซ็น',
+                                                      onTap: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              SignatureWidget(
+                                                            jobId: ticketId
+                                                                .toString(),
+                                                            option: 'battery',
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
                                                 )
                                             ],
                                           )
@@ -530,20 +540,26 @@ class JobDetailViewPM extends StatelessWidget {
                                                           .pvtMaintenance!
                                                           .signaturePad ==
                                                       null)
-                                                ButtonRed(
-                                                  title: 'บันทึกลายเซ็น',
-                                                  onTap: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          SignatureWidget(
-                                                        jobId:
-                                                            ticketId.toString(),
-                                                        option: 'preventive',
-                                                      ),
-                                                    );
-                                                  },
+                                                Column(
+                                                  children: [
+                                                    5.kH,
+                                                    ButtonRed(
+                                                      title: 'บันทึกลายเซ็น',
+                                                      onTap: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              SignatureWidget(
+                                                            jobId: ticketId
+                                                                .toString(),
+                                                            option:
+                                                                'preventive',
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
                                                 )
                                             ],
                                           )

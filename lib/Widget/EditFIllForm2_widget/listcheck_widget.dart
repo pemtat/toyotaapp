@@ -76,12 +76,12 @@ class ListChecksWidget extends StatelessWidget {
                                 children: [
                                   Text(
                                     list,
-                                    style: TextStyleList.subtext1,
+                                    style: TextStyleList.text1,
                                   ),
                                   if (additional![index] != '')
                                     Text(
                                       ' (${additional![index]}$unit)',
-                                      style: TextStyleList.subtext7,
+                                      style: TextStyleList.text9,
                                     ),
                                 ],
                               ),
@@ -107,7 +107,7 @@ class ListChecksWidget extends StatelessWidget {
                             if (part != '' || remark != '')
                               Text(
                                 list,
-                                style: TextStyleList.subtext1,
+                                style: TextStyleList.text1,
                               ),
                             if (part != '' || remark != '') space2.kH,
                             if (part != '')

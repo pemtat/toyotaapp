@@ -33,7 +33,7 @@ class EditFillFormView2 extends StatelessWidget {
   final String? readOnly;
 
   EditFillFormView2({super.key, required this.jobId, this.readOnly}) {
-    fillformController2.fetchData(jobId);
+    fillformController2.fetchData(jobId, readOnly);
   }
   final BatteryInformation batteryInfoController =
       Get.put(BatteryInformation());

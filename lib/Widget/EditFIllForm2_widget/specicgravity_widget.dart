@@ -54,7 +54,7 @@ class SpecicGravityWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'TH.P',
+                  'Sp.Gr',
                   style: TextStyleList.subtext1,
                 ),
                 Text(

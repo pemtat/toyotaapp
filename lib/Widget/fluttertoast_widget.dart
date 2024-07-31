@@ -8,3 +8,33 @@ void showMessage(String message) {
     fontSize: 12.0,
   );
 }
+
+void showWaitMessage() {
+  Fluttertoast.showToast(
+    msg: "กำลังบันทึกข้อมูล...",
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 3,
+    fontSize: 12.0,
+  );
+}
+
+void showSaveMessage() {
+  Fluttertoast.showToast(
+    msg: "บันทึกข้อมูลสำเร็จ",
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 3,
+    fontSize: 12.0,
+  );
+}
+
+void showSignatureSaveMessage() {
+  Fluttertoast.showToast(
+    msg: "บันทึกลายเซ็นสำเร็จ",
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 3,
+    fontSize: 12.0,
+  );
+}

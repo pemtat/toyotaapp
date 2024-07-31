@@ -128,6 +128,7 @@ class PowertrainChecks extends GetxController {
 
   void chooseAdd() {
     selectionsChoose.addAll(selections);
+    remarksChoose.assignAll(remarks);
   }
 
   void chooseClear() {

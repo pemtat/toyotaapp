@@ -37,7 +37,7 @@ class EditFillFormView extends StatelessWidget {
       required this.ticketId,
       required this.jobId,
       this.readOnly}) {
-    fillFormController.fetchForm(reportId, ticketId, jobId);
+    fillFormController.fetchForm(reportId, ticketId, jobId, readOnly);
   }
 
   final Rcode rcodeController = Get.put(Rcode());

@@ -155,7 +155,8 @@ class BatteryCondition extends GetxController {
 
   void chooseAdd() {
     selectionsChoose.addAll(selections);
-    additionalChoose.addAll(additional);
+    additionalChoose.assignAll(additional);
+    remarksChoose.assignAll(remarks);
   }
 
   void chooseClear() {

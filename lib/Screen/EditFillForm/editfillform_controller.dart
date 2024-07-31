@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
@@ -17,10 +16,12 @@ import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_procedure.dar
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_result.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/wcode.dart';
+import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
 class EditFillformController extends GetxController {
   final fault = TextEditingController().obs;
@@ -36,6 +37,8 @@ class EditFillformController extends GetxController {
       Get.put(AdditSparepartList());
   final RepairResult repairResultController = Get.put(RepairResult());
   final RepairStaff repairStaffController = Get.put(RepairStaff());
+  final TicketDetailController ticketDetailController =
+      Get.put(TicketDetailController());
   List<String> fieldServiceReportList = [
     'Inspection',
     'Repairing',
@@ -53,11 +56,17 @@ class EditFillformController extends GetxController {
   var ticketId = ''.obs;
   var jobId = ''.obs;
   var relationId = ''.obs;
-
-  void fetchForm(String reportId, String ticketId, String jobId) async {
+  var readOnly = ''.obs;
+  void fetchForm(
+      String reportId, String ticketId, String jobId, readOnly) async {
     String? token = await getToken();
     this.ticketId.value = ticketId;
     this.jobId.value = jobId;
+    if (readOnly != null) {
+      this.readOnly.value = readOnly;
+    } else {
+      this.readOnly.value = 'no';
+    }
 
     await fetchReportData(
         reportId, token ?? '', reportList, additionalReportList);
@@ -321,22 +330,15 @@ class EditFillformController extends GetxController {
 
           if (response.statusCode == 200) {
             print('Report updated successfully');
-            Fluttertoast.showToast(
-              msg: "กำลังบันทึกข้อมูล...",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 3,
-              fontSize: 12.0,
-            );
-            jobDetailController.fetchData(
-                ticketId.toString(), jobId.toString());
-            Fluttertoast.showToast(
-              msg: "บันทึกข้อมูลสำเร็จ",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 3,
-              fontSize: 12.0,
-            );
+            showWaitMessage();
+            if (readOnly.value == 'yes') {
+              ticketDetailController.fetchData(
+                  ticketId.toString(), jobId.toString());
+            } else {
+              jobDetailController.fetchData(
+                  ticketId.toString(), jobId.toString());
+            }
+            showSaveMessage();
           } else {
             print('Failed to save report: ${response.statusCode}');
           }

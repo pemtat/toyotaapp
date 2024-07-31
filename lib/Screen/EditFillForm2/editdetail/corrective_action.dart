@@ -12,6 +12,7 @@ class CorrectiveAction extends GetxController {
   void correctiveActionModal(BuildContext context) {
     correctiveActionChoose.clear();
     correctiveActionChoose.addAll(correctiveAction);
+    otherChoose.value = other.value;
     ShowModalWidget(
       children: [
         Row(
@@ -38,6 +39,7 @@ class CorrectiveAction extends GetxController {
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: CheckBoxWidget(
                   option: 'yes',
+                  other: otherChoose,
                   text: correctiveActionList[index],
                   listItem: correctiveActionChoose,
                   itemSet: correctiveActionChoose,

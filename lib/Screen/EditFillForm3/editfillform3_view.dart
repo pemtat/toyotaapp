@@ -40,7 +40,7 @@ class EditFillFormView3 extends StatelessWidget {
   final String jobId;
   final String? readOnly;
   EditFillFormView3({super.key, required this.jobId, this.readOnly}) {
-    fillformController3.fetchData(jobId);
+    fillformController3.fetchData(jobId, readOnly);
   }
   final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());
   final DriveMotorChecks driveMotorChecks = Get.put(DriveMotorChecks());
@@ -163,6 +163,8 @@ class EditFillFormView3 extends StatelessWidget {
                 Obx(() => chassisChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
                         readOnly: readOnly == null ? null : 'yes',
+                        additionalControllers:
+                            chassisChecks.additionalControllers,
                         selection: chassisChecks.selections,
                         remarkSelection: chassisChecks.remarks,
                         remarkSelectionChoose: chassisChecks.remarksChoose,
@@ -311,6 +313,8 @@ class EditFillFormView3 extends StatelessWidget {
                     ? ListChecksWidget(
                         readOnly: readOnly == null ? null : 'yes',
                         selection: breakSystemChecks.selections,
+                        additionalControllers:
+                            breakSystemChecks.additionalControllers,
                         remarkSelection: breakSystemChecks.remarks,
                         remarkSelectionChoose: breakSystemChecks.remarksChoose,
                         listSelection: breakSystemChecks.ListData,
@@ -395,6 +399,10 @@ class EditFillFormView3 extends StatelessWidget {
                         : Container()),
                 Obx(() => batteryChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        subControllers1: batteryChecks.subControllers1,
+                        subControllers2: batteryChecks.subControllers2,
+                        additionalControllers:
+                            batteryChecks.additionalControllers,
                         readOnly: readOnly == null ? null : 'yes',
                         selection: batteryChecks.selections,
                         remarkSelection: batteryChecks.remarks,
@@ -485,6 +493,9 @@ class EditFillFormView3 extends StatelessWidget {
                 Obx(() => mastChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
                         readOnly: readOnly == null ? null : 'yes',
+                        additionalControllers: mastChecks.additionalControllers,
+                        subControllers1: mastChecks.subControllers1,
+                        subControllers2: mastChecks.subControllers2,
                         selection: mastChecks.selections,
                         remarkSelection: mastChecks.remarks,
                         remarkSelectionChoose: mastChecks.remarksChoose,
@@ -518,6 +529,7 @@ class EditFillFormView3 extends StatelessWidget {
                 Obx(() => ptPsOm.isAllFieldsFilled.value
                     ? ListChecksWidget(
                         readOnly: readOnly == null ? null : 'yes',
+                        additionalControllers: ptPsOm.additionalControllers,
                         selection: ptPsOm.selections,
                         remarkSelection: ptPsOm.remarks,
                         remarkSelectionChoose: ptPsOm.remarksChoose,
@@ -548,6 +560,7 @@ class EditFillFormView3 extends StatelessWidget {
                 Obx(() => vnaOm.isAllFieldsFilled.value
                     ? ListChecksWidget(
                         readOnly: readOnly == null ? null : 'yes',
+                        additionalControllers: vnaOm.additionalControllers,
                         selection: vnaOm.selections,
                         remarkSelection: vnaOm.remarks,
                         remarkSelectionChoose: vnaOm.remarksChoose,

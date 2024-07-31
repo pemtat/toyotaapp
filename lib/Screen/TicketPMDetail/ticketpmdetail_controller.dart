@@ -70,7 +70,7 @@ class TicketPmDetailController extends GetxController {
     try {
       if (pmInfo.first.jobImageStart!.isNotEmpty) {
         List<dynamic> imageBeforeList = pmInfo.first.jobImageStart!;
-
+        imagesBefore.clear();
         for (int i = 0; i < imageBeforeList.length; i++) {
           imagesBefore.add({
             'id': imageBeforeList[i].id,
@@ -82,7 +82,7 @@ class TicketPmDetailController extends GetxController {
 
       if (pmInfo.first.jobImageEnd!.isNotEmpty) {
         List<dynamic> imageAfterList = pmInfo.first.jobImageEnd!;
-
+        imagesAfter.clear();
         for (int i = 0; i < imageAfterList.length; i++) {
           imagesAfter.add({
             'id': imageAfterList[i].id,

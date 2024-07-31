@@ -32,32 +32,36 @@ class NoteItem extends StatelessWidget {
                     color: red3,
                   )),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      note.reporter!.name ?? '',
-                      style: TextStyleList.text10,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      formatDateTimePlus(note.createdAt ?? ''),
-                      style: TextStyleList.subtext1,
-                    ),
-                  ],
-                ),
-                Text(
-                  note.text ?? '',
-                  style: TextStyleList.subtext3,
-                ),
-                if (note.attachments != null && note.attachments!.isNotEmpty)
-                  Text(
-                    'Attachments: ${note.attachments![0].filename}',
-                    style: TextStyleList.subtext3,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        note.reporter!.name ?? '',
+                        style: TextStyleList.text10,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        formatDateTimePlus(note.createdAt ?? ''),
+                        style: TextStyleList.subtext1,
+                      ),
+                    ],
                   ),
-              ],
+                  Text(
+                    note.text ?? '',
+                    style: TextStyleList.subtext3,
+                    maxLines: null,
+                    overflow: TextOverflow.visible,
+                  ),
+                  // if (note.attachments != null && note.attachments!.isNotEmpty)
+                  //   Text(
+                  //     'Attachments: ${note.attachments![0].filename}',
+                  //     style: TextStyleList.subtext3,
+                  //   ),
+                ],
+              ),
             ),
           ],
         ),

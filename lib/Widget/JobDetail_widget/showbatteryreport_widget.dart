@@ -50,7 +50,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TitleApp(text: "Battery Maintenance Report"),
+                const TitleApp2(text: "Battery Maintenance Report"),
                 10.kH,
                 BoxInfo2(
                     title: 'Battery Brand', value: info1!.batteryBand ?? '-'),
@@ -71,7 +71,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                 BoxInfo2(title: 'Capacity', value: info1.capacity ?? '-'),
                 space.kH,
                 10.kH,
-                const TitleApp(text: "Forklife Information"),
+                const TitleApp2(text: "Forklife Information"),
                 space.kH,
                 BoxInfo2(
                     title: 'Forklife Brand', value: info1.forkliftBrand ?? '-'),
@@ -87,7 +87,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     value: info1.forkliftOperation ?? '-'),
                 space.kH,
                 10.kH,
-                const TitleApp(text: "Battery Usage"),
+                const TitleApp2(text: "Battery Usage"),
                 space.kH,
                 BoxInfo2(title: 'Shift time', value: info1.shiftTime ?? '-'),
                 space.kH,
@@ -104,39 +104,56 @@ class ShowBatteryReportWidget extends StatelessWidget {
                             : '-'),
                 4.kH,
                 10.kH,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TitleApp(text: "Specic Gravity and Voltage Checks"),
-                    4.kH,
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: specicGravity!.length,
-                      itemBuilder: (context, index) {
-                        final data = specicGravity[index];
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: black3),
-                              color: white1,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(6))),
-                          child: Column(children: [
-                            BoxInfo(
-                                title: 'Temperature',
-                                value: data.temperature ?? '-'),
-                            BoxInfo(title: 'TH.P', value: data.thp ?? '-'),
-                            BoxInfo(
-                                title: 'Voltage',
-                                value: data.voltageCheck ?? '-'),
-                          ]),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                info1.totalVoltage != '0'
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TitleApp2(
+                              text: "Specic Gravity and Voltage Checks"),
+                          4.kH,
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: specicGravity!.length,
+                            itemBuilder: (context, index) {
+                              final data = specicGravity[index];
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border.all(width: 1, color: black3),
+                                    color: white1,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: Column(children: [
+                                  BoxInfo(
+                                      title: 'Temperature',
+                                      value: data.temperature ?? '-'),
+                                  BoxInfo(
+                                      title: 'Sp.Gr', value: data.thp ?? '-'),
+                                  BoxInfo(
+                                      title: 'Voltage',
+                                      value: data.voltageCheck ?? '-'),
+                                ]),
+                              );
+                            },
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              4.wH,
+                              Text(
+                                'Total Voltage ${info1.totalVoltage}V.',
+                                style: TextStyleList.text2,
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    : const TitleApp2(
+                        text: "Specic Gravity and Voltage Checks",
+                        moreText: '-',
+                      ),
                 10.kH,
                 filteredBatteryCondition.isNotEmpty
                     ? Column(
@@ -175,7 +192,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                         ],
                       )
                     : const TitleApp2(
-                        text: "Battery Conditsion",
+                        text: "Battery Condition",
                         moreText: '-',
                       ),
                 space.kH,

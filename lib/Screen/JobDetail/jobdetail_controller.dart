@@ -227,9 +227,11 @@ class JobDetailController extends GetxController {
           rightButton: right,
           onRightButtonPressed: () {
             saveCurrentDateTime(saveCompletedtime);
+            showWaitMessage();
             updateStatusSubjobs(jobId, issueId.toString());
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
+            showSaveMessage();
           },
         );
       },

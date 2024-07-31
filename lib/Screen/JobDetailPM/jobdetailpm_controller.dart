@@ -236,10 +236,12 @@ class JobDetailControllerPM extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
+            showWaitMessage();
             saveCurrentDateTime(saveCompletedtime);
             changeIssueStatusPM(jobId, 103, comment.value.text);
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
+            showSaveMessage();
           },
         );
       },
