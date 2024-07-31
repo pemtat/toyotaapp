@@ -306,7 +306,7 @@ class CalendarView extends StatelessWidget {
                             padding: const EdgeInsets.all(paddingApp),
                             child: ListView.builder(
                               shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: events.length,
                               itemBuilder: (context, index) {
                                 final event = events[index];
