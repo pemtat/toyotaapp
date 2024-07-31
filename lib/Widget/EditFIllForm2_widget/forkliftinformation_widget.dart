@@ -10,11 +10,13 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 class ForkliftinformationWidget extends StatelessWidget {
   final ForkliftInformationModel info;
   final int index;
+  final String? readOnly;
   final ForklifeInformation controller;
   const ForkliftinformationWidget({
     super.key,
     required this.info,
     required this.index,
+    this.readOnly,
     required this.controller,
   });
 
@@ -83,45 +85,46 @@ class ForkliftinformationWidget extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            top: 16,
-            right: 16,
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                popupMenuTheme: const PopupMenuThemeData(
-                  color: white3,
+          if (readOnly == null)
+            Positioned(
+              top: 16,
+              right: 16,
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  popupMenuTheme: const PopupMenuThemeData(
+                    color: white3,
+                  ),
                 ),
-              ),
-              child: PopupMenuButton(
-                offset: const Offset(0, 30),
-                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                  PopupMenuItem(
-                    value: 'edit',
-                    child: Text(
-                      'Edit',
-                      style: TextStyleList.text9,
+                child: PopupMenuButton(
+                  offset: const Offset(0, 30),
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                    PopupMenuItem(
+                      value: 'edit',
+                      child: Text(
+                        'Edit',
+                        style: TextStyleList.text9,
+                      ),
                     ),
+                    PopupMenuItem(
+                      value: 'delete',
+                      child: Text('Delete', style: TextStyleList.text9),
+                    ),
+                  ],
+                  child: Image.asset(
+                    'assets/boxedit.png',
+                    width: 24,
+                    height: 24,
                   ),
-                  PopupMenuItem(
-                    value: 'delete',
-                    child: Text('Delete', style: TextStyleList.text9),
-                  ),
-                ],
-                child: Image.asset(
-                  'assets/boxedit.png',
-                  width: 24,
-                  height: 24,
+                  onSelected: (value) {
+                    if (value == 'edit') {
+                      controller.forklifeEditModal(context, info);
+                    } else if (value == 'delete') {
+                      controller.forklifeList.removeAt(index);
+                    }
+                  },
                 ),
-                onSelected: (value) {
-                  if (value == 'edit') {
-                    controller.forklifeEditModal(context, info);
-                  } else if (value == 'delete') {
-                    controller.forklifeList.removeAt(index);
-                  }
-                },
               ),
-            ),
-          )
+            )
         ],
       ),
     );

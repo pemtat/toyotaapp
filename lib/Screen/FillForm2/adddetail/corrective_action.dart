@@ -37,6 +37,7 @@ class CorrectiveAction extends GetxController {
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: CheckBoxWidget(
+                  option: 'yes',
                   text: correctiveActionList[index],
                   listItem: correctiveActionChoose,
                   itemSet: correctiveActionChoose,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Models/sparepartseach.dart';
 import 'package:toyotamobile/Service/api.dart';
@@ -77,6 +78,18 @@ void updateCheckbox2(String label, RxList<String> data) {
     data.clear();
     data.add('-');
   }
+}
+
+void updateCheckbox3(String label, RxList<String> data) {
+  data.clear();
+  data.add(label);
+}
+
+void updateCheckbox3other(
+    String label, RxList<String> data, Rx<TextEditingController> other) {
+  data.clear();
+  other.value.clear();
+  data.add(label);
 }
 
 void updateSelection(int index, String value, RxList<String> selectionsChoose) {

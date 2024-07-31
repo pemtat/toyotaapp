@@ -6,15 +6,16 @@ import 'package:toyotamobile/Styles/text.dart';
 class TextFieldWidget extends StatelessWidget {
   final String text;
   final TextInputType? number;
+  final String? readOnly;
   final TextEditingController textSet;
   final String? addtionalText;
-  const TextFieldWidget({
-    super.key,
-    required this.text,
-    required this.textSet,
-    this.number,
-    this.addtionalText,
-  });
+  const TextFieldWidget(
+      {super.key,
+      required this.text,
+      required this.textSet,
+      this.number,
+      this.addtionalText,
+      this.readOnly});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class TextFieldWidget extends StatelessWidget {
           Expanded(
             flex: 8,
             child: TextField(
+              readOnly: readOnly != null ? true : false,
               keyboardType: number ?? TextInputType.text,
               controller: textSet,
               decoration: InputDecoration(

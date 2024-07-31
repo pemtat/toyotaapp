@@ -204,6 +204,8 @@ Future<void> fetchReportData(
   RxList<RepairReportModel> additionalReportList,
 ) async {
   try {
+    reportList.clear();
+    additionalReportList.clear();
     final response = await http.get(
       Uri.parse(getRepairReportById(id)),
       headers: {
@@ -252,6 +254,7 @@ Future<void> fetchBatteryReportData(
   String token,
   RxList<BatteryReportModel> reportList,
 ) async {
+  reportList.clear();
   try {
     final response = await http.get(
       Uri.parse(getBatteryReportById(id)),
@@ -313,6 +316,7 @@ Future<void> fetchPreventiveReportData(
   RxList<PreventivereportModel> reportList,
 ) async {
   try {
+    reportList.clear();
     final response = await http.get(
       Uri.parse(getPreventiveReportById(id)),
       headers: {
@@ -904,6 +908,31 @@ void updateStatusSubjobs(
   }
 }
 
+void updateTechSubjob(
+    String jobId, String ticketId, String remark, int status) async {
+  try {
+    String? token = await getToken();
+    String remark2 = remark == '-' ? '' : remark;
+    Map<String, dynamic> body = {'tech_status': status, 'tech_remark': remark2};
+
+    final response = await http.put(
+      Uri.parse(updateSubJobs(jobId)),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Update status done');
+      // jobDetailController.fetchData(ticketId, jobId);
+    } else {}
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
 Future<void> updateCommentJobs(
   String jobId,
   String comment,
@@ -966,7 +995,7 @@ void updateAcceptStatusSubjobs(
   try {
     String? token = await getToken();
 
-    Map<String, dynamic> body = {'status': status};
+    Map<String, dynamic> body = {'status': status, 'tech_status': 1};
 
     final response = await http.put(
       Uri.parse(updateSubJobs(jobId)),
@@ -1351,7 +1380,7 @@ Future<CustomerById> fetchCustomerInfo(String id) async {
     }
   } catch (e) {
     print('Error: $e');
-    rethrow; // Rethrow the caught error
+    rethrow;
   }
 }
 

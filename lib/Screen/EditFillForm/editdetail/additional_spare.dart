@@ -164,7 +164,7 @@ class AdditSparepartList extends GetxController {
         space.kH,
         CheckBoxNew(
           text: 'Change on PM',
-          itemSet: selectionsChoose2,
+          itemSet: selectionsChoose,
         ),
       ],
       onPressed: () {
@@ -324,7 +324,7 @@ class AdditSparepartList extends GetxController {
         space.kH,
         CheckBoxNew(
           text: 'Change on PM',
-          itemSet: selectionsChoose2,
+          itemSet: selectionsChoose,
         ),
       ],
       onPressed: () {
@@ -386,8 +386,12 @@ class AdditSparepartList extends GetxController {
     partDetails.value.text = part.partDetails;
     quantity.value = part.quantity;
     chooseClear();
-    selectionsChoose.add(part.changeNow ?? '-');
-    selectionsChoose2.add(part.changeOnPM ?? '-');
+    if (part.changeNow == '-') {
+      selectionsChoose.add(part.changeOnPM ?? '-');
+    } else if (part.changeOnPM == '-') {
+      selectionsChoose.add(part.changeNow ?? '-');
+    }
+
     searchPartNumber.value.text = part.partNumber;
   }
 
@@ -407,17 +411,24 @@ class AdditSparepartList extends GetxController {
         partNumber.value.text != '' ? partNumber.value.text : '-';
     String partDetailsValue =
         partDetails.value.text != '' ? partDetails.value.text : '-';
-    String changeNowValue =
+    String changeNowValue = '-';
+    String changePMValue = '-';
+    String changeValue =
         selectionsChoose.isEmpty ? '-' : selectionsChoose.first;
-    String changeOnPMValue =
-        selectionsChoose2.isEmpty ? '-' : selectionsChoose2.first;
+    if (changeValue == 'Change Now') {
+      changeNowValue = changeValue;
+      changePMValue = '-';
+    } else if (changeValue == 'Change on PM') {
+      changeNowValue = '-';
+      changePMValue = changeValue;
+    }
     additSparePartList.add(SparePartModel(
         cCodePage: cCodePageValue,
         partNumber: partNumberValue,
         partDetails: partDetailsValue,
         quantity: quantity.value,
         changeNow: changeNowValue,
-        changeOnPM: changeOnPMValue,
+        changeOnPM: changePMValue,
         additional: 1));
   }
 
@@ -428,15 +439,22 @@ class AdditSparepartList extends GetxController {
         partNumber.value.text != '' ? partNumber.value.text : '-';
     String partDetailsValue =
         partDetails.value.text != '' ? partDetails.value.text : '-';
-    String changeNowValue =
+    String changeNowValue = '-';
+    String changePMValue = '-';
+    String changeValue =
         selectionsChoose.isEmpty ? '-' : selectionsChoose.first;
-    String changeOnPMValue =
-        selectionsChoose2.isEmpty ? '-' : selectionsChoose2.first;
+    if (changeValue == 'Change Now') {
+      changeNowValue = changeValue;
+      changePMValue = '-';
+    } else if (changeValue == 'Change on PM') {
+      changeNowValue = '-';
+      changePMValue = changeValue;
+    }
     part.cCodePage = cCodePageValue;
     part.partNumber = partNumberValue;
     part.partDetails = partDetailsValue;
     part.quantity = quantity.value;
     part.changeNow = changeNowValue;
-    part.changeOnPM = changeOnPMValue;
+    part.changeOnPM = changePMValue;
   }
 }

@@ -290,7 +290,7 @@ class JobDetailView extends StatelessWidget {
                                                           6.kH,
                                                           Row(
                                                             children: [
-                                                              Icon(Icons
+                                                              const Icon(Icons
                                                                   .access_time),
                                                               4.wH,
                                                               Text(
@@ -424,7 +424,7 @@ class JobDetailView extends StatelessWidget {
                                                         6.kH,
                                                         Row(
                                                           children: [
-                                                            Icon(Icons
+                                                            const Icon(Icons
                                                                 .access_time),
                                                             4.wH,
                                                             Text(
@@ -542,7 +542,7 @@ class JobDetailView extends StatelessWidget {
                         text: 'Complete'),
                   ),
                 )
-              : SizedBox.shrink();
+              : const SizedBox.shrink();
         }));
   }
 }

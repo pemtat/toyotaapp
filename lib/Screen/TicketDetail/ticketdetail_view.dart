@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Screen/EditFillForm/editfillform_view.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
+import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/customerinfo_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
@@ -273,7 +275,7 @@ class TicketDetailView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  8.kH,
+                                  12.kH,
                                   if (ticketController.imagesBefore.isNotEmpty)
                                     AttachmentsListWidget(
                                       attachments:
@@ -282,7 +284,7 @@ class TicketDetailView extends StatelessWidget {
                                       jobid: jobId,
                                       option: 'before',
                                     ),
-                                  10.kH,
+                                  12.kH,
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -297,7 +299,7 @@ class TicketDetailView extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      8.kH,
+                                      12.kH,
                                       if (ticketController
                                           .imagesBefore.isNotEmpty)
                                         AttachmentsListWidget(
@@ -307,12 +309,13 @@ class TicketDetailView extends StatelessWidget {
                                           jobid: jobId,
                                           option: 'after',
                                         ),
+                                      12.kH,
                                       Container(
                                         height: 0.5,
                                         color: const Color.fromARGB(
                                             255, 224, 222, 222),
                                       ),
-                                      10.kH,
+                                      12.kH,
                                       ShowTextFieldType(
                                           hintText: subJob.comment == ''
                                               ? '-'
@@ -321,10 +324,29 @@ class TicketDetailView extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              8.kH,
+                              10.kH,
                               BoxContainer(
                                 children: [
-                                  const TitleApp(text: 'Repair Report*'),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleApp(
+                                          text: 'Field Service Report*'),
+                                      subJob.status == '103'
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(() => EditFillFormView(
+                                                      readOnly: 'yes',
+                                                      reportId: jobId,
+                                                      ticketId: ticketId,
+                                                      jobId: jobId.toString(),
+                                                    ));
+                                              },
+                                            )
+                                          : Container()
+                                    ],
+                                  ),
                                   Obx(() => ticketController
                                               .reportList.isNotEmpty ||
                                           ticketController

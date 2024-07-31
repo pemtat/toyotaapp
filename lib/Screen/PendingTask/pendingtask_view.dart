@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/PendingTask/peddingtask_controller.dart';
-import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -13,6 +13,7 @@ import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/moredetail.widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
@@ -183,19 +184,76 @@ class PendingTaskView extends StatelessWidget {
       }),
       bottomNavigationBar: BottomAppBar(
         color: white3,
-        child: Container(
-          decoration: Decoration2(),
-          child: EndButton(
-            onPressed: () {
-              penddingTaskController.showAcceptDialog(
-                context,
-                'Do you confirm to accept this job?',
-                'No',
-                'Yes',
-              );
-            },
-            text: 'Accept',
-          ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: EndButton(
+                onPressed: () {
+                  penddingTaskController.showAcceptDialog(
+                    context,
+                    'Do you confirm to accept this job?',
+                    'No',
+                    'Yes',
+                  );
+                },
+                text: 'Accept',
+              ),
+            ),
+            13.wH,
+            Expanded(
+              child: EndButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: white4,
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            10.kH,
+                            TextFieldType(
+                              hintText: 'Remark',
+                              textSet: penddingTaskController.cancelNote.value,
+                              maxLine: 5,
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              'No',
+                              style: TextStyleList.text1,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              updateTechSubjob(
+                                  jobId,
+                                  ticketId,
+                                  penddingTaskController.cancelNote.value.text,
+                                  2);
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              'Yes',
+                              style: TextStyleList.text1,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                text: 'Cancel',
+              ),
+            ),
+          ],
         ),
       ),
     );

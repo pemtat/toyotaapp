@@ -81,9 +81,15 @@ class SignatureWidget extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: () async {
+            showDialog(
+                context: context,
+                barrierColor: Color.fromARGB(59, 0, 0, 0),
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return const LoadingDialog();
+                });
             saveCurrentDateTime(saveCompletedtime);
             if (ticketId != null) {
-              Navigator.pop(context);
               await updateSignatureJob(
                   jobId,
                   ticketId ?? '',
@@ -99,9 +105,12 @@ class SignatureWidget extends StatelessWidget {
                 timeInSecForIosWeb: 3,
                 fontSize: 12.0,
               );
+              Navigator.pop(context);
+              Navigator.pop(context);
             } else {
               showDialog(
                   context: context,
+                  barrierColor: Color.fromARGB(59, 0, 0, 0),
                   barrierDismissible: false,
                   builder: (BuildContext context) {
                     return const LoadingDialog();
@@ -131,6 +140,7 @@ class SignatureWidget extends StatelessWidget {
                   fontSize: 12.0,
                 );
               }
+              Navigator.pop(context);
               Navigator.pop(context);
               Navigator.pop(context);
             }

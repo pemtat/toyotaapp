@@ -34,6 +34,7 @@ class ProcessStaff extends GetxController {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: CheckBoxWidget(
+                  option: 'true',
                   text: repairStaffList[index],
                   listItem: repairStaffChoose,
                   itemSet: repairStaffChoose),

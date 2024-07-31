@@ -64,7 +64,8 @@ class Pms extends StatelessWidget {
                           job.customerStatus == '1' &&
                           statusMatch;
                     }).toList();
-                    // filteredJobs.sort((a, b) => b.id!.compareTo(a.id ?? ''));
+                    filteredJobs
+                        .sort((a, b) => b.dueDate!.compareTo(a.dueDate ?? ''));
 
                     if (filteredJobs.isEmpty) {
                       return SingleChildScrollView(

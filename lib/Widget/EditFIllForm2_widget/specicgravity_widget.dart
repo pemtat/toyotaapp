@@ -11,10 +11,12 @@ class SpecicGravityWidget extends StatelessWidget {
   final SpecicGravityModel info;
   final int index;
   final SpecicGravity specicGravityController;
+  final String? readOnly;
   const SpecicGravityWidget({
     super.key,
     required this.info,
     required this.index,
+    this.readOnly,
     required this.specicGravityController,
   });
 
@@ -71,46 +73,47 @@ class SpecicGravityWidget extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            top: 16,
-            right: 16,
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                popupMenuTheme: const PopupMenuThemeData(
-                  color: white3,
+          if (readOnly == null)
+            Positioned(
+              top: 16,
+              right: 16,
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  popupMenuTheme: const PopupMenuThemeData(
+                    color: white3,
+                  ),
                 ),
-              ),
-              child: PopupMenuButton(
-                offset: const Offset(0, 30),
-                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                  PopupMenuItem(
-                    value: 'edit',
-                    child: Text(
-                      'Edit',
-                      style: TextStyleList.text9,
+                child: PopupMenuButton(
+                  offset: const Offset(0, 30),
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                    PopupMenuItem(
+                      value: 'edit',
+                      child: Text(
+                        'Edit',
+                        style: TextStyleList.text9,
+                      ),
                     ),
+                    PopupMenuItem(
+                      value: 'delete',
+                      child: Text('Delete', style: TextStyleList.text9),
+                    ),
+                  ],
+                  child: Image.asset(
+                    'assets/boxedit.png',
+                    width: 24,
+                    height: 24,
                   ),
-                  PopupMenuItem(
-                    value: 'delete',
-                    child: Text('Delete', style: TextStyleList.text9),
-                  ),
-                ],
-                child: Image.asset(
-                  'assets/boxedit.png',
-                  width: 24,
-                  height: 24,
+                  onSelected: (value) {
+                    if (value == 'edit') {
+                      specicGravityController.specicGravityEditModal(
+                          context, info);
+                    } else if (value == 'delete') {
+                      specicGravityController.specicGravityList.removeAt(index);
+                    }
+                  },
                 ),
-                onSelected: (value) {
-                  if (value == 'edit') {
-                    specicGravityController.specicGravityEditModal(
-                        context, info);
-                  } else if (value == 'delete') {
-                    specicGravityController.specicGravityList.removeAt(index);
-                  }
-                },
               ),
-            ),
-          )
+            )
         ],
       ),
     );

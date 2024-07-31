@@ -36,6 +36,7 @@ class Maintenance extends GetxController {
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: CheckBoxWidget(
+                  option: 'true',
                   text: chargingTypeList[index],
                   listItem: chargingTypeChoose,
                   itemSet: chargingTypeChoose,
@@ -93,6 +94,7 @@ class Maintenance extends GetxController {
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: CheckBoxWidget(
+                  option: 'true',
                   text: chargingTypeList[index],
                   listItem: chargingTypeChoose,
                   itemSet: chargingTypeChoose,
@@ -137,8 +139,8 @@ class Maintenance extends GetxController {
     people.value.text = batteryInfo.people.toString();
     hr.value.text = batteryInfo.hr.toString();
 
-    if (chargingType.isNotEmpty) {
-      chargingTypeChoose.add(chargingType.first);
+    if (batteryInfo.chargingType.isNotEmpty) {
+      chargingTypeChoose.add(batteryInfo.chargingType.first);
     }
   }
 

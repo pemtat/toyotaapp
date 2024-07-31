@@ -63,6 +63,7 @@ class BatteryUsage extends GetxController {
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: CheckBoxWidget(
+                  option: 'yes',
                   text: chargingTypeList[index],
                   listItem: chargingTypeChoose,
                   itemSet: chargingTypeChoose,
@@ -132,6 +133,7 @@ class BatteryUsage extends GetxController {
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: CheckBoxWidget(
+                  option: 'yes',
                   text: chargingTypeList[index],
                   listItem: chargingTypeChoose,
                   itemSet: chargingTypeChoose,

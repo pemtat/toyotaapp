@@ -71,7 +71,7 @@ class Jobs extends StatelessWidget {
                               job.status == '102' ||
                               job.status == '103');
                     }).toList();
-                    // filteredJobs.sort((a, b) => b.id!.compareTo(a.id ?? ''));
+
                     if (filteredJobs.isEmpty) {
                       return Center(
                         child: Text(
@@ -80,6 +80,8 @@ class Jobs extends StatelessWidget {
                         ),
                       );
                     }
+                    filteredJobs
+                        .sort((a, b) => b.dueDate!.compareTo(a.dueDate ?? ''));
                     return Column(
                       children: [
                         Expanded(
@@ -90,7 +92,8 @@ class Jobs extends StatelessWidget {
                               final job = filteredJobs[index];
                               return InkWell(
                                 onTap: () {
-                                  if (job.status == '101') {
+                                  if (job.techStatus == '2') {
+                                  } else if (job.status == '101') {
                                     Get.to(() => PendingTaskView(
                                         ticketId: job.bugId ?? '',
                                         jobId: job.id.toString()));
@@ -109,6 +112,7 @@ class Jobs extends StatelessWidget {
                                   index: index,
                                   jobsHome: jobController,
                                   bugId: job.bugId ?? '',
+                                  confirm: job.techStatus == '2' ? 'yes' : null,
                                   job: job,
                                   reporter: job.reporterId ?? '',
                                   expandedIndex: ticketController.expandedIndex,

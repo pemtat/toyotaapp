@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
+import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
@@ -168,13 +169,16 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                         ],
                       ),
                 space2.kH,
-                TitleApp2(
-                  text:
-                      'ผลการตรวจเช็คเเละการบำรุงรักษา\n(Maintenance and service result)',
-                  moreText: maintenance.mtServiceResult == ''
-                      ? '-'
-                      : maintenance.mtServiceResult,
-                ),
+                TitleWithButton(
+                    space: true,
+                    titleText:
+                        'ผลการตรวจเช็คเเละการบำรุงรักษา\n(Maintenance and service result)',
+                    button: Text(
+                      maintenance.mtServiceResult == ''
+                          ? '-'
+                          : maintenance.mtServiceResult ?? '',
+                      style: TextStyleList.text3,
+                    )),
                 space2.kH,
                 TitleApp2(
                   text: 'ประมาณการซ่อม ชั่วโมง(HR)',

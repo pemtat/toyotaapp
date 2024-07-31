@@ -234,21 +234,28 @@ class AssignedjobsNew extends StatelessWidget {
                                   ),
                                 );
                               }
-
+                              filteredJobs.sort((a, b) =>
+                                  b.dueDate!.compareTo(a.dueDate ?? ''));
                               return ListView.builder(
                                 itemCount: filteredJobs.length,
                                 itemBuilder: (context, index) {
                                   final job = filteredJobs[index];
                                   return InkWell(
                                     onTap: () {
-                                      Get.to(() => PendingTaskView(
-                                          ticketId: job.bugId ?? '',
-                                          jobId: job.id.toString()));
+                                      if (job.techStatus == '2') {
+                                      } else {
+                                        Get.to(() => PendingTaskView(
+                                            ticketId: job.bugId ?? '',
+                                            jobId: job.id.toString()));
+                                      }
                                     },
                                     child: SubJobsTicket(
                                         index: index,
                                         bugId: job.bugId ?? '',
                                         reporter: job.reporterId ?? '',
+                                        confirm: job.techStatus == '2'
+                                            ? 'yes'
+                                            : null,
                                         job: job,
                                         jobsHome: jobController,
                                         expandedIndex:
@@ -318,6 +325,8 @@ class AssignedjobsNew extends StatelessWidget {
                                   ),
                                 );
                               }
+                              filteredJobs.sort((a, b) =>
+                                  b.dueDate!.compareTo(a.dueDate ?? ''));
                               return ListView.builder(
                                 itemCount: filteredJobs.length,
                                 itemBuilder: (context, index) {
@@ -401,7 +410,8 @@ class AssignedjobsNew extends StatelessWidget {
                                   ),
                                 );
                               }
-
+                              filteredJobs.sort((a, b) =>
+                                  b.dueDate!.compareTo(a.dueDate ?? ''));
                               return ListView.builder(
                                 itemCount: filteredJobs.length,
                                 itemBuilder: (context, index) {

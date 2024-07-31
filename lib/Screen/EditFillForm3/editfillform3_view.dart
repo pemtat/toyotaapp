@@ -38,7 +38,8 @@ import 'package:get/get.dart';
 
 class EditFillFormView3 extends StatelessWidget {
   final String jobId;
-  EditFillFormView3({super.key, required this.jobId}) {
+  final String? readOnly;
+  EditFillFormView3({super.key, required this.jobId, this.readOnly}) {
     fillformController3.fetchData(jobId);
   }
   final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());
@@ -123,15 +124,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Intial Checks',
-                    button: Obx(() => !initialChecks.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              initialChecks.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !initialChecks.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  initialChecks.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => initialChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: initialChecks.selections,
                         remarkSelection: initialChecks.remarks,
                         remarkSelectionChoose: initialChecks.remarksChoose,
@@ -147,15 +151,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Chassis Checks',
-                    button: Obx(() => !chassisChecks.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              chassisChecks.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !chassisChecks.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  chassisChecks.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => chassisChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: chassisChecks.selections,
                         remarkSelection: chassisChecks.remarks,
                         remarkSelectionChoose: chassisChecks.remarksChoose,
@@ -174,15 +181,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Hydraulic motor & Punp Checks',
-                    button: Obx(() => !hydraulicmMotor.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              hydraulicmMotor.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !hydraulicmMotor.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  hydraulicmMotor.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => hydraulicmMotor.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: hydraulicmMotor.selections,
                         remarkSelection: hydraulicmMotor.remarks,
                         remarkSelectionChoose: hydraulicmMotor.remarksChoose,
@@ -201,15 +211,18 @@ class EditFillFormView3 extends StatelessWidget {
                 TitleWithButton(
                     titleText:
                         'Steering Motor & Hydraulic steering\nsystem checks (CBE)',
-                    button: Obx(() => !steeringMotor.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              steeringMotor.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !steeringMotor.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  steeringMotor.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => steeringMotor.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: steeringMotor.selections,
                         remarkSelection: steeringMotor.remarks,
                         remarkSelectionChoose: steeringMotor.remarksChoose,
@@ -227,15 +240,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Auxiliary Motor Checks (Raymond)',
-                    button: Obx(() => !auxiliaryMotor.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              auxiliaryMotor.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !auxiliaryMotor.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  auxiliaryMotor.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => auxiliaryMotor.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: auxiliaryMotor.selections,
                         remarkSelection: auxiliaryMotor.remarks,
                         remarkSelectionChoose: auxiliaryMotor.remarksChoose,
@@ -253,15 +269,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Drive Motor Checks',
-                    button: Obx(() => !driveMotorChecks.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              driveMotorChecks.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !driveMotorChecks.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  driveMotorChecks.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => driveMotorChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: driveMotorChecks.selections,
                         remarkSelection: driveMotorChecks.remarks,
                         remarkSelectionChoose: driveMotorChecks.remarksChoose,
@@ -279,15 +298,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Brake System Checks',
-                    button: Obx(() => !breakSystemChecks.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              breakSystemChecks.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !breakSystemChecks.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  breakSystemChecks.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => breakSystemChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: breakSystemChecks.selections,
                         remarkSelection: breakSystemChecks.remarks,
                         remarkSelectionChoose: breakSystemChecks.remarksChoose,
@@ -306,15 +328,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Controller, Logic Box Checks',
-                    button: Obx(() => !controllerLogic.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              controllerLogic.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !controllerLogic.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  controllerLogic.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => controllerLogic.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: controllerLogic.selections,
                         remarkSelection: controllerLogic.remarks,
                         remarkSelectionChoose: controllerLogic.remarksChoose,
@@ -331,15 +356,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Powertrain Checks',
-                    button: Obx(() => !powertrainChecks.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              powertrainChecks.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !powertrainChecks.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  powertrainChecks.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => powertrainChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: powertrainChecks.selections,
                         remarkSelection: powertrainChecks.remarks,
                         remarkSelectionChoose: powertrainChecks.remarksChoose,
@@ -356,15 +384,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Battery Checks',
-                    button: Obx(() => !batteryChecks.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              batteryChecks.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !batteryChecks.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  batteryChecks.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => batteryChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: batteryChecks.selections,
                         remarkSelection: batteryChecks.remarks,
                         remarkSelectionChoose: batteryChecks.remarksChoose,
@@ -386,15 +417,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Charger Checks',
-                    button: Obx(() => !chargerChecks.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              chargerChecks.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !chargerChecks.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  chargerChecks.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => chargerChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: chargerChecks.selections,
                         remarkSelection: chargerChecks.remarks,
                         remarkSelectionChoose: chargerChecks.remarksChoose,
@@ -411,15 +445,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Meterial Handling System Checks',
-                    button: Obx(() => !meterialHandling.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              meterialHandling.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !meterialHandling.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  meterialHandling.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => meterialHandling.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: meterialHandling.selections,
                         remarkSelection: meterialHandling.remarks,
                         remarkSelectionChoose: meterialHandling.remarksChoose,
@@ -436,15 +473,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Mast Checks',
-                    button: Obx(() => !mastChecks.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              mastChecks.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !mastChecks.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  mastChecks.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => mastChecks.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: mastChecks.selections,
                         remarkSelection: mastChecks.remarks,
                         remarkSelectionChoose: mastChecks.remarksChoose,
@@ -466,15 +506,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'PT/PS เเละ OS / List for MHE class 3',
-                    button: Obx(() => !ptPsOm.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              ptPsOm.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !ptPsOm.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  ptPsOm.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => ptPsOm.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: ptPsOm.selections,
                         remarkSelection: ptPsOm.remarks,
                         remarkSelectionChoose: ptPsOm.remarksChoose,
@@ -493,15 +536,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: "VNA เเละ OM / List for VNA & OME model",
-                    button: Obx(() => !vnaOm.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              vnaOm.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !vnaOm.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  vnaOm.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => vnaOm.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: vnaOm.selections,
                         remarkSelection: vnaOm.remarks,
                         remarkSelectionChoose: vnaOm.remarksChoose,
@@ -520,15 +566,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: "For Special equipment",
-                    button: Obx(() => !forSpecial.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              forSpecial.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !forSpecial.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  forSpecial.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => forSpecial.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: forSpecial.selections,
                         remarkSelection: forSpecial.remarks,
                         remarkSelectionChoose: forSpecial.remarksChoose,
@@ -545,15 +594,18 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: "Safety",
-                    button: Obx(() => !safety.isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              safety.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() => !safety.isAllFieldsFilled.value
+                            ? AddButton(
+                                onTap: () {
+                                  safety.checkModal(context);
+                                },
+                              )
+                            : Container())
+                        : Container()),
                 Obx(() => safety.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: safety.selections,
                         remarkSelection: safety.remarks,
                         remarkSelectionChoose: safety.remarksChoose,
@@ -602,12 +654,14 @@ class EditFillFormView3 extends StatelessWidget {
                 children: [
                   TitleWithButton(
                       titleText: 'Maintenance and Service Result',
-                      button: maintenance.maintenanceList.isEmpty
-                          ? AddButton(
-                              onTap: () {
-                                maintenance.batteryUsageModal(context);
-                              },
-                            )
+                      button: readOnly == null
+                          ? maintenance.maintenanceList.isEmpty
+                              ? AddButton(
+                                  onTap: () {
+                                    maintenance.batteryUsageModal(context);
+                                  },
+                                )
+                              : Container()
                           : Container()),
                   maintenance.maintenanceList.isNotEmpty
                       ? ListView.builder(
@@ -617,6 +671,7 @@ class EditFillFormView3 extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final info = maintenance.maintenanceList[index];
                             return MaintenanceWidget(
+                              readOnly: readOnly == null ? null : 'yes',
                               info: info,
                               index: index,
                               batteryUsageController: maintenance,
@@ -632,6 +687,7 @@ class EditFillFormView3 extends StatelessWidget {
               children: [
                 Obx(
                   () => AddEditBox(
+                      readOnly: readOnly == null ? null : 'yes',
                       titleText: 'Process Staff',
                       list: processStaff.repairStaff,
                       onTap: () => processStaff.repairStaffModal(context),

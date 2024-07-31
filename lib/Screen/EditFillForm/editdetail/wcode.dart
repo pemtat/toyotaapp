@@ -34,6 +34,7 @@ class Wcode extends GetxController {
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: CheckBoxWidget(
+                  option: 'true',
                   text: wCodeList[index],
                   listItem: wCodeChoose,
                   itemSet: wCodeChoose,

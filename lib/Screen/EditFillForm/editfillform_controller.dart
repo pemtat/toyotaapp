@@ -69,66 +69,89 @@ class EditFillformController extends GetxController {
       errorCode.value.text = reportData.errorCodeReport ?? '';
       workorderNumber.value.text = reportData.orderNo ?? '';
 
-      fieldServiceReport.add(reportData.fieldReport ?? '');
-      List<String> newList = reportData.rCode!.split(',');
+      if (reportData.fieldReport != '-') {
+        fieldServiceReport.add(reportData.fieldReport ?? '');
+      }
 
-      newList = reportData.repairResult!.split(',');
-      repairResultController.repairResultChoose.addAll(newList);
+      if (reportData.repairResult != '-') {
+        if (reportData.repairResult!.contains('H')) {
+          repairResultController.repairResult.add('H');
 
-      newList = reportData.processStaff!.split(',');
-      repairStaffController.repairStaffChoose.addAll(newList);
-      if (reportData.rCode!.isNotEmpty) {
+          if (reportData.repairResult!.contains(':')) {
+            List<String> parts = reportData.repairResult!.split(':');
+
+            if (parts.length > 1) {
+              repairResultController.other.value.text = parts[1].trim();
+            }
+          }
+        } else if (reportData.repairResult!.contains('M')) {
+          repairResultController.repairResult.add('M');
+          if (reportData.repairResult!.contains(':')) {
+            List<String> parts = reportData.repairResult!.split(':');
+
+            if (parts.length > 1) {
+              repairResultController.other.value.text = parts[1].trim();
+            }
+          }
+        } else {
+          repairResultController.repairResult
+              .add(reportData.repairResult ?? '');
+        }
+      }
+      if (reportData.processStaff != '-') {
+        repairStaffController.repairStaff.add(reportData.processStaff ?? '');
+      }
+      if (reportData.wCode != '-') {
+        wcodeController.wCode.add(reportData.wCode ?? '');
+      }
+      if (reportData.rCode! != '-') {
         List<String> rCodeList = reportData.rCode!.split(',');
 
         for (String rCode in rCodeList) {
           rcodeController.rCode.add(rCode.trim());
         }
       }
-      if (reportData.wCode!.isNotEmpty) {
-        List<String> wCodeList = reportData.wCode!.split('%');
+      // if (reportData.wCode!.isNotEmpty) {
+      //   List<String> wCodeList = reportData.wCode!.split('%');
 
-        for (String wCode in wCodeList) {
-          wcodeController.wCode.add(wCode.trim());
-        }
-      }
+      //   for (String wCode in wCodeList) {
+      //     wcodeController.wCode.add(wCode.trim());
+      //   }
+      // }
       rPController.repairProcedureList.add(RepairProcedureModel(
         repairProcedure: reportData.produre ?? '',
         causeProblem: reportData.problem ?? '',
       ));
 
       if (reportData.quantity != 0)
+
         // ignore: curly_braces_in_flow_control_structures
         for (var reportDataList in reportList + additionalReportList) {
           if (reportDataList.additional == false &&
               reportDataList.quantity != '0') {
             sparePartListController.sparePartList.add(SparePartModel(
-                relationId: reportData.relationId,
-                cCodePage: reportData.cCode ?? '1',
-                partNumber: reportData.partNumber ?? '',
-                partDetails: reportData.description ?? '',
-                quantity: int.parse(reportData.quantity ?? ''),
-                changeNow: reportData.changeNow ?? '',
-                changeOnPM: reportData.changeOnPm ?? '',
+                relationId: reportDataList.relationId,
+                cCodePage: reportDataList.cCode ?? '1',
+                partNumber: reportDataList.partNumber ?? '',
+                partDetails: reportDataList.description ?? '',
+                quantity: int.parse(reportDataList.quantity ?? ''),
+                changeNow: reportDataList.changeNow ?? '',
+                changeOnPM: reportDataList.changeOnPm ?? '',
                 additional: 0));
           } else if (reportDataList.additional == true &&
               reportDataList.quantity != '0') {
             additSparePartListController.additSparePartList.add(SparePartModel(
-                relationId: reportData.relationId,
-                cCodePage: reportData.cCode ?? '1',
-                partNumber: reportData.partNumber ?? '',
-                partDetails: reportData.description ?? '',
-                quantity: int.parse(reportData.quantity ?? ''),
-                changeNow: reportData.changeNow ?? '',
-                changeOnPM: reportData.changeOnPm ?? '',
+                relationId: reportDataList.relationId,
+                cCodePage: reportDataList.cCode ?? '1',
+                partNumber: reportDataList.partNumber ?? '',
+                partDetails: reportDataList.description ?? '',
+                quantity: int.parse(reportDataList.quantity ?? ''),
+                changeNow: reportDataList.changeNow ?? '',
+                changeOnPM: reportDataList.changeOnPm ?? '',
                 additional: 1));
           }
         }
-      if (reportData.repairResult!.isNotEmpty) {
-        repairResultController.repairResult.add(reportData.repairResult ?? '');
-      }
-      if (reportData.processStaff!.isNotEmpty) {
-        repairStaffController.repairStaff.add(reportData.processStaff ?? '');
-      }
+
       signatureController.value =
           TextEditingValue(text: reportData.signature ?? '');
     }
@@ -177,6 +200,47 @@ class EditFillformController extends GetxController {
     String? token = await getToken();
     try {
       if (relationId.value != '') {
+        if (repairResultController.repairResult.isNotEmpty) {
+          if (repairResultController.repairResult.first == 'H') {
+            repairResultController.repairResult.clear();
+            repairResultController.repairResult
+                .add('H : ${repairResultController.other.value.text}');
+          } else if (repairResultController.repairResult.first == 'M') {
+            repairResultController.repairResult.clear();
+            repairResultController.repairResult
+                .add('M : ${repairResultController.other.value.text}');
+          }
+        }
+        if (fieldServiceReport.isEmpty) {
+          fieldServiceReport.add('-');
+        }
+        if (wcodeController.wCode.isEmpty) {
+          wcodeController.wCode.add('-');
+        }
+        if (repairResultController.repairResult.isEmpty) {
+          repairResultController.repairResult.add('-');
+        }
+        if (repairStaffController.repairStaff.isEmpty) {
+          repairStaffController.repairStaff.add('-');
+        }
+        if (rcodeController.rCode.isEmpty) {
+          rcodeController.rCode.add('-');
+        }
+        if (rPController.repairProcedureList.isEmpty) {
+          rPController.repairProcedureList.add(RepairProcedureModel(
+            repairProcedure: '-',
+            causeProblem: '-',
+          ));
+        }
+        if (fault.value.text == '') {
+          fault.value.text = '-';
+        }
+        if (errorCode.value.text == '') {
+          errorCode.value.text = '-';
+        }
+        if (workorderNumber.value.text == '') {
+          workorderNumber.value.text = '-';
+        }
         saveCurrentDateTime(saveCompletedtime);
         final Map<String, dynamic> data = {
           'field_report': fieldServiceReport.first,
@@ -184,11 +248,11 @@ class EditFillformController extends GetxController {
           'error_code_report': errorCode.value.text,
           'order_no': workorderNumber.value.text,
           'r_code': rcodeController.rCode.join(','),
-          'w_code': wcodeController.wCode.join('%'),
+          'w_code': wcodeController.wCode.first,
           'produre': rPController.repairProcedureList.first.repairProcedure,
           'problem': rPController.repairProcedureList.first.causeProblem,
-          'repair_result': repairResultController.repairResult.join(','),
-          'process_staff': repairStaffController.repairStaff.join(','),
+          'repair_result': repairResultController.repairResult.first,
+          'process_staff': repairStaffController.repairStaff.first,
           'relation_id': relationId.value,
           'bugid': ticketId.value
         };

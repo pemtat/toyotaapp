@@ -8,6 +8,10 @@ String stringToStatus(String status) {
       return "acknowledged";
     case '102':
       return 'confirmed';
+    case '25':
+      return 'confirmed';
+    case '90':
+      return 'closed';
     case '50':
       return 'confirmed';
     case '80':

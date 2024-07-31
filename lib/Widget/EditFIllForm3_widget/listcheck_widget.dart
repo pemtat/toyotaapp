@@ -18,6 +18,7 @@ class ListChecksWidget extends StatelessWidget {
   final RxList<String>? additionalChoose;
   final Function(BuildContext) showModal;
   final String? unit;
+  final String? readOnly;
   final RxList<List<String>>? additional2;
   final RxList<List<String>>? additionalChoose2;
   const ListChecksWidget(
@@ -32,6 +33,7 @@ class ListChecksWidget extends StatelessWidget {
       this.additional,
       this.additionalChoose2,
       this.additionalChoose,
+      this.readOnly,
       this.unit,
       required this.show});
 
@@ -180,66 +182,69 @@ class ListChecksWidget extends StatelessWidget {
                 },
               ),
             ),
-            Positioned(
-              top: 16,
-              right: 16,
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  popupMenuTheme: const PopupMenuThemeData(
-                    color: white3,
+            if (readOnly == null)
+              Positioned(
+                top: 16,
+                right: 16,
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    popupMenuTheme: const PopupMenuThemeData(
+                      color: white3,
+                    ),
                   ),
-                ),
-                child: PopupMenuButton(
-                  offset: const Offset(0, 30),
-                  itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                    PopupMenuItem(
-                      value: 'edit',
-                      child: Text(
-                        'Edit',
-                        style: TextStyleList.text9,
+                  child: PopupMenuButton(
+                    offset: const Offset(0, 30),
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                      PopupMenuItem(
+                        value: 'edit',
+                        child: Text(
+                          'Edit',
+                          style: TextStyleList.text9,
+                        ),
                       ),
+                      PopupMenuItem(
+                        value: 'delete',
+                        child: Text('Delete', style: TextStyleList.text9),
+                      ),
+                    ],
+                    child: Image.asset(
+                      'assets/boxedit.png',
+                      width: 24,
+                      height: 24,
                     ),
-                    PopupMenuItem(
-                      value: 'delete',
-                      child: Text('Delete', style: TextStyleList.text9),
-                    ),
-                  ],
-                  child: Image.asset(
-                    'assets/boxedit.png',
-                    width: 24,
-                    height: 24,
+                    onSelected: (value) {
+                      if (value == 'edit') {
+                        showModal(context);
+                      } else if (value == 'delete') {
+                        selection.value =
+                            List<String>.filled(selection.length, '').obs;
+                        remarkSelection.value =
+                            List<String>.filled(remarkSelection.length, '').obs;
+                        remarkSelectionChoose.value = List<String>.filled(
+                                remarkSelectionChoose.length, '')
+                            .obs;
+                        if (additional != null) {
+                          additional!.value =
+                              List<String>.filled(additional!.length, '').obs;
+                          additionalChoose!.value =
+                              List<String>.filled(additionalChoose!.length, '')
+                                  .obs;
+                        }
+                        if (additional2 != null) {
+                          additional2!.value = List<List<String>>.generate(
+                              additional2!.length,
+                              (_) => List.filled(2, '')).obs;
+                          additionalChoose2!.value =
+                              List<List<String>>.generate(
+                                  additionalChoose2!.length,
+                                  (_) => List.filled(2, '')).obs;
+                        }
+                        show.value = false;
+                      }
+                    },
                   ),
-                  onSelected: (value) {
-                    if (value == 'edit') {
-                      showModal(context);
-                    } else if (value == 'delete') {
-                      selection.value =
-                          List<String>.filled(selection.length, '').obs;
-                      remarkSelection.value =
-                          List<String>.filled(remarkSelection.length, '').obs;
-                      remarkSelectionChoose.value =
-                          List<String>.filled(remarkSelectionChoose.length, '')
-                              .obs;
-                      if (additional != null) {
-                        additional!.value =
-                            List<String>.filled(additional!.length, '').obs;
-                        additionalChoose!.value =
-                            List<String>.filled(additionalChoose!.length, '')
-                                .obs;
-                      }
-                      if (additional2 != null) {
-                        additional2!.value = List<List<String>>.generate(
-                            additional2!.length, (_) => List.filled(2, '')).obs;
-                        additionalChoose2!.value = List<List<String>>.generate(
-                            additionalChoose2!.length,
-                            (_) => List.filled(2, '')).obs;
-                      }
-                      show.value = false;
-                    }
-                  },
                 ),
               ),
-            ),
           ],
         ),
       ),

@@ -16,6 +16,7 @@ class ListChecksWidget extends StatelessWidget {
   final RxList<String>? additional;
   final Function(BuildContext) showModal;
   final String? unit;
+  final String? readOnly;
 
   const ListChecksWidget(
       {super.key,
@@ -24,6 +25,7 @@ class ListChecksWidget extends StatelessWidget {
       required this.remarkChooseSelection,
       required this.listSelection,
       required this.showModal,
+      this.readOnly,
       this.additional,
       this.unit,
       required this.show});
@@ -123,56 +125,57 @@ class ListChecksWidget extends StatelessWidget {
                 },
               ),
             ),
-            Positioned(
-              top: 16,
-              right: 16,
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  popupMenuTheme: const PopupMenuThemeData(
-                    color: white3,
+            if (readOnly == null)
+              Positioned(
+                top: 16,
+                right: 16,
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    popupMenuTheme: const PopupMenuThemeData(
+                      color: white3,
+                    ),
                   ),
-                ),
-                child: PopupMenuButton(
-                  offset: const Offset(0, 30),
-                  itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                    PopupMenuItem(
-                      value: 'edit',
-                      child: Text(
-                        'Edit',
-                        style: TextStyleList.text9,
+                  child: PopupMenuButton(
+                    offset: const Offset(0, 30),
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                      PopupMenuItem(
+                        value: 'edit',
+                        child: Text(
+                          'Edit',
+                          style: TextStyleList.text9,
+                        ),
                       ),
+                      PopupMenuItem(
+                        value: 'delete',
+                        child: Text('Delete', style: TextStyleList.text9),
+                      ),
+                    ],
+                    child: Image.asset(
+                      'assets/boxedit.png',
+                      width: 24,
+                      height: 24,
                     ),
-                    PopupMenuItem(
-                      value: 'delete',
-                      child: Text('Delete', style: TextStyleList.text9),
-                    ),
-                  ],
-                  child: Image.asset(
-                    'assets/boxedit.png',
-                    width: 24,
-                    height: 24,
-                  ),
-                  onSelected: (value) {
-                    if (value == 'edit') {
-                      showModal(context);
-                    } else if (value == 'delete') {
-                      selection.value =
-                          List<String>.filled(selection.length, '').obs;
-                      remarkSelection.value =
-                          List<String>.filled(remarkSelection.length, '').obs;
-                      remarkChooseSelection.value =
-                          List<String>.filled(remarkChooseSelection.length, '')
-                              .obs;
-                      if (additional != null) {
-                        additional!.value =
-                            List<String>.filled(additional!.length, '').obs;
+                    onSelected: (value) {
+                      if (value == 'edit') {
+                        showModal(context);
+                      } else if (value == 'delete') {
+                        selection.value =
+                            List<String>.filled(selection.length, '').obs;
+                        remarkSelection.value =
+                            List<String>.filled(remarkSelection.length, '').obs;
+                        remarkChooseSelection.value = List<String>.filled(
+                                remarkChooseSelection.length, '')
+                            .obs;
+                        if (additional != null) {
+                          additional!.value =
+                              List<String>.filled(additional!.length, '').obs;
+                        }
+                        show.value = false;
                       }
-                      show.value = false;
-                    }
-                  },
+                    },
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),

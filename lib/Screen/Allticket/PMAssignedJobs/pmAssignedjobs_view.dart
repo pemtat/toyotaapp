@@ -287,7 +287,7 @@ class PmAssignedJobsView extends StatelessWidget {
                     ),
                   );
                 }
-
+                pagedJobs.sort((a, b) => b.dueDate!.compareTo(a.dueDate ?? ''));
                 return ListView.builder(
                   itemCount: pagedJobs.length,
                   itemBuilder: (context, index) {

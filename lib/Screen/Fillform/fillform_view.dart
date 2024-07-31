@@ -71,10 +71,11 @@ class FillFormView extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: CheckBoxWidget(
-                          text:
-                              fillFormController.fieldServiceReportList[index],
-                          listItem: fillFormController.fieldServiceReport,
-                          itemSet: fillFormController.fieldServiceReport),
+                        text: fillFormController.fieldServiceReportList[index],
+                        listItem: fillFormController.fieldServiceReport,
+                        itemSet: fillFormController.fieldServiceReport,
+                        option: 'true',
+                      ),
                     );
                   },
                 ),
@@ -115,7 +116,7 @@ class FillFormView extends StatelessWidget {
                       titleText: 'W Code',
                       list: wcodeController.wCode,
                       onTap: () => wcodeController.wCodeModal(context),
-                      moreText: getDisplayString4(wcodeController.wCode)),
+                      moreText: getDisplayString(wcodeController.wCode)),
                 ),
               ],
             ),
@@ -227,6 +228,7 @@ class FillFormView extends StatelessWidget {
                   () => AddEditBox(
                       titleText: 'Repair Result',
                       list: repairResultController.repairResult,
+                      other: repairResultController.other,
                       onTap: () =>
                           repairResultController.repairResultModal(context),
                       moreText: getDisplayString(

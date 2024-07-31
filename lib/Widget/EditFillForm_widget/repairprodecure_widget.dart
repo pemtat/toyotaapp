@@ -10,12 +10,14 @@ class RepairProdecureWidget extends StatelessWidget {
   final RepairProcedureModel part;
   final RepairProcedure repairProcedureController;
   final int index;
+  final String? readOnly;
 
   const RepairProdecureWidget({
     super.key,
     required this.part,
     required this.index,
     required this.repairProcedureController,
+    this.readOnly,
   });
 
   @override
@@ -63,46 +65,47 @@ class RepairProdecureWidget extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            top: 16,
-            right: 16,
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                popupMenuTheme: const PopupMenuThemeData(
-                  color: white3,
+          if (readOnly == null)
+            Positioned(
+              top: 16,
+              right: 16,
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  popupMenuTheme: const PopupMenuThemeData(
+                    color: white3,
+                  ),
                 ),
-              ),
-              child: PopupMenuButton(
-                offset: const Offset(0, 30),
-                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                  PopupMenuItem(
-                    value: 'edit',
-                    child: Text(
-                      'Edit',
-                      style: TextStyleList.text9,
+                child: PopupMenuButton(
+                  offset: const Offset(0, 30),
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                    PopupMenuItem(
+                      value: 'edit',
+                      child: Text(
+                        'Edit',
+                        style: TextStyleList.text9,
+                      ),
                     ),
+                    PopupMenuItem(
+                      value: 'delete',
+                      child: Text('Delete', style: TextStyleList.text9),
+                    ),
+                  ],
+                  child: Image.asset(
+                    'assets/boxedit.png',
+                    width: 24,
+                    height: 24,
                   ),
-                  PopupMenuItem(
-                    value: 'delete',
-                    child: Text('Delete', style: TextStyleList.text9),
-                  ),
-                ],
-                child: Image.asset(
-                  'assets/boxedit.png',
-                  width: 24,
-                  height: 24,
+                  onSelected: (value) {
+                    if (value == 'edit') {
+                      repairProcedureController.rPEditModal(context, part);
+                    } else if (value == 'delete') {
+                      repairProcedureController.repairProcedureList
+                          .removeAt(index);
+                    }
+                  },
                 ),
-                onSelected: (value) {
-                  if (value == 'edit') {
-                    repairProcedureController.rPEditModal(context, part);
-                  } else if (value == 'delete') {
-                    repairProcedureController.repairProcedureList
-                        .removeAt(index);
-                  }
-                },
               ),
-            ),
-          )
+            )
         ],
       ),
     );

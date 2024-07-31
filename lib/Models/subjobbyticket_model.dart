@@ -31,6 +31,8 @@ class Subjobs {
   int? severity;
   int? reproducibility;
   Status? status;
+  String? techStatus;
+  String? techRemark;
   int? resolution;
   int? projection;
   int? categoryId;
@@ -52,6 +54,8 @@ class Subjobs {
       this.severity,
       this.reproducibility,
       this.status,
+      this.techStatus,
+      this.techRemark,
       this.resolution,
       this.projection,
       this.categoryId,
@@ -74,6 +78,8 @@ class Subjobs {
     severity = json['severity'];
     reproducibility = json['reproducibility'];
     status = json['status'] != null ? Status.fromJson(json['status']) : null;
+    techStatus = json['tech_status'];
+    techRemark = json['tech_remark'];
     resolution = json['resolution'];
     projection = json['projection'];
     categoryId = json['category_id'];
@@ -101,6 +107,8 @@ class Subjobs {
     if (status != null) {
       data['status'] = status!.toJson();
     }
+    data['tech_status'] = techStatus;
+    data['tech_remark'] = techRemark;
     data['resolution'] = resolution;
     data['projection'] = projection;
     data['category_id'] = categoryId;

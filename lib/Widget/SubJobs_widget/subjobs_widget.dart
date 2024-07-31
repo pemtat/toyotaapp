@@ -21,6 +21,7 @@ class SubJobsTicket extends StatelessWidget {
   final String bugId;
   final String reporter;
   final int? index;
+  final String? confirm;
 
   final String? status;
 
@@ -33,6 +34,7 @@ class SubJobsTicket extends StatelessWidget {
       required this.bugId,
       required this.reporter,
       required this.jobsHome,
+      this.confirm,
       required this.index});
 
   @override
@@ -62,7 +64,9 @@ class SubJobsTicket extends StatelessWidget {
                 style: TextStyleList.text11,
               ),
               const Spacer(),
-              StatusButton(status: status ?? '')
+              confirm == null
+                  ? StatusButton(status: status ?? '')
+                  : StatusButton(status: 'notconfirm')
             ],
           ),
         ),

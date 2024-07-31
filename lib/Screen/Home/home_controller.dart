@@ -352,20 +352,22 @@ class HomeController extends GetxController {
         List<SubJobAssgined> closedSubJobsOver = [];
 
         for (var subJob in itemList) {
-          switch (subJob.status) {
-            case '101':
-              newSubJobs.add(subJob);
-              break;
-            case '102':
-              pendingSubJobs.add(subJob);
-              break;
-            case '103':
-              completedSubJobs.add(subJob);
-              if (DateTime.parse(subJob.dueDate ?? '')
-                  .isBefore(DateTime.now())) {
-                closedSubJobsOver.add(subJob);
-              }
-              break;
+          if (subJob.techStatus != '2') {
+            switch (subJob.status) {
+              case '101':
+                newSubJobs.add(subJob);
+                break;
+              case '102':
+                pendingSubJobs.add(subJob);
+                break;
+              case '103':
+                completedSubJobs.add(subJob);
+                if (DateTime.parse(subJob.dueDate ?? '')
+                    .isBefore(DateTime.now())) {
+                  closedSubJobsOver.add(subJob);
+                }
+                break;
+            }
           }
         }
         totalJobsTicket.value = itemList.length;

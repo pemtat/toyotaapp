@@ -20,6 +20,8 @@ class PeddingtaskController extends GetxController {
   var issueData = [].obs;
   var attachments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
+  final cancelNote = TextEditingController().obs;
+
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var pdfList = <Map<String, dynamic>>[].obs;
   var attachmentsData = <Map<String, dynamic>>[].obs;

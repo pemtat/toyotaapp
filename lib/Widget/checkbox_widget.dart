@@ -9,13 +9,18 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 class CheckBoxWidget extends StatelessWidget {
   final String text;
   final RxList<String> listItem;
+  final String? option;
+  final String? readOnly;
   final RxList<String> itemSet;
-  const CheckBoxWidget({
-    super.key,
-    required this.text,
-    required this.listItem,
-    required this.itemSet,
-  });
+  final Rx<TextEditingController>? other;
+  const CheckBoxWidget(
+      {super.key,
+      required this.text,
+      required this.listItem,
+      required this.itemSet,
+      this.option,
+      this.other,
+      this.readOnly});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,17 @@ class CheckBoxWidget extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            updateCheckbox(text, itemSet);
+            if (readOnly == null) {
+              if (option != null && other == null) {
+                if (!listItem.contains(text)) updateCheckbox3(text, itemSet);
+              } else if (option != null && other != null) {
+                if (!listItem.contains(text)) {
+                  updateCheckbox3other(text, itemSet, other!);
+                }
+              } else {
+                updateCheckbox(text, itemSet);
+              }
+            }
           },
           child: Obx(
             () => SizedBox(
@@ -455,7 +470,7 @@ class CheckBoxNew extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            updateCheckbox2(text, itemSet);
+            updateCheckbox3(text, itemSet);
           },
           child: Obx(
             () => SizedBox(

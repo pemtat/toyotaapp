@@ -92,7 +92,7 @@ class HomeView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                '${userData.resourceNo} - ${userData.name}',
+                                '${userData.resourceNo} - ${userData.realName}',
                                 style: TextStyleList.title2,
                               ),
                               Row(
@@ -330,7 +330,8 @@ class HomeView extends StatelessWidget {
                         combinedData.addAll(pmJobData);
 
                         final jobData = jobController.subJobAssigned
-                            .where((job) => job.status == '101')
+                            .where((job) =>
+                                job.status == '101' && job.techStatus != '2')
                             .toList();
 
                         combinedData.addAll(jobData);

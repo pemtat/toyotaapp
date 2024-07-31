@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/repair_procedure.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/process_staff.dart';
@@ -129,22 +130,63 @@ class FillformController extends GetxController {
       if (response.statusCode == 200) {
         List<dynamic> highRelationData = json.decode(response.body);
 
+        if (repairResultController.repairResult.isNotEmpty) {
+          if (repairResultController.repairResult.first == 'H') {
+            repairResultController.repairResult.clear();
+            repairResultController.repairResult
+                .add('H : ${repairResultController.other.value.text}');
+          } else if (repairResultController.repairResult.first == 'M') {
+            repairResultController.repairResult.clear();
+            repairResultController.repairResult
+                .add('M : ${repairResultController.other.value.text}');
+          }
+        }
+        if (fieldServiceReport.isEmpty) {
+          fieldServiceReport.add('-');
+        }
+        if (wcodeController.wCode.isEmpty) {
+          wcodeController.wCode.add('-');
+        }
+        if (repairResultController.repairResult.isEmpty) {
+          repairResultController.repairResult.add('-');
+        }
+        if (processStaffController.repairStaff.isEmpty) {
+          processStaffController.repairStaff.add('-');
+        }
+        if (rcodeController.rCode.isEmpty) {
+          rcodeController.rCode.add('-');
+        }
+        if (rPController.repairProcedureList.isEmpty) {
+          rPController.repairProcedureList.add(RepairProcedureModel(
+            repairProcedure: '-',
+            causeProblem: '-',
+          ));
+        }
+        if (fault.value.text == '') {
+          fault.value.text = '-';
+        }
+        if (errorCode.value.text == '') {
+          errorCode.value.text = '-';
+        }
+        if (workorderNumber.value.text == '') {
+          workorderNumber.value.text = '-';
+        }
         if (highRelationData.isNotEmpty) {
           var currentRelationId = highRelationData.first['relation_id'];
           var highRelation = (int.parse(currentRelationId) + 1).toString();
           saveCurrentDateTime(saveCompletedtime);
           final Map<String, dynamic> data = {
             'job_issue_id': '$jobId',
-            'field_report': fieldServiceReport.join(', '),
+            'field_report': fieldServiceReport.first,
             'fault_report': fault.value.text,
             'error_code_report': errorCode.value.text,
             'order_no': workorderNumber.value.text,
             'r_code': rcodeController.rCode.join(','),
-            'w_code': wcodeController.wCode.join('%'),
+            'w_code': wcodeController.wCode.first,
             'produre': rPController.repairProcedureList.first.repairProcedure,
             'problem': rPController.repairProcedureList.first.causeProblem,
-            'repair_result': repairResultController.repairResult.join(','),
-            'process_staff': processStaffController.repairStaff.join(','),
+            'repair_result': repairResultController.repairResult.first,
+            'process_staff': processStaffController.repairStaff.first,
             'relation_id': highRelation,
             'bugid': ticketId.value
           };

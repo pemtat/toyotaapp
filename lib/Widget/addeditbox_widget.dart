@@ -8,6 +8,7 @@ class AddEditBox extends StatelessWidget {
   final String titleText;
   final RxList<String> list;
   final VoidCallback onTap;
+  final String? readOnly;
   final String moreText;
   final Rx<TextEditingController>? other;
 
@@ -17,6 +18,7 @@ class AddEditBox extends StatelessWidget {
     required this.list,
     required this.onTap,
     required this.moreText,
+    this.readOnly,
     this.other,
   });
 
@@ -25,19 +27,22 @@ class AddEditBox extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Obx(
-          () => TitleWithButton(
-            titleText: titleText,
-            button: list.isEmpty
-                ? AddButton(
-                    onTap: onTap,
-                  )
-                : EditButton(onTap: onTap),
-          ),
+        TitleWithButton(
+          titleText: titleText,
+          button: readOnly == null
+              ? list.isEmpty
+                  ? AddButton(
+                      onTap: onTap,
+                    )
+                  : EditButton(onTap: onTap)
+              : Container(),
         ),
         Obx(() {
           if (list.isNotEmpty) {
-            bool hasOtherOnly = list.length == 1 && list.contains('Other');
+            bool hasOtherOnly = list.length == 1 &&
+                (list.contains('Other') ||
+                    list.contains('H') ||
+                    list.contains('M'));
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,6 +55,16 @@ class AddEditBox extends StatelessWidget {
                 if (list.contains('Other') && other != null)
                   Text(
                     'Other : ${other!.value.text}',
+                    style: TextStyleList.text12,
+                  ),
+                if (list.contains('H') && other != null)
+                  Text(
+                    'H : ${other!.value.text}',
+                    style: TextStyleList.text12,
+                  ),
+                if (list.contains('M') && other != null)
+                  Text(
+                    'M : ${other!.value.text}',
                     style: TextStyleList.text12,
                   ),
               ],

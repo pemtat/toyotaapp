@@ -180,7 +180,6 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       ),
                 space.kH,
                 TitleWithButton(
-                    space: true,
                     titleText: 'Corrective Action',
                     button: Text(
                       info1.correctiveAction ?? '',

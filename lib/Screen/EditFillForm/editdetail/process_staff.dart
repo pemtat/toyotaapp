@@ -34,6 +34,7 @@ class RepairStaff extends GetxController {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: CheckBoxWidget(
+                  option: 'true',
                   text: repairStaffList[index],
                   listItem: repairStaffChoose,
                   itemSet: repairStaffChoose),
@@ -44,7 +45,7 @@ class RepairStaff extends GetxController {
         EndButton(
             onPressed: () {
               repairStaff.clear();
-              repairStaff.addAll(repairStaff.where((code) => code.isNotEmpty));
+              repairStaff.addAll(repairStaffChoose);
 
               Navigator.pop(context);
             },

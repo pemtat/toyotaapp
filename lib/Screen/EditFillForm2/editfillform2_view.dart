@@ -30,7 +30,9 @@ import 'package:get/get.dart';
 
 class EditFillFormView2 extends StatelessWidget {
   final String jobId;
-  EditFillFormView2({super.key, required this.jobId}) {
+  final String? readOnly;
+
+  EditFillFormView2({super.key, required this.jobId, this.readOnly}) {
     fillformController2.fetchData(jobId);
   }
   final BatteryInformation batteryInfoController =
@@ -77,13 +79,15 @@ class EditFillFormView2 extends StatelessWidget {
                 children: [
                   TitleWithButton(
                     titleText: 'Bettery Information',
-                    button: batteryInfoController.batteryInformationList.isEmpty
-                        ? AddButton(
-                            onTap: () {
-                              batteryInfoController
-                                  .batteryInformationModal(context);
-                            },
-                          )
+                    button: readOnly == null
+                        ? batteryInfoController.batteryInformationList.isEmpty
+                            ? AddButton(
+                                onTap: () {
+                                  batteryInfoController
+                                      .batteryInformationModal(context);
+                                },
+                              )
+                            : Container()
                         : Container(),
                   ),
                   batteryInfoController.batteryInformationList.isNotEmpty
@@ -96,6 +100,7 @@ class EditFillFormView2 extends StatelessWidget {
                             final info = batteryInfoController
                                 .batteryInformationList[index];
                             return BatteryInfoDetailWidget(
+                              readOnly: readOnly == null ? null : 'yes',
                               info: info,
                               index: index,
                               batteryInfoController: batteryInfoController,
@@ -112,13 +117,15 @@ class EditFillFormView2 extends StatelessWidget {
                 children: [
                   TitleWithButton(
                       titleText: 'Forklife Information',
-                      button: forkLifeInformation.forklifeList.isEmpty
-                          ? AddButton(
-                              onTap: () {
-                                forkLifeInformation
-                                    .forklifeInformationModal(context);
-                              },
-                            )
+                      button: readOnly == null
+                          ? forkLifeInformation.forklifeList.isEmpty
+                              ? AddButton(
+                                  onTap: () {
+                                    forkLifeInformation
+                                        .forklifeInformationModal(context);
+                                  },
+                                )
+                              : Container()
                           : Container()),
                   forkLifeInformation.forklifeList.isNotEmpty
                       ? ListView.builder(
@@ -129,6 +136,7 @@ class EditFillFormView2 extends StatelessWidget {
                             final part =
                                 forkLifeInformation.forklifeList[index];
                             return ForkliftinformationWidget(
+                              readOnly: readOnly == null ? null : 'yes',
                               info: part,
                               index: index,
                               controller: forkLifeInformation,
@@ -145,13 +153,15 @@ class EditFillFormView2 extends StatelessWidget {
                 children: [
                   TitleWithButton(
                       titleText: 'Bettery Usage',
-                      button: batteryUsageController.batteryUsageList.isEmpty
-                          ? AddButton(
-                              onTap: () {
-                                batteryUsageController
-                                    .batteryUsageModal(context);
-                              },
-                            )
+                      button: readOnly == null
+                          ? batteryUsageController.batteryUsageList.isEmpty
+                              ? AddButton(
+                                  onTap: () {
+                                    batteryUsageController
+                                        .batteryUsageModal(context);
+                                  },
+                                )
+                              : Container()
                           : Container()),
                   batteryUsageController.batteryUsageList.isNotEmpty
                       ? ListView.builder(
@@ -163,6 +173,7 @@ class EditFillFormView2 extends StatelessWidget {
                             final info =
                                 batteryUsageController.batteryUsageList[index];
                             return BatteryUsageWidget(
+                              readOnly: readOnly == null ? null : 'yes',
                               info: info,
                               index: index,
                               batteryUsageController: batteryUsageController,
@@ -179,11 +190,14 @@ class EditFillFormView2 extends StatelessWidget {
                 children: [
                   TitleWithButton(
                     titleText: 'Specic Gravity and Voltage Check',
-                    button: AddButton(
-                      onTap: () {
-                        specicGravityController.specicGravityModal(context);
-                      },
-                    ),
+                    button: readOnly == null
+                        ? AddButton(
+                            onTap: () {
+                              specicGravityController
+                                  .specicGravityModal(context);
+                            },
+                          )
+                        : Container(),
                   ),
                   specicGravityController.specicGravityList.isNotEmpty
                       ? ListView.builder(
@@ -195,6 +209,7 @@ class EditFillFormView2 extends StatelessWidget {
                             final info = specicGravityController
                                 .specicGravityList[index];
                             return SpecicGravityWidget(
+                              readOnly: readOnly == null ? null : 'yes',
                               info: info,
                               index: index,
                               specicGravityController: specicGravityController,
@@ -210,16 +225,20 @@ class EditFillFormView2 extends StatelessWidget {
               children: [
                 TitleWithButton(
                     titleText: 'Battery Condition',
-                    button: Obx(() => !batteryConditionController
-                            .isAllFieldsFilled.value
-                        ? AddButton(
-                            onTap: () {
-                              batteryConditionController.checkModal(context);
-                            },
-                          )
-                        : Container())),
+                    button: readOnly == null
+                        ? Obx(() =>
+                            !batteryConditionController.isAllFieldsFilled.value
+                                ? AddButton(
+                                    onTap: () {
+                                      batteryConditionController
+                                          .checkModal(context);
+                                    },
+                                  )
+                                : Container())
+                        : Container()),
                 Obx(() => batteryConditionController.isAllFieldsFilled.value
                     ? ListChecksWidget(
+                        readOnly: readOnly == null ? null : 'yes',
                         selection: batteryConditionController.selections,
                         remarkSelection: batteryConditionController.remarks,
                         remarkChooseSelection:
@@ -237,6 +256,7 @@ class EditFillFormView2 extends StatelessWidget {
             Obx(() => BoxContainer(
                   children: [
                     AddEditBox(
+                      readOnly: readOnly == null ? null : 'yes',
                       titleText: 'Corrective Action',
                       list: correctiveActionController.correctiveAction,
                       onTap: () => correctiveActionController
@@ -288,6 +308,7 @@ class EditFillFormView2 extends StatelessWidget {
               children: [
                 Obx(
                   () => AddEditBox(
+                    readOnly: readOnly == null ? null : 'yes',
                     titleText: 'Repair P.M Battery',
                     list: repairPmController.repairPm,
                     onTap: () => repairPmController.repairPMModal(context),

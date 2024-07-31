@@ -9,6 +9,8 @@ class SubJobAssgined {
   String? dateSubmitted;
   String? bugId;
   String? status;
+  String? techRemark;
+  String? techStatus;
   String? resolution;
   String? projection;
   String? categoryId;
@@ -21,10 +23,6 @@ class SubJobAssgined {
   String? timeStart;
   String? timeEnd;
   String? comment;
-  String? contentBefore;
-  String? imageBefore;
-  String? imageAfter;
-  String? contentAfter;
   String? location;
   String? serialNo;
   String? summaryBug;
@@ -41,6 +39,8 @@ class SubJobAssgined {
       this.dateSubmitted,
       this.bugId,
       this.status,
+      this.techRemark,
+      this.techStatus,
       this.resolution,
       this.projection,
       this.categoryId,
@@ -53,10 +53,6 @@ class SubJobAssgined {
       this.timeStart,
       this.timeEnd,
       this.comment,
-      this.contentBefore,
-      this.imageBefore,
-      this.imageAfter,
-      this.contentAfter,
       this.location,
       this.serialNo,
       this.summaryBug,
@@ -73,6 +69,8 @@ class SubJobAssgined {
     dateSubmitted = json['date_submitted'];
     bugId = json['bug_id'];
     status = json['status'];
+    techRemark = json['tech_remark'];
+    techStatus = json['tech_status'];
     resolution = json['resolution'];
     projection = json['projection'];
     categoryId = json['category_id'];
@@ -85,10 +83,6 @@ class SubJobAssgined {
     timeStart = json['time_start'];
     timeEnd = json['time_end'];
     comment = json['comment'];
-    contentBefore = json['content_before'];
-    imageBefore = json['image_before'];
-    imageAfter = json['image_after'];
-    contentAfter = json['content_after'];
     summaryBug = json['summary_bug'];
     realName = json['realname'];
   }
@@ -105,6 +99,8 @@ class SubJobAssgined {
     data['date_submitted'] = dateSubmitted;
     data['bug_id'] = bugId;
     data['status'] = status;
+    data['tech_remark'] = techRemark;
+    data['tech_status'] = techStatus;
     data['resolution'] = resolution;
     data['projection'] = projection;
     data['category_id'] = categoryId;
@@ -117,10 +113,6 @@ class SubJobAssgined {
     data['time_start'] = timeStart;
     data['time_end'] = timeEnd;
     data['comment'] = comment;
-    data['content_before'] = contentBefore;
-    data['image_before'] = imageBefore;
-    data['image_after'] = imageAfter;
-    data['content_after'] = contentAfter;
     data['summary_bug'] = summaryBug;
     data['realname'] = realName;
     return data;

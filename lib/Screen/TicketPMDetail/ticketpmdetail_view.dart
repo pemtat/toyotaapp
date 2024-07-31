@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/checkcustomer.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Screen/EditFillForm2/editfillform2_view.dart';
+import 'package:toyotamobile/Screen/EditFillForm3/editfillform3_view.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -10,6 +12,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showpreventive_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
+import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
@@ -162,7 +165,7 @@ class TicketPMDetailView extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              8.kH,
+                              10.kH,
                               BoxContainer(
                                 children: [
                                   Row(
@@ -175,7 +178,7 @@ class TicketPMDetailView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  8.kH,
+                                  10.kH,
                                   if (jobController.imagesBefore.isNotEmpty)
                                     AttachmentsListWidget(
                                       attachments: jobController.imagesBefore,
@@ -183,7 +186,7 @@ class TicketPMDetailView extends StatelessWidget {
                                       jobid: ticketId,
                                       option: 'before',
                                     ),
-                                  10.kH,
+                                  12.kH,
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -198,7 +201,7 @@ class TicketPMDetailView extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      8.kH,
+                                      10.kH,
                                       if (jobController.imagesBefore.isNotEmpty)
                                         AttachmentsListWidget(
                                           attachments:
@@ -207,12 +210,13 @@ class TicketPMDetailView extends StatelessWidget {
                                           jobid: ticketId,
                                           option: 'after',
                                         ),
+                                      10.kH,
                                       Container(
                                         height: 0.5,
                                         color: const Color.fromARGB(
                                             255, 224, 222, 222),
                                       ),
-                                      10.kH,
+                                      12.kH,
                                       ShowTextFieldType(
                                           hintText: pmData.comment == ''
                                               ? '-'
@@ -224,8 +228,27 @@ class TicketPMDetailView extends StatelessWidget {
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  const TitleApp(
-                                      text: 'Battery Maintenance Report'),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleApp(
+                                          text: 'Battery Maintenance Report'),
+                                      stringToStatus(issue.status.id
+                                                      .toString()) ==
+                                                  'closed' &&
+                                              jobController
+                                                  .reportList.isNotEmpty
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(() => EditFillFormView2(
+                                                    jobId: ticketId,
+                                                    readOnly: 'yes'));
+                                              },
+                                            )
+                                          : Container()
+                                    ],
+                                  ),
                                   Obx(() => jobController.reportList.isNotEmpty
                                       ? ShowBatteryReportWidget(
                                           reportData: jobController.reportList,
@@ -236,8 +259,30 @@ class TicketPMDetailView extends StatelessWidget {
                               8.kH,
                               BoxContainer(
                                 children: [
-                                  const TitleApp(
-                                      text: 'Periodic Maintenance Report'),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleApp(
+                                          text: 'Periodic Maintenance Report'),
+                                      stringToStatus(issue.status.id
+                                                      .toString()) ==
+                                                  'closed' &&
+                                              jobController
+                                                  .reportPreventiveList
+                                                  .first
+                                                  .maintenanceRecords!
+                                                  .isNotEmpty
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(() => EditFillFormView3(
+                                                    jobId: ticketId,
+                                                    readOnly: 'yes'));
+                                              },
+                                            )
+                                          : Container()
+                                    ],
+                                  ),
                                   Obx(() => jobController.reportPreventiveList
                                           .first.maintenanceRecords!.isNotEmpty
                                       ? ShowPreventiveReportWidget(

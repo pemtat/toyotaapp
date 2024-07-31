@@ -37,6 +37,7 @@ class RepairPM extends GetxController {
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: CheckBoxWidget(
+                  option: 'yes',
                   text: repairPmList[index],
                   listItem: repairPmChoose,
                   itemSet: repairPmChoose,

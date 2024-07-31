@@ -30,11 +30,13 @@ class EditFillFormView extends StatelessWidget {
   final String reportId;
   final String ticketId;
   final String jobId;
+  final String? readOnly;
   EditFillFormView(
       {super.key,
       required this.reportId,
       required this.ticketId,
-      required this.jobId}) {
+      required this.jobId,
+      this.readOnly}) {
     fillFormController.fetchForm(reportId, ticketId, jobId);
   }
 
@@ -86,6 +88,8 @@ class EditFillFormView extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: CheckBoxWidget(
+                              option: 'true',
+                              readOnly: readOnly == null ? null : 'yes',
                               text: fillFormController
                                   .fieldServiceReportList[index],
                               listItem: fillFormController.fieldServiceReport,
@@ -99,15 +103,21 @@ class EditFillFormView extends StatelessWidget {
                 BoxContainer(
                   children: [
                     TextFieldWidget(
-                        text: 'Fault', textSet: fillFormController.fault.value),
+                        text: 'Fault',
+                        textSet: fillFormController.fault.value,
+                        readOnly: readOnly == null ? null : 'yes'),
                     20.kH,
                     TextFieldWidget(
-                        text: 'Error Code',
-                        textSet: fillFormController.errorCode.value),
+                      text: 'Error Code',
+                      textSet: fillFormController.errorCode.value,
+                      readOnly: readOnly == null ? null : 'yes',
+                    ),
                     20.kH,
                     TextFieldWidget(
-                        text: 'Work Order Number(Order No.)',
-                        textSet: fillFormController.workorderNumber.value)
+                      text: 'Work Order Number(Order No.)',
+                      textSet: fillFormController.workorderNumber.value,
+                      readOnly: readOnly == null ? null : 'yes',
+                    )
                   ],
                 ),
                 14.kH,
@@ -115,6 +125,7 @@ class EditFillFormView extends StatelessWidget {
                   children: [
                     Obx(
                       () => AddEditBox(
+                          readOnly: readOnly == null ? null : 'yes',
                           titleText: 'R Code',
                           list: rcodeController.rCode,
                           onTap: () => rcodeController.rCodeModal(context),
@@ -127,10 +138,11 @@ class EditFillFormView extends StatelessWidget {
                   children: [
                     Obx(
                       () => AddEditBox(
+                          readOnly: readOnly == null ? null : 'yes',
                           titleText: 'W Code',
                           list: wcodeController.wCode,
                           onTap: () => wcodeController.wCodeModal(context),
-                          moreText: getDisplayString4(wcodeController.wCode)),
+                          moreText: getDisplayString(wcodeController.wCode)),
                     ),
                   ],
                 ),
@@ -140,12 +152,14 @@ class EditFillFormView extends StatelessWidget {
                     children: [
                       TitleWithButton(
                           titleText: 'Repair prodecure',
-                          button: rPController.repairProcedureList.isEmpty
-                              ? AddButton(
-                                  onTap: () {
-                                    rPController.rPModal(context);
-                                  },
-                                )
+                          button: readOnly == null
+                              ? rPController.repairProcedureList.isEmpty
+                                  ? AddButton(
+                                      onTap: () {
+                                        rPController.rPModal(context);
+                                      },
+                                    )
+                                  : Container()
                               : Container()),
                       rPController.repairProcedureList.isNotEmpty
                           ? ListView.builder(
@@ -157,6 +171,7 @@ class EditFillFormView extends StatelessWidget {
                                 final part =
                                     rPController.repairProcedureList[index];
                                 return RepairProdecureWidget(
+                                  readOnly: readOnly == null ? null : 'yes',
                                   part: part,
                                   index: index,
                                   repairProcedureController: rPController,
@@ -243,6 +258,8 @@ class EditFillFormView extends StatelessWidget {
                   children: [
                     Obx(
                       () => AddEditBox(
+                          readOnly: readOnly == null ? null : 'yes',
+                          other: repairResultController.other,
                           titleText: 'Repair Result',
                           list: repairResultController.repairResult,
                           onTap: () =>
@@ -258,6 +275,7 @@ class EditFillFormView extends StatelessWidget {
                     Obx(
                       () => AddEditBox(
                           titleText: 'Process Staff',
+                          readOnly: readOnly == null ? null : 'yes',
                           list: repairStaffController.repairStaff,
                           onTap: () =>
                               repairStaffController.repairStaffModal(context),

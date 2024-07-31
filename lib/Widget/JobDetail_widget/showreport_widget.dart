@@ -56,7 +56,7 @@ class ShowRepairReport extends StatelessWidget {
                 space.kH,
                 BoxInfo2(
                   title: 'W Code',
-                  value: formatWCode(data.wCode),
+                  value: data.wCode ?? '-',
                   space: true,
                 ),
                 space.kH,
@@ -129,6 +129,7 @@ class ShowRepairReport extends StatelessWidget {
                           children: [
                             const BoxInfo2(
                                 title: 'Additional spare part list', value: ''),
+                            4.kH,
                             ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
