@@ -16,6 +16,7 @@ import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_procedure.dar
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_result.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/wcode.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -36,9 +37,14 @@ class EditFillformController extends GetxController {
   final AdditSparepartList additSparePartListController =
       Get.put(AdditSparepartList());
   final RepairResult repairResultController = Get.put(RepairResult());
+
+  final JobDetailController jobDetailController =
+      Get.put(JobDetailController());
+
   final RepairStaff repairStaffController = Get.put(RepairStaff());
   final TicketDetailController ticketDetailController =
       Get.put(TicketDetailController());
+
   List<String> fieldServiceReportList = [
     'Inspection',
     'Repairing',
@@ -330,13 +336,25 @@ class EditFillformController extends GetxController {
 
           if (response.statusCode == 200) {
             print('Report updated successfully');
+
             showWaitMessage();
             if (readOnly.value == 'yes') {
-              ticketDetailController.fetchData(
-                  ticketId.toString(), jobId.toString());
+              // ticketDetailController.fetchData(
+              //     ticketId.toString(), jobId.toString());
+              await fetchReportData(
+                  jobId.toString(),
+                  token ?? '',
+                  ticketDetailController.reportList,
+                  ticketDetailController.additionalReportList);
             } else {
-              jobDetailController.fetchData(
-                  ticketId.toString(), jobId.toString());
+              // jobDetailController.fetchData(
+              //     ticketId.toString(), jobId.toString());
+              await fetchReportData(
+                  jobId.toString(),
+                  token ?? '',
+                  jobDetailController.reportList,
+                  jobDetailController.additionalReportList);
+              jobDetailController.completeCheck.value = true;
             }
             showSaveMessage();
           } else {

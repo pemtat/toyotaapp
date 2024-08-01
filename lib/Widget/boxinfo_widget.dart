@@ -5,13 +5,14 @@ class BoxInfo extends StatelessWidget {
   final String title;
   final String value;
   final Widget? trailing;
+  final String? more;
 
-  const BoxInfo({
-    super.key,
-    required this.title,
-    required this.value,
-    this.trailing,
-  });
+  const BoxInfo(
+      {super.key,
+      required this.title,
+      required this.value,
+      this.trailing,
+      this.more});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +26,24 @@ class BoxInfo extends StatelessWidget {
             style: TextStyleList.text3,
           ),
         ),
-        trailing ??
-            Text(
-              value,
-              style: TextStyleList.text2,
-            ),
+        Row(
+          children: [
+            trailing ??
+                Text(
+                  value,
+                  style: TextStyleList.text2,
+                ),
+            if (more != null)
+              if (more != '')
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    '(${more ?? '-'})',
+                    style: TextStyleList.text9,
+                  ),
+                ),
+          ],
+        ),
       ],
     );
   }

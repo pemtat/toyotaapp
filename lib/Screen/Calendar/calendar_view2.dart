@@ -9,7 +9,6 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/Calendar_widget/fullcalendar_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
-import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class CalendarView2 extends StatelessWidget {
   final String? other;
@@ -28,15 +27,15 @@ class CalendarView2 extends StatelessWidget {
               automaticallyImplyLeading: false,
               title: other == null
                   ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('Calendar', style: TextStyleList.title1),
-                        5.wH,
+                        // Text('Calendar', style: TextStyleList.title1),
+                        // 5.wH,
                         InkWell(
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: const Icon(Icons.calendar_today)),
+                            child: const Icon(Icons.calendar_month)),
                       ],
                     )
                   : Row(

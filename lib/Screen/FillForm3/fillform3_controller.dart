@@ -435,10 +435,13 @@ class FillformController3 extends GetxController {
       if (response.statusCode == 201) {
         print('yes');
         showWaitMessage();
-        await jobDetailControllerPM.fetchData(jobId.toString());
-        await fetchCommentJobInfo(
-            jobId.toString(), token ?? '', jobDetailControllerPM.comment);
-        jobDetailControllerPM.commentCheck.value = true;
+        await fetchPreventiveReportData(jobId.toString(), token ?? '',
+            jobDetailControllerPM.reportPreventiveList);
+        jobDetailControllerPM.completeCheck.value = true;
+        // await jobDetailControllerPM.fetchData(jobId.toString());
+        // await fetchCommentJobInfo(
+        //     jobId.toString(), token ?? '', jobDetailControllerPM.comment);
+        // jobDetailControllerPM.commentCheck.value = true;
         showSaveMessage();
       } else {
         print('Failed to save report: ${response.statusCode}');

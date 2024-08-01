@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
+import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
@@ -81,6 +82,7 @@ class SignatureWidget extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: () async {
+            var token = await getToken();
             showDialog(
                 context: context,
                 barrierColor: Color.fromARGB(59, 0, 0, 0),
@@ -96,8 +98,10 @@ class SignatureWidget extends StatelessWidget {
                   saveCompletedtime.value,
                   signatureController.value.text,
                   signaturePad.value);
-              await jobController.fetchData(
-                  ticketId.toString(), jobId.toString());
+              await fetchReportData(jobId, token ?? '',
+                  jobController.reportList, jobController.additionalReportList);
+              // await jobController.fetchData(
+              //     ticketId.toString(), jobId.toString());
               showSignatureSaveMessage();
               Navigator.pop(context);
               Navigator.pop(context);
@@ -117,7 +121,10 @@ class SignatureWidget extends StatelessWidget {
                     signatureController.value.text,
                     signaturePad.value,
                     'battery');
-                await jobControllerPM.fetchData(jobId.toString());
+                // await jobControllerPM.fetchData(jobId.toString());
+                await fetchBatteryReportData(
+                    jobId, token ?? '', jobControllerPM.reportList);
+                showSignatureSaveMessage();
               } else {
                 await changeIssueSignaturePM(
                     jobId,
@@ -125,7 +132,8 @@ class SignatureWidget extends StatelessWidget {
                     signatureController.value.text,
                     signaturePad.value,
                     'preventive');
-                await jobControllerPM.fetchData(jobId.toString());
+                await fetchPreventiveReportData(
+                    jobId, token ?? '', jobControllerPM.reportPreventiveList);
                 showSignatureSaveMessage();
               }
               Navigator.pop(context);

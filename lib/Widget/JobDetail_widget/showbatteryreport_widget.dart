@@ -25,12 +25,14 @@ class ShowBatteryReportWidget extends StatelessWidget {
     var info1 = data.btrMaintenance;
     var specicGravity = data.specicVoltageCheck;
     var condition = data.btrConditions;
+    condition!.sort((a, b) =>
+        int.parse(a.itemId ?? '').compareTo(int.parse(b.itemId ?? '')));
     var sparepart = data.btrSpareparts;
     var recommendedSpareparts =
         sparepart!.where((sp) => sp.additional == 'recommended').toList();
     var changeSpareparts =
         sparepart.where((sp) => sp.additional == 'change').toList();
-    var filteredBatteryCondition = condition!
+    var filteredBatteryCondition = condition
         .where((item) =>
             (item.status != null && item.status!.isNotEmpty) ||
             (item.description != null && item.description!.isNotEmpty))
@@ -62,13 +64,34 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     title: 'ManuFacturer No.',
                     value: info1.manufacturerNo ?? '-'),
                 space.kH,
-                BoxInfo2(
-                    title: 'Serial No.', value: info1.batteryLifespan ?? '-'),
+                BoxInfo2(title: 'Serial No.', value: info1.serialNo ?? '-'),
                 space.kH,
-                BoxInfo2(
-                    title: 'Voltage', value: info1.informationVoltage ?? '-'),
-                space.kH,
-                BoxInfo2(title: 'Capacity', value: info1.capacity ?? '-'),
+                (info1.batteryLifespan == '0' &&
+                        info1.informationVoltage == '0' &&
+                        info1.capacity == '0')
+                    ? Column(
+                        children: [
+                          const BoxInfo2(title: 'Battery Lifespan', value: '-'),
+                          space.kH,
+                          const BoxInfo2(title: 'Voltage', value: '-'),
+                          space.kH,
+                          const BoxInfo2(title: 'Capacity', value: '-'),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          BoxInfo2(
+                              title: 'Battery Lifespan',
+                              value: info1.batteryLifespan ?? '-'),
+                          space.kH,
+                          BoxInfo2(
+                              title: 'Voltage',
+                              value: info1.informationVoltage ?? '-'),
+                          space.kH,
+                          BoxInfo2(
+                              title: 'Capacity', value: info1.capacity ?? '-'),
+                        ],
+                      ),
                 space.kH,
                 10.kH,
                 const TitleApp2(text: "Forklife Information"),
@@ -84,16 +107,37 @@ class ShowBatteryReportWidget extends StatelessWidget {
                 space.kH,
                 BoxInfo2(
                     title: 'Forklife Operation',
-                    value: info1.forkliftOperation ?? '-'),
+                    value: info1.forkliftOperation == '0'
+                        ? '-'
+                        : info1.forkliftOperation ?? '-'),
                 space.kH,
                 10.kH,
                 const TitleApp2(text: "Battery Usage"),
                 space.kH,
-                BoxInfo2(title: 'Shift time', value: info1.shiftTime ?? '-'),
-                space.kH,
-                BoxInfo2(title: 'Hrs. per shift', value: info1.hrs ?? '-'),
-                space.kH,
-                BoxInfo2(title: 'Ratio', value: info1.ratio ?? '-'),
+                (info1.shiftTime == '0' &&
+                        info1.hrs == '0' &&
+                        info1.ratio == '0')
+                    ? Column(
+                        children: [
+                          const BoxInfo2(title: 'Shift time', value: '-'),
+                          space.kH,
+                          const BoxInfo2(title: 'Hrs. per shift', value: '-'),
+                          space.kH,
+                          const BoxInfo2(title: 'Ratio', value: '-'),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          BoxInfo2(
+                              title: 'Shift time',
+                              value: info1.shiftTime ?? '-'),
+                          space.kH,
+                          BoxInfo2(
+                              title: 'Hrs. per shift', value: info1.hrs ?? '-'),
+                          space.kH,
+                          BoxInfo2(title: 'Ratio', value: info1.ratio ?? '-'),
+                        ],
+                      ),
                 space.kH,
                 BoxInfo2(
                     title: 'Charging Type',
@@ -177,14 +221,20 @@ class ShowBatteryReportWidget extends StatelessWidget {
                                         Radius.circular(6))),
                                 child: Column(children: [
                                   BoxInfo(
-                                      title: 'Name',
-                                      value: data.nameEn ?? 'Plates'),
+                                    title: 'Name',
+                                    value: data.nameEn ?? '-',
+                                    more: data.checking,
+                                  ),
                                   BoxInfo(
                                       title: 'Option',
-                                      value: data.status ?? '-'),
+                                      value: data.status == ''
+                                          ? '-'
+                                          : data.status ?? '-'),
                                   BoxInfo(
                                       title: 'Description',
-                                      value: data.description ?? '-'),
+                                      value: data.description == ''
+                                          ? '-'
+                                          : data.description ?? '-'),
                                 ]),
                               );
                             },
@@ -199,7 +249,9 @@ class ShowBatteryReportWidget extends StatelessWidget {
                 TitleWithButton(
                     titleText: 'Corrective Action',
                     button: Text(
-                      info1.correctiveAction ?? '',
+                      info1.correctiveAction == ''
+                          ? '-'
+                          : info1.correctiveAction ?? '-',
                       style: TextStyleList.text3,
                     )),
                 space.kH,
@@ -259,7 +311,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                 TitleWithButton(
                     titleText: 'Repair P.M Battery',
                     button: Text(
-                      info1.repairPm ?? '',
+                      info1.repairPm == '' ? '-' : info1.repairPm ?? '-',
                       style: TextStyleList.text3,
                     )),
                 space.kH,

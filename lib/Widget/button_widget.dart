@@ -167,6 +167,7 @@ class EndButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
+      height: 50,
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(

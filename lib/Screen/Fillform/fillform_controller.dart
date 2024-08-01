@@ -257,8 +257,14 @@ class FillformController extends GetxController {
 
             if (response.statusCode == 201) {
               showWaitMessage();
-              jobDetailController.fetchData(
-                  ticketId.toString(), jobId.toString());
+              // jobDetailController.fetchData(
+              //     ticketId.toString(), jobId.toString());
+              await fetchReportData(
+                  jobId.toString(),
+                  token ?? '',
+                  jobDetailController.reportList,
+                  jobDetailController.additionalReportList);
+              jobDetailController.completeCheck.value = true;
               showSaveMessage();
             } else {
               print('Failed to save report: ${response.statusCode}');

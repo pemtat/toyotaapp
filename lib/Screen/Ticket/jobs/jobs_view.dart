@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
@@ -65,7 +66,17 @@ class Jobs extends StatelessWidget {
                           ticketController.selectedStatus.isEmpty ||
                               ticketController.selectedStatus
                                   .contains(stringToStatus(job.status ?? ''));
+                      final jobDate = formatDateTimeString(job.dueDate ?? '');
+                      final dateMatch = ticketController.selectedDate.value ==
+                              null ||
+                          (jobDate.year ==
+                                  ticketController.selectedDate.value!.year &&
+                              jobDate.month ==
+                                  ticketController.selectedDate.value!.month &&
+                              jobDate.day ==
+                                  ticketController.selectedDate.value!.day);
                       return searchQueryMatch &&
+                          dateMatch &&
                           statusMatch &&
                           (job.status == '101' ||
                               job.status == '102' ||

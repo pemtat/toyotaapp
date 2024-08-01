@@ -48,7 +48,7 @@ class BatteryCondition extends GetxController {
                               ),
                             ]),
                       ),
-                      if (index == 3)
+                      if (index == 2)
                         Expanded(
                           flex: 2,
                           child: Column(
@@ -128,8 +128,8 @@ class BatteryCondition extends GetxController {
   List<String> ListData = [
     'Tray',
     'Container',
-    'Connector',
     'Vent Plug',
+    'Connector',
     'Cover',
     'Terminal',
     'Cable+Plug',

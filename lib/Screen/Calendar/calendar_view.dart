@@ -30,23 +30,22 @@ class CalendarView extends StatelessWidget {
           children: [
             AppBar(
               backgroundColor: white3,
-              title: InkWell(
-                onTap: () {
-                  Get.to(
-                    () => CalendarView2(),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Calendar', style: TextStyleList.title1),
-                    5.wH,
-                    const Icon(Icons.calendar_month),
-                  ],
-                ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Calendar', style: TextStyleList.title1),
+                  5.wH,
+                  InkWell(
+                      onTap: () {
+                        Get.to(
+                          () => CalendarView2(),
+                          transition: Transition.rightToLeft,
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      child: const Icon(Icons.calendar_view_month)),
+                ],
               ),
             ),
             Container(

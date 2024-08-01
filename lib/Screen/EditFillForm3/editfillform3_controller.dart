@@ -680,12 +680,16 @@ class FillformController3 extends GetxController {
         print('yes');
         showWaitMessage();
         if (readOnly.value == 'yes') {
-          ticketPmDetailController.fetchData(jobId.toString());
+          await fetchPreventiveReportData(jobId.toString(), token ?? '',
+              ticketPmDetailController.reportPreventiveList);
         } else {
-          await jobDetailControllerPM.fetchData(jobId.toString());
-          await fetchCommentJobInfo(
-              jobId.toString(), token ?? '', jobDetailControllerPM.comment);
-          jobDetailControllerPM.commentCheck.value = true;
+          // await jobDetailControllerPM.fetchData(jobId.toString());
+          // await fetchCommentJobInfo(
+          //     jobId.toString(), token ?? '', jobDetailControllerPM.comment);
+          // jobDetailControllerPM.commentCheck.value = true;
+          await fetchPreventiveReportData(jobId.toString(), token ?? '',
+              jobDetailControllerPM.reportPreventiveList);
+          jobDetailControllerPM.completeCheck.value = true;
         }
         showSaveMessage();
       } else {

@@ -202,6 +202,7 @@ class EditFillFormView3 extends StatelessWidget {
                         showModal: hydraulicmMotor.checkModal,
                         show: hydraulicmMotor.isAllFieldsFilled,
                         additional: hydraulicmMotor.additional,
+                        additionalChoose: hydraulicmMotor.additionalChoose,
                         unit: '',
                       )
                     : const SizedBox())
@@ -232,6 +233,7 @@ class EditFillFormView3 extends StatelessWidget {
                         showModal: steeringMotor.checkModal,
                         show: steeringMotor.isAllFieldsFilled,
                         additional: steeringMotor.additional,
+                        additionalChoose: steeringMotor.additionalChoose,
                         unit: '',
                       )
                     : const SizedBox())
@@ -261,6 +263,7 @@ class EditFillFormView3 extends StatelessWidget {
                         showModal: auxiliaryMotor.checkModal,
                         show: auxiliaryMotor.isAllFieldsFilled,
                         additional: auxiliaryMotor.additional,
+                        additionalChoose: auxiliaryMotor.additionalChoose,
                         unit: '',
                       )
                     : const SizedBox())
@@ -290,6 +293,7 @@ class EditFillFormView3 extends StatelessWidget {
                         showModal: driveMotorChecks.checkModal,
                         show: driveMotorChecks.isAllFieldsFilled,
                         additional: driveMotorChecks.additional,
+                        additionalChoose: driveMotorChecks.additionalChoose,
                         unit: '',
                       )
                     : const SizedBox())

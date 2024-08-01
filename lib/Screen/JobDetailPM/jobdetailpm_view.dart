@@ -228,7 +228,7 @@ class JobDetailViewPM extends StatelessWidget {
                                         jobController.imagesAfter,
                                       ),
                                     ),
-                                    10.kH,
+                                    12.kH,
                                     Obx(() =>
                                         jobController.imagesBefore.isNotEmpty
                                             ? Obx(
@@ -492,10 +492,13 @@ class JobDetailViewPM extends StatelessWidget {
                                             text:
                                                 'Periodic Maintenance Report'),
                                         Obx(() => jobController
-                                                .reportPreventiveList
-                                                .first
-                                                .maintenanceRecords!
-                                                .isNotEmpty
+                                                    .reportPreventiveList
+                                                    .isNotEmpty &&
+                                                jobController
+                                                        .reportPreventiveList
+                                                        .first
+                                                        .pvtMaintenance !=
+                                                    null
                                             ? EditButton(
                                                 onTap: () {
                                                   Get.to(
@@ -517,11 +520,11 @@ class JobDetailViewPM extends StatelessWidget {
                                       'Please fill the periodic maintenance report',
                                       style: TextStyleList.text16,
                                     ),
-                                    Obx(() => jobController
-                                            .reportPreventiveList
-                                            .first
-                                            .maintenanceRecords!
-                                            .isNotEmpty
+                                    Obx(() => jobController.reportPreventiveList
+                                                .isNotEmpty &&
+                                            jobController.reportPreventiveList
+                                                    .first.pvtMaintenance !=
+                                                null
                                         ? Column(
                                             children: [
                                               ShowPreventiveReportWidget(

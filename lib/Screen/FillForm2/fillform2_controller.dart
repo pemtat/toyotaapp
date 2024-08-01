@@ -47,7 +47,6 @@ class FillformController2 extends GetxController {
   final RepairPM repairPmController = Get.put(RepairPM());
   final GlobalKey<SfSignaturePadState> signature = GlobalKey();
   final UserController userController = Get.put(UserController());
-
   var saveCompletedtime = ''.obs;
   void clearSignature() {
     isSignatureEmpty.value = true;
@@ -253,10 +252,13 @@ class FillformController2 extends GetxController {
 
       if (response.statusCode == 201) {
         showWaitMessage();
-        await jobDetailControllerPM.fetchData(jobId.toString());
-        await fetchCommentJobInfo(
-            jobId.toString(), token ?? '', jobDetailControllerPM.comment);
-        jobDetailControllerPM.commentCheck.value = true;
+        // await jobDetailControllerPM.fetchData(jobId.toString());
+        // await fetchCommentJobInfo(
+        //     jobId.toString(), token ?? '', jobDetailControllerPM.comment);
+        // jobDetailControllerPM.commentCheck.value = true;
+        await fetchBatteryReportData(
+            jobId.toString(), token ?? '', jobDetailControllerPM.reportList);
+        jobDetailControllerPM.completeCheck.value = true;
         showSaveMessage();
       } else {
         print('Failed to save report: ${response.statusCode}');

@@ -71,7 +71,7 @@ class CalendarItem extends StatelessWidget {
                               style: TextStyleList.text9,
                             ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 6),
+                        padding: const EdgeInsets.only(right: 10),
                         child: StatusButton(status: event['status']),
                       ),
                     ],

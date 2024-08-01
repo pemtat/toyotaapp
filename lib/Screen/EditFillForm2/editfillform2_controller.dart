@@ -241,7 +241,11 @@ class EditFillformController2 extends GetxController {
         repairPmController.repairPm.add(info1.repairPm ?? '');
       }
     }
-    for (var i = 0; i < condition!.length; i++) {
+
+    condition!.sort((a, b) =>
+        int.parse(a.itemId ?? '').compareTo(int.parse(b.itemId ?? '')));
+
+    for (var i = 0; i < condition.length; i++) {
       if (condition[i].status != '' ||
           condition[i].checking != '' ||
           condition[i].description != '') {
@@ -357,6 +361,7 @@ class EditFillformController2 extends GetxController {
     List<Map<String, dynamic>> batteryCondition =
         batteryConditionController.ListData.asMap().entries.map((entry) {
       int index = entry.key;
+
       return {
         "item_id": index + 1,
         "status": batteryConditionController.selections[index],
@@ -415,12 +420,16 @@ class EditFillformController2 extends GetxController {
       if (response.statusCode == 200) {
         showWaitMessage();
         if (readOnly.value == 'yes') {
-          ticketPmDetailController.fetchData(jobId.toString());
+          await fetchBatteryReportData(jobId.toString(), token ?? '',
+              ticketPmDetailController.reportList);
         } else {
-          await jobDetailControllerPM.fetchData(jobId.toString());
-          await fetchCommentJobInfo(
-              jobId.toString(), token ?? '', jobDetailControllerPM.comment);
-          jobDetailControllerPM.commentCheck.value = true;
+          // await jobDetailControllerPM.fetchData(jobId.toString());
+          // await fetchCommentJobInfo(
+          //     jobId.toString(), token ?? '', jobDetailControllerPM.comment);
+          // jobDetailControllerPM.commentCheck.value = true;
+          await fetchBatteryReportData(
+              jobId.toString(), token ?? '', jobDetailControllerPM.reportList);
+          jobDetailControllerPM.completeCheck.value = true;
         }
         showSaveMessage();
       } else {

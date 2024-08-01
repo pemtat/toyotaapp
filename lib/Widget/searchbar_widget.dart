@@ -88,7 +88,7 @@ class SearchFilter extends StatelessWidget {
                                 },
                                 child: Text(
                                   'reset',
-                                  style: TextStyleList.subtext3,
+                                  style: TextStyleList.text1,
                                 )),
                           ],
                         ),
