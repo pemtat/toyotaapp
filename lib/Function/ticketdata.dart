@@ -435,6 +435,7 @@ Future<void> fetchPmJobInfo(
       var data = jsonDecode(response.body);
       var pmJobInfo = PMJobInfoModel.fromJson(data);
       reportList.add(pmJobInfo);
+      reportList.refresh();
     } else {}
   } catch (e) {
     print(e);
@@ -507,6 +508,7 @@ Future<void> fetchPmJobImg(String id, RxList<Map<String, String>> imagesBefore,
               'content': imageBeforeList[i].content,
             });
           }
+          imagesBefore.refresh();
         }
       } else {
         if (pmJobInfo.jobImageEnd!.isNotEmpty) {
@@ -519,6 +521,7 @@ Future<void> fetchPmJobImg(String id, RxList<Map<String, String>> imagesBefore,
               'content': imageAfterList[i].content,
             });
           }
+          imagesAfter.refresh();
         }
       }
     } else {}
