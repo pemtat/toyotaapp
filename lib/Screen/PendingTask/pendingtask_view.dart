@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/PendingTask/peddingtask_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -22,6 +23,7 @@ class PendingTaskView extends StatelessWidget {
   final PeddingtaskController penddingTaskController =
       Get.put(PeddingtaskController());
   final JobDetailController jobController = Get.put(JobDetailController());
+  final HomeController homeController = Get.put(HomeController());
 
   final String ticketId;
   final String jobId;
@@ -239,6 +241,7 @@ class PendingTaskView extends StatelessWidget {
                                   penddingTaskController.cancelNote.value.text,
                                   2);
                               Navigator.pop(context);
+                              homeController.fetchDataFromAssignJob();
                             },
                             child: Text(
                               'Yes',

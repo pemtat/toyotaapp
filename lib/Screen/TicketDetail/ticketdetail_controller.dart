@@ -68,7 +68,8 @@ class TicketDetailController extends GetxController {
   void fetchData(String ticketId, subjobId) async {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
-    fetchReportData(subjobId, token ?? '', reportList, additionalReportList);
+    await fetchReportData(
+        subjobId, token ?? '', reportList, additionalReportList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
     await fetchUserById(subJobs.first.reporterId ?? '', userData);
     await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
@@ -126,11 +127,11 @@ class TicketDetailController extends GetxController {
         attatchments.clear;
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);
-        fetchNotes(issue.notes, notesFiles);
       }).toList();
 
       issueData.value = issuesList;
     } else {}
+    notesFiles.assignAll(issueData.first.notes ?? []);
   }
 
   void showCompletedDialog(

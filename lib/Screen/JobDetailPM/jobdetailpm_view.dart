@@ -229,14 +229,17 @@ class JobDetailViewPM extends StatelessWidget {
                                       ),
                                     ),
                                     12.kH,
-                                    Obx(() =>
-                                        jobController.imagesBefore.isNotEmpty
-                                            ? Obx(
-                                                () => jobController
-                                                            .savedDateStartTime
-                                                            .value ==
-                                                        ''
-                                                    ? ButtonTime(
+                                    Obx(() => jobController
+                                            .imagesBefore.isNotEmpty
+                                        ? Obx(
+                                            () => jobController
+                                                        .savedDateStartTime
+                                                        .value ==
+                                                    ''
+                                                ? Column(
+                                                    children: [
+                                                      2.kH,
+                                                      ButtonTime(
                                                         saveTime: (datetime) {
                                                           showTimeDialogPM(
                                                               context,
@@ -252,27 +255,29 @@ class JobDetailViewPM extends StatelessWidget {
                                                         time: jobController
                                                             .savedDateStartTime,
                                                         title: 'Start Time',
-                                                      )
-                                                    : Column(
+                                                      ),
+                                                      6.kH,
+                                                    ],
+                                                  )
+                                                : Column(
+                                                    children: [
+                                                      6.kH,
+                                                      Row(
                                                         children: [
-                                                          6.kH,
-                                                          Row(
-                                                            children: [
-                                                              Icon(Icons
-                                                                  .access_time),
-                                                              4.wH,
-                                                              Text(
-                                                                "Start Time : ${jobController.savedDateStartTime.value}",
-                                                                style:
-                                                                    TextStyleList
-                                                                        .text6,
-                                                              ),
-                                                            ],
+                                                          Icon(Icons
+                                                              .access_time),
+                                                          4.wH,
+                                                          Text(
+                                                            "Start Time : ${jobController.savedDateStartTime.value}",
+                                                            style: TextStyleList
+                                                                .text6,
                                                           ),
                                                         ],
                                                       ),
-                                              )
-                                            : Container()),
+                                                    ],
+                                                  ),
+                                          )
+                                        : Container()),
                                     Obx(() => jobController
                                                 .savedDateStartTime.value !=
                                             ''
@@ -309,17 +314,17 @@ class JobDetailViewPM extends StatelessWidget {
                                                     jobController.imagesBefore,
                                                     jobController.imagesAfter),
                                               ),
-                                              8.kH,
+                                              12.kH,
                                             ],
                                           )
                                         : Container()),
-                                    8.kH,
+                                    2.kH,
                                     Obx(() => jobController
-                                                .commentCheck.value ==
-                                            false
+                                                .comment.value.text ==
+                                            ''
                                         ? Column(
                                             children: [
-                                              6.kH,
+                                              4.kH,
                                               TextFieldType(
                                                 hintText: 'Add Comment',
                                                 textSet:
@@ -339,8 +344,6 @@ class JobDetailViewPM extends StatelessWidget {
                                                               .value.text,
                                                           jobController
                                                               .comment);
-                                                      jobController.commentCheck
-                                                          .value = true;
                                                     },
                                                     text: 'Submit',
                                                   ),
@@ -353,8 +356,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                 .comment.value.text))),
                                     Obx(() => jobController
                                                 .imagesAfter.isNotEmpty &&
-                                            jobController.commentCheck.value ==
-                                                true
+                                            jobController.comment.value.text !=
+                                                ''
                                         ? Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -386,7 +389,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                         4.kH,
                                                         Row(
                                                           children: [
-                                                            Icon(Icons
+                                                            const Icon(Icons
                                                                 .access_time),
                                                             4.wH,
                                                             Text(
@@ -443,6 +446,7 @@ class JobDetailViewPM extends StatelessWidget {
                                               ShowBatteryReportWidget(
                                                 reportData:
                                                     jobController.reportList,
+                                                bugId: ticketId.toString(),
                                               ),
                                               if (jobController
                                                           .reportList
@@ -530,6 +534,7 @@ class JobDetailViewPM extends StatelessWidget {
                                               ShowPreventiveReportWidget(
                                                 reportData: jobController
                                                     .reportPreventiveList,
+                                                bugId: ticketId.toString(),
                                               ),
                                               if (jobController
                                                           .reportPreventiveList

@@ -333,7 +333,7 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Field Service Report*'),
-                                      subJob.status == '103'
+                                      issue.status.id != '90'
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView(
@@ -355,7 +355,9 @@ class TicketDetailView extends StatelessWidget {
                                           reportData:
                                               ticketController.reportList,
                                           additionalReportData: ticketController
-                                              .additionalReportList)
+                                              .additionalReportList,
+                                          jobId: jobId.toString(),
+                                        )
                                       : Container())
                                 ],
                               ),

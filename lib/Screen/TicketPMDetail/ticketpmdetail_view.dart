@@ -215,7 +215,7 @@ class TicketPMDetailView extends StatelessWidget {
                                       const TitleApp(
                                           text: 'Battery Maintenance Report'),
                                       stringToStatus(issue.status.id
-                                                      .toString()) ==
+                                                      .toString()) !=
                                                   'closed' &&
                                               jobController
                                                   .reportList.isNotEmpty
@@ -232,6 +232,7 @@ class TicketPMDetailView extends StatelessWidget {
                                   Obx(() => jobController.reportList.isNotEmpty
                                       ? ShowBatteryReportWidget(
                                           reportData: jobController.reportList,
+                                          bugId: ticketId.toString(),
                                         )
                                       : Container())
                                 ],
@@ -246,13 +247,13 @@ class TicketPMDetailView extends StatelessWidget {
                                       const TitleApp(
                                           text: 'Periodic Maintenance Report'),
                                       stringToStatus(issue.status.id
-                                                      .toString()) ==
+                                                      .toString()) !=
                                                   'closed' &&
-                                              jobController
-                                                  .reportPreventiveList
-                                                  .first
-                                                  .maintenanceRecords!
-                                                  .isNotEmpty
+                                              jobController.reportPreventiveList
+                                                  .isNotEmpty &&
+                                              jobController.reportPreventiveList
+                                                      .first.pvtMaintenance !=
+                                                  null
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView3(
@@ -264,10 +265,14 @@ class TicketPMDetailView extends StatelessWidget {
                                     ],
                                   ),
                                   Obx(() => jobController.reportPreventiveList
-                                          .first.maintenanceRecords!.isNotEmpty
+                                              .isNotEmpty &&
+                                          jobController.reportPreventiveList
+                                                  .first.pvtMaintenance !=
+                                              null
                                       ? ShowPreventiveReportWidget(
                                           reportData: jobController
                                               .reportPreventiveList,
+                                          bugId: ticketId.toString(),
                                         )
                                       : Container())
                                 ],

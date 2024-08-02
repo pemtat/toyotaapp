@@ -130,14 +130,13 @@ class JobDetailController extends GetxController {
         List<Issues>? issuesList = ticketModel.issues;
         issuesList!.map((issue) {
           issueId = issue.id;
-          attatchments.clear();
 
           fetchReadAttachment(issueId, token ?? '', issue.attachments,
               attachmentsData, attatchments);
-          fetchNotesPic(issue.notes, notesFiles, notePic);
         }).toList();
         issueData.value = issuesList;
       } else {}
+      notesFiles.assignAll(issueData.first.notes ?? []);
     } catch (e) {
       Get.to(() => BottomBarView());
     }
@@ -193,7 +192,7 @@ class JobDetailController extends GetxController {
         },
         body: jsonEncode(body),
       );
-      fetchData(issueId.toString(), jobId.toString());
+      await fetchNotes(issueId.toString(), notesFiles);
       notes.value.clear();
     } else if (addAttatchments.isNotEmpty && noteText == '') {
       showMessage('โปรดเพิ่ม Note');
@@ -210,7 +209,7 @@ class JobDetailController extends GetxController {
         },
         body: jsonEncode(body),
       );
-      fetchData(issueId.toString(), jobId.toString());
+      await fetchNotes(issueId.toString(), notesFiles);
       notes.value.clear();
     }
   }

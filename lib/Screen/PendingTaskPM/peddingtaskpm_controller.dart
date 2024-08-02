@@ -64,8 +64,8 @@ class PendingTaskControllerPM extends GetxController {
     final String apiUrl = getTicketbyId(ticketId);
 
     String? token = await getToken();
-    await fetchBatteryReportData(jobId, token ?? '', reportList);
-    await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
+    // await fetchBatteryReportData(jobId, token ?? '', reportList);
+    // await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     // fetchPdfData(ticketId, token ?? '', pdfList);
 
     final response = await http.get(
@@ -92,7 +92,7 @@ class PendingTaskControllerPM extends GetxController {
       issueData.value = issuesList;
     } else {}
     await fetchUserById(issueData.first.reporter.id.toString(), userData);
-    await fetchNotesPic(issueData.first.notes, notesFiles, notePic);
+    notesFiles.assignAll(issueData.first.notes ?? []);
   }
 
   void completeJob() async {
@@ -168,7 +168,8 @@ class PendingTaskControllerPM extends GetxController {
         },
         body: jsonEncode(body),
       );
-      fetchData(issueId.toString());
+      await fetchNotes(issueId.toString(), notesFiles);
+
       notes.value.clear();
     } else if (addAttatchments.isNotEmpty && noteText == '') {
       showMessage('โปรดเพิ่ม Note');
@@ -185,7 +186,8 @@ class PendingTaskControllerPM extends GetxController {
         },
         body: jsonEncode(body),
       );
-      fetchData(issueId.toString());
+      await fetchNotes(issueId.toString(), notesFiles);
+
       notes.value.clear();
     }
   }
@@ -201,9 +203,9 @@ class PendingTaskControllerPM extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () async {
-            updateJobPM(jobId, 1, '-', issueData.first.customerStatus);
+            updateJobPM(jobId, 1, '-', issueData.first.customerStatus, 'yes');
             Navigator.pop(context);
-            jobController.fetchDataFromAssignJob();
+
             showSaveMessage();
           },
         );

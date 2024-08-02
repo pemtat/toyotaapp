@@ -7,17 +7,16 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
+import 'package:toyotamobile/Widget/pdf_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 
 class ShowPreventiveReportWidget extends StatelessWidget {
   final RxList<PreventivereportModel> reportData;
-
-  const ShowPreventiveReportWidget({
-    super.key,
-    required this.reportData,
-  });
+  final String bugId;
+  const ShowPreventiveReportWidget(
+      {super.key, required this.reportData, required this.bugId});
   @override
   Widget build(BuildContext context) {
     var data = reportData.first;
@@ -200,6 +199,15 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 ),
                 space.kH,
 
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    PdfFile(
+                      name: 'Periodic Maintenance Report',
+                      path: bugId,
+                    )
+                  ],
+                ),
                 if (maintenance.signaturePad != null)
                   Center(
                       child: Column(

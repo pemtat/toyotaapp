@@ -34,9 +34,7 @@ class JobDetailControllerPM extends GetxController {
   var isPicking = false.obs;
   var commentCheck = false.obs;
   var issueData = [].obs;
-
   var saveCompletedtime2 = ''.obs;
-
   var attatchments = <Map<String, dynamic>>[].obs;
   var addAttatchments = <Map<String, dynamic>>[].obs;
   var moreDetail = false.obs;
@@ -78,10 +76,8 @@ class JobDetailControllerPM extends GetxController {
     }
     if (pmInfo.first.comment != null && pmInfo.first.comment != '') {
       comment.value.text = pmInfo.first.comment ?? '';
-      commentCheck.value = true;
     } else {
       comment.value.text = '';
-      commentCheck.value = false;
     }
     if (pmInfo.first.tStart != null && pmInfo.first.tStart != '') {
       DateTime startTime = DateTime.parse(pmInfo.first.tStart!);

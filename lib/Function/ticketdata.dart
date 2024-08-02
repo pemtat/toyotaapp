@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:toyotamobile/Function/checklevel.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
@@ -58,6 +57,51 @@ Future<void> fetchSubJob(
   } catch (e) {
     print('Error: $e');
   }
+}
+
+Future<void> fetchCommentSubJob(
+    String subjobId, Rx<TextEditingController> comment) async {
+  String? token = await getToken();
+  try {
+    final response = await http.get(
+      Uri.parse(getSubJobById(subjobId)),
+      headers: {
+        'Authorization': token ?? '',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+
+      List<SubJobDetail> dataList =
+          jsonResponse.map((json) => SubJobDetail.fromJson(json)).toList();
+      comment.value.text = dataList.first.comment ?? '';
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> fetchNotes(String ticketId, RxList<Notes> notesFiles) async {
+  String? token = await getToken();
+  final response = await http.get(
+    Uri.parse(getTicketbyId(ticketId)),
+    headers: {
+      'Authorization': '$token',
+    },
+  );
+  if (response.statusCode == 200) {
+    Map<String, dynamic> data = json.decode(response.body);
+    TicketByIdModel ticketModel = TicketByIdModel.fromJson(data);
+    List<Issues>? issuesList = ticketModel.issues;
+    issuesList!.map((issue) {
+      notesFiles.clear();
+      notesFiles.assignAll(issue.notes ?? []);
+      notesFiles.refresh();
+    }).toList();
+  } else {}
 }
 
 Future<void> fetchWarrantyById(
@@ -132,7 +176,7 @@ Future<String> getReportById(
   }
 }
 
-void fetchReadAttachment(
+Future<void> fetchReadAttachment(
     int issueId,
     String token,
     List<Attachments>? getAttachments,
@@ -176,24 +220,19 @@ void fetchReadAttachment(
   }
 }
 
-void fetchNotes(List<Notes>? notes, RxList<Notes> notesFiles) {
-  if (notes != null) {
-    var issueNotes = notes;
-    notesFiles.assignAll(issueNotes);
-  }
-}
-
 Future<void> fetchNotesPic(
-    List<Notes>? notes, RxList<Notes> notesFiles, List<String> notePic) async {
+  List<Notes>? notes,
+  RxList<Notes> notesFiles,
+) async {
   if (notes != null) {
     // ignore: unnecessary_cast
     var issueNotes = notes as List<Notes>;
     notesFiles.assignAll(issueNotes);
 
-    notesFiles.forEach((note) async {
-      var reporterId = note.reporter!.id;
-      notePic.add(await checkLevel(reporterId ?? 0));
-    });
+    // notesFiles.forEach((note) async {
+    //   var reporterId = note.reporter!.id;
+    //   notePic.add(await checkLevel(reporterId ?? 0));
+    // });
   }
 }
 
@@ -389,6 +428,35 @@ Future<void> fetchPmJobInfo(
       var data = jsonDecode(response.body);
       var pmJobInfo = PMJobInfoModel.fromJson(data);
       reportList.add(pmJobInfo);
+    } else {}
+  } catch (e) {
+    print(e);
+  }
+}
+
+Future<void> fetchPdfReport(
+  String id,
+  String token,
+  RxString pdfReport,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getPdfReportById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = jsonDecode(response.body);
+
+      if (responseBody.containsKey('pdf_base64')) {
+        pdfReport.value = responseBody['pdf_base64'];
+        pdfReport.refresh();
+      } else {
+        pdfReport.value = '';
+        pdfReport.refresh();
+      }
     } else {}
   } catch (e) {
     print(e);
@@ -758,7 +826,8 @@ Future<void> changeIssueStatusPMComment(
       body: jsonEncode(body),
     );
     if (response.statusCode == 201) {
-      await fetchCommentJobInfo(issueId, token ?? '', comment2);
+      comment2.value.text = comment;
+      comment2.refresh();
     } else {
       print(response.statusCode);
     }
@@ -767,8 +836,8 @@ Future<void> changeIssueStatusPMComment(
   }
 }
 
-Future<void> updateJobPM(
-    String issueId, int status, String comment, String customerStatus) async {
+Future<void> updateJobPM(String issueId, int status, String comment,
+    String customerStatus, String refresh) async {
   final String updateStatus = updateTechInfoJob();
   try {
     String? token = await getToken();
@@ -794,7 +863,9 @@ Future<void> updateJobPM(
           '-',
         );
       }
-
+      if (refresh == 'yes') {
+        jobController.fetchDataFromAssignJob();
+      }
       print('Update Done');
     } else {
       print(response.statusCode);
@@ -986,11 +1057,8 @@ void updateTechSubjob(
   }
 }
 
-Future<void> updateCommentJobs(
-  String jobId,
-  String comment,
-  String ticketId,
-) async {
+Future<void> updateCommentJobs(String jobId, String comment, String ticketId,
+    Rx<TextEditingController> commentfield) async {
   try {
     String? token = await getToken();
 
@@ -1006,6 +1074,9 @@ Future<void> updateCommentJobs(
     );
 
     if (response.statusCode == 200) {
+      commentfield.value.text = comment;
+      commentfield.refresh();
+      print(commentfield.value.text);
       print('Update comment done');
     } else {}
   } catch (e) {
@@ -1034,7 +1105,6 @@ Future<void> updateSignatureJob(String jobId, String ticketId,
 
     if (response.statusCode == 200) {
       print('Update status done');
-      jobDetailController.fetchData(ticketId, jobId);
     } else {
       return;
     }

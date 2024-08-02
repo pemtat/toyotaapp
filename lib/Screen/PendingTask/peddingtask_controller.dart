@@ -43,7 +43,7 @@ class PeddingtaskController extends GetxController {
   void fetchData(String ticketId, String subjobId) async {
     final String apiUrl = getTicketbyId(ticketId);
     String? token = await getToken();
-
+    jobId = subjobId;
     // await fetchPdfData(ticketId, token ?? '', pdfList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
     await fetchUserById(subJobs.first.reporterId ?? '', userData);
@@ -62,14 +62,12 @@ class PeddingtaskController extends GetxController {
       List<Issues>? issuesList = ticketModel.issues;
       issuesList!.map((issue) {
         issueId = issue.id;
-        jobId = subjobId;
-        attatchments.clear;
+
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);
-
-        fetchNotes(issue.notes, notesFiles);
       }).toList();
       issueData.value = issuesList;
+      notesFiles.assignAll(issueData.first.notes ?? []);
     } else {}
   }
 
@@ -105,7 +103,7 @@ class PeddingtaskController extends GetxController {
         },
         body: jsonEncode(body),
       );
-      fetchData(issueId.toString(), jobId.toString());
+      await fetchNotes(issueId.toString(), notesFiles);
       notes.value.clear();
     } else if (addAttatchments.isNotEmpty && noteText == '') {
       showMessage('โปรดเพิ่ม Note');
@@ -122,7 +120,7 @@ class PeddingtaskController extends GetxController {
         },
         body: jsonEncode(body),
       );
-      fetchData(issueId.toString(), jobId.toString());
+      await fetchNotes(issueId.toString(), notesFiles);
       notes.value.clear();
     }
   }

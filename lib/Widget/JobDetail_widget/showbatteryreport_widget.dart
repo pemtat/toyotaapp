@@ -8,16 +8,16 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
+import 'package:toyotamobile/Widget/pdf_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 
 class ShowBatteryReportWidget extends StatelessWidget {
   final RxList<BatteryReportModel> reportData;
-  const ShowBatteryReportWidget({
-    super.key,
-    required this.reportData,
-  });
+  final String bugId;
+  const ShowBatteryReportWidget(
+      {super.key, required this.reportData, required this.bugId});
 
   @override
   Widget build(BuildContext context) {
@@ -362,6 +362,16 @@ class ShowBatteryReportWidget extends StatelessWidget {
                             '-',
                             style: TextStyleList.text3,
                           )),
+                4.kH,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    PdfFile(
+                      name: 'Battery Maintenance Report',
+                      path: bugId,
+                    )
+                  ],
+                ),
                 if (info1.signaturePad != null)
                   Center(
                       child: Column(

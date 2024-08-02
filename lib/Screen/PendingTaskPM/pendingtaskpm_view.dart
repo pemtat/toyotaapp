@@ -462,8 +462,9 @@ class PendingTaskViewPM extends StatelessWidget {
                                   ticketId.toString(),
                                   2,
                                   jobController.cancelNote.value.text,
-                                  jobController.issueData.first.customerStatus);
-                              homeController.fetchDataFromAssignJob();
+                                  jobController.issueData.first.customerStatus,
+                                  'yes');
+
                               Navigator.pop(context);
                               Navigator.pop(context);
                             },

@@ -374,11 +374,9 @@ class JobDetailView extends StatelessWidget {
                                                                 .comment
                                                                 .value
                                                                 .text,
-                                                            ticketId
-                                                                .toString());
-                                                        jobController.fetchData(
                                                             ticketId.toString(),
-                                                            jobId.toString());
+                                                            jobController
+                                                                .comment);
                                                       }
                                                     },
                                                     text: 'Submit',
@@ -489,6 +487,7 @@ class JobDetailView extends StatelessWidget {
                                                 additionalReportData:
                                                     jobController
                                                         .additionalReportList,
+                                                jobId: jobId.toString(),
                                               ),
                                               if (jobController.reportList.first
                                                           .signature ==

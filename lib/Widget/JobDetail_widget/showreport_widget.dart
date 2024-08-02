@@ -6,16 +6,19 @@ import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
+import 'package:toyotamobile/Widget/pdf_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class ShowRepairReport extends StatelessWidget {
   final RxList<RepairReportModel> reportData;
   final RxList<RepairReportModel> additionalReportData;
+  final String jobId;
   const ShowRepairReport(
       {super.key,
       required this.reportData,
-      required this.additionalReportData});
+      required this.additionalReportData,
+      required this.jobId});
 
   @override
   Widget build(BuildContext context) {
@@ -180,19 +183,31 @@ class ShowRepairReport extends StatelessWidget {
                 BoxInfo2(
                     title: 'Process staff', value: data.processStaff ?? ''),
                 space.kH,
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    PdfFile(
+                      name: 'Field Service Report',
+                      path: jobId,
+                    )
+                  ],
+                ),
+
                 if (data.signaturePad != '')
                   Center(
                       child: Column(
                     children: [
-                      5.kH,
+                      8.kH,
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,
                           child: Base64ImageWidget(data.signaturePad ?? '')),
-                      5.kH,
+                      4.kH,
+                      space.kH,
                     ],
                   )),
-                space.kH,
+
                 if (data.signature != '')
                   ShowTextFieldWidget(
                       text: 'ลงชื่อ', hintText: data.signature ?? ''),
