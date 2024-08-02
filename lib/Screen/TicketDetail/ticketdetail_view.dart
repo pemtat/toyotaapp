@@ -96,7 +96,7 @@ class TicketDetailView extends StatelessWidget {
                                   TicketInfoStatus(
                                     ticketId: issue.id,
                                     dateTime: formatDateTime(issue.createdAt),
-                                    reporter: issue.reporter.name,
+                                    reporter: issue.reporter.realName,
                                     status: issue.status.name,
                                     more:
                                         ticketController.moreTicketDetail.value,
@@ -195,7 +195,8 @@ class TicketDetailView extends StatelessWidget {
                                           8.kH,
                                           CustomerInformation(
                                               context: context,
-                                              contactName: issue.reporter.name,
+                                              contactName:
+                                                  issue.reporter.realName,
                                               email: issue.reporter.email,
                                               phoneNumber:
                                                   userData!.phoneNo ?? '-',
@@ -255,7 +256,7 @@ class TicketDetailView extends StatelessWidget {
                                     jobIdString: subJob!.id,
                                     dateTime:
                                         subJob.dueDate ?? 'ยังไม่มีกำหนดการ',
-                                    reporter: issue.reporter.name ?? '',
+                                    reporter: issue.reporter.realName ?? '',
                                     summary: subJob.summary ?? '',
                                     description: subJob.description ?? '',
                                     status: stringToStatus(subJob.status ?? ''),
@@ -333,7 +334,7 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Field Service Report*'),
-                                      issue.status.id != '90'
+                                      issue.status.id != 90
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView(

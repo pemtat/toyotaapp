@@ -135,7 +135,7 @@ class JobDetailView extends StatelessWidget {
                                         dateTime:
                                             formatDateTime(issue.createdAt),
                                         status: issue.status.name,
-                                        reporter: issue.reporter.name,
+                                        reporter: issue.reporter.realName,
                                         more: jobController
                                             .moreTicketDetail.value,
                                       ),
@@ -223,7 +223,8 @@ class JobDetailView extends StatelessWidget {
                                           jobIdString: subJob!.id,
                                           dateTime: subJob.dueDate ??
                                               'ยังไม่มีกำหนดการ',
-                                          reporter: issue.reporter.name ?? '',
+                                          reporter:
+                                              issue.reporter.realName ?? '',
                                           summary: subJob.summary ?? '',
                                           description: subJob.description ?? '',
                                           status: stringToStatus(

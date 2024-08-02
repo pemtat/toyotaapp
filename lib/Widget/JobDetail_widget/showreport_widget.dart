@@ -183,6 +183,7 @@ class ShowRepairReport extends StatelessWidget {
                 BoxInfo2(
                     title: 'Process staff', value: data.processStaff ?? ''),
                 space.kH,
+                4.kH,
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -190,6 +191,7 @@ class ShowRepairReport extends StatelessWidget {
                     PdfFile(
                       name: 'Field Service Report',
                       path: jobId,
+                      option: 'fieldreport',
                     )
                   ],
                 ),
@@ -198,7 +200,7 @@ class ShowRepairReport extends StatelessWidget {
                   Center(
                       child: Column(
                     children: [
-                      8.kH,
+                      12.kH,
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,

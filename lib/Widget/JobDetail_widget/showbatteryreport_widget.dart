@@ -369,6 +369,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     PdfFile(
                       name: 'Battery Maintenance Report',
                       path: bugId,
+                      option: 'btr',
                     )
                   ],
                 ),
@@ -377,12 +378,12 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       child: Column(
                     children: [
                       space.kH,
-                      5.kH,
+                      6.kH,
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,
                           child: Base64ImageWidget(info1.signaturePad ?? '')),
-                      5.kH,
+                      6.kH,
                     ],
                   )),
                 if (info1.signature != null)

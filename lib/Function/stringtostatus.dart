@@ -17,7 +17,7 @@ String stringToStatus(String status) {
     case '80':
       return 'resolved';
     case '103':
-      return 'closed';
+      return 'completed';
     default:
       return 'pending';
   }

@@ -117,6 +117,7 @@ class HomeView extends StatelessWidget {
                     4.kH,
                     Container(
                       decoration: BoxDecoration(
+                        border: Border.all(color: black3),
                         borderRadius: BorderRadius.circular(6),
                         color: white3,
                       ),
@@ -191,6 +192,7 @@ class HomeView extends StatelessWidget {
                         ],
                       ),
                     ),
+                    2.kH,
                     Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: paddingApp),

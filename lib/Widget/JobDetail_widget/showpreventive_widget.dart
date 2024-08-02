@@ -205,6 +205,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                     PdfFile(
                       name: 'Periodic Maintenance Report',
                       path: bugId,
+                      option: 'pvt',
                     )
                   ],
                 ),
@@ -213,13 +214,13 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                       child: Column(
                     children: [
                       space.kH,
-                      5.kH,
+                      6.kH,
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,
                           child: Base64ImageWidget(
                               maintenance.signaturePad ?? '')),
-                      5.kH,
+                      6.kH,
                     ],
                   )),
                 if (maintenance.signature != null)

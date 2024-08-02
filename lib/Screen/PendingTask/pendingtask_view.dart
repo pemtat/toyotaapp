@@ -96,7 +96,7 @@ class PendingTaskView extends StatelessWidget {
                                   ticketId: issue.id,
                                   dateTime: penddingTaskController
                                       .formatDateTime(issue.createdAt),
-                                  reporter: issue.reporter.name,
+                                  reporter: issue.reporter.realName,
                                   status: issue.status.name,
                                 ),
                               ],
@@ -142,7 +142,7 @@ class PendingTaskView extends StatelessWidget {
                             8.kH,
                             CustomerInformation(
                                 context: context,
-                                contactName: issue.reporter.name,
+                                contactName: issue.reporter.realName,
                                 email: issue.reporter.email,
                                 phoneNumber: userData!.phoneNo ?? '-',
                                 location: customerInfo!.customerAddress ?? '-',
@@ -166,7 +166,7 @@ class PendingTaskView extends StatelessWidget {
                                   jobIdString: subJob!.id,
                                   dateTime:
                                       subJob.dueDate ?? 'ยังไม่มีกำหนดการ',
-                                  reporter: issue.reporter.name ?? '',
+                                  reporter: issue.reporter.realName ?? '',
                                   summary: subJob.summary ?? '',
                                   description: subJob.description ?? '',
                                   status: stringToStatus(subJob.status ?? ''),

@@ -9,7 +9,12 @@ import 'package:toyotamobile/Widget/pdfviewer_widget.dart';
 class PdfFile extends StatelessWidget {
   final String path;
   final String name;
-  const PdfFile({super.key, required this.path, required this.name});
+  final String option;
+  const PdfFile(
+      {super.key,
+      required this.path,
+      required this.name,
+      required this.option});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class PdfFile extends StatelessWidget {
             builder: (BuildContext context) {
               return const LoadingDialog();
             });
-        await fetchPdfReport(path, token ?? '', pdfReport);
+        await fetchPdfReport(path, token ?? '', pdfReport, option);
         Navigator.pop(context);
         if (pdfReport.value != '') {
           Get.to(() => PdfBase64View(name: name, path: pdfReport.value));

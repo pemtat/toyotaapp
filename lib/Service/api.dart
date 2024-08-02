@@ -24,8 +24,16 @@ String getWarrantyTruckByTicketId(String issueId) {
   return '$url/api/rest/issues/$issueId/warranty';
 }
 
-String getPdfReportById(String issueId) {
+String getPdfPvtReportById(String issueId) {
   return '$url/api/rest/pm_jobs/pdf_pvt/$issueId';
+}
+
+String getPdfBtrReportById(String issueId) {
+  return '$url/api/rest/pm_jobs/pdf_btr/$issueId';
+}
+
+String getPdfFieldReportById(String issueId) {
+  return '$url/api/rest/pm_jobs/pdf_fieldreport/$issueId';
 }
 
 String getTrickdetailById(String id) {

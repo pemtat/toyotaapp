@@ -153,6 +153,8 @@ class TicketView extends StatelessWidget {
       buildCheckbox(
           status: 'confirmed', selectedStatus: ticketController.selectedStatus),
       buildCheckbox(
+          status: 'completed', selectedStatus: ticketController.selectedStatus),
+      buildCheckbox(
           status: 'closed', selectedStatus: ticketController.selectedStatus),
     ];
   }

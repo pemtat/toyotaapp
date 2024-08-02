@@ -101,7 +101,10 @@ Future<void> fetchNotes(String ticketId, RxList<Notes> notesFiles) async {
       notesFiles.assignAll(issue.notes ?? []);
       notesFiles.refresh();
     }).toList();
-  } else {}
+  } else {
+    notesFiles.refresh();
+  }
+  notesFiles.refresh();
 }
 
 Future<void> fetchWarrantyById(
@@ -243,8 +246,6 @@ Future<void> fetchReportData(
   RxList<RepairReportModel> additionalReportList,
 ) async {
   try {
-    reportList.clear();
-    additionalReportList.clear();
     final response = await http.get(
       Uri.parse(getRepairReportById(id)),
       headers: {
@@ -253,12 +254,14 @@ Future<void> fetchReportData(
     );
 
     if (response.statusCode == 200) {
+      reportList.clear();
       List<dynamic> responseData = jsonDecode(response.body);
       List<RepairReportModel> loadedReports = responseData.map((reportJson) {
         return RepairReportModel.fromJson(reportJson);
       }).toList();
 
       reportList.value = loadedReports;
+      reportList.refresh();
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
@@ -274,12 +277,14 @@ Future<void> fetchReportData(
     );
 
     if (response.statusCode == 200) {
+      additionalReportList.clear();
       List<dynamic> responseData = jsonDecode(response.body);
       List<RepairReportModel> loadedReports = responseData.map((reportJson) {
         return RepairReportModel.fromJson(reportJson);
       }).toList();
 
       additionalReportList.value = loadedReports;
+      additionalReportList.refresh();
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
@@ -293,7 +298,6 @@ Future<void> fetchBatteryReportData(
   String token,
   RxList<BatteryReportModel> reportList,
 ) async {
-  reportList.clear();
   try {
     final response = await http.get(
       Uri.parse(getBatteryReportById(id)),
@@ -311,6 +315,7 @@ Future<void> fetchBatteryReportData(
       List<SpecicVoltageCheck>? specicVoltageCheck;
 
       if (responseData != null) {
+        reportList.clear();
         btrMaintenance = responseData['btr_maintenance'] != null
             ? BtrMaintenance.fromJson(responseData['btr_maintenance'])
             : null;
@@ -341,6 +346,7 @@ Future<void> fetchBatteryReportData(
       );
 
       reportList.add(batteryReport);
+      reportList.refresh();
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
@@ -355,7 +361,6 @@ Future<void> fetchPreventiveReportData(
   RxList<PreventivereportModel> reportList,
 ) async {
   try {
-    reportList.clear();
     final response = await http.get(
       Uri.parse(getPreventiveReportById(id)),
       headers: {
@@ -372,6 +377,7 @@ Future<void> fetchPreventiveReportData(
       List<MaintenanceRecords>? maintenanceRecords;
 
       if (responseData != null) {
+        reportList.clear();
         pvtMaintenance = responseData['pvt_maintenance'] is Map<String, dynamic>
             ? PvtMaintenance.fromJson(responseData['pvt_maintenance'])
             : null;
@@ -402,6 +408,7 @@ Future<void> fetchPreventiveReportData(
           maintenanceRecords: maintenanceRecords);
 
       reportList.add(preventiveReport);
+      reportList.refresh();
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
@@ -435,13 +442,19 @@ Future<void> fetchPmJobInfo(
 }
 
 Future<void> fetchPdfReport(
-  String id,
-  String token,
-  RxString pdfReport,
-) async {
+    String id, String token, RxString pdfReport, String option) async {
   try {
+    String apiUrl = '';
+
+    if (option == 'fieldreport') {
+      apiUrl = getPdfFieldReportById(id);
+    } else if (option == 'btr') {
+      apiUrl = getPdfBtrReportById(id);
+    } else {
+      apiUrl = getPdfPvtReportById(id);
+    }
     final response = await http.get(
-      Uri.parse(getPdfReportById(id)),
+      Uri.parse(apiUrl),
       headers: {
         'Authorization': token,
       },
@@ -452,6 +465,12 @@ Future<void> fetchPdfReport(
 
       if (responseBody.containsKey('pdf_base64')) {
         pdfReport.value = responseBody['pdf_base64'];
+        pdfReport.refresh();
+      } else if (responseBody.containsKey('pdf_btr')) {
+        pdfReport.value = responseBody['pdf_btr'];
+        pdfReport.refresh();
+      } else if (responseBody.containsKey('pdf_report')) {
+        pdfReport.value = responseBody['pdf_report'];
         pdfReport.refresh();
       } else {
         pdfReport.value = '';

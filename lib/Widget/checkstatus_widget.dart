@@ -15,6 +15,8 @@ class StatusButton extends StatelessWidget {
       case 'assigned':
         return const StatusPendingButton();
       case 'closed':
+        return const StatusCloseButton();
+      case 'completed':
         return const StatusCompletedButton();
       case 'confirmed':
         return const StatusOnprocessButton();
@@ -48,6 +50,8 @@ class SidebarColor {
       case 'assigned':
         return black6;
       case 'closed':
+        return black6;
+      case 'completed':
         return black6;
       case 'confirmed':
         return green3;

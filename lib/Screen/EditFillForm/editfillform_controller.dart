@@ -138,7 +138,7 @@ class EditFillformController extends GetxController {
         causeProblem: reportData.problem ?? '',
       ));
 
-      if (reportData.quantity != 0)
+      if (reportData.quantity != '0')
 
         // ignore: curly_braces_in_flow_control_structures
         for (var reportDataList in reportList + additionalReportList) {

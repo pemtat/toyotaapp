@@ -120,7 +120,7 @@ class PendingTaskViewPM extends StatelessWidget {
                                               dateTime: issue.dueDate ??
                                                   getFormattedDate(
                                                       DateTime.now()),
-                                              reporter: issue.reporter.name,
+                                              reporter: issue.reporter.realName,
                                               summary:
                                                   '${issue.getCustomFieldValue("Customer Name")}',
                                               description:

@@ -225,7 +225,7 @@ class PmAssignedJobsView extends StatelessWidget {
                 } else if (pmAssignedController.isSelected.value == 2) {
                   return buildJobList(context, 'confirmed');
                 } else if (pmAssignedController.isSelected.value == 3) {
-                  return buildJobList(context, 'closed');
+                  return buildJobList(context, 'completedAndclosed');
                 } else {
                   return const SizedBox();
                 }
@@ -267,7 +267,7 @@ class PmAssignedJobsView extends StatelessWidget {
                               pmAssignedController.selectedDate.value!.day);
                   return searchQueryMatch &&
                       dateMatch &&
-                      stringToStatus(job.status ?? '') == status &&
+                      status.contains(stringToStatus(job.status ?? '')) &&
                       statusMatch;
                 }).toList();
 
@@ -300,7 +300,7 @@ class PmAssignedJobsView extends StatelessWidget {
                               () => PendingTaskViewPM(ticketId: job.id ?? ''));
                         } else if (status == 'confirmed') {
                           Get.to(() => JobDetailViewPM(ticketId: job.id ?? ''));
-                        } else if (status == 'closed') {
+                        } else {
                           Get.to(
                               () => TicketPMDetailView(ticketId: job.id ?? ''));
                         }
@@ -341,6 +341,9 @@ class PmAssignedJobsView extends StatelessWidget {
           selectedStatus: pmAssignedController.selectedStatus),
       buildCheckbox(
           status: 'confirmed',
+          selectedStatus: pmAssignedController.selectedStatus),
+      buildCheckbox(
+          status: 'completed',
           selectedStatus: pmAssignedController.selectedStatus),
       buildCheckbox(
           status: 'closed',

@@ -72,7 +72,9 @@ class CalendarItem extends StatelessWidget {
                             ),
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: StatusButton(status: event['status']),
+                        child: event['techStatus'] == '2'
+                            ? const StatusButton(status: 'notconfirm')
+                            : StatusButton(status: event['status']),
                       ),
                     ],
                   ),

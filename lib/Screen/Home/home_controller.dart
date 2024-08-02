@@ -217,9 +217,13 @@ class HomeController extends GetxController {
               case 'confirmed':
                 confirmPmItems.add(pm);
                 break;
+              case 'completed':
+                closedPmItems.add(pm);
+                break;
               case 'closed':
                 closedPmItems.add(pm);
                 break;
+
               default:
                 if (DateTime.parse(pm.dueDate ?? '').isBefore(DateTime.now())) {
                   closedPmItemsOver.add(pm);

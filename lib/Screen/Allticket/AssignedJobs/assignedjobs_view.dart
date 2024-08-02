@@ -462,7 +462,8 @@ class AssignedjobsNew extends StatelessWidget {
           status: 'confirmed',
           selectedStatus: assignedController.selectedStatus),
       buildCheckbox(
-          status: 'closed', selectedStatus: assignedController.selectedStatus),
+          status: 'completed',
+          selectedStatus: assignedController.selectedStatus),
     ];
   }
 }

@@ -45,6 +45,26 @@ class StatusCompletedButton extends StatelessWidget {
   }
 }
 
+class StatusCloseButton extends StatelessWidget {
+  const StatusCloseButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: white9),
+      child: Text(
+        "Closed",
+        style: GoogleFonts.kanit(
+            color: const Color(0xff656565),
+            fontSize: 14,
+            fontWeight: FontWeight.w400),
+      ),
+    );
+  }
+}
+
 class StatusMaintenanceButton extends StatelessWidget {
   const StatusMaintenanceButton({super.key});
 

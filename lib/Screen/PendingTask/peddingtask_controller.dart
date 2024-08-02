@@ -95,7 +95,7 @@ class PeddingtaskController extends GetxController {
           {"name": name, "content": content}
         ]
       };
-      http.post(
+      await http.post(
         Uri.parse(addNoteUrl),
         headers: {
           'Authorization': '$token',
@@ -112,7 +112,7 @@ class PeddingtaskController extends GetxController {
         "text": noteText,
         "view_state": {"name": "public"},
       };
-      http.post(
+      await http.post(
         Uri.parse(addNoteUrl),
         headers: {
           'Authorization': '$token',

@@ -313,7 +313,8 @@ class CalendarView extends StatelessWidget {
                                 return InkWell(
                                   onTap: () {
                                     if (event['type'] == EventType.Job) {
-                                      if (event['status'] == 'pending') {
+                                      if (event['techStatus'] == '2') {
+                                      } else if (event['status'] == 'pending') {
                                         Get.to(() => PendingTaskView(
                                             ticketId: event['bugid'] ?? '',
                                             jobId: event['jobid']));
@@ -328,7 +329,8 @@ class CalendarView extends StatelessWidget {
                                             jobId: event['jobid']));
                                       }
                                     } else {
-                                      if (event['status'] == 'pending') {
+                                      if (event['techStatus'] == '2') {
+                                      } else if (event['status'] == 'pending') {
                                         Get.to(() => PendingTaskViewPM(
                                             ticketId: event['jobid']));
                                       } else if (event['status'] ==

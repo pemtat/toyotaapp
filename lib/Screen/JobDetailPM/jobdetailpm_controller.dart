@@ -71,7 +71,8 @@ class JobDetailControllerPM extends GetxController {
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     await fetchPmJobInfo(jobId, token ?? '', pmInfo);
     if (reportList.isNotEmpty ||
-        reportPreventiveList.first.maintenanceRecords!.isNotEmpty) {
+        (reportPreventiveList.isNotEmpty &&
+            reportPreventiveList.first.pvtMaintenance != null)) {
       completeCheck.value = true;
     }
     if (pmInfo.first.comment != null && pmInfo.first.comment != '') {
@@ -190,7 +191,7 @@ class JobDetailControllerPM extends GetxController {
           {"name": name, "content": content}
         ]
       };
-      http.post(
+      await http.post(
         Uri.parse(addNoteUrl),
         headers: {
           'Authorization': '$token',
@@ -208,7 +209,7 @@ class JobDetailControllerPM extends GetxController {
         "text": noteText,
         "view_state": {"name": "public"},
       };
-      http.post(
+      await http.post(
         Uri.parse(addNoteUrl),
         headers: {
           'Authorization': '$token',

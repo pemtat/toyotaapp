@@ -74,11 +74,11 @@ class CalendarController extends GetxController {
         final dayKey = DateTime.utc(pmDate.year, pmDate.month, pmDate.day);
         final dayKey2 = DateTime(pmDate.year, pmDate.month, pmDate.day);
         final formattedTime = DateFormat('hh:mm a').format(pmDate);
-
         final eventData = {
           "jobid": pm.id,
           "bugid": '',
           "time": formattedTime,
+          "techStatus": pm.techStatus,
           "status": stringToStatus(pm.status ?? ''),
           "task": '',
           "customerName": pm.customerName,
@@ -150,6 +150,7 @@ class CalendarController extends GetxController {
           "jobid": job.id.toString(),
           "bugid": job.bugId.toString(),
           "time": formattedTime,
+          "techStatus": job.techStatus,
           "status": stringToStatus(job.status ?? ''),
           "customerName": userData.first.users!.first.realName,
           "task": job.description,
