@@ -15,8 +15,10 @@ import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 class SparepartList extends GetxController {
   int space = 24;
   void sparePartListModal(BuildContext context) {
+    products.clear();
     sparePartClear();
     chooseClear();
+    products.clear();
     ShowModalWidget2(
       title: "Spare part list",
       children: [
@@ -65,6 +67,7 @@ class SparepartList extends GetxController {
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
                       products.clear();
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                   );
                 },
@@ -177,6 +180,7 @@ class SparepartList extends GetxController {
 
   void sparePartListEditModal(BuildContext context, SparePartModel part) {
     sparePartRead(part);
+    products.clear();
     ShowModalWidget2(
       title: "Spare part list",
       children: [
@@ -225,6 +229,7 @@ class SparepartList extends GetxController {
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
                       products.clear();
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                   );
                 },

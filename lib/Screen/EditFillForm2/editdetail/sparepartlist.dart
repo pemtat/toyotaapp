@@ -15,6 +15,7 @@ class SparepartList extends GetxController {
   int space = 24;
   void sparePartListModal(BuildContext context) {
     sparePartClear();
+    products.clear();
     ShowModalWidget2(
       title: 'Recommanded spare part',
       children: [
@@ -67,6 +68,7 @@ class SparepartList extends GetxController {
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
                       products.clear();
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                   );
                 },
@@ -169,6 +171,7 @@ class SparepartList extends GetxController {
 
   void sparePartListEditModal(BuildContext context, SparePartModel part) {
     sparePartRead(part);
+    products.clear();
     ShowModalWidget2(
       title: 'Recommanded spare part',
       children: [
@@ -221,6 +224,7 @@ class SparepartList extends GetxController {
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
                       products.clear();
+                      FocusScope.of(context).requestFocus(FocusNode());
                     },
                   );
                 },
