@@ -28,7 +28,8 @@ class HomeController extends GetxController {
   var subJobAssignedPage = <SubJobAssgined>[].obs;
   final BottomBarController notificationController =
       Get.put(BottomBarController());
-  int currentPage = 1; // Initial page
+  int currentPage = 1;
+  int currentPagePM = 1;
   final mostRecentNewJob = Rx<Issues?>(null);
   final mostRecentCompleteJob = Rx<Issues?>(null);
   var pmItems = <PmModel>[].obs;
@@ -69,6 +70,8 @@ class HomeController extends GetxController {
     overdueJobs = 0.obs;
     onProcessJobs = 0.obs;
     serviceZoneSet = <String>{}.obs;
+    currentPage = 1;
+    currentPagePM = 1;
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? tokenResponse = prefs.getString('token_response');
@@ -303,13 +306,15 @@ class HomeController extends GetxController {
   }
 
   Future<void> loadMorePM(String userId) async {
-    currentPage++;
-    await fetchPMdataPage(currentPage, userId);
-    await fetchJobdataPage(currentPage, userId);
+    currentPagePM++;
+    print(currentPagePM);
+    await fetchPMdataPage(currentPagePM, userId);
   }
 
   Future<void> loadMoreJob(String userId) async {
     currentPage++;
+    print(currentPage);
+
     await fetchJobdataPage(currentPage, userId);
   }
 
