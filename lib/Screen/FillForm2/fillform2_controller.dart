@@ -202,13 +202,9 @@ class FillformController2 extends GetxController {
       };
     }).toList();
 
-    var chargingType = (batteryusage.chargingType.isNotEmpty &&
-            batteryusage.chargingType.first == 'Charge when needed')
-        ? 1
-        : batteryusage.chargingType.isNotEmpty &&
-                batteryusage.chargingType.first == 'Only 1 time/day'
-            ? 0
-            : -1;
+    var chargingType = batteryusage.chargingType.isNotEmpty
+        ? batteryusage.chargingType.first
+        : '-';
 
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),

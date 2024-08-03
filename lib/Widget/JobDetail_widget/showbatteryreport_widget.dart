@@ -140,12 +140,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       ),
                 space.kH,
                 BoxInfo2(
-                    title: 'Charging Type',
-                    value: info1.chargingType == '1'
-                        ? 'Charge when needed'
-                        : info1.chargingType == '0'
-                            ? 'Only 1 time/day'
-                            : '-'),
+                    title: 'Charging Type', value: info1.chargingType ?? '-'),
                 4.kH,
                 10.kH,
                 info1.totalVoltage != '0'

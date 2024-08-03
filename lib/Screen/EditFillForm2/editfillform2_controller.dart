@@ -140,12 +140,8 @@ class EditFillformController2 extends GetxController {
     }
 
     List<String> chosenChargingTypes = [];
-    if (info1.chargingType != '-1') {
-      if (info1.chargingType == '1') {
-        chosenChargingTypes.add('Charge when needed');
-      } else {
-        chosenChargingTypes.add('Only 1 time/day');
-      }
+    if (info1.chargingType != '-') {
+      chosenChargingTypes.add(info1.chargingType ?? '-');
     }
     final newBatteryUseInfo = BatteryUsageModel(
         shiftTime: double.tryParse(info1.shiftTime ?? '') ?? 0,
@@ -370,13 +366,9 @@ class EditFillformController2 extends GetxController {
       };
     }).toList();
 
-    var chargingType = (batteryusage.chargingType.isNotEmpty &&
-            batteryusage.chargingType.first == 'Charge when needed')
-        ? 1
-        : batteryusage.chargingType.isNotEmpty &&
-                batteryusage.chargingType.first == 'Only 1 time/day'
-            ? 0
-            : -1;
+    var chargingType = batteryusage.chargingType.isNotEmpty
+        ? batteryusage.chargingType.first
+        : '-';
 
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
