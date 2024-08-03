@@ -38,13 +38,16 @@ class BreakSystemChecks extends GetxController {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: List.generate(ListData.length, (index) {
+            additionalControllers[index].text = additional[index];
             return Obx(() {
               final TextEditingController controller =
                   TextEditingController(text: remarksChoose[index]);
               controller.selection = TextSelection.fromPosition(
                   TextPosition(offset: controller.text.length));
+
               final TextEditingController additionalController =
                   additionalControllers[index];
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

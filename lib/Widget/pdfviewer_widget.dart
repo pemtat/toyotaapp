@@ -46,6 +46,7 @@ class _PdfBase64ViewState extends State<PdfBase64View> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: BackIcon(),
         title: Text(
           widget.name,

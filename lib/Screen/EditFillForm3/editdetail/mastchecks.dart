@@ -38,6 +38,9 @@ class MastChecks extends GetxController {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: List.generate(ListData.length, (index) {
+            additionalControllers[index].text = additional[index];
+            subControllers1[index].text = additional2[index][0];
+            subControllers2[index].text = additional2[index][1];
             return Obx(() {
               final TextEditingController controller =
                   TextEditingController(text: remarksChoose[index]);

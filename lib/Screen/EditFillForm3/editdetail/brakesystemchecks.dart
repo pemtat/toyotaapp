@@ -38,6 +38,8 @@ class BreakSystemChecks extends GetxController {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: List.generate(ListData.length, (index) {
+            additionalControllers[index].text = additional[index];
+
             return Obx(() {
               final TextEditingController controller =
                   TextEditingController(text: remarksChoose[index]);
