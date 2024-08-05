@@ -34,7 +34,6 @@ class Rcode extends GetxController {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: CheckBoxWidget(
-                  option: 'yes',
                   text: rCodeList[index],
                   listItem: rCodeChoose,
                   itemSet: rCodeChoose),

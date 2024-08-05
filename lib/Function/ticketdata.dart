@@ -247,29 +247,6 @@ Future<void> fetchReportData(
 ) async {
   try {
     final response = await http.get(
-      Uri.parse(getRepairReportById(id)),
-      headers: {
-        'Authorization': token,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      reportList.clear();
-      List<dynamic> responseData = jsonDecode(response.body);
-      List<RepairReportModel> loadedReports = responseData.map((reportJson) {
-        return RepairReportModel.fromJson(reportJson);
-      }).toList();
-
-      reportList.value = loadedReports;
-      reportList.refresh();
-    } else {
-      print('Failed to load data: ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Error: $e');
-  }
-  try {
-    final response = await http.get(
       Uri.parse(getAdditionalRepairReportById(id)),
       headers: {
         'Authorization': token,
@@ -285,6 +262,29 @@ Future<void> fetchReportData(
 
       additionalReportList.value = loadedReports;
       additionalReportList.refresh();
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+  try {
+    final response = await http.get(
+      Uri.parse(getRepairReportById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      reportList.clear();
+      List<dynamic> responseData = jsonDecode(response.body);
+      List<RepairReportModel> loadedReports = responseData.map((reportJson) {
+        return RepairReportModel.fromJson(reportJson);
+      }).toList();
+
+      reportList.value = loadedReports;
+      reportList.refresh();
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
