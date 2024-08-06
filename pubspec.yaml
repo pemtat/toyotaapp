@@ -86,7 +86,6 @@ flutter_launcher_icons:
 flutter:
   assets:
     - assets/faceid.png
-    - assets/chevron.png
     - assets/propjob.png
     - assets/pass.png
     - assets/notpass.png
