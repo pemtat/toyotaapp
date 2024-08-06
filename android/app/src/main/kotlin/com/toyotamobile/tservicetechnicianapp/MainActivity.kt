@@ -1,4 +1,4 @@
-package com.toyota.tservicemobile
+package com.toyotamobile.tservicetechnicianapp
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 
