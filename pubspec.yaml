@@ -76,8 +76,9 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/toyota.png"
-  adaptive_icon_background: "#ffffff"
+  remove_alpha_ios: true
+  image_path_android: "assets/toyota.png"
+  image_path_ios: "assets/toyota2.jpg"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -119,6 +120,7 @@ flutter:
     - assets/home.png
     - assets/ticket.png
     - assets/account.png
+    - assets/toyota2.jpg
     - assets/home_red.png
     - assets/ticket_red.png
     - assets/account_red.png
