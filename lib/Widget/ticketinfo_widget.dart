@@ -123,7 +123,7 @@ class PMJobInfo extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                formatDateTime(dateTime),
+                formatDateTime(dateTime, ''),
                 style: TextStyleList.subtext1,
               ),
               const SizedBox(height: 4),
@@ -360,7 +360,7 @@ class JobInfo extends StatelessWidget {
                 ),
                 4.kH,
                 Text(
-                  '${formatDateTime(dateTime)}\nReported by $reporter',
+                  '${formatDateTime(dateTime, 'time')}\nReported by $reporter',
                   style: TextStyleList.subtext1,
                 ),
               ],

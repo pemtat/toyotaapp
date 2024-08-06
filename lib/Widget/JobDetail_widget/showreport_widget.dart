@@ -14,17 +14,18 @@ class ShowRepairReport extends StatelessWidget {
   final RxList<RepairReportModel> reportData;
   final RxList<RepairReportModel> additionalReportData;
   final String jobId;
-  const ShowRepairReport(
-      {super.key,
-      required this.reportData,
-      required this.additionalReportData,
-      required this.jobId});
+
+  const ShowRepairReport({
+    super.key,
+    required this.reportData,
+    required this.additionalReportData,
+    required this.jobId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var data = reportData.first;
-
     var space = 8;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
       child: Stack(
@@ -36,112 +37,58 @@ class ShowRepairReport extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               color: white5,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BoxInfo2(
-                    title: 'Field Service Report',
-                    value: data.fieldReport ?? '-'),
-                space.kH,
-                BoxInfo2(title: 'Fault', value: data.faultReport ?? '-'),
-                space.kH,
-                BoxInfo2(
-                    title: 'Error Code', value: data.errorCodeReport ?? '-'),
-                space.kH,
-                BoxInfo2(
-                    title: 'Work Order Number', value: data.orderNo ?? '-'),
-                space.kH,
-                BoxInfo2(
-                  title: 'R Code',
-                  value: data.rCode ?? '-',
-                  space: true,
-                ),
-                space.kH,
-                BoxInfo2(
-                  title: 'W Code',
-                  value: data.wCode ?? '-',
-                  space: true,
-                ),
-                space.kH,
-                BoxInfo2(
-                  title: 'Repair Procedure',
-                  value: data.produre ?? '-',
-                  space: true,
-                ),
-                space.kH,
-                BoxInfo2(
-                  title: 'Problem',
-                  value: data.problem ?? '-',
-                  space: true,
-                ),
-                space.kH,
-                4.kH,
+            child: Obx(() {
+              if (reportData.isEmpty) {
+                return const Center(child: Text('No report data available.'));
+              }
+              var data = reportData.first;
 
-                // ignore: unrelated_type_equality_checks
-                reportData.first.quantity != '0'
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const BoxInfo2(title: 'Spare part List', value: ''),
-                          4.kH,
-                          ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: reportData.length,
-                            itemBuilder: (context, index) {
-                              final data = reportData[index];
-                              return Container(
-                                margin: const EdgeInsets.only(bottom: 8),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border.all(width: 1, color: black3),
-                                    color: white1,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(6))),
-                                child: Column(children: [
-                                  BoxInfo(
-                                      title: 'C-Code',
-                                      value: data.cCode ?? '-'),
-                                  BoxInfo(
-                                      title: 'Part Number',
-                                      value: data.partNumber ?? '-'),
-                                  BoxInfo(
-                                      title: 'Description',
-                                      value: data.description ?? '-'),
-                                  BoxInfo(
-                                      title: 'Quantity',
-                                      value: data.quantity ?? '-'),
-                                  BoxInfo(
-                                      title: 'Change Now',
-                                      value: data.changeNow ?? '-'),
-                                  BoxInfo(
-                                      title: 'Change on PM',
-                                      value: data.changeOnPm ?? '-'),
-                                ]),
-                              );
-                            },
-                          ),
-                        ],
-                      )
-                    : const BoxInfo2(title: 'Spare part List', value: '-'),
-                8.kH,
-                if (additionalReportData.isNotEmpty)
-                  // ignore: unrelated_type_equality_checks
-                  additionalReportData.first.quantity != '0'
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BoxInfo2(
+                      title: 'Field Service Report',
+                      value: data.fieldReport ?? '-'),
+                  space.kH,
+                  BoxInfo2(title: 'Fault', value: data.faultReport ?? '-'),
+                  space.kH,
+                  BoxInfo2(
+                      title: 'Error Code', value: data.errorCodeReport ?? '-'),
+                  space.kH,
+                  BoxInfo2(
+                      title: 'Work Order Number', value: data.orderNo ?? '-'),
+                  space.kH,
+                  BoxInfo2(
+                      title: 'R Code', value: data.rCode ?? '-', space: true),
+                  space.kH,
+                  BoxInfo2(
+                      title: 'W Code', value: data.wCode ?? '-', space: true),
+                  space.kH,
+                  BoxInfo2(
+                      title: 'Repair Procedure',
+                      value: data.produre ?? '-',
+                      space: true),
+                  space.kH,
+                  BoxInfo2(
+                      title: 'Problem',
+                      value: data.problem ?? '-',
+                      space: true),
+                  space.kH,
+                  4.kH,
+                  reportData.first.quantity != '0'
                       ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const BoxInfo2(
-                                title: 'Additional spare part list', value: ''),
+                            const BoxInfo2(title: 'Spare part List', value: ''),
                             4.kH,
                             ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: additionalReportData.length,
+                              itemCount: reportData.length,
                               itemBuilder: (context, index) {
-                                final data = additionalReportData[index];
+                                final data = reportData[index];
                                 return Container(
-                                  margin:
-                                      const EdgeInsets.only(bottom: 6, top: 2),
+                                  margin: const EdgeInsets.only(bottom: 8),
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       border:
@@ -149,72 +96,127 @@ class ShowRepairReport extends StatelessWidget {
                                       color: white1,
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(6))),
-                                  child: Column(children: [
-                                    BoxInfo(
-                                        title: 'C-Code',
-                                        value: data.cCode ?? ''),
-                                    BoxInfo(
-                                        title: 'Part Number',
-                                        value: data.partNumber ?? ''),
-                                    BoxInfo(
-                                        title: 'Description',
-                                        value: data.description ?? ''),
-                                    BoxInfo(
-                                        title: 'Quantity',
-                                        value: data.quantity ?? ''),
-                                    BoxInfo(
-                                        title: 'Change Now',
-                                        value: data.changeNow ?? '-'),
-                                    BoxInfo(
-                                        title: 'Change on PM',
-                                        value: data.changeOnPm ?? '-'),
-                                  ]),
+                                  child: Column(
+                                    children: [
+                                      BoxInfo(
+                                          title: 'C-Code',
+                                          value: data.cCode ?? '-'),
+                                      BoxInfo(
+                                          title: 'Part Number',
+                                          value: data.partNumber ?? '-'),
+                                      BoxInfo(
+                                          title: 'Description',
+                                          value: data.description ?? '-'),
+                                      BoxInfo(
+                                          title: 'Quantity',
+                                          value: data.quantity ?? '-'),
+                                      BoxInfo(
+                                          title: 'Change Now',
+                                          value: data.changeNow ?? '-'),
+                                      BoxInfo(
+                                          title: 'Change on PM',
+                                          value: data.changeOnPm ?? '-'),
+                                    ],
+                                  ),
                                 );
                               },
                             ),
                           ],
                         )
-                      : const BoxInfo2(
-                          title: 'Additional spare part list', value: '-'),
-                space.kH,
-                BoxInfo2(
-                    title: 'Repair Result', value: data.repairResult ?? ''),
-                space.kH,
-                BoxInfo2(
-                    title: 'Process staff', value: data.processStaff ?? ''),
-                space.kH,
-                4.kH,
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    PdfFile(
-                      name: 'Field Service Report',
-                      path: jobId,
-                      option: 'fieldreport',
-                    )
-                  ],
-                ),
-
-                if (data.signaturePad != '')
-                  Center(
-                      child: Column(
+                      : const BoxInfo2(title: 'Spare part List', value: '-'),
+                  8.kH,
+                  if (additionalReportData.isNotEmpty)
+                    additionalReportData.first.quantity != '0'
+                        ? Column(
+                            children: [
+                              const BoxInfo2(
+                                  title: 'Additional spare part list',
+                                  value: ''),
+                              4.kH,
+                              ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: additionalReportData.length,
+                                itemBuilder: (context, index) {
+                                  final data = additionalReportData[index];
+                                  return Container(
+                                    margin: const EdgeInsets.only(
+                                        bottom: 6, top: 2),
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        border:
+                                            Border.all(width: 1, color: black3),
+                                        color: white1,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(6))),
+                                    child: Column(
+                                      children: [
+                                        BoxInfo(
+                                            title: 'C-Code',
+                                            value: data.cCode ?? ''),
+                                        BoxInfo(
+                                            title: 'Part Number',
+                                            value: data.partNumber ?? ''),
+                                        BoxInfo(
+                                            title: 'Description',
+                                            value: data.description ?? ''),
+                                        BoxInfo(
+                                            title: 'Quantity',
+                                            value: data.quantity ?? ''),
+                                        BoxInfo(
+                                            title: 'Change Now',
+                                            value: data.changeNow ?? '-'),
+                                        BoxInfo(
+                                            title: 'Change on PM',
+                                            value: data.changeOnPm ?? '-'),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          )
+                        : const BoxInfo2(
+                            title: 'Additional spare part list', value: '-'),
+                  space.kH,
+                  BoxInfo2(
+                      title: 'Repair Result', value: data.repairResult ?? ''),
+                  space.kH,
+                  BoxInfo2(
+                      title: 'Process staff', value: data.processStaff ?? ''),
+                  space.kH,
+                  4.kH,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      12.kH,
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 200,
-                          child: Base64ImageWidget(data.signaturePad ?? '')),
-                      4.kH,
-                      space.kH,
+                      PdfFile(
+                        name: 'Field Service Report',
+                        path: jobId,
+                        option: 'fieldreport',
+                      ),
                     ],
-                  )),
-
-                if (data.signature != '')
-                  ShowTextFieldWidget(
-                      text: 'ลงชื่อ', hintText: data.signature ?? ''),
-              ],
-            ),
+                  ),
+                  if (data.signaturePad != '')
+                    Center(
+                      child: Column(
+                        children: [
+                          12.kH,
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 200,
+                            child: Base64ImageWidget(data.signaturePad ?? ''),
+                          ),
+                          4.kH,
+                          space.kH,
+                        ],
+                      ),
+                    ),
+                  if (data.signature != '')
+                    ShowTextFieldWidget(
+                        text: 'ลงชื่อ', hintText: data.signature ?? ''),
+                ],
+              );
+            }),
           ),
         ],
       ),

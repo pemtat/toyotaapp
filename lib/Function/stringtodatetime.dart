@@ -1,8 +1,12 @@
 import 'package:intl/intl.dart';
 
-String formatDateTime(String dateTime) {
+String formatDateTime(String dateTime, String option) {
   DateTime parsedDate = DateTime.parse(dateTime);
-  return DateFormat('dd MMMM yyyy').format(parsedDate);
+  if (option == 'time') {
+    return DateFormat('dd MMMM yyyy HH:mm').format(parsedDate);
+  } else {
+    return DateFormat('dd MMMM yyyy').format(parsedDate);
+  }
 }
 
 String formatDateTimePlus(String dateTime) {

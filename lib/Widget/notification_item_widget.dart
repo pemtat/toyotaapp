@@ -29,7 +29,7 @@ class NotificationItem extends StatelessWidget {
               style: TextStyleList.detailtext1,
             ),
             Text(
-              formatDateTime(notification.dueDate ?? ''),
+              formatDateTime(notification.dueDate ?? '', ''),
               style: TextStyleList.detailtext1,
             ),
           ],

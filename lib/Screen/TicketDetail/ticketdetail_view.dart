@@ -95,7 +95,8 @@ class TicketDetailView extends StatelessWidget {
                                 child: BoxContainer(children: [
                                   TicketInfoStatus(
                                     ticketId: issue.id,
-                                    dateTime: formatDateTime(issue.createdAt),
+                                    dateTime:
+                                        formatDateTime(issue.createdAt, ''),
                                     reporter: issue.reporter.realName,
                                     status: issue.status.name,
                                     more:

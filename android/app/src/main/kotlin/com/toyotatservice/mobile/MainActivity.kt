@@ -1,4 +1,4 @@
-package com.toyota.mobile
+package com.toyotatservice.mobile
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -94,8 +95,7 @@ class PendingTaskView extends StatelessWidget {
                               children: [
                                 TicketInfoStatus(
                                   ticketId: issue.id,
-                                  dateTime: penddingTaskController
-                                      .formatDateTime(issue.createdAt),
+                                  dateTime: formatDateTime(issue.createdAt, ''),
                                   reporter: issue.reporter.realName,
                                   status: issue.status.name,
                                 ),

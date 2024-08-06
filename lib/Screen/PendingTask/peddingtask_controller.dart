@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
@@ -69,11 +68,6 @@ class PeddingtaskController extends GetxController {
       issueData.value = issuesList;
       notesFiles.assignAll(issueData.first.notes ?? []);
     } else {}
-  }
-
-  String formatDateTime(String dateTime) {
-    DateTime parsedDate = DateTime.parse(dateTime);
-    return DateFormat('dd MMMM yyyy, HH:mm').format(parsedDate);
   }
 
   void addNote(Rx<TextEditingController> textControllerRx) async {

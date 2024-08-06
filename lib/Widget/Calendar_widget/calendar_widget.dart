@@ -197,10 +197,15 @@ class CalendarItem extends StatelessWidget {
                         const SizedBox(height: 2),
                         const Icon(Icons.calendar_month_outlined),
                         const SizedBox(width: 5),
-                        Text(
-                          formatDateTime(event['date']),
-                          style: TextStyleList.subtext1,
-                        ),
+                        event['type'] == EventType.Job
+                            ? Text(
+                                formatDateTime(event['date'], 'time'),
+                                style: TextStyleList.subtext1,
+                              )
+                            : Text(
+                                formatDateTime(event['date'], ''),
+                                style: TextStyleList.subtext1,
+                              ),
                         const SizedBox(height: 2),
                       ],
                     ),

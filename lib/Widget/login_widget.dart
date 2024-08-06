@@ -73,7 +73,7 @@ class TextFieldBarVisible extends StatelessWidget {
               decoration: InputDecoration(
                 suffixIcon: IconButton(
                   icon: Icon(
-                    !isTextHidden.value
+                    isTextHidden.value
                         ? Icons.visibility_off
                         : Icons.visibility,
                   ),

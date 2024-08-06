@@ -133,7 +133,7 @@ class JobDetailView extends StatelessWidget {
                                       TicketInfoStatus(
                                         ticketId: issue.id,
                                         dateTime:
-                                            formatDateTime(issue.createdAt),
+                                            formatDateTime(issue.createdAt, ''),
                                         status: issue.status.name,
                                         reporter: issue.reporter.realName,
                                         more: jobController
@@ -490,33 +490,45 @@ class JobDetailView extends StatelessWidget {
                                                         .additionalReportList,
                                                 jobId: jobId.toString(),
                                               ),
-                                              if (jobController.reportList.first
-                                                          .signature ==
-                                                      '' &&
-                                                  jobController.reportList.first
-                                                          .signaturePad ==
-                                                      '')
-                                                Column(
-                                                  children: [
-                                                    5.kH,
-                                                    ButtonRed(
-                                                      title: 'บันทึกลายเซ็น',
-                                                      onTap: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              SignatureWidget(
-                                                            jobId: jobId
-                                                                .toString(),
-                                                            ticketId: ticketId
-                                                                .toString(),
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ],
-                                                )
+                                              Obx(() {
+                                                if (jobController.reportList
+                                                        .isNotEmpty &&
+                                                    (jobController
+                                                                .reportList
+                                                                .first
+                                                                .signature ==
+                                                            '' &&
+                                                        jobController
+                                                                .reportList
+                                                                .first
+                                                                .signaturePad ==
+                                                            '')) {
+                                                  return Column(
+                                                    children: [
+                                                      5.kH,
+                                                      ButtonRed(
+                                                        title: 'บันทึกลายเซ็น',
+                                                        onTap: () {
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                SignatureWidget(
+                                                              jobId: jobId
+                                                                  .toString(),
+                                                              ticketId: ticketId
+                                                                  .toString(),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                } else {
+                                                  return SizedBox
+                                                      .shrink(); // Return an empty widget if the condition is not met
+                                                }
+                                              })
                                             ],
                                           )
                                         : Container()),

@@ -113,9 +113,11 @@ class PmItemWidget extends StatelessWidget {
               const Icon(Icons.calendar_month_outlined),
               const SizedBox(width: 5),
               Text(
-                formatDateTime(formatDateTimeCut(
-                  job.dueDate,
-                )),
+                formatDateTime(
+                    formatDateTimeCut(
+                      job.dueDate,
+                    ),
+                    ''),
                 style: TextStyleList.subtext1,
               ),
             ],

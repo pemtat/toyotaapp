@@ -247,29 +247,6 @@ Future<void> fetchReportData(
 ) async {
   try {
     final response = await http.get(
-      Uri.parse(getAdditionalRepairReportById(id)),
-      headers: {
-        'Authorization': token,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      additionalReportList.clear();
-      List<dynamic> responseData = jsonDecode(response.body);
-      List<RepairReportModel> loadedReports = responseData.map((reportJson) {
-        return RepairReportModel.fromJson(reportJson);
-      }).toList();
-
-      additionalReportList.value = loadedReports;
-      additionalReportList.refresh();
-    } else {
-      print('Failed to load data: ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Error: $e');
-  }
-  try {
-    final response = await http.get(
       Uri.parse(getRepairReportById(id)),
       headers: {
         'Authorization': token,
@@ -285,6 +262,29 @@ Future<void> fetchReportData(
 
       reportList.value = loadedReports;
       reportList.refresh();
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+  try {
+    final response = await http.get(
+      Uri.parse(getAdditionalRepairReportById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      additionalReportList.clear();
+      List<dynamic> responseData = jsonDecode(response.body);
+      List<RepairReportModel> loadedReports = responseData.map((reportJson) {
+        return RepairReportModel.fromJson(reportJson);
+      }).toList();
+
+      additionalReportList.value = loadedReports;
+      additionalReportList.refresh();
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
@@ -1098,7 +1098,7 @@ Future<void> updateCommentJobs(String jobId, String comment, String ticketId,
     if (response.statusCode == 200) {
       commentfield.value.text = comment;
       commentfield.refresh();
-      print(commentfield.value.text);
+
       print('Update comment done');
     } else {}
   } catch (e) {

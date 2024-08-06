@@ -97,7 +97,7 @@ class SubJobsTicket extends StatelessWidget {
                   const Icon(Icons.calendar_month_outlined),
                   const SizedBox(width: 5),
                   Text(
-                    formatDateTime(job.dueDate),
+                    formatDateTime(job.dueDate, 'time'),
                     style: TextStyleList.subtext1,
                   ),
                 ],
