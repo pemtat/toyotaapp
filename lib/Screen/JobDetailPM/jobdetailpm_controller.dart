@@ -25,6 +25,8 @@ class JobDetailControllerPM extends GetxController {
   final notes = TextEditingController().obs;
   var notesFiles = <Notes>[].obs;
   final comment = TextEditingController().obs;
+  final comment2 = TextEditingController().obs;
+
   var reportList = <BatteryReportModel>[].obs;
   var pmInfo = <PMJobInfoModel>[].obs;
 

@@ -52,7 +52,7 @@ class RepairProdecureWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Part Name',
+                  'Cause of the problem',
                   style: TextStyleList.subtext1,
                 ),
                 Text(

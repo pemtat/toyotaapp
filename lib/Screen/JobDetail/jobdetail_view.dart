@@ -356,8 +356,8 @@ class JobDetailView extends StatelessWidget {
                                             children: [
                                               TextFieldType(
                                                 hintText: 'Add Comment',
-                                                textSet:
-                                                    jobController.comment.value,
+                                                textSet: jobController
+                                                    .comment2.value,
                                               ),
                                               6.kH,
                                               Row(
@@ -366,13 +366,13 @@ class JobDetailView extends StatelessWidget {
                                                 children: [
                                                   CustomElevatedButton(
                                                     onPressed: () async {
-                                                      if (jobController.comment
+                                                      if (jobController.comment2
                                                               .value.text !=
                                                           '') {
                                                         await updateCommentJobs(
                                                             jobId.toString(),
                                                             jobController
-                                                                .comment
+                                                                .comment2
                                                                 .value
                                                                 .text,
                                                             ticketId.toString(),

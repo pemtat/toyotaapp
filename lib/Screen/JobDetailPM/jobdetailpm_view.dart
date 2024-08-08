@@ -320,41 +320,43 @@ class JobDetailViewPM extends StatelessWidget {
                                           )
                                         : Container()),
                                     2.kH,
-                                    Obx(() => jobController
-                                                .comment.value.text ==
-                                            ''
-                                        ? Column(
-                                            children: [
-                                              4.kH,
-                                              TextFieldType(
-                                                hintText: 'Add Comment',
-                                                textSet:
-                                                    jobController.comment.value,
-                                              ),
-                                              8.kH,
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                    Obx(() =>
+                                        jobController.comment.value.text == ''
+                                            ? Column(
                                                 children: [
-                                                  CustomElevatedButton(
-                                                    onPressed: () async {
-                                                      await changeIssueStatusPMComment(
-                                                          ticketId.toString(),
-                                                          102,
-                                                          jobController.comment
-                                                              .value.text,
-                                                          jobController
-                                                              .comment);
-                                                    },
-                                                    text: 'Submit',
+                                                  4.kH,
+                                                  TextFieldType(
+                                                    hintText: 'Add Comment',
+                                                    textSet: jobController
+                                                        .comment2.value,
                                                   ),
+                                                  8.kH,
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      CustomElevatedButton(
+                                                        onPressed: () async {
+                                                          await changeIssueStatusPMComment(
+                                                              ticketId
+                                                                  .toString(),
+                                                              102,
+                                                              jobController
+                                                                  .comment2
+                                                                  .value
+                                                                  .text,
+                                                              jobController
+                                                                  .comment);
+                                                        },
+                                                        text: 'Submit',
+                                                      ),
+                                                    ],
+                                                  )
                                                 ],
                                               )
-                                            ],
-                                          )
-                                        : Obx(() => ShowTextFieldType(
-                                            hintText: jobController
-                                                .comment.value.text))),
+                                            : Obx(() => ShowTextFieldType(
+                                                hintText: jobController
+                                                    .comment.value.text))),
                                     Obx(() => jobController
                                                 .imagesAfter.isNotEmpty &&
                                             jobController.comment.value.text !=

@@ -23,6 +23,7 @@ import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 class JobDetailController extends GetxController {
   final notes = TextEditingController().obs;
   final comment = TextEditingController().obs;
+  final comment2 = TextEditingController().obs;
   var reportList = <RepairReportModel>[].obs;
   var pdfList = <Map<String, dynamic>>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
