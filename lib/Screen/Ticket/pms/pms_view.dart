@@ -28,7 +28,7 @@ class Pms extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        if (pmsController.jobLoading.value) {
+        if (jobController.isLoading.value) {
           return const Expanded(child: Center(child: CircleLoading()));
         }
         return Expanded(
