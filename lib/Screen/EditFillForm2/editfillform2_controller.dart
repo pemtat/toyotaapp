@@ -176,6 +176,7 @@ class EditFillformController2 extends GetxController {
 
           if (parts.length > 1) {
             correctiveActionController.other.value.text = parts[1].trim();
+            correctiveActionController.other2.text = parts[1].trim();
           }
         }
       } else {
@@ -231,6 +232,7 @@ class EditFillformController2 extends GetxController {
 
           if (parts.length > 1) {
             repairPmController.other.value.text = parts[1].trim();
+            repairPmController.other2.text = parts[1].trim();
           }
         }
       } else {

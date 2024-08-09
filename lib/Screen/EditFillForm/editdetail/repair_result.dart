@@ -9,7 +9,7 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 
 class RepairResult extends GetxController {
   void repairResultModal(BuildContext context) {
-    otherChoose.value.text = other.value.text;
+    otherChoose.value.text = other2.text;
 
     repairResultChoose.clear();
     repairResultChoose.addAll(repairResult);
@@ -80,6 +80,7 @@ class RepairResult extends GetxController {
               repairResult
                   .addAll(repairResultChoose.where((code) => code.isNotEmpty));
               other.value = otherChoose.value;
+              other2.text = otherChoose.value.text;
               Navigator.pop(context);
             },
             text: 'Save')
@@ -90,7 +91,9 @@ class RepairResult extends GetxController {
   var repairResult = <String>[].obs;
   var repairResultChoose = <String>[].obs;
   final other = TextEditingController().obs;
+  final other2 = TextEditingController();
   final otherChoose = TextEditingController().obs;
+
   List<String> repairResultList = [
     'Run',
     'Temporary',

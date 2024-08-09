@@ -12,7 +12,7 @@ class RepairPM extends GetxController {
   void repairPMModal(BuildContext context) {
     repairPmChoose.clear();
     repairPmChoose.addAll(repairPm);
-    otherChoose.value = other.value;
+    otherChoose.value.text = other2.text;
     ShowModalWidget(
       children: [
         Row(
@@ -66,6 +66,7 @@ class RepairPM extends GetxController {
           onPressed: () {
             repairPm.clear();
             other.value = otherChoose.value;
+            other2.text = otherChoose.value.text;
             repairPm.addAll(repairPmChoose);
             Navigator.pop(context);
           },
@@ -78,6 +79,7 @@ class RepairPM extends GetxController {
   var repairPm = <String>[].obs;
   var repairPmChoose = <String>[].obs;
   final other = TextEditingController().obs;
+  final other2 = TextEditingController();
   final otherChoose = TextEditingController().obs;
 
   List<String> repairPmList = [

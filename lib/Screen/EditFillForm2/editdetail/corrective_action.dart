@@ -12,7 +12,7 @@ class CorrectiveAction extends GetxController {
   void correctiveActionModal(BuildContext context) {
     correctiveActionChoose.clear();
     correctiveActionChoose.addAll(correctiveAction);
-    otherChoose.value = other.value;
+    otherChoose.value.text = other2.text;
     ShowModalWidget(
       children: [
         Row(
@@ -66,6 +66,7 @@ class CorrectiveAction extends GetxController {
           onPressed: () {
             correctiveAction.clear();
             other.value = otherChoose.value;
+            other2.text = otherChoose.value.text;
             correctiveAction.addAll(correctiveActionChoose);
             Navigator.pop(context);
           },
@@ -79,6 +80,7 @@ class CorrectiveAction extends GetxController {
   var correctiveActionChoose = <String>[].obs;
   final other = TextEditingController().obs;
   final otherChoose = TextEditingController().obs;
+  final other2 = TextEditingController();
 
   List<String> correctiveActionList = [
     'New battery set',
