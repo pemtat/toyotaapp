@@ -118,7 +118,7 @@ class PmItemWidget extends StatelessWidget {
                     formatDateTimeCut(
                       job.dueDate,
                     ),
-                    ''),
+                    'time'),
                 style: TextStyleList.subtext1,
               ),
             ],

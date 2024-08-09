@@ -204,7 +204,7 @@ class CalendarItem extends StatelessWidget {
                                 style: TextStyleList.subtext1,
                               )
                             : Text(
-                                formatDateTime(event['date'], ''),
+                                formatDateTime(event['date'], 'time'),
                                 style: TextStyleList.subtext1,
                               ),
                         const SizedBox(height: 2),

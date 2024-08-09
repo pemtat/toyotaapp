@@ -124,7 +124,7 @@ class PMJobInfo extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                formatDateTime(dateTime, ''),
+                formatDateTime(dateTime, 'time'),
                 style: TextStyleList.subtext1,
               ),
               const SizedBox(height: 4),
