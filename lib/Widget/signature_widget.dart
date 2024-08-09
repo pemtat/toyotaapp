@@ -49,6 +49,7 @@ class SignatureWidget extends StatelessWidget {
           children: [
             Container(
               height: 200,
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
               ),

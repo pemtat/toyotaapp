@@ -97,6 +97,7 @@ class EditFillformController extends GetxController {
 
             if (parts.length > 1) {
               repairResultController.other.value.text = parts[1].trim();
+              repairResultController.other2.text = parts[1].trim();
             }
           }
         } else if (reportData.repairResult!.contains('M')) {
@@ -106,6 +107,7 @@ class EditFillformController extends GetxController {
 
             if (parts.length > 1) {
               repairResultController.other.value.text = parts[1].trim();
+              repairResultController.other2.text = parts[1].trim();
             }
           }
         } else {
