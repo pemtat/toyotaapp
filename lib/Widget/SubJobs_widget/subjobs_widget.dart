@@ -10,6 +10,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class SubJobsTicket extends StatelessWidget {
@@ -119,7 +120,7 @@ class SubJobsTicket extends StatelessWidget {
                                   child: SizedBox(
                                       width: 20,
                                       height: 20,
-                                      child: CircularProgressIndicator())),
+                                      child: DataCircleLoading())),
                             ),
                           ],
                         ),
@@ -207,8 +208,7 @@ class SubJobsTicket extends StatelessWidget {
                                               barrierDismissible: false,
                                               builder: (BuildContext context) {
                                                 return const Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
+                                                  child: DataCircleLoading(),
                                                 );
                                               },
                                             );

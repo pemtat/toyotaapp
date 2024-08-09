@@ -15,6 +15,7 @@ import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class PmItemWidget extends StatelessWidget {
@@ -134,7 +135,7 @@ class PmItemWidget extends StatelessWidget {
                       child: SizedBox(
                         width: 20,
                         height: 20,
-                        child: CircularProgressIndicator(),
+                        child: DataCircleLoading(),
                       ),
                     );
                   } else if (snapshot.hasError) {
@@ -170,8 +171,7 @@ class PmItemWidget extends StatelessWidget {
                                           barrierDismissible: false,
                                           builder: (BuildContext context) {
                                             return const Center(
-                                              child:
-                                                  CircularProgressIndicator(),
+                                              child: DataCircleLoading(),
                                             );
                                           },
                                         );
@@ -233,7 +233,7 @@ class PmItemWidget extends StatelessWidget {
                                     child: SizedBox(
                                       width: 20,
                                       height: 20,
-                                      child: CircularProgressIndicator(),
+                                      child: DataCircleLoading(),
                                     ),
                                   ),
                                 );
@@ -293,7 +293,7 @@ class PmItemWidget extends StatelessWidget {
                                     child: SizedBox(
                                       width: 20,
                                       height: 20,
-                                      child: CircularProgressIndicator(),
+                                      child: DataCircleLoading(),
                                     ),
                                   ),
                                 );

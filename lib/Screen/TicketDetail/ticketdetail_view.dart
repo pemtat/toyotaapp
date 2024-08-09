@@ -12,6 +12,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/customerinfo_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/moredetail.widget.dart';
 import 'package:toyotamobile/Widget/noteItem_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
@@ -56,7 +57,7 @@ class TicketDetailView extends StatelessWidget {
       body: Obx(
         () {
           if (ticketController.issueData.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircleLoading());
           } else {
             var file = ticketController.attatchments.isNotEmpty
                 ? ticketController.attatchments

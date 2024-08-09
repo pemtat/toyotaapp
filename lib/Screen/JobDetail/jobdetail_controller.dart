@@ -229,7 +229,7 @@ class JobDetailController extends GetxController {
             saveCurrentDateTime(saveCompletedtime);
             showWaitMessage();
             updateStatusSubjobs(jobId, issueId.toString());
-            // jobController.fetchDataFromAssignJob();
+            jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
             showSaveMessage();
           },

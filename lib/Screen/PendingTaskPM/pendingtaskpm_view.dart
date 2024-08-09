@@ -18,6 +18,7 @@ import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
@@ -86,7 +87,7 @@ class PendingTaskViewPM extends StatelessWidget {
       body: Obx(
         () {
           if (jobController.issueData.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircleLoading());
           } else {
             var filePdf =
                 jobController.pdfList.isNotEmpty ? jobController.pdfList : null;

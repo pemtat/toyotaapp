@@ -5,6 +5,7 @@ import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 
@@ -61,7 +62,7 @@ class Intruction extends StatelessWidget {
                                   barrierDismissible: false,
                                   builder: (BuildContext context) {
                                     return const Center(
-                                      child: CircularProgressIndicator(),
+                                      child: DataCircleLoading(),
                                     );
                                   },
                                 );
@@ -94,7 +95,7 @@ class Intruction extends StatelessWidget {
                             child: SizedBox(
                               width: 20,
                               height: 20,
-                              child: CircularProgressIndicator(),
+                              child: DataCircleLoading(),
                             ),
                           ),
                         );
@@ -130,7 +131,7 @@ class Intruction extends StatelessWidget {
                                         barrierDismissible: false,
                                         builder: (BuildContext context) {
                                           return const Center(
-                                            child: CircularProgressIndicator(),
+                                            child: DataCircleLoading(),
                                           );
                                         },
                                       );

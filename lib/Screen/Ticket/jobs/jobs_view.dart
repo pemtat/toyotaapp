@@ -12,6 +12,7 @@ import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class Jobs extends StatelessWidget {
@@ -29,7 +30,7 @@ class Jobs extends StatelessWidget {
         if (jobs.jobLoading.value) {
           return const Expanded(
             child: Center(
-              child: CircularProgressIndicator(),
+              child: CircleLoading(),
             ),
           );
         }
@@ -136,7 +137,7 @@ class Jobs extends StatelessWidget {
                         ),
                         if (jobs.loading.value)
                           const Center(
-                            child: CircularProgressIndicator(),
+                            child: CircleLoading(),
                           )
                       ],
                     );

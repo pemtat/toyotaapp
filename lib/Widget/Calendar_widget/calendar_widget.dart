@@ -13,6 +13,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class CalendarItem extends StatelessWidget {
@@ -221,12 +222,14 @@ class CalendarItem extends StatelessWidget {
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
-                                    return const Center(
-                                        child: SizedBox(
-                                            width: 20,
-                                            height: 20,
-                                            child:
-                                                CircularProgressIndicator()));
+                                    return const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: DataCircleLoading(),
+                                      ),
+                                    );
                                   } else if (snapshot.hasError) {
                                     return const Text('-');
                                   } else if (!snapshot.hasData ||
@@ -255,14 +258,12 @@ class CalendarItem extends StatelessWidget {
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
-                                    return const Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircularProgressIndicator(),
-                                        ),
+                                    return const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: DataCircleLoading(),
                                       ),
                                     );
                                   } else if (snapshot.hasError) {

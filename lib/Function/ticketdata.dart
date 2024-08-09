@@ -1047,7 +1047,6 @@ void updateStatusSubjobs(
 
     if (response.statusCode == 200) {
       print('Update status done');
-      jobDetailController.fetchData(ticketId, jobId);
     } else {}
   } catch (e) {
     print('Error: $e');

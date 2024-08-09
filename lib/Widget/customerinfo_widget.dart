@@ -4,6 +4,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 
@@ -80,7 +81,7 @@ class CustomerInformation extends StatelessWidget {
                     barrierDismissible: false,
                     builder: (BuildContext context) {
                       return const Center(
-                        child: CircularProgressIndicator(),
+                        child: DataCircleLoading(),
                       );
                     },
                   );

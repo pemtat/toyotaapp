@@ -6,6 +6,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 
@@ -128,7 +129,7 @@ class EditProfileView extends StatelessWidget {
           );
         } else {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircleLoading(),
           );
         }
       }),

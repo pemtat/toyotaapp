@@ -57,6 +57,8 @@ class CalendarView extends StatelessWidget {
         ),
       ),
       body: RefreshIndicator(
+        color: Colors.red,
+        backgroundColor: Colors.white,
         onRefresh: refresh,
         child: SingleChildScrollView(
           child: Column(

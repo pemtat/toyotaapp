@@ -6,6 +6,7 @@ import 'package:advance_pdf_viewer2/advance_pdf_viewer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 
 class PdfBase64View extends StatefulWidget {
   final String name;
@@ -54,7 +55,7 @@ class _PdfBase64ViewState extends State<PdfBase64View> {
         ),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CircleLoading())
           : PDFViewer(document: _document!),
     );
   }

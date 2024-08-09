@@ -12,6 +12,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
@@ -47,7 +48,7 @@ class SubTicketView extends StatelessWidget {
       body: Obx(
         () {
           if (subticketController.subJobs.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircleLoading());
           } else {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -13,6 +13,7 @@ import 'package:toyotamobile/Widget/customerinfo_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/moredetail.widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
@@ -60,7 +61,7 @@ class PendingTaskView extends StatelessWidget {
       ),
       body: Obx(() {
         if (penddingTaskController.issueData.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircleLoading());
         } else {
           var file = penddingTaskController.attatchments.isNotEmpty
               ? penddingTaskController.attatchments

@@ -10,6 +10,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 
@@ -160,7 +161,7 @@ class AccountView extends StatelessWidget {
           );
         } else {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircleLoading(),
           );
         }
       }),

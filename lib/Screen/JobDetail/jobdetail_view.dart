@@ -16,6 +16,7 @@ import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/intruction_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/moredetail.widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/signature_widget.dart';
@@ -86,7 +87,7 @@ class JobDetailView extends StatelessWidget {
         body: Obx(
           () {
             if (jobController.issueData.isEmpty) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CircleLoading());
             } else {
               var file = jobController.attatchments.isNotEmpty
                   ? jobController.attatchments

@@ -6,6 +6,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/inputdecoraton.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
@@ -41,7 +42,7 @@ class AdditSparepartList extends GetxController {
               if (isLoading.value) {
                 return const Padding(
                   padding: EdgeInsets.only(top: 16.0),
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(child: DataCircleLoading()),
                 );
               }
               return ListView.builder(
@@ -197,7 +198,7 @@ class AdditSparepartList extends GetxController {
               if (isLoading.value) {
                 return const Padding(
                   padding: EdgeInsets.only(top: 16.0),
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(child: DataCircleLoading()),
                 );
               }
               return ListView.builder(

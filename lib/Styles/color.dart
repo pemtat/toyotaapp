@@ -30,6 +30,7 @@ const Color blue1 = Color(0xff2E7CF6);
 const Color blue2 = Color.fromARGB(255, 106, 175, 248);
 const Color blue3 = Color.fromARGB(255, 7, 54, 243);
 const Color blue4 = Color.fromARGB(255, 137, 188, 241);
+const Color blue5 = Color.fromARGB(255, 13, 68, 250);
 
 const Color black = Colors.black;
 const Color black1 = Color.fromARGB(117, 29, 27, 32);

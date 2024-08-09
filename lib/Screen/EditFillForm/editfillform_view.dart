@@ -20,6 +20,7 @@ import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
@@ -72,7 +73,7 @@ class EditFillFormView extends StatelessWidget {
       body: Obx(
         () {
           if (fillFormController.reportList.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircleLoading());
           }
           return SingleChildScrollView(
             child: Column(

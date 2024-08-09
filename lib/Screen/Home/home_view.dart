@@ -14,6 +14,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
 import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/titleheader_widget.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
@@ -37,7 +38,7 @@ class HomeView extends StatelessWidget {
       () {
         if (jobController.isLoading.value) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircleLoading(),
           );
         }
         return WillPopScope(
@@ -68,6 +69,9 @@ class HomeView extends StatelessWidget {
               ),
             ),
             body: RefreshIndicator(
+              displacement: 30,
+              color: Colors.red,
+              backgroundColor: Colors.white,
               onRefresh: refresh,
               // child: Obx(
               //   () {

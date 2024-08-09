@@ -13,6 +13,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class Pms extends StatelessWidget {
@@ -28,8 +29,7 @@ class Pms extends StatelessWidget {
     return Obx(
       () {
         if (pmsController.jobLoading.value) {
-          return const Expanded(
-              child: Center(child: CircularProgressIndicator()));
+          return const Expanded(child: Center(child: CircleLoading()));
         }
         return Expanded(
           child: Padding(
@@ -129,7 +129,7 @@ class Pms extends StatelessWidget {
                         ),
                         if (pmsController.loading.value)
                           const Center(
-                            child: CircularProgressIndicator(),
+                            child: CircleLoading(),
                           )
                       ],
                     );

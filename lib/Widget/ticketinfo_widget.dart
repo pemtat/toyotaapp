@@ -8,6 +8,7 @@ import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:flutter/services.dart';
@@ -155,7 +156,7 @@ class PMJobInfo extends StatelessWidget {
                             child: SizedBox(
                               width: 20,
                               height: 20,
-                              child: CircularProgressIndicator(),
+                              child: DataCircleLoading(),
                             ),
                           ),
                         );
@@ -192,8 +193,7 @@ class PMJobInfo extends StatelessWidget {
                                               barrierDismissible: false,
                                               builder: (BuildContext context) {
                                                 return const Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
+                                                  child: DataCircleLoading(),
                                                 );
                                               },
                                             );
