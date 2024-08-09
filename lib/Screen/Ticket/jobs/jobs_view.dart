@@ -137,7 +137,7 @@ class Jobs extends StatelessWidget {
                         ),
                         if (jobs.loading.value)
                           const Center(
-                            child: CircleLoading(),
+                            child: DataCircleLoading(),
                           )
                       ],
                     );

@@ -129,7 +129,7 @@ class Pms extends StatelessWidget {
                         ),
                         if (pmsController.loading.value)
                           const Center(
-                            child: CircleLoading(),
+                            child: DataCircleLoading(),
                           )
                       ],
                     );
