@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/loadingdata.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/pdfviewer_widget.dart';
 
 class PdfFile extends StatelessWidget {
@@ -28,7 +28,7 @@ class PdfFile extends StatelessWidget {
             barrierColor: Color.fromARGB(59, 0, 0, 0),
             barrierDismissible: false,
             builder: (BuildContext context) {
-              return const LoadingDialog();
+              return const Center(child: DataCircleLoading());
             });
         await fetchPdfReport(path, token ?? '', pdfReport, option);
         Navigator.pop(context);

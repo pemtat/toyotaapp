@@ -526,8 +526,8 @@ class JobDetailView extends StatelessWidget {
                                                     ],
                                                   );
                                                 } else {
-                                                  return SizedBox
-                                                      .shrink(); // Return an empty widget if the condition is not met
+                                                  return const SizedBox
+                                                      .shrink();
                                                 }
                                               })
                                             ],
