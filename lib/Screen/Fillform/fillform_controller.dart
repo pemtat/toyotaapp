@@ -227,6 +227,7 @@ class FillformController extends GetxController {
               final sparePartData = {
                 ...sparePart.toJson(),
                 'relation_id': highRelation,
+                'job_issue_id': jobId.value,
               };
 
               try {

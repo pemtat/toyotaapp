@@ -306,6 +306,7 @@ class EditFillformController extends GetxController {
         if (allSpareParts.isNotEmpty) {
           final body = {
             'relation_id': relationId.value.toString(),
+            'job_issue_id': jobId.value,
             'sparepart':
                 allSpareParts.map((sparePart) => sparePart.toJson()).toList(),
           };

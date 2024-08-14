@@ -130,7 +130,7 @@ class Maintenance extends GetxController {
   List<String> chargingTypeList = [
     'พร้อมใช้งาน(Run)',
     'ใช้งานได้ชั่วคราว(Temporary)',
-    'ใช้งานได้ชั่วคราว(Stop)',
+    'ไม่พร้อมใช้งาน(Stop)',
   ];
   var maintenanceList = <MaintenanceModel>[].obs;
   final people = TextEditingController().obs;
