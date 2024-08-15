@@ -89,9 +89,57 @@ class FillFormView3 extends StatelessWidget {
           children: [
             BoxContainer(
               children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Customer Name',
+                          textSet: fillformController3.customerName.value),
+                    ),
+                    10.wH,
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Department',
+                          textSet: fillformController3.department.value),
+                    ),
+                  ],
+                ),
+                20.kH,
                 TextFieldWidget(
-                    text: 'Operation Hour',
-                    textSet: fillformController3.operationHour.value),
+                    text: 'Contacted Name',
+                    textSet: fillformController3.contactedName.value),
+                20.kH,
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Product',
+                          textSet: fillformController3.product.value),
+                    ),
+                    10.wH,
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Model',
+                          textSet: fillformController3.model.value),
+                    ),
+                  ],
+                ),
+                20.kH,
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Operation Hour',
+                          textSet: fillformController3.operationHour.value),
+                    ),
+                    10.wH,
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Serial No',
+                          textSet: fillformController3.serialNo.value),
+                    ),
+                  ],
+                ),
                 20.kH,
                 Row(
                   children: [

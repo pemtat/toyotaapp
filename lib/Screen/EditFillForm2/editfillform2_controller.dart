@@ -10,6 +10,7 @@ import 'package:toyotamobile/Models/batteryusage_model.dart';
 import 'package:toyotamobile/Models/forkliftinformation.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
 import 'package:toyotamobile/Models/specigravity_model.dart';
+import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/batterycondition.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/battery_information.dart';
@@ -34,7 +35,8 @@ class EditFillformController2 extends GetxController {
   final customerName = TextEditingController().obs;
   final contactPerson = TextEditingController().obs;
   final division = TextEditingController().obs;
-
+  var userByZone = <UsersZone>[].obs;
+  var selectedUser = ''.obs;
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
   final TextEditingController signatureController = TextEditingController();
@@ -93,6 +95,12 @@ class EditFillformController2 extends GetxController {
     String? token = await getToken();
     await userController.fetchData();
     await fetchBatteryReportData(jobId, token ?? '', batteryReportList);
+
+    await fetchUserByZone(
+      userController.userInfo.first.zone,
+      token ?? '',
+      userByZone,
+    );
     var data = batteryReportList.first;
     var info1 = data.btrMaintenance;
     var specicGravity = data.specicVoltageCheck;
@@ -111,6 +119,8 @@ class EditFillformController2 extends GetxController {
     customerName.value.text = info1!.customerName ?? '';
     contactPerson.value.text = info1.contactPerson ?? '';
     division.value.text = info1.division ?? '';
+    selectedUser.value = info1.tech2 ?? '';
+
     final newBatteryInfo = BatteryInformationModel(
       batteryBand: info1.batteryBand ?? '-',
       batteryModel: info1.batteryModel ?? '-',
@@ -414,6 +424,7 @@ class EditFillformController2 extends GetxController {
       "customer_name": customerName.value.text,
       "contact_person": contactPerson.value.text,
       "division": division.value.text,
+      "tech2": selectedUser.value == '' ? '-' : selectedUser.value,
       "signature_tech": '',
       "suggestion": '',
       "satisfaction": '',

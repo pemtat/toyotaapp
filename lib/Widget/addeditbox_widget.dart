@@ -57,9 +57,9 @@ class AddEditBox extends StatelessWidget {
                     'Other : ${other!.value.text}',
                     style: TextStyleList.text12,
                   ),
-                if (list.contains('H') && other != null)
+                if (list.contains('HR') && other != null)
                   Text(
-                    'H : ${other!.value.text}',
+                    'HR : ${other!.value.text}',
                     style: TextStyleList.text12,
                   ),
                 if (list.contains('M') && other != null)

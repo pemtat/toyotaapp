@@ -7,6 +7,7 @@ import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
 import 'package:toyotamobile/Models/specigravity_model.dart';
+import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/batterycondition.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/battery_information.dart';
@@ -32,7 +33,8 @@ class FillformController2 extends GetxController {
   final customerName = TextEditingController().obs;
   final contactPerson = TextEditingController().obs;
   final division = TextEditingController().obs;
-
+  var userByZone = <UsersZone>[].obs;
+  var selectedUser = ''.obs;
   final SparepartList sparePartListController = Get.put(SparepartList());
   final AdditSparepartList additSparePartListController =
       Get.put(AdditSparepartList());
@@ -93,7 +95,13 @@ class FillformController2 extends GetxController {
 
   void fetchData(String jobId) async {
     this.jobId.value = jobId;
+    String? token = await getToken();
     await userController.fetchData();
+    await fetchUserByZone(
+      userController.userInfo.first.zone,
+      token ?? '',
+      userByZone,
+    );
   }
 
   Future<void> saveReport(BuildContext context) async {
@@ -239,7 +247,7 @@ class FillformController2 extends GetxController {
       "customer_name": customerName.value.text,
       "contact_person": contactPerson.value.text,
       "tech1": userController.userInfo.first.realName,
-      "tech2": '',
+      "tech2": selectedUser.value == '' ? '-' : selectedUser.value,
       "division": division.value.text,
       "signature_tech": '',
       "suggestion": '',

@@ -48,19 +48,39 @@ class ShowPreventiveReportWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                space.kH,
+                BoxInfo2(
+                    title: 'Customer Name',
+                    value: maintenance!.customerName ?? '-'),
+                space.kH,
+                BoxInfo2(
+                    title: 'Department', value: maintenance.department ?? '-'),
+                space.kH,
+                BoxInfo2(
+                    title: 'Contacted Name',
+                    value: maintenance.contactedName ?? '-'),
+                space.kH,
+                BoxInfo2(title: 'Product', value: maintenance.product ?? '-'),
+                space.kH,
+                BoxInfo2(title: 'Model', value: maintenance.model ?? '-'),
+                space.kH,
+                BoxInfo2(
+                    title: 'Serial No', value: maintenance.serialNo ?? '-'),
+                space.kH,
                 BoxInfo2(
                     title: 'Operation Hour',
-                    value: maintenance!.operationHour ?? '-'),
+                    value: maintenance.operationHour ?? '-'),
                 space.kH,
                 BoxInfo2(
                     title: 'Mast Type', value: maintenance.mastType ?? '-'),
                 space.kH,
+
+                BoxInfo2(
+                    title: 'Lift Hieght', value: maintenance.liftHeight ?? '-'),
+                space.kH,
                 BoxInfo2(
                     title: 'Customer Fleet',
                     value: maintenance.customerFleet ?? '-'),
-                space.kH,
-                BoxInfo2(
-                    title: 'Lift Hieght', value: maintenance.liftHeight ?? '-'),
                 space.kH,
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),

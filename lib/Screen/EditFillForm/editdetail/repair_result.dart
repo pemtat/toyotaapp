@@ -46,11 +46,11 @@ class RepairResult extends GetxController {
           },
         ),
         Obx(() {
-          if (repairResultChoose.contains('H')) {
+          if (repairResultChoose.contains('HR')) {
             return Column(
               children: [
                 TextFieldEditWidget(
-                  text: 'H',
+                  text: 'HR',
                   textSet: otherChoose.value,
                 ),
               ],
@@ -98,7 +98,7 @@ class RepairResult extends GetxController {
     'Run',
     'Temporary',
     'Stop',
-    'H',
+    'HR',
     'M',
   ];
 }

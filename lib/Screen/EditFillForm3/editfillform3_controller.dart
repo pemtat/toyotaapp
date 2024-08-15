@@ -45,6 +45,12 @@ class FillformController3 extends GetxController {
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
   var reportPreventiveList = <PreventivereportModel>[].obs;
+  final customerName = TextEditingController().obs;
+  final department = TextEditingController().obs;
+  final contactedName = TextEditingController().obs;
+  final product = TextEditingController().obs;
+  final model = TextEditingController().obs;
+  final serialNo = TextEditingController().obs;
   final operationHour = TextEditingController().obs;
   final mastType = TextEditingController().obs;
   final lifeHeight = TextEditingController().obs;
@@ -286,6 +292,12 @@ class FillformController3 extends GetxController {
       mastType.value.text = maintenances.mastType ?? '';
       lifeHeight.value.text = maintenances.liftHeight ?? '';
       selectedUser.value = maintenances.tech2 ?? '';
+      customerName.value.text = maintenances.customerName ?? '';
+      department.value.text = maintenances.department ?? '';
+      contactedName.value.text = maintenances.contactedName ?? '';
+      product.value.text = maintenances.product ?? '';
+      model.value.text = maintenances.model ?? '';
+      serialNo.value.text = maintenances.serialNo ?? '';
       if (maintenances.safetyTravelAlarm == '' &&
           maintenances.safetyRearviewMirror == '' &&
           maintenances.safetySeatBelt == '') {
@@ -668,6 +680,24 @@ class FillformController3 extends GetxController {
         : maintenance.maintenanceList.first.chargingType.first;
     var officer =
         processStaff.repairStaff.isEmpty ? '' : processStaff.repairStaff.first;
+    if (customerName.value.text == '') {
+      customerName.value.text = '-';
+    }
+    if (department.value.text == '') {
+      department.value.text = '-';
+    }
+    if (contactedName.value.text == '') {
+      contactedName.value.text = '-';
+    }
+    if (product.value.text == '') {
+      product.value.text = '-';
+    }
+    if (model.value.text == '') {
+      model.value.text = '-';
+    }
+    if (serialNo.value.text == '') {
+      serialNo.value.text = '-';
+    }
     if (operationHour.value.text == '') {
       operationHour.value.text = '-';
     }
@@ -690,6 +720,12 @@ class FillformController3 extends GetxController {
       "customer_checking": "",
       "customer_score": 0,
       "customer_description": "",
+      'customer_name': customerName.value.text,
+      'department': department.value.text,
+      'contacted_name': contactedName.value.text,
+      'product': product.value.text,
+      'model': model.value.text,
+      'serial_no': serialNo.value.text,
       "operation_hour": operationHour.value.text,
       "mast_type": mastType.value.text,
       "lift_height": lifeHeight.value.text,

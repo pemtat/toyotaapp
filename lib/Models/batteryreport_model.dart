@@ -97,39 +97,44 @@ class BtrMaintenance {
   String? createdAtLocal;
   String? lastUpdatedLocal;
   String? createdByRealname;
+  String? tech1;
+  String? tech2;
 
-  BtrMaintenance(
-      {this.id,
-      this.jobId,
-      this.batteryBand,
-      this.batteryModel,
-      this.manufacturerNo,
-      this.serialNo,
-      this.batteryLifespan,
-      this.informationVoltage,
-      this.capacity,
-      this.forkliftBrand,
-      this.forkliftModel,
-      this.forkliftSerial,
-      this.forkliftOperation,
-      this.shiftTime,
-      this.hrs,
-      this.ratio,
-      this.chargingType,
-      this.totalVoltage,
-      this.correctiveAction,
-      this.result,
-      this.repairPm,
-      this.signature,
-      this.signaturePad,
-      this.saveTime,
-      this.relationId,
-      this.createdAtLocal,
-      this.lastUpdatedLocal,
-      this.createdByRealname,
-      this.contactPerson,
-      this.customerName,
-      this.division});
+  BtrMaintenance({
+    this.id,
+    this.jobId,
+    this.batteryBand,
+    this.batteryModel,
+    this.manufacturerNo,
+    this.serialNo,
+    this.batteryLifespan,
+    this.informationVoltage,
+    this.capacity,
+    this.forkliftBrand,
+    this.forkliftModel,
+    this.forkliftSerial,
+    this.forkliftOperation,
+    this.shiftTime,
+    this.hrs,
+    this.ratio,
+    this.chargingType,
+    this.totalVoltage,
+    this.correctiveAction,
+    this.result,
+    this.repairPm,
+    this.signature,
+    this.signaturePad,
+    this.saveTime,
+    this.relationId,
+    this.createdAtLocal,
+    this.lastUpdatedLocal,
+    this.createdByRealname,
+    this.contactPerson,
+    this.customerName,
+    this.division,
+    this.tech2,
+    this.tech1,
+  });
 
   BtrMaintenance.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -163,6 +168,8 @@ class BtrMaintenance {
     division = json['division'];
     customerName = json['customer_name'];
     contactPerson = json['contact_person'];
+    tech1 = json['tech1'];
+    tech2 = json['tech2'];
   }
 
   Map<String, dynamic> toJson() {
@@ -198,6 +205,8 @@ class BtrMaintenance {
     data['contact_person'] = contactPerson;
     data['customer_name'] = customerName;
     data['division'] = division;
+    data['tech1'] = tech1;
+    data['tech2'] = tech2;
     return data;
   }
 }

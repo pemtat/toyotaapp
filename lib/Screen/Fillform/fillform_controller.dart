@@ -153,10 +153,10 @@ class FillformController extends GetxController {
         List<dynamic> highRelationData = json.decode(response.body);
 
         if (repairResultController.repairResult.isNotEmpty) {
-          if (repairResultController.repairResult.first == 'H') {
+          if (repairResultController.repairResult.first == 'HR') {
             repairResultController.repairResult.clear();
             repairResultController.repairResult
-                .add('H : ${repairResultController.other.value.text}');
+                .add('HR : ${repairResultController.other.value.text}');
           } else if (repairResultController.repairResult.first == 'M') {
             repairResultController.repairResult.clear();
             repairResultController.repairResult

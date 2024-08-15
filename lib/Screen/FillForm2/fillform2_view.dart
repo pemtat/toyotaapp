@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
+import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/batterycondition.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/forklife_information.dart';
@@ -356,6 +357,50 @@ class FillFormView2 extends StatelessWidget {
                         : const SizedBox()
                   ],
                 )),
+            10.kH,
+            BoxContainer(
+              child: Obx(() {
+                return GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: white3,
+                          title: Center(child: Text('ผู้ตรวจซ่อม 2')),
+                          titleTextStyle: TextStyleList.text1,
+                          content: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: fillformController2.userByZone
+                                  .map<Widget>((UsersZone user) {
+                                return ListTile(
+                                  title: Text(user.realname ?? 'No data'),
+                                  onTap: () {
+                                    fillformController2.selectedUser.value =
+                                        user.realname ?? '';
+                                    Navigator.of(context).pop();
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: AbsorbPointer(
+                    child: TextField(
+                      controller: TextEditingController(
+                          text: fillformController2.selectedUser.value),
+                      decoration: InputDecoration(
+                          labelText: 'ผู้ตรวจซ่อม 2',
+                          labelStyle: TextStyleList.text9),
+                    ),
+                  ),
+                );
+              }),
+            ),
             100.kH,
           ],
         ),

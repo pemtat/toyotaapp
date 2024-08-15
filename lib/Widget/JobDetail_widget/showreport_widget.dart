@@ -55,32 +55,32 @@ class ShowRepairReport extends StatelessWidget {
                       title: 'Field Service Report',
                       value: data.fieldReport ?? '-'),
                   space.kH,
-                  // BoxInfo2(
-                  //     title: 'Customer Name', value: data.customerName ?? '-'),
-                  // space.kH,
-                  // BoxInfo2(title: 'Department', value: data.department ?? '-'),
-                  // space.kH,
-                  // BoxInfo2(
-                  //     title: 'Contacted Name',
-                  //     value: data.contactedName ?? '-'),
-                  // space.kH,
-                  // BoxInfo2(title: 'Product', value: data.product ?? '-'),
-                  // space.kH,
-                  // BoxInfo2(title: 'Model', value: data.model ?? '-'),
-                  // space.kH,
-                  // BoxInfo2(title: 'Serial No', value: data.serialNo ?? '-'),
-                  // space.kH,
+                  BoxInfo2(
+                      title: 'Customer Name', value: data.customerName ?? '-'),
+                  space.kH,
+                  BoxInfo2(title: 'Department', value: data.department ?? '-'),
+                  space.kH,
+                  BoxInfo2(
+                      title: 'Contacted Name',
+                      value: data.contactedName ?? '-'),
+                  space.kH,
+                  BoxInfo2(title: 'Product', value: data.product ?? '-'),
+                  space.kH,
+                  BoxInfo2(title: 'Model', value: data.model ?? '-'),
+                  space.kH,
+                  BoxInfo2(title: 'Serial No', value: data.serialNo ?? '-'),
+                  space.kH,
                   BoxInfo2(
                       title: 'Operation Hour',
                       value: data.operationHour ?? '-'),
                   space.kH,
                   BoxInfo2(title: 'Mast Type', value: data.mastType ?? '-'),
                   space.kH,
+                  BoxInfo2(title: 'Lift Hieght', value: data.lifeHeight ?? '-'),
+                  space.kH,
                   BoxInfo2(
                       title: 'Customer Fleet',
                       value: data.customerFleet ?? '-'),
-                  space.kH,
-                  BoxInfo2(title: 'Lift Hieght', value: data.lifeHeight ?? '-'),
                   space.kH,
                   BoxInfo2(
                       title: 'Error Code', value: data.errorCodeReport ?? '-'),
@@ -218,7 +218,6 @@ class ShowRepairReport extends StatelessWidget {
                   BoxInfo2(title: 'ผู้ตรวจซ่อม 1', value: data.tech1 ?? ''),
                   space.kH,
                   BoxInfo2(title: 'ผู้ตรวจซ่อม 2', value: data.tech2 ?? ''),
-
                   Obx(() => (timeStart.value != '' && timeEnd.value != '')
                       ? Column(
                           children: [

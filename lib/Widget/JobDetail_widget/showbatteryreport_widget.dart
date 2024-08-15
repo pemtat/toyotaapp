@@ -373,6 +373,10 @@ class ShowBatteryReportWidget extends StatelessWidget {
                             '-',
                             style: TextStyleList.text3,
                           )),
+                space.kH,
+                TitleApp2(text: 'ผู้ตรวจซ่อม 1', moreText: info1.tech1 ?? ''),
+                space.kH,
+                TitleApp2(text: 'ผู้ตรวจซ่อม 2', moreText: info1.tech2 ?? ''),
                 Obx(() => (timeStart.value != '' && timeEnd.value != '')
                     ? Column(
                         children: [

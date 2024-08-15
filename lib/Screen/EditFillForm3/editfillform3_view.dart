@@ -90,10 +90,70 @@ class EditFillFormView3 extends StatelessWidget {
           children: [
             BoxContainer(
               children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                        text: 'Customer Name',
+                        textSet: fillformController3.customerName.value,
+                        readOnly: readOnly == null ? null : 'yes',
+                      ),
+                    ),
+                    10.wH,
+                    Expanded(
+                      child: TextFieldWidget(
+                        text: 'Department',
+                        textSet: fillformController3.department.value,
+                        readOnly: readOnly == null ? null : 'yes',
+                      ),
+                    ),
+                  ],
+                ),
+                20.kH,
                 TextFieldWidget(
-                  text: 'Operation Hour',
-                  textSet: fillformController3.operationHour.value,
+                  text: 'Contacted Name',
+                  textSet: fillformController3.contactedName.value,
                   readOnly: readOnly == null ? null : 'yes',
+                ),
+                20.kH,
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                        text: 'Product',
+                        textSet: fillformController3.product.value,
+                        readOnly: readOnly == null ? null : 'yes',
+                      ),
+                    ),
+                    10.wH,
+                    Expanded(
+                      child: TextFieldWidget(
+                        text: 'Model',
+                        textSet: fillformController3.model.value,
+                        readOnly: readOnly == null ? null : 'yes',
+                      ),
+                    ),
+                  ],
+                ),
+                20.kH,
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                        text: 'Operation Hour',
+                        textSet: fillformController3.operationHour.value,
+                        readOnly: readOnly == null ? null : 'yes',
+                      ),
+                    ),
+                    10.wH,
+                    Expanded(
+                      child: TextFieldWidget(
+                        text: 'Serial No',
+                        textSet: fillformController3.serialNo.value,
+                        readOnly: readOnly == null ? null : 'yes',
+                      ),
+                    ),
+                  ],
                 ),
                 20.kH,
                 Row(
@@ -123,7 +183,6 @@ class EditFillFormView3 extends StatelessWidget {
                 )
               ],
             ),
-            14.kH,
             14.kH,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -83,7 +83,12 @@ class PvtMaintenance {
   String? customerFleet;
   String? tech1;
   String? tech2;
-
+  String? customerName;
+  String? department;
+  String? contactedName;
+  String? product;
+  String? model;
+  String? serialNo;
   PvtMaintenance({
     this.id,
     this.jobId,
@@ -109,6 +114,12 @@ class PvtMaintenance {
     this.operationHour,
     this.tech2,
     this.tech1,
+    this.contactedName,
+    this.customerName,
+    this.department,
+    this.model,
+    this.product,
+    this.serialNo,
   });
 
   PvtMaintenance.fromJson(Map<String, dynamic> json) {
@@ -136,6 +147,12 @@ class PvtMaintenance {
     operationHour = json['operation_hour'];
     tech2 = json['tech2'];
     tech1 = json['tech1'];
+    contactedName = json['contacted_name'];
+    customerName = json['customer_name'];
+    department = json['department'];
+    model = json['model'];
+    product = json['product'];
+    serialNo = json['serial_no'];
   }
 
   Map<String, dynamic> toJson() {
@@ -164,6 +181,12 @@ class PvtMaintenance {
     data['operation_hour'] = operationHour;
     data['tech2'] = tech2;
     data['tech1'] = tech1;
+    data['contacted_name'] = contactedName;
+    data['customer_name'] = customerName;
+    data['department'] = department;
+    data['model'] = model;
+    data['product'] = product;
+    data['serial_no'] = serialNo;
 
     return data;
   }

@@ -120,8 +120,8 @@ class EditFillformController extends GetxController {
       }
 
       if (reportData.repairResult != '-') {
-        if (reportData.repairResult!.contains('H')) {
-          repairResultController.repairResult.add('H');
+        if (reportData.repairResult!.contains('HR')) {
+          repairResultController.repairResult.add('HR');
 
           if (reportData.repairResult!.contains(':')) {
             List<String> parts = reportData.repairResult!.split(':');

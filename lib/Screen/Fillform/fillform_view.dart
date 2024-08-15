@@ -85,60 +85,57 @@ class FillFormView extends StatelessWidget {
             14.kH,
             BoxContainer(
               children: [
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: TextFieldWidget(
-                //           text: 'Customer Name',
-                //           textSet: fillFormController.customerName.value),
-                //     ),
-                //     10.wH,
-                //     Expanded(
-                //       child: TextFieldWidget(
-                //           text: 'Department',
-                //           textSet: fillFormController.department.value),
-                //     ),
-                //   ],
-                // ),
-                // 20.kH,
-                // TextFieldWidget(
-                //     text: 'Contacted Name',
-                //     textSet: fillFormController.contactedName.value),
-                // 20.kH,
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: TextFieldWidget(
-                //           text: 'Product',
-                //           textSet: fillFormController.product.value),
-                //     ),
-                //     10.wH,
-                //     Expanded(
-                //       child: TextFieldWidget(
-                //           text: 'Model',
-                //           textSet: fillFormController.model.value),
-                //     ),
-                //   ],
-                // ),
-                // 20.kH,
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: TextFieldWidget(
-                //           text: 'Operation Hour',
-                //           textSet: fillFormController.operationHour.value),
-                //     ),
-                //     10.wH,
-                //     Expanded(
-                //       child: TextFieldWidget(
-                //           text: 'Serial No',
-                //           textSet: fillFormController.serialNo.value),
-                //     ),
-                //   ],
-                // ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Customer Name',
+                          textSet: fillFormController.customerName.value),
+                    ),
+                    10.wH,
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Department',
+                          textSet: fillFormController.department.value),
+                    ),
+                  ],
+                ),
+                20.kH,
                 TextFieldWidget(
-                    text: 'Operation Hour',
-                    textSet: fillFormController.operationHour.value),
+                    text: 'Contacted Name',
+                    textSet: fillFormController.contactedName.value),
+                20.kH,
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Product',
+                          textSet: fillFormController.product.value),
+                    ),
+                    10.wH,
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Model',
+                          textSet: fillFormController.model.value),
+                    ),
+                  ],
+                ),
+                20.kH,
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Operation Hour',
+                          textSet: fillFormController.operationHour.value),
+                    ),
+                    10.wH,
+                    Expanded(
+                      child: TextFieldWidget(
+                          text: 'Serial No',
+                          textSet: fillFormController.serialNo.value),
+                    ),
+                  ],
+                ),
                 20.kH,
                 Row(
                   children: [
