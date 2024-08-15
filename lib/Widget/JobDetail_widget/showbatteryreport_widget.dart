@@ -55,7 +55,15 @@ class ShowBatteryReportWidget extends StatelessWidget {
                 const TitleApp2(text: "Battery Maintenance Report"),
                 10.kH,
                 BoxInfo2(
-                    title: 'Battery Brand', value: info1!.batteryBand ?? '-'),
+                    title: 'Customer Name', value: info1!.customerName ?? '-'),
+                space.kH,
+                BoxInfo2(
+                    title: 'Contact Person', value: info1.contactPerson ?? '-'),
+                space.kH,
+                BoxInfo2(title: 'Division', value: info1.division ?? '-'),
+                10.kH,
+                BoxInfo2(
+                    title: 'Battery Brand', value: info1.batteryBand ?? '-'),
                 space.kH,
                 BoxInfo2(
                     title: 'Battery Model', value: info1.batteryModel ?? '-'),

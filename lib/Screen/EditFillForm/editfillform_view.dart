@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
+import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/process_staff.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/rcode.dart';
@@ -98,6 +99,85 @@ class EditFillFormView extends StatelessWidget {
                         );
                       },
                     ),
+                  ],
+                ),
+                14.kH,
+                BoxContainer(
+                  children: [
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: TextFieldWidget(
+                    //           text: 'Customer Name',
+                    //           textSet: fillFormController.customerName.value),
+                    //     ),
+                    //     10.wH,
+                    //     Expanded(
+                    //       child: TextFieldWidget(
+                    //           text: 'Department',
+                    //           textSet: fillFormController.department.value),
+                    //     ),
+                    //   ],
+                    // ),
+                    // 20.kH,
+                    // TextFieldWidget(
+                    //     text: 'Contacted Name',
+                    //     textSet: fillFormController.contactedName.value),
+                    // 20.kH,
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: TextFieldWidget(
+                    //           text: 'Product',
+                    //           textSet: fillFormController.product.value),
+                    //     ),
+                    //     10.wH,
+                    //     Expanded(
+                    //       child: TextFieldWidget(
+                    //           text: 'Model',
+                    //           textSet: fillFormController.model.value),
+                    //     ),
+                    //   ],
+                    // ),
+                    // 20.kH,
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: TextFieldWidget(
+                    //           text: 'Operation Hour',
+                    //           textSet: fillFormController.operationHour.value),
+                    //     ),
+                    //     10.wH,
+                    //     Expanded(
+                    //       child: TextFieldWidget(
+                    //           text: 'Serial No',
+                    //           textSet: fillFormController.serialNo.value),
+                    //     ),
+                    //   ],
+                    // ),
+                    TextFieldWidget(
+                        text: 'Operation Hour',
+                        textSet: fillFormController.operationHour.value),
+                    20.kH,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFieldWidget(
+                              text: 'Mast Type',
+                              textSet: fillFormController.mastType.value),
+                        ),
+                        10.wH,
+                        Expanded(
+                          child: TextFieldWidget(
+                              text: 'Life Height',
+                              textSet: fillFormController.lifeHeight.value),
+                        ),
+                      ],
+                    ),
+                    20.kH,
+                    TextFieldWidget(
+                        text: 'Customer Fleet No.',
+                        textSet: fillFormController.customerFleetNo.value)
                   ],
                 ),
                 14.kH,
@@ -284,6 +364,49 @@ class EditFillFormView extends StatelessWidget {
                               repairStaffController.repairStaff)),
                     ),
                   ],
+                ),
+                BoxContainer(
+                  child: Obx(() {
+                    return GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: white3,
+                              title: const Center(child: Text('ผู้ตรวจซ่อม 2')),
+                              titleTextStyle: TextStyleList.text1,
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: fillFormController.userByZone
+                                      .map<Widget>((UsersZone user) {
+                                    return ListTile(
+                                      title: Text(user.realname ?? 'No data'),
+                                      onTap: () {
+                                        fillFormController.selectedUser.value =
+                                            user.realname ?? '';
+                                        Navigator.of(context).pop();
+                                      },
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: AbsorbPointer(
+                        child: TextField(
+                          controller: TextEditingController(
+                              text: fillFormController.selectedUser.value),
+                          decoration: InputDecoration(
+                              labelText: 'ผู้ตรวจซ่อม 2',
+                              labelStyle: TextStyleList.text9),
+                        ),
+                      ),
+                    );
+                  }),
                 ),
                 100.kH,
               ],

@@ -15,6 +15,7 @@ import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
+import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
@@ -56,6 +57,34 @@ Future<void> fetchSubJob(
     }
   } catch (e) {
     print('Error: $e');
+  }
+}
+
+Future<void> fetchUserByZone(
+    String zone, String token, RxList<UsersZone> userByZone) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getUserByZone(zone)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+
+      UserByZone userData = UserByZone.fromJson(data);
+
+      if (userData.users != null) {
+        userByZone.assignAll(userData.users!);
+      } else {}
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+      userByZone.clear();
+    }
+  } catch (e) {
+    print('Error: $e');
+    userByZone.clear();
   }
 }
 

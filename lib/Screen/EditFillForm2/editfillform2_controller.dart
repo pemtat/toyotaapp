@@ -31,6 +31,9 @@ import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 class EditFillformController2 extends GetxController {
   var jobId = ''.obs;
   var readOnly = ''.obs;
+  final customerName = TextEditingController().obs;
+  final contactPerson = TextEditingController().obs;
+  final division = TextEditingController().obs;
 
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
@@ -105,9 +108,11 @@ class EditFillformController2 extends GetxController {
     //         (item.description != null && item.description!.isNotEmpty) &&
     //         (item.nameEn != null))
     //     .toList();
-
+    customerName.value.text = info1!.customerName ?? '';
+    contactPerson.value.text = info1.contactPerson ?? '';
+    division.value.text = info1.division ?? '';
     final newBatteryInfo = BatteryInformationModel(
-      batteryBand: info1!.batteryBand ?? '-',
+      batteryBand: info1.batteryBand ?? '-',
       batteryModel: info1.batteryModel ?? '-',
       mfgNo: info1.manufacturerNo ?? '',
       serialNo: info1.serialNo ?? '',
@@ -371,7 +376,15 @@ class EditFillformController2 extends GetxController {
     var chargingType = batteryusage.chargingType.isNotEmpty
         ? batteryusage.chargingType.first
         : '-';
-
+    if (customerName.value.text == '') {
+      customerName.value.text = '-';
+    }
+    if (contactPerson.value.text == '') {
+      contactPerson.value.text = '-';
+    }
+    if (division.value.text == '') {
+      division.value.text = '-';
+    }
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
       "battery_band": batteryinformation.batteryBand,
@@ -398,6 +411,12 @@ class EditFillformController2 extends GetxController {
           ? ''
           : repairPmController.repairPm.first,
       "relation_id": "",
+      "customer_name": customerName.value.text,
+      "contact_person": contactPerson.value.text,
+      "division": division.value.text,
+      "signature_tech": '',
+      "suggestion": '',
+      "satisfaction": '',
       "created_by": userController.userInfo.first.id,
       "btr_sparepart": combinedList,
       "specic_voltage_check": specicGravity,

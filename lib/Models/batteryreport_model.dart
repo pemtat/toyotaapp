@@ -85,6 +85,9 @@ class BtrMaintenance {
   String? chargingType;
   String? totalVoltage;
   String? correctiveAction;
+  String? customerName;
+  String? contactPerson;
+  String? division;
   String? result;
   String? repairPm;
   String? signature;
@@ -123,7 +126,10 @@ class BtrMaintenance {
       this.relationId,
       this.createdAtLocal,
       this.lastUpdatedLocal,
-      this.createdByRealname});
+      this.createdByRealname,
+      this.contactPerson,
+      this.customerName,
+      this.division});
 
   BtrMaintenance.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -154,6 +160,9 @@ class BtrMaintenance {
     createdAtLocal = json['created_at_local'];
     lastUpdatedLocal = json['last_updated_local'];
     createdByRealname = json['created_by_realname'];
+    division = json['division'];
+    customerName = json['customer_name'];
+    contactPerson = json['contact_person'];
   }
 
   Map<String, dynamic> toJson() {
@@ -186,6 +195,9 @@ class BtrMaintenance {
     data['created_at_local'] = createdAtLocal;
     data['last_updated_local'] = lastUpdatedLocal;
     data['created_by_realname'] = createdByRealname;
+    data['contact_person'] = contactPerson;
+    data['customer_name'] = customerName;
+    data['division'] = division;
     return data;
   }
 }

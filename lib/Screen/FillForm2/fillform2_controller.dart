@@ -29,6 +29,10 @@ class FillformController2 extends GetxController {
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
   final TextEditingController signatureController = TextEditingController();
+  final customerName = TextEditingController().obs;
+  final contactPerson = TextEditingController().obs;
+  final division = TextEditingController().obs;
+
   final SparepartList sparePartListController = Get.put(SparepartList());
   final AdditSparepartList additSparePartListController =
       Get.put(AdditSparepartList());
@@ -206,6 +210,16 @@ class FillformController2 extends GetxController {
         ? batteryusage.chargingType.first
         : '-';
 
+    if (customerName.value.text == '') {
+      customerName.value.text = '-';
+    }
+    if (contactPerson.value.text == '') {
+      contactPerson.value.text = '-';
+    }
+    if (division.value.text == '') {
+      division.value.text = '-';
+    }
+
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
       "battery_band": batteryinformation.batteryBand,
@@ -222,6 +236,14 @@ class FillformController2 extends GetxController {
       "shift_time": batteryusage.shiftTime,
       "hrs": batteryusage.hrsPerShift,
       "ratio": batteryusage.ratio,
+      "customer_name": customerName.value.text,
+      "contact_person": contactPerson.value.text,
+      "tech1": jobDetailControllerPM.userData.first.users!.first.realName,
+      "tech2": '',
+      "division": division.value.text,
+      "signature_tech": '',
+      "suggestion": '',
+      "satisfaction": '',
       "charging_type": chargingType,
       "total_voltage": sumVoltageCheck,
       "corrective_action": correctiveActionController.correctiveAction.isEmpty

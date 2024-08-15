@@ -7,6 +7,7 @@ import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/repair_procedure.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
+import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/process_staff.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/rcode.dart';
@@ -25,11 +26,23 @@ class FillformController extends GetxController {
   final fault = TextEditingController().obs;
   final errorCode = TextEditingController().obs;
   final workorderNumber = TextEditingController().obs;
+  final customerName = TextEditingController().obs;
+  final department = TextEditingController().obs;
+  final contactedName = TextEditingController().obs;
+  final product = TextEditingController().obs;
+  final model = TextEditingController().obs;
+  final serialNo = TextEditingController().obs;
+  final operationHour = TextEditingController().obs;
+  final mastType = TextEditingController().obs;
+  final lifeHeight = TextEditingController().obs;
+  final customerFleetNo = TextEditingController().obs;
   final Rcode rcodeController = Get.put(Rcode());
   final Wcode wcodeController = Get.put(Wcode());
+  var userByZone = <UsersZone>[].obs;
   var isFormComplete = false.obs;
   final TextEditingController signatureController = TextEditingController();
-
+  var selectedUser = ''.obs;
+  var usersList = <UsersZone>[].obs;
   final RepairProcedure rPController = Get.put(RepairProcedure());
   final SparepartList sparePartListController = Get.put(SparepartList());
   final AdditSparepartList additSparePartListController =
@@ -91,8 +104,15 @@ class FillformController extends GetxController {
   }
 
   void fetchData(String ticketId, String jobId) async {
+    String? token = await getToken();
     this.ticketId.value = ticketId;
     this.jobId.value = jobId;
+
+    await fetchUserByZone(
+      jobDetailController.userData.first.users!.first.zone ?? '',
+      token ?? '',
+      userByZone,
+    );
   }
 
   void clearSignature() {
@@ -171,6 +191,37 @@ class FillformController extends GetxController {
         if (workorderNumber.value.text == '') {
           workorderNumber.value.text = '-';
         }
+        if (customerName.value.text == '') {
+          customerName.value.text = '-';
+        }
+        if (department.value.text == '') {
+          department.value.text = '-';
+        }
+        if (contactedName.value.text == '') {
+          contactedName.value.text = '-';
+        }
+        if (product.value.text == '') {
+          product.value.text = '-';
+        }
+        if (model.value.text == '') {
+          model.value.text = '-';
+        }
+        if (serialNo.value.text == '') {
+          serialNo.value.text = '-';
+        }
+        if (operationHour.value.text == '') {
+          operationHour.value.text = '-';
+        }
+        if (mastType.value.text == '') {
+          mastType.value.text = '-';
+        }
+        if (lifeHeight.value.text == '') {
+          lifeHeight.value.text = '-';
+        }
+        if (customerFleetNo.value.text == '') {
+          customerFleetNo.value.text = '-';
+        }
+
         if (highRelationData.isNotEmpty) {
           var currentRelationId = highRelationData.first['relation_id'];
           var highRelation = (int.parse(currentRelationId) + 1).toString();
@@ -188,7 +239,20 @@ class FillformController extends GetxController {
             'repair_result': repairResultController.repairResult.first,
             'process_staff': processStaffController.repairStaff.first,
             'relation_id': highRelation,
-            'bugid': ticketId.value
+            'customer_name': customerName.value.text,
+            'department': department.value.text,
+            'contacted_name': contactedName.value.text,
+            'product': product.value.text,
+            'model': model.value.text,
+            'serial_no': serialNo.value.text,
+            'operation_hour': operationHour.value.text,
+            'mast_type': mastType.value.text,
+            'customer_fleet': customerFleetNo.value.text,
+            'life_height': lifeHeight.value.text,
+            'tech1': jobDetailController.userData.first.users!.first.realName,
+            'tech2': selectedUser.value == '' ? '-' : selectedUser.value,
+            'bugid': ticketId.value,
+            'save_time': saveCompletedtime.value
           };
           List<SparePartModel> allSpareParts =
               List.from(sparePartListController.sparePartList);

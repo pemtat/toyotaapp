@@ -25,6 +25,7 @@ import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 
@@ -71,6 +72,25 @@ class FillFormView2 extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            14.kH,
+            BoxContainer(
+              children: [
+                TextFieldWidget(
+                  text: 'Customer Name',
+                  textSet: fillformController2.customerName.value,
+                ),
+                20.kH,
+                TextFieldWidget(
+                  text: 'Contact Person',
+                  textSet: fillformController2.contactPerson.value,
+                ),
+                20.kH,
+                TextFieldWidget(
+                  text: 'Division',
+                  textSet: fillformController2.division.value,
+                )
+              ],
+            ),
             14.kH,
             Obx(
               () => BoxContainer(

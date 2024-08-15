@@ -21,32 +21,57 @@ class RepairReportModel {
   String? quantity;
   String? changeNow;
   String? changeOnPm;
+  String? operationHour;
+  String? mastType;
+  String? lifeHeight;
+  String? customerFleet;
+  String? tech1;
+  String? tech2;
+  String? customerName;
+  String? department;
+  String? contactedName;
+  String? product;
+  String? model;
+  String? serialNo;
   bool? additional;
 
-  RepairReportModel(
-      {this.id,
-      this.jobIssueId,
-      this.fieldReport,
-      this.faultReport,
-      this.errorCodeReport,
-      this.orderNo,
-      this.rCode,
-      this.wCode,
-      this.produre,
-      this.problem,
-      this.repairResult,
-      this.processStaff,
-      this.relationId,
-      this.saveTime,
-      this.signature,
-      this.signaturePad,
-      this.cCode,
-      this.partNumber,
-      this.description,
-      this.quantity,
-      this.changeNow,
-      this.changeOnPm,
-      this.additional});
+  RepairReportModel({
+    this.id,
+    this.jobIssueId,
+    this.fieldReport,
+    this.faultReport,
+    this.errorCodeReport,
+    this.orderNo,
+    this.rCode,
+    this.wCode,
+    this.produre,
+    this.problem,
+    this.repairResult,
+    this.processStaff,
+    this.relationId,
+    this.saveTime,
+    this.signature,
+    this.signaturePad,
+    this.cCode,
+    this.partNumber,
+    this.description,
+    this.quantity,
+    this.changeNow,
+    this.changeOnPm,
+    this.additional,
+    this.contactedName,
+    this.customerFleet,
+    this.customerName,
+    this.department,
+    this.lifeHeight,
+    this.mastType,
+    this.model,
+    this.operationHour,
+    this.product,
+    this.serialNo,
+    this.tech2,
+    this.tech1,
+  });
 
   RepairReportModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -72,6 +97,18 @@ class RepairReportModel {
     changeNow = json['change_now'];
     changeOnPm = json['change_on_pm'];
     additional = json['additional'];
+    contactedName = json['contacted_name'];
+    customerFleet = json['customer_fleet'];
+    customerName = json['customer_name'];
+    department = json['department'];
+    lifeHeight = json['life_height'];
+    mastType = json['mast_type'];
+    model = json['model'];
+    operationHour = json['operation_hour'];
+    product = json['product'];
+    serialNo = json['serial_no'];
+    tech2 = json['tech2'];
+    tech1 = json['tech1'];
   }
 
   Map<String, dynamic> toJson() {
@@ -99,6 +136,18 @@ class RepairReportModel {
     data['change_now'] = changeNow;
     data['change_on_pm'] = changeOnPm;
     data['additional'] = additional;
+    data['contacted_name'] = contactedName;
+    data['customer_fleet'] = customerFleet;
+    data['customer_name'] = customerName;
+    data['department'] = department;
+    data['life_height'] = lifeHeight;
+    data['mast_type'] = mastType;
+    data['model'] = model;
+    data['operation_hour'] = operationHour;
+    data['product'] = product;
+    data['serial_no'] = serialNo;
+    data['tech2'] = tech2;
+    data['tech1'] = tech1;
     return data;
   }
 }
