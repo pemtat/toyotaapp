@@ -451,6 +451,10 @@ class JobDetailViewPM extends StatelessWidget {
                                                 reportData:
                                                     jobController.reportList,
                                                 bugId: ticketId.toString(),
+                                                timeStart: jobController
+                                                    .savedDateStartTime,
+                                                timeEnd: jobController
+                                                    .savedDateEndTime,
                                               ),
                                               if (jobController
                                                           .reportList
@@ -539,6 +543,10 @@ class JobDetailViewPM extends StatelessWidget {
                                                 reportData: jobController
                                                     .reportPreventiveList,
                                                 bugId: ticketId.toString(),
+                                                timeStart: jobController
+                                                    .savedDateStartTime,
+                                                timeEnd: jobController
+                                                    .savedDateEndTime,
                                               ),
                                               if (jobController
                                                           .reportPreventiveList

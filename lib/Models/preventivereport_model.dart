@@ -77,6 +77,12 @@ class PvtMaintenance {
   String? signature;
   String? signaturePad;
   String? saveTime;
+  String? operationHour;
+  String? mastType;
+  String? liftHeight;
+  String? customerFleet;
+  String? tech1;
+  String? tech2;
 
   PvtMaintenance({
     this.id,
@@ -97,6 +103,12 @@ class PvtMaintenance {
     this.signature,
     this.signaturePad,
     this.saveTime,
+    this.customerFleet,
+    this.liftHeight,
+    this.mastType,
+    this.operationHour,
+    this.tech2,
+    this.tech1,
   });
 
   PvtMaintenance.fromJson(Map<String, dynamic> json) {
@@ -118,6 +130,12 @@ class PvtMaintenance {
     signature = json['signature'];
     signaturePad = json['signature_pad'];
     saveTime = json['save_time'];
+    customerFleet = json['customer_fleet'];
+    liftHeight = json['lift_height'];
+    mastType = json['mast_type'];
+    operationHour = json['operation_hour'];
+    tech2 = json['tech2'];
+    tech1 = json['tech1'];
   }
 
   Map<String, dynamic> toJson() {
@@ -140,6 +158,12 @@ class PvtMaintenance {
     data['signature'] = signature;
     data['signature_pad'] = signaturePad;
     data['save_time'] = saveTime;
+    data['customer_fleet'] = customerFleet;
+    data['lift_height'] = liftHeight;
+    data['mast_type'] = mastType;
+    data['operation_hour'] = operationHour;
+    data['tech2'] = tech2;
+    data['tech1'] = tech1;
 
     return data;
   }

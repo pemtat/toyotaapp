@@ -18,6 +18,7 @@ import 'package:toyotamobile/Screen/EditFillForm/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/wcode.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
+import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
@@ -52,6 +53,7 @@ class EditFillformController extends GetxController {
   var usersList = <UsersZone>[].obs;
   final JobDetailController jobDetailController =
       Get.put(JobDetailController());
+  final UserController userController = Get.put(UserController());
 
   final RepairStaff repairStaffController = Get.put(RepairStaff());
   final TicketDetailController ticketDetailController =
@@ -80,9 +82,9 @@ class EditFillformController extends GetxController {
     String? token = await getToken();
     this.ticketId.value = ticketId;
     this.jobId.value = jobId;
-
+    await userController.fetchData();
     await fetchUserByZone(
-      jobDetailController.userData.first.users!.first.zone ?? '',
+      userController.userInfo.first.zone,
       token ?? '',
       userByZone,
     );

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
@@ -14,12 +15,16 @@ class ShowRepairReport extends StatelessWidget {
   final RxList<RepairReportModel> reportData;
   final RxList<RepairReportModel> additionalReportData;
   final String jobId;
+  final RxString timeStart;
+  final RxString timeEnd;
 
   const ShowRepairReport({
     super.key,
     required this.reportData,
     required this.additionalReportData,
     required this.jobId,
+    required this.timeStart,
+    required this.timeEnd,
   });
 
   @override
@@ -75,7 +80,7 @@ class ShowRepairReport extends StatelessWidget {
                       title: 'Customer Fleet',
                       value: data.customerFleet ?? '-'),
                   space.kH,
-                  BoxInfo2(title: 'Life Hieght', value: data.lifeHeight ?? '-'),
+                  BoxInfo2(title: 'Lift Hieght', value: data.lifeHeight ?? '-'),
                   space.kH,
                   BoxInfo2(
                       title: 'Error Code', value: data.errorCodeReport ?? '-'),
@@ -213,6 +218,18 @@ class ShowRepairReport extends StatelessWidget {
                   BoxInfo2(title: 'ผู้ตรวจซ่อม 1', value: data.tech1 ?? ''),
                   space.kH,
                   BoxInfo2(title: 'ผู้ตรวจซ่อม 2', value: data.tech2 ?? ''),
+
+                  Obx(() => (timeStart.value != '' && timeEnd.value != '')
+                      ? Column(
+                          children: [
+                            space.kH,
+                            BoxInfo2(
+                                title: 'ระยะเวลาการทำงาน',
+                                value: calculateTimeDifference(
+                                    timeStart, timeEnd)),
+                          ],
+                        )
+                      : Container()),
                   4.kH,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -16,8 +17,15 @@ import 'package:toyotamobile/Widget/title_widget.dart';
 class ShowBatteryReportWidget extends StatelessWidget {
   final RxList<BatteryReportModel> reportData;
   final String bugId;
-  const ShowBatteryReportWidget(
-      {super.key, required this.reportData, required this.bugId});
+  final RxString timeStart;
+  final RxString timeEnd;
+  const ShowBatteryReportWidget({
+    super.key,
+    required this.reportData,
+    required this.bugId,
+    required this.timeStart,
+    required this.timeEnd,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -365,6 +373,17 @@ class ShowBatteryReportWidget extends StatelessWidget {
                             '-',
                             style: TextStyleList.text3,
                           )),
+                Obx(() => (timeStart.value != '' && timeEnd.value != '')
+                    ? Column(
+                        children: [
+                          space.kH,
+                          TitleApp2(
+                              text: 'ระยะเวลาการทำงาน',
+                              moreText:
+                                  calculateTimeDifference(timeStart, timeEnd)),
+                        ],
+                      )
+                    : Container()),
                 4.kH,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

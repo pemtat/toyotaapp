@@ -238,7 +238,7 @@ class FillformController2 extends GetxController {
       "ratio": batteryusage.ratio,
       "customer_name": customerName.value.text,
       "contact_person": contactPerson.value.text,
-      "tech1": jobDetailControllerPM.userData.first.users!.first.realName,
+      "tech1": userController.userInfo.first.realName,
       "tech2": '',
       "division": division.value.text,
       "signature_tech": '',

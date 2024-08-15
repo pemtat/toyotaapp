@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
+import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/EditFillForm3/editdetail/auxiliarymotor.dart';
 import 'package:toyotamobile/Screen/EditFillForm3/editdetail/batterychecks.dart';
 import 'package:toyotamobile/Screen/EditFillForm3/editdetail/brakesystemchecks.dart';
@@ -33,6 +34,7 @@ import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 
@@ -86,6 +88,42 @@ class EditFillFormView3 extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            BoxContainer(
+              children: [
+                TextFieldWidget(
+                  text: 'Operation Hour',
+                  textSet: fillformController3.operationHour.value,
+                  readOnly: readOnly == null ? null : 'yes',
+                ),
+                20.kH,
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFieldWidget(
+                        text: 'Mast Type',
+                        textSet: fillformController3.mastType.value,
+                        readOnly: readOnly == null ? null : 'yes',
+                      ),
+                    ),
+                    10.wH,
+                    Expanded(
+                      child: TextFieldWidget(
+                        text: 'Lift Height',
+                        textSet: fillformController3.lifeHeight.value,
+                        readOnly: readOnly == null ? null : 'yes',
+                      ),
+                    ),
+                  ],
+                ),
+                20.kH,
+                TextFieldWidget(
+                  text: 'Customer Fleet No.',
+                  textSet: fillformController3.customerFleetNo.value,
+                  readOnly: readOnly == null ? null : 'yes',
+                )
+              ],
+            ),
+            14.kH,
             14.kH,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -711,6 +749,50 @@ class EditFillFormView3 extends StatelessWidget {
                       moreText: getDisplayString(processStaff.repairStaff)),
                 ),
               ],
+            ),
+            space.kH,
+            BoxContainer(
+              child: Obx(() {
+                return GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: white3,
+                          title: Center(child: Text('ผู้ตรวจซ่อม 2')),
+                          titleTextStyle: TextStyleList.text1,
+                          content: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: fillformController3.userByZone
+                                  .map<Widget>((UsersZone user) {
+                                return ListTile(
+                                  title: Text(user.realname ?? 'No data'),
+                                  onTap: () {
+                                    fillformController3.selectedUser.value =
+                                        user.realname ?? '';
+                                    Navigator.of(context).pop();
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: AbsorbPointer(
+                    child: TextField(
+                      controller: TextEditingController(
+                          text: fillformController3.selectedUser.value),
+                      decoration: InputDecoration(
+                          labelText: 'ผู้ตรวจซ่อม 2',
+                          labelStyle: TextStyleList.text9),
+                    ),
+                  ),
+                );
+              }),
             ),
             100.kH,
           ],

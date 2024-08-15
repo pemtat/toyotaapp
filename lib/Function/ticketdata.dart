@@ -268,6 +268,26 @@ Future<void> fetchNotesPic(
   }
 }
 
+String calculateTimeDifference(RxString timeStart, RxString timeEnd) {
+  // สมมติว่าเวลามีรูปแบบเป็น 'HH:mm'
+
+  // แปลง RxString เป็น DateTime
+  final format = DateFormat('yyyy-MM-dd HH:mm:ss');
+
+  // แปลง RxString เป็น DateTime
+  DateTime startTime = format.parse(timeStart.value);
+  DateTime endTime = format.parse(timeEnd.value);
+
+  // คำนวณส่วนต่างเวลา
+  Duration difference = endTime.difference(startTime);
+
+  // ดึงจำนวนชั่วโมงและนาทีจาก Duration
+  int hours = difference.inHours;
+  int minutes = difference.inMinutes.remainder(60);
+
+  return '$hours ชั่วโมง $minutes นาที';
+}
+
 Future<void> fetchReportData(
   String id,
   String token,
@@ -1046,7 +1066,6 @@ void saveCurrentDateTimeToPMJob(
 
     if (response.statusCode == 201) {
       print('Update time done');
-      // jobDetailController.fetchData(ticketId, jobId);
     } else {
       print('Failed to update time: ${response.statusCode}');
       print('Response body: ${response.body}');

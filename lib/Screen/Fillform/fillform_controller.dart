@@ -16,6 +16,7 @@ import 'package:toyotamobile/Screen/FillForm/adddetail/repair_result.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/wcode.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
+import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
@@ -51,6 +52,7 @@ class FillformController extends GetxController {
   final ProcessStaff processStaffController = Get.put(ProcessStaff());
   final JobDetailController jobDetailController =
       Get.put(JobDetailController());
+  final UserController userController = Get.put(UserController());
   List<String> fieldServiceReportList = [
     'Inspection',
     'Repairing',
@@ -107,9 +109,9 @@ class FillformController extends GetxController {
     String? token = await getToken();
     this.ticketId.value = ticketId;
     this.jobId.value = jobId;
-
+    await userController.fetchData();
     await fetchUserByZone(
-      jobDetailController.userData.first.users!.first.zone ?? '',
+      userController.userInfo.first.zone,
       token ?? '',
       userByZone,
     );
@@ -249,7 +251,7 @@ class FillformController extends GetxController {
             'mast_type': mastType.value.text,
             'customer_fleet': customerFleetNo.value.text,
             'life_height': lifeHeight.value.text,
-            'tech1': jobDetailController.userData.first.users!.first.realName,
+            'tech1': userController.userInfo.first.realName,
             'tech2': selectedUser.value == '' ? '-' : selectedUser.value,
             'bugid': ticketId.value,
             'save_time': saveCompletedtime.value

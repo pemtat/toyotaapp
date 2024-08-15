@@ -234,6 +234,10 @@ class TicketPMDetailView extends StatelessWidget {
                                       ? ShowBatteryReportWidget(
                                           reportData: jobController.reportList,
                                           bugId: ticketId.toString(),
+                                          timeStart:
+                                              jobController.savedDateStartTime,
+                                          timeEnd:
+                                              jobController.savedDateEndTime,
                                         )
                                       : Container())
                                 ],
@@ -274,6 +278,10 @@ class TicketPMDetailView extends StatelessWidget {
                                           reportData: jobController
                                               .reportPreventiveList,
                                           bugId: ticketId.toString(),
+                                          timeStart:
+                                              jobController.savedDateStartTime,
+                                          timeEnd:
+                                              jobController.savedDateEndTime,
                                         )
                                       : Container())
                                 ],

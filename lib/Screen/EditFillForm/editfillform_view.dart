@@ -169,7 +169,7 @@ class EditFillFormView extends StatelessWidget {
                         10.wH,
                         Expanded(
                           child: TextFieldWidget(
-                              text: 'Life Height',
+                              text: 'Lift Height',
                               textSet: fillFormController.lifeHeight.value),
                         ),
                       ],

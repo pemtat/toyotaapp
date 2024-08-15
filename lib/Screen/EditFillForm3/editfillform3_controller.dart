@@ -9,6 +9,7 @@ import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/maintenance_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
+import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/EditFillForm3/editdetail/auxiliarymotor.dart';
 import 'package:toyotamobile/Screen/EditFillForm3/editdetail/batterychecks.dart';
 import 'package:toyotamobile/Screen/EditFillForm3/editdetail/brakesystemchecks.dart';
@@ -41,10 +42,15 @@ import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 class FillformController3 extends GetxController {
   var jobId = ''.obs;
   var readOnly = ''.obs;
-
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
   var reportPreventiveList = <PreventivereportModel>[].obs;
+  final operationHour = TextEditingController().obs;
+  final mastType = TextEditingController().obs;
+  final lifeHeight = TextEditingController().obs;
+  final customerFleetNo = TextEditingController().obs;
+  var userByZone = <UsersZone>[].obs;
+  var selectedUser = ''.obs;
   final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());
   final DriveMotorChecks driveMotorChecks = Get.put(DriveMotorChecks());
   final InitialChecks initialChecks = Get.put(InitialChecks());
@@ -90,6 +96,11 @@ class FillformController3 extends GetxController {
     String? token = await getToken();
     await userController.fetchData();
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
+    await fetchUserByZone(
+      userController.userInfo.first.zone,
+      token ?? '',
+      userByZone,
+    );
     var data = reportPreventiveList.first;
     var fullMaintenanceRecords = data.pvtCheckingTypeMaster;
     var maintenances = data.pvtMaintenance;
@@ -270,7 +281,12 @@ class FillformController3 extends GetxController {
       }
     }
     if (maintenances != []) {
-      if (maintenances!.safetyTravelAlarm == '' &&
+      customerFleetNo.value.text = maintenances!.customerFleet ?? '';
+      operationHour.value.text = maintenances.operationHour ?? '';
+      mastType.value.text = maintenances.mastType ?? '';
+      lifeHeight.value.text = maintenances.liftHeight ?? '';
+      selectedUser.value = maintenances.tech2 ?? '';
+      if (maintenances.safetyTravelAlarm == '' &&
           maintenances.safetyRearviewMirror == '' &&
           maintenances.safetySeatBelt == '') {
         safety.isAllFieldsFilled.value = false;
@@ -652,6 +668,18 @@ class FillformController3 extends GetxController {
         : maintenance.maintenanceList.first.chargingType.first;
     var officer =
         processStaff.repairStaff.isEmpty ? '' : processStaff.repairStaff.first;
+    if (operationHour.value.text == '') {
+      operationHour.value.text = '-';
+    }
+    if (mastType.value.text == '') {
+      mastType.value.text = '-';
+    }
+    if (lifeHeight.value.text == '') {
+      lifeHeight.value.text = '-';
+    }
+    if (customerFleetNo.value.text == '') {
+      customerFleetNo.value.text = '-';
+    }
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
       "safety_travel_alarm": safety.selections[0],
@@ -662,6 +690,11 @@ class FillformController3 extends GetxController {
       "customer_checking": "",
       "customer_score": 0,
       "customer_description": "",
+      "operation_hour": operationHour.value.text,
+      "mast_type": mastType.value.text,
+      "lift_height": lifeHeight.value.text,
+      "customer_fleet": customerFleetNo.value.text,
+      "tech2": selectedUser.value == '' ? '-' : selectedUser.value,
       "hr": maintenance.maintenanceList.first.hr,
       "m": maintenance.maintenanceList.first.people,
       "created_by": userController.userInfo.first.id,

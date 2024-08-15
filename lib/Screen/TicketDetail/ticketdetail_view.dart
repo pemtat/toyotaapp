@@ -360,6 +360,10 @@ class TicketDetailView extends StatelessWidget {
                                           additionalReportData: ticketController
                                               .additionalReportList,
                                           jobId: jobId.toString(),
+                                          timeStart: ticketController
+                                              .savedDateStartTime,
+                                          timeEnd:
+                                              ticketController.savedDateEndTime,
                                         )
                                       : Container())
                                 ],

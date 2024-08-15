@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
+import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/auxiliarymotor.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/batterychecks.dart';
 import 'package:toyotamobile/Screen/FillForm3/adddetail/brakesystemchecks.dart';
@@ -39,6 +40,12 @@ class FillformController3 extends GetxController {
   var jobId = ''.obs;
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
+  final operationHour = TextEditingController().obs;
+  final mastType = TextEditingController().obs;
+  final lifeHeight = TextEditingController().obs;
+  final customerFleetNo = TextEditingController().obs;
+  var userByZone = <UsersZone>[].obs;
+  var selectedUser = ''.obs;
   final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());
   final DriveMotorChecks driveMotorChecks = Get.put(DriveMotorChecks());
   final InitialChecks initialChecks = Get.put(InitialChecks());
@@ -72,8 +79,14 @@ class FillformController3 extends GetxController {
   }
 
   void fetchData(String jobId) async {
+    String? token = await getToken();
     this.jobId.value = jobId;
     await userController.fetchData();
+    await fetchUserByZone(
+      userController.userInfo.first.zone,
+      token ?? '',
+      userByZone,
+    );
   }
 
   Future<void> saveSignature() async {
@@ -408,6 +421,18 @@ class FillformController3 extends GetxController {
     print(maintenance.maintenanceList.first.chargingType.first);
     var officer =
         processStaff.repairStaff.isEmpty ? '' : processStaff.repairStaff.first;
+    if (operationHour.value.text == '') {
+      operationHour.value.text = '-';
+    }
+    if (mastType.value.text == '') {
+      mastType.value.text = '-';
+    }
+    if (lifeHeight.value.text == '') {
+      lifeHeight.value.text = '-';
+    }
+    if (customerFleetNo.value.text == '') {
+      customerFleetNo.value.text = '-';
+    }
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
       "safety_travel_alarm": safety.selections[0],
@@ -418,6 +443,12 @@ class FillformController3 extends GetxController {
       "customer_checking": "",
       "customer_score": 0,
       "customer_description": "",
+      "operation_hour": operationHour.value.text,
+      "mast_type": mastType.value.text,
+      "lift_height": lifeHeight.value.text,
+      "customer_fleet": customerFleetNo.value.text,
+      "tech1": userController.userInfo.first.realName,
+      "tech2": selectedUser.value == '' ? '-' : selectedUser.value,
       "hr": maintenance.maintenanceList.first.hr,
       "m": maintenance.maintenanceList.first.people,
       "created_by": userController.userInfo.first.id,

@@ -490,6 +490,10 @@ class JobDetailView extends StatelessWidget {
                                                     jobController
                                                         .additionalReportList,
                                                 jobId: jobId.toString(),
+                                                timeStart: jobController
+                                                    .savedDateStartTime,
+                                                timeEnd: jobController
+                                                    .savedDateEndTime,
                                               ),
                                               Obx(() {
                                                 if (jobController.reportList

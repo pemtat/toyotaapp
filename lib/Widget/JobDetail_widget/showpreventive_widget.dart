@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -15,8 +16,15 @@ import 'package:toyotamobile/Widget/title_widget.dart';
 class ShowPreventiveReportWidget extends StatelessWidget {
   final RxList<PreventivereportModel> reportData;
   final String bugId;
-  const ShowPreventiveReportWidget(
-      {super.key, required this.reportData, required this.bugId});
+  final RxString timeStart;
+  final RxString timeEnd;
+  const ShowPreventiveReportWidget({
+    super.key,
+    required this.reportData,
+    required this.bugId,
+    required this.timeStart,
+    required this.timeEnd,
+  });
   @override
   Widget build(BuildContext context) {
     var data = reportData.first;
@@ -40,6 +48,20 @@ class ShowPreventiveReportWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                BoxInfo2(
+                    title: 'Operation Hour',
+                    value: maintenance!.operationHour ?? '-'),
+                space.kH,
+                BoxInfo2(
+                    title: 'Mast Type', value: maintenance.mastType ?? '-'),
+                space.kH,
+                BoxInfo2(
+                    title: 'Customer Fleet',
+                    value: maintenance.customerFleet ?? '-'),
+                space.kH,
+                BoxInfo2(
+                    title: 'Lift Hieght', value: maintenance.liftHeight ?? '-'),
+                space.kH,
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -99,7 +121,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 4.kH,
                 BoxInfo(
                     title: 'Travel Alarm',
-                    value: maintenance!.safetyTravelAlarm!.isEmpty
+                    value: maintenance.safetyTravelAlarm!.isEmpty
                         ? '-'
                         : maintenance.safetyTravelAlarm ?? ''),
                 BoxInfo(
@@ -197,8 +219,27 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                       ? '-'
                       : maintenance.officerChecking,
                 ),
-                space.kH,
 
+                space.kH,
+                TitleApp2(
+                    text: 'ผู้ตรวจซ่อม 1', moreText: maintenance.tech1 ?? ''),
+                space.kH,
+                TitleApp2(
+                    text: 'ผู้ตรวจซ่อม 2', moreText: maintenance.tech2 ?? ''),
+
+                Obx(() => (timeStart.value != '' && timeEnd.value != '')
+                    ? Column(
+                        children: [
+                          space.kH,
+                          TitleApp2(
+                              text: 'ระยะเวลาการทำงาน',
+                              moreText:
+                                  calculateTimeDifference(timeStart, timeEnd)),
+                        ],
+                      )
+                    : Container()),
+
+                4.kH,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -209,6 +250,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                     )
                   ],
                 ),
+
                 if (maintenance.signaturePad != null)
                   Center(
                       child: Column(
