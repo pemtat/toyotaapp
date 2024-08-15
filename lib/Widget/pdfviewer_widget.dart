@@ -55,7 +55,7 @@ class _PdfBase64ViewState extends State<PdfBase64View> {
         ),
       ),
       body: _isLoading
-          ? Center(child: CircleLoading())
+          ? const Center(child: DataCircleLoading())
           : PDFViewer(document: _document!),
     );
   }
