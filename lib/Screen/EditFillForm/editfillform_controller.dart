@@ -111,7 +111,7 @@ class EditFillformController extends GetxController {
       serialNo.value.text = reportData.serialNo ?? '';
       operationHour.value.text = reportData.operationHour ?? '';
       mastType.value.text = reportData.mastType ?? '';
-      lifeHeight.value.text = reportData.lifeHeight ?? '';
+      lifeHeight.value.text = reportData.liftHeight ?? '';
       selectedUser.value = reportData.tech2 ?? '';
       errorCode.value.text = reportData.errorCodeReport ?? '';
       workorderNumber.value.text = reportData.orderNo ?? '';
@@ -124,9 +124,7 @@ class EditFillformController extends GetxController {
       if (reportData.repairResult != '') {
         chargingTypeChoose.add(reportData.repairResult ?? '');
       }
-      if (reportData.m != '0' &&
-          reportData.hr != '0' &&
-          chargingTypeChoose.isNotEmpty) {
+      if (reportData.m != '0' && chargingTypeChoose.isNotEmpty) {
         final newBatteryInfo = MaintenanceModel(
             people: double.tryParse(reportData.m ?? '0') ?? 0,
             hr: double.tryParse(reportData.hr ?? '0') ?? 0,
@@ -325,7 +323,7 @@ class EditFillformController extends GetxController {
           'operation_hour': operationHour.value.text,
           'mast_type': mastType.value.text,
           'customer_fleet': customerFleetNo.value.text,
-          'life_height': lifeHeight.value.text,
+          'lift_height': lifeHeight.value.text,
           'tech2': selectedUser.value == '' ? '-' : selectedUser.value,
           'bugid': ticketId.value,
           'save_time': saveCompletedtime.value

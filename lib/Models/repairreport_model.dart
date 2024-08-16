@@ -25,7 +25,7 @@ class RepairReportModel {
   String? changeOnPm;
   String? operationHour;
   String? mastType;
-  String? lifeHeight;
+  String? liftHeight;
   String? customerFleet;
   String? tech1;
   String? tech2;
@@ -67,7 +67,7 @@ class RepairReportModel {
     this.customerFleet,
     this.customerName,
     this.department,
-    this.lifeHeight,
+    this.liftHeight,
     this.mastType,
     this.model,
     this.operationHour,
@@ -107,7 +107,7 @@ class RepairReportModel {
     customerFleet = json['customer_fleet'];
     customerName = json['customer_name'];
     department = json['department'];
-    lifeHeight = json['life_height'];
+    liftHeight = json['lift_height'];
     mastType = json['mast_type'];
     model = json['model'];
     operationHour = json['operation_hour'];
@@ -148,7 +148,7 @@ class RepairReportModel {
     data['customer_fleet'] = customerFleet;
     data['customer_name'] = customerName;
     data['department'] = department;
-    data['life_height'] = lifeHeight;
+    data['lift_height'] = liftHeight;
     data['mast_type'] = mastType;
     data['model'] = model;
     data['operation_hour'] = operationHour;

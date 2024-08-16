@@ -266,7 +266,7 @@ class FillformController extends GetxController {
             'operation_hour': operationHour.value.text,
             'mast_type': mastType.value.text,
             'customer_fleet': customerFleetNo.value.text,
-            'life_height': lifeHeight.value.text,
+            'lift_height': lifeHeight.value.text,
             'tech1': userController.userInfo.first.realName,
             'tech2': selectedUser.value == '' ? '-' : selectedUser.value,
             'bugid': ticketId.value,

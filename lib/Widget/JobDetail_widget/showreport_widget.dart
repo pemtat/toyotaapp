@@ -75,7 +75,7 @@ class ShowRepairReport extends StatelessWidget {
                   space.kH,
                   BoxInfo2(title: 'Mast Type', value: data.mastType ?? '-'),
                   space.kH,
-                  BoxInfo2(title: 'Lift Hieght', value: data.lifeHeight ?? '-'),
+                  BoxInfo2(title: 'Lift Hieght', value: data.liftHeight ?? '-'),
                   space.kH,
                   BoxInfo2(
                       title: 'Customer Fleet',

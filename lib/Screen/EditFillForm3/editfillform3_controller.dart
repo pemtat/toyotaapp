@@ -314,9 +314,7 @@ class FillformController3 extends GetxController {
       if (maintenances.mtServiceResult != '') {
         chargingTypeChoose.add(maintenances.mtServiceResult ?? '');
       }
-      if (maintenances.m != '0' &&
-          maintenances.hr != '0' &&
-          chargingTypeChoose.isNotEmpty) {
+      if (maintenances.m != '0' && chargingTypeChoose.isNotEmpty) {
         final newBatteryInfo = MaintenanceModel(
             people: double.tryParse(maintenances.m ?? '0') ?? 0,
             hr: double.tryParse(maintenances.hr ?? '0') ?? 0,
