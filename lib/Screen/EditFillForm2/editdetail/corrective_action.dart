@@ -85,9 +85,10 @@ class CorrectiveAction extends GetxController {
   List<String> correctiveActionList = [
     'New battery set',
     'New battery cell',
-    'New Components',
+    'New components',
     'Equalizing charge',
     'Sp.Gr.Adjustment',
+    'เกิดอุบัติเหตุ(เสนอราคา)',
     'Other',
   ];
 }

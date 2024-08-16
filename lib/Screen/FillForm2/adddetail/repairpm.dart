@@ -14,6 +14,7 @@ class RepairPM extends GetxController {
     repairPmChoose.addAll(repairPm);
 
     otherChoose.value.text = other2.text;
+    otherCellChoose.value.text = otherCell2.text;
     ShowModalWidget(
       children: [
         Row(
@@ -41,6 +42,7 @@ class RepairPM extends GetxController {
                 child: CheckBoxWidget(
                   option: 'yes',
                   other: otherChoose,
+                  other2: otherCellChoose,
                   text: repairPmList[index],
                   listItem: repairPmChoose,
                   itemSet: repairPmChoose,
@@ -62,12 +64,29 @@ class RepairPM extends GetxController {
             return Container();
           }
         }),
+        Obx(() {
+          if (repairPmChoose.contains('Replace new cell battery')) {
+            return Column(
+              children: [
+                6.kH,
+                TextFieldEditWidget(
+                  text: 'Cell Battery',
+                  textSet: otherCellChoose.value,
+                ),
+              ],
+            );
+          } else {
+            return Container();
+          }
+        }),
         space.kH,
         EndButton(
           onPressed: () {
             repairPm.clear();
             other.value = otherChoose.value;
             other2.text = otherChoose.value.text;
+            otherCell.value = otherCellChoose.value;
+            otherCell2.text = otherCellChoose.value.text;
             repairPm.addAll(repairPmChoose);
             Navigator.pop(context);
           },
@@ -82,10 +101,12 @@ class RepairPM extends GetxController {
   final other = TextEditingController().obs;
   final other2 = TextEditingController();
   final otherChoose = TextEditingController().obs;
-
+  final otherCell = TextEditingController().obs;
+  final otherCell2 = TextEditingController();
+  final otherCellChoose = TextEditingController().obs;
   List<String> repairPmList = [
     'Sp.Gr. Adjustment done',
-    'Clean Battery',
+    'Clean battery',
     'Rell distilled water',
     'Replace new cell battery',
     'Replace new components',

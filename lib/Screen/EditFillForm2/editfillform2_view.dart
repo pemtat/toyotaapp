@@ -338,6 +338,7 @@ class EditFillFormView2 extends StatelessWidget {
                     onTap: () => repairPmController.repairPMModal(context),
                     moreText: getDisplayString(repairPmController.repairPm),
                     other: repairPmController.other,
+                    other2: repairPmController.otherCell,
                   ),
                 ),
               ],

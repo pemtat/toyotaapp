@@ -13,6 +13,7 @@ class CheckBoxWidget extends StatelessWidget {
   final String? readOnly;
   final RxList<String> itemSet;
   final Rx<TextEditingController>? other;
+  final Rx<TextEditingController>? other2;
   const CheckBoxWidget(
       {super.key,
       required this.text,
@@ -20,6 +21,7 @@ class CheckBoxWidget extends StatelessWidget {
       required this.itemSet,
       this.option,
       this.other,
+      this.other2,
       this.readOnly});
 
   @override
@@ -34,6 +36,10 @@ class CheckBoxWidget extends StatelessWidget {
             if (readOnly == null) {
               if (option != null && other == null) {
                 if (!listItem.contains(text)) updateCheckbox3(text, itemSet);
+              } else if (option != null && other != null && other2 != null) {
+                if (!listItem.contains(text)) {
+                  updateCheckbox4other(text, itemSet, other!, other2!);
+                }
               } else if (option != null && other != null) {
                 if (!listItem.contains(text)) {
                   updateCheckbox3other(text, itemSet, other!);

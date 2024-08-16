@@ -92,6 +92,14 @@ void updateCheckbox3other(
   data.add(label);
 }
 
+void updateCheckbox4other(String label, RxList<String> data,
+    Rx<TextEditingController> other, Rx<TextEditingController> other2) {
+  data.clear();
+  other.value.clear();
+  other2.value.clear();
+  data.add(label);
+}
+
 void updateSelection(int index, String value, RxList<String> selectionsChoose) {
   selectionsChoose[index] = value;
 }

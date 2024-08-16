@@ -129,6 +129,11 @@ class FillformController2 extends GetxController {
         repairPmController.repairPm.clear();
         repairPmController.repairPm
             .add('Other : ${repairPmController.other.value.text}');
+      } else if (repairPmController.repairPm.first ==
+          'Replace new cell battery') {
+        repairPmController.repairPm.clear();
+        repairPmController.repairPm.add(
+            'Replace new cell battery : ${repairPmController.otherCell.value.text}');
       }
     }
     batteryInfoController.batteryInformationList.isEmpty

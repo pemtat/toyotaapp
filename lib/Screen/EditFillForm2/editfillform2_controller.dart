@@ -250,6 +250,17 @@ class EditFillformController2 extends GetxController {
             repairPmController.other2.text = parts[1].trim();
           }
         }
+      } else if (info1.repairPm!.contains('Replace new cell battery')) {
+        repairPmController.repairPm.add('Replace new cell battery');
+
+        if (info1.repairPm!.contains(':')) {
+          List<String> parts = info1.repairPm!.split(':');
+
+          if (parts.length > 1) {
+            repairPmController.otherCell.value.text = parts[1].trim();
+            repairPmController.otherCell2.text = parts[1].trim();
+          }
+        }
       } else {
         repairPmController.repairPm.add(info1.repairPm ?? '');
       }
@@ -290,6 +301,11 @@ class EditFillformController2 extends GetxController {
         repairPmController.repairPm.clear();
         repairPmController.repairPm
             .add('Other : ${repairPmController.other.value.text}');
+      } else if (repairPmController.repairPm.first ==
+          'Replace new cell battery') {
+        repairPmController.repairPm.clear();
+        repairPmController.repairPm.add(
+            'Replace new cell battery : ${repairPmController.otherCell.value.text}');
       }
     }
     batteryInfoController.batteryInformationList.isEmpty

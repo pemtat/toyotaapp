@@ -11,6 +11,7 @@ class AddEditBox extends StatelessWidget {
   final String? readOnly;
   final String moreText;
   final Rx<TextEditingController>? other;
+  final Rx<TextEditingController>? other2;
 
   const AddEditBox({
     super.key,
@@ -20,6 +21,7 @@ class AddEditBox extends StatelessWidget {
     required this.moreText,
     this.readOnly,
     this.other,
+    this.other2,
   });
 
   @override
@@ -41,7 +43,7 @@ class AddEditBox extends StatelessWidget {
           if (list.isNotEmpty) {
             bool hasOtherOnly = list.length == 1 &&
                 (list.contains('Other') ||
-                    list.contains('H') ||
+                    list.contains('Replace new cell battery') ||
                     list.contains('M'));
 
             return Column(
@@ -57,9 +59,9 @@ class AddEditBox extends StatelessWidget {
                     'Other : ${other!.value.text}',
                     style: TextStyleList.text12,
                   ),
-                if (list.contains('HR') && other != null)
+                if (list.contains('Replace new cell battery') && other2 != null)
                   Text(
-                    'HR : ${other!.value.text}',
+                    'Replace new cell battery : ${other2!.value.text}',
                     style: TextStyleList.text12,
                   ),
                 if (list.contains('M') && other != null)
