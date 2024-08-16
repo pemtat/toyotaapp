@@ -93,6 +93,20 @@ class FillformController3 extends GetxController {
       token ?? '',
       userByZone,
     );
+    if (jobDetailControllerPM.customer != null) {
+      customerName.value.text =
+          jobDetailControllerPM.customer!.customerName ?? '';
+    }
+    if (jobDetailControllerPM.userData.isNotEmpty) {
+      contactedName.value.text =
+          jobDetailControllerPM.userData.first.users!.first.realName ?? '';
+    }
+    if (jobDetailControllerPM.warrantyInfoList.isNotEmpty) {
+      product.value.text =
+          jobDetailControllerPM.warrantyInfoList.first.productName;
+      model.value.text = jobDetailControllerPM.warrantyInfoList.first.model;
+      serialNo.value.text = jobDetailControllerPM.warrantyInfoList.first.serial;
+    }
   }
 
   Future<void> saveSignature() async {
@@ -478,7 +492,11 @@ class FillformController3 extends GetxController {
       "customer_fleet": customerFleetNo.value.text,
       "tech1": userController.userInfo.first.realName,
       "tech2": selectedUser.value == '' ? '-' : selectedUser.value,
-      "hr": maintenance.maintenanceList.first.hr,
+      "hr": jobDetailControllerPM.savedDateStartTime.value != '' &&
+              jobDetailControllerPM.savedDateEndTime.value != ''
+          ? calculateTimeDifference(jobDetailControllerPM.savedDateStartTime,
+              jobDetailControllerPM.savedDateEndTime)
+          : '-',
       "m": maintenance.maintenanceList.first.people,
       "created_by": userController.userInfo.first.id,
       "pvt_maintenance_details": combinedList,

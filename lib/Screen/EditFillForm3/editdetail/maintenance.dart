@@ -44,16 +44,16 @@ class Maintenance extends GetxController {
                 ));
           },
         ),
-        space.kH,
-        TextFieldWidget(
-          text: 'ประมาณการซ่อมชั่วโมง (HR)',
-          textSet: people.value,
-          number: TextInputType.number,
-        ),
-        8.kH,
+        // space.kH,
+        // TextFieldWidget(
+        //   text: 'ประมาณการซ่อมชั่วโมง (HR)',
+        //   textSet: people.value,
+        //   number: TextInputType.number,
+        // ),
+        // 8.kH,
         TextFieldWidget(
           text: 'จำนวนคน (M)',
-          textSet: hr.value,
+          textSet: people.value,
           number: TextInputType.number,
         ),
         space.kH,
@@ -102,12 +102,12 @@ class Maintenance extends GetxController {
                 ));
           },
         ),
-        space.kH,
-        TextFieldEditWidget(
-          text: 'ประมาณการซ่อม ชั่วโมง (HR)',
-          textSet: hr.value,
-        ),
-        8.kH,
+        // space.kH,
+        // TextFieldEditWidget(
+        //   text: 'ประมาณการซ่อม ชั่วโมง (HR)',
+        //   textSet: hr.value,
+        // ),
+        // 8.kH,
         TextFieldEditWidget(
           text: 'จำนวนคน (M)',
           textSet: people.value,

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -225,7 +224,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 space2.kH,
                 TitleApp2(
                   text: 'ประมาณการซ่อม ชั่วโมง(HR)',
-                  moreText: maintenance.hr == '0' ? '-' : maintenance.hr,
+                  moreText: maintenance.hr == '-' ? '-' : maintenance.hr,
                 ),
                 space2.kH,
                 TitleApp2(
@@ -246,18 +245,6 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 space.kH,
                 TitleApp2(
                     text: 'ผู้ตรวจซ่อม 2', moreText: maintenance.tech2 ?? ''),
-
-                Obx(() => (timeStart.value != '' && timeEnd.value != '')
-                    ? Column(
-                        children: [
-                          space.kH,
-                          TitleApp2(
-                              text: 'ระยะเวลาการทำงาน',
-                              moreText:
-                                  calculateTimeDifference(timeStart, timeEnd)),
-                        ],
-                      )
-                    : Container()),
 
                 4.kH,
                 Row(

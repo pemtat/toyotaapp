@@ -72,7 +72,7 @@ class TextFieldWidget extends StatelessWidget {
                         ),
                       ),
                 contentPadding: const EdgeInsets.symmetric(
-                  vertical: 14.0,
+                  vertical: 10.0,
                   horizontal: 19.0,
                 ),
               ),
@@ -174,7 +174,7 @@ class TextFieldList extends StatelessWidget {
                         ),
                       ),
                 contentPadding: const EdgeInsets.symmetric(
-                  vertical: 14.0,
+                  vertical: 10.0,
                   horizontal: 19.0,
                 ),
               ),
@@ -273,7 +273,7 @@ class TextFieldEditWidget extends StatelessWidget {
                         ),
                       ),
                 contentPadding: const EdgeInsets.symmetric(
-                    vertical: 14.0, horizontal: 19.0),
+                    vertical: 10.0, horizontal: 19.0),
               ),
             ),
           ),

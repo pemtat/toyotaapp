@@ -731,7 +731,6 @@ class FillformController3 extends GetxController {
       "lift_height": lifeHeight.value.text,
       "customer_fleet": customerFleetNo.value.text,
       "tech2": selectedUser.value == '' ? '-' : selectedUser.value,
-      "hr": maintenance.maintenanceList.first.hr,
       "m": maintenance.maintenanceList.first.people,
       "created_by": userController.userInfo.first.id,
       "pvt_maintenance_details": combinedList,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/maintenance_model.dart';
 import 'package:toyotamobile/Models/repair_procedure.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
@@ -119,33 +120,20 @@ class EditFillformController extends GetxController {
         fieldServiceReport.add(reportData.fieldReport ?? '');
       }
 
-      if (reportData.repairResult != '-') {
-        if (reportData.repairResult!.contains('HR')) {
-          repairResultController.repairResult.add('HR');
-
-          if (reportData.repairResult!.contains(':')) {
-            List<String> parts = reportData.repairResult!.split(':');
-
-            if (parts.length > 1) {
-              repairResultController.other.value.text = parts[1].trim();
-              repairResultController.other2.text = parts[1].trim();
-            }
-          }
-        } else if (reportData.repairResult!.contains('M')) {
-          repairResultController.repairResult.add('M');
-          if (reportData.repairResult!.contains(':')) {
-            List<String> parts = reportData.repairResult!.split(':');
-
-            if (parts.length > 1) {
-              repairResultController.other.value.text = parts[1].trim();
-              repairResultController.other2.text = parts[1].trim();
-            }
-          }
-        } else {
-          repairResultController.repairResult
-              .add(reportData.repairResult ?? '');
-        }
+      var chargingTypeChoose = <String>[].obs;
+      if (reportData.repairResult != '') {
+        chargingTypeChoose.add(reportData.repairResult ?? '');
       }
+      if (reportData.m != '0' &&
+          reportData.hr != '0' &&
+          chargingTypeChoose.isNotEmpty) {
+        final newBatteryInfo = MaintenanceModel(
+            people: double.tryParse(reportData.m ?? '0') ?? 0,
+            hr: double.tryParse(reportData.hr ?? '0') ?? 0,
+            chargingType: chargingTypeChoose);
+        repairResultController.maintenanceList.add(newBatteryInfo);
+      }
+
       if (reportData.processStaff != '-') {
         repairStaffController.repairStaff.add(reportData.processStaff ?? '');
       }
@@ -248,26 +236,20 @@ class EditFillformController extends GetxController {
     String? token = await getToken();
     try {
       if (relationId.value != '') {
-        if (repairResultController.repairResult.isNotEmpty) {
-          if (repairResultController.repairResult.first == 'H') {
-            repairResultController.repairResult.clear();
-            repairResultController.repairResult
-                .add('H : ${repairResultController.other.value.text}');
-          } else if (repairResultController.repairResult.first == 'M') {
-            repairResultController.repairResult.clear();
-            repairResultController.repairResult
-                .add('M : ${repairResultController.other.value.text}');
-          }
-        }
+        repairResultController.maintenanceList.isEmpty
+            ? repairResultController.repairResultWrite()
+            : repairResultController.maintenanceList.first;
+        repairResultController.maintenanceList.first.chargingType.isEmpty
+            ? repairResultController.maintenanceList.first.chargingType.add('')
+            : repairResultController.maintenanceList.first.chargingType.first;
+
         if (fieldServiceReport.isEmpty) {
           fieldServiceReport.add('-');
         }
         if (wcodeController.wCode.isEmpty) {
           wcodeController.wCode.add('-');
         }
-        if (repairResultController.repairResult.isEmpty) {
-          repairResultController.repairResult.add('-');
-        }
+
         if (repairStaffController.repairStaff.isEmpty) {
           repairStaffController.repairStaff.add('-');
         }
@@ -329,7 +311,9 @@ class EditFillformController extends GetxController {
           'w_code': wcodeController.wCode.first,
           'produre': rPController.repairProcedureList.first.repairProcedure,
           'problem': rPController.repairProcedureList.first.causeProblem,
-          'repair_result': repairResultController.repairResult.first,
+          'repair_result':
+              repairResultController.maintenanceList.first.chargingType.first,
+          "m": repairResultController.maintenanceList.first.people,
           'process_staff': repairStaffController.repairStaff.first,
           'relation_id': relationId.value,
           'customer_name': customerName.value.text,

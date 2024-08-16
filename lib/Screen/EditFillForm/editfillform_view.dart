@@ -16,6 +16,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/EditFillForm_widget/Sparepart_widget.dart';
 import 'package:toyotamobile/Widget/EditFillForm_widget/repairprodecure_widget.dart';
+import 'package:toyotamobile/Widget/EditFillForm_widget/repairresult.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -352,20 +353,38 @@ class EditFillFormView extends StatelessWidget {
                       ],
                     )),
                 space.kH,
-                BoxContainer(
-                  children: [
-                    Obx(
-                      () => AddEditBox(
-                          readOnly: readOnly == null ? null : 'yes',
-                          other: repairResultController.other,
+                Obx(
+                  () => BoxContainer(
+                    children: [
+                      TitleWithButton(
                           titleText: 'Repair Result',
-                          list: repairResultController.repairResult,
-                          onTap: () =>
-                              repairResultController.repairResultModal(context),
-                          moreText: getDisplayString(
-                              repairResultController.repairResult)),
-                    ),
-                  ],
+                          button: repairResultController.maintenanceList.isEmpty
+                              ? AddButton(
+                                  onTap: () {
+                                    repairResultController
+                                        .repairResultModal(context);
+                                  },
+                                )
+                              : Container()),
+                      repairResultController.maintenanceList.isNotEmpty
+                          ? ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount:
+                                  repairResultController.maintenanceList.length,
+                              itemBuilder: (context, index) {
+                                final info = repairResultController
+                                    .maintenanceList[index];
+                                return RepairResultWidget(
+                                  info: info,
+                                  index: index,
+                                  repairResult: repairResultController,
+                                );
+                              },
+                            )
+                          : const SizedBox()
+                    ],
+                  ),
                 ),
                 space.kH,
                 BoxContainer(

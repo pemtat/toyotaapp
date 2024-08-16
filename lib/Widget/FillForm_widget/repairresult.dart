@@ -3,22 +3,20 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Models/maintenance_model.dart';
-import 'package:toyotamobile/Screen/EditFillForm3/editdetail/maintenance.dart';
+import 'package:toyotamobile/Screen/FillForm/adddetail/repair_result.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
-class MaintenanceWidget extends StatelessWidget {
+class RepairResultWidget extends StatelessWidget {
   final MaintenanceModel info;
   final int index;
-  final String? readOnly;
-  final Maintenance batteryUsageController;
-  const MaintenanceWidget({
+  final RepairResult repairResult;
+  const RepairResultWidget({
     super.key,
     required this.info,
     required this.index,
-    this.readOnly,
-    required this.batteryUsageController,
+    required this.repairResult,
   });
 
   @override
@@ -72,47 +70,45 @@ class MaintenanceWidget extends StatelessWidget {
               ],
             ),
           ),
-          if (readOnly == null)
-            Positioned(
-              top: 16,
-              right: 16,
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  popupMenuTheme: const PopupMenuThemeData(
-                    color: white3,
-                  ),
-                ),
-                child: PopupMenuButton(
-                  offset: const Offset(0, 30),
-                  itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                    PopupMenuItem(
-                      value: 'edit',
-                      child: Text(
-                        'Edit',
-                        style: TextStyleList.text9,
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'delete',
-                      child: Text('Delete', style: TextStyleList.text9),
-                    ),
-                  ],
-                  child: Image.asset(
-                    'assets/boxedit.png',
-                    width: 24,
-                    height: 24,
-                  ),
-                  onSelected: (value) {
-                    if (value == 'edit') {
-                      batteryUsageController.batteryUsageModalEditModal(
-                          context, info);
-                    } else if (value == 'delete') {
-                      batteryUsageController.maintenanceList.removeAt(index);
-                    }
-                  },
+          Positioned(
+            top: 16,
+            right: 16,
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                popupMenuTheme: const PopupMenuThemeData(
+                  color: white3,
                 ),
               ),
-            )
+              child: PopupMenuButton(
+                offset: const Offset(0, 30),
+                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                  PopupMenuItem(
+                    value: 'edit',
+                    child: Text(
+                      'Edit',
+                      style: TextStyleList.text9,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'delete',
+                    child: Text('Delete', style: TextStyleList.text9),
+                  ),
+                ],
+                child: Image.asset(
+                  'assets/boxedit.png',
+                  width: 24,
+                  height: 24,
+                ),
+                onSelected: (value) {
+                  if (value == 'edit') {
+                    repairResult.repairResultEditModal(context, info);
+                  } else if (value == 'delete') {
+                    repairResult.maintenanceList.removeAt(index);
+                  }
+                },
+              ),
+            ),
+          )
         ],
       ),
     );

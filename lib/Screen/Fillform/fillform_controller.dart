@@ -43,6 +43,7 @@ class FillformController extends GetxController {
   var isFormComplete = false.obs;
   final TextEditingController signatureController = TextEditingController();
   var selectedUser = ''.obs;
+
   var usersList = <UsersZone>[].obs;
   final RepairProcedure rPController = Get.put(RepairProcedure());
   final SparepartList sparePartListController = Get.put(SparepartList());
@@ -97,7 +98,7 @@ class FillformController extends GetxController {
         wcodeController.wCode.isEmpty ||
         rPController.repairProcedure.value.text.isEmpty ||
         rPController.causeProblem.value.text.isEmpty ||
-        repairResultController.repairResult.isEmpty ||
+        repairResultController.maintenanceList.isEmpty ||
         processStaffController.repairStaff.isEmpty) {
       isComplete = false;
     }
@@ -115,6 +116,20 @@ class FillformController extends GetxController {
       token ?? '',
       userByZone,
     );
+    if (jobDetailController.customerInfo.isNotEmpty) {
+      customerName.value.text =
+          jobDetailController.customerInfo.first.customerName ?? '';
+    }
+    if (jobDetailController.userData.isNotEmpty) {
+      contactedName.value.text =
+          jobDetailController.userData.first.users!.first.realName ?? '';
+    }
+    if (jobDetailController.warrantyInfo.isNotEmpty) {
+      product.value.text =
+          jobDetailController.warrantyInfo.first.nametruck ?? '';
+      model.value.text = jobDetailController.warrantyInfo.first.model ?? '';
+      serialNo.value.text = jobDetailController.warrantyInfo.first.serial ?? '';
+    }
   }
 
   void clearSignature() {
@@ -151,27 +166,20 @@ class FillformController extends GetxController {
 
       if (response.statusCode == 200) {
         List<dynamic> highRelationData = json.decode(response.body);
+        repairResultController.maintenanceList.isEmpty
+            ? repairResultController.repairResultWrite()
+            : repairResultController.maintenanceList.first;
+        repairResultController.maintenanceList.first.chargingType.isEmpty
+            ? repairResultController.maintenanceList.first.chargingType.add('')
+            : repairResultController.maintenanceList.first.chargingType.first;
 
-        if (repairResultController.repairResult.isNotEmpty) {
-          if (repairResultController.repairResult.first == 'HR') {
-            repairResultController.repairResult.clear();
-            repairResultController.repairResult
-                .add('HR : ${repairResultController.other.value.text}');
-          } else if (repairResultController.repairResult.first == 'M') {
-            repairResultController.repairResult.clear();
-            repairResultController.repairResult
-                .add('M : ${repairResultController.other.value.text}');
-          }
-        }
         if (fieldServiceReport.isEmpty) {
           fieldServiceReport.add('-');
         }
         if (wcodeController.wCode.isEmpty) {
           wcodeController.wCode.add('-');
         }
-        if (repairResultController.repairResult.isEmpty) {
-          repairResultController.repairResult.add('-');
-        }
+
         if (processStaffController.repairStaff.isEmpty) {
           processStaffController.repairStaff.add('-');
         }
@@ -238,7 +246,15 @@ class FillformController extends GetxController {
             'w_code': wcodeController.wCode.first,
             'produre': rPController.repairProcedureList.first.repairProcedure,
             'problem': rPController.repairProcedureList.first.causeProblem,
-            'repair_result': repairResultController.repairResult.first,
+            'repair_result':
+                repairResultController.maintenanceList.first.chargingType.first,
+            "hr": jobDetailController.savedDateStartTime.value != '' &&
+                    jobDetailController.savedDateEndTime.value != ''
+                ? calculateTimeDifference(
+                    jobDetailController.savedDateStartTime,
+                    jobDetailController.savedDateEndTime)
+                : '-',
+            "m": repairResultController.maintenanceList.first.people,
             'process_staff': processStaffController.repairStaff.first,
             'relation_id': highRelation,
             'customer_name': customerName.value.text,

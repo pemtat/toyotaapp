@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
@@ -213,22 +212,18 @@ class ShowRepairReport extends StatelessWidget {
                       title: 'Repair Result', value: data.repairResult ?? ''),
                   space.kH,
                   BoxInfo2(
+                      title: 'ประมาณการซ่อม ชั่วโมง(HR)', value: data.hr ?? ''),
+                  space.kH,
+                  BoxInfo2(
+                      title: 'จำนวนคน(M)',
+                      value: data.m == '0' ? '-' : data.m ?? '-'),
+                  space.kH,
+                  BoxInfo2(
                       title: 'Process staff', value: data.processStaff ?? ''),
                   space.kH,
                   BoxInfo2(title: 'ผู้ตรวจซ่อม 1', value: data.tech1 ?? ''),
                   space.kH,
                   BoxInfo2(title: 'ผู้ตรวจซ่อม 2', value: data.tech2 ?? ''),
-                  Obx(() => (timeStart.value != '' && timeEnd.value != '')
-                      ? Column(
-                          children: [
-                            space.kH,
-                            BoxInfo2(
-                                title: 'ระยะเวลาการทำงาน',
-                                value: calculateTimeDifference(
-                                    timeStart, timeEnd)),
-                          ],
-                        )
-                      : Container()),
                   4.kH,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

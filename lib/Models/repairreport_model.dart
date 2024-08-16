@@ -10,6 +10,8 @@ class RepairReportModel {
   String? produre;
   String? problem;
   String? repairResult;
+  String? hr;
+  String? m;
   String? processStaff;
   String? relationId;
   String? saveTime;
@@ -47,6 +49,8 @@ class RepairReportModel {
     this.produre,
     this.problem,
     this.repairResult,
+    this.hr,
+    this.m,
     this.processStaff,
     this.relationId,
     this.saveTime,
@@ -85,6 +89,8 @@ class RepairReportModel {
     produre = json['produre'];
     problem = json['problem'];
     repairResult = json['repair_result'];
+    hr = json['hr'];
+    m = json['m'];
     processStaff = json['process_staff'];
     relationId = json['relation_id'];
     saveTime = json['save_time'];
@@ -124,6 +130,8 @@ class RepairReportModel {
     data['produre'] = produre;
     data['problem'] = problem;
     data['repair_result'] = repairResult;
+    data['hr'] = hr;
+    data['m'] = m;
     data['process_staff'] = processStaff;
     data['relation_id'] = relationId;
     data['save_time'] = saveTime;
