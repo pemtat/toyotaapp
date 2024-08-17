@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:advance_pdf_viewer2/advance_pdf_viewer.dart';
@@ -32,9 +33,10 @@ class _PdfBase64ViewState extends State<PdfBase64View> {
     Uint8List bytes = base64Decode(base64String);
 
     Directory tempDir = await getTemporaryDirectory();
-    File tempFile = File('${tempDir.path}/temp.pdf');
-    await tempFile.writeAsBytes(bytes);
+    String randomNumber = (Random().nextInt(900000000) + 100000000).toString();
 
+    File tempFile = File('${tempDir.path}/temp_$randomNumber.pdf');
+    await tempFile.writeAsBytes(bytes);
     PDFDocument document = await PDFDocument.fromFile(tempFile);
 
     setState(() {
