@@ -130,8 +130,6 @@ class PeddingtaskController extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () {
-            // changeIssueStatus(issueId, 'confirmed');
-
             updateAcceptStatusSubjobs(jobId, issueId.toString(), '102');
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);

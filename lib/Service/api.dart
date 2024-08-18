@@ -92,7 +92,7 @@ String deletePmJobImage() {
   return '$url/api/rest/pm_jobs/delete_image';
 }
 
-String updateIssueStatusById(int issueId) {
+String updateIssueStatusById(String issueId) {
   return '$issue/$issueId';
 }
 

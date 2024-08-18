@@ -819,7 +819,7 @@ void showTimeDialogPM(
   );
 }
 
-void changeIssueStatus(int issueId, String status) async {
+void changeIssueStatus(String issueId, String status) async {
   final String updateStatus = updateIssueStatusById(issueId);
 
   String? token = await getToken();
@@ -836,9 +836,9 @@ void changeIssueStatus(int issueId, String status) async {
     body: jsonEncode(body),
   );
   if (response.statusCode == 200) {
-    jobController.fetchDataFromAssignJob();
-    bottomController.currentIndex.value = 0;
-    Get.offAll(() => BottomBarView());
+    // jobController.fetchDataFromAssignJob();
+    // bottomController.currentIndex.value = 0;
+    // Get.offAll(() => BottomBarView());
   }
 }
 
@@ -1199,7 +1199,8 @@ void updateAcceptStatusSubjobs(
     );
 
     if (response.statusCode == 200) {
-      jobDetailController.fetchData(ticketId, jobId);
+      // jobDetailController.fetchData(ticketId, jobId);
+      changeIssueStatus(ticketId, 'onprocess');
     } else {
       print('Failed to update status: ${response.statusCode}');
     }
