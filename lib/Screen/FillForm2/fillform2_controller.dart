@@ -102,10 +102,10 @@ class FillformController2 extends GetxController {
       token ?? '',
       userByZone,
     );
-    if (jobDetailControllerPM.customer != null) {
-      customerName.value.text =
-          jobDetailControllerPM.customer!.customerName ?? '';
-    }
+
+    customerName.value.text =
+        jobDetailControllerPM.customer.value.customerName ?? '';
+
     if (jobDetailControllerPM.userData.isNotEmpty) {
       contactPerson.value.text =
           jobDetailControllerPM.userData.first.users!.first.realName ?? '';

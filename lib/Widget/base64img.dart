@@ -10,6 +10,7 @@ class AttachmentsListWidget extends StatelessWidget {
   final String? option;
   final String? jobid;
   final String? pmjobid;
+  final String? base64;
   final bool? edit;
   final String? createdBy;
 
@@ -20,7 +21,8 @@ class AttachmentsListWidget extends StatelessWidget {
       this.jobid,
       this.pmjobid,
       this.createdBy,
-      this.edit});
+      this.edit,
+      this.base64});
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +38,15 @@ class AttachmentsListWidget extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    showImageDialogUrl(context, attachment['content']);
+                    if (base64 == null) {
+                      showImageDialogUrl(context, attachment['content']);
+                    } else {
+                      _showImageDialog(context, attachment['content']);
+                    }
                   },
-                  child: UrlImageWidget(attachment['content']),
+                  child: base64 == null
+                      ? UrlImageWidget(attachment['content'])
+                      : Base64ImageWidget(attachment['content']),
                 ),
                 if (edit == true)
                   Positioned(

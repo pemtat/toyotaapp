@@ -1,5 +1,5 @@
 String extractDescription(String description) {
-  final indexCD = description.indexOf('.');
+  final indexCD = description.indexOf('(');
   final indexDash = description.indexOf('-');
 
   int endIndex;

@@ -1183,7 +1183,9 @@ void updateTechSubjob(
     if (response.statusCode == 200) {
       print('Update status done');
       // jobDetailController.fetchData(ticketId, jobId);
-    } else {}
+    } else {
+      print(response.statusCode);
+    }
   } catch (e) {
     print('Error: $e');
   }

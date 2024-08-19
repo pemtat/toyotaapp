@@ -39,7 +39,7 @@ class TicketPmDetailController extends GetxController {
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
   var jobId;
-  CustomerById? customer;
+  Rx<CustomerById> customer = CustomerById.getEmpty().obs;
   PmModel? pmData;
   var pdfList = <Map<String, dynamic>>[].obs;
   var status = RxString('');
@@ -74,7 +74,7 @@ class TicketPmDetailController extends GetxController {
           imagesBefore.add({
             'id': imageBeforeList[i].id,
             'filename': imageBeforeList[i].name,
-            'content': imageBeforeList[i].content,
+            'content': imageBeforeList[i].imgUrl,
           });
         }
       }
@@ -86,7 +86,7 @@ class TicketPmDetailController extends GetxController {
           imagesAfter.add({
             'id': imageAfterList[i].id,
             'filename': imageAfterList[i].name,
-            'content': imageAfterList[i].content,
+            'content': imageAfterList[i].imgUrl,
           });
         }
       }
@@ -109,8 +109,16 @@ class TicketPmDetailController extends GetxController {
         issueId = issue.id;
         checkWarranty(
             issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
-        customer = await fetchCustomerInfo(
-            issue.getCustomFieldValue('Customer No') ?? '');
+        String customerNo = issue.getCustomFieldValue('Customer No') ?? '';
+        if (customerNo.isNotEmpty) {
+          try {
+            customer.value = await fetchCustomerInfo(customerNo);
+          } catch (e) {
+            customer.value = CustomerById.getEmpty();
+          }
+        } else {
+          customer.value = CustomerById.getEmpty();
+        }
       }).toList();
       issueData.value = issuesList;
     } else {}

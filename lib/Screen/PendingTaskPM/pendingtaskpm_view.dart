@@ -111,34 +111,37 @@ class PendingTaskViewPM extends StatelessWidget {
                                   jobController.moreTicketDetail.value =
                                       !jobController.moreTicketDetail.value;
                                 },
-                                child: Obx(() => jobController
-                                            .userData.isNotEmpty &&
-                                        jobController.customer != null
-                                    ? BoxContainer(
-                                        children: [
-                                          PMJobInfo(
-                                              ticketId: issue.id,
-                                              dateTime: issue.dueDate ??
-                                                  getFormattedDate(
-                                                      DateTime.now()),
-                                              reporter: issue.reporter.realName,
-                                              summary:
-                                                  '${issue.getCustomFieldValue("Customer Name")}',
-                                              description:
-                                                  'Service Zone :  ${userController.userInfo.first.zone} ',
-                                              detail: issue.description,
-                                              status: stringToStatus(
-                                                  issue.status.id.toString()),
-                                              location: issue
-                                                  .getCustomFieldValue(
-                                                      "Customer No")
-                                                  .toString(),
-                                              contact: jobController
-                                                      .customer!.phoneNo ??
-                                                  '-'),
-                                        ],
-                                      )
-                                    : Container()),
+                                child:
+                                    Obx(() => jobController.userData.isNotEmpty
+                                        ? BoxContainer(
+                                            children: [
+                                              PMJobInfo(
+                                                  ticketId: issue.id,
+                                                  dateTime: issue.dueDate ??
+                                                      getFormattedDate(
+                                                          DateTime.now()),
+                                                  reporter:
+                                                      issue.reporter.realName,
+                                                  summary:
+                                                      '${issue.getCustomFieldValue("Customer Name")}',
+                                                  description:
+                                                      'Service Zone :  ${userController.userInfo.first.zone} ',
+                                                  detail: issue.description,
+                                                  status: stringToStatus(issue
+                                                      .status.id
+                                                      .toString()),
+                                                  location: issue
+                                                      .getCustomFieldValue(
+                                                          "Customer No")
+                                                      .toString(),
+                                                  contact: jobController
+                                                          .customer
+                                                          .value
+                                                          .phoneNo ??
+                                                      '-'),
+                                            ],
+                                          )
+                                        : Container()),
                               ),
                               Column(
                                 children: [

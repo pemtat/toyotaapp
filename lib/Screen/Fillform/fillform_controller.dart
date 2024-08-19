@@ -318,7 +318,10 @@ class FillformController extends GetxController {
 
                 if (response.statusCode == 201) {
                   print('Sparepart saved successfully');
-                } else {}
+                } else {
+                  print(
+                      'Error occurred while saving report: ${response.statusCode}');
+                }
               } catch (e) {
                 print('Error occurred while saving sparepart: $e');
               }
@@ -347,7 +350,9 @@ class FillformController extends GetxController {
             } else {
               print('Failed to save report: ${response.statusCode}');
             }
-          } catch (e) {}
+          } catch (e) {
+            print('Error occurred while saving report: $e');
+          }
         }
       }
     } catch (e) {

@@ -79,29 +79,27 @@ class TicketDetailController extends GetxController {
     savedDateStartTime.value = subJobs.first.timeStart ?? '';
     savedDateEndTime.value = subJobs.first.timeEnd ?? '';
     try {
-      if (subJobs.first.imageBefore != '' &&
-          subJobs.first.contentBefore != '') {
-        List<dynamic> imageBeforeList = jsonDecode(subJobs.first.imageBefore!);
-        List<dynamic> contentBeforeList =
-            jsonDecode(subJobs.first.contentBefore!);
-        imagesBefore.clear();
+      if (subJobs.first.imageUrlBefore != null &&
+          subJobs.first.imageUrlBefore != '') {
+        List<dynamic> imageBeforeList =
+            jsonDecode(subJobs.first.imageUrlBefore!);
+
         for (int i = 0; i < imageBeforeList.length; i++) {
           imagesBefore.add({
-            'filename': imageBeforeList[i],
-            'content': contentBeforeList[i],
+            'filename': '',
+            'content': imageBeforeList[i],
           });
         }
       }
 
-      if (subJobs.first.imageAfter != '' && subJobs.first.contentAfter != '') {
-        List<dynamic> imageAfterList = jsonDecode(subJobs.first.imageAfter!);
-        List<dynamic> contentAfterList =
-            jsonDecode(subJobs.first.contentAfter!);
-        imagesAfter.clear();
-        for (int i = 0; i < contentAfterList.length; i++) {
+      if (subJobs.first.imageUrlAfter != null &&
+          subJobs.first.imageUrlAfter != '') {
+        List<dynamic> imageAfterList = jsonDecode(subJobs.first.imageUrlAfter!);
+
+        for (int i = 0; i < imageAfterList.length; i++) {
           imagesAfter.add({
-            'filename': imageAfterList[i],
-            'content': contentAfterList[i],
+            'filename': '',
+            'content': imageAfterList[i],
           });
         }
       }

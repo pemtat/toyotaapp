@@ -41,7 +41,7 @@ class PendingTaskControllerPM extends GetxController {
   // ignore: prefer_typing_uninitialized_variables
   var issueId;
   var jobId;
-  CustomerById? customer;
+  Rx<CustomerById> customer = CustomerById.getEmpty().obs;
   PmModel? pmData;
   var pdfList = <Map<String, dynamic>>[].obs;
   var status = RxString('');
@@ -83,8 +83,16 @@ class PendingTaskControllerPM extends GetxController {
         issueId = issue.id;
         checkWarranty(
             issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
-        customer = await fetchCustomerInfo(
-            issue.getCustomFieldValue('Customer No') ?? '');
+        String customerNo = issue.getCustomFieldValue('Customer No') ?? '';
+        if (customerNo.isNotEmpty) {
+          try {
+            customer.value = await fetchCustomerInfo(customerNo);
+          } catch (e) {
+            customer.value = CustomerById.getEmpty();
+          }
+        } else {
+          customer.value = CustomerById.getEmpty();
+        }
 
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);

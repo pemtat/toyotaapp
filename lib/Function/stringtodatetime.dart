@@ -10,8 +10,13 @@ String formatDateTime(String dateTime, String option) {
 }
 
 String formatDateTimePlus(String dateTime) {
-  DateTime parsedDate = DateTime.parse(dateTime).add(const Duration(hours: 7));
-  return DateFormat('dd MMMM yyyy HH:mm').format(parsedDate);
+  try {
+    DateTime parsedDate =
+        DateTime.parse(dateTime).add(const Duration(hours: 7));
+    return DateFormat('dd MMMM yyyy HH:mm').format(parsedDate);
+  } catch (e) {
+    return dateTime;
+  }
 }
 
 String formatDateTimeCut(String dateTimeString) {

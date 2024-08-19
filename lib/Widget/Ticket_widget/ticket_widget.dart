@@ -238,11 +238,38 @@ class PmItemWidget extends StatelessWidget {
                                   ),
                                 );
                               } else if (snapshot.hasError) {
-                                return Center(
-                                    child: Text('Error: ${snapshot.error}'));
+                                return Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: Decoration2(),
+                                  child: Column(
+                                    children: [
+                                      const BoxInfo(title: "Model", value: '-'),
+                                      const SizedBox(height: 3),
+                                      BoxInfo(
+                                        title: "Serial Number",
+                                        value: job.serialNo,
+                                      ),
+                                      const SizedBox(height: 3),
+                                    ],
+                                  ),
+                                );
                               } else if (!snapshot.hasData ||
                                   snapshot.data!.isEmpty) {
-                                return Container();
+                                return Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: Decoration2(),
+                                  child: Column(
+                                    children: [
+                                      const BoxInfo(title: "Model", value: '-'),
+                                      const SizedBox(height: 3),
+                                      BoxInfo(
+                                        title: "Serial Number",
+                                        value: job.serialNo,
+                                      ),
+                                      const SizedBox(height: 3),
+                                    ],
+                                  ),
+                                );
                               }
                               var warrantyInfo = <WarrantyInfo>[].obs;
                               warrantyInfo = snapshot.data!;
@@ -298,11 +325,38 @@ class PmItemWidget extends StatelessWidget {
                                   ),
                                 );
                               } else if (snapshot.hasError) {
-                                return Center(
-                                    child: Text('Error: ${snapshot.error}'));
+                                return Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: Decoration2(),
+                                  child: Column(
+                                    children: [
+                                      const BoxInfo(title: "Model", value: '-'),
+                                      const SizedBox(height: 3),
+                                      BoxInfo(
+                                        title: "Serial Number",
+                                        value: job.serialNo,
+                                      ),
+                                      const SizedBox(height: 3),
+                                    ],
+                                  ),
+                                );
                               } else if (!snapshot.hasData ||
                                   snapshot.data!.isEmpty) {
-                                return Container();
+                                return Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: Decoration2(),
+                                  child: Column(
+                                    children: [
+                                      const BoxInfo(title: "Model", value: '-'),
+                                      const SizedBox(height: 3),
+                                      BoxInfo(
+                                        title: "Serial Number",
+                                        value: job.serialNo,
+                                      ),
+                                      const SizedBox(height: 3),
+                                    ],
+                                  ),
+                                );
                               }
                               var warrantyInfo = <WarrantyInfo>[].obs;
                               warrantyInfo = snapshot.data!;

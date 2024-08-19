@@ -49,4 +49,19 @@ class CustomerById {
     data['Phone_No'] = phoneNo;
     return data;
   }
+
+  static CustomerById getEmpty() {
+    return CustomerById(
+      customerNo: '',
+      customerName: '',
+      customerAddress: '',
+      customerEmail: '',
+      customerTaxID: '',
+      billToCustomerNo: '',
+      customerPostingGroup: '',
+      paymentTerm: '',
+      lastModify: '',
+      phoneNo: '',
+    );
+  }
 }

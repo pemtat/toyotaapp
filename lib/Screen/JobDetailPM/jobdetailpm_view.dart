@@ -119,8 +119,7 @@ class JobDetailViewPM extends StatelessWidget {
                                         !jobController.moreTicketDetail.value;
                                   },
                                   child: Obx(() => jobController
-                                              .userData.isNotEmpty &&
-                                          jobController.customer != null
+                                          .userData.isNotEmpty
                                       ? BoxContainer(
                                           children: [
                                             PMJobInfo(
@@ -141,8 +140,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                     .getCustomFieldValue(
                                                         "Customer No")
                                                     .toString(),
-                                                contact: jobController
-                                                        .customer!.phoneNo ??
+                                                contact: jobController.customer
+                                                        .value.phoneNo ??
                                                     '-'
                                                         ''),
                                           ],
@@ -150,13 +149,12 @@ class JobDetailViewPM extends StatelessWidget {
                                       : Container()),
                                 ),
                                 8.kH,
-                                Obx(() => jobController.userData.isNotEmpty &&
-                                        jobController.customer != null
+                                Obx(() => jobController.userData.isNotEmpty
                                     ? Intruction(
                                         context: context,
-                                        phoneNumber:
-                                            jobController.customer!.phoneNo ??
-                                                '-',
+                                        phoneNumber: jobController
+                                                .customer.value.phoneNo ??
+                                            '-',
                                         location: issue
                                             .getCustomFieldValue("Customer No")
                                             .toString(),

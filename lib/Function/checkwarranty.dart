@@ -21,7 +21,7 @@ checkWarranty(
   if (response.statusCode == 200) {
     Map<String, dynamic> data = json.decode(response.body);
     String productName = data['NameTruck'] ?? '-';
-    String serial = data['Serial'] ?? '-';
+    String serial = data['Serial'] ?? serialNumber;
     String model = data['Model'] ?? '-';
     int warrantyStatus = data['WarrantyStatus'] ?? 0;
     WarrantyInfo warrantyInfo = WarrantyInfo(
@@ -32,6 +32,14 @@ checkWarranty(
     );
 
     warrantyInfoList.add(warrantyInfo);
+  } else {
+    WarrantyInfo warrantyInfo2 = WarrantyInfo(
+      productName: '-',
+      serial: serialNumber,
+      model: '-',
+      warrantyStatus: 0,
+    );
+    warrantyInfoList.add(warrantyInfo2);
   }
 }
 
@@ -72,7 +80,7 @@ Future<RxList<WarrantyInfo>> checkWarrantyReturn(
   if (response.statusCode == 200) {
     Map<String, dynamic> data = json.decode(response.body);
     String productName = data['NameTruck'] ?? '';
-    String serial = data['Serial'] ?? '';
+    String serial = data['Serial'] ?? serialNumber;
     String model = data['Model'] ?? '-';
     int warrantyStatus = data['WarrantyStatus'] ?? 0;
     WarrantyInfo warrantyInfo = WarrantyInfo(
@@ -85,6 +93,13 @@ Future<RxList<WarrantyInfo>> checkWarrantyReturn(
     warrantyInfoList.add(warrantyInfo);
     return warrantyInfoList;
   } else {
+    WarrantyInfo warrantyInfo2 = WarrantyInfo(
+      productName: '-',
+      serial: serialNumber,
+      model: '-',
+      warrantyStatus: 0,
+    );
+    warrantyInfoList.add(warrantyInfo2);
     return warrantyInfoList;
   }
 }

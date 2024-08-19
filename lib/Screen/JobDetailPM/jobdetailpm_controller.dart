@@ -31,7 +31,6 @@ class JobDetailControllerPM extends GetxController {
   var pmInfo = <PMJobInfoModel>[].obs;
 
   var reportPreventiveList = <PreventivereportModel>[].obs;
-  var customerInfo = <CustomerById>[].obs;
   var saveCompletedtime = ''.obs;
   var isPicking = false.obs;
   var commentCheck = false.obs;
@@ -48,7 +47,7 @@ class JobDetailControllerPM extends GetxController {
   var jobId;
   var userData = <UserById>[].obs;
   PmModel? pmData;
-  CustomerById? customer;
+  Rx<CustomerById> customer = CustomerById.getEmpty().obs;
   var pdfList = <Map<String, dynamic>>[].obs;
   var status = RxString('');
   List<String> notePic = [];
@@ -77,6 +76,7 @@ class JobDetailControllerPM extends GetxController {
             reportPreventiveList.first.pvtMaintenance != null)) {
       completeCheck.value = true;
     }
+
     if (pmInfo.first.comment != null && pmInfo.first.comment != '') {
       comment.value.text = pmInfo.first.comment ?? '';
     } else {
@@ -100,7 +100,12 @@ class JobDetailControllerPM extends GetxController {
 
       savedDateEndTime.value = formattedEndTime;
     }
-
+    if (imagesBefore.isNotEmpty) {
+      imagesBefore.clear();
+    }
+    if (imagesAfter.isNotEmpty) {
+      imagesAfter.clear();
+    }
     try {
       if (pmInfo.first.jobImageStart!.isNotEmpty) {
         List<dynamic> imageBeforeList = pmInfo.first.jobImageStart!;
@@ -144,8 +149,16 @@ class JobDetailControllerPM extends GetxController {
         issueId = issue.id;
         checkWarranty(
             issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
-        customer = await fetchCustomerInfo(
-            issue.getCustomFieldValue('Customer No') ?? '');
+        String customerNo = issue.getCustomFieldValue('Customer No') ?? '';
+        if (customerNo.isNotEmpty) {
+          try {
+            customer.value = await fetchCustomerInfo(customerNo);
+          } catch (e) {
+            customer.value = CustomerById.getEmpty();
+          }
+        } else {
+          customer.value = CustomerById.getEmpty();
+        }
       }).toList();
       issueData.value = issuesList;
     } else {}

@@ -305,10 +305,124 @@ class CalendarItem extends StatelessWidget {
                                 ConnectionState.waiting) {
                               return Container();
                             } else if (snapshot.hasError) {
-                              return const Text('-');
+                              return Obx(
+                                () => expandedIndex.value &&
+                                        expandedTicketId.value == event['jobid']
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 0.0, right: 8, bottom: 8),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: 0.5,
+                                              color: const Color(0xFFEAEAEA),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Container(
+                                              padding: const EdgeInsets.all(10),
+                                              decoration: Decoration2(),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        'Model',
+                                                        style:
+                                                            TextStyleList.text3,
+                                                      ),
+                                                      Flexible(
+                                                        child: Text(
+                                                          '-',
+                                                          style: TextStyleList
+                                                              .text2,
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 3),
+                                                  BoxInfo(
+                                                    title: "Serial Number",
+                                                    value: event['serialNo'],
+                                                  ),
+                                                  const SizedBox(height: 3),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                              );
                             } else if (!snapshot.hasData ||
                                 snapshot.data!.isEmpty) {
-                              return Container();
+                              return Obx(
+                                () => expandedIndex.value &&
+                                        expandedTicketId.value == event['jobid']
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 0.0, right: 8, bottom: 8),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: 0.5,
+                                              color: const Color(0xFFEAEAEA),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Container(
+                                              padding: const EdgeInsets.all(10),
+                                              decoration: Decoration2(),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        'Model',
+                                                        style:
+                                                            TextStyleList.text3,
+                                                      ),
+                                                      Flexible(
+                                                        child: Text(
+                                                          '-',
+                                                          style: TextStyleList
+                                                              .text2,
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 3),
+                                                  BoxInfo(
+                                                    title: "Serial Number",
+                                                    value: event['serialNo'],
+                                                  ),
+                                                  const SizedBox(height: 3),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                              );
                             }
                             var warrantyInfo = <WarrantyInfo>[].obs;
                             warrantyInfo = snapshot.data!;

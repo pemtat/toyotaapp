@@ -61,6 +61,7 @@ class MoreDetail extends StatelessWidget {
                 children: [
                   8.kH,
                   AttachmentsListWidget(
+                    base64: 'yes',
                     attachments: file ?? [],
                     edit: ediefile,
                   ),
