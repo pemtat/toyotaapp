@@ -48,15 +48,15 @@ class MaintenanceWidget extends StatelessWidget {
                     getDisplayString2(info.chargingType),
                     style: TextStyleList.text12,
                   ),
-                // 8.kH,
-                // Text(
-                //   'ประมาณการซ่อม ชั่วโมง (HR)',
-                //   style: TextStyleList.subtext1,
-                // ),
-                // Text(
-                //   "${info.hr}",
-                //   style: TextStyleList.text15,
-                // ),
+                8.kH,
+                Text(
+                  'ประมาณการซ่อม ชั่วโมง (HR)',
+                  style: TextStyleList.subtext1,
+                ),
+                Text(
+                  "${info.hr}",
+                  style: TextStyleList.text15,
+                ),
                 8.kH,
                 Text(
                   'จำนวนคน',

@@ -124,7 +124,9 @@ class EditFillformController extends GetxController {
       if (reportData.repairResult != '') {
         chargingTypeChoose.add(reportData.repairResult ?? '');
       }
-      if (reportData.m != '0' && chargingTypeChoose.isNotEmpty) {
+      if (reportData.m != '0' &&
+          reportData.hr != '0' &&
+          chargingTypeChoose.isNotEmpty) {
         final newBatteryInfo = MaintenanceModel(
             people: double.tryParse(reportData.m ?? '0') ?? 0,
             hr: double.tryParse(reportData.hr ?? '0') ?? 0,
@@ -311,6 +313,7 @@ class EditFillformController extends GetxController {
           'problem': rPController.repairProcedureList.first.causeProblem,
           'repair_result':
               repairResultController.maintenanceList.first.chargingType.first,
+          "hr": repairResultController.maintenanceList.first.hr,
           "m": repairResultController.maintenanceList.first.people,
           'process_staff': repairStaffController.repairStaff.first,
           'relation_id': relationId.value,

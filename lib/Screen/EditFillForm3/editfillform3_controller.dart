@@ -314,7 +314,9 @@ class FillformController3 extends GetxController {
       if (maintenances.mtServiceResult != '') {
         chargingTypeChoose.add(maintenances.mtServiceResult ?? '');
       }
-      if (maintenances.m != '0' && chargingTypeChoose.isNotEmpty) {
+      if (maintenances.m != '0' &&
+          maintenances.hr != '0' &&
+          chargingTypeChoose.isNotEmpty) {
         final newBatteryInfo = MaintenanceModel(
             people: double.tryParse(maintenances.m ?? '0') ?? 0,
             hr: double.tryParse(maintenances.hr ?? '0') ?? 0,
@@ -729,6 +731,7 @@ class FillformController3 extends GetxController {
       "lift_height": lifeHeight.value.text,
       "customer_fleet": customerFleetNo.value.text,
       "tech2": selectedUser.value == '' ? '-' : selectedUser.value,
+      "hr": maintenance.maintenanceList.first.hr,
       "m": maintenance.maintenanceList.first.people,
       "created_by": userController.userInfo.first.id,
       "pvt_maintenance_details": combinedList,

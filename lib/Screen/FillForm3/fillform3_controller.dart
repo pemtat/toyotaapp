@@ -492,11 +492,7 @@ class FillformController3 extends GetxController {
       "customer_fleet": customerFleetNo.value.text,
       "tech1": userController.userInfo.first.realName,
       "tech2": selectedUser.value == '' ? '-' : selectedUser.value,
-      "hr": jobDetailControllerPM.savedDateStartTime.value != '' &&
-              jobDetailControllerPM.savedDateEndTime.value != ''
-          ? calculateTimeDifference(jobDetailControllerPM.savedDateStartTime,
-              jobDetailControllerPM.savedDateEndTime)
-          : '-',
+      "hr": maintenance.maintenanceList.first.hr,
       "m": maintenance.maintenanceList.first.people,
       "created_by": userController.userInfo.first.id,
       "pvt_maintenance_details": combinedList,

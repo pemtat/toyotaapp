@@ -49,14 +49,14 @@ class RepairResultWidget extends StatelessWidget {
                     style: TextStyleList.text12,
                   ),
                 8.kH,
-                // Text(
-                //   'ประมาณการซ่อม ชั่วโมง (HR)',
-                //   style: TextStyleList.subtext1,
-                // ),
-                // Text(
-                //   "${info.hr}",
-                //   style: TextStyleList.text15,
-                // ),
+                Text(
+                  'ประมาณการซ่อม ชั่วโมง (HR)',
+                  style: TextStyleList.subtext1,
+                ),
+                Text(
+                  "${info.hr}",
+                  style: TextStyleList.text15,
+                ),
                 8.kH,
                 Text(
                   'จำนวนคน',

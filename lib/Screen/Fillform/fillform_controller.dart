@@ -248,12 +248,7 @@ class FillformController extends GetxController {
             'problem': rPController.repairProcedureList.first.causeProblem,
             'repair_result':
                 repairResultController.maintenanceList.first.chargingType.first,
-            "hr": jobDetailController.savedDateStartTime.value != '' &&
-                    jobDetailController.savedDateEndTime.value != ''
-                ? calculateTimeDifference(
-                    jobDetailController.savedDateStartTime,
-                    jobDetailController.savedDateEndTime)
-                : '-',
+            "hr": repairResultController.maintenanceList.first.hr,
             "m": repairResultController.maintenanceList.first.people,
             'process_staff': processStaffController.repairStaff.first,
             'relation_id': highRelation,
