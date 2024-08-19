@@ -24,6 +24,8 @@ class SubJobDetail {
   String? contentBefore;
   String? imageAfter;
   String? contentAfter;
+  String? imageUrlBefore;
+  String? imageUrlAfter;
 
   String? comment;
 
@@ -53,7 +55,9 @@ class SubJobDetail {
       this.contentAfter,
       this.imageBefore,
       this.imageAfter,
-      this.comment});
+      this.comment,
+      this.imageUrlAfter,
+      this.imageUrlBefore});
 
   SubJobDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -82,6 +86,8 @@ class SubJobDetail {
     imageAfter = json['image_after'];
     contentAfter = json['content_after'];
     comment = json['comment'];
+    imageUrlBefore = json['img_url_before'];
+    imageUrlAfter = json['img_url_after'];
   }
 
   Map<String, dynamic> toJson() {
@@ -112,6 +118,8 @@ class SubJobDetail {
     data['content_after'] = contentAfter;
     data['image_after'] = imageAfter;
     data['comment'] = comment;
+    data['img_url_before'] = imageUrlBefore;
+    data['img_url_after'] = imageUrlAfter;
     return data;
   }
 }

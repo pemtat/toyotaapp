@@ -109,7 +109,7 @@ class JobDetailControllerPM extends GetxController {
           imagesBefore.add({
             'id': imageBeforeList[i].id,
             'filename': imageBeforeList[i].name,
-            'content': imageBeforeList[i].content,
+            'content': imageBeforeList[i].imgUrl,
           });
         }
       }
@@ -121,7 +121,7 @@ class JobDetailControllerPM extends GetxController {
           imagesAfter.add({
             'id': imageAfterList[i].id,
             'filename': imageAfterList[i].name,
-            'content': imageAfterList[i].content,
+            'content': imageAfterList[i].imgUrl,
           });
         }
       }

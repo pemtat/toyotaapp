@@ -182,6 +182,65 @@ Future<void> fetchUserById(String id, RxList<UserById> userData) async {
   }
 }
 
+Future<void> fetchSubJobImg(
+    RxList<Map<String, String>> file, String subjobId, String option) async {
+  try {
+    String? token = await getToken();
+    final response = await http.get(
+      Uri.parse(getSubJobById(subjobId)),
+      headers: {
+        'Authorization': token ?? '',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+
+      List<SubJobDetail> dataList =
+          jsonResponse.map((json) => SubJobDetail.fromJson(json)).toList();
+      try {
+        if (option == 'before') {
+          if (dataList.first.imageUrlBefore != null &&
+              dataList.first.imageUrlBefore != '') {
+            file.clear();
+            List<dynamic> imageBeforeList =
+                jsonDecode(dataList.first.imageUrlBefore!);
+
+            for (int i = 0; i < imageBeforeList.length; i++) {
+              file.add({
+                'filename': '',
+                'content': imageBeforeList[i],
+              });
+            }
+            file.refresh();
+          }
+        } else if (option == 'after') {
+          if (dataList.first.imageUrlAfter != null &&
+              dataList.first.imageUrlAfter != '') {
+            file.clear();
+            List<dynamic> imageAfterList =
+                jsonDecode(dataList.first.imageUrlAfter!);
+
+            for (int i = 0; i < imageAfterList.length; i++) {
+              file.add({
+                'filename': '',
+                'content': imageAfterList[i],
+              });
+            }
+            file.refresh();
+          }
+        }
+      } catch (e) {
+        print("Error: $e");
+      }
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
 Future<String> getReportById(
   String id,
 ) async {
@@ -554,7 +613,7 @@ Future<void> fetchPmJobImg(String id, RxList<Map<String, String>> imagesBefore,
             imagesBefore.add({
               'id': imageBeforeList[i].id,
               'filename': imageBeforeList[i].name,
-              'content': imageBeforeList[i].content,
+              'content': imageBeforeList[i].imgUrl,
             });
           }
           imagesBefore.refresh();
@@ -567,7 +626,7 @@ Future<void> fetchPmJobImg(String id, RxList<Map<String, String>> imagesBefore,
             imagesAfter.add({
               'id': imageAfterList[i].id,
               'filename': imageAfterList[i].name,
-              'content': imageAfterList[i].content,
+              'content': imageAfterList[i].imgUrl,
             });
           }
           imagesAfter.refresh();
@@ -722,11 +781,15 @@ Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
       io.File imageFile = io.File(pickedFile.path);
       String fileName = pickedFile.name;
       String base64Content = base64Encode(await imageFile.readAsBytes());
-      file.add({
+
+      var images = <Map<String, String>>[].obs;
+      images.add({
         'filename': fileName,
         'content': base64Content,
       });
-      updateImgSubjobs(jobId, ticketId, file, option);
+
+      await updateImgSubjobs(jobId, ticketId, images, option);
+      await fetchSubJobImg(file, jobId, option);
     }
   } finally {
     isPicking.value = false;
@@ -1322,15 +1385,14 @@ Future<void> deleteImgSubJob(
     Map<String, dynamic> body = {};
     List<String> filenames = [];
     List<String> contents = [];
-    // Prepare the body by extracting the content and filename
     for (var data in imageData) {
       filenames.add(data['filename'] ?? '');
       contents.add(data['content'] ?? '');
     }
     if (option == 'before') {
-      body = {'image_before': filenames, 'content_before': contents};
+      body = {'img_url_before': contents};
     } else {
-      body = {'image_after': filenames, 'content_after': contents};
+      body = {'img_url_after': contents};
     }
     final response = await http.put(
       Uri.parse(updateSubJobs(jobId)),

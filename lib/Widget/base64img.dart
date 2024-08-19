@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
+import 'package:toyotamobile/Widget/urlimg.dart';
 
 class AttachmentsListWidget extends StatelessWidget {
   final List<Map<String, dynamic>> attachments;
@@ -34,9 +36,9 @@ class AttachmentsListWidget extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    _showImageDialog(context, attachment['content']);
+                    showImageDialogUrl(context, attachment['content']);
                   },
-                  child: Base64ImageWidget(attachment['content']),
+                  child: UrlImageWidget(attachment['content']),
                 ),
                 if (edit == true)
                   Positioned(
@@ -130,6 +132,47 @@ void _showImageDialog(BuildContext context, String base64String) {
                 tag: base64String,
                 child: Image.memory(
                   imageBytes,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+void showImageDialogUrl(BuildContext context, String imgUrl) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return GestureDetector(
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+        child: Dialog(
+          backgroundColor: const Color.fromARGB(0, 68, 137, 255),
+          child: SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: Center(
+              child: Hero(
+                tag: imgUrl,
+                child: Image.network(
+                  imgUrl,
+                  fit: BoxFit.contain,
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(child: DataCircleLoading());
+                  },
+                  errorBuilder: (BuildContext context, Object error,
+                      StackTrace? stackTrace) {
+                    return const Text(
+                      'Failed to load image',
+                      style: TextStyle(color: Colors.white),
+                    );
+                  },
                 ),
               ),
             ),

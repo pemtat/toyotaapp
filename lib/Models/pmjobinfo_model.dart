@@ -117,6 +117,7 @@ class JobImageStart {
   String? status;
   String? createdBy;
   String? lastUpdated;
+  String? imgUrl;
 
   JobImageStart(
       {this.id,
@@ -125,7 +126,8 @@ class JobImageStart {
       this.content,
       this.status,
       this.createdBy,
-      this.lastUpdated});
+      this.lastUpdated,
+      this.imgUrl});
 
   JobImageStart.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -135,6 +137,7 @@ class JobImageStart {
     status = json['status'];
     createdBy = json['created_by'];
     lastUpdated = json['last_updated'];
+    imgUrl = json['img_url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -146,6 +149,7 @@ class JobImageStart {
     data['status'] = status;
     data['created_by'] = createdBy;
     data['last_updated'] = lastUpdated;
+    data['img_url'] = imgUrl;
     return data;
   }
 }
@@ -158,6 +162,7 @@ class JobImageEnd {
   String? status;
   String? createdBy;
   String? lastUpdated;
+  String? imgUrl;
 
   JobImageEnd(
       {this.id,
@@ -166,7 +171,8 @@ class JobImageEnd {
       this.content,
       this.status,
       this.createdBy,
-      this.lastUpdated});
+      this.lastUpdated,
+      this.imgUrl});
 
   JobImageEnd.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -176,6 +182,7 @@ class JobImageEnd {
     status = json['status'];
     createdBy = json['created_by'];
     lastUpdated = json['last_updated'];
+    imgUrl = json['img_url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -187,6 +194,8 @@ class JobImageEnd {
     data['status'] = status;
     data['created_by'] = createdBy;
     data['last_updated'] = lastUpdated;
+    data['img_url'] = imgUrl;
+
     return data;
   }
 }

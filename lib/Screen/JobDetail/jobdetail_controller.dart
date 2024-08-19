@@ -87,31 +87,28 @@ class JobDetailController extends GetxController {
 
       if (imagesAfter.isNotEmpty) imagesAfter.clear();
       try {
-        if (subJobs.first.imageBefore != '' &&
-            subJobs.first.contentBefore != '') {
+        if (subJobs.first.imageUrlBefore != null &&
+            subJobs.first.imageUrlBefore != '') {
           List<dynamic> imageBeforeList =
-              jsonDecode(subJobs.first.imageBefore!);
-          List<dynamic> contentBeforeList =
-              jsonDecode(subJobs.first.contentBefore!);
+              jsonDecode(subJobs.first.imageUrlBefore!);
 
           for (int i = 0; i < imageBeforeList.length; i++) {
             imagesBefore.add({
-              'filename': imageBeforeList[i],
-              'content': contentBeforeList[i],
+              'filename': '',
+              'content': imageBeforeList[i],
             });
           }
         }
 
-        if (subJobs.first.imageAfter != '' &&
-            subJobs.first.contentAfter != '') {
-          List<dynamic> imageAfterList = jsonDecode(subJobs.first.imageAfter!);
-          List<dynamic> contentAfterList =
-              jsonDecode(subJobs.first.contentAfter!);
+        if (subJobs.first.imageUrlAfter != null &&
+            subJobs.first.imageUrlAfter != '') {
+          List<dynamic> imageAfterList =
+              jsonDecode(subJobs.first.imageUrlAfter!);
 
-          for (int i = 0; i < contentAfterList.length; i++) {
+          for (int i = 0; i < imageAfterList.length; i++) {
             imagesAfter.add({
-              'filename': imageAfterList[i],
-              'content': contentAfterList[i],
+              'filename': '',
+              'content': imageAfterList[i],
             });
           }
         }
