@@ -211,12 +211,12 @@ class EditFillFormView extends StatelessWidget {
                       textSet: fillFormController.errorCode.value,
                       readOnly: readOnly == null ? null : 'yes',
                     ),
-                    20.kH,
-                    TextFieldWidget(
-                      text: 'Work Order Number(Order No.)',
-                      textSet: fillFormController.workorderNumber.value,
-                      readOnly: readOnly == null ? null : 'yes',
-                    )
+                    // 20.kH,
+                    // TextFieldWidget(
+                    //   text: 'Work Order Number(Order No.)',
+                    //   textSet: fillFormController.workorderNumber.value,
+                    //   readOnly: readOnly == null ? null : 'yes',
+                    // )
                   ],
                 ),
                 14.kH,

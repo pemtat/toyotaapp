@@ -168,10 +168,10 @@ class FillFormView extends StatelessWidget {
                 TextFieldWidget(
                     text: 'Error Code',
                     textSet: fillFormController.errorCode.value),
-                20.kH,
-                TextFieldWidget(
-                    text: 'Work Order Number(Order No.)',
-                    textSet: fillFormController.workorderNumber.value)
+                // 20.kH,
+                // TextFieldWidget(
+                //     text: 'Work Order Number(Order No.)',
+                //     textSet: fillFormController.workorderNumber.value)
               ],
             ),
             14.kH,
