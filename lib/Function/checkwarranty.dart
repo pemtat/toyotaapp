@@ -23,7 +23,7 @@ checkWarranty(
     String productName = data['NameTruck'] ?? '-';
     String serial = data['Serial'] ?? serialNumber;
     String model = data['Model'] ?? '-';
-    int warrantyStatus = data['WarrantyStatus'] ?? 0;
+    int warrantyStatus = data['WarrantyStatus'] == true ? 1 : 0;
     WarrantyInfo warrantyInfo = WarrantyInfo(
       productName: productName,
       serial: serial,
@@ -82,7 +82,7 @@ Future<RxList<WarrantyInfo>> checkWarrantyReturn(
     String productName = data['NameTruck'] ?? '';
     String serial = data['Serial'] ?? serialNumber;
     String model = data['Model'] ?? '-';
-    int warrantyStatus = data['WarrantyStatus'] ?? 0;
+    int warrantyStatus = data['WarrantyStatus'] == true ? 1 : 0;
     WarrantyInfo warrantyInfo = WarrantyInfo(
       productName: productName,
       serial: serial,

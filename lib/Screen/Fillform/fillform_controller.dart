@@ -241,7 +241,7 @@ class FillformController extends GetxController {
             'field_report': fieldServiceReport.first,
             'fault_report': fault.value.text,
             'error_code_report': errorCode.value.text,
-            'order_no': workorderNumber.value.text,
+            'order_no': jobId.value,
             'r_code': rcodeController.rCode.join(','),
             'w_code': wcodeController.wCode.first,
             'produre': rPController.repairProcedureList.first.repairProcedure,

@@ -97,10 +97,6 @@ class FillformController3 extends GetxController {
     customerName.value.text =
         jobDetailControllerPM.customer.value.customerName ?? '';
 
-    if (jobDetailControllerPM.userData.isNotEmpty) {
-      contactedName.value.text =
-          jobDetailControllerPM.userData.first.users!.first.realName ?? '';
-    }
     if (jobDetailControllerPM.warrantyInfoList.isNotEmpty) {
       product.value.text =
           jobDetailControllerPM.warrantyInfoList.first.productName;

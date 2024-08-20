@@ -105,10 +105,13 @@ class FillformController2 extends GetxController {
 
     customerName.value.text =
         jobDetailControllerPM.customer.value.customerName ?? '';
-
-    if (jobDetailControllerPM.userData.isNotEmpty) {
-      contactPerson.value.text =
-          jobDetailControllerPM.userData.first.users!.first.realName ?? '';
+    if (jobDetailControllerPM.warrantyInfoList.isNotEmpty) {
+      forkLifeInformation.forklifeBrand.value.text =
+          jobDetailControllerPM.warrantyInfoList.first.productName;
+      forkLifeInformation.forklifeModel.value.text =
+          jobDetailControllerPM.warrantyInfoList.first.model;
+      forkLifeInformation.serialNo.value.text =
+          jobDetailControllerPM.warrantyInfoList.first.serial;
     }
   }
 
