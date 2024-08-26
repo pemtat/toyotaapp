@@ -1191,6 +1191,39 @@ void updateTechSubjob(
   }
 }
 
+Future<void> updateJobSparePart(String jobId, int status, String zone,
+    String techLevel, String handlerId, String remark) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {'lead_tech_status': status};
+
+    if (remark != '-') {
+      body = body = {'lead_tech_status': status, 'lead_tech_remark': remark};
+    }
+    final response = await http.put(
+      Uri.parse(updateSubJobs(jobId)),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Update status done');
+      if (techLevel == '1') {
+        await jobController.fetchSubJobSparePart(handlerId, 'tech');
+      } else {
+        await jobController.fetchSubJobSparePart(zone, 'techlead');
+      }
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
 Future<void> updateCommentJobs(String jobId, String comment, String ticketId,
     Rx<TextEditingController> commentfield) async {
   try {
@@ -1671,5 +1704,15 @@ Future<void> fetchgetCustomerInfo(
     print('Error: $e');
     Get.offAll(BottomBarView());
     bottomController.currentIndex.value = 0;
+  }
+}
+
+Future<void> fetchSubJobSparePartOption() async {
+  if (jobController.techLevel.value == '1') {
+    await jobController.fetchSubJobSparePart(
+        jobController.handlerIdTech.toString(), 'tech');
+  } else {
+    await jobController.fetchSubJobSparePart(
+        jobController.zone.value, 'leadtech');
   }
 }

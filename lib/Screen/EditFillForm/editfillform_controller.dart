@@ -76,7 +76,6 @@ class EditFillformController extends GetxController {
   var isSignatureEmpty = true.obs;
   var ticketId = ''.obs;
   var jobId = ''.obs;
-  var relationId = ''.obs;
   var readOnly = ''.obs;
   void fetchForm(
       String reportId, String ticketId, String jobId, readOnly) async {
@@ -100,7 +99,6 @@ class EditFillformController extends GetxController {
 
     if (reportList.isNotEmpty) {
       var reportData = reportList.first;
-      relationId.value = reportData.relationId ?? '';
       fault.value.text = reportData.faultReport ?? '';
       customerFleetNo.value.text = reportData.customerFleet ?? '';
       customerName.value.text = reportData.customerName ?? '';
@@ -166,7 +164,6 @@ class EditFillformController extends GetxController {
           if (reportDataList.additional == false &&
               reportDataList.quantity != '0') {
             sparePartListController.sparePartList.add(SparePartModel(
-                relationId: reportDataList.relationId,
                 cCodePage: reportDataList.cCode ?? '1',
                 partNumber: reportDataList.partNumber ?? '',
                 partDetails: reportDataList.description ?? '',
@@ -177,7 +174,6 @@ class EditFillformController extends GetxController {
           } else if (reportDataList.additional == true &&
               reportDataList.quantity != '0') {
             additSparePartListController.additSparePartList.add(SparePartModel(
-                relationId: reportDataList.relationId,
                 cCodePage: reportDataList.cCode ?? '1',
                 partNumber: reportDataList.partNumber ?? '',
                 partDetails: reportDataList.description ?? '',
@@ -235,195 +231,193 @@ class EditFillformController extends GetxController {
   Future<void> saveReport(BuildContext context) async {
     String? token = await getToken();
     try {
-      if (relationId.value != '') {
-        repairResultController.maintenanceList.isEmpty
-            ? repairResultController.repairResultWrite()
-            : repairResultController.maintenanceList.first;
-        repairResultController.maintenanceList.first.chargingType.isEmpty
-            ? repairResultController.maintenanceList.first.chargingType.add('')
-            : repairResultController.maintenanceList.first.chargingType.first;
+      repairResultController.maintenanceList.isEmpty
+          ? repairResultController.repairResultWrite()
+          : repairResultController.maintenanceList.first;
+      repairResultController.maintenanceList.first.chargingType.isEmpty
+          ? repairResultController.maintenanceList.first.chargingType.add('')
+          : repairResultController.maintenanceList.first.chargingType.first;
 
-        if (fieldServiceReport.isEmpty) {
-          fieldServiceReport.add('-');
-        }
-        if (wcodeController.wCode.isEmpty) {
-          wcodeController.wCode.add('-');
-        }
+      if (fieldServiceReport.isEmpty) {
+        fieldServiceReport.add('-');
+      }
+      if (wcodeController.wCode.isEmpty) {
+        wcodeController.wCode.add('-');
+      }
 
-        if (repairStaffController.repairStaff.isEmpty) {
-          repairStaffController.repairStaff.add('-');
-        }
-        if (rcodeController.rCode.isEmpty) {
-          rcodeController.rCode.add('-');
-        }
-        if (rPController.repairProcedureList.isEmpty) {
-          rPController.repairProcedureList.add(RepairProcedureModel(
-            repairProcedure: '-',
-            causeProblem: '-',
-          ));
-        }
-        if (fault.value.text == '') {
-          fault.value.text = '-';
-        }
-        if (errorCode.value.text == '') {
-          errorCode.value.text = '-';
-        }
-        if (workorderNumber.value.text == '') {
-          workorderNumber.value.text = '-';
-        }
-        if (customerName.value.text == '') {
-          customerName.value.text = '-';
-        }
-        if (department.value.text == '') {
-          department.value.text = '-';
-        }
-        if (contactedName.value.text == '') {
-          contactedName.value.text = '-';
-        }
-        if (product.value.text == '') {
-          product.value.text = '-';
-        }
-        if (model.value.text == '') {
-          model.value.text = '-';
-        }
-        if (serialNo.value.text == '') {
-          serialNo.value.text = '-';
-        }
-        if (operationHour.value.text == '') {
-          operationHour.value.text = '-';
-        }
-        if (mastType.value.text == '') {
-          mastType.value.text = '-';
-        }
-        if (lifeHeight.value.text == '') {
-          lifeHeight.value.text = '-';
-        }
-        if (customerFleetNo.value.text == '') {
-          customerFleetNo.value.text = '-';
-        }
-        saveCurrentDateTime(saveCompletedtime);
-        final Map<String, dynamic> data = {
-          'field_report': fieldServiceReport.first,
-          'fault_report': fault.value.text,
-          'error_code_report': errorCode.value.text,
-          'order_no': workorderNumber.value.text,
-          'r_code': rcodeController.rCode.join(','),
-          'w_code': wcodeController.wCode.first,
-          'produre': rPController.repairProcedureList.first.repairProcedure,
-          'problem': rPController.repairProcedureList.first.causeProblem,
-          'repair_result':
-              repairResultController.maintenanceList.first.chargingType.first,
-          "hr": repairResultController.maintenanceList.first.hr,
-          "m": repairResultController.maintenanceList.first.people,
-          'process_staff': repairStaffController.repairStaff.first,
-          'relation_id': relationId.value,
-          'customer_name': customerName.value.text,
-          'department': department.value.text,
-          'contacted_name': contactedName.value.text,
-          'product': product.value.text,
-          'model': model.value.text,
-          'serial_no': serialNo.value.text,
-          'operation_hour': operationHour.value.text,
-          'mast_type': mastType.value.text,
-          'customer_fleet': customerFleetNo.value.text,
-          'lift_height': lifeHeight.value.text,
-          'tech2': selectedUser.value == '' ? '-' : selectedUser.value,
-          'bugid': ticketId.value,
-          'save_time': saveCompletedtime.value
+      if (repairStaffController.repairStaff.isEmpty) {
+        repairStaffController.repairStaff.add('-');
+      }
+      if (rcodeController.rCode.isEmpty) {
+        rcodeController.rCode.add('-');
+      }
+      if (rPController.repairProcedureList.isEmpty) {
+        rPController.repairProcedureList.add(RepairProcedureModel(
+          repairProcedure: '-',
+          causeProblem: '-',
+        ));
+      }
+      if (fault.value.text == '') {
+        fault.value.text = '-';
+      }
+      if (errorCode.value.text == '') {
+        errorCode.value.text = '-';
+      }
+      if (workorderNumber.value.text == '') {
+        workorderNumber.value.text = '-';
+      }
+      if (customerName.value.text == '') {
+        customerName.value.text = '-';
+      }
+      if (department.value.text == '') {
+        department.value.text = '-';
+      }
+      if (contactedName.value.text == '') {
+        contactedName.value.text = '-';
+      }
+      if (product.value.text == '') {
+        product.value.text = '-';
+      }
+      if (model.value.text == '') {
+        model.value.text = '-';
+      }
+      if (serialNo.value.text == '') {
+        serialNo.value.text = '-';
+      }
+      if (operationHour.value.text == '') {
+        operationHour.value.text = '-';
+      }
+      if (mastType.value.text == '') {
+        mastType.value.text = '-';
+      }
+      if (lifeHeight.value.text == '') {
+        lifeHeight.value.text = '-';
+      }
+      if (customerFleetNo.value.text == '') {
+        customerFleetNo.value.text = '-';
+      }
+      saveCurrentDateTime(saveCompletedtime);
+      final Map<String, dynamic> data = {
+        'field_report': fieldServiceReport.first,
+        'fault_report': fault.value.text,
+        'error_code_report': errorCode.value.text,
+        'order_no': workorderNumber.value.text,
+        'r_code': rcodeController.rCode.join(','),
+        'w_code': wcodeController.wCode.first,
+        'produre': rPController.repairProcedureList.first.repairProcedure,
+        'problem': rPController.repairProcedureList.first.causeProblem,
+        'repair_result':
+            repairResultController.maintenanceList.first.chargingType.first,
+        "hr": repairResultController.maintenanceList.first.hr,
+        "m": repairResultController.maintenanceList.first.people,
+        'process_staff': repairStaffController.repairStaff.first,
+        'customer_name': customerName.value.text,
+        'department': department.value.text,
+        'contacted_name': contactedName.value.text,
+        'product': product.value.text,
+        'model': model.value.text,
+        'serial_no': serialNo.value.text,
+        'operation_hour': operationHour.value.text,
+        'mast_type': mastType.value.text,
+        'customer_fleet': customerFleetNo.value.text,
+        'lift_height': lifeHeight.value.text,
+        'tech2': selectedUser.value == '' ? '-' : selectedUser.value,
+        'bugid': ticketId.value,
+        'save_time': saveCompletedtime.value
+      };
+      List<SparePartModel> allSpareParts =
+          List.from(sparePartListController.sparePartList);
+      allSpareParts.addAll(additSparePartListController.additSparePartList);
+      if (sparePartListController.sparePartList.isEmpty) {
+        final SparePartModel defaultSparePart = SparePartModel(
+          cCodePage: "-",
+          partNumber: "-",
+          partDetails: "-",
+          quantity: 0,
+          changeNow: "-",
+          changeOnPM: "-",
+          additional: 0,
+        );
+
+        allSpareParts.add(defaultSparePart);
+      }
+      if (additSparePartListController.additSparePartList.isEmpty) {
+        final SparePartModel defaultSparePart = SparePartModel(
+          cCodePage: "-",
+          partNumber: "-",
+          partDetails: "-",
+          quantity: 0,
+          changeNow: "-",
+          changeOnPM: "-",
+          additional: 1,
+        );
+
+        allSpareParts.add(defaultSparePart);
+      }
+
+      if (allSpareParts.isNotEmpty) {
+        final body = {
+          'job_issue_id': jobId.value,
+          'sparepart':
+              allSpareParts.map((sparePart) => sparePart.toJson()).toList(),
         };
-        List<SparePartModel> allSpareParts =
-            List.from(sparePartListController.sparePartList);
-        allSpareParts.addAll(additSparePartListController.additSparePartList);
-        if (sparePartListController.sparePartList.isEmpty) {
-          final SparePartModel defaultSparePart = SparePartModel(
-            cCodePage: "-",
-            partNumber: "-",
-            partDetails: "-",
-            quantity: 0,
-            changeNow: "-",
-            changeOnPM: "-",
-            additional: 0,
-          );
+        try {
+          final response = await http.post(Uri.parse(updateSparepart()),
+              headers: {
+                'Authorization': '$token',
+                'Content-Type': 'application/json',
+              },
+              body: jsonEncode(body));
 
-          allSpareParts.add(defaultSparePart);
+          if (response.statusCode == 200) {
+            print('Sparepart Updated successfully');
+            await fetchSubJobSparePartOption();
+            await jobDetailController.fetchSubJobSparePartId();
+          } else {
+            print('Failed to save sparepart: ${response.body}');
+          }
+        } catch (e) {
+          print('Error occurred while saving sparepart: $e');
         }
-        if (additSparePartListController.additSparePartList.isEmpty) {
-          final SparePartModel defaultSparePart = SparePartModel(
-            cCodePage: "-",
-            partNumber: "-",
-            partDetails: "-",
-            quantity: 0,
-            changeNow: "-",
-            changeOnPM: "-",
-            additional: 1,
-          );
+      }
 
-          allSpareParts.add(defaultSparePart);
-        }
-
-        if (allSpareParts.isNotEmpty) {
-          final body = {
-            'relation_id': relationId.value.toString(),
-            'job_issue_id': jobId.value,
-            'sparepart':
-                allSpareParts.map((sparePart) => sparePart.toJson()).toList(),
-          };
-          try {
-            final response = await http.post(Uri.parse(updateSparepart()),
+      try {
+        final response =
+            await http.put(Uri.parse(updateReportById(jobId.value)),
                 headers: {
                   'Authorization': '$token',
                   'Content-Type': 'application/json',
                 },
-                body: jsonEncode(body));
+                body: jsonEncode(data));
 
-            if (response.statusCode == 200) {
-              print('Sparepart Updated successfully');
-            } else {
-              print('Failed to save sparepart: ${response.body}');
-            }
-          } catch (e) {
-            print('Error occurred while saving sparepart: $e');
-          }
-        }
+        if (response.statusCode == 200) {
+          print('Report updated successfully');
 
-        try {
-          final response =
-              await http.put(Uri.parse(updateReportById(jobId.value)),
-                  headers: {
-                    'Authorization': '$token',
-                    'Content-Type': 'application/json',
-                  },
-                  body: jsonEncode(data));
-
-          if (response.statusCode == 200) {
-            print('Report updated successfully');
-
-            showWaitMessage();
-            if (readOnly.value == 'yes') {
-              // ticketDetailController.fetchData(
-              //     ticketId.toString(), jobId.toString());
-              await fetchReportData(
-                  jobId.toString(),
-                  token ?? '',
-                  ticketDetailController.reportList,
-                  ticketDetailController.additionalReportList);
-            } else {
-              // jobDetailController.fetchData(
-              //     ticketId.toString(), jobId.toString());
-              await fetchReportData(
-                  jobId.toString(),
-                  token ?? '',
-                  jobDetailController.reportList,
-                  jobDetailController.additionalReportList);
-              jobDetailController.completeCheck.value = true;
-            }
-            showSaveMessage();
+          showWaitMessage();
+          if (readOnly.value == 'yes') {
+            // ticketDetailController.fetchData(
+            //     ticketId.toString(), jobId.toString());
+            await fetchReportData(
+                jobId.toString(),
+                token ?? '',
+                ticketDetailController.reportList,
+                ticketDetailController.additionalReportList);
           } else {
-            print('Failed to save report: ${response.statusCode}');
+            // jobDetailController.fetchData(
+            //     ticketId.toString(), jobId.toString());
+            await fetchReportData(
+                jobId.toString(),
+                token ?? '',
+                jobDetailController.reportList,
+                jobDetailController.additionalReportList);
+            jobDetailController.completeCheck.value = true;
           }
-        } catch (e) {
-          print('Error occurred while saving report: $e');
+          showSaveMessage();
+        } else {
+          print('Failed to save report: ${response.statusCode}');
         }
+      } catch (e) {
+        print('Error occurred while saving report: $e');
       }
     } catch (e) {
       print(e);

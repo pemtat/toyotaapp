@@ -4,6 +4,7 @@ import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
+import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
@@ -25,6 +26,7 @@ class HomeController extends GetxController {
   var customerUserInfo = <CustomerById>[].obs;
   var subJobAssignedList = <SubJobAssgined>[].obs;
   var subJobAssigned = <SubJobAssgined>[].obs;
+  var subJobSparePart = <SubJobSparePart>[].obs;
   var subJobAssignedPage = <SubJobAssgined>[].obs;
   final BottomBarController notificationController =
       Get.put(BottomBarController());
@@ -38,6 +40,9 @@ class HomeController extends GetxController {
   final RxInt pmjobList = 0.obs;
   final RxInt pmjobListConfirmed = 0.obs;
   final RxInt pmjobListClosed = 0.obs;
+  final RxInt sparePartPending = 0.obs;
+  final RxInt sparePartApproved = 0.obs;
+  final RxInt sparePartReject = 0.obs;
   final RxInt subjobList = 0.obs;
   final RxInt subjobListPending = 0.obs;
   final RxInt subjobListClosed = 0.obs;
@@ -50,6 +55,9 @@ class HomeController extends GetxController {
   var totalJobs = 0.obs;
   var closedJobs = 0.obs;
   var incomingJobs = 0.obs;
+  var techLevel = ''.obs;
+  var zone = ''.obs;
+  var handlerIdTech = ''.obs;
   var overdueJobs = 0.obs;
   var onProcessJobs = 0.obs;
   var serviceZoneSet = <String>{}.obs;
@@ -73,15 +81,25 @@ class HomeController extends GetxController {
     currentPage = 1;
     currentPagePM = 1;
     try {
+      await userController.fetchData();
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? tokenResponse = prefs.getString('token_response');
       Map<String, dynamic> tokenData = json.decode(tokenResponse ?? '');
       // String? accessToken = tokenData['token'];
+      handlerIdTech.value = tokenData['user']['id'].toString();
       int handlerId = tokenData['user']['id'];
+      techLevel.value = tokenData['user']['tech_level'];
 
       await userController.fetchData();
+      zone.value = userController.userInfo.first.zone;
       await fetchPMdata(handlerId);
       await fetchSubJobsdata(handlerId);
+      subJobSparePart.clear();
+      if (techLevel.value == '1') {
+        await fetchSubJobSparePart(handlerId.toString(), 'tech');
+      } else {
+        await fetchSubJobSparePart(zone.value, 'leadtech');
+      }
       pmItemsPage.clear();
       subJobAssignedPage.clear();
       await fetchPMdataPage(1, userController.userInfo.first.id.toString());
@@ -387,6 +405,55 @@ class HomeController extends GetxController {
         overdueJobs.value += closedSubJobsOver.length;
         closedJobs.value += completedSubJobs.length;
         subJobAssigned.value = itemList;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> fetchSubJobSparePart(String id, String option) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    try {
+      final response = await http.get(
+        Uri.parse(option == 'tech'
+            ? getSparepartJobByHandler(id)
+            : getSparepartJobByZone(id)),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+        List<SubJobSparePart> itemList =
+            responseData.map((job) => SubJobSparePart.fromJson(job)).toList();
+
+        List<SubJobSparePart> pendingSparePart = [];
+        List<SubJobSparePart> completedSparePart = [];
+        List<SubJobSparePart> rejectedSparePart = [];
+        for (var sparePart in itemList) {
+          if (sparePart.techStatus != '2') {
+            switch (sparePart.leadTechStatus) {
+              case '0':
+                pendingSparePart.add(sparePart);
+                break;
+              case '1':
+                pendingSparePart.add(sparePart);
+                break;
+              case '2':
+                completedSparePart.add(sparePart);
+                break;
+              case '3':
+                rejectedSparePart.add(sparePart);
+                break;
+            }
+          }
+        }
+        sparePartPending.value = pendingSparePart.length;
+        sparePartApproved.value = completedSparePart.length;
+        sparePartReject.value = rejectedSparePart.length;
+        subJobSparePart.value = itemList;
       }
     } catch (e) {
       print(e.toString());

@@ -4,7 +4,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class CheckStatus extends StatelessWidget {
-  final int status;
+  final String status;
 
   const CheckStatus({
     super.key,
@@ -13,7 +13,7 @@ class CheckStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return status == 1
+    return status == '1'
         ? Row(
             children: [
               Image.asset(
@@ -26,10 +26,10 @@ class CheckStatus extends StatelessWidget {
               Text(
                 'Active',
                 style: GoogleFonts.kanit(
-                  fontSize: 14,
-                  color: green1,
-                  fontWeight: FontWeight.w500,
-                ),
+                    fontSize: 14,
+                    color: green1,
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.none),
               ),
             ],
           )
@@ -45,10 +45,10 @@ class CheckStatus extends StatelessWidget {
               Text(
                 'InActive',
                 style: GoogleFonts.kanit(
-                  fontSize: 14,
-                  color: red2,
-                  fontWeight: FontWeight.w500,
-                ),
+                    fontSize: 14,
+                    color: red2,
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.none),
               ),
             ],
           );

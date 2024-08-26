@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
-import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 
@@ -131,19 +129,19 @@ class JobItemWidget extends StatelessWidget {
                                 value: job.serialNo,
                               ),
                               const SizedBox(height: 3),
-                              BoxInfo(
-                                title: "Warranty Status",
-                                value: '',
-                                trailing:
-                                    // ignore: unrelated_type_equality_checks
-                                    checkWarrantyStatus(job.serialNo) == true
-                                        ? const CheckStatus(
-                                            status: 1,
-                                          )
-                                        : const CheckStatus(
-                                            status: 0,
-                                          ),
-                              ),
+                              // BoxInfo(
+                              //   title: "Warranty Status",
+                              //   value: '',
+                              //   trailing:
+                              //       // ignore: unrelated_type_equality_checks
+                              //       checkWarrantyStatus(job.serialNo) == true
+                              //           ? const CheckStatus(
+                              //               status: 1,
+                              //             )
+                              //           : const CheckStatus(
+                              //               status: 0,
+                              //             ),
+                              // ),
                             ],
                           )),
                     ],

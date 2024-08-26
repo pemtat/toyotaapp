@@ -141,3 +141,81 @@ Future<void> fetchProducts(
     isLoading(false);
   }
 }
+
+Future<Map<String, String>?> fetchProductsReturn(
+    String placeNumber, RxList<Product> products) async {
+  String username = usernameProduct;
+  String password = passwordProduct;
+
+  String basicAuth =
+      'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+
+  try {
+    final response = await http.get(
+      Uri.parse(getSparePartbySearch(placeNumber)),
+      headers: {'Authorization': basicAuth},
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = jsonDecode(response.body);
+
+      products.value =
+          responseData.map((job) => Product.fromJson(job)).toList();
+
+      if (products.isNotEmpty) {
+        return {
+          'inventory': products.first.inventory.toString(),
+          'model': products.first.model,
+          'no': products.first.no,
+        };
+      } else {
+        return null;
+      }
+    } else {
+      print('Error: ${response.statusCode}');
+      return null;
+    }
+  } catch (e) {
+    print('Exception occurred: $e');
+    return null;
+  }
+}
+
+Future<String> fetchProductsReturnString(String placeNumber) async {
+  if (placeNumber != '-') {
+    String username = usernameProduct;
+    String password = passwordProduct;
+
+    String basicAuth =
+        'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+    RxList<Product> products = <Product>[].obs;
+
+    try {
+      final response = await http.get(
+        Uri.parse(getSparePartbySearch(placeNumber)),
+        headers: {'Authorization': basicAuth},
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+
+        products.value =
+            responseData.map((job) => Product.fromJson(job)).toList();
+
+        if (products.isNotEmpty) {
+          return products.first.inventory.toString();
+        } else {
+          return '0';
+        }
+      } else {
+        print('Error: ${response.statusCode}');
+        return '0';
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+      return '0';
+    }
+  } else {
+    return 'N/A';
+  }
+}

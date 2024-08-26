@@ -19,7 +19,8 @@ class StatusNewButton extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xffF55C02),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -39,7 +40,8 @@ class StatusCompletedButton extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xff656565),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -59,7 +61,94 @@ class StatusCloseButton extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xff656565),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
+      ),
+    );
+  }
+}
+
+class StatusWaitForApprove extends StatelessWidget {
+  const StatusWaitForApprove({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: const Color.fromARGB(255, 255, 231, 217),
+      ),
+      child: Text(
+        "Wait for Approve",
+        style: GoogleFonts.kanit(
+            color: const Color(0xffF55C02),
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
+      ),
+    );
+  }
+}
+
+class StatusWaitForPending extends StatelessWidget {
+  const StatusWaitForPending({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: white9),
+      child: Text(
+        "Pending",
+        style: GoogleFonts.kanit(
+            color: const Color(0xff656565),
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
+      ),
+    );
+  }
+}
+
+class StatusApproved extends StatelessWidget {
+  const StatusApproved({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: green2),
+      child: Text(
+        "Approved",
+        style: GoogleFonts.kanit(
+            color: green3,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
+      ),
+    );
+  }
+}
+
+class StatusReject extends StatelessWidget {
+  const StatusReject({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: white9),
+      child: Text(
+        "Reject",
+        style: GoogleFonts.kanit(
+            color: const Color(0xff656565),
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -79,7 +168,8 @@ class StatusMaintenanceButton extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xff656565),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -99,7 +189,8 @@ class StatusAssignedButton extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xff656565),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -121,7 +212,8 @@ class StatusFeedBackButton extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xffF55C02),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -143,7 +235,8 @@ class StatusResolved extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xffF55C02),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -165,7 +258,8 @@ class StatusAcknowledged extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xffF55C02),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -187,7 +281,8 @@ class StatusPendingButton extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xffF55C02),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -205,7 +300,10 @@ class StatusOnprocessButton extends StatelessWidget {
       child: Text(
         "On process",
         style: GoogleFonts.kanit(
-            color: green3, fontSize: 14, fontWeight: FontWeight.w400),
+            color: green3,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -223,7 +321,10 @@ class StatusConfirmedButton extends StatelessWidget {
       child: Text(
         "Confirmed",
         style: GoogleFonts.kanit(
-            color: green3, fontSize: 14, fontWeight: FontWeight.w400),
+            color: green3,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -243,7 +344,8 @@ class StatusPlanningButton extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xff656565),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -261,7 +363,10 @@ class StatusOngoingButton extends StatelessWidget {
       child: Text(
         "Ongoing",
         style: GoogleFonts.kanit(
-            color: green3, fontSize: 14, fontWeight: FontWeight.w400),
+            color: green3,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }
@@ -283,7 +388,8 @@ class StatusNotConfirmButton extends StatelessWidget {
         style: GoogleFonts.kanit(
             color: const Color(0xffF55C02),
             fontSize: 14,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
       ),
     );
   }

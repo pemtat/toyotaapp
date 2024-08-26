@@ -7,6 +7,7 @@ import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
+import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
@@ -26,6 +27,7 @@ class JobDetailController extends GetxController {
   final comment2 = TextEditingController().obs;
   var reportList = <RepairReportModel>[].obs;
   var pdfList = <Map<String, dynamic>>[].obs;
+  var subJobSparePart = <SubJobSparePart>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
   var warrantyInfo = <WarrantybyIdModel>[].obs;
   var notesFiles = <Notes>[].obs;
@@ -33,7 +35,9 @@ class JobDetailController extends GetxController {
   var issueData = [].obs;
   var customerInfo = <CustomerById>[].obs;
   var completeCheck = false.obs;
-
+  Rx<String> expandedTicketId = Rx<String>('');
+  var selectedDate = Rx<DateTime?>(null);
+  var expandedIndex = false.obs;
   var saveCompletedtime = ''.obs;
   List<String> notePic = [];
   var attatchments = <Map<String, dynamic>>[].obs;
@@ -61,16 +65,14 @@ class JobDetailController extends GetxController {
     try {
       final String apiUrl = getTicketbyId(ticketId);
       String? token = await getToken();
-
       issueId = ticketId;
       jobId = subjobId;
-      pdfList.clear;
       await fetchReportData(
           subjobId, token ?? '', reportList, additionalReportList);
       if (reportList.isNotEmpty || additionalReportList.isNotEmpty) {
         completeCheck.value = true;
+        await fetchSubJobSparePartId();
       }
-      // fetchPdfData(ticketId, token ?? '', pdfList);
 
       await fetchSubJob(subjobId, token ?? '', subJobs);
       await fetchUserById(subJobs.first.reporterId ?? '', userData);
@@ -137,6 +139,20 @@ class JobDetailController extends GetxController {
       notesFiles.assignAll(issueData.first.notes ?? []);
     } catch (e) {
       Get.to(() => BottomBarView());
+    }
+  }
+
+  Future<void> fetchSubJobSparePartId() async {
+    try {
+      subJobSparePart.clear();
+      final filteredSpareParts = jobController.subJobSparePart
+          .where((element) => element.id == jobId)
+          .toList();
+
+      subJobSparePart.value = filteredSpareParts;
+      subJobSparePart.refresh();
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -213,6 +229,29 @@ class JobDetailController extends GetxController {
   }
 
   void showCompletedDialog(
+      BuildContext context, String title, String left, String right) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogAlert(
+          rightColor: red1,
+          title: title,
+          leftButton: left,
+          rightButton: right,
+          onRightButtonPressed: () {
+            saveCurrentDateTime(saveCompletedtime);
+            showWaitMessage();
+            updateStatusSubjobs(jobId, issueId.toString());
+            jobController.fetchDataFromAssignJob();
+            Navigator.pop(context);
+            showSaveMessage();
+          },
+        );
+      },
+    );
+  }
+
+  void showApproveSparePart(
       BuildContext context, String title, String left, String right) {
     showDialog(
       context: context,

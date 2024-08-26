@@ -292,7 +292,9 @@ class ButtonTime extends StatelessWidget {
 class ButtonRed extends StatelessWidget {
   final title;
   final VoidCallback onTap;
-  const ButtonRed({super.key, required this.title, required this.onTap});
+  final Color? color;
+  const ButtonRed(
+      {super.key, required this.title, required this.onTap, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -302,7 +304,7 @@ class ButtonRed extends StatelessWidget {
           child: ElevatedButton(
             onPressed: onTap,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
+              backgroundColor: color ?? Colors.red,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
@@ -316,6 +318,35 @@ class ButtonRed extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ButtonColor extends StatelessWidget {
+  final title;
+  final Color backgroundColor;
+  final VoidCallback onTap;
+  const ButtonColor(
+      {super.key,
+      required this.title,
+      required this.onTap,
+      required this.backgroundColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: backgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+      ),
+      child: Text(
+        title,
+        style: TextStyleList.text7.copyWith(color: Colors.white),
+      ),
     );
   }
 }

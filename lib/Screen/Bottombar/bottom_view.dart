@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_view.dart';
 import 'package:toyotamobile/Screen/Home/home_view.dart';
 import 'package:toyotamobile/Screen/Notification/notification_view.dart';
+import 'package:toyotamobile/Screen/Sparepart/sparepart_view.dart';
 import 'package:toyotamobile/Screen/Ticket/ticket_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 
@@ -14,6 +15,7 @@ class BottomBarView extends StatelessWidget {
   final List<Widget> _pages = [
     HomeView(),
     TicketView(),
+    SparePartView(),
     CalendarView(),
     NotificationView(),
     const AccountView()
@@ -82,6 +84,12 @@ class BottomBarView extends StatelessWidget {
                     AssetImage('assets/ticket.png'),
                   ),
                   label: 'Ticket',
+                ),
+                const BottomNavigationBarItem(
+                  icon: ImageIcon(
+                    AssetImage('assets/sparepart.png'),
+                  ),
+                  label: 'Spare Part',
                 ),
                 const BottomNavigationBarItem(
                   icon: ImageIcon(

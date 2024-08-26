@@ -5,11 +5,13 @@ import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editfillform_view.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
+import 'package:toyotamobile/Screen/Sparepart/sparepart_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
+import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/addnote_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
@@ -34,6 +36,7 @@ class JobDetailView extends StatelessWidget {
   final String? jobId;
   final String? status;
   final JobDetailController jobController = Get.put(JobDetailController());
+  final SparePartController subjob = Get.put(SparePartController());
 
   JobDetailView({super.key, required this.ticketId, this.jobId, this.status}) {
     jobController.fetchData(ticketId, jobId ?? '');
@@ -533,7 +536,46 @@ class JobDetailView extends StatelessWidget {
                                                   return const SizedBox
                                                       .shrink();
                                                 }
-                                              })
+                                              }),
+                                              Obx(() => (jobController
+                                                          .subJobSparePart
+                                                          .isNotEmpty &&
+                                                      subJob != null &&
+                                                      jobController
+                                                              .reportList
+                                                              .first
+                                                              .signature !=
+                                                          '' &&
+                                                      jobController
+                                                              .reportList
+                                                              .first
+                                                              .signaturePad !=
+                                                          '')
+                                                  ? Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        ButtonColor(
+                                                          backgroundColor: red4,
+                                                          title:
+                                                              'View Part Detail',
+                                                          onTap: () {
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    Obx(() =>
+                                                                        SubJobSparePartWidget(
+                                                                          subJobSparePart: jobController
+                                                                              .subJobSparePart
+                                                                              .first,
+                                                                        )));
+                                                          },
+                                                        ),
+                                                      ],
+                                                    )
+                                                  : Container()),
                                             ],
                                           )
                                         : Container()),

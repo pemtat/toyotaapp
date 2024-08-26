@@ -26,8 +26,11 @@ class SubJobDetail {
   String? contentAfter;
   String? imageUrlBefore;
   String? imageUrlAfter;
-
+  String? salesStatus;
+  String? leadTechStatus;
+  String? leadTechRemark;
   String? comment;
+  String? referenceCode;
 
   SubJobDetail(
       {this.id,
@@ -57,7 +60,11 @@ class SubJobDetail {
       this.imageAfter,
       this.comment,
       this.imageUrlAfter,
-      this.imageUrlBefore});
+      this.imageUrlBefore,
+      this.leadTechRemark,
+      this.leadTechStatus,
+      this.referenceCode,
+      this.salesStatus});
 
   SubJobDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -88,6 +95,10 @@ class SubJobDetail {
     comment = json['comment'];
     imageUrlBefore = json['img_url_before'];
     imageUrlAfter = json['img_url_after'];
+    salesStatus = json['sales_status'];
+    leadTechStatus = json['lead_tech_status'];
+    leadTechRemark = json['lead_tech_remark'];
+    referenceCode = json['reference_code'];
   }
 
   Map<String, dynamic> toJson() {
@@ -120,6 +131,10 @@ class SubJobDetail {
     data['comment'] = comment;
     data['img_url_before'] = imageUrlBefore;
     data['img_url_after'] = imageUrlAfter;
+    data['sales_status'] = salesStatus;
+    data['lead_tech_status'] = leadTechStatus;
+    data['lead_tech_remark'] = leadTechRemark;
+    data['reference_code'] = referenceCode;
     return data;
   }
 }

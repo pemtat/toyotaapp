@@ -42,6 +42,26 @@ class StatusButton extends StatelessWidget {
   }
 }
 
+class StatusButton2 extends StatelessWidget {
+  final String status;
+
+  const StatusButton2({super.key, required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    switch (status) {
+      case '1':
+        return const StatusWaitForApprove();
+      case '2':
+        return const StatusApproved();
+      case '3':
+        return const StatusReject();
+      default:
+        return const StatusWaitForPending();
+    }
+  }
+}
+
 class SidebarColor {
   static Color getColor(String status) {
     switch (status) {

@@ -19,7 +19,7 @@ class SparePartModel {
   });
   Map<String, dynamic> toJson() {
     return {
-      'relation_id': relationId,
+      'relation_id': "",
       'c_code': cCodePage,
       'part_number': partNumber,
       'description': partDetails,
