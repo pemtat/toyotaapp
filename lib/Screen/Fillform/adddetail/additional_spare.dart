@@ -31,7 +31,7 @@ class AdditSparepartList extends GetxController {
           children: [
             TextField(
                 controller: searchPartNumber.value,
-                onChanged: (String value) {
+                onSubmitted: (String value) {
                   if (value.length >= 4) {
                     fetchProducts(
                         searchPartNumber.value.text, isLoading, products);
@@ -197,7 +197,7 @@ class AdditSparepartList extends GetxController {
           children: [
             TextField(
                 controller: searchPartNumber.value,
-                onChanged: (String value) {
+                onSubmitted: (String value) {
                   if (value.length >= 4) {
                     fetchProducts(
                         searchPartNumber.value.text, isLoading, products);
