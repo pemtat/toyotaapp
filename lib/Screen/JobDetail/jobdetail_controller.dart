@@ -82,9 +82,11 @@ class JobDetailController extends GetxController {
       savedDateStartTime.value =
           formatDateTimeCut(subJobs.first.timeStart ?? '');
       savedDateEndTime.value = formatDateTimeCut(subJobs.first.timeEnd ?? '');
-      if (subJobs.first.comment != null && subJobs.first.comment != '') {
+      comment2.value.clear();
+      if (subJobs.first.comment != null || subJobs.first.comment != '') {
         comment.value.text = subJobs.first.comment ?? '';
       }
+
       if (imagesBefore.isNotEmpty) imagesBefore.clear();
 
       if (imagesAfter.isNotEmpty) imagesAfter.clear();

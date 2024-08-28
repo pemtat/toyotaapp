@@ -76,7 +76,7 @@ class JobDetailControllerPM extends GetxController {
             reportPreventiveList.first.pvtMaintenance != null)) {
       completeCheck.value = true;
     }
-
+    comment2.value.clear();
     if (pmInfo.first.comment != null && pmInfo.first.comment != '') {
       comment.value.text = pmInfo.first.comment ?? '';
     } else {

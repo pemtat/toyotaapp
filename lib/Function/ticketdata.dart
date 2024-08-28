@@ -275,39 +275,43 @@ Future<void> fetchReadAttachment(
     List<Map<String, dynamic>> attatchments) async {
   attatchments.clear();
   attachmentsData.clear();
-  if (getAttachments != null) {
-    var attachments = getAttachments as List<dynamic>;
-    for (var attachment in attachments) {
-      Map<String, dynamic> attachmentMap = {
-        'id': attachment.id,
-        'filename': attachment.filename,
-      };
-      attachmentsData.add(attachmentMap);
-    }
+  try {
+    if (getAttachments != null) {
+      var attachments = getAttachments as List<dynamic>;
+      for (var attachment in attachments) {
+        Map<String, dynamic> attachmentMap = {
+          'id': attachment.id,
+          'filename': attachment.filename,
+        };
+        attachmentsData.add(attachmentMap);
+      }
 
-    for (var attachment in attachmentsData) {
-      int attachmentId = attachment['id'];
-      final String getFileUrl = getAttachmentFileById(issueId, attachmentId);
+      for (var attachment in attachmentsData) {
+        int attachmentId = attachment['id'];
+        final String getFileUrl = getAttachmentFileById(issueId, attachmentId);
 
-      final response2 = await http.get(
-        Uri.parse(getFileUrl),
-        headers: {
-          'Authorization': token,
-        },
-      );
-      if (response2.statusCode == 200) {
-        Map<String, dynamic> data = json.decode(response2.body);
-        var files = data['files'] as List<dynamic>;
-        var fileData = files.map((file) {
-          return {
-            'id': file['id'],
-            'filename': file['filename'],
-            'content': file['content'],
-          };
-        }).toList();
-        attatchments.addAll(fileData);
-      } else {}
+        final response2 = await http.get(
+          Uri.parse(getFileUrl),
+          headers: {
+            'Authorization': token,
+          },
+        );
+        if (response2.statusCode == 200) {
+          Map<String, dynamic> data = json.decode(response2.body);
+          var files = data['files'] as List<dynamic>;
+          var fileData = files.map((file) {
+            return {
+              'id': file['id'],
+              'filename': file['filename'],
+              'content': file['content'],
+            };
+          }).toList();
+          attatchments.addAll(fileData);
+        } else {}
+      }
     }
+  } catch (e) {
+    attatchments = [];
   }
 }
 
