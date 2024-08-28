@@ -471,10 +471,8 @@ class JobDetailView extends StatelessWidget {
                                                       ));
                                                 },
                                               )
-                                            : jobController.reportList
-                                                        .isNotEmpty &&
-                                                    (subJob != null &&
-                                                        subJob.leadTechStatus !=
+                                            : subJob != null &&
+                                                    (subJob.leadTechStatus !=
                                                             '1' &&
                                                         subJob.leadTechStatus !=
                                                             '2')
@@ -554,6 +552,8 @@ class JobDetailView extends StatelessWidget {
                                                           .subJobSparePart
                                                           .isNotEmpty &&
                                                       subJob != null &&
+                                                      jobController.reportList
+                                                          .isNotEmpty &&
                                                       jobController
                                                               .reportList
                                                               .first
