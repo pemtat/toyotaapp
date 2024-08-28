@@ -117,8 +117,8 @@ class EditSparePartView extends StatelessWidget {
                                       .additSparePartListEditModal(
                                           context, part);
                                 },
-                                sparePartList:
-                                    sparePartListController.sparePartList,
+                                sparePartList: additSparePartListController
+                                    .additSparePartList,
                               );
                             },
                           )

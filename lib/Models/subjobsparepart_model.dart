@@ -28,6 +28,7 @@ class SubJobSparePart {
   String? summaryBug;
   String? realname;
   String? referenceCode;
+  String? bugStatus;
   List<Sparepart>? sparepart;
   List<Sparepart>? additionalSparepart;
   SubJobSparePart(
@@ -61,6 +62,7 @@ class SubJobSparePart {
       this.realname,
       this.referenceCode,
       this.sparepart,
+      this.bugStatus,
       this.additionalSparepart});
 
   SubJobSparePart.fromJson(Map<String, dynamic> json) {
@@ -92,6 +94,7 @@ class SubJobSparePart {
     reportjobId = json['reportjob_id'];
     summaryBug = json['summary_bug'];
     realname = json['realname'];
+    bugStatus = json['bug_status'];
     referenceCode = json['reference_code'];
     if (json['sparepart'] != null) {
       sparepart = <Sparepart>[];
@@ -138,6 +141,7 @@ class SubJobSparePart {
     data['summary_bug'] = summaryBug;
     data['realname'] = realname;
     data['reference_code'] = referenceCode;
+    data['bug_status'] = bugStatus;
     if (sparepart != null) {
       data['sparepart'] = sparepart!.map((v) => v.toJson()).toList();
     }

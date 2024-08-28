@@ -456,7 +456,12 @@ class JobDetailView extends StatelessWidget {
                                         const TitleApp(
                                             text: 'Field Service Report*'),
                                         Obx(() => jobController
-                                                .reportList.isNotEmpty
+                                                    .reportList.isNotEmpty &&
+                                                (subJob != null &&
+                                                    subJob.leadTechStatus !=
+                                                        '1' &&
+                                                    subJob.leadTechStatus !=
+                                                        '2')
                                             ? EditButton(
                                                 onTap: () {
                                                   Get.to(() => EditFillFormView(
@@ -466,14 +471,22 @@ class JobDetailView extends StatelessWidget {
                                                       ));
                                                 },
                                               )
-                                            : AddButton(
-                                                onTap: () {
-                                                  Get.to(() => FillFormView(
-                                                        ticketId: ticketId,
-                                                        jobId: jobId ?? '',
-                                                      ));
-                                                },
-                                              )),
+                                            : jobController.reportList
+                                                        .isNotEmpty &&
+                                                    (subJob != null &&
+                                                        subJob.leadTechStatus !=
+                                                            '1' &&
+                                                        subJob.leadTechStatus !=
+                                                            '2')
+                                                ? AddButton(
+                                                    onTap: () {
+                                                      Get.to(() => FillFormView(
+                                                            ticketId: ticketId,
+                                                            jobId: jobId ?? '',
+                                                          ));
+                                                    },
+                                                  )
+                                                : Container()),
                                       ],
                                     ),
                                     Text(
@@ -566,10 +579,14 @@ class JobDetailView extends StatelessWidget {
                                                                 builder: (BuildContext
                                                                         context) =>
                                                                     Obx(() =>
-                                                                        SubJobSparePartWidget(
-                                                                          subJobSparePart: jobController
-                                                                              .subJobSparePart
-                                                                              .first,
+                                                                        Material(
+                                                                          color:
+                                                                              Colors.transparent,
+                                                                          child:
+                                                                              SubJobSparePartWidget(
+                                                                            subJobSparePart:
+                                                                                jobController.subJobSparePart.first,
+                                                                          ),
                                                                         )));
                                                           },
                                                         ),

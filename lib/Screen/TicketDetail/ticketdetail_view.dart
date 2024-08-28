@@ -7,6 +7,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
+import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/customerinfo_widget.dart';
@@ -336,7 +337,9 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Field Service Report*'),
-                                      issue.status.id != 90
+                                      issue.status.id != 90 &&
+                                              subJob.leadTechStatus != '1' &&
+                                              subJob.leadTechStatus != '2'
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView(
@@ -354,16 +357,61 @@ class TicketDetailView extends StatelessWidget {
                                               .reportList.isNotEmpty ||
                                           ticketController
                                               .additionalReportList.isNotEmpty
-                                      ? ShowRepairReport(
-                                          reportData:
-                                              ticketController.reportList,
-                                          additionalReportData: ticketController
-                                              .additionalReportList,
-                                          jobId: jobId.toString(),
-                                          timeStart: ticketController
-                                              .savedDateStartTime,
-                                          timeEnd:
-                                              ticketController.savedDateEndTime,
+                                      ? Column(
+                                          children: [
+                                            ShowRepairReport(
+                                              reportData:
+                                                  ticketController.reportList,
+                                              additionalReportData:
+                                                  ticketController
+                                                      .additionalReportList,
+                                              jobId: jobId.toString(),
+                                              timeStart: ticketController
+                                                  .savedDateStartTime,
+                                              timeEnd: ticketController
+                                                  .savedDateEndTime,
+                                            ),
+                                            Obx(() => (ticketController
+                                                        .subJobSparePart
+                                                        .isNotEmpty &&
+                                                    ticketController.reportList
+                                                            .first.signature !=
+                                                        '' &&
+                                                    ticketController
+                                                            .reportList
+                                                            .first
+                                                            .signaturePad !=
+                                                        '')
+                                                ? Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      ButtonColor(
+                                                        backgroundColor: red4,
+                                                        title:
+                                                            'View Part Detail',
+                                                        onTap: () {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  Obx(() =>
+                                                                      Material(
+                                                                        color: Colors
+                                                                            .transparent,
+                                                                        child:
+                                                                            SubJobSparePartWidget(
+                                                                          subJobSparePart: ticketController
+                                                                              .subJobSparePart
+                                                                              .first,
+                                                                        ),
+                                                                      )));
+                                                        },
+                                                      ),
+                                                    ],
+                                                  )
+                                                : Container()),
+                                          ],
                                         )
                                       : Container())
                                 ],

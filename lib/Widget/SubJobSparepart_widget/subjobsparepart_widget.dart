@@ -94,7 +94,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                       children: [
                         Text(
                           'Sales',
-                          style: TextStyleList.subtitle8,
+                          style: TextStyleList.subtitle1,
                         ),
                         Text(
                           ' :',
@@ -139,31 +139,28 @@ class SubJobSparePartWidget extends StatelessWidget {
                       style: TextStyleList.text1,
                     ),
                     if (expandedIndex != null && expandedTicketId != null)
-                      Obx(() => Padding(
-                            padding: const EdgeInsets.only(right: 6.0),
-                            child: InkWell(
-                              onTap: () {
-                                if (expandedTicketId!.value ==
-                                    subJobSparePart.id) {
-                                  expandedIndex!.value = !expandedIndex!.value;
-                                } else {
-                                  expandedTicketId!.value =
-                                      subJobSparePart.id ?? '';
-                                  expandedIndex!.value = true;
-                                }
-                              },
-                              child: expandedIndex!.value &&
-                                      expandedTicketId!.value ==
-                                          subJobSparePart.id
-                                  ? const ArrowUp(
-                                      width: 30,
-                                      height: 30,
-                                    )
-                                  : const ArrowDown(
-                                      width: 30,
-                                      height: 30,
-                                    ),
-                            ),
+                      Obx(() => InkWell(
+                            onTap: () {
+                              if (expandedTicketId!.value ==
+                                  subJobSparePart.id) {
+                                expandedIndex!.value = !expandedIndex!.value;
+                              } else {
+                                expandedTicketId!.value =
+                                    subJobSparePart.id ?? '';
+                                expandedIndex!.value = true;
+                              }
+                            },
+                            child: expandedIndex!.value &&
+                                    expandedTicketId!.value ==
+                                        subJobSparePart.id
+                                ? const ArrowUp(
+                                    width: 30,
+                                    height: 30,
+                                  )
+                                : const ArrowDown(
+                                    width: 30,
+                                    height: 30,
+                                  ),
                           )),
                   ],
                 ),
@@ -193,12 +190,22 @@ class SubJobSparePartWidget extends StatelessWidget {
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          subJobSparePart.leadTechStatus == '0' ||
-                                  subJobSparePart.leadTechStatus == '3'
+                          if (expandedIndex == null)
+                            Container(
+                                width: 120,
+                                child: ButtonRed(
+                                    title: 'ปิด',
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    })),
+                          6.wH,
+                          subJobSparePart.bugStatus != '90' &&
+                                  (subJobSparePart.leadTechStatus == '0' ||
+                                      subJobSparePart.leadTechStatus == '3')
                               ? Container(
                                   width: 120,
                                   child: ButtonRed(
-                                      title: 'Request Part',
+                                      title: 'ขออนุมัติ',
                                       onTap: () {
                                         showApproveSparePart(
                                             context,

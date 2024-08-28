@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
-import 'package:toyotamobile/Models/jobprogress_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
+import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
@@ -26,7 +26,7 @@ class TicketDetailController extends GetxController {
   var savedDateStartTime = ''.obs;
   var warrantyInfo = <WarrantybyIdModel>[].obs;
   var customerInfo = <CustomerById>[].obs;
-
+  var subJobSparePart = <SubJobSparePart>[].obs;
   var savedDateEndTime = ''.obs;
   var imagesBefore = <Map<String, String>>[].obs;
   var imagesAfter = <Map<String, String>>[].obs;
@@ -40,33 +40,14 @@ class TicketDetailController extends GetxController {
   var userData = <UserById>[].obs;
 
   var issueId;
+  var jobId = ''.obs;
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
   var subJobs = <SubJobDetail>[].obs;
-
-  final List<JobItemData> jobTimeLineItems = [
-    JobItemData(
-        imagePath: 'assets/search.png',
-        jobid: '0001',
-        description: 'Investigation issue ',
-        datetime: '28 January 2024 at 08:15 PM',
-        status: 'done'),
-    JobItemData(
-        imagePath: 'assets/briefcase.png',
-        jobid: '0002',
-        description: 'Replace spare parts',
-        datetime: '29 January 2024 at 15:10 PM',
-        status: 'pending'),
-    JobItemData(
-        imagePath: 'assets/briefcase.png',
-        jobid: '0003',
-        description: 'Replace spare parts',
-        datetime: '30 January 2024 at 10:20 PM',
-        status: 'pending'),
-  ];
 
   final HomeController jobController = Get.put(HomeController());
   void fetchData(String ticketId, subjobId) async {
     final String apiUrl = getTicketbyId(ticketId);
+    jobId.value = subjobId;
     String? token = await getToken();
     await fetchReportData(
         subjobId, token ?? '', reportList, additionalReportList);
@@ -76,6 +57,10 @@ class TicketDetailController extends GetxController {
 
     await fetchgetCustomerInfo(
         userData.first.users!.first.companyId ?? '', customerInfo);
+    if (reportList.isNotEmpty || additionalReportList.isNotEmpty) {
+      await fetchSubJobSparePartId();
+    }
+
     savedDateStartTime.value = subJobs.first.timeStart ?? '';
     savedDateEndTime.value = subJobs.first.timeEnd ?? '';
     try {
@@ -130,6 +115,20 @@ class TicketDetailController extends GetxController {
       issueData.value = issuesList;
     } else {}
     notesFiles.assignAll(issueData.first.notes ?? []);
+  }
+
+  Future<void> fetchSubJobSparePartId() async {
+    try {
+      subJobSparePart.clear();
+      final filteredSpareParts = jobController.subJobSparePart
+          .where((element) => element.id == jobId.value)
+          .toList();
+
+      subJobSparePart.value = filteredSpareParts;
+      subJobSparePart.refresh();
+    } catch (e) {
+      print(e);
+    }
   }
 
   void showCompletedDialog(

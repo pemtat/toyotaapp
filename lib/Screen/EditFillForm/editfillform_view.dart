@@ -359,12 +359,14 @@ class EditFillFormView extends StatelessWidget {
                       TitleWithButton(
                           titleText: 'Repair Result',
                           button: repairResultController.maintenanceList.isEmpty
-                              ? AddButton(
-                                  onTap: () {
-                                    repairResultController
-                                        .repairResultModal(context);
-                                  },
-                                )
+                              ? readOnly == null
+                                  ? AddButton(
+                                      onTap: () {
+                                        repairResultController
+                                            .repairResultModal(context);
+                                      },
+                                    )
+                                  : Container()
                               : Container()),
                       repairResultController.maintenanceList.isNotEmpty
                           ? ListView.builder(
@@ -376,6 +378,7 @@ class EditFillFormView extends StatelessWidget {
                                 final info = repairResultController
                                     .maintenanceList[index];
                                 return RepairResultWidget(
+                                  readOnly: readOnly == null ? null : 'yes',
                                   info: info,
                                   index: index,
                                   repairResult: repairResultController,

@@ -433,21 +433,19 @@ class HomeController extends GetxController {
         List<SubJobSparePart> completedSparePart = [];
         List<SubJobSparePart> rejectedSparePart = [];
         for (var sparePart in itemList) {
-          if (sparePart.techStatus != '2') {
-            switch (sparePart.leadTechStatus) {
-              case '0':
-                pendingSparePart.add(sparePart);
-                break;
-              case '1':
-                pendingSparePart.add(sparePart);
-                break;
-              case '2':
-                completedSparePart.add(sparePart);
-                break;
-              case '3':
-                rejectedSparePart.add(sparePart);
-                break;
-            }
+          switch (sparePart.leadTechStatus) {
+            case '0':
+              pendingSparePart.add(sparePart);
+              break;
+            case '1':
+              pendingSparePart.add(sparePart);
+              break;
+            case '2':
+              completedSparePart.add(sparePart);
+              break;
+            case '3':
+              rejectedSparePart.add(sparePart);
+              break;
           }
         }
         sparePartPending.value = pendingSparePart.length;

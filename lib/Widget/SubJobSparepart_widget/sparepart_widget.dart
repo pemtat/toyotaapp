@@ -42,34 +42,45 @@ class SparePartDetail extends StatelessWidget {
             width: double.infinity,
             child: Column(
               children: [
+                if (techLevel == '1' &&
+                    (leadTechStatus == '0' || leadTechStatus == '3'))
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      EditButton(onTap: () {
+                        Get.to(() => EditSparePartView(
+                            sparepart: sparepart,
+                            additionalSparepart: additionalSparepart,
+                            jobId: jobId));
+                      }),
+                      6.kH,
+                    ],
+                  ),
+                if (techLevel == '2' && leadTechStatus == '1')
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      EditButton(onTap: () {
+                        Get.to(() => EditSparePartView(
+                            sparepart: sparepart,
+                            additionalSparepart: additionalSparepart,
+                            jobId: jobId));
+                      }),
+                      6.kH,
+                    ],
+                  ),
                 sparepart.isNotEmpty && sparepart.first.quantity != '0'
                     ? Column(
                         children: [
+                          6.kH,
                           const AppDivider(),
                           6.kH,
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Spare Part List',
                                 style: TextStyleList.subtitle4,
                               ),
-                              if (techLevel == '1' &&
-                                  (leadTechStatus == '0' ||
-                                      leadTechStatus == '3'))
-                                EditButton(onTap: () {
-                                  Get.to(() => EditSparePartView(
-                                      sparepart: sparepart,
-                                      additionalSparepart: additionalSparepart,
-                                      jobId: jobId));
-                                }),
-                              if (techLevel == '2' && leadTechStatus == '1')
-                                EditButton(onTap: () {
-                                  Get.to(() => EditSparePartView(
-                                      sparepart: sparepart,
-                                      additionalSparepart: additionalSparepart,
-                                      jobId: jobId));
-                                })
                             ],
                           ),
                           Container(
@@ -160,28 +171,11 @@ class SparePartDetail extends StatelessWidget {
                           const AppDivider(),
                           10.kH,
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Additional Spare Part List',
                                 style: TextStyleList.subtitle4,
                               ),
-                              if (techLevel == '1' &&
-                                  (leadTechStatus == '0' ||
-                                      leadTechStatus == '3'))
-                                EditButton(onTap: () {
-                                  Get.to(() => EditSparePartView(
-                                      sparepart: sparepart,
-                                      additionalSparepart: additionalSparepart,
-                                      jobId: jobId));
-                                }),
-                              if (techLevel == '2' && leadTechStatus == '1')
-                                EditButton(onTap: () {
-                                  Get.to(() => EditSparePartView(
-                                      sparepart: sparepart,
-                                      additionalSparepart: additionalSparepart,
-                                      jobId: jobId));
-                                })
                             ],
                           ),
                           Container(
