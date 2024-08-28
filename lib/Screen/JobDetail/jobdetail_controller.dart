@@ -86,7 +86,7 @@ class JobDetailController extends GetxController {
       if (subJobs.first.comment != null && subJobs.first.comment != '') {
         comment.value.text = subJobs.first.comment ?? '';
       } else {
-        comment.value.clear();
+        comment.value.text = '';
       }
 
       if (imagesBefore.isNotEmpty) imagesBefore.clear();
