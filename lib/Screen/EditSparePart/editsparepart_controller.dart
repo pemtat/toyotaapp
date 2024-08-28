@@ -8,6 +8,7 @@ import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -20,6 +21,8 @@ class EditSparePartController extends GetxController {
   final List<Sparepart> sparepart = [];
   final List<Sparepart> additionalSparepart = [];
   final HomeController jobController = Get.put(HomeController());
+  final JobDetailController jobDetailController =
+      Get.put(JobDetailController());
   final SparepartList sparePartListController = Get.put(SparepartList());
   final AdditSparepartList additSparePartListController =
       Get.put(AdditSparepartList());
@@ -176,6 +179,12 @@ class EditSparePartController extends GetxController {
           if (response.statusCode == 200) {
             print('Sparepart Updated successfully');
             await fetchSubJobSparePartOption();
+            await fetchReportData(
+                jobId.value,
+                token ?? '',
+                jobDetailController.reportList,
+                jobDetailController.additionalReportList);
+            await jobDetailController.fetchSubJobSparePartId();
           } else {
             print('Failed to save sparepart: ${response.body}');
           }

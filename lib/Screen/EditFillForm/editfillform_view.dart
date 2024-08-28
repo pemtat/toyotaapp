@@ -15,13 +15,13 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/EditFillForm_widget/repairprodecure_widget.dart';
-import 'package:toyotamobile/Widget/EditFillForm_widget/repairresult.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
+import 'package:toyotamobile/Widget/maintenance_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
@@ -383,11 +383,16 @@ class EditFillFormView extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 final info = repairResultController
                                     .maintenanceList[index];
-                                return RepairResultWidget(
-                                  readOnly: readOnly == null ? null : 'yes',
+                                return MaintenanceShowWidget(
+                                  readOnly: readOnly,
                                   info: info,
                                   index: index,
-                                  repairResult: repairResultController,
+                                  editFunction: () {
+                                    repairResultController
+                                        .repairResultEditModal(context, info);
+                                  },
+                                  maintenanceList:
+                                      repairResultController.maintenanceList,
                                 );
                               },
                             )

@@ -26,12 +26,12 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/EditFillForm3_widget/maintenance_widget.dart';
 import 'package:toyotamobile/Widget/EditFillForm3_widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
+import 'package:toyotamobile/Widget/maintenance_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
@@ -786,11 +786,15 @@ class EditFillFormView3 extends StatelessWidget {
                           itemCount: maintenance.maintenanceList.length,
                           itemBuilder: (context, index) {
                             final info = maintenance.maintenanceList[index];
-                            return MaintenanceWidget(
-                              readOnly: readOnly == null ? null : 'yes',
+                            return MaintenanceShowWidget(
+                              readOnly: readOnly,
                               info: info,
                               index: index,
-                              batteryUsageController: maintenance,
+                              editFunction: () {
+                                maintenance.batteryUsageModalEditModal(
+                                    context, info);
+                              },
+                              maintenanceList: maintenance.maintenanceList,
                             );
                           },
                         )

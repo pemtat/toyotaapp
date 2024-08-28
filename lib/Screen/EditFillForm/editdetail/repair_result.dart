@@ -78,7 +78,7 @@ class RepairResult extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Maintenance and Service Result",
+              "Repair Result",
               style: TextStyleList.subheading,
             ),
             InkWell(
