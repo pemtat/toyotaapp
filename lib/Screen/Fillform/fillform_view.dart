@@ -13,7 +13,6 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/FillForm_widget/Sparepart_widget.dart';
 import 'package:toyotamobile/Widget/FillForm_widget/repairprodecure_widget.dart';
 import 'package:toyotamobile/Widget/FillForm_widget/repairresult.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
@@ -22,6 +21,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
@@ -250,14 +250,16 @@ class FillFormView extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final part =
                                   sparePartListController.sparePartList[index];
-                              return PartDetailWidget(
+                              return SparePartManageWidget(
                                 part: part,
                                 index: index,
-                                sparePartListController:
-                                    sparePartListController,
-                                additSparePartListController:
-                                    additSparePartListController,
-                                additional: false,
+                                editFunction: () {
+                                  sparePartListController
+                                      .sparePartListEditModal(context, part);
+                                },
+                                sparePartList:
+                                    sparePartListController.sparePartList,
+                                changeShow: 'yes',
                               );
                             },
                           )
@@ -285,14 +287,17 @@ class FillFormView extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final part = additSparePartListController
                                   .additSparePartList[index];
-                              return PartDetailWidget(
+                              return SparePartManageWidget(
                                 part: part,
                                 index: index,
-                                sparePartListController:
-                                    sparePartListController,
-                                additSparePartListController:
-                                    additSparePartListController,
-                                additional: true,
+                                editFunction: () {
+                                  additSparePartListController
+                                      .additSparePartListEditModal(
+                                          context, part);
+                                },
+                                sparePartList: additSparePartListController
+                                    .additSparePartList,
+                                changeShow: 'yes',
                               );
                             },
                           )

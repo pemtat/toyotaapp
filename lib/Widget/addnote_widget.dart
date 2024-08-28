@@ -16,6 +16,7 @@ class AddNote extends StatelessWidget {
   final Rx<TextEditingController> notes;
   final RxList<Map<String, dynamic>> addAttatchments;
   final RxBool isPicking;
+  final String? showOnly;
   final Function(Rx<TextEditingController>) addNote;
   const AddNote(
       {super.key,
@@ -24,7 +25,8 @@ class AddNote extends StatelessWidget {
       required this.notes,
       required this.addAttatchments,
       required this.isPicking,
-      required this.addNote});
+      required this.addNote,
+      this.showOnly});
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +56,16 @@ class AddNote extends StatelessWidget {
             );
           }
         }),
-        12.kH,
-        TextFieldType(
-          hintText: 'Add Notes',
-          textSet: notes.value,
-        ),
+        if (showOnly == null)
+          Column(
+            children: [
+              12.kH,
+              TextFieldType(
+                hintText: 'Add Notes',
+                textSet: notes.value,
+              ),
+            ],
+          ),
         8.kH,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,12 +100,13 @@ class AddNote extends StatelessWidget {
                 ],
               ),
             ),
-            CustomElevatedButton(
-              onPressed: () {
-                addNote(notes);
-              },
-              text: 'Submit',
-            ),
+            if (showOnly == null)
+              CustomElevatedButton(
+                onPressed: () {
+                  addNote(notes);
+                },
+                text: 'Submit',
+              ),
           ],
         ),
       ],

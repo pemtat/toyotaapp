@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
 import 'package:toyotamobile/Screen/Sparepart/sparepart_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -243,7 +244,20 @@ class SparePartView extends StatelessWidget {
                   itemCount: filteredJobs.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  Obx(() => Material(
+                                        color: Colors.transparent,
+                                        child: PendingTaskView(
+                                          ticketId:
+                                              filteredJobs[index].bugId ?? '',
+                                          jobId: filteredJobs[index].id ?? '',
+                                          showOnly: 'yes',
+                                        ),
+                                      )));
+                        },
                         child: SubJobSparePartWidget(
                           subJobSparePart: filteredJobs[index],
                           expandedTicketId:

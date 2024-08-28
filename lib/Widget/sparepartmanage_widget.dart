@@ -10,6 +10,7 @@ class SparePartManageWidget extends StatelessWidget {
   final SparePartModel part;
   final int index;
   final VoidCallback editFunction;
+  final String? changeShow;
   final RxList<SparePartModel> sparePartList;
   const SparePartManageWidget({
     super.key,
@@ -17,6 +18,7 @@ class SparePartManageWidget extends StatelessWidget {
     required this.index,
     required this.editFunction,
     required this.sparePartList,
+    this.changeShow,
   });
 
   @override
@@ -78,24 +80,36 @@ class SparePartManageWidget extends StatelessWidget {
                   "${part.quantity}",
                   style: TextStyleList.text15,
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'Change Now',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  part.changeNow ?? '-',
-                  style: TextStyleList.text15,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Change on PM',
-                  style: TextStyleList.subtext1,
-                ),
-                Text(
-                  part.changeOnPM ?? '-',
-                  style: TextStyleList.text15,
-                ),
+                if (changeShow != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 8),
+                      Text(
+                        'Change Now',
+                        style: TextStyleList.subtext1,
+                      ),
+                      Text(
+                        part.changeNow ?? '-',
+                        style: TextStyleList.text15,
+                      ),
+                    ],
+                  ),
+                if (changeShow != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 8),
+                      Text(
+                        'Change on PM',
+                        style: TextStyleList.subtext1,
+                      ),
+                      Text(
+                        part.changeOnPM ?? '-',
+                        style: TextStyleList.text15,
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),

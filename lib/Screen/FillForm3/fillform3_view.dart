@@ -27,13 +27,13 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/FIllForm3_widget/maintenance_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm3_widget/sparepart_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm3_widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
@@ -679,12 +679,14 @@ class FillFormView3 extends StatelessWidget {
                             itemCount: sparepartList.sparePartList.length,
                             itemBuilder: (context, index) {
                               final part = sparepartList.sparePartList[index];
-                              return PartDetailWidget2(
-                                part: part,
-                                index: index,
-                                sparePartListController: sparepartList,
-                                additional: false,
-                              );
+                              return SparePartManageWidget(
+                                  part: part,
+                                  index: index,
+                                  editFunction: () {
+                                    sparepartList.sparePartListEditModal(
+                                        context, part);
+                                  },
+                                  sparePartList: sparepartList.sparePartList);
                             },
                           )
                         : const SizedBox()

@@ -26,6 +26,7 @@ class PendingTaskView extends StatelessWidget {
       Get.put(PeddingtaskController());
   final JobDetailController jobController = Get.put(JobDetailController());
   final HomeController homeController = Get.put(HomeController());
+  final String? showOnly;
 
   final String ticketId;
   final String jobId;
@@ -33,6 +34,7 @@ class PendingTaskView extends StatelessWidget {
     super.key,
     required this.ticketId,
     required this.jobId,
+    this.showOnly,
   }) {
     penddingTaskController.fetchData(ticketId, jobId);
   }
@@ -158,6 +160,7 @@ class PendingTaskView extends StatelessWidget {
                                   penddingTaskController.addAttatchments,
                               isPicking: penddingTaskController.isPicking,
                               addNote: penddingTaskController.addNote,
+                              showOnly: showOnly,
                             ),
                             8.kH,
                             BoxContainer(
@@ -185,81 +188,85 @@ class PendingTaskView extends StatelessWidget {
           );
         }
       }),
-      bottomNavigationBar: BottomAppBar(
-        color: white3,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: EndButton(
-                onPressed: () {
-                  penddingTaskController.showAcceptDialog(
-                    context,
-                    'Do you confirm to accept this job?',
-                    'No',
-                    'Yes',
-                  );
-                },
-                text: 'Accept',
+      bottomNavigationBar: showOnly == null
+          ? BottomAppBar(
+              color: white3,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: EndButton(
+                      onPressed: () {
+                        penddingTaskController.showAcceptDialog(
+                          context,
+                          'Do you confirm to accept this job?',
+                          'No',
+                          'Yes',
+                        );
+                      },
+                      text: 'Accept',
+                    ),
+                  ),
+                  13.wH,
+                  Expanded(
+                    child: EndButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: white4,
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  10.kH,
+                                  TextFieldType(
+                                    hintText: 'Remark',
+                                    textSet:
+                                        penddingTaskController.cancelNote.value,
+                                    maxLine: 5,
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    'No',
+                                    style: TextStyleList.text1,
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    updateTechSubjob(
+                                        jobId,
+                                        ticketId,
+                                        penddingTaskController
+                                            .cancelNote.value.text,
+                                        2);
+                                    Navigator.pop(context);
+                                    homeController.fetchDataFromAssignJob();
+                                  },
+                                  child: Text(
+                                    'Yes',
+                                    style: TextStyleList.text1,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      text: 'Cancel',
+                    ),
+                  ),
+                ],
               ),
-            ),
-            13.wH,
-            Expanded(
-              child: EndButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        backgroundColor: white4,
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            10.kH,
-                            TextFieldType(
-                              hintText: 'Remark',
-                              textSet: penddingTaskController.cancelNote.value,
-                              maxLine: 5,
-                            ),
-                          ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              'No',
-                              style: TextStyleList.text1,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              updateTechSubjob(
-                                  jobId,
-                                  ticketId,
-                                  penddingTaskController.cancelNote.value.text,
-                                  2);
-                              Navigator.pop(context);
-                              homeController.fetchDataFromAssignJob();
-                            },
-                            child: Text(
-                              'Yes',
-                              style: TextStyleList.text1,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                text: 'Cancel',
-              ),
-            ),
-          ],
-        ),
-      ),
+            )
+          : null,
     );
   }
 }
