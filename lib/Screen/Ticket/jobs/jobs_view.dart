@@ -45,9 +45,9 @@ class Jobs extends StatelessWidget {
                   child: Obx(() {
                     if (jobController.subJobAssignedPage.isEmpty) {
                       return SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: const AlwaysScrollableScrollPhysics(),
                         child: Container(
-                          margin: EdgeInsets.only(top: 15),
+                          margin: const EdgeInsets.only(top: 15),
                           child: Center(
                               child: Text(
                             'No jobs available.',

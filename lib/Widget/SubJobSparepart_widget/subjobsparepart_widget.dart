@@ -191,7 +191,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           if (expandedIndex == null)
-                            Container(
+                            SizedBox(
                                 width: 120,
                                 child: ButtonRed(
                                     title: 'ปิด',
@@ -202,7 +202,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                           subJobSparePart.bugStatus != '90' &&
                                   (subJobSparePart.leadTechStatus == '0' ||
                                       subJobSparePart.leadTechStatus == '3')
-                              ? Container(
+                              ? SizedBox(
                                   width: 120,
                                   child: ButtonRed(
                                       title: 'ขออนุมัติ',
@@ -235,7 +235,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                               : subJobSparePart.leadTechStatus == '1'
                                   ? Row(
                                       children: [
-                                        Container(
+                                        SizedBox(
                                             width: 120,
                                             child: ButtonRed(
                                                 color: blue1,
@@ -261,7 +261,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                   }, blue1);
                                                 })),
                                         6.wH,
-                                        Container(
+                                        SizedBox(
                                           width: 120,
                                           child: ButtonRed(
                                             title: 'Not Approve',

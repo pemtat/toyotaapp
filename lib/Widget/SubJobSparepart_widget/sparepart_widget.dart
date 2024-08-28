@@ -31,14 +31,13 @@ class SparePartDetail extends StatelessWidget {
                 additionalSparepart.first.quantity == '0')
         ? Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Container(
-                child: Center(
-                    child: Text(
+            child: Center(
+                child: Text(
               'ไม่มี Spare Part',
               style: TextStyleList.text5,
-            ))),
+            )),
           )
-        : Container(
+        : SizedBox(
             width: double.infinity,
             child: Column(
               children: [
@@ -83,7 +82,7 @@ class SparePartDetail extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: DataTable(
                                 dataTextStyle: TextStyleList.text9,
@@ -107,8 +106,8 @@ class SparePartDetail extends StatelessWidget {
                                           AsyncSnapshot<String> snapshot) {
                                         if (snapshot.connectionState ==
                                             ConnectionState.waiting) {
-                                          return Center(
-                                              child: Container(
+                                          return const Center(
+                                              child: SizedBox(
                                                   width: 18,
                                                   height: 18,
                                                   child: DataCircleLoading()));
@@ -135,8 +134,8 @@ class SparePartDetail extends StatelessWidget {
                                             AsyncSnapshot<String> snapshot) {
                                           if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
-                                            return Center(
-                                                child: Container(
+                                            return const Center(
+                                                child: SizedBox(
                                                     width: 18,
                                                     height: 18,
                                                     child:
@@ -178,7 +177,7 @@ class SparePartDetail extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: DataTable(
                                 horizontalMargin: 0,
@@ -202,8 +201,8 @@ class SparePartDetail extends StatelessWidget {
                                           AsyncSnapshot<String> snapshot) {
                                         if (snapshot.connectionState ==
                                             ConnectionState.waiting) {
-                                          return Center(
-                                              child: Container(
+                                          return const Center(
+                                              child: SizedBox(
                                                   width: 18,
                                                   height: 18,
                                                   child: DataCircleLoading()));
@@ -229,8 +228,8 @@ class SparePartDetail extends StatelessWidget {
                                           AsyncSnapshot<String> snapshot) {
                                         if (snapshot.connectionState ==
                                             ConnectionState.waiting) {
-                                          return Center(
-                                              child: Container(
+                                          return const Center(
+                                              child: SizedBox(
                                                   width: 18,
                                                   height: 18,
                                                   child: DataCircleLoading()));

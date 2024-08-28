@@ -67,7 +67,7 @@ class SubJobsTicket extends StatelessWidget {
               const Spacer(),
               confirm == null
                   ? StatusButton(status: status ?? '')
-                  : StatusButton(status: 'notconfirm')
+                  : const StatusButton(status: 'notconfirm')
             ],
           ),
         ),
