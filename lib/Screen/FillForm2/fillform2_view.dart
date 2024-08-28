@@ -18,7 +18,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/batteryInformation_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/batteryusage_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/forkliftinformation_widget.dart';
-import 'package:toyotamobile/Widget/FIllForm2_widget/listcheck_widget.dart';
+import 'package:toyotamobile/Widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/specicgravity_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';

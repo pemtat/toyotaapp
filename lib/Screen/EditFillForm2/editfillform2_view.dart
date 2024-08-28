@@ -18,7 +18,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/EditFIllForm2_widget/batteryInformation_widget.dart';
 import 'package:toyotamobile/Widget/EditFIllForm2_widget/batteryusage_widget.dart';
 import 'package:toyotamobile/Widget/EditFIllForm2_widget/forkliftinformation_widget.dart';
-import 'package:toyotamobile/Widget/EditFIllForm2_widget/listcheck_widget.dart';
+import 'package:toyotamobile/Widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/EditFIllForm2_widget/specicgravity_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
@@ -265,7 +265,7 @@ class EditFillFormView2 extends StatelessWidget {
                         readOnly: readOnly == null ? null : 'yes',
                         selection: batteryConditionController.selections,
                         remarkSelection: batteryConditionController.remarks,
-                        remarkChooseSelection:
+                        remarkSelectionChoose:
                             batteryConditionController.remarksChoose,
                         listSelection: batteryConditionController.ListData,
                         showModal: batteryConditionController.checkModal,
