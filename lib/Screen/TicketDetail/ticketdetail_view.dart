@@ -338,8 +338,8 @@ class TicketDetailView extends StatelessWidget {
                                       const TitleApp(
                                           text: 'Field Service Report*'),
                                       issue.status.id != 90 &&
-                                              subJob.leadTechStatus != '1' &&
-                                              subJob.leadTechStatus != '2'
+                                              subJob.techManagerStatus != '1' &&
+                                              subJob.techManagerStatus != '2'
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView(

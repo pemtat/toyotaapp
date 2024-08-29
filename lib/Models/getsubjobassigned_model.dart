@@ -28,8 +28,8 @@ class SubJobAssgined {
   String? summaryBug;
   String? realName;
   String? salesStatus;
-  String? leadTechStatus;
-  String? leadTechRemark;
+  String? techManagerStatus;
+  String? techManagerRemark;
   String? referenceCode;
 
   SubJobAssgined(
@@ -61,8 +61,8 @@ class SubJobAssgined {
       this.serialNo,
       this.summaryBug,
       this.realName,
-      this.leadTechRemark,
-      this.leadTechStatus,
+      this.techManagerRemark,
+      this.techManagerStatus,
       this.referenceCode,
       this.salesStatus});
 
@@ -94,8 +94,8 @@ class SubJobAssgined {
     summaryBug = json['summary_bug'];
     realName = json['realname'];
     salesStatus = json['sales_status'];
-    leadTechStatus = json['lead_tech_status'];
-    leadTechRemark = json['lead_tech_remark'];
+    techManagerStatus = json['tech_manager_status'];
+    techManagerRemark = json['tech_manager_remark'];
     referenceCode = json['reference_code'];
   }
 
@@ -128,8 +128,8 @@ class SubJobAssgined {
     data['summary_bug'] = summaryBug;
     data['realname'] = realName;
     data['sales_status'] = salesStatus;
-    data['lead_tech_status'] = leadTechStatus;
-    data['lead_tech_remark'] = leadTechRemark;
+    data['tech_manager_status'] = techManagerStatus;
+    data['tech_manager_remark'] = techManagerRemark;
     data['reference_code'] = referenceCode;
 
     return data;

@@ -458,10 +458,13 @@ class JobDetailView extends StatelessWidget {
                                         Obx(() => jobController
                                                     .reportList.isNotEmpty &&
                                                 (subJob != null &&
-                                                    subJob.leadTechStatus !=
+                                                    subJob.techManagerStatus !=
                                                         '1' &&
-                                                    subJob.leadTechStatus !=
-                                                        '2')
+                                                    subJob.techManagerStatus !=
+                                                        '2' &&
+                                                    subJob
+                                                            .techManagerStatus !=
+                                                        '3')
                                             ? EditButton(
                                                 onTap: () {
                                                   Get.to(() => EditFillFormView(
@@ -472,10 +475,12 @@ class JobDetailView extends StatelessWidget {
                                                 },
                                               )
                                             : subJob != null &&
-                                                    (subJob.leadTechStatus !=
+                                                    (subJob.techManagerStatus !=
                                                             '1' &&
-                                                        subJob.leadTechStatus !=
-                                                            '2')
+                                                        subJob.techManagerStatus !=
+                                                            '2' &&
+                                                        subJob.techManagerStatus !=
+                                                            '3')
                                                 ? AddButton(
                                                     onTap: () {
                                                       Get.to(() => FillFormView(

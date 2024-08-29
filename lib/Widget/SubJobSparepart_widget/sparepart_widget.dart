@@ -13,7 +13,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 class SparePartDetail extends StatelessWidget {
   final String jobId;
   final String techLevel;
-  final String leadTechStatus;
+  final String techManagerStatus;
   final List<Sparepart> sparepart;
   final List<Sparepart> additionalSparepart;
   const SparePartDetail(
@@ -22,7 +22,7 @@ class SparePartDetail extends StatelessWidget {
       required this.sparepart,
       required this.jobId,
       required this.techLevel,
-      required this.leadTechStatus});
+      required this.techManagerStatus});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class SparePartDetail extends StatelessWidget {
             child: Column(
               children: [
                 if (techLevel == '1' &&
-                    (leadTechStatus == '0' || leadTechStatus == '3'))
+                    (techManagerStatus == '0' || techManagerStatus == '4'))
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -55,7 +55,7 @@ class SparePartDetail extends StatelessWidget {
                       6.kH,
                     ],
                   ),
-                if (techLevel == '2' && leadTechStatus == '1')
+                if (techLevel == '2' && techManagerStatus == '2')
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

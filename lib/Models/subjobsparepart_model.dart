@@ -12,8 +12,8 @@ class SubJobSparePart {
   String? techStatus;
   String? techRemark;
   String? salesStatus;
-  String? leadTechStatus;
-  String? leadTechRemark;
+  String? techManagerStatus;
+  String? techManagerRemark;
   String? resolution;
   String? projection;
   String? categoryId;
@@ -45,8 +45,8 @@ class SubJobSparePart {
       this.techStatus,
       this.techRemark,
       this.salesStatus,
-      this.leadTechStatus,
-      this.leadTechRemark,
+      this.techManagerStatus,
+      this.techManagerRemark,
       this.resolution,
       this.projection,
       this.categoryId,
@@ -79,8 +79,8 @@ class SubJobSparePart {
     techStatus = json['tech_status'];
     techRemark = json['tech_remark'];
     salesStatus = json['sales_status'];
-    leadTechStatus = json['lead_tech_status'];
-    leadTechRemark = json['lead_tech_remark'];
+    techManagerStatus = json['tech_manager_status'];
+    techManagerRemark = json['tech_manager_remark'];
     resolution = json['resolution'];
     projection = json['projection'];
     categoryId = json['category_id'];
@@ -125,8 +125,8 @@ class SubJobSparePart {
     data['tech_status'] = techStatus;
     data['tech_remark'] = techRemark;
     data['sales_status'] = salesStatus;
-    data['lead_tech_status'] = leadTechStatus;
-    data['lead_tech_remark'] = leadTechRemark;
+    data['tech_manager_status'] = techManagerStatus;
+    data['tech_manager_remark'] = techManagerRemark;
     data['resolution'] = resolution;
     data['projection'] = projection;
     data['category_id'] = categoryId;

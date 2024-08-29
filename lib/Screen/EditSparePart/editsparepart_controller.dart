@@ -93,7 +93,7 @@ class EditSparePartController extends GetxController {
                   await updateJobSparePart(
                       jobId.value,
                       1,
-                      jobController.zone.value,
+                      jobController.techManageId.value,
                       jobController.techLevel.value,
                       jobController.handlerIdTech.value,
                       rejectNote.value.text);

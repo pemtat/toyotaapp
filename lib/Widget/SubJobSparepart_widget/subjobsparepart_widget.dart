@@ -71,12 +71,13 @@ class SubJobSparePartWidget extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Lead Tech :',
+                          'Tech Manager :',
                           style: TextStyleList.subtitle1,
                         ),
                         4.wH,
                         StatusButton2(
-                            status: subJobSparePart.leadTechStatus.toString()),
+                            status:
+                                subJobSparePart.techManagerStatus.toString()),
                       ],
                     ),
                   ],
@@ -124,7 +125,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Lead Remark : ${subJobSparePart.leadTechRemark == '' || subJobSparePart.leadTechRemark == null ? '-' : subJobSparePart.leadTechRemark}',
+                      'Manager Remark : ${subJobSparePart.techManagerRemark == '' || subJobSparePart.techManagerRemark == null ? '-' : subJobSparePart.techManagerRemark}',
                       style: TextStyleList.text1,
                     ),
                   ],
@@ -173,8 +174,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                             sparepart: subJobSparePart.sparepart ?? [],
                             jobId: subJobSparePart.id ?? '',
                             techLevel: jobController.techLevel.value,
-                            leadTechStatus:
-                                subJobSparePart.leadTechStatus ?? '',
+                            techManagerStatus:
+                                subJobSparePart.techManagerStatus ?? '',
                           )
                         : Container())
                     : SparePartDetail(
@@ -183,7 +184,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                         sparepart: subJobSparePart.sparepart ?? [],
                         jobId: subJobSparePart.id ?? '',
                         techLevel: jobController.techLevel.value,
-                        leadTechStatus: subJobSparePart.leadTechStatus ?? '',
+                        techManagerStatus:
+                            subJobSparePart.techManagerStatus ?? '',
                       ),
                 6.kH,
                 jobController.techLevel.value == '1'
@@ -200,8 +202,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                                     })),
                           6.wH,
                           subJobSparePart.bugStatus != '90' &&
-                                  (subJobSparePart.leadTechStatus == '0' ||
-                                      subJobSparePart.leadTechStatus == '3')
+                                  (subJobSparePart.techManagerStatus == '0' ||
+                                      subJobSparePart.techManagerStatus == '4')
                               ? SizedBox(
                                   width: 120,
                                   child: ButtonRed(
@@ -215,7 +217,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                           await updateJobSparePart(
                                               subJobSparePart.id ?? '',
                                               1,
-                                              jobController.zone.value,
+                                              jobController.techManageId.value,
                                               jobController.techLevel.value,
                                               jobController.handlerIdTech.value,
                                               '');
@@ -229,10 +231,11 @@ class SubJobSparePartWidget extends StatelessWidget {
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          subJobSparePart.leadTechStatus == '0' ||
-                                  subJobSparePart.leadTechStatus == '3'
+                          subJobSparePart.techManagerStatus == '0' ||
+                                  subJobSparePart.techManagerStatus == '1' ||
+                                  subJobSparePart.techManagerStatus == '3'
                               ? Container()
-                              : subJobSparePart.leadTechStatus == '1'
+                              : subJobSparePart.techManagerStatus == '2'
                                   ? Row(
                                       children: [
                                         SizedBox(
@@ -249,9 +252,9 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                     updateJobSparePart(
                                                         subJobSparePart.id ??
                                                             '',
-                                                        2,
+                                                        3,
                                                         jobController
-                                                            .zone.value,
+                                                            .techManageId.value,
                                                         jobController
                                                             .techLevel.value,
                                                         jobController
@@ -300,12 +303,12 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                       TextButton(
                                                         onPressed: () async {
                                                           await updateJobSparePart(
-                                                              subJobSparePart
-                                                                      .id ??
+                                                              subJobSparePart.id ??
                                                                   '',
-                                                              3,
+                                                              4,
                                                               jobController
-                                                                  .zone.value,
+                                                                  .techManageId
+                                                                  .value,
                                                               jobController
                                                                   .techLevel
                                                                   .value,

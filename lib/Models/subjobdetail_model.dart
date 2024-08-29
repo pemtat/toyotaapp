@@ -27,8 +27,8 @@ class SubJobDetail {
   String? imageUrlBefore;
   String? imageUrlAfter;
   String? salesStatus;
-  String? leadTechStatus;
-  String? leadTechRemark;
+  String? techManagerStatus;
+  String? techManagerRemark;
   String? comment;
   String? referenceCode;
 
@@ -61,8 +61,8 @@ class SubJobDetail {
       this.comment,
       this.imageUrlAfter,
       this.imageUrlBefore,
-      this.leadTechRemark,
-      this.leadTechStatus,
+      this.techManagerRemark,
+      this.techManagerStatus,
       this.referenceCode,
       this.salesStatus});
 
@@ -96,8 +96,8 @@ class SubJobDetail {
     imageUrlBefore = json['img_url_before'];
     imageUrlAfter = json['img_url_after'];
     salesStatus = json['sales_status'];
-    leadTechStatus = json['lead_tech_status'];
-    leadTechRemark = json['lead_tech_remark'];
+    techManagerStatus = json['tech_manager_status'];
+    techManagerRemark = json['tech_manager_remark'];
     referenceCode = json['reference_code'];
   }
 
@@ -132,8 +132,8 @@ class SubJobDetail {
     data['img_url_before'] = imageUrlBefore;
     data['img_url_after'] = imageUrlAfter;
     data['sales_status'] = salesStatus;
-    data['lead_tech_status'] = leadTechStatus;
-    data['lead_tech_remark'] = leadTechRemark;
+    data['tech_manager_status'] = techManagerStatus;
+    data['tech_manager_remark'] = techManagerRemark;
     data['reference_code'] = referenceCode;
     return data;
   }

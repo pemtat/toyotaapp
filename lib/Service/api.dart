@@ -1,4 +1,4 @@
-const String url = 'https://tsadmin.tmh-wst.com';
+const String url = 'https://fsm-dev.vansales.asia';
 const String urlFSM = 'http://tscapi.tmh-wst.com';
 const String issue = '$url/api/rest/issues';
 const String user = '$url/api/rest/users';
@@ -152,8 +152,8 @@ String getSparepartJobByHandler(String id) {
   return '$url/api/rest/jobs/getSparepartByHandlerId?handler_id=$id';
 }
 
-String getSparepartJobByZone(String zone) {
-  return '$url/api/rest/jobs/getSparepartByHandlerId?zone=$zone';
+String getSparepartJobById(String id) {
+  return '$url/api/rest/jobs/getSparepartByHandlerId?tech_manager_id=$id';
 }
 
 String getSubJobsByHandlerPage(String id, int page) {

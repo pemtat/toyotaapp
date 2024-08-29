@@ -56,7 +56,7 @@ class HomeController extends GetxController {
   var closedJobs = 0.obs;
   var incomingJobs = 0.obs;
   var techLevel = ''.obs;
-  var zone = ''.obs;
+  var techManageId = ''.obs;
   var handlerIdTech = ''.obs;
   var overdueJobs = 0.obs;
   var onProcessJobs = 0.obs;
@@ -91,14 +91,14 @@ class HomeController extends GetxController {
       techLevel.value = tokenData['user']['tech_level'];
 
       await userController.fetchData();
-      zone.value = userController.userInfo.first.zone;
+      techManageId.value = userController.userInfo.first.id.toString();
       await fetchPMdata(handlerId);
       await fetchSubJobsdata(handlerId);
       subJobSparePart.clear();
       if (techLevel.value == '1') {
         await fetchSubJobSparePart(handlerId.toString(), 'tech');
       } else {
-        await fetchSubJobSparePart(zone.value, 'leadtech');
+        await fetchSubJobSparePart(techManageId.value, 'leadtech');
       }
       pmItemsPage.clear();
       subJobAssignedPage.clear();
@@ -418,7 +418,7 @@ class HomeController extends GetxController {
       final response = await http.get(
         Uri.parse(option == 'tech'
             ? getSparepartJobByHandler(id)
-            : getSparepartJobByZone(id)),
+            : getSparepartJobById(id)),
         headers: {
           'Authorization': '$token',
         },
@@ -433,7 +433,7 @@ class HomeController extends GetxController {
         List<SubJobSparePart> completedSparePart = [];
         List<SubJobSparePart> rejectedSparePart = [];
         for (var sparePart in itemList) {
-          switch (sparePart.leadTechStatus) {
+          switch (sparePart.techManagerStatus) {
             case '0':
               pendingSparePart.add(sparePart);
               break;
@@ -441,9 +441,12 @@ class HomeController extends GetxController {
               pendingSparePart.add(sparePart);
               break;
             case '2':
-              completedSparePart.add(sparePart);
+              pendingSparePart.add(sparePart);
               break;
             case '3':
+              completedSparePart.add(sparePart);
+              break;
+            case '4':
               rejectedSparePart.add(sparePart);
               break;
           }

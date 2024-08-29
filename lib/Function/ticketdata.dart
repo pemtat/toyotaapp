@@ -1195,14 +1195,15 @@ void updateTechSubjob(
   }
 }
 
-Future<void> updateJobSparePart(String jobId, int status, String zone,
+Future<void> updateJobSparePart(String jobId, int status, String techManagerId,
     String techLevel, String handlerId, String remark) async {
   try {
     String? token = await getToken();
-    Map<String, dynamic> body = {'lead_tech_status': status};
+    Map<String, dynamic> body = {'tech_manager_status': status};
 
     if (remark != '-') {
-      body = body = {'lead_tech_status': status, 'lead_tech_remark': remark};
+      body =
+          body = {'tech_manager_status': status, 'tech_manager_remark': remark};
     }
     final response = await http.put(
       Uri.parse(updateSubJobs(jobId)),
@@ -1218,7 +1219,7 @@ Future<void> updateJobSparePart(String jobId, int status, String zone,
       if (techLevel == '1') {
         await jobController.fetchSubJobSparePart(handlerId, 'tech');
       } else {
-        await jobController.fetchSubJobSparePart(zone, 'techlead');
+        await jobController.fetchSubJobSparePart(techManagerId, 'techlead');
       }
     } else {
       print(response.statusCode);
@@ -1717,6 +1718,6 @@ Future<void> fetchSubJobSparePartOption() async {
         jobController.handlerIdTech.toString(), 'tech');
   } else {
     await jobController.fetchSubJobSparePart(
-        jobController.zone.value, 'leadtech');
+        jobController.techManageId.value, 'leadtech');
   }
 }
