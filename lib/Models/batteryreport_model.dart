@@ -219,6 +219,7 @@ class BtrSpareparts {
   String? quantity;
   String? additional;
   String? relationId;
+  String? unitMeasure;
   String? createdAtLocal;
   String? lastUpdatedLocal;
   String? createdByRealname;
@@ -231,6 +232,7 @@ class BtrSpareparts {
       this.quantity,
       this.additional,
       this.relationId,
+      this.unitMeasure,
       this.createdAtLocal,
       this.lastUpdatedLocal,
       this.createdByRealname});
@@ -243,6 +245,7 @@ class BtrSpareparts {
     quantity = json['quantity'];
     additional = json['additional'];
     relationId = json['relation_id'];
+    unitMeasure = json['unit_of_measure'];
     createdAtLocal = json['created_at_local'];
     lastUpdatedLocal = json['last_updated_local'];
     createdByRealname = json['created_by_realname'];
@@ -257,6 +260,7 @@ class BtrSpareparts {
     data['quantity'] = quantity;
     data['additional'] = additional;
     data['relation_id'] = relationId;
+    data['unit_of_measure'] = unitMeasure;
     data['created_at_local'] = createdAtLocal;
     data['last_updated_local'] = lastUpdatedLocal;
     data['created_by_realname'] = createdByRealname;

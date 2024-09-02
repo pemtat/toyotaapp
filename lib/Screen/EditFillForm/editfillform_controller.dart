@@ -157,32 +157,32 @@ class EditFillformController extends GetxController {
         causeProblem: reportData.problem ?? '',
       ));
 
-      if (reportData.quantity != '0')
-
-        // ignore: curly_braces_in_flow_control_structures
-        for (var reportDataList in reportList + additionalReportList) {
-          if (reportDataList.additional == false &&
-              reportDataList.quantity != '0') {
-            sparePartListController.sparePartList.add(SparePartModel(
-                cCodePage: reportDataList.cCode ?? '1',
-                partNumber: reportDataList.partNumber ?? '',
-                partDetails: reportDataList.description ?? '',
-                quantity: int.parse(reportDataList.quantity ?? ''),
-                changeNow: reportDataList.changeNow ?? '',
-                changeOnPM: reportDataList.changeOnPm ?? '',
-                additional: 0));
-          } else if (reportDataList.additional == true &&
-              reportDataList.quantity != '0') {
-            additSparePartListController.additSparePartList.add(SparePartModel(
-                cCodePage: reportDataList.cCode ?? '1',
-                partNumber: reportDataList.partNumber ?? '',
-                partDetails: reportDataList.description ?? '',
-                quantity: int.parse(reportDataList.quantity ?? ''),
-                changeNow: reportDataList.changeNow ?? '',
-                changeOnPM: reportDataList.changeOnPm ?? '',
-                additional: 1));
-          }
+      // ignore: curly_braces_in_flow_control_structures
+      for (var reportDataList in reportList + additionalReportList) {
+        if (reportDataList.additional == false &&
+            reportDataList.quantity != '0') {
+          sparePartListController.sparePartList.add(SparePartModel(
+              cCodePage: reportDataList.cCode ?? '1',
+              partNumber: reportDataList.partNumber ?? '',
+              partDetails: reportDataList.description ?? '',
+              quantity: int.parse(reportDataList.quantity ?? ''),
+              changeNow: reportDataList.changeNow ?? '',
+              changeOnPM: reportDataList.changeOnPm ?? '',
+              unitMeasure: reportDataList.unitMeasure ?? '',
+              additional: 0));
+        } else if (reportDataList.additional == true &&
+            reportDataList.quantity != '0') {
+          additSparePartListController.additSparePartList.add(SparePartModel(
+              cCodePage: reportDataList.cCode ?? '1',
+              partNumber: reportDataList.partNumber ?? '',
+              partDetails: reportDataList.description ?? '',
+              quantity: int.parse(reportDataList.quantity ?? ''),
+              changeNow: reportDataList.changeNow ?? '',
+              changeOnPM: reportDataList.changeOnPm ?? '',
+              unitMeasure: reportDataList.unitMeasure ?? '',
+              additional: 1));
         }
+      }
 
       signatureController.value =
           TextEditingValue(text: reportData.signature ?? '');
@@ -336,6 +336,7 @@ class EditFillformController extends GetxController {
           quantity: 0,
           changeNow: "-",
           changeOnPM: "-",
+          unitMeasure: "-",
           additional: 0,
         );
 
@@ -349,6 +350,7 @@ class EditFillformController extends GetxController {
           quantity: 0,
           changeNow: "-",
           changeOnPM: "-",
+          unitMeasure: "-",
           additional: 1,
         );
 

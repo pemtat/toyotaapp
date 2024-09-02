@@ -157,6 +157,7 @@ class FillformController2 extends GetxController {
           cCodePage: "-",
           partNumber: "-",
           partDetails: "-",
+          unitMeasure: "-",
           quantity: 0,
           additional: 0,
           relationId: "");
@@ -168,6 +169,7 @@ class FillformController2 extends GetxController {
           cCodePage: "-",
           partNumber: "-",
           partDetails: "-",
+          unitMeasure: "-",
           quantity: 0,
           additional: 0,
           relationId: "");
@@ -200,6 +202,7 @@ class FillformController2 extends GetxController {
         "quantity": sparePart.quantity,
         "additional": "recommended",
         "relation_id": "",
+        "unit_of_measure": sparePart.unitMeasure
       };
     }).toList();
 
@@ -212,6 +215,7 @@ class FillformController2 extends GetxController {
         "quantity": sparePart.quantity,
         "additional": "change",
         "relation_id": "",
+        "unit_of_measure": sparePart.unitMeasure
       };
     }).toList();
     List<Map<String, dynamic>> combinedList = [

@@ -161,18 +161,19 @@ class Sparepart {
   String? quantity;
   String? changeNow;
   String? changeOnPm;
+  String? unitMeasure;
   bool? additional;
 
-  Sparepart({
-    this.id,
-    this.cCode,
-    this.partNumber,
-    this.description,
-    this.quantity,
-    this.changeNow,
-    this.changeOnPm,
-    this.additional,
-  });
+  Sparepart(
+      {this.id,
+      this.cCode,
+      this.partNumber,
+      this.description,
+      this.quantity,
+      this.changeNow,
+      this.changeOnPm,
+      this.additional,
+      this.unitMeasure});
 
   Sparepart.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -183,6 +184,7 @@ class Sparepart {
     changeNow = json['change_now'];
     changeOnPm = json['change_on_pm'];
     additional = json['additional'];
+    unitMeasure = json['unit_of_measure'];
   }
 
   Map<String, dynamic> toJson() {
@@ -195,6 +197,7 @@ class Sparepart {
     data['change_now'] = changeNow;
     data['change_on_pm'] = changeOnPm;
     data['additional'] = additional;
+    data['unit_of_measure'] = unitMeasure;
     return data;
   }
 }

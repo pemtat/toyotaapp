@@ -5,6 +5,7 @@ class SparePartModel {
   int quantity;
   String? changeNow;
   String? changeOnPM;
+  String unitMeasure;
   int additional;
   String? relationId;
   SparePartModel({
@@ -12,6 +13,7 @@ class SparePartModel {
     required this.partNumber,
     required this.partDetails,
     required this.quantity,
+    required this.unitMeasure,
     this.changeNow,
     this.changeOnPM,
     required this.additional,
@@ -24,6 +26,7 @@ class SparePartModel {
       'part_number': partNumber,
       'description': partDetails,
       'quantity': quantity.toString(),
+      'unit_of_measure': unitMeasure,
       'change_now': changeNow,
       'change_on_pm': changeOnPM,
       'additional': additional,

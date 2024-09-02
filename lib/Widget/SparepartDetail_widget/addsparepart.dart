@@ -21,6 +21,7 @@ class AddSparePartDetail extends StatelessWidget {
   final RxList<Product> products;
   final Rx<TextEditingController> partNumber;
   final Rx<TextEditingController> partDetails;
+  final Rx<TextEditingController> unitMeasure;
   final RxInt quantity;
   final RxList<String> selectionsChoose;
   final RxList<String> selectionsChoose2;
@@ -37,6 +38,7 @@ class AddSparePartDetail extends StatelessWidget {
     required this.products,
     required this.partNumber,
     required this.partDetails,
+    required this.unitMeasure,
     required this.quantity,
     required this.selectionsChoose,
     required this.selectionsChoose2,
@@ -105,7 +107,7 @@ class AddSparePartDetail extends StatelessWidget {
                       partNumber.value.text = product.no;
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
-
+                      unitMeasure.value.text = product.baseUnitOfMeasure;
                       products.clear();
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
@@ -242,6 +244,7 @@ class AddSparePartDetail extends StatelessWidget {
     cCodePage.value.clear();
     partNumber.value.clear();
     partDetails.value.clear();
+    unitMeasure.value.clear();
     quantity.value = 1;
     searchPartNumber.value.clear();
   }
@@ -253,6 +256,8 @@ class AddSparePartDetail extends StatelessWidget {
         partNumber.value.text != '' ? partNumber.value.text : '-';
     String partDetailsValue =
         partDetails.value.text != '' ? partDetails.value.text : '-';
+    String unitMeasureValue =
+        unitMeasure.value.text != '' ? unitMeasure.value.text : '-';
     String changeNowValue = '-';
     String changePMValue = '-';
     String changeValue =
@@ -272,6 +277,7 @@ class AddSparePartDetail extends StatelessWidget {
           quantity: quantity.value,
           changeNow: changeNowValue,
           changeOnPM: changePMValue,
+          unitMeasure: unitMeasureValue,
           additional: 0));
     } else if (additional == '1') {
       sparePartList.add(SparePartModel(
@@ -281,6 +287,7 @@ class AddSparePartDetail extends StatelessWidget {
           quantity: quantity.value,
           changeNow: changeNowValue,
           changeOnPM: changePMValue,
+          unitMeasure: unitMeasureValue,
           additional: 1));
     }
   }

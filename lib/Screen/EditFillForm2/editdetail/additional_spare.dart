@@ -21,6 +21,7 @@ class AdditSparepartList extends GetxController {
           products: products,
           partNumber: partNumber,
           partDetails: partDetails,
+          unitMeasure: unitMeasure,
           quantity: quantity,
           selectionsChoose: selectionsChoose,
           selectionsChoose2: selectionsChoose2,
@@ -48,6 +49,7 @@ class AdditSparepartList extends GetxController {
           products: products,
           partNumber: partNumber,
           partDetails: partDetails,
+          unitMeasure: unitMeasure,
           quantity: quantity,
           selectionsChoose: selectionsChoose,
           selectionsChoose2: selectionsChoose2,
@@ -64,6 +66,7 @@ class AdditSparepartList extends GetxController {
   final cCodePage = TextEditingController().obs;
   final partNumber = TextEditingController().obs;
   final partDetails = TextEditingController().obs;
+  final unitMeasure = TextEditingController().obs;
   final changeNow = TextEditingController().obs;
   final changeonPM = TextEditingController().obs;
   final searchPartNumber = TextEditingController().obs;

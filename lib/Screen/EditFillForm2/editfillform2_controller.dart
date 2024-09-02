@@ -212,6 +212,7 @@ class EditFillformController2 extends GetxController {
                   int.tryParse(recommendedSpareparts[i].quantity ?? '') ?? 0,
               changeNow: "",
               changeOnPM: "",
+              unitMeasure: recommendedSpareparts[i].unitMeasure ?? '',
               relationId: "",
               additional: 0));
         }
@@ -230,6 +231,7 @@ class EditFillformController2 extends GetxController {
               quantity: int.tryParse(changeSpareparts[i].quantity ?? '') ?? 0,
               changeNow: "",
               changeOnPM: "",
+              unitMeasure: changeSpareparts[i].unitMeasure ?? '',
               relationId: "",
               additional: 1));
         }
@@ -288,6 +290,8 @@ class EditFillformController2 extends GetxController {
     String? token = await getToken();
     String apiUrl = updateBatteryReport();
 
+    print(additSparePartListController.additSparePartList.first.unitMeasure);
+
     saveCurrentDateTime(saveCompletedtime);
     if (correctiveActionController.correctiveAction.isNotEmpty) {
       if (correctiveActionController.correctiveAction.first == 'Other') {
@@ -328,7 +332,8 @@ class EditFillformController2 extends GetxController {
           partDetails: "-",
           quantity: 0,
           additional: 0,
-          relationId: "");
+          relationId: "",
+          unitMeasure: "-");
 
       sparePartListController.sparePartList.add(defaultSparePart);
     }
@@ -339,7 +344,8 @@ class EditFillformController2 extends GetxController {
           partDetails: "-",
           quantity: 0,
           additional: 0,
-          relationId: "");
+          relationId: "",
+          unitMeasure: "-");
 
       additSparePartListController.additSparePartList.add(defaultSparePart);
     }
@@ -369,6 +375,7 @@ class EditFillformController2 extends GetxController {
         "quantity": sparePart.quantity,
         "additional": "recommended",
         "relation_id": "",
+        "unit_of_measure": sparePart.unitMeasure
       };
     }).toList();
 
@@ -381,6 +388,7 @@ class EditFillformController2 extends GetxController {
         "quantity": sparePart.quantity,
         "additional": "change",
         "relation_id": "",
+        "unit_of_measure": sparePart.unitMeasure
       };
     }).toList();
     List<Map<String, dynamic>> combinedList = [

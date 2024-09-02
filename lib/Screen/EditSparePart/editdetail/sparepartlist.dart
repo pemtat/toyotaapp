@@ -71,7 +71,7 @@ class SparepartList extends GetxController {
                       partNumber.value.text = product.no;
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
-
+                      unitMeasure.value.text = product.baseUnitOfMeasure;
                       products.clear();
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
@@ -238,7 +238,7 @@ class SparepartList extends GetxController {
                       partNumber.value.text = product.no;
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
-
+                      unitMeasure.value.text = product.baseUnitOfMeasure;
                       products.clear();
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
@@ -357,6 +357,7 @@ class SparepartList extends GetxController {
   final cCodePage = TextEditingController().obs;
   final partNumber = TextEditingController().obs;
   final partDetails = TextEditingController().obs;
+  final unitMeasure = TextEditingController().obs;
   final changeNow = TextEditingController().obs;
   final changeonPM = TextEditingController().obs;
   final searchPartNumber = TextEditingController().obs;
@@ -400,6 +401,7 @@ class SparepartList extends GetxController {
     cCodePage.value.text = part.cCodePage;
     partNumber.value.text = part.partNumber;
     partDetails.value.text = part.partDetails;
+    unitMeasure.value.text = part.unitMeasure;
     quantity.value = part.quantity;
     chooseClear();
     if (part.changeNow == '-') {
@@ -415,6 +417,7 @@ class SparepartList extends GetxController {
     cCodePage.value.clear();
     partNumber.value.clear();
     partDetails.value.clear();
+    unitMeasure.value.clear();
     quantity.value = 1;
     searchPartNumber.value.clear();
   }
@@ -426,6 +429,8 @@ class SparepartList extends GetxController {
         partNumber.value.text != '' ? partNumber.value.text : '-';
     String partDetailsValue =
         partDetails.value.text != '' ? partDetails.value.text : '-';
+    String unitMeasureValue =
+        unitMeasure.value.text != '' ? unitMeasure.value.text : '-';
     String changeNowValue = '-';
     String changePMValue = '-';
     String changeValue =
@@ -441,6 +446,7 @@ class SparepartList extends GetxController {
         cCodePage: cCodePageValue,
         partNumber: partNumberValue,
         partDetails: partDetailsValue,
+        unitMeasure: unitMeasureValue,
         quantity: quantity.value,
         changeNow: changeNowValue,
         changeOnPM: changePMValue,
@@ -454,6 +460,8 @@ class SparepartList extends GetxController {
         partNumber.value.text != '' ? partNumber.value.text : '-';
     String partDetailsValue =
         partDetails.value.text != '' ? partDetails.value.text : '-';
+    String unitMeasureValue =
+        unitMeasure.value.text != '' ? unitMeasure.value.text : '-';
     String changeNowValue = '-';
     String changePMValue = '-';
     String changeValue =
@@ -468,6 +476,7 @@ class SparepartList extends GetxController {
     part.cCodePage = cCodePageValue;
     part.partNumber = partNumberValue;
     part.partDetails = partDetailsValue;
+    part.unitMeasure = unitMeasureValue;
     part.quantity = quantity.value;
     part.changeNow = changeNowValue;
     part.changeOnPM = changePMValue;

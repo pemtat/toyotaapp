@@ -20,6 +20,7 @@ class SparepartList extends GetxController {
           products: products,
           partNumber: partNumber,
           partDetails: partDetails,
+          unitMeasure: unitMeasure,
           quantity: quantity,
           selectionsChoose: selectionsChoose,
           selectionsChoose2: selectionsChoose2,
@@ -48,6 +49,7 @@ class SparepartList extends GetxController {
           products: products,
           partNumber: partNumber,
           partDetails: partDetails,
+          unitMeasure: unitMeasure,
           quantity: quantity,
           selectionsChoose: selectionsChoose,
           selectionsChoose2: selectionsChoose2,
@@ -66,6 +68,7 @@ class SparepartList extends GetxController {
   final cCodePage = TextEditingController().obs;
   final partNumber = TextEditingController().obs;
   final partDetails = TextEditingController().obs;
+  final unitMeasure = TextEditingController().obs;
   var selections = List<String>.filled(2, '').obs;
   var selections2 = List<String>.filled(2, '').obs;
   var selectionsChoose = List<String>.filled(2, '').obs;

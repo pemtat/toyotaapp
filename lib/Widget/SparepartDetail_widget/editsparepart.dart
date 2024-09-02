@@ -22,6 +22,7 @@ class EditSparePartDetail extends StatelessWidget {
   final RxList<Product> products;
   final Rx<TextEditingController> partNumber;
   final Rx<TextEditingController> partDetails;
+  final Rx<TextEditingController> unitMeasure;
   final RxInt quantity;
   final RxList<String> selectionsChoose;
   final RxList<String> selectionsChoose2;
@@ -38,6 +39,7 @@ class EditSparePartDetail extends StatelessWidget {
     required this.products,
     required this.partNumber,
     required this.partDetails,
+    required this.unitMeasure,
     required this.quantity,
     required this.selectionsChoose,
     required this.selectionsChoose2,
@@ -107,7 +109,7 @@ class EditSparePartDetail extends StatelessWidget {
                           partNumber.value.text = product.no;
                           searchPartNumber.value.text = product.no;
                           partDetails.value.text = product.model;
-
+                          unitMeasure.value.text = product.baseUnitOfMeasure;
                           products.clear();
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
@@ -248,6 +250,7 @@ class EditSparePartDetail extends StatelessWidget {
     cCodePage.value.text = part.cCodePage;
     partNumber.value.text = part.partNumber;
     partDetails.value.text = part.partDetails;
+    unitMeasure.value.text = part.unitMeasure;
     quantity.value = part.quantity;
     chooseClear();
     if (part.changeNow == '-') {
@@ -265,6 +268,7 @@ class EditSparePartDetail extends StatelessWidget {
     partDetails.value.clear();
     quantity.value = 1;
     searchPartNumber.value.clear();
+    unitMeasure.value.clear();
   }
 
   void sparePartUpdate(SparePartModel part) {
@@ -274,6 +278,8 @@ class EditSparePartDetail extends StatelessWidget {
         partNumber.value.text != '' ? partNumber.value.text : '-';
     String partDetailsValue =
         partDetails.value.text != '' ? partDetails.value.text : '-';
+    String unitMeasureValue =
+        unitMeasure.value.text != '' ? unitMeasure.value.text : '-';
     String changeNowValue = '-';
     String changePMValue = '-';
     String changeValue =
@@ -291,5 +297,6 @@ class EditSparePartDetail extends StatelessWidget {
     part.quantity = quantity.value;
     part.changeNow = changeNowValue;
     part.changeOnPM = changePMValue;
+    part.unitMeasure = unitMeasureValue;
   }
 }

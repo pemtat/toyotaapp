@@ -21,6 +21,7 @@ class RepairReportModel {
   String? partNumber;
   String? description;
   String? quantity;
+  String? unitMeasure;
   String? changeNow;
   String? changeOnPm;
   String? operationHour;
@@ -62,6 +63,7 @@ class RepairReportModel {
     this.quantity,
     this.changeNow,
     this.changeOnPm,
+    this.unitMeasure,
     this.additional,
     this.contactedName,
     this.customerFleet,
@@ -102,6 +104,7 @@ class RepairReportModel {
     quantity = json['quantity'];
     changeNow = json['change_now'];
     changeOnPm = json['change_on_pm'];
+    unitMeasure = json['unit_of_measure'];
     additional = json['additional'];
     contactedName = json['contacted_name'];
     customerFleet = json['customer_fleet'];
@@ -143,6 +146,7 @@ class RepairReportModel {
     data['quantity'] = quantity;
     data['change_now'] = changeNow;
     data['change_on_pm'] = changeOnPm;
+    data['unit_of_measure'] = unitMeasure;
     data['additional'] = additional;
     data['contacted_name'] = contactedName;
     data['customer_fleet'] = customerFleet;

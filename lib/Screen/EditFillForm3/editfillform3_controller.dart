@@ -342,6 +342,7 @@ class FillformController3 extends GetxController {
                 changeNow: "",
                 changeOnPM: "",
                 relationId: "",
+                unitMeasure: sparePart[i].unitMeasure ?? '',
                 additional: 0));
           }
         }
@@ -654,7 +655,8 @@ class FillformController3 extends GetxController {
           partDetails: "-",
           quantity: 0,
           additional: 0,
-          relationId: "");
+          relationId: "",
+          unitMeasure: "-");
 
       sparepartList.sparePartList.add(defaultSparePart);
     }
@@ -669,6 +671,7 @@ class FillformController3 extends GetxController {
         "description": sparePart.partDetails,
         "part_number": sparePart.partNumber,
         "qty": sparePart.quantity,
+        "unit_of_measure": sparePart.unitMeasure,
       };
     }).toList();
 
