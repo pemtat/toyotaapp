@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/showdialogsave.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
@@ -12,6 +13,9 @@ import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
+
+import 'package:toyotamobile/Widget/pdfviewer_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
@@ -111,12 +115,44 @@ class SubJobSparePartWidget extends StatelessWidget {
                 6.kH,
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Warranty : ',
-                      style: TextStyleList.text1,
+                    Row(
+                      children: [
+                        Text(
+                          'Warranty : ',
+                          style: TextStyleList.text1,
+                        ),
+                        CheckStatus(
+                            status: subJobSparePart.warrantyStatus ?? '')
+                      ],
                     ),
-                    CheckStatus(status: subJobSparePart.warrantyStatus ?? '')
+                    if (jobController.techLevel.value == '2')
+                      InkWell(
+                        onTap: () async {
+                          RxString pdfReport = ''.obs;
+                          String? token = await getToken();
+                          showDialog(
+                              context: context,
+                              barrierColor: Color.fromARGB(59, 0, 0, 0),
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return const Center(child: DataCircleLoading());
+                              });
+                          await fetchPdfReport(subJobSparePart.id ?? '',
+                              token ?? '', pdfReport, 'estimate');
+                          Navigator.pop(context);
+                          if (pdfReport.value != '') {
+                            Get.to(() => PdfBase64View(
+                                name: 'Estimate Report',
+                                path: pdfReport.value));
+                          }
+                        },
+                        child: Text(
+                          'View PDF',
+                          style: TextStyleList.subtext9,
+                        ),
+                      ),
                   ],
                 ),
                 4.kH,

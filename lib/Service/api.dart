@@ -36,6 +36,10 @@ String getPdfFieldReportById(String issueId) {
   return '$url/api/rest/pm_jobs/pdf_fieldreport/$issueId';
 }
 
+String getPdfEstimateReportById(String issueId) {
+  return '$url/api/rest/pm_jobs/pdf_estimate/$issueId';
+}
+
 String getUserByZone(String zone) {
   return '$url/api/rest/jobs/user_by_zone?zone=$zone';
 }

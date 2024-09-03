@@ -559,7 +559,9 @@ Future<void> fetchPdfReport(
   try {
     String apiUrl = '';
 
-    if (option == 'fieldreport') {
+    if (option == 'estimate') {
+      apiUrl = getPdfEstimateReportById(id);
+    } else if (option == 'fieldreport') {
       apiUrl = getPdfFieldReportById(id);
     } else if (option == 'btr') {
       apiUrl = getPdfBtrReportById(id);
@@ -576,7 +578,10 @@ Future<void> fetchPdfReport(
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
 
-      if (responseBody.containsKey('pdf_base64')) {
+      if (responseBody.containsKey('pdf_estimate')) {
+        pdfReport.value = responseBody['pdf_estimate'];
+        pdfReport.refresh();
+      } else if (responseBody.containsKey('pdf_base64')) {
         pdfReport.value = responseBody['pdf_base64'];
         pdfReport.refresh();
       } else if (responseBody.containsKey('pdf_btr')) {
