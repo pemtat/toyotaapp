@@ -30,7 +30,7 @@ class EditSparePartDetail extends StatelessWidget {
   final RxList<String> selections2;
   final RxList<SparePartModel> sparePartList;
   final String? changeShow;
-  const EditSparePartDetail({
+  EditSparePartDetail({
     required this.title,
     required this.part,
     required this.cCodePage,
@@ -49,7 +49,8 @@ class EditSparePartDetail extends StatelessWidget {
     this.changeShow,
     super.key,
   });
-
+  final salesPrice = TextEditingController().obs;
+  final priceVat = TextEditingController().obs;
   @override
   Widget build(BuildContext context) {
     sparePartRead(part);
@@ -110,6 +111,9 @@ class EditSparePartDetail extends StatelessWidget {
                           searchPartNumber.value.text = product.no;
                           partDetails.value.text = product.model;
                           unitMeasure.value.text = product.baseUnitOfMeasure;
+                          salesPrice.value.text = product.salesPrice.toString();
+                          priceVat.value.text =
+                              product.priceIncludesVat == true ? '1' : '0';
                           products.clear();
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
@@ -251,6 +255,8 @@ class EditSparePartDetail extends StatelessWidget {
     partNumber.value.text = part.partNumber;
     partDetails.value.text = part.partDetails;
     unitMeasure.value.text = part.unitMeasure;
+    salesPrice.value.text = part.salesPrice;
+    priceVat.value.text = part.priceVat;
     quantity.value = part.quantity;
     chooseClear();
     if (part.changeNow == '-') {
@@ -266,6 +272,8 @@ class EditSparePartDetail extends StatelessWidget {
     cCodePage.value.clear();
     partNumber.value.clear();
     partDetails.value.clear();
+    salesPrice.value.clear();
+    priceVat.value.clear();
     quantity.value = 1;
     searchPartNumber.value.clear();
     unitMeasure.value.clear();
@@ -280,6 +288,10 @@ class EditSparePartDetail extends StatelessWidget {
         partDetails.value.text != '' ? partDetails.value.text : '-';
     String unitMeasureValue =
         unitMeasure.value.text != '' ? unitMeasure.value.text : '-';
+    String salesPriceValue =
+        salesPrice.value.text != '' ? salesPrice.value.text : '0';
+    String priceVatValue =
+        priceVat.value.text != '' ? priceVat.value.text : '0';
     String changeNowValue = '-';
     String changePMValue = '-';
     String changeValue =
@@ -294,6 +306,8 @@ class EditSparePartDetail extends StatelessWidget {
     part.cCodePage = cCodePageValue;
     part.partNumber = partNumberValue;
     part.partDetails = partDetailsValue;
+    part.salesPrice = salesPriceValue;
+    part.priceVat = priceVatValue;
     part.quantity = quantity.value;
     part.changeNow = changeNowValue;
     part.changeOnPM = changePMValue;

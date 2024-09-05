@@ -9,6 +9,8 @@ class Product {
   final String vendorNo;
   final String productGroupCode;
   final String serviceItemGroup;
+  final int salesPrice;
+  final bool priceIncludesVat;
   // final String productImage;
 
   Product({
@@ -22,6 +24,8 @@ class Product {
     required this.vendorNo,
     required this.productGroupCode,
     required this.serviceItemGroup,
+    required this.salesPrice,
+    required this.priceIncludesVat,
     // required this.productImage,
   });
 
@@ -37,7 +41,10 @@ class Product {
       vendorNo: json['Vendor_No'],
       productGroupCode: json['Product_Group_Code'],
       serviceItemGroup: json['Service_Item_Group'],
-      // productImage: json['Product_Image'],
+      salesPrice: json['sales_price'],
+      priceIncludesVat: json['Price_Includes_VAT'] is int
+          ? json['Price_Includes_VAT'] == 1
+          : false,
     );
   }
 
@@ -53,6 +60,8 @@ class Product {
       'Vendor_No': vendorNo,
       'Product_Group_Code': productGroupCode,
       'Service_Item_Group': serviceItemGroup,
+      'sales_price': salesPrice,
+      'Price_Includes_VAT': priceIncludesVat,
       // 'Product_Image': productImage,
     };
   }

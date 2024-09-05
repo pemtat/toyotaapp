@@ -350,6 +350,8 @@ class DarDetails {
   String? lastUpdatedLocal;
   String? createdByRealname;
   String? unitMeasure;
+  String? salesPrice;
+  bool? priceVat;
 
   DarDetails(
       {this.id,
@@ -359,6 +361,8 @@ class DarDetails {
       this.description,
       this.partNumber,
       this.qty,
+      this.priceVat,
+      this.salesPrice,
       this.createdAtLocal,
       this.lastUpdatedLocal,
       this.createdByRealname,
@@ -376,6 +380,8 @@ class DarDetails {
     lastUpdatedLocal = json['last_updated_local'];
     createdByRealname = json['created_by_realname'];
     unitMeasure = json['unit_of_measure'];
+    salesPrice = json['price'];
+    priceVat = json['price_includes_vat'];
   }
 
   Map<String, dynamic> toJson() {
@@ -391,6 +397,8 @@ class DarDetails {
     data['last_updated_local'] = lastUpdatedLocal;
     data['created_by_realname'] = createdByRealname;
     data['unit_of_measure'] = unitMeasure;
+    data['price'] = salesPrice;
+    data['price_includes_vat'] = priceVat;
     return data;
   }
 }

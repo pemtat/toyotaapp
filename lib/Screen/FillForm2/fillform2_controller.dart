@@ -158,6 +158,8 @@ class FillformController2 extends GetxController {
           partNumber: "-",
           partDetails: "-",
           unitMeasure: "-",
+          salesPrice: "0",
+          priceVat: "0",
           quantity: 0,
           additional: 0,
           relationId: "");
@@ -170,6 +172,8 @@ class FillformController2 extends GetxController {
           partNumber: "-",
           partDetails: "-",
           unitMeasure: "-",
+          salesPrice: "0",
+          priceVat: "0",
           quantity: 0,
           additional: 0,
           relationId: "");
@@ -195,6 +199,7 @@ class FillformController2 extends GetxController {
         0, (sum, item) => sum + (item["voltage_check"] ?? 0));
     List<Map<String, dynamic>> sparePartList =
         sparePartListController.sparePartList.map((sparePart) {
+      var price = double.tryParse(sparePart.salesPrice) ?? 0.0;
       return {
         "c_code": sparePart.cCodePage,
         "part_number": sparePart.partNumber,
@@ -202,12 +207,15 @@ class FillformController2 extends GetxController {
         "quantity": sparePart.quantity,
         "additional": "recommended",
         "relation_id": "",
-        "unit_of_measure": sparePart.unitMeasure
+        "unit_of_measure": sparePart.unitMeasure,
+        "price": price,
+        "price_includes_vat": sparePart.priceVat == '1' ? 1 : 0
       };
     }).toList();
 
     List<Map<String, dynamic>> additionalList =
         additSparePartListController.additSparePartList.map((sparePart) {
+      var price = double.tryParse(sparePart.salesPrice) ?? 0.0;
       return {
         "c_code": sparePart.cCodePage,
         "part_number": sparePart.partNumber,
@@ -215,7 +223,9 @@ class FillformController2 extends GetxController {
         "quantity": sparePart.quantity,
         "additional": "change",
         "relation_id": "",
-        "unit_of_measure": sparePart.unitMeasure
+        "unit_of_measure": sparePart.unitMeasure,
+        "price": price,
+        "price_includes_vat": sparePart.priceVat == '1' ? 1 : 0
       };
     }).toList();
     List<Map<String, dynamic>> combinedList = [

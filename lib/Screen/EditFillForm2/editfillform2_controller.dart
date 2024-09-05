@@ -210,6 +210,8 @@ class EditFillformController2 extends GetxController {
               partDetails: recommendedSpareparts[i].description ?? '',
               quantity:
                   int.tryParse(recommendedSpareparts[i].quantity ?? '') ?? 0,
+              salesPrice: recommendedSpareparts[i].salesPrice ?? '0',
+              priceVat: recommendedSpareparts[i].priceVat == true ? '1' : '0',
               changeNow: "",
               changeOnPM: "",
               unitMeasure: recommendedSpareparts[i].unitMeasure ?? '',
@@ -229,6 +231,8 @@ class EditFillformController2 extends GetxController {
               partNumber: changeSpareparts[i].partNumber ?? '',
               partDetails: changeSpareparts[i].description ?? '',
               quantity: int.tryParse(changeSpareparts[i].quantity ?? '') ?? 0,
+              salesPrice: changeSpareparts[i].salesPrice ?? '0',
+              priceVat: changeSpareparts[i].priceVat == true ? '1' : '0',
               changeNow: "",
               changeOnPM: "",
               unitMeasure: changeSpareparts[i].unitMeasure ?? '',
@@ -290,8 +294,6 @@ class EditFillformController2 extends GetxController {
     String? token = await getToken();
     String apiUrl = updateBatteryReport();
 
-    print(additSparePartListController.additSparePartList.first.unitMeasure);
-
     saveCurrentDateTime(saveCompletedtime);
     if (correctiveActionController.correctiveAction.isNotEmpty) {
       if (correctiveActionController.correctiveAction.first == 'Other') {
@@ -327,25 +329,31 @@ class EditFillformController2 extends GetxController {
 
     if (sparePartListController.sparePartList.isEmpty) {
       final SparePartModel defaultSparePart = SparePartModel(
-          cCodePage: "-",
-          partNumber: "-",
-          partDetails: "-",
-          quantity: 0,
-          additional: 0,
-          relationId: "",
-          unitMeasure: "-");
+        cCodePage: "-",
+        partNumber: "-",
+        partDetails: "-",
+        quantity: 0,
+        additional: 0,
+        relationId: "",
+        unitMeasure: "-",
+        salesPrice: "0",
+        priceVat: "0",
+      );
 
       sparePartListController.sparePartList.add(defaultSparePart);
     }
     if (additSparePartListController.additSparePartList.isEmpty) {
       final SparePartModel defaultSparePart = SparePartModel(
-          cCodePage: "-",
-          partNumber: "-",
-          partDetails: "-",
-          quantity: 0,
-          additional: 0,
-          relationId: "",
-          unitMeasure: "-");
+        cCodePage: "-",
+        partNumber: "-",
+        partDetails: "-",
+        quantity: 0,
+        additional: 0,
+        relationId: "",
+        unitMeasure: "-",
+        salesPrice: "0",
+        priceVat: "0",
+      );
 
       additSparePartListController.additSparePartList.add(defaultSparePart);
     }
@@ -368,6 +376,7 @@ class EditFillformController2 extends GetxController {
         0, (sum, item) => sum + (item["voltage_check"] ?? 0));
     List<Map<String, dynamic>> sparePartList =
         sparePartListController.sparePartList.map((sparePart) {
+      var price = double.tryParse(sparePart.salesPrice) ?? 0.0;
       return {
         "c_code": sparePart.cCodePage,
         "part_number": sparePart.partNumber,
@@ -375,12 +384,15 @@ class EditFillformController2 extends GetxController {
         "quantity": sparePart.quantity,
         "additional": "recommended",
         "relation_id": "",
-        "unit_of_measure": sparePart.unitMeasure
+        "unit_of_measure": sparePart.unitMeasure,
+        "price": price,
+        "price_includes_vat": sparePart.priceVat == '1' ? 1 : 0
       };
     }).toList();
 
     List<Map<String, dynamic>> additionalList =
         additSparePartListController.additSparePartList.map((sparePart) {
+      var price = double.tryParse(sparePart.salesPrice) ?? 0.0;
       return {
         "c_code": sparePart.cCodePage,
         "part_number": sparePart.partNumber,
@@ -388,7 +400,9 @@ class EditFillformController2 extends GetxController {
         "quantity": sparePart.quantity,
         "additional": "change",
         "relation_id": "",
-        "unit_of_measure": sparePart.unitMeasure
+        "unit_of_measure": sparePart.unitMeasure,
+        "price": price,
+        "price_includes_vat": sparePart.priceVat == '1' ? 1 : 0
       };
     }).toList();
     List<Map<String, dynamic>> combinedList = [

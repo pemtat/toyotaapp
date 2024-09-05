@@ -339,6 +339,8 @@ class FillformController3 extends GetxController {
                 partNumber: sparePart[i].partNumber ?? '',
                 partDetails: sparePart[i].description ?? '',
                 quantity: int.tryParse(sparePart[i].qty ?? '') ?? 0,
+                salesPrice: sparePart[i].salesPrice ?? '0',
+                priceVat: sparePart[i].priceVat == true ? '1' : '0',
                 changeNow: "",
                 changeOnPM: "",
                 relationId: "",
@@ -650,13 +652,16 @@ class FillformController3 extends GetxController {
     ];
     if (sparepartList.sparePartList.isEmpty) {
       final SparePartModel defaultSparePart = SparePartModel(
-          cCodePage: "-",
-          partNumber: "-",
-          partDetails: "-",
-          quantity: 0,
-          additional: 0,
-          relationId: "",
-          unitMeasure: "-");
+        cCodePage: "-",
+        partNumber: "-",
+        partDetails: "-",
+        quantity: 0,
+        additional: 0,
+        relationId: "",
+        unitMeasure: "-",
+        salesPrice: "0",
+        priceVat: "0",
+      );
 
       sparepartList.sparePartList.add(defaultSparePart);
     }
@@ -665,6 +670,7 @@ class FillformController3 extends GetxController {
       int index = entry.key + 1;
 
       SparePartModel sparePart = entry.value;
+      var price = double.tryParse(sparePart.salesPrice) ?? 0.0;
       return {
         "no": index,
         "page_code": sparePart.cCodePage,
@@ -672,6 +678,8 @@ class FillformController3 extends GetxController {
         "part_number": sparePart.partNumber,
         "qty": sparePart.quantity,
         "unit_of_measure": sparePart.unitMeasure,
+        "price": price,
+        "price_includes_vat": sparePart.priceVat == '1' ? 1 : 0
       };
     }).toList();
 

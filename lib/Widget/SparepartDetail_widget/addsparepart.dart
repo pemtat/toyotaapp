@@ -30,7 +30,7 @@ class AddSparePartDetail extends StatelessWidget {
   final RxList<SparePartModel> sparePartList;
   final String? changeShow;
   final String additional;
-  const AddSparePartDetail({
+  AddSparePartDetail({
     required this.title,
     required this.cCodePage,
     required this.searchPartNumber,
@@ -50,6 +50,8 @@ class AddSparePartDetail extends StatelessWidget {
     super.key,
   });
 
+  final salesPrice = TextEditingController().obs;
+  final priceVat = TextEditingController().obs;
   @override
   Widget build(BuildContext context) {
     sparePartClear();
@@ -108,6 +110,9 @@ class AddSparePartDetail extends StatelessWidget {
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
                       unitMeasure.value.text = product.baseUnitOfMeasure;
+                      salesPrice.value.text = product.salesPrice.toString();
+                      priceVat.value.text =
+                          product.priceIncludesVat == true ? '1' : '0';
                       products.clear();
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
@@ -245,6 +250,8 @@ class AddSparePartDetail extends StatelessWidget {
     partNumber.value.clear();
     partDetails.value.clear();
     unitMeasure.value.clear();
+    salesPrice.value.clear();
+    priceVat.value.clear();
     quantity.value = 1;
     searchPartNumber.value.clear();
   }
@@ -258,6 +265,10 @@ class AddSparePartDetail extends StatelessWidget {
         partDetails.value.text != '' ? partDetails.value.text : '-';
     String unitMeasureValue =
         unitMeasure.value.text != '' ? unitMeasure.value.text : '-';
+    String salesPriceValue =
+        salesPrice.value.text != '' ? salesPrice.value.text : '0';
+    String priceVatValue =
+        priceVat.value.text != '' ? priceVat.value.text : '0';
     String changeNowValue = '-';
     String changePMValue = '-';
     String changeValue =
@@ -275,6 +286,8 @@ class AddSparePartDetail extends StatelessWidget {
           partNumber: partNumberValue,
           partDetails: partDetailsValue,
           quantity: quantity.value,
+          salesPrice: salesPriceValue,
+          priceVat: priceVatValue,
           changeNow: changeNowValue,
           changeOnPM: changePMValue,
           unitMeasure: unitMeasureValue,
@@ -284,6 +297,8 @@ class AddSparePartDetail extends StatelessWidget {
           cCodePage: cCodePageValue,
           partNumber: partNumberValue,
           partDetails: partDetailsValue,
+          salesPrice: salesPriceValue,
+          priceVat: priceVatValue,
           quantity: quantity.value,
           changeNow: changeNowValue,
           changeOnPM: changePMValue,

@@ -15,6 +15,8 @@ import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 
 class AdditSparepartList extends GetxController {
   int space = 24;
+  final salesPrice = TextEditingController().obs;
+  final priceVat = TextEditingController().obs;
   void additSparePartListModal(BuildContext context) {
     additSparePartClear();
     chooseClear();
@@ -402,6 +404,8 @@ class AdditSparepartList extends GetxController {
     partDetails.value.text = part.partDetails;
     unitMeasure.value.text = part.unitMeasure;
     quantity.value = part.quantity;
+    salesPrice.value.text = part.salesPrice;
+    priceVat.value.text = part.priceVat;
     chooseClear();
     if (part.changeNow == '-') {
       selectionsChoose.add(part.changeOnPM ?? '-');
@@ -418,7 +422,8 @@ class AdditSparepartList extends GetxController {
     partDetails.value.clear();
     unitMeasure.value.clear();
     quantity.value = 1;
-
+    salesPrice.value.clear();
+    priceVat.value.clear();
     searchPartNumber.value.clear();
   }
 
@@ -431,6 +436,10 @@ class AdditSparepartList extends GetxController {
         partDetails.value.text != '' ? partDetails.value.text : '-';
     String unitMeasureValue =
         unitMeasure.value.text != '' ? unitMeasure.value.text : '-';
+    String salesPriceValue =
+        salesPrice.value.text != '' ? salesPrice.value.text : '0';
+    String priceVatValue =
+        priceVat.value.text != '' ? priceVat.value.text : '0';
     String changeNowValue = '-';
     String changePMValue = '-';
     String changeValue =
@@ -450,6 +459,8 @@ class AdditSparepartList extends GetxController {
         quantity: quantity.value,
         changeNow: changeNowValue,
         changeOnPM: changePMValue,
+        salesPrice: salesPriceValue,
+        priceVat: priceVatValue,
         additional: 1));
   }
 
@@ -462,6 +473,10 @@ class AdditSparepartList extends GetxController {
         partDetails.value.text != '' ? partDetails.value.text : '-';
     String unitMeasureValue =
         unitMeasure.value.text != '' ? unitMeasure.value.text : '-';
+    String salesPriceValue =
+        salesPrice.value.text != '' ? salesPrice.value.text : '0';
+    String priceVatValue =
+        priceVat.value.text != '' ? priceVat.value.text : '0';
     String changeNowValue = '-';
     String changePMValue = '-';
     String changeValue =
@@ -477,6 +492,8 @@ class AdditSparepartList extends GetxController {
     part.partNumber = partNumberValue;
     part.partDetails = partDetailsValue;
     part.unitMeasure = unitMeasureValue;
+    part.salesPrice = salesPriceValue;
+    part.priceVat = priceVatValue;
     part.quantity = quantity.value;
     part.changeNow = changeNowValue;
     part.changeOnPM = changePMValue;

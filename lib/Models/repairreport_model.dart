@@ -22,6 +22,8 @@ class RepairReportModel {
   String? description;
   String? quantity;
   String? unitMeasure;
+  String? salesPrice;
+  bool? priceVat;
   String? changeNow;
   String? changeOnPm;
   String? operationHour;
@@ -38,46 +40,47 @@ class RepairReportModel {
   String? serialNo;
   bool? additional;
 
-  RepairReportModel({
-    this.id,
-    this.jobIssueId,
-    this.fieldReport,
-    this.faultReport,
-    this.errorCodeReport,
-    this.orderNo,
-    this.rCode,
-    this.wCode,
-    this.produre,
-    this.problem,
-    this.repairResult,
-    this.hr,
-    this.m,
-    this.processStaff,
-    this.relationId,
-    this.saveTime,
-    this.signature,
-    this.signaturePad,
-    this.cCode,
-    this.partNumber,
-    this.description,
-    this.quantity,
-    this.changeNow,
-    this.changeOnPm,
-    this.unitMeasure,
-    this.additional,
-    this.contactedName,
-    this.customerFleet,
-    this.customerName,
-    this.department,
-    this.liftHeight,
-    this.mastType,
-    this.model,
-    this.operationHour,
-    this.product,
-    this.serialNo,
-    this.tech2,
-    this.tech1,
-  });
+  RepairReportModel(
+      {this.id,
+      this.jobIssueId,
+      this.fieldReport,
+      this.faultReport,
+      this.errorCodeReport,
+      this.orderNo,
+      this.rCode,
+      this.wCode,
+      this.produre,
+      this.problem,
+      this.repairResult,
+      this.hr,
+      this.m,
+      this.processStaff,
+      this.relationId,
+      this.saveTime,
+      this.signature,
+      this.signaturePad,
+      this.cCode,
+      this.partNumber,
+      this.description,
+      this.quantity,
+      this.changeNow,
+      this.changeOnPm,
+      this.unitMeasure,
+      this.additional,
+      this.contactedName,
+      this.customerFleet,
+      this.customerName,
+      this.department,
+      this.liftHeight,
+      this.mastType,
+      this.model,
+      this.operationHour,
+      this.product,
+      this.serialNo,
+      this.tech2,
+      this.tech1,
+      this.priceVat,
+      this.salesPrice});
 
   RepairReportModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -118,6 +121,8 @@ class RepairReportModel {
     serialNo = json['serial_no'];
     tech2 = json['tech2'];
     tech1 = json['tech1'];
+    salesPrice = json['price'];
+    priceVat = json['price_includes_vat'];
   }
 
   Map<String, dynamic> toJson() {
@@ -160,6 +165,8 @@ class RepairReportModel {
     data['serial_no'] = serialNo;
     data['tech2'] = tech2;
     data['tech1'] = tech1;
+    data['price'] = salesPrice;
+    data['price_includes_vat'] = priceVat;
     return data;
   }
 }
