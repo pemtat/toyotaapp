@@ -58,6 +58,8 @@ class StatusButton2 extends StatelessWidget {
         return const StatusApproved();
       case '4':
         return const StatusReject();
+      case '5':
+        return const StatusConfirmed();
       default:
         return const StatusWaitForPending();
     }

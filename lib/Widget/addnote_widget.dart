@@ -56,59 +56,54 @@ class AddNote extends StatelessWidget {
             );
           }
         }),
-        if (showOnly == null)
-          Column(
-            children: [
-              12.kH,
-              TextFieldType(
-                hintText: 'Add Notes',
-                textSet: notes.value,
-              ),
-            ],
-          ),
-        8.kH,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: () {
-                pickFile(addAttatchments, isPicking);
-              },
-              child: Row(
-                children: [
-                  // Image.asset('assets/link.png'),
-                  // 4.wH,
-                  // Text(
-                  //   'Attach file',
-                  //   style: TextStyleList.text1,
-                  // ),
-                  Obx(() {
-                    if (addAttatchments.isNotEmpty) {
-                      return Row(
-                        children: [
-                          4.wH,
-                          Text(
-                            addAttatchments.first['filename'],
-                            style: TextStyleList.text1,
-                          ),
-                        ],
-                      );
-                    } else {
-                      return Container();
-                    }
-                  }),
-                ],
-              ),
-            ),
-            if (showOnly == null)
-              CustomElevatedButton(
-                onPressed: () {
-                  addNote(notes);
-                },
-                text: 'Submit',
-              ),
-          ],
-        ),
+        // if (showOnly == null)
+        //   Column(
+        //     children: [
+        //       12.kH,
+        //       TextFieldType(
+        //         hintText: 'Add Notes',
+        //         textSet: notes.value,
+        //       ),
+        //     ],
+        //   ),
+        // 8.kH,
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     GestureDetector(
+        //       onTap: () {
+        //         pickFile(addAttatchments, isPicking);
+        //       },
+        //       child: Row(
+        //         children: [
+
+        //           Obx(() {
+        //             if (addAttatchments.isNotEmpty) {
+        //               return Row(
+        //                 children: [
+        //                   4.wH,
+        //                   Text(
+        //                     addAttatchments.first['filename'],
+        //                     style: TextStyleList.text1,
+        //                   ),
+        //                 ],
+        //               );
+        //             } else {
+        //               return Container();
+        //             }
+        //           }),
+        //         ],
+        //       ),
+        //     ),
+        //     if (showOnly == null)
+        //       CustomElevatedButton(
+        //         onPressed: () {
+        //           addNote(notes);
+        //         },
+        //         text: 'Submit',
+        //       ),
+        //   ],
+        // ),
       ],
     );
   }

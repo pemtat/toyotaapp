@@ -12,7 +12,6 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
-import 'package:toyotamobile/Widget/addnote_widget.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
@@ -270,15 +269,15 @@ class PendingTaskViewPM extends StatelessWidget {
                                 ],
                               ),
                               8.kH,
-                              AddNote(
-                                  notePic: jobController.notePic,
-                                  notesFiles: jobController.notesFiles,
-                                  notes: jobController.notes,
-                                  addAttatchments:
-                                      jobController.addAttatchments,
-                                  isPicking: jobController.isPicking,
-                                  addNote: jobController.addNote),
-                              8.kH,
+                              // AddNote(
+                              //     notePic: jobController.notePic,
+                              //     notesFiles: jobController.notesFiles,
+                              //     notes: jobController.notes,
+                              //     addAttatchments:
+                              //         jobController.addAttatchments,
+                              //     isPicking: jobController.isPicking,
+                              //     addNote: jobController.addNote),
+                              // 8.kH,
                               // BoxContainer(
                               //   children: [
                               //     Row(

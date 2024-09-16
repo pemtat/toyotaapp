@@ -817,47 +817,65 @@ class EditFillFormView3 extends StatelessWidget {
             ),
             space.kH,
             BoxContainer(
-              child: Obx(() {
-                return GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          backgroundColor: white3,
-                          title: Center(child: Text('ผู้ตรวจซ่อม 2')),
-                          titleTextStyle: TextStyleList.text1,
-                          content: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: fillformController3.userByZone
-                                  .map<Widget>((UsersZone user) {
-                                return ListTile(
-                                  title: Text(user.realname ?? 'No data'),
-                                  onTap: () {
-                                    fillformController3.selectedUser.value =
-                                        user.realname ?? '';
-                                    Navigator.of(context).pop();
-                                  },
-                                );
-                              }).toList(),
-                            ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Obx(() {
+                      return GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                backgroundColor: white3,
+                                title: Center(child: Text('ผู้ตรวจซ่อม 2')),
+                                titleTextStyle: TextStyleList.text1,
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: fillformController3.userByZone
+                                        .map<Widget>((UsersZone user) {
+                                      return ListTile(
+                                        title: Text(user.realname ?? 'No data'),
+                                        onTap: () {
+                                          fillformController3.selectedUser
+                                              .value = user.realname ?? '';
+                                          Navigator.of(context).pop();
+                                        },
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: AbsorbPointer(
+                          child: TextField(
+                            controller: TextEditingController(
+                                text: fillformController3.selectedUser.value),
+                            decoration: InputDecoration(
+                                labelText: 'ผู้ตรวจซ่อม 2',
+                                labelStyle: TextStyleList.text9),
                           ),
-                        );
-                      },
-                    );
-                  },
-                  child: AbsorbPointer(
-                    child: TextField(
-                      controller: TextEditingController(
-                          text: fillformController3.selectedUser.value),
-                      decoration: InputDecoration(
-                          labelText: 'ผู้ตรวจซ่อม 2',
-                          labelStyle: TextStyleList.text9),
-                    ),
+                        ),
+                      );
+                    }),
                   ),
-                );
-              }),
+                  Obx(() {
+                    if (fillformController3.selectedUser.value != '') {
+                      return InkWell(
+                        onTap: () {
+                          fillformController3.selectedUser.value = '';
+                        },
+                        child: Icon(Icons.close),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  })
+                ],
+              ),
             ),
             100.kH,
           ],

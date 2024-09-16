@@ -58,13 +58,17 @@ class InputDecoration1 extends InputDecoration {
 }
 
 class InputDecoration2 extends InputDecoration {
-  InputDecoration2({
-    super.labelText,
-  }) : super(
+  InputDecoration2({super.labelText, required VoidCallback function})
+      : super(
           labelStyle: TextStyleList.text11,
-          suffixIcon: const Icon(
-            Icons.search_sharp,
-            color: Colors.grey,
+          suffixIcon: InkWell(
+            onTap: () {
+              function();
+            },
+            child: const Icon(
+              Icons.search_sharp,
+              color: Colors.grey,
+            ),
           ),
           fillColor: black5,
           enabledBorder: OutlineInputBorder(

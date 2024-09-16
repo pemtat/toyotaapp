@@ -1,4 +1,4 @@
-const String url = 'https://fsm-dev.vansales.asia';
+const String url = 'https://tsadmin.tmh-wst.com';
 const String urlFSM = 'http://tscapi.tmh-wst.com';
 const String issue = '$url/api/rest/issues';
 const String user = '$url/api/rest/users';
@@ -194,6 +194,14 @@ String updateReportById(String id) {
 
 String updateSparepart() {
   return "$url/api/rest/jobs/sparepart";
+}
+
+String createSparepartNotes() {
+  return "$url/api/rest/jobs/sparepart_note";
+}
+
+String createUserTokenNotification() {
+  return "$url/api/rest/users/create_token_notification";
 }
 
 String getAdditionalRepairReportById(String id) {

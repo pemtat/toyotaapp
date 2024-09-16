@@ -416,47 +416,67 @@ class EditFillFormView extends StatelessWidget {
                   ],
                 ),
                 BoxContainer(
-                  child: Obx(() {
-                    return GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              backgroundColor: white3,
-                              title: const Center(child: Text('ผู้ตรวจซ่อม 2')),
-                              titleTextStyle: TextStyleList.text1,
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: fillFormController.userByZone
-                                      .map<Widget>((UsersZone user) {
-                                    return ListTile(
-                                      title: Text(user.realname ?? 'No data'),
-                                      onTap: () {
-                                        fillFormController.selectedUser.value =
-                                            user.realname ?? '';
-                                        Navigator.of(context).pop();
-                                      },
-                                    );
-                                  }).toList(),
-                                ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Obx(() {
+                          return GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    backgroundColor: white3,
+                                    title: Center(child: Text('ผู้ตรวจซ่อม 2')),
+                                    titleTextStyle: TextStyleList.text1,
+                                    content: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: fillFormController.userByZone
+                                            .map<Widget>((UsersZone user) {
+                                          return ListTile(
+                                            title: Text(
+                                                user.realname ?? 'No data'),
+                                            onTap: () {
+                                              fillFormController.selectedUser
+                                                  .value = user.realname ?? '';
+                                              Navigator.of(context).pop();
+                                            },
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: AbsorbPointer(
+                              child: TextField(
+                                controller: TextEditingController(
+                                    text:
+                                        fillFormController.selectedUser.value),
+                                decoration: InputDecoration(
+                                    labelText: 'ผู้ตรวจซ่อม 2',
+                                    labelStyle: TextStyleList.text9),
                               ),
-                            );
-                          },
-                        );
-                      },
-                      child: AbsorbPointer(
-                        child: TextField(
-                          controller: TextEditingController(
-                              text: fillFormController.selectedUser.value),
-                          decoration: InputDecoration(
-                              labelText: 'ผู้ตรวจซ่อม 2',
-                              labelStyle: TextStyleList.text9),
-                        ),
+                            ),
+                          );
+                        }),
                       ),
-                    );
-                  }),
+                      Obx(() {
+                        if (fillFormController.selectedUser.value != '') {
+                          return InkWell(
+                            onTap: () {
+                              fillFormController.selectedUser.value = '';
+                            },
+                            child: Icon(Icons.close),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      })
+                    ],
+                  ),
                 ),
                 100.kH,
               ],

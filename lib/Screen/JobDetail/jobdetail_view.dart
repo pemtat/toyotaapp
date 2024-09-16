@@ -12,7 +12,6 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
 import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
-import 'package:toyotamobile/Widget/addnote_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
@@ -197,17 +196,17 @@ class JobDetailView extends StatelessWidget {
                                                 }
                                               },
                                             ),
-                                            8.kH,
-                                            AddNote(
-                                                notePic: jobController.notePic,
-                                                notesFiles:
-                                                    jobController.notesFiles,
-                                                notes: jobController.notes,
-                                                addAttatchments: jobController
-                                                    .addAttatchments,
-                                                isPicking:
-                                                    jobController.isPicking,
-                                                addNote: jobController.addNote),
+                                            // 8.kH,
+                                            // AddNote(
+                                            //     notePic: jobController.notePic,
+                                            //     notesFiles:
+                                            //         jobController.notesFiles,
+                                            //     notes: jobController.notes,
+                                            //     addAttatchments: jobController
+                                            //         .addAttatchments,
+                                            //     isPicking:
+                                            //         jobController.isPicking,
+                                            //     addNote: jobController.addNote),
                                             8.kH,
                                           ],
                                         )

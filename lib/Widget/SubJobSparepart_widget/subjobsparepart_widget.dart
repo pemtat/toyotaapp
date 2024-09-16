@@ -35,6 +35,23 @@ class SubJobSparePartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RxList<TextEditingController> remarkControllers =
+        <TextEditingController>[].obs;
+
+    void addRemark() {
+      remarkControllers.add(TextEditingController());
+    }
+
+    void removeRemark(int index) {
+      if (remarkControllers.isNotEmpty) {
+        remarkControllers.removeAt(index);
+      }
+    }
+
+    List<String> getAllRemarks() {
+      return remarkControllers.map((controller) => controller.text).toList();
+    }
+
     final rejectNote = TextEditingController().obs;
     return Column(
       children: [
@@ -106,8 +123,9 @@ class SubJobSparePartWidget extends StatelessWidget {
                           style: TextStyleList.title1,
                         ),
                         4.wH,
-                        StatusButton2(
-                            status: subJobSparePart.salesStatus.toString()),
+                        subJobSparePart.salesStatus.toString() == '1'
+                            ? const StatusButton2(status: '5')
+                            : const StatusButton2(status: '1'),
                       ],
                     )
                   ],
@@ -134,7 +152,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                           String? token = await getToken();
                           showDialog(
                               context: context,
-                              barrierColor: Color.fromARGB(59, 0, 0, 0),
+                              barrierColor: const Color.fromARGB(59, 0, 0, 0),
                               barrierDismissible: false,
                               builder: (BuildContext context) {
                                 return const Center(child: DataCircleLoading());
@@ -256,7 +274,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                               jobController.techManageId.value,
                                               jobController.techLevel.value,
                                               jobController.handlerIdTech.value,
-                                              '');
+                                              'send');
                                           await jobDetailController
                                               .fetchSubJobSparePartId();
                                         }, red1);
@@ -280,24 +298,137 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                 color: blue1,
                                                 title: 'Approve',
                                                 onTap: () {
-                                                  showApproveSparePart(
-                                                      context,
-                                                      'Are you sure to approve?',
-                                                      'No',
-                                                      'Yes', () {
-                                                    updateJobSparePart(
-                                                        subJobSparePart.id ??
-                                                            '',
-                                                        3,
-                                                        jobController
-                                                            .techManageId.value,
-                                                        jobController
-                                                            .techLevel.value,
-                                                        jobController
-                                                            .handlerIdTech
-                                                            .value,
-                                                        '-');
-                                                  }, blue1);
+                                                  addRemark();
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        backgroundColor: white4,
+                                                        content: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Obx(() => Column(
+                                                                  children: [
+                                                                    ...List.generate(
+                                                                        remarkControllers
+                                                                            .length,
+                                                                        (index) {
+                                                                      return Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .only(
+                                                                            bottom:
+                                                                                8.0),
+                                                                        child:
+                                                                            Row(
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: TextFieldType(
+                                                                                hintText: 'หมายเหตุ',
+                                                                                textSet: remarkControllers[index],
+                                                                              ),
+                                                                            ),
+                                                                            IconButton(
+                                                                              icon: Icon(Icons.remove_circle_outline),
+                                                                              onPressed: () {
+                                                                                removeRemark(index);
+                                                                              },
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      );
+                                                                    }),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Icon(
+                                                                          size:
+                                                                              20,
+                                                                          Icons
+                                                                              .add,
+                                                                          color:
+                                                                              black6,
+                                                                        ),
+                                                                        InkWell(
+                                                                            onTap:
+                                                                                () {
+                                                                              addRemark();
+                                                                            },
+                                                                            child:
+                                                                                Text(
+                                                                              'เพิ่มหมายเหตุ',
+                                                                              style: TextStyleList.text3,
+                                                                            )),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                )),
+                                                          ],
+                                                        ),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child: Text('No',
+                                                                style:
+                                                                    TextStyleList
+                                                                        .text1),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed:
+                                                                () async {
+                                                              List<String>
+                                                                  remarks =
+                                                                  getAllRemarks();
+
+                                                              await createSparepartNote(
+                                                                  subJobSparePart
+                                                                          .id ??
+                                                                      '',
+                                                                  jobController
+                                                                      .techManageId
+                                                                      .value,
+                                                                  jobController
+                                                                      .techLevel
+                                                                      .value,
+                                                                  jobController
+                                                                      .handlerIdTech
+                                                                      .value,
+                                                                  remarks);
+                                                              await updateJobSparePart(
+                                                                  subJobSparePart
+                                                                          .id ??
+                                                                      '',
+                                                                  3,
+                                                                  jobController
+                                                                      .techManageId
+                                                                      .value,
+                                                                  jobController
+                                                                      .techLevel
+                                                                      .value,
+                                                                  jobController
+                                                                      .handlerIdTech
+                                                                      .value,
+                                                                  '-');
+
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Text('Yes',
+                                                                style:
+                                                                    TextStyleList
+                                                                        .text1),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
                                                 })),
                                         6.wH,
                                         SizedBox(

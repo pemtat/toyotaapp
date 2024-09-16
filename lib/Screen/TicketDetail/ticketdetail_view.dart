@@ -15,7 +15,6 @@ import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/moredetail.widget.dart';
-import 'package:toyotamobile/Widget/noteItem_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
@@ -210,43 +209,43 @@ class TicketDetailView extends StatelessWidget {
                                                   customerInfo.customerName ??
                                                       '',
                                               onTap: () {}),
-                                          if (ticketController
-                                              .notesFiles.isNotEmpty)
-                                            8.kH,
-                                          if (ticketController
-                                              .notesFiles.isNotEmpty)
-                                            BoxContainer(
-                                              children: [
-                                                8.kH,
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const TitleApp(
-                                                        text: 'Notes'),
-                                                    8.kH,
-                                                    ListView.builder(
-                                                      physics:
-                                                          const NeverScrollableScrollPhysics(),
-                                                      shrinkWrap: true,
-                                                      itemCount:
-                                                          ticketController
-                                                              .notesFiles
-                                                              .length,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        final note =
-                                                            ticketController
-                                                                    .notesFiles[
-                                                                index];
-                                                        return NoteItem(
-                                                            note: note);
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                          // if (ticketController
+                                          //     .notesFiles.isNotEmpty)
+                                          //   8.kH,
+                                          // if (ticketController
+                                          //     .notesFiles.isNotEmpty)
+                                          //   BoxContainer(
+                                          //     children: [
+                                          //       8.kH,
+                                          //       Column(
+                                          //         crossAxisAlignment:
+                                          //             CrossAxisAlignment.start,
+                                          //         children: [
+                                          //           const TitleApp(
+                                          //               text: 'Notes'),
+                                          //           8.kH,
+                                          //           ListView.builder(
+                                          //             physics:
+                                          //                 const NeverScrollableScrollPhysics(),
+                                          //             shrinkWrap: true,
+                                          //             itemCount:
+                                          //                 ticketController
+                                          //                     .notesFiles
+                                          //                     .length,
+                                          //             itemBuilder:
+                                          //                 (context, index) {
+                                          //               final note =
+                                          //                   ticketController
+                                          //                           .notesFiles[
+                                          //                       index];
+                                          //               return NoteItem(
+                                          //                   note: note);
+                                          //             },
+                                          //           ),
+                                          //         ],
+                                          //       ),
+                                          //     ],
+                                          //   ),
                                         ],
                                       )
                                     : Container(),

@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:toyotamobile/Models/login_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
@@ -88,6 +91,35 @@ class LoginController extends GetxController {
       // ignore: avoid_print
       print('Error fetching token data: $e');
       Get.snackbar('Error', 'Error fetching token data');
+    }
+  }
+
+  Future<void> getDeviceTypeAndCreateFCMToken() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    String deviceType;
+
+    if (Platform.isAndroid) {
+      deviceType = 'Android';
+    } else if (Platform.isIOS) {
+      deviceType = 'iOS';
+    } else {
+      deviceType = 'Unknown';
+    }
+
+    print('Device Type: $deviceType');
+
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      String? token = await messaging.getToken();
+      print('FCM Token: $token');
+    } else {
+      print('User declined or has not accepted permission');
     }
   }
 }

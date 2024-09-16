@@ -83,30 +83,12 @@ class SignatureWidget extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: () async {
-            var token = await getToken();
-            showDialog(
-                context: context,
-                barrierColor: Color.fromARGB(59, 0, 0, 0),
-                barrierDismissible: false,
-                builder: (BuildContext context) {
-                  return const LoadingDialog();
-                });
-            saveCurrentDateTime(saveCompletedtime);
-            if (ticketId != null) {
-              await updateSignatureJob(
-                  jobId,
-                  ticketId ?? '',
-                  saveCompletedtime.value,
-                  signatureController.value.text,
-                  signaturePad.value);
-              await fetchReportData(jobId, token ?? '',
-                  jobController.reportList, jobController.additionalReportList);
-              // await jobController.fetchData(
-              //     ticketId.toString(), jobId.toString());
-              showSignatureSaveMessage();
-              Navigator.pop(context);
-              Navigator.pop(context);
+            if (signaturePad.value == '') {
+              showMessage('โปรดลงชื่อก่อนบันทึกข้อมูล');
+            } else if (signatureController.value.text == '') {
+              showMessage('โปรดเพิ่มลายเซ็นก่อนบันทึกข้อมูล');
             } else {
+              var token = await getToken();
               showDialog(
                   context: context,
                   barrierColor: Color.fromARGB(59, 0, 0, 0),
@@ -114,32 +96,59 @@ class SignatureWidget extends StatelessWidget {
                   builder: (BuildContext context) {
                     return const LoadingDialog();
                   });
-
-              if (option == 'battery') {
-                await changeIssueSignaturePM(
+              saveCurrentDateTime(saveCompletedtime);
+              if (ticketId != null) {
+                await updateSignatureJob(
                     jobId,
+                    ticketId ?? '',
                     saveCompletedtime.value,
                     signatureController.value.text,
-                    signaturePad.value,
-                    'battery');
-                // await jobControllerPM.fetchData(jobId.toString());
-                await fetchBatteryReportData(
-                    jobId, token ?? '', jobControllerPM.reportList);
+                    signaturePad.value);
+                await fetchReportData(
+                    jobId,
+                    token ?? '',
+                    jobController.reportList,
+                    jobController.additionalReportList);
+                // await jobController.fetchData(
+                //     ticketId.toString(), jobId.toString());
                 showSignatureSaveMessage();
+                Navigator.pop(context);
+                Navigator.pop(context);
               } else {
-                await changeIssueSignaturePM(
-                    jobId,
-                    saveCompletedtime.value,
-                    signatureController.value.text,
-                    signaturePad.value,
-                    'preventive');
-                await fetchPreventiveReportData(
-                    jobId, token ?? '', jobControllerPM.reportPreventiveList);
-                showSignatureSaveMessage();
+                showDialog(
+                    context: context,
+                    barrierColor: Color.fromARGB(59, 0, 0, 0),
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return const LoadingDialog();
+                    });
+
+                if (option == 'battery') {
+                  await changeIssueSignaturePM(
+                      jobId,
+                      saveCompletedtime.value,
+                      signatureController.value.text,
+                      signaturePad.value,
+                      'battery');
+                  // await jobControllerPM.fetchData(jobId.toString());
+                  await fetchBatteryReportData(
+                      jobId, token ?? '', jobControllerPM.reportList);
+                  showSignatureSaveMessage();
+                } else {
+                  await changeIssueSignaturePM(
+                      jobId,
+                      saveCompletedtime.value,
+                      signatureController.value.text,
+                      signaturePad.value,
+                      'preventive');
+                  await fetchPreventiveReportData(
+                      jobId, token ?? '', jobControllerPM.reportPreventiveList);
+                  showSignatureSaveMessage();
+                }
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pop(context);
               }
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
             }
           },
           child: Text(

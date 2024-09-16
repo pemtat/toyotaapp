@@ -98,7 +98,7 @@ class EditSparePartController extends GetxController {
                 onPressed: () async {
                   await updateJobSparePart(
                       jobId.value,
-                      1,
+                      2,
                       jobController.techManageId.value,
                       jobController.techLevel.value,
                       jobController.handlerIdTech.value,

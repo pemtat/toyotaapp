@@ -1206,9 +1206,17 @@ Future<void> updateJobSparePart(String jobId, int status, String techManagerId,
     String? token = await getToken();
     Map<String, dynamic> body = {'tech_manager_status': status};
 
-    if (remark != '-') {
-      body =
-          body = {'tech_manager_status': status, 'tech_manager_remark': remark};
+    if (remark == 'send') {
+      body = {
+        'tech_manager_status': status,
+        'tech_manager_id': 0,
+        'tech_manager_remark': '',
+      };
+    } else if (remark != '-') {
+      body = {
+        'tech_manager_status': status,
+        'tech_manager_remark': remark,
+      };
     }
     final response = await http.put(
       Uri.parse(updateSubJobs(jobId)),
@@ -1220,6 +1228,41 @@ Future<void> updateJobSparePart(String jobId, int status, String techManagerId,
     );
 
     if (response.statusCode == 200) {
+      print('Update status done');
+      if (techLevel == '1') {
+        await jobController.fetchSubJobSparePart(handlerId, 'tech');
+      } else {
+        await jobController.fetchSubJobSparePart(techManagerId, 'techlead');
+      }
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> createSparepartNote(String jobId, String techManagerId,
+    String techLevel, String handlerId, List<String> remarkList) async {
+  try {
+    List<Map<String, dynamic>> noteList =
+        remarkList.map((remark) => {'details': remark}).toList();
+    String? token = await getToken();
+    Map<String, dynamic> body = {
+      'job_issue_id': jobId,
+      'note': noteList,
+    };
+
+    final response = await http.post(
+      Uri.parse(createSparepartNotes()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 201) {
       print('Update status done');
       if (techLevel == '1') {
         await jobController.fetchSubJobSparePart(handlerId, 'tech');

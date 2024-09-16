@@ -8,7 +8,6 @@ import 'package:toyotamobile/Screen/PendingTask/peddingtask_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
-import 'package:toyotamobile/Widget/addnote_widget.dart';
 import 'package:toyotamobile/Widget/customerinfo_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
@@ -152,17 +151,17 @@ class PendingTaskView extends StatelessWidget {
                                 companyName: customerInfo.customerName ?? '',
                                 onTap: () {}),
                             8.kH,
-                            AddNote(
-                              notePic: penddingTaskController.notePic,
-                              notesFiles: penddingTaskController.notesFiles,
-                              notes: penddingTaskController.notes,
-                              addAttatchments:
-                                  penddingTaskController.addAttatchments,
-                              isPicking: penddingTaskController.isPicking,
-                              addNote: penddingTaskController.addNote,
-                              showOnly: showOnly,
-                            ),
-                            8.kH,
+                            // AddNote(
+                            //   notePic: penddingTaskController.notePic,
+                            //   notesFiles: penddingTaskController.notesFiles,
+                            //   notes: penddingTaskController.notes,
+                            //   addAttatchments:
+                            //       penddingTaskController.addAttatchments,
+                            //   isPicking: penddingTaskController.isPicking,
+                            //   addNote: penddingTaskController.addNote,
+                            //   showOnly: showOnly,
+                            // ),
+                            // 8.kH,
                             BoxContainer(
                               children: [
                                 JobInfo(

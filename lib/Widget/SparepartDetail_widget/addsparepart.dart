@@ -78,7 +78,12 @@ class AddSparePartDetail extends StatelessWidget {
                     products.clear();
                   }
                 },
-                decoration: InputDecoration2(labelText: 'Enter Part Number')),
+                decoration: InputDecoration2(
+                    labelText: 'Enter Part Number',
+                    function: () {
+                      fetchProducts(
+                          searchPartNumber.value.text, isLoading, products);
+                    })),
             Obx(() {
               if (isLoading.value) {
                 return const Padding(
