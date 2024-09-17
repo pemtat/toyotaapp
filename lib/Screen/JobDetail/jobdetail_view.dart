@@ -457,12 +457,9 @@ class JobDetailView extends StatelessWidget {
                                         Obx(() => jobController
                                                     .reportList.isNotEmpty &&
                                                 (subJob != null &&
-                                                    subJob.techManagerStatus !=
-                                                        '1' &&
-                                                    subJob.techManagerStatus !=
-                                                        '2' &&
-                                                    subJob
-                                                            .techManagerStatus !=
+                                                        subJob.estimateStatus ==
+                                                            '0' ||
+                                                    subJob!.estimateStatus ==
                                                         '3')
                                             ? EditButton(
                                                 onTap: () {
@@ -474,11 +471,9 @@ class JobDetailView extends StatelessWidget {
                                                 },
                                               )
                                             : subJob != null &&
-                                                    (subJob.techManagerStatus !=
-                                                            '1' &&
-                                                        subJob.techManagerStatus !=
-                                                            '2' &&
-                                                        subJob.techManagerStatus !=
+                                                    (subJob.estimateStatus ==
+                                                            '0' ||
+                                                        subJob.estimateStatus ==
                                                             '3')
                                                 ? AddButton(
                                                     onTap: () {
