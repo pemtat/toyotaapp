@@ -119,7 +119,7 @@ class JobDetailViewPM extends StatelessWidget {
                                         !jobController.moreTicketDetail.value;
                                   },
                                   child: Obx(() => jobController
-                                          .userData.isNotEmpty
+                                          .issueData.isNotEmpty
                                       ? BoxContainer(
                                           children: [
                                             PMJobInfo(
@@ -127,8 +127,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                 dateTime: issue.dueDate ??
                                                     getFormattedDate(
                                                         DateTime.now()),
-                                                reporter:
-                                                    issue.reporter.realName,
+                                                reporter: '',
                                                 summary:
                                                     '${issue.getCustomFieldValue("Customer Name")}',
                                                 description:
@@ -149,7 +148,7 @@ class JobDetailViewPM extends StatelessWidget {
                                       : Container()),
                                 ),
                                 8.kH,
-                                Obx(() => jobController.userData.isNotEmpty
+                                Obx(() => jobController.issueData.isNotEmpty
                                     ? Intruction(
                                         context: context,
                                         phoneNumber: jobController

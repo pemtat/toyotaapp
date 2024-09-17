@@ -279,11 +279,13 @@ Future<void> fetchReadAttachment(
     if (getAttachments != null) {
       var attachments = getAttachments as List<dynamic>;
       for (var attachment in attachments) {
-        Map<String, dynamic> attachmentMap = {
-          'id': attachment.id,
-          'filename': attachment.filename,
-        };
-        attachmentsData.add(attachmentMap);
+        if (!attachment.filename.toLowerCase().endsWith('.pdf')) {
+          Map<String, dynamic> attachmentMap = {
+            'id': attachment.id,
+            'filename': attachment.filename,
+          };
+          attachmentsData.add(attachmentMap);
+        }
       }
 
       for (var attachment in attachmentsData) {

@@ -122,7 +122,8 @@ class TicketPmDetailController extends GetxController {
       }).toList();
       issueData.value = issuesList;
     } else {}
-    await fetchUserById(issueData.first.reporter.id.toString(), userData);
+    // await fetchUserById(
+    //     issueData.first.history.first.user.id.toString(), userData);
   }
 
   void completeJob() async {

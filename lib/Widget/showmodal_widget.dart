@@ -36,6 +36,7 @@ class ShowModalWidget extends StatelessWidget {
       isScrollControlled: true,
       context: context,
       builder: (context) => this,
+      enableDrag: false,
     );
   }
 }
@@ -107,6 +108,7 @@ class ShowModalWidget2 extends StatelessWidget {
   void showModal(BuildContext context) {
     showModalBottomSheet(
       useSafeArea: true,
+      enableDrag: false,
       isScrollControlled: true,
       context: context,
       builder: (context) => this,

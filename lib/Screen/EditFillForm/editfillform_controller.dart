@@ -64,7 +64,7 @@ class EditFillformController extends GetxController {
     'Inspection',
     'Repairing',
     'Re-repairing',
-    'Comission',
+    'Commissioning',
     'Other',
   ];
   final TextEditingController signatureController = TextEditingController();

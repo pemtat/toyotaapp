@@ -11,6 +11,7 @@ class AdditSparepartList extends GetxController {
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
+      enableDrag: false,
       builder: (BuildContext context) {
         return AddSparePartDetail(
           title: 'Additional spare part list',
@@ -39,6 +40,7 @@ class AdditSparepartList extends GetxController {
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
+      enableDrag: false,
       builder: (BuildContext context) {
         return EditSparePartDetail(
           title: 'Additional spare part list',

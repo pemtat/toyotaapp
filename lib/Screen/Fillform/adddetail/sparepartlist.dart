@@ -10,6 +10,7 @@ class SparepartList extends GetxController {
     showModalBottomSheet(
       useSafeArea: true,
       isScrollControlled: true,
+      enableDrag: false,
       context: context,
       builder: (BuildContext context) {
         return AddSparePartDetail(
@@ -39,6 +40,7 @@ class SparepartList extends GetxController {
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
+      enableDrag: false,
       builder: (BuildContext context) {
         return EditSparePartDetail(
           title: 'Spare Part List',

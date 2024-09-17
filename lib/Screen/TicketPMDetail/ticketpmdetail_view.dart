@@ -91,7 +91,7 @@ class TicketPMDetailView extends StatelessWidget {
                                       !jobController.moreTicketDetail.value;
                                 },
                                 child:
-                                    Obx(() => jobController.userData.isNotEmpty
+                                    Obx(() => jobController.issueData.isNotEmpty
                                         ? BoxContainer(
                                             children: [
                                               PMJobInfo(
@@ -99,8 +99,7 @@ class TicketPMDetailView extends StatelessWidget {
                                                   dateTime: issue.dueDate ??
                                                       getFormattedDate(
                                                           DateTime.now()),
-                                                  reporter:
-                                                      issue.reporter.realName,
+                                                  reporter: '',
                                                   summary:
                                                       '${issue.getCustomFieldValue("Customer Name")}',
                                                   description:

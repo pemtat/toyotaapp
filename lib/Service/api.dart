@@ -1,4 +1,4 @@
-const String url = 'https://tsadmin.tmh-wst.com';
+const String url = 'http://localhost:5000';
 const String urlFSM = 'http://tscapi.tmh-wst.com';
 const String issue = '$url/api/rest/issues';
 const String user = '$url/api/rest/users';
@@ -42,6 +42,10 @@ String getPdfEstimateReportById(String issueId) {
 
 String getUserByZone(String zone) {
   return '$url/api/rest/jobs/user_by_zone?zone=$zone';
+}
+
+String getAllSales() {
+  return '$url/api/rest/jobs/user_all_sales';
 }
 
 String getTrickdetailById(String id) {

@@ -58,7 +58,7 @@ class FillformController extends GetxController {
     'Inspection',
     'Repairing',
     'Re-repairing',
-    'Comission',
+    'Commissioning',
     'Other',
   ];
   var fieldServiceReport = <String>[].obs;

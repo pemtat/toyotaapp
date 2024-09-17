@@ -5,6 +5,7 @@ import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_view.dart';
 import 'package:toyotamobile/Screen/Allticket/PMAssignedJobs/pmAssignedjobs_view.dart';
+import 'package:toyotamobile/Screen/Overdue/overduejob_view.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
 import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
@@ -216,7 +217,9 @@ class HomeView extends StatelessWidget {
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Get.to(() => OverduejobView());
+                              },
                               child: Container(
                                 child: _buildInfoCard(
                                   icon: Icons.warning,
@@ -242,80 +245,6 @@ class HomeView extends StatelessWidget {
                             ),
                           ]),
                     ),
-                    // 10.kH,
-                    // Container(
-                    //   padding:
-                    //       const EdgeInsets.symmetric(horizontal: paddingApp),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       JobStatusItem(
-                    //         onTap: () {
-                    //           Get.to(() => AssignedjobsNew());
-                    //         },
-                    //         count: jobController.subjobList,
-                    //         title: 'Incoming New Jobs',
-                    //         countColor: const Color(0xffEB0A1E),
-                    //         titleColor: const Color(0xff434343),
-                    //         containerColor:
-                    //             const Color.fromARGB(255, 242, 194, 198),
-                    //         imagePath: 'assets/propjob.png',
-                    //         flexValue: 6,
-                    //         center: false,
-                    //       ),
-                    //       10.wH,
-                    //       JobStatusItem(
-                    //         onTap: () {
-                    //           Get.to(() => CompleteJobsView());
-                    //         },
-                    //         count: jobController.subjobListPending,
-                    //         title: 'On Process Jobs',
-                    //         countColor: const Color(0xff323232),
-                    //         titleColor: const Color(0xff434343),
-                    //         containerColor: const Color(0xffEAEAEA),
-                    //         flexValue: 4,
-                    //         center: true,
-                    //       ),
-                    //       5.wH,
-                    //     ],
-                    //   ),
-                    // ),
-                    // Container(
-                    //   padding: const EdgeInsets.all(paddingApp),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       JobStatusItem(
-                    //         onTap: () {
-                    //           Get.to(() => PmAssignedJobsView());
-                    //         },
-                    //         count: jobController.pmjobList,
-                    //         title: 'PM\nIncoming Jobs',
-                    //         countColor: const Color(0xffEB0A1E),
-                    //         titleColor: const Color(0xff434343),
-                    //         containerColor:
-                    //             const Color.fromARGB(255, 242, 194, 198),
-                    //         imagePath: 'assets/propjob.png',
-                    //         flexValue: 6,
-                    //         center: false,
-                    //       ),
-                    //       10.wH,
-                    //       JobStatusItem(
-                    //         onTap: () {
-                    //           Get.to(() => PmCompleteJobsView());
-                    //         },
-                    //         count: jobController.pmjobListConfirmed,
-                    //         title: 'PM\nOn Process Jobs',
-                    //         countColor: const Color(0xff323232),
-                    //         titleColor: const Color(0xff434343),
-                    //         containerColor: const Color(0xffEAEAEA),
-                    //         flexValue: 4,
-                    //         center: true,
-                    //       ),
-                    //       5.wH,
-                    //     ],
-                    //   ),
-                    // ),
                     const AppDivider(),
                     10.kH,
                     const JobTitle(

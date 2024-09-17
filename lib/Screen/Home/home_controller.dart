@@ -234,21 +234,21 @@ class HomeController extends GetxController {
             switch (status) {
               case 'pending':
                 pendingPmItems.add(pm);
+                if (DateTime.parse(pm.dueDate ?? '').isBefore(DateTime.now())) {
+                  closedPmItemsOver.add(pm);
+                }
                 break;
               case 'confirmed':
                 confirmPmItems.add(pm);
+                if (DateTime.parse(pm.dueDate ?? '').isBefore(DateTime.now())) {
+                  closedPmItemsOver.add(pm);
+                }
                 break;
               case 'completed':
                 closedPmItems.add(pm);
                 break;
               case 'closed':
                 closedPmItems.add(pm);
-                break;
-
-              default:
-                if (DateTime.parse(pm.dueDate ?? '').isBefore(DateTime.now())) {
-                  closedPmItemsOver.add(pm);
-                }
                 break;
             }
           }
@@ -383,16 +383,20 @@ class HomeController extends GetxController {
             switch (subJob.status) {
               case '101':
                 newSubJobs.add(subJob);
-                break;
-              case '102':
-                pendingSubJobs.add(subJob);
-                break;
-              case '103':
-                completedSubJobs.add(subJob);
                 if (DateTime.parse(subJob.dueDate ?? '')
                     .isBefore(DateTime.now())) {
                   closedSubJobsOver.add(subJob);
                 }
+                break;
+              case '102':
+                pendingSubJobs.add(subJob);
+                if (DateTime.parse(subJob.dueDate ?? '')
+                    .isBefore(DateTime.now())) {
+                  closedSubJobsOver.add(subJob);
+                }
+                break;
+              case '103':
+                completedSubJobs.add(subJob);
                 break;
             }
           }
