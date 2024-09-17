@@ -1,4 +1,4 @@
-const String url = 'http://localhost:5000';
+const String url = 'https://tsadmin.tmh-wst.com';
 const String urlFSM = 'http://tscapi.tmh-wst.com';
 const String issue = '$url/api/rest/issues';
 const String user = '$url/api/rest/users';
