@@ -455,12 +455,7 @@ class JobDetailView extends StatelessWidget {
                                         const TitleApp(
                                             text: 'Field Service Report*'),
                                         Obx(() => jobController
-                                                    .reportList.isNotEmpty &&
-                                                (subJob != null &&
-                                                        subJob.estimateStatus ==
-                                                            '0' ||
-                                                    subJob!.estimateStatus ==
-                                                        '3')
+                                                .reportList.isNotEmpty
                                             ? EditButton(
                                                 onTap: () {
                                                   Get.to(() => EditFillFormView(
@@ -470,20 +465,14 @@ class JobDetailView extends StatelessWidget {
                                                       ));
                                                 },
                                               )
-                                            : subJob != null &&
-                                                    (subJob.estimateStatus ==
-                                                            '0' ||
-                                                        subJob.estimateStatus ==
-                                                            '3')
-                                                ? AddButton(
-                                                    onTap: () {
-                                                      Get.to(() => FillFormView(
-                                                            ticketId: ticketId,
-                                                            jobId: jobId ?? '',
-                                                          ));
-                                                    },
-                                                  )
-                                                : Container()),
+                                            : AddButton(
+                                                onTap: () {
+                                                  Get.to(() => FillFormView(
+                                                        ticketId: ticketId,
+                                                        jobId: jobId ?? '',
+                                                      ));
+                                                },
+                                              ))
                                       ],
                                     ),
                                     Text(
