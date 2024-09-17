@@ -14,6 +14,7 @@ class SparePartDetail extends StatelessWidget {
   final String jobId;
   final String techLevel;
   final String techManagerStatus;
+  final String estimateStatus;
   final List<Sparepart> sparepart;
   final List<Sparepart> additionalSparepart;
   const SparePartDetail(
@@ -22,7 +23,8 @@ class SparePartDetail extends StatelessWidget {
       required this.sparepart,
       required this.jobId,
       required this.techLevel,
-      required this.techManagerStatus});
+      required this.techManagerStatus,
+      required this.estimateStatus});
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +43,7 @@ class SparePartDetail extends StatelessWidget {
             width: double.infinity,
             child: Column(
               children: [
-                if (techLevel == '1' &&
-                    (techManagerStatus == '0' || techManagerStatus == '4'))
+                if (techLevel == '1' && estimateStatus == '0')
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -55,7 +56,9 @@ class SparePartDetail extends StatelessWidget {
                       6.kH,
                     ],
                   ),
-                if (techLevel == '2' && techManagerStatus == '2')
+                if (techLevel == '2' &&
+                    techManagerStatus == '0' &&
+                    estimateStatus == '1')
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

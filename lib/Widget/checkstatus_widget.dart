@@ -51,15 +51,9 @@ class StatusButton2 extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (status) {
       case '1':
-        return const StatusWaitForConfirm();
-      case '2':
-        return const StatusWaitForApprove();
-      case '3':
-        return const StatusApproved();
-      case '4':
-        return const StatusReject();
-      case '5':
         return const StatusConfirmed();
+      case '2':
+        return const StatusReject();
       default:
         return const StatusWaitForPending();
     }

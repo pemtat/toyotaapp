@@ -9,6 +9,8 @@ class SubJobSparePart {
   String? dateSubmitted;
   String? bugId;
   String? status;
+  String? estimateStatus;
+  String? quotation;
   String? techStatus;
   String? techRemark;
   String? salesStatus;
@@ -42,6 +44,8 @@ class SubJobSparePart {
       this.dateSubmitted,
       this.bugId,
       this.status,
+      this.estimateStatus,
+      this.quotation,
       this.techStatus,
       this.techRemark,
       this.salesStatus,
@@ -76,6 +80,8 @@ class SubJobSparePart {
     dateSubmitted = json['date_submitted'];
     bugId = json['bug_id'];
     status = json['status'];
+    estimateStatus = json['estimate_status'];
+    quotation = json['quotation'];
     techStatus = json['tech_status'];
     techRemark = json['tech_remark'];
     salesStatus = json['sales_status'];
@@ -122,6 +128,8 @@ class SubJobSparePart {
     data['date_submitted'] = dateSubmitted;
     data['bug_id'] = bugId;
     data['status'] = status;
+    data['estimate_status'] = estimateStatus;
+    data['quotation'] = quotation;
     data['tech_status'] = techStatus;
     data['tech_remark'] = techRemark;
     data['sales_status'] = salesStatus;

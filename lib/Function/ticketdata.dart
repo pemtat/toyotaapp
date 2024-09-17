@@ -15,6 +15,7 @@ import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
+import 'package:toyotamobile/Models/userallsales_model.dart';
 import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantybyid_model.dart';
@@ -85,6 +86,34 @@ Future<void> fetchUserByZone(
   } catch (e) {
     print('Error: $e');
     userByZone.clear();
+  }
+}
+
+Future<void> fetchAllSales(RxList<UsersSales> userAllSales) async {
+  String? token = await getToken();
+  try {
+    final response = await http.get(
+      Uri.parse(getAllSales()),
+      headers: {
+        'Authorization': token ?? '',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+
+      UserAllSales userData = UserAllSales.fromJson(data);
+
+      if (userData.users != null) {
+        userAllSales.assignAll(userData.users!);
+      } else {}
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+      userAllSales.clear();
+    }
+  } catch (e) {
+    print('Error: $e');
+    userAllSales.clear();
   }
 }
 
@@ -1200,21 +1229,47 @@ void updateTechSubjob(
   }
 }
 
-Future<void> updateJobSparePart(String jobId, int status, String techManagerId,
-    String techLevel, String handlerId, String remark) async {
+Future<void> updateJobSparePart(String jobId, String techManagerId,
+    String techLevel, String handlerId, String remark, String option) async {
   try {
     String? token = await getToken();
-    Map<String, dynamic> body = {'tech_manager_status': status};
+    Map<String, dynamic> body = {};
 
-    if (remark == 'send') {
+    if (option == 'send') {
       body = {
-        'tech_manager_status': status,
+        'estimate_status': 1,
         'tech_manager_id': 0,
+        'tech_manager_status': 0,
         'tech_manager_remark': '',
+        'admin_status': 0,
+        'sales_id': 0,
+        'sales_status': 0,
+        'sales_manager_id': 0,
+        'sales_manager_status': 0,
+        'sales_director_id': 0,
+        'sales_director_status': 0,
+        'quotation': 0
       };
-    } else if (remark != '-') {
+    } else if (option == 'approve') {
       body = {
-        'tech_manager_status': status,
+        'tech_manager_status': 1,
+        'estimate_status': 2,
+      };
+    } else if (option.contains('approve_add_sales')) {
+      var parts = option.split(':');
+      var salesId = parts[1].trim();
+      body = {
+        'tech_manager_status': 1,
+        'sales_id': salesId,
+      };
+    } else if (option == 'reject') {
+      body = {
+        'tech_manager_status': 2,
+        'tech_manager_remark': remark,
+        'estimate_status': 3,
+      };
+    } else if (option == 'update_sparepart') {
+      body = {
         'tech_manager_remark': remark,
       };
     }

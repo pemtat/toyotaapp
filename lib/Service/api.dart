@@ -44,6 +44,10 @@ String getUserByZone(String zone) {
   return '$url/api/rest/jobs/user_by_zone?zone=$zone';
 }
 
+String getAllSales() {
+  return '$url/api/rest/jobs/user_all_sales';
+}
+
 String getTrickdetailById(String id) {
   return '$urlFSM/api/serial/search/$id';
 }

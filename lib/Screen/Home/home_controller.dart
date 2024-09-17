@@ -438,15 +438,9 @@ class HomeController extends GetxController {
               pendingSparePart.add(sparePart);
               break;
             case '1':
-              pendingSparePart.add(sparePart);
-              break;
-            case '2':
-              pendingSparePart.add(sparePart);
-              break;
-            case '3':
               completedSparePart.add(sparePart);
               break;
-            case '4':
+            case '2':
               rejectedSparePart.add(sparePart);
               break;
           }

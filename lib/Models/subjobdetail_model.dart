@@ -29,6 +29,7 @@ class SubJobDetail {
   String? salesStatus;
   String? techManagerStatus;
   String? techManagerRemark;
+  String? estimateStatus;
   String? comment;
   String? referenceCode;
 
@@ -63,6 +64,7 @@ class SubJobDetail {
       this.imageUrlBefore,
       this.techManagerRemark,
       this.techManagerStatus,
+      this.estimateStatus,
       this.referenceCode,
       this.salesStatus});
 
@@ -99,6 +101,7 @@ class SubJobDetail {
     techManagerStatus = json['tech_manager_status'];
     techManagerRemark = json['tech_manager_remark'];
     referenceCode = json['reference_code'];
+    estimateStatus = json['estimate_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -135,6 +138,7 @@ class SubJobDetail {
     data['tech_manager_status'] = techManagerStatus;
     data['tech_manager_remark'] = techManagerRemark;
     data['reference_code'] = referenceCode;
+    data['estimate_status'] = estimateStatus;
     return data;
   }
 }

@@ -4,6 +4,7 @@ import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/showdialogsave.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
+import 'package:toyotamobile/Models/userallsales_model.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -13,6 +14,7 @@ import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 
 import 'package:toyotamobile/Widget/pdfviewer_widget.dart';
@@ -52,6 +54,7 @@ class SubJobSparePartWidget extends StatelessWidget {
       return remarkControllers.map((controller) => controller.text).toList();
     }
 
+    var usersList = <UsersSales>[].obs;
     final rejectNote = TextEditingController().obs;
     return Column(
       children: [
@@ -112,22 +115,22 @@ class SubJobSparePartWidget extends StatelessWidget {
                       'BB no. : ${subJobSparePart.referenceCode ?? ''}',
                       style: TextStyleList.title1,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          'Sales',
-                          style: TextStyleList.subtitle1,
-                        ),
-                        Text(
-                          ' :',
-                          style: TextStyleList.title1,
-                        ),
-                        4.wH,
-                        subJobSparePart.salesStatus.toString() == '1'
-                            ? const StatusButton2(status: '5')
-                            : const StatusButton2(status: '1'),
-                      ],
-                    )
+                    if (subJobSparePart.quotation != '1')
+                      Row(
+                        children: [
+                          Text(
+                            'Sales',
+                            style: TextStyleList.subtitle1,
+                          ),
+                          Text(
+                            ' :',
+                            style: TextStyleList.title1,
+                          ),
+                          4.wH,
+                          StatusButton2(
+                              status: subJobSparePart.salesStatus.toString())
+                        ],
+                      )
                   ],
                 ),
                 6.kH,
@@ -230,6 +233,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                             techLevel: jobController.techLevel.value,
                             techManagerStatus:
                                 subJobSparePart.techManagerStatus ?? '',
+                            estimateStatus:
+                                subJobSparePart.estimateStatus ?? '',
                           )
                         : Container())
                     : SparePartDetail(
@@ -240,6 +245,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                         techLevel: jobController.techLevel.value,
                         techManagerStatus:
                             subJobSparePart.techManagerStatus ?? '',
+                        estimateStatus: subJobSparePart.estimateStatus ?? '',
                       ),
                 6.kH,
                 jobController.techLevel.value == '1'
@@ -256,8 +262,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                                     })),
                           6.wH,
                           subJobSparePart.bugStatus != '90' &&
-                                  (subJobSparePart.techManagerStatus == '0' ||
-                                      subJobSparePart.techManagerStatus == '4')
+                                  (subJobSparePart.estimateStatus == '0' ||
+                                      subJobSparePart.estimateStatus == '3')
                               ? SizedBox(
                                   width: 120,
                                   child: ButtonRed(
@@ -270,10 +276,10 @@ class SubJobSparePartWidget extends StatelessWidget {
                                             'Yes', () async {
                                           await updateJobSparePart(
                                               subJobSparePart.id ?? '',
-                                              1,
                                               jobController.techManageId.value,
                                               jobController.techLevel.value,
                                               jobController.handlerIdTech.value,
+                                              '',
                                               'send');
                                           await jobDetailController
                                               .fetchSubJobSparePartId();
@@ -285,11 +291,11 @@ class SubJobSparePartWidget extends StatelessWidget {
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          subJobSparePart.techManagerStatus == '0' ||
-                                  subJobSparePart.techManagerStatus == '1' ||
-                                  subJobSparePart.techManagerStatus == '3'
+                          subJobSparePart.techManagerStatus == '1' ||
+                                  subJobSparePart.techManagerStatus == '2'
                               ? Container()
-                              : subJobSparePart.techManagerStatus == '2'
+                              : subJobSparePart.techManagerStatus == '0' &&
+                                      subJobSparePart.estimateStatus == '1'
                                   ? Row(
                                       children: [
                                         SizedBox(
@@ -297,7 +303,11 @@ class SubJobSparePartWidget extends StatelessWidget {
                                             child: ButtonRed(
                                                 color: blue1,
                                                 title: 'Approve',
-                                                onTap: () {
+                                                onTap: () async {
+                                                  var selectedUser = ''.obs;
+                                                  var selectedUserId = ''.obs;
+                                                  await fetchAllSales(
+                                                      usersList);
                                                   addRemark();
                                                   showDialog(
                                                     context: context,
@@ -309,6 +319,80 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                           mainAxisSize:
                                                               MainAxisSize.min,
                                                           children: [
+                                                            if (subJobSparePart
+                                                                    .quotation ==
+                                                                '2')
+                                                              Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    child:
+                                                                        Obx(() {
+                                                                      return GestureDetector(
+                                                                        onTap:
+                                                                            () {
+                                                                          showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (BuildContext context) {
+                                                                              return AlertDialog(
+                                                                                backgroundColor: white3,
+                                                                                title: Center(child: Text('เลือก Sales')),
+                                                                                titleTextStyle: TextStyleList.text1,
+                                                                                content: SingleChildScrollView(
+                                                                                  child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    children: usersList.map<Widget>((UsersSales user) {
+                                                                                      return ListTile(
+                                                                                        title: Text(user.realname ?? 'No data'),
+                                                                                        onTap: () {
+                                                                                          selectedUser.value = user.realname ?? '';
+                                                                                          selectedUserId.value = user.id ?? '';
+                                                                                          Navigator.of(context).pop();
+                                                                                        },
+                                                                                      );
+                                                                                    }).toList(),
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          );
+                                                                        },
+                                                                        child:
+                                                                            AbsorbPointer(
+                                                                          child:
+                                                                              TextField(
+                                                                            controller:
+                                                                                TextEditingController(text: selectedUser.value),
+                                                                            decoration:
+                                                                                InputDecoration(labelText: 'Sales', labelStyle: TextStyleList.text9),
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    }),
+                                                                  ),
+                                                                  Obx(() {
+                                                                    if (selectedUser
+                                                                            .value !=
+                                                                        '') {
+                                                                      return InkWell(
+                                                                        onTap:
+                                                                            () {
+                                                                          selectedUser.value =
+                                                                              '';
+                                                                          selectedUserId.value =
+                                                                              '';
+                                                                        },
+                                                                        child: const Icon(
+                                                                            Icons.close),
+                                                                      );
+                                                                    } else {
+                                                                      return Container();
+                                                                    }
+                                                                  })
+                                                                ],
+                                                              ),
+                                                            10.kH,
                                                             Obx(() => Column(
                                                                   children: [
                                                                     ...List.generate(
@@ -344,7 +428,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                           MainAxisAlignment
                                                                               .start,
                                                                       children: [
-                                                                        Icon(
+                                                                        const Icon(
                                                                           size:
                                                                               20,
                                                                           Icons
@@ -386,39 +470,68 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                               List<String>
                                                                   remarks =
                                                                   getAllRemarks();
-
-                                                              await createSparepartNote(
-                                                                  subJobSparePart
-                                                                          .id ??
+                                                              if (subJobSparePart
+                                                                          .quotation ==
+                                                                      '2' &&
+                                                                  selectedUserId
+                                                                          .value ==
+                                                                      '') {
+                                                                showMessage(
+                                                                    'โปรดเลือก Sales');
+                                                              } else {
+                                                                await createSparepartNote(
+                                                                    subJobSparePart
+                                                                            .id ??
+                                                                        '',
+                                                                    jobController
+                                                                        .techManageId
+                                                                        .value,
+                                                                    jobController
+                                                                        .techLevel
+                                                                        .value,
+                                                                    jobController
+                                                                        .handlerIdTech
+                                                                        .value,
+                                                                    remarks);
+                                                                if (subJobSparePart
+                                                                        .quotation ==
+                                                                    '1') {
+                                                                  await updateJobSparePart(
+                                                                      subJobSparePart
+                                                                              .id ??
+                                                                          '',
+                                                                      jobController
+                                                                          .techManageId
+                                                                          .value,
+                                                                      jobController
+                                                                          .techLevel
+                                                                          .value,
+                                                                      jobController
+                                                                          .handlerIdTech
+                                                                          .value,
                                                                       '',
-                                                                  jobController
-                                                                      .techManageId
-                                                                      .value,
-                                                                  jobController
-                                                                      .techLevel
-                                                                      .value,
-                                                                  jobController
-                                                                      .handlerIdTech
-                                                                      .value,
-                                                                  remarks);
-                                                              await updateJobSparePart(
-                                                                  subJobSparePart
-                                                                          .id ??
+                                                                      'approve');
+                                                                } else {
+                                                                  await updateJobSparePart(
+                                                                      subJobSparePart
+                                                                              .id ??
+                                                                          '',
+                                                                      jobController
+                                                                          .techManageId
+                                                                          .value,
+                                                                      jobController
+                                                                          .techLevel
+                                                                          .value,
+                                                                      jobController
+                                                                          .handlerIdTech
+                                                                          .value,
                                                                       '',
-                                                                  3,
-                                                                  jobController
-                                                                      .techManageId
-                                                                      .value,
-                                                                  jobController
-                                                                      .techLevel
-                                                                      .value,
-                                                                  jobController
-                                                                      .handlerIdTech
-                                                                      .value,
-                                                                  '-');
+                                                                      'approve_add_sales:${selectedUserId.value}');
+                                                                }
 
-                                                              Navigator.pop(
-                                                                  context);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              }
                                                             },
                                                             child: Text('Yes',
                                                                 style:
@@ -472,7 +585,6 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                           await updateJobSparePart(
                                                               subJobSparePart.id ??
                                                                   '',
-                                                              4,
                                                               jobController
                                                                   .techManageId
                                                                   .value,
@@ -483,7 +595,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                   .handlerIdTech
                                                                   .value,
                                                               rejectNote
-                                                                  .value.text);
+                                                                  .value.text,
+                                                              'reject');
 
                                                           Navigator.pop(
                                                               context);

@@ -172,13 +172,13 @@ class SparePartView extends StatelessWidget {
               ),
               Obx(() {
                 if (sparePartController.isSelected.value == 1) {
-                  return buildJobList(context, '012');
+                  return buildJobList(context, '0');
                 }
                 if (sparePartController.isSelected.value == 2) {
-                  return buildJobList(context, '3');
+                  return buildJobList(context, '1');
                 }
                 if (sparePartController.isSelected.value == 3) {
-                  return buildJobList(context, '4');
+                  return buildJobList(context, '2');
                 } else {
                   return const SizedBox();
                 }

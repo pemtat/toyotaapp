@@ -98,11 +98,11 @@ class EditSparePartController extends GetxController {
                 onPressed: () async {
                   await updateJobSparePart(
                       jobId.value,
-                      2,
                       jobController.techManageId.value,
                       jobController.techLevel.value,
                       jobController.handlerIdTech.value,
-                      rejectNote.value.text);
+                      rejectNote.value.text,
+                      'update_sparepart');
                   saveReport(context);
                   Navigator.pop(context);
                   Navigator.pop(context);
