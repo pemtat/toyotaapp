@@ -31,11 +31,12 @@ class SparepartList extends GetxController {
         ),
         space.kH,
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
                 controller: searchPartNumber.value,
                 onSubmitted: (String value) {
-                  if (value.length >= 5) {
+                  if (value.length >= 4) {
                     fetchProducts(
                         searchPartNumber.value.text, isLoading, products);
                   } else {
@@ -48,6 +49,11 @@ class SparepartList extends GetxController {
                       fetchProducts(
                           searchPartNumber.value.text, isLoading, products);
                     })),
+            4.kH,
+            Text(
+              '(โปรดกรอก 4 ตัวอักษรขึ้นไปเพื่อค้นหา)',
+              style: TextStyleList.text1,
+            ),
             Obx(() {
               if (isLoading.value) {
                 return const Padding(
@@ -203,11 +209,12 @@ class SparepartList extends GetxController {
         ),
         space.kH,
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
                 controller: searchPartNumber.value,
                 onSubmitted: (String value) {
-                  if (value.length >= 5) {
+                  if (value.length >= 4) {
                     fetchProducts(
                         searchPartNumber.value.text, isLoading, products);
                   } else {
@@ -220,6 +227,11 @@ class SparepartList extends GetxController {
                       fetchProducts(
                           searchPartNumber.value.text, isLoading, products);
                     })),
+            4.kH,
+            Text(
+              '(โปรดกรอก 4 ตัวอักษรขึ้นไปเพื่อค้นหา)',
+              style: TextStyleList.text1,
+            ),
             Obx(() {
               if (isLoading.value) {
                 return const Padding(

@@ -15,7 +15,7 @@ class BottomBarView extends StatelessWidget {
   final List<Widget> _pages = [
     HomeView(),
     TicketView(),
-    SparePartView(),
+    // SparePartView(),
     CalendarView(),
     NotificationView(),
     const AccountView()
@@ -85,12 +85,12 @@ class BottomBarView extends StatelessWidget {
                   ),
                   label: 'Ticket',
                 ),
-                const BottomNavigationBarItem(
-                  icon: ImageIcon(
-                    AssetImage('assets/sparepart.png'),
-                  ),
-                  label: 'Spare Part',
-                ),
+                // const BottomNavigationBarItem(
+                //   icon: ImageIcon(
+                //     AssetImage('assets/sparepart.png'),
+                //   ),
+                //   label: 'Spare Part',
+                // ),
                 const BottomNavigationBarItem(
                   icon: ImageIcon(
                     AssetImage('assets/calendar.png'),

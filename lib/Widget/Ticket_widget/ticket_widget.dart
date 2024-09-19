@@ -50,7 +50,7 @@ class PmItemWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                'PM ID : ${job.id.toString().padLeft(4, '0')}',
+                'PM ID : ${job.id.toString().padLeft(7, '0')}',
                 style: TextStyleList.text16,
               ),
               const SizedBox(width: 10),

@@ -536,51 +536,51 @@ class JobDetailView extends StatelessWidget {
                                                       .shrink();
                                                 }
                                               }),
-                                              Obx(() => (jobController
-                                                          .subJobSparePart
-                                                          .isNotEmpty &&
-                                                      subJob != null &&
-                                                      jobController.reportList
-                                                          .isNotEmpty &&
-                                                      jobController
-                                                              .reportList
-                                                              .first
-                                                              .signature !=
-                                                          '' &&
-                                                      jobController
-                                                              .reportList
-                                                              .first
-                                                              .signaturePad !=
-                                                          '')
-                                                  ? Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        ButtonColor(
-                                                          backgroundColor: red4,
-                                                          title:
-                                                              'View Part Detail',
-                                                          onTap: () {
-                                                            showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    Obx(() =>
-                                                                        Material(
-                                                                          color:
-                                                                              Colors.transparent,
-                                                                          child:
-                                                                              SubJobSparePartWidget(
-                                                                            subJobSparePart:
-                                                                                jobController.subJobSparePart.first,
-                                                                          ),
-                                                                        )));
-                                                          },
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : Container()),
+                                              // Obx(() => (jobController
+                                              //             .subJobSparePart
+                                              //             .isNotEmpty &&
+                                              //         subJob != null &&
+                                              //         jobController.reportList
+                                              //             .isNotEmpty &&
+                                              //         jobController
+                                              //                 .reportList
+                                              //                 .first
+                                              //                 .signature !=
+                                              //             '' &&
+                                              //         jobController
+                                              //                 .reportList
+                                              //                 .first
+                                              //                 .signaturePad !=
+                                              //             '')
+                                              //     ? Row(
+                                              //         mainAxisAlignment:
+                                              //             MainAxisAlignment.end,
+                                              //         children: [
+                                              //           ButtonColor(
+                                              //             backgroundColor: red4,
+                                              //             title:
+                                              //                 'View Part Detail',
+                                              //             onTap: () {
+                                              //               showDialog(
+                                              //                   context:
+                                              //                       context,
+                                              //                   builder: (BuildContext
+                                              //                           context) =>
+                                              //                       Obx(() =>
+                                              //                           Material(
+                                              //                             color:
+                                              //                                 Colors.transparent,
+                                              //                             child:
+                                              //                                 SubJobSparePartWidget(
+                                              //                               subJobSparePart:
+                                              //                                   jobController.subJobSparePart.first,
+                                              //                             ),
+                                              //                           )));
+                                              //             },
+                                              //           ),
+                                              //         ],
+                                              //       )
+                                              //     : Container()),
                                             ],
                                           )
                                         : Container()),

@@ -71,7 +71,8 @@ class PendingTaskViewPM extends StatelessWidget {
                         children: [
                           Text(extractDescription(description),
                               style: TextStyleList.title1),
-                          Text('PM ID: $ticketId', style: TextStyleList.text16),
+                          Text('PM ID: ${ticketId.toString().padLeft(7, '0')}',
+                              style: TextStyleList.text16),
                         ],
                       );
                     }
