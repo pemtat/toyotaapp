@@ -153,6 +153,7 @@ class CalendarController extends GetxController {
           "techStatus": job.techStatus,
           "status": stringToStatus(job.status ?? ''),
           "customerName": userData.first.users!.first.realName,
+          "companyName": job.companyName ?? '',
           "task": job.description,
           "model": warrantyInfo.isEmpty || warrantyInfo.first.model == null
               ? '-'

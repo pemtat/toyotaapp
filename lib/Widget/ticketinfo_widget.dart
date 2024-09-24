@@ -18,6 +18,7 @@ class TicketInfo extends StatelessWidget {
   final int ticketId;
   final String dateTime;
   final String reporter;
+  final String companyName;
   final bool? more;
 
   const TicketInfo(
@@ -25,6 +26,7 @@ class TicketInfo extends StatelessWidget {
       required this.ticketId,
       required this.dateTime,
       required this.reporter,
+      required this.companyName,
       this.more});
 
   @override
@@ -52,6 +54,11 @@ class TicketInfo extends StatelessWidget {
                   child: Image.asset('assets/ticketblock.png'),
                 )
               ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              companyName,
+              style: TextStyleList.subtext1,
             ),
             const SizedBox(height: 4),
             Text(
@@ -248,6 +255,7 @@ class TicketInfoStatus extends StatelessWidget {
   final String dateTime;
   final String reporter;
   final String status;
+  final String companyName;
   final bool? more;
   const TicketInfoStatus({
     super.key,
@@ -255,6 +263,7 @@ class TicketInfoStatus extends StatelessWidget {
     required this.dateTime,
     required this.reporter,
     required this.status,
+    required this.companyName,
     this.more,
   });
 
@@ -280,6 +289,11 @@ class TicketInfoStatus extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 4),
+            Text(
+              companyName,
+              style: TextStyleList.subtext1,
+            ),
+            const SizedBox(height: 1),
             Text(
               '$dateTime\nReported by $reporter',
               style: TextStyleList.subtext1,

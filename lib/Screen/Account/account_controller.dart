@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
@@ -12,10 +13,19 @@ class AccountController extends GetxController {
   final BottomBarController controller = Get.put(BottomBarController());
   final HomeController jobController = Get.put(HomeController());
   final UserController userController = Get.put(UserController());
+  var version = ''.obs;
+  var buildVersion = ''.obs;
   @override
   void onInit() {
     super.onInit();
     userController.fetchData();
+    getDataApp();
+  }
+
+  Future<void> getDataApp() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version.value = packageInfo.version;
+    buildVersion.value = packageInfo.buildNumber;
   }
 
   void showLogoutDialog(

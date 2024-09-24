@@ -135,6 +135,9 @@ class JobDetailView extends StatelessWidget {
                                     children: [
                                       TicketInfoStatus(
                                         ticketId: issue.id,
+                                        companyName: subJob != null
+                                            ? subJob.companyName ?? ''
+                                            : '',
                                         dateTime:
                                             formatDateTime(issue.createdAt, ''),
                                         status: issue.status.name,

@@ -344,47 +344,47 @@ class EditFillFormView2 extends StatelessWidget {
                 ),
               ],
             ),
-            space.kH,
-            Obx(() => BoxContainer(
-                  children: [
-                    TitleWithButton(
-                      titleText: 'Action & Result / Change spare parts',
-                      button: additSparePartListController
-                                  .additSparePartList.length <
-                              7
-                          ? AddButton(
-                              onTap: () {
-                                additSparePartListController
-                                    .additSparePartListModal(context);
-                              },
-                            )
-                          : Container(),
-                    ),
-                    additSparePartListController.additSparePartList.isNotEmpty
-                        ? ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: additSparePartListController
-                                .additSparePartList.length,
-                            itemBuilder: (context, index) {
-                              final part = additSparePartListController
-                                  .additSparePartList[index];
-                              return SparePartManageWidget(
-                                part: part,
-                                index: index,
-                                editFunction: () {
-                                  additSparePartListController
-                                      .additSparePartListEditModal(
-                                          context, part);
-                                },
-                                sparePartList: additSparePartListController
-                                    .additSparePartList,
-                              );
-                            },
-                          )
-                        : const SizedBox()
-                  ],
-                )),
+            // space.kH,
+            // Obx(() => BoxContainer(
+            //       children: [
+            //         TitleWithButton(
+            //           titleText: 'Action & Result / Change spare parts',
+            //           button: additSparePartListController
+            //                       .additSparePartList.length <
+            //                   7
+            //               ? AddButton(
+            //                   onTap: () {
+            //                     additSparePartListController
+            //                         .additSparePartListModal(context);
+            //                   },
+            //                 )
+            //               : Container(),
+            //         ),
+            //         additSparePartListController.additSparePartList.isNotEmpty
+            //             ? ListView.builder(
+            //                 physics: const NeverScrollableScrollPhysics(),
+            //                 shrinkWrap: true,
+            //                 itemCount: additSparePartListController
+            //                     .additSparePartList.length,
+            //                 itemBuilder: (context, index) {
+            //                   final part = additSparePartListController
+            //                       .additSparePartList[index];
+            //                   return SparePartManageWidget(
+            //                     part: part,
+            //                     index: index,
+            //                     editFunction: () {
+            //                       additSparePartListController
+            //                           .additSparePartListEditModal(
+            //                               context, part);
+            //                     },
+            //                     sparePartList: additSparePartListController
+            //                         .additSparePartList,
+            //                   );
+            //                 },
+            //               )
+            //             : const SizedBox()
+            //       ],
+            //     )),
             10.kH,
             BoxContainer(
               child: Row(

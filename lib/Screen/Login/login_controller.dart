@@ -69,7 +69,6 @@ class LoginController extends GetxController {
 
       if (response.statusCode == 201) {
         final tokenResponseData = json.decode(response.body);
-
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.clear();
         prefs.setString('verify', 'pass');

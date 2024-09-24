@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
 import 'package:toyotamobile/Service/notification.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'Screen/Login/login_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   NotificationService().initNotification();
   runApp(MyApp(home: await getHomeWidget(prefs)));

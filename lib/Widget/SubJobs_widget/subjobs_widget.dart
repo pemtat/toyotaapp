@@ -89,6 +89,11 @@ class SubJobsTicket extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
+                job.companyName ?? '',
+                style: TextStyleList.text10,
+              ),
+              const SizedBox(height: 2),
+              Text(
                 'Reported by ${job.realName}',
                 style: TextStyleList.subtext4,
               ),

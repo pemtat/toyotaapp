@@ -178,6 +178,16 @@ class CalendarItem extends StatelessWidget {
                       ],
                     ),
                   if (event['type'] == EventType.Job)
+                    Column(
+                      children: [
+                        const SizedBox(height: 2),
+                        Text(
+                          event['companyName'] ?? '',
+                          style: TextStyleList.text10,
+                        ),
+                      ],
+                    ),
+                  if (event['type'] == EventType.Job)
                     Obx(() => (expandedIndex.value &&
                             expandedTicketId.value == event['jobid'])
                         ? Column(

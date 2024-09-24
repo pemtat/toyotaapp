@@ -78,11 +78,11 @@ class EditProfileView extends StatelessWidget {
                       label: 'Email',
                       controller: editProfileController.email.value,
                     ),
-                    16.kH,
-                    TextFormFieldBar(
-                      label: 'Phone Number',
-                      controller: editProfileController.phoneNumber.value,
-                    ),
+                    // 16.kH,
+                    // TextFormFieldBar(
+                    //   label: 'Phone Number',
+                    //   controller: editProfileController.phoneNumber.value,
+                    // ),
                     16.kH,
                     TextFormFieldBar(
                       label: 'Resource No',

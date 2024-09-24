@@ -157,6 +157,21 @@ class AccountView extends StatelessWidget {
                   )
                 ],
               ),
+              Obx(() => accountController.version.value != ''
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6, horizontal: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Version : ${accountController.version.value}',
+                            style: TextStyleList.subtext1,
+                          )
+                        ],
+                      ),
+                    )
+                  : Container())
             ],
           );
         } else {
