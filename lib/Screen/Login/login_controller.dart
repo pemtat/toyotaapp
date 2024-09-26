@@ -77,6 +77,8 @@ class LoginController extends GetxController {
         String? tokenResponse = prefs.getString('token_response');
         Map<String, dynamic> tokenData = json.decode(tokenResponse ?? '');
         prefs.setString('token', tokenData['token']);
+        getDeviceTypeAndCreateFCMToken(
+            tokenData['token'], tokenData['user']['id']);
         jobController.subJobAssigned.clear();
         jobController.pmItems.clear();
         jobController.fetchDataFromAssignJob();
@@ -93,20 +95,27 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> getDeviceTypeAndCreateFCMToken() async {
+  Future<void> getDeviceTypeAndCreateFCMToken(
+      String accessToken, int userId) async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String deviceType;
+    String deviceId;
 
+    // Determine device type and get device ID
     if (Platform.isAndroid) {
       deviceType = 'Android';
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      deviceId = androidInfo.id;
     } else if (Platform.isIOS) {
       deviceType = 'iOS';
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      deviceId = iosInfo.identifierForVendor ?? 'Unknown'; // iOS device ID
     } else {
       deviceType = 'Unknown';
+      deviceId = 'Unknown';
     }
 
-    print('Device Type: $deviceType');
-
+    // Request notification permission and get FCM token
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
@@ -116,7 +125,36 @@ class LoginController extends GetxController {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       String? token = await messaging.getToken();
-      print('FCM Token: $token');
+      if (token != null) {
+        Map<String, dynamic> body = {
+          "user_id": userId,
+          "token": token,
+          "device_id": deviceId,
+          "device_type": deviceType,
+          "created_at": DateTime.now().toString()
+        };
+        try {
+          final response = await http.post(
+            Uri.parse(createUserTokenNotification()),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': accessToken,
+            },
+            body: jsonEncode(body),
+          );
+
+          if (response.statusCode == 201) {
+            print('Data created successfully');
+          } else if (response.statusCode == 200) {
+            print('Data updated successfully');
+          } else {
+            print(response.statusCode);
+          }
+        } catch (e) {
+          // ignore: avoid_print
+          print('Error fetching token data: $e');
+        }
+      }
     } else {
       print('User declined or has not accepted permission');
     }

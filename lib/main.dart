@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toyotamobile/Styles/color.dart';
+import 'package:toyotamobile/firebase_options.dart';
 import 'Screen/Login/login_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   NotificationService().initNotification();
   runApp(MyApp(home: await getHomeWidget(prefs)));
