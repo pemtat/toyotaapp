@@ -23,7 +23,6 @@ void main() async {
   //     payload: 'Notification Payload',
   //   );
   // });
-
   runApp(MyApp(home: await getHomeWidget(prefs)));
 }
 
