@@ -89,6 +89,27 @@ class SubJobSparePartWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
+                      'Job ID : ${subJobSparePart.id}',
+                      style: TextStyleList.title1,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Status :',
+                          style: TextStyleList.subtitle1,
+                        ),
+                        4.wH,
+                        StatusButton3(
+                            status: subJobSparePart.estimateStatus.toString()),
+                      ],
+                    ),
+                  ],
+                ),
+                6.kH,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
                       'Ticket : ${subJobSparePart.bugId}',
                       style: TextStyleList.title1,
                     ),
