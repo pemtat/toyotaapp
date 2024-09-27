@@ -273,10 +273,7 @@ class PmAssignedJobsView extends StatelessWidget {
                       statusMatch;
                 }).toList();
 
-                final pagedJobs =
-                    pmAssignedController.getPagedItems(filteredJobs);
-
-                if (pagedJobs.isEmpty) {
+                if (filteredJobs.isEmpty) {
                   return SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Container(
@@ -289,11 +286,12 @@ class PmAssignedJobsView extends StatelessWidget {
                     ),
                   );
                 }
-                pagedJobs.sort((a, b) => b.dueDate!.compareTo(a.dueDate ?? ''));
+                filteredJobs
+                    .sort((a, b) => b.dueDate!.compareTo(a.dueDate ?? ''));
                 return ListView.builder(
-                  itemCount: pagedJobs.length,
+                  itemCount: filteredJobs.length,
                   itemBuilder: (context, index) {
-                    final job = pagedJobs[index];
+                    final job = filteredJobs[index];
                     return InkWell(
                       onTap: () {
                         if (job.techStatus == '2') {

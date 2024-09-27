@@ -308,7 +308,7 @@ Future<void> fetchReadAttachment(
     if (getAttachments != null) {
       var attachments = getAttachments as List<dynamic>;
       for (var attachment in attachments) {
-        if (!attachment.filename.toLowerCase().endsWith('.pdf')) {
+        if (attachment.createdAt != null) {
           Map<String, dynamic> attachmentMap = {
             'id': attachment.id,
             'filename': attachment.filename,

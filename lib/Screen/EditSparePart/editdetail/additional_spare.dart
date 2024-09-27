@@ -30,6 +30,7 @@ class AdditSparepartList extends GetxController {
         ),
         space.kH,
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
                 controller: searchPartNumber.value,
@@ -47,6 +48,11 @@ class AdditSparepartList extends GetxController {
                       fetchProducts(
                           searchPartNumber.value.text, isLoading, products);
                     })),
+            4.kH,
+            Text(
+              '(โปรดกรอก 4 ตัวอักษรขึ้นไปเพื่อค้นหา)',
+              style: TextStyleList.text1,
+            ),
             Obx(() {
               if (isLoading.value) {
                 return const Padding(
@@ -54,6 +60,7 @@ class AdditSparepartList extends GetxController {
                   child: Center(child: DataCircleLoading()),
                 );
               }
+
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -202,6 +209,7 @@ class AdditSparepartList extends GetxController {
         ),
         space.kH,
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
                 controller: searchPartNumber.value,
@@ -219,6 +227,11 @@ class AdditSparepartList extends GetxController {
                       fetchProducts(
                           searchPartNumber.value.text, isLoading, products);
                     })),
+            4.kH,
+            Text(
+              '(โปรดกรอก 4 ตัวอักษรขึ้นไปเพื่อค้นหา)',
+              style: TextStyleList.text1,
+            ),
             Obx(() {
               if (isLoading.value) {
                 return const Padding(

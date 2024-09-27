@@ -218,19 +218,6 @@ class HomeView extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                Get.to(() => OverduejobView());
-                              },
-                              child: Container(
-                                child: _buildInfoCard(
-                                  icon: Icons.warning,
-                                  value: jobController.overdueJobs.value,
-                                  label: 'Overdue',
-                                  labelColor: Colors.red,
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
                                 Get.to(() => AssignedjobsNew(
                                       selectIndex: 2,
                                     ));
@@ -240,6 +227,19 @@ class HomeView extends StatelessWidget {
                                   icon: Icons.build,
                                   value: jobController.onProcessJobs.value,
                                   label: 'On Process',
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => OverduejobView());
+                              },
+                              child: Container(
+                                child: _buildInfoCard(
+                                  icon: Icons.warning,
+                                  value: jobController.overdueJobs.value,
+                                  label: 'Overdue',
+                                  labelColor: Colors.red,
                                 ),
                               ),
                             ),

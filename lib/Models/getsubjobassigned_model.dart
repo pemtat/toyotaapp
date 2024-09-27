@@ -31,6 +31,7 @@ class SubJobAssgined {
   String? techManagerStatus;
   String? techManagerRemark;
   String? referenceCode;
+  String? companyName;
 
   SubJobAssgined(
       {this.id,
@@ -64,7 +65,8 @@ class SubJobAssgined {
       this.techManagerRemark,
       this.techManagerStatus,
       this.referenceCode,
-      this.salesStatus});
+      this.salesStatus,
+      this.companyName});
 
   SubJobAssgined.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -97,6 +99,7 @@ class SubJobAssgined {
     techManagerStatus = json['tech_manager_status'];
     techManagerRemark = json['tech_manager_remark'];
     referenceCode = json['reference_code'];
+    companyName = json['company_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -131,7 +134,7 @@ class SubJobAssgined {
     data['tech_manager_status'] = techManagerStatus;
     data['tech_manager_remark'] = techManagerRemark;
     data['reference_code'] = referenceCode;
-
+    data['company_name'] = companyName;
     return data;
   }
 }

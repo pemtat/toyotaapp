@@ -75,7 +75,8 @@ class JobDetailViewPM extends StatelessWidget {
                           children: [
                             Text(extractDescription(description),
                                 style: TextStyleList.title1),
-                            Text('PM ID: $ticketId',
+                            Text(
+                                'PM ID: ${ticketId.toString().padLeft(7, '0')}',
                                 style: TextStyleList.text16),
                           ],
                         );

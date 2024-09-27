@@ -56,12 +56,12 @@ class SubJobsTicket extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'JobID: #${job.id.toString().padLeft(4, '0')}',
+                'JobID: #${job.id.toString().padLeft(6, '0')}',
                 style: TextStyleList.subtitle1,
               ),
               const SizedBox(width: 5),
               Text(
-                ('(Ticket #$bugId)'),
+                ('(Ticket #${bugId.toString().padLeft(7, '0')})'),
                 style: TextStyleList.text11,
               ),
               const Spacer(),
@@ -86,6 +86,11 @@ class SubJobsTicket extends StatelessWidget {
               Text(
                 job.description ?? '',
                 style: TextStyleList.text2,
+              ),
+              const SizedBox(height: 2),
+              Text(
+                job.companyName ?? '',
+                style: TextStyleList.text10,
               ),
               const SizedBox(height: 2),
               Text(
