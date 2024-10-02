@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/showdialogsave.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
@@ -52,6 +53,63 @@ class SubJobSparePartWidget extends StatelessWidget {
 
     List<String> getAllRemarks() {
       return remarkControllers.map((controller) => controller.text).toList();
+    }
+
+    String summarySparePart(String option) {
+      int summary = 0;
+      if (option == 'discount') {
+        final formatter = NumberFormat("#,###");
+        if (subJobSparePart.sparepart != null &&
+            subJobSparePart.sparepart!.isNotEmpty &&
+            subJobSparePart.sparepart!.first.quantity != '0') {
+          summary += subJobSparePart.sparepart!.fold(0, (total, item) {
+            int salesPrice = int.parse(item.salesPrice ?? '0');
+            int quantity = int.parse(item.quantity ?? '0');
+            int discount = int.parse(item.discount ?? '0');
+            double priceAfterDiscount = salesPrice * (1 - (discount / 100));
+            return total + (priceAfterDiscount * quantity).toInt();
+          });
+        }
+
+        if (subJobSparePart.additionalSparepart != null &&
+            subJobSparePart.additionalSparepart!.isNotEmpty &&
+            subJobSparePart.additionalSparepart!.first.quantity != '0') {
+          summary +=
+              subJobSparePart.additionalSparepart!.fold(0, (total, item) {
+            int salesPrice = int.parse(item.salesPrice ?? '0');
+            int quantity = int.parse(item.quantity ?? '0');
+            int discount = int.parse(item.discount ?? '0');
+            double priceAfterDiscount = salesPrice * (1 - (discount / 100));
+            return total + (priceAfterDiscount * quantity).toInt();
+          });
+        }
+
+        return formatter.format(summary);
+      } else {
+        if (subJobSparePart.sparepart != null &&
+            subJobSparePart.sparepart!.isNotEmpty &&
+            subJobSparePart.sparepart!.first.quantity != '0') {
+          summary += subJobSparePart.sparepart!.fold(0, (total, item) {
+            int salesPrice = int.parse(item.salesPrice ?? '0');
+            int quantity = int.parse(item.quantity ?? '0');
+            return total + (salesPrice * quantity).toInt();
+          });
+        }
+
+        if (subJobSparePart.additionalSparepart != null &&
+            subJobSparePart.additionalSparepart!.isNotEmpty &&
+            subJobSparePart.additionalSparepart!.first.quantity != '0') {
+          summary +=
+              subJobSparePart.additionalSparepart!.fold(0, (total, item) {
+            int salesPrice = int.parse(item.salesPrice ?? '0');
+            int quantity = int.parse(item.quantity ?? '0');
+            return total + (salesPrice * quantity).toInt();
+          });
+        }
+        String summaryCheck = summary > 100000 ? '1' : '0';
+
+        return summaryCheck;
+      }
     }
 
     var usersList = <UsersSales>[].obs;
@@ -113,18 +171,36 @@ class SubJobSparePartWidget extends StatelessWidget {
                       'Ticket : ${subJobSparePart.bugId}',
                       style: TextStyleList.title1,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          'Tech Manager :',
-                          style: TextStyleList.subtitle1,
-                        ),
-                        4.wH,
-                        StatusButton2(
-                            status:
-                                subJobSparePart.techManagerStatus.toString()),
-                      ],
-                    ),
+                    subJobSparePart.quotation == '1' ||
+                            summarySparePart('') == '1'
+                        ? Row(
+                            children: [
+                              Text(
+                                'Tech Manager :',
+                                style: TextStyleList.subtitle1,
+                              ),
+                              4.wH,
+                              StatusButton2(
+                                  status: subJobSparePart.techManagerStatus
+                                      .toString()),
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              Text(
+                                'Sales',
+                                style: TextStyleList.subtitle1,
+                              ),
+                              Text(
+                                ' :',
+                                style: TextStyleList.title1,
+                              ),
+                              4.wH,
+                              StatusButton2(
+                                  status:
+                                      subJobSparePart.salesStatus.toString())
+                            ],
+                          ),
                   ],
                 ),
                 8.kH,
@@ -136,7 +212,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                       'BB no. : ${subJobSparePart.referenceCode ?? ''}',
                       style: TextStyleList.title1,
                     ),
-                    if (subJobSparePart.quotation != '1')
+                    if (subJobSparePart.quotation != '1' &&
+                        summarySparePart('') == '1')
                       Row(
                         children: [
                           Text(
@@ -203,7 +280,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Manager Remark : ${subJobSparePart.techManagerRemark == '' || subJobSparePart.techManagerRemark == null ? '-' : subJobSparePart.techManagerRemark}',
+                      'Issue Remark : ${subJobSparePart.description ?? ''}',
                       style: TextStyleList.text1,
                     ),
                   ],
@@ -214,7 +291,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Issue Remark : ${subJobSparePart.description ?? ''}',
+                      'Remark : ${subJobSparePart.techManagerRemark == '' || subJobSparePart.techManagerRemark == null ? '-' : subJobSparePart.techManagerRemark}',
                       style: TextStyleList.text1,
                     ),
                     if (expandedIndex != null && expandedTicketId != null)
@@ -243,6 +320,20 @@ class SubJobSparePartWidget extends StatelessWidget {
                           )),
                   ],
                 ),
+                if (jobController.techLevel.value == '2')
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Quotation : ${subJobSparePart.quotation == '1' ? 'No' : 'Yes'}',
+                        style: TextStyleList.text1,
+                      ),
+                      Text(
+                        'Total : ${summarySparePart('discount')}',
+                        style: TextStyleList.text1,
+                      ),
+                    ],
+                  ),
                 expandedIndex != null && expandedTicketId != null
                     ? Obx(() => (expandedIndex!.value &&
                             expandedTicketId!.value == subJobSparePart.id)

@@ -173,6 +173,7 @@ class Sparepart {
   String? salesPrice;
   bool? priceVat;
   bool? additional;
+  String? discount;
 
   Sparepart(
       {this.id,
@@ -185,7 +186,8 @@ class Sparepart {
       this.additional,
       this.unitMeasure,
       this.priceVat,
-      this.salesPrice});
+      this.salesPrice,
+      this.discount});
 
   Sparepart.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -199,6 +201,7 @@ class Sparepart {
     unitMeasure = json['unit_of_measure'];
     salesPrice = json['price'];
     priceVat = json['price_includes_vat'];
+    discount = json['discount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -214,6 +217,7 @@ class Sparepart {
     data['unit_of_measure'] = unitMeasure;
     data['price'] = salesPrice;
     data['price_includes_vat'] = priceVat;
+    data['discount'] = discount;
     return data;
   }
 }

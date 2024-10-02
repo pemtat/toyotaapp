@@ -172,13 +172,13 @@ class SparePartView extends StatelessWidget {
               ),
               Obx(() {
                 if (sparePartController.isSelected.value == 1) {
-                  return buildJobList(context, '0');
+                  return buildJobList(context, '01');
                 }
                 if (sparePartController.isSelected.value == 2) {
-                  return buildJobList(context, '1');
+                  return buildJobList(context, '2');
                 }
                 if (sparePartController.isSelected.value == 3) {
-                  return buildJobList(context, '2');
+                  return buildJobList(context, '3');
                 } else {
                   return const SizedBox();
                 }
@@ -221,7 +221,7 @@ class SparePartView extends StatelessWidget {
                   return searchQueryMatch &&
                       dateMatch &&
                       statusMatch &&
-                      status.contains(job.techManagerStatus ?? '');
+                      status.contains(job.estimateStatus ?? '');
                 }).toList();
 
                 if (filteredJobs.isEmpty) {
