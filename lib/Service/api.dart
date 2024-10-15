@@ -1,5 +1,5 @@
 const String url = 'https://fsm-dev.vansales.asia';
-const String urlFSM = 'http://tscapi.tmh-wst.com';
+const String urlFSM = 'http://tscapitest.tmh-wst.com';
 const String issue = '$url/api/rest/issues';
 const String user = '$url/api/rest/users';
 const String loginUrl = '$url/api/rest/users/login';
@@ -204,8 +204,28 @@ String createSparepartNotes() {
   return "$url/api/rest/jobs/sparepart_note";
 }
 
+String createHistoryQuotation() {
+  return "$url/api/rest/jobs/history_quotation_add";
+}
+
 String createUserTokenNotification() {
   return "$url/api/rest/users/create_token_notification";
+}
+
+String createJobNotificationHistory() {
+  return "$url/api/rest/jobs/job_notification_create";
+}
+
+String getJobNotificationHistory(String id) {
+  return "$url/api/rest/jobs/get_job_notification_history/$id";
+}
+
+String sendUserNotification() {
+  return "$url/api/rest/users/rest_user_send_notification";
+}
+
+String deleteTokenNotification() {
+  return "$url/api/rest/users/logout";
 }
 
 String getAdditionalRepairReportById(String id) {

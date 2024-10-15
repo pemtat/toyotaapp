@@ -131,7 +131,7 @@ class SubJobSparePartWidget extends StatelessWidget {
             children: [
               Text(
                 'Sparepart Request Status',
-                style: TextStyleList.subtitle1,
+                style: TextStyleList.detail2,
               ),
             ],
           ),
@@ -148,13 +148,13 @@ class SubJobSparePartWidget extends StatelessWidget {
                   children: [
                     Text(
                       'Job ID : ${subJobSparePart.id}',
-                      style: TextStyleList.title1,
+                      style: TextStyleList.subtitle9,
                     ),
                     Row(
                       children: [
                         Text(
                           'Status :',
-                          style: TextStyleList.subtitle1,
+                          style: TextStyleList.detail2,
                         ),
                         4.wH,
                         StatusButton3(
@@ -169,7 +169,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                   children: [
                     Text(
                       'Ticket : ${subJobSparePart.bugId}',
-                      style: TextStyleList.title1,
+                      style: TextStyleList.subtitle9,
                     ),
                     subJobSparePart.quotation == '1' ||
                             summarySparePart('') == '1'
@@ -177,7 +177,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                             children: [
                               Text(
                                 'Tech Manager :',
-                                style: TextStyleList.subtitle1,
+                                style: TextStyleList.detail2,
                               ),
                               4.wH,
                               StatusButton2(
@@ -189,7 +189,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                             children: [
                               Text(
                                 'Sales',
-                                style: TextStyleList.subtitle1,
+                                style: TextStyleList.detail2,
                               ),
                               Text(
                                 ' :',
@@ -210,7 +210,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                   children: [
                     Text(
                       'BB no. : ${subJobSparePart.referenceCode ?? ''}',
-                      style: TextStyleList.title1,
+                      style: TextStyleList.subtitle9,
                     ),
                     if (subJobSparePart.quotation != '1' &&
                         summarySparePart('') == '1')
@@ -218,7 +218,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                         children: [
                           Text(
                             'Sales',
-                            style: TextStyleList.subtitle1,
+                            style: TextStyleList.detail2,
                           ),
                           Text(
                             ' :',
@@ -231,6 +231,33 @@ class SubJobSparePartWidget extends StatelessWidget {
                       )
                   ],
                 ),
+                6.kH,
+                if (subJobSparePart.documentNo != null)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'OJ no. : ${subJobSparePart.documentNo ?? ''}',
+                        style: TextStyleList.subtitle9,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Purchase Order',
+                            style: TextStyleList.detail2,
+                          ),
+                          Text(
+                            ' :',
+                            style: TextStyleList.title1,
+                          ),
+                          4.wH,
+                          StatusButton2(
+                              status: subJobSparePart.purchaseStatus.toString())
+                        ],
+                      )
+                    ],
+                  ),
                 6.kH,
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,6 +369,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                 subJobSparePart.additionalSparepart ?? [],
                             sparepart: subJobSparePart.sparepart ?? [],
                             jobId: subJobSparePart.id ?? '',
+                            bugId: subJobSparePart.bugId ?? '',
                             techLevel: jobController.techLevel.value,
                             techManagerStatus:
                                 subJobSparePart.techManagerStatus ?? '',
@@ -354,6 +382,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                             subJobSparePart.additionalSparepart ?? [],
                         sparepart: subJobSparePart.sparepart ?? [],
                         jobId: subJobSparePart.id ?? '',
+                        bugId: subJobSparePart.bugId ?? '',
                         techLevel: jobController.techLevel.value,
                         techManagerStatus:
                             subJobSparePart.techManagerStatus ?? '',
@@ -388,11 +417,14 @@ class SubJobSparePartWidget extends StatelessWidget {
                                             'Yes', () async {
                                           await updateJobSparePart(
                                               subJobSparePart.id ?? '',
-                                              jobController.techManageId.value,
                                               jobController.techLevel.value,
                                               jobController.handlerIdTech.value,
                                               '',
-                                              'send');
+                                              'send',
+                                              subJobSparePart.bugId ?? '',
+                                              subJobSparePart.handlerId ?? '',
+                                              subJobSparePart.reportjobId ??
+                                                  '');
                                           await jobDetailController
                                               .fetchSubJobSparePartId();
                                         }, red1);
@@ -613,32 +645,44 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                               .id ??
                                                                           '',
                                                                       jobController
-                                                                          .techManageId
-                                                                          .value,
-                                                                      jobController
                                                                           .techLevel
                                                                           .value,
                                                                       jobController
                                                                           .handlerIdTech
                                                                           .value,
                                                                       '',
-                                                                      'approve');
+                                                                      'approve',
+                                                                      subJobSparePart
+                                                                              .bugId ??
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .handlerId ??
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .reportjobId ??
+                                                                          '');
                                                                 } else {
                                                                   await updateJobSparePart(
                                                                       subJobSparePart
                                                                               .id ??
                                                                           '',
                                                                       jobController
-                                                                          .techManageId
-                                                                          .value,
-                                                                      jobController
                                                                           .techLevel
                                                                           .value,
                                                                       jobController
                                                                           .handlerIdTech
                                                                           .value,
                                                                       '',
-                                                                      'approve_add_sales:${selectedUserId.value}');
+                                                                      'approve_add_sales:${selectedUserId.value}',
+                                                                      subJobSparePart
+                                                                              .bugId ??
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .handlerId ??
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .reportjobId ??
+                                                                          '');
                                                                 }
 
                                                                 Navigator.pop(
@@ -695,11 +739,9 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                       TextButton(
                                                         onPressed: () async {
                                                           await updateJobSparePart(
-                                                              subJobSparePart.id ??
+                                                              subJobSparePart
+                                                                      .id ??
                                                                   '',
-                                                              jobController
-                                                                  .techManageId
-                                                                  .value,
                                                               jobController
                                                                   .techLevel
                                                                   .value,
@@ -708,7 +750,16 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                   .value,
                                                               rejectNote
                                                                   .value.text,
-                                                              'reject');
+                                                              'reject',
+                                                              subJobSparePart
+                                                                      .bugId ??
+                                                                  '',
+                                                              subJobSparePart
+                                                                      .handlerId ??
+                                                                  '',
+                                                              subJobSparePart
+                                                                      .reportjobId ??
+                                                                  '');
 
                                                           Navigator.pop(
                                                               context);

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Models/home_model.dart';
+import 'package:toyotamobile/Models/notificationhistory_model.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 
 class NotificationItem extends StatelessWidget {
-  final Issues notification;
+  final NotificationHistory notification;
 
   const NotificationItem({super.key, required this.notification});
 
@@ -14,22 +15,22 @@ class NotificationItem extends StatelessWidget {
     return BoxContainer(
       children: [
         Text(
-          notification.summary ?? '',
+          notification.title ?? '',
           style: TextStyleList.text10,
         ),
         Text(
-          notification.description ?? '',
+          notification.details ?? '',
           style: TextStyleList.text16,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'TicketID : ${notification.id}',
+              'TicketID : ${notification.bugId}',
               style: TextStyleList.detailtext1,
             ),
             Text(
-              formatDateTime(notification.dueDate ?? '', ''),
+              formatDateTimePlus(notification.datetimeNotify ?? ''),
               style: TextStyleList.detailtext1,
             ),
           ],

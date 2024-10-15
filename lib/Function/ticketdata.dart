@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
+import 'package:toyotamobile/Models/notificationhistory_model.dart';
 import 'package:toyotamobile/Models/pmcommentjob_model.dart';
 import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
@@ -1231,8 +1233,15 @@ void updateTechSubjob(
   }
 }
 
-Future<void> updateJobSparePart(String jobId, String techManagerId,
-    String techLevel, String handlerId, String remark, String option) async {
+Future<void> updateJobSparePart(
+    String jobId,
+    String techLevel,
+    String handlerId,
+    String remark,
+    String option,
+    String bugId,
+    String techHandlerId,
+    String reporterId) async {
   try {
     String? token = await getToken();
     Map<String, dynamic> body = {};
@@ -1250,13 +1259,21 @@ Future<void> updateJobSparePart(String jobId, String techManagerId,
         'sales_manager_status': 0,
         'sales_director_id': 0,
         'sales_director_status': 0,
+        'customer_status': 0,
         'quotation': 0
       };
+      createQuotationHistory(jobId, 'tech', bugId, handlerId, '1');
     } else if (option == 'approve') {
-      body = {
-        'tech_manager_status': 1,
-        'estimate_status': 2,
-      };
+      body = {'tech_manager_status': 1, 'estimate_status': 2};
+      createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
+      sendNotificationToUser(
+          handlerId,
+          techHandlerId,
+          'Job ID : $jobId',
+          'ใบเบิก Spare Part ของคุณผ่านการอนุมัติเเล้ว',
+          reporterId,
+          bugId,
+          jobId);
     } else if (option.contains('approve_add_sales')) {
       var parts = option.split(':');
       var salesId = parts[1].trim();
@@ -1264,12 +1281,22 @@ Future<void> updateJobSparePart(String jobId, String techManagerId,
         'tech_manager_status': 1,
         'sales_id': salesId,
       };
+      createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
     } else if (option == 'reject') {
       body = {
         'tech_manager_status': 2,
         'tech_manager_remark': remark,
         'estimate_status': 3,
       };
+      createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '2');
+      sendNotificationToUser(
+          handlerId,
+          techHandlerId,
+          'Job ID : $jobId',
+          'ใบเบิก Spare Part ของคุณไม่ผ่านการอนุมัติ',
+          reporterId,
+          bugId,
+          jobId);
     } else if (option == 'update_sparepart') {
       body = {
         'tech_manager_remark': remark,
@@ -1289,7 +1316,7 @@ Future<void> updateJobSparePart(String jobId, String techManagerId,
       if (techLevel == '1') {
         await jobController.fetchSubJobSparePart(handlerId, 'tech');
       } else {
-        await jobController.fetchSubJobSparePart(techManagerId, 'techlead');
+        await jobController.fetchSubJobSparePart(handlerId, 'techlead');
       }
     } else {
       print(response.statusCode);
@@ -1325,6 +1352,103 @@ Future<void> createSparepartNote(String jobId, String techManagerId,
         await jobController.fetchSubJobSparePart(handlerId, 'tech');
       } else {
         await jobController.fetchSubJobSparePart(techManagerId, 'techlead');
+      }
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> createQuotationHistory(
+  String jobId,
+  String details,
+  String bugId,
+  String createBy,
+  String status,
+) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {
+      'job_issue_id': jobId,
+      "details": details,
+      "bug_id": int.parse(bugId),
+      "create_by": int.parse(createBy),
+      "status": int.parse(status)
+    };
+
+    final response = await http.post(
+      Uri.parse(createHistoryQuotation()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 201) {
+      print('Update Done');
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> sendNotificationToUser(
+    String handlerId,
+    String techHandlerId,
+    String details,
+    String bodyDetail,
+    String reporterId,
+    String bugId,
+    String jobId) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {
+      'handler_id': techHandlerId,
+      "detail": details,
+      "body": bodyDetail
+    };
+
+    final response = await http.post(
+      Uri.parse(sendUserNotification()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Sent Notifcation');
+      try {
+        Map<String, dynamic> body2 = {
+          "title": details,
+          "details": bodyDetail,
+          "bug_id": int.parse(bugId),
+          "user_id": int.parse(techHandlerId),
+          "report_by": int.parse(handlerId),
+          "group_notify": "one",
+          "group_report_by": "tech",
+          "reference_code": reporterId,
+          "job_id": int.parse(jobId)
+        };
+        final response = await http.post(
+          Uri.parse(createJobNotificationHistory()),
+          headers: {
+            'Authorization': '$token',
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode(body2),
+        );
+        if (response.statusCode == 201) {
+          print('Updated History Notification');
+        }
+      } catch (e) {
+        print(e);
       }
     } else {
       print(response.statusCode);
@@ -1823,6 +1947,6 @@ Future<void> fetchSubJobSparePartOption() async {
         jobController.handlerIdTech.toString(), 'tech');
   } else {
     await jobController.fetchSubJobSparePart(
-        jobController.techManageId.value, 'leadtech');
+        jobController.handlerIdTech.value, 'leadtech');
   }
 }

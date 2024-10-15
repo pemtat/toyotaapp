@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/refresh.dart';
+import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/Notification/notification_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
@@ -10,7 +12,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class NotificationView extends StatelessWidget {
   NotificationView({super.key});
-
+  final HomeController jobController = Get.put(HomeController());
   final NotificationController notificationController =
       Get.put(NotificationController());
 
@@ -33,68 +35,84 @@ class NotificationView extends StatelessWidget {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-              child: Text(
-                'Today',
-                style: TextStyleList.text16,
-              ),
-            ),
-            Obx(() {
-              final todayNotifications =
-                  notificationController.todayNotifications;
-              if (todayNotifications.isEmpty) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: paddingApp),
-                  child: Text('No notifications for today',
-                      style: TextStyleList.subtitle2),
+      body: RefreshIndicator(
+        color: Colors.red,
+        backgroundColor: Colors.white,
+        onRefresh: refresh,
+        displacement: 0,
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Padding(
+              //   padding:
+              //       const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+              //   child: Text(
+              //     'Today',
+              //     style: TextStyleList.text16,
+              //   ),
+              // ),
+              Obx(() {
+                // final todayNotifications =
+                //     notificationController.todayNotifications;
+                if (jobController.notificationHistory.isEmpty) {
+                  return Container(
+                    height: 70,
+                    margin: const EdgeInsets.only(top: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'No notifications history',
+                          style: TextStyleList.subtitle2,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: jobController.notificationHistory.length,
+                  itemBuilder: (context, index) {
+                    final notification =
+                        jobController.notificationHistory[index];
+                    return NotificationItem(notification: notification);
+                  },
                 );
-              }
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: todayNotifications.length,
-                itemBuilder: (context, index) {
-                  final notification = todayNotifications[index];
-                  return NotificationItem(notification: notification);
-                },
-              );
-            }),
-            16.kH,
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 8.0, horizontal: paddingApp),
-              child: Text(
-                'Yesterday',
-                style: TextStyleList.text16,
-              ),
-            ),
-            Obx(() {
-              final yesterdayNotifications =
-                  notificationController.yesterdayNotifications;
-              if (yesterdayNotifications.isEmpty) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: paddingApp),
-                  child: Text('No notifications for yesterday',
-                      style: TextStyleList.subtitle2),
-                );
-              }
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: yesterdayNotifications.length,
-                itemBuilder: (context, index) {
-                  final notification = yesterdayNotifications[index];
-                  return NotificationItem(notification: notification);
-                },
-              );
-            }),
-          ],
+              }),
+              // 16.kH,
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //       vertical: 8.0, horizontal: paddingApp),
+              //   child: Text(
+              //     'Yesterday',
+              //     style: TextStyleList.text16,
+              //   ),
+              // ),
+              // Obx(() {
+              //   final yesterdayNotifications =
+              //       notificationController.yesterdayNotifications;
+              //   if (yesterdayNotifications.isEmpty) {
+              //     return Padding(
+              //       padding: const EdgeInsets.symmetric(horizontal: paddingApp),
+              //       child: Text('No notifications for yesterday',
+              //           style: TextStyleList.subtitle2),
+              //     );
+              //   }
+              //   return ListView.builder(
+              //     shrinkWrap: true,
+              //     physics: const NeverScrollableScrollPhysics(),
+              //     itemCount: yesterdayNotifications.length,
+              //     itemBuilder: (context, index) {
+              //       final notification = yesterdayNotifications[index];
+              //       return NotificationItem(notification: notification);
+              //     },
+              //   );
+              // }),
+            ],
+          ),
         ),
       ),
     );

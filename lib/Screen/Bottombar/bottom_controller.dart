@@ -8,12 +8,16 @@ class BottomBarController extends GetxController {
   Future<bool> checkNotification() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? notification = prefs.getString('notification');
-    hasNotification.value = true;
-    return notification == 'yes';
+    if (currentIndex.value != 4) {
+      hasNotification.value = true;
+      return notification == 'yes';
+    }
+    return notification == 'no';
   }
 
   Future<void> clearNotification() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('notification');
+    hasNotification.value = false;
   }
 }

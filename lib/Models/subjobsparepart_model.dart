@@ -19,6 +19,8 @@ class SubJobSparePart {
   String? resolution;
   String? projection;
   String? categoryId;
+  String? documentNo;
+  String? purchaseStatus;
   String? projectId;
   String? handlerId;
   String? reproducibility;
@@ -61,13 +63,15 @@ class SubJobSparePart {
       this.lastUpdated,
       this.warrantyStatus,
       this.description,
+      this.purchaseStatus,
       this.reportjobId,
       this.summaryBug,
       this.realname,
       this.referenceCode,
       this.sparepart,
       this.bugStatus,
-      this.additionalSparepart});
+      this.additionalSparepart,
+      this.documentNo});
 
   SubJobSparePart.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -98,8 +102,10 @@ class SubJobSparePart {
     warrantyStatus = json['warranty_status'];
     description = json['description'];
     reportjobId = json['reportjob_id'];
+    documentNo = json['document_no'];
     summaryBug = json['summary_bug'];
     realname = json['realname'];
+    purchaseStatus = json['purchase_order_status'];
     bugStatus = json['bug_status'];
     referenceCode = json['reference_code'];
     if (json['sparepart'] != null) {
@@ -140,8 +146,10 @@ class SubJobSparePart {
     data['category_id'] = categoryId;
     data['project_id'] = projectId;
     data['handler_id'] = handlerId;
+    data['purchase_order_status'] = purchaseStatus;
     data['reproducibility'] = reproducibility;
     data['due_date'] = dueDate;
+    data['document_no'] = documentNo;
     data['last_updated'] = lastUpdated;
     data['warranty_status'] = warrantyStatus;
     data['description'] = description;

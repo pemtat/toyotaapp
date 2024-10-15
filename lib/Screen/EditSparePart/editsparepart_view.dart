@@ -20,13 +20,14 @@ class EditSparePartView extends StatelessWidget {
   final List<Sparepart> sparepart;
   final List<Sparepart> additionalSparepart;
   final String jobId;
-  EditSparePartView({
-    super.key,
-    required this.sparepart,
-    required this.additionalSparepart,
-    required this.jobId,
-  }) {
-    sparePartController.fetchForm(jobId, sparepart, additionalSparepart);
+  final String bugId;
+  EditSparePartView(
+      {super.key,
+      required this.sparepart,
+      required this.additionalSparepart,
+      required this.jobId,
+      required this.bugId}) {
+    sparePartController.fetchForm(jobId, bugId, sparepart, additionalSparepart);
   }
   final AdditSparepartList additSparePartListController =
       Get.put(AdditSparepartList());

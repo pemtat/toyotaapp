@@ -3,6 +3,7 @@ import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/home_model.dart';
+import 'package:toyotamobile/Models/notificationhistory_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
@@ -27,6 +28,7 @@ class HomeController extends GetxController {
   var subJobAssignedList = <SubJobAssgined>[].obs;
   var subJobAssigned = <SubJobAssgined>[].obs;
   var subJobSparePart = <SubJobSparePart>[].obs;
+  var notificationHistory = <NotificationHistory>[].obs;
   var subJobAssignedPage = <SubJobAssgined>[].obs;
   final BottomBarController notificationController =
       Get.put(BottomBarController());
@@ -90,20 +92,23 @@ class HomeController extends GetxController {
       int handlerId = tokenData['user']['id'];
       techLevel.value = tokenData['user']['tech_level'];
 
-      await userController.fetchData();
-      techManageId.value = userController.userInfo.first.id.toString();
+      // await userController.fetchData();
+      // techManageId.value = userController.userInfo.first.id.toString();
       await fetchPMdata(handlerId);
       await fetchSubJobsdata(handlerId);
       subJobSparePart.clear();
       if (techLevel.value == '1') {
         await fetchSubJobSparePart(handlerId.toString(), 'tech');
       } else {
-        await fetchSubJobSparePart(techManageId.value, 'leadtech');
+        await fetchSubJobSparePart(handlerId.toString(), 'leadtech');
       }
+
       pmItemsPage.clear();
       subJobAssignedPage.clear();
       await fetchPMdataPage(1, userController.userInfo.first.id.toString());
       await fetchJobdataPage(1, userController.userInfo.first.id.toString());
+      notificationHistory.clear();
+      await fetchJobNotification(handlerId.toString());
       isLoading.value = false;
 
       // final response = await http.get(
@@ -456,6 +461,33 @@ class HomeController extends GetxController {
         sparePartApproved.value = completedSparePart.length;
         sparePartReject.value = rejectedSparePart.length;
         subJobSparePart.value = itemList;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> fetchJobNotification(String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    try {
+      final response = await http.get(
+        Uri.parse(getJobNotificationHistory(id)),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+        notificationHistory.value = responseData
+            .map((job) => NotificationHistory.fromJson(job))
+            .toList()
+          ..sort((a, b) {
+            DateTime dateA = DateTime.parse(a.datetimeNotify ?? '');
+            DateTime dateB = DateTime.parse(b.datetimeNotify ?? '');
+            return dateB.compareTo(dateA);
+          });
       }
     } catch (e) {
       print(e.toString());

@@ -29,10 +29,12 @@ class EditSparePartController extends GetxController {
   final rejectNote = TextEditingController().obs;
   var saveCompletedtime = ''.obs;
   var jobId = ''.obs;
+  var bugId = ''.obs;
   var readOnly = ''.obs;
-  void fetchForm(String jobId, List<Sparepart> sparepart,
+  void fetchForm(String jobId, String bugId, List<Sparepart> sparepart,
       final List<Sparepart> additionalSparepart) async {
     this.jobId.value = jobId;
+    this.bugId.value = bugId;
 
     for (var reportDataList in sparepart + additionalSparepart) {
       if (reportDataList.additional == false &&
@@ -98,11 +100,13 @@ class EditSparePartController extends GetxController {
                 onPressed: () async {
                   await updateJobSparePart(
                       jobId.value,
-                      jobController.techManageId.value,
                       jobController.techLevel.value,
                       jobController.handlerIdTech.value,
                       rejectNote.value.text,
-                      'update_sparepart');
+                      'update_sparepart',
+                      bugId.value,
+                      '',
+                      '');
                   saveReport(context);
                   Navigator.pop(context);
                   Navigator.pop(context);

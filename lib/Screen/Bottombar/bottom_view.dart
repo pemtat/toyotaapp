@@ -54,6 +54,9 @@ class BottomBarView extends StatelessWidget {
                   duration: const Duration(milliseconds: 10),
                   curve: Curves.easeInOut,
                 );
+                if (index == 4) {
+                  controller.clearNotification();
+                }
                 controller.currentIndex.value = index;
               },
               type: BottomNavigationBarType.fixed,

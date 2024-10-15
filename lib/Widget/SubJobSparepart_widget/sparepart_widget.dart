@@ -12,6 +12,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class SparePartDetail extends StatelessWidget {
   final String jobId;
+  final String bugId;
   final String techLevel;
   final String techManagerStatus;
   final String estimateStatus;
@@ -22,6 +23,7 @@ class SparePartDetail extends StatelessWidget {
       required this.additionalSparepart,
       required this.sparepart,
       required this.jobId,
+      required this.bugId,
       required this.techLevel,
       required this.techManagerStatus,
       required this.estimateStatus});
@@ -52,7 +54,8 @@ class SparePartDetail extends StatelessWidget {
                         Get.to(() => EditSparePartView(
                             sparepart: sparepart,
                             additionalSparepart: additionalSparepart,
-                            jobId: jobId));
+                            jobId: jobId,
+                            bugId: bugId));
                       }),
                       6.kH,
                     ],
@@ -65,9 +68,11 @@ class SparePartDetail extends StatelessWidget {
                     children: [
                       EditButton(onTap: () {
                         Get.to(() => EditSparePartView(
-                            sparepart: sparepart,
-                            additionalSparepart: additionalSparepart,
-                            jobId: jobId));
+                              sparepart: sparepart,
+                              additionalSparepart: additionalSparepart,
+                              jobId: jobId,
+                              bugId: bugId,
+                            ));
                       }),
                       6.kH,
                     ],
