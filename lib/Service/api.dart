@@ -64,6 +64,14 @@ String createPeriodicReport() {
   return '$url/api/rest/pm_jobs/create_pvt_maintenance';
 }
 
+String createJobsBatteryReport() {
+  return '$url/api/rest/jobs/jobs_btr_maintenance_add';
+}
+
+String updateJobsBatteryReport() {
+  return '$url/api/rest/jobs/jobs_update_btr_maintenance';
+}
+
 String createBatteryReport() {
   return '$url/api/rest/pm_jobs/create_btr_maintenance';
 }
@@ -170,6 +178,10 @@ String getSubJobsByHandlerPage(String id, int page) {
 
 String getRepairReportById(String id) {
   return '$url/api/rest/jobs/jobs_report?id=$id';
+}
+
+String getJobBatteryReportById(String id) {
+  return '$url/api/rest/jobs/jobs_btr_maintenance_data?job_issue_id=$id';
 }
 
 String getBatteryReportById(String id) {
