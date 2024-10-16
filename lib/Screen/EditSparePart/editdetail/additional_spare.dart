@@ -80,11 +80,15 @@ class AdditSparepartList extends GetxController {
                       product.inventory.toString(),
                       style: TextStyleList.text3,
                     ),
-                    onTap: () {
+                    onTap: () async {
                       partNumber.value.text = product.no;
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
                       unitMeasure.value.text = product.baseUnitOfMeasure;
+                      await getSparePartDetails(
+                          partNumber.value.text, salesPrice);
+                      priceVat.value.text =
+                          product.priceIncludesVat == true ? '1' : '0';
                       products.clear();
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
@@ -258,11 +262,15 @@ class AdditSparepartList extends GetxController {
                       product.inventory.toString(),
                       style: TextStyleList.text3,
                     ),
-                    onTap: () {
+                    onTap: () async {
                       partNumber.value.text = product.no;
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
                       unitMeasure.value.text = product.baseUnitOfMeasure;
+                      await getSparePartDetails(
+                          partNumber.value.text, salesPrice);
+                      priceVat.value.text =
+                          product.priceIncludesVat == true ? '1' : '0';
                       products.clear();
                       FocusScope.of(context).requestFocus(FocusNode());
                     },

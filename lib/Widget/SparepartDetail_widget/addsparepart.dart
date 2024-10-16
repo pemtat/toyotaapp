@@ -116,12 +116,13 @@ class AddSparePartDetail extends StatelessWidget {
                       product.inventory.toString(),
                       style: TextStyleList.text3,
                     ),
-                    onTap: () {
+                    onTap: () async {
                       partNumber.value.text = product.no;
                       searchPartNumber.value.text = product.no;
                       partDetails.value.text = product.model;
                       unitMeasure.value.text = product.baseUnitOfMeasure;
-                      salesPrice.value.text = product.salesPrice.toString();
+                      await getSparePartDetails(
+                          partNumber.value.text, salesPrice);
                       priceVat.value.text =
                           product.priceIncludesVat == true ? '1' : '0';
                       products.clear();

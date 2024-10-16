@@ -4,6 +4,7 @@ import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Models/notificationhistory_model.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
+import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class NotificationItem extends StatelessWidget {
   final NotificationHistory notification;
@@ -18,15 +19,17 @@ class NotificationItem extends StatelessWidget {
           notification.title ?? '',
           style: TextStyleList.text10,
         ),
+        6.kH,
         Text(
           notification.details ?? '',
           style: TextStyleList.text16,
         ),
+        6.kH,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'TicketID : ${notification.bugId}',
+              'Ticket ID : ${notification.bugId}',
               style: TextStyleList.detailtext1,
             ),
             Text(

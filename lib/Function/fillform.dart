@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Models/sparepartseach.dart';
+import 'package:toyotamobile/Models/sparepartseachdetails_model.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:http/http.dart' as http;
 
@@ -117,6 +119,30 @@ void updateSelectionSub(
 Future<void> fetchProducts(
     String placeNumber, RxBool isLoading, RxList<Product> products) async {
   isLoading(true);
+  String? token = await getToken();
+
+  try {
+    final response = await http.get(
+      Uri.parse(getSparePartSearch(placeNumber)),
+      headers: {'Authorization': token ?? ''},
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = jsonDecode(response.body);
+
+      products.value =
+          responseData.map((job) => Product.fromJson(job)).toList();
+    } else {
+      print('type search');
+    }
+  } finally {
+    isLoading(false);
+  }
+}
+
+Future<void> getSparePartDetails(
+    String placeNumber, Rx<TextEditingController> salesPrice) async {
+  RxList<ProductDetails> productsDetails = <ProductDetails>[].obs;
   String username = usernameProduct;
   String password = passwordProduct;
 
@@ -130,15 +156,17 @@ Future<void> fetchProducts(
     );
 
     if (response.statusCode == 200) {
+      productsDetails.clear();
       List<dynamic> responseData = jsonDecode(response.body);
 
-      products.value =
-          responseData.map((job) => Product.fromJson(job)).toList();
+      productsDetails.value =
+          responseData.map((job) => ProductDetails.fromJson(job)).toList();
+      salesPrice.value.text = productsDetails.first.salesPrice.toString();
     } else {
-      print('type search');
+      salesPrice.value.text = '0';
     }
-  } finally {
-    isLoading(false);
+  } catch (e) {
+    salesPrice.value.text = '0';
   }
 }
 

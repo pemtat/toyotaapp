@@ -184,6 +184,10 @@ String getSparePartbySearch(String partNumber) {
   return '$urlFSM/api/sparepart/search/$partNumber';
 }
 
+String getSparePartSearch(String partNumber) {
+  return '$url/api/rest/jobs/sparepart/search/$partNumber';
+}
+
 String updateBatterySignature() {
   return "$url/api/rest/pm_jobs/update_btr_maintenance_signature";
 }

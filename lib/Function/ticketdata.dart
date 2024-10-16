@@ -1264,7 +1264,7 @@ Future<void> updateJobSparePart(
       };
       createQuotationHistory(jobId, 'tech', bugId, handlerId, '1');
     } else if (option == 'approve') {
-      body = {'tech_manager_status': 1, 'estimate_status': 2};
+      body = {'tech_manager_status': 1};
       createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
       sendNotificationToUser(
           handlerId,
