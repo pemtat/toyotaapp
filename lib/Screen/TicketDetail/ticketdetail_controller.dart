@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
@@ -22,6 +23,7 @@ class TicketDetailController extends GetxController {
   var pdfList = <Map<String, dynamic>>[].obs;
   var issueData = [].obs;
   var reportList = <RepairReportModel>[].obs;
+  var reportBatteryList = <BatteryReportModel>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
   var savedDateStartTime = ''.obs;
   var warrantyInfo = <WarrantybyIdModel>[].obs;
@@ -51,6 +53,7 @@ class TicketDetailController extends GetxController {
     String? token = await getToken();
     await fetchReportData(
         subjobId, token ?? '', reportList, additionalReportList);
+    await fetchBatteryReportData(subjobId, token ?? '', reportBatteryList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
     await fetchUserById(subJobs.first.reporterId ?? '', userData);
     await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
@@ -26,6 +27,7 @@ class JobDetailController extends GetxController {
   final comment = TextEditingController().obs;
   final comment2 = TextEditingController().obs;
   var reportList = <RepairReportModel>[].obs;
+  var reportBatteryList = <BatteryReportModel>[].obs;
   var pdfList = <Map<String, dynamic>>[].obs;
   var subJobSparePart = <SubJobSparePart>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
@@ -69,7 +71,9 @@ class JobDetailController extends GetxController {
       jobId = subjobId;
       await fetchReportData(
           subjobId, token ?? '', reportList, additionalReportList);
-      if (reportList.isNotEmpty || additionalReportList.isNotEmpty) {
+      await fetchBatteryReportData(jobId, token ?? '', reportBatteryList);
+      if ((reportList.isNotEmpty || additionalReportList.isNotEmpty) ||
+          reportBatteryList.isNotEmpty) {
         completeCheck.value = true;
         await fetchSubJobSparePartId();
       }

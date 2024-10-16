@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editfillform_view.dart';
+import 'package:toyotamobile/Screen/EditFillForm2/editfillform2_view.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
 import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
@@ -338,7 +340,7 @@ class TicketDetailView extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const TitleApp(
-                                          text: 'Field Service Report*'),
+                                          text: 'Field Service Report'),
                                       issue.status.id != 90
                                           ? EditButton(
                                               onTap: () {
@@ -371,47 +373,42 @@ class TicketDetailView extends StatelessWidget {
                                               timeEnd: ticketController
                                                   .savedDateEndTime,
                                             ),
-                                            // Obx(() => (ticketController
-                                            //             .subJobSparePart
-                                            //             .isNotEmpty &&
-                                            //         ticketController.reportList
-                                            //                 .first.signature !=
-                                            //             '' &&
-                                            //         ticketController
-                                            //                 .reportList
-                                            //                 .first
-                                            //                 .signaturePad !=
-                                            //             '')
-                                            //     ? Row(
-                                            //         mainAxisAlignment:
-                                            //             MainAxisAlignment.end,
-                                            //         children: [
-                                            //           ButtonColor(
-                                            //             backgroundColor: red4,
-                                            //             title:
-                                            //                 'View Part Detail',
-                                            //             onTap: () {
-                                            //               showDialog(
-                                            //                   context: context,
-                                            //                   builder: (BuildContext
-                                            //                           context) =>
-                                            //                       Obx(() =>
-                                            //                           Material(
-                                            //                             color: Colors
-                                            //                                 .transparent,
-                                            //                             child:
-                                            //                                 SubJobSparePartWidget(
-                                            //                               subJobSparePart: ticketController
-                                            //                                   .subJobSparePart
-                                            //                                   .first,
-                                            //                             ),
-                                            //                           )));
-                                            //             },
-                                            //           ),
-                                            //         ],
-                                            //       )
-                                            //     : Container()),
                                           ],
+                                        )
+                                      : Container())
+                                ],
+                              ),
+                              BoxContainer(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleApp(
+                                          text: 'Battery Maintenance Report'),
+                                      issue.status.id != 90
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(() => EditFillFormView2(
+                                                    jobId: ticketId,
+                                                    jobIssueId: jobId,
+                                                    readOnly: 'yes'));
+                                              },
+                                            )
+                                          : Container()
+                                    ],
+                                  ),
+                                  Obx(() => ticketController
+                                          .reportBatteryList.isNotEmpty
+                                      ? ShowBatteryReportWidget(
+                                          reportData: ticketController
+                                              .reportBatteryList,
+                                          bugId: jobId,
+                                          pdfOption: 'fieldreport_btr',
+                                          timeStart: ticketController
+                                              .savedDateStartTime,
+                                          timeEnd:
+                                              ticketController.savedDateEndTime,
                                         )
                                       : Container())
                                 ],

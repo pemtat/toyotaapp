@@ -17,12 +17,14 @@ import 'package:toyotamobile/Widget/title_widget.dart';
 class ShowBatteryReportWidget extends StatelessWidget {
   final RxList<BatteryReportModel> reportData;
   final String bugId;
+  final String pdfOption;
   final RxString timeStart;
   final RxString timeEnd;
   const ShowBatteryReportWidget({
     super.key,
     required this.reportData,
     required this.bugId,
+    required this.pdfOption,
     required this.timeStart,
     required this.timeEnd,
   });
@@ -395,7 +397,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     PdfFile(
                       name: 'Battery Maintenance Report',
                       path: bugId,
-                      option: 'btr',
+                      option: pdfOption == 'btr' ? 'btr' : 'fieldreport_btr',
                     )
                   ],
                 ),

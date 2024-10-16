@@ -436,6 +436,68 @@ Future<void> fetchReportData(
   }
 }
 
+Future<void> fetchJobBatteryReportData(
+  String id,
+  String token,
+  RxList<BatteryReportModel> reportBatteryList,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getJobBatteryReportById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      String responseBody = response.body;
+      Map<String, dynamic>? responseData = jsonDecode(responseBody);
+      BtrMaintenance? btrMaintenance;
+      List<BtrSpareparts>? btrSpareparts;
+      List<BtrConditions>? btrConditions;
+      List<SpecicVoltageCheck>? specicVoltageCheck;
+
+      if (responseData != null) {
+        reportBatteryList.clear();
+        btrMaintenance = responseData['btr_maintenance'] != null
+            ? BtrMaintenance.fromJson(responseData['btr_maintenance'])
+            : null;
+
+        btrSpareparts = responseData['btr_spareparts'] != null
+            ? List<BtrSpareparts>.from(responseData['btr_spareparts']
+                .map((x) => BtrSpareparts.fromJson(x)))
+            : [];
+
+        btrConditions = responseData['btr_conditions'] != null
+            ? List<BtrConditions>.from(responseData['btr_conditions']
+                .map((x) => BtrConditions.fromJson(x)))
+            : [];
+
+        specicVoltageCheck = responseData['specic_voltage_check'] != null
+            ? List<SpecicVoltageCheck>.from(responseData['specic_voltage_check']
+                .map((x) => SpecicVoltageCheck.fromJson(x)))
+            : [];
+      } else {
+        print('No data found');
+      }
+
+      BatteryReportModel batteryReport = BatteryReportModel(
+        btrMaintenance: btrMaintenance,
+        btrSpareparts: btrSpareparts,
+        btrConditions: btrConditions,
+        specicVoltageCheck: specicVoltageCheck,
+      );
+
+      reportBatteryList.add(batteryReport);
+      reportBatteryList.refresh();
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
 Future<void> fetchBatteryReportData(
   String id,
   String token,
@@ -594,6 +656,8 @@ Future<void> fetchPdfReport(
       apiUrl = getPdfEstimateReportById(id);
     } else if (option == 'fieldreport') {
       apiUrl = getPdfFieldReportById(id);
+    } else if (option == 'fieldreport_btr') {
+      apiUrl = getPdfJobsBtrReportById(id);
     } else if (option == 'btr') {
       apiUrl = getPdfBtrReportById(id);
     } else {
@@ -617,6 +681,9 @@ Future<void> fetchPdfReport(
         pdfReport.refresh();
       } else if (responseBody.containsKey('pdf_btr')) {
         pdfReport.value = responseBody['pdf_btr'];
+        pdfReport.refresh();
+      } else if (responseBody.containsKey('pdf_jobs_btr')) {
+        pdfReport.value = responseBody['pdf_jobs_btr'];
         pdfReport.refresh();
       } else if (responseBody.containsKey('pdf_report')) {
         pdfReport.value = responseBody['pdf_report'];

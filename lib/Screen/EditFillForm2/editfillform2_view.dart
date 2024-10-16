@@ -33,9 +33,10 @@ import 'package:get/get.dart';
 class EditFillFormView2 extends StatelessWidget {
   final String jobId;
   final String? readOnly;
-
-  EditFillFormView2({super.key, required this.jobId, this.readOnly}) {
-    fillformController2.fetchData(jobId, readOnly);
+  final String? jobIssueId;
+  EditFillFormView2(
+      {super.key, required this.jobId, this.readOnly, this.jobIssueId}) {
+    fillformController2.fetchData(jobId, readOnly, jobIssueId);
   }
   final BatteryInformation batteryInfoController =
       Get.put(BatteryInformation());

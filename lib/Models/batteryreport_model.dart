@@ -68,6 +68,7 @@ class BatteryReportModel {
 class BtrMaintenance {
   String? id;
   String? jobId;
+  String? jobIssueId;
   String? batteryBand;
   String? batteryModel;
   String? manufacturerNo;
@@ -103,6 +104,7 @@ class BtrMaintenance {
   BtrMaintenance({
     this.id,
     this.jobId,
+    this.jobIssueId,
     this.batteryBand,
     this.batteryModel,
     this.manufacturerNo,
@@ -139,6 +141,7 @@ class BtrMaintenance {
   BtrMaintenance.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     jobId = json['job_id'];
+    jobIssueId = json['job_issue_id'];
     batteryBand = json['battery_band'];
     batteryModel = json['battery_model'];
     manufacturerNo = json['manufacturer_no'];
@@ -176,6 +179,7 @@ class BtrMaintenance {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['job_id'] = jobId;
+    data['job_issue_id'] = jobIssueId;
     data['battery_band'] = batteryBand;
     data['battery_model'] = batteryModel;
     data['manufacturer_no'] = manufacturerNo;

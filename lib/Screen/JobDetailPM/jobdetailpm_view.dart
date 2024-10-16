@@ -449,6 +449,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                 reportData:
                                                     jobController.reportList,
                                                 bugId: ticketId.toString(),
+                                                pdfOption: 'btr',
                                                 timeStart: jobController
                                                     .savedDateStartTime,
                                                 timeEnd: jobController

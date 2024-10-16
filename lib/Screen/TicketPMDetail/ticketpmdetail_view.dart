@@ -236,6 +236,7 @@ class TicketPMDetailView extends StatelessWidget {
                                       ? ShowBatteryReportWidget(
                                           reportData: jobController.reportList,
                                           bugId: ticketId.toString(),
+                                          pdfOption: 'btr',
                                           timeStart:
                                               jobController.savedDateStartTime,
                                           timeEnd:

@@ -32,6 +32,10 @@ String getPdfBtrReportById(String issueId) {
   return '$url/api/rest/pm_jobs/pdf_btr/$issueId';
 }
 
+String getPdfJobsBtrReportById(String issueId) {
+  return '$url/api/rest/pm_jobs/pdf_fieldreport_btr/$issueId';
+}
+
 String getPdfFieldReportById(String issueId) {
   return '$url/api/rest/pm_jobs/pdf_fieldreport/$issueId';
 }

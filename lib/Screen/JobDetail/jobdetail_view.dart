@@ -3,6 +3,8 @@ import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editfillform_view.dart';
+import 'package:toyotamobile/Screen/EditFillForm2/editfillform2_view.dart';
+import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/Fillform/fillform_view.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/Sparepart/sparepart_controller.dart';
@@ -10,6 +12,7 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
 import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
@@ -587,6 +590,95 @@ class JobDetailView extends StatelessWidget {
                                             ],
                                           )
                                         : Container()),
+                                  ],
+                                ),
+                                8.kH,
+                                BoxContainer(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const TitleApp(
+                                            text: 'Battery Maintenance Report'),
+                                        Obx(() => jobController
+                                                .reportBatteryList.isNotEmpty
+                                            ? EditButton(
+                                                onTap: () {
+                                                  Get.to(
+                                                      () => EditFillFormView2(
+                                                            jobId: ticketId,
+                                                            jobIssueId: jobId
+                                                                .toString(),
+                                                          ));
+                                                },
+                                              )
+                                            : AddButton(
+                                                onTap: () {
+                                                  Get.to(() => FillFormView2(
+                                                        jobId: ticketId,
+                                                        jobIssueId:
+                                                            jobId.toString(),
+                                                      ));
+                                                },
+                                              )),
+                                      ],
+                                    ),
+                                    Text(
+                                      'Please fill the bettery maintenance report',
+                                      style: TextStyleList.text16,
+                                    ),
+                                    Obx(() => jobController
+                                            .reportBatteryList.isNotEmpty
+                                        ? Column(
+                                            children: [
+                                              ShowBatteryReportWidget(
+                                                reportData: jobController
+                                                    .reportBatteryList,
+                                                bugId: jobId ?? '',
+                                                pdfOption: 'fieldreport_btr',
+                                                timeStart: jobController
+                                                    .savedDateStartTime,
+                                                timeEnd: jobController
+                                                    .savedDateEndTime,
+                                              ),
+                                              if (jobController
+                                                          .reportBatteryList
+                                                          .first
+                                                          .btrMaintenance!
+                                                          .signature ==
+                                                      null &&
+                                                  jobController
+                                                          .reportBatteryList
+                                                          .first
+                                                          .btrMaintenance!
+                                                          .signaturePad ==
+                                                      null)
+                                                Column(
+                                                  children: [
+                                                    5.kH,
+                                                    ButtonRed(
+                                                      title: 'บันทึกลายเซ็น',
+                                                      onTap: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              SignatureWidget(
+                                                            jobId: jobId
+                                                                .toString(),
+                                                            ticketId: ticketId
+                                                                .toString(),
+                                                            option: 'battery',
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
+                                                )
+                                            ],
+                                          )
+                                        : Container())
                                   ],
                                 ),
                               ],

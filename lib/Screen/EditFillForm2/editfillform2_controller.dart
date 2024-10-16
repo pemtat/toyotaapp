@@ -20,7 +20,9 @@ import 'package:toyotamobile/Screen/EditFillForm2/editdetail/forklife_informatio
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/repairpm.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/specic_gravity.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
+import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
@@ -32,6 +34,7 @@ import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 class EditFillformController2 extends GetxController {
   var jobId = ''.obs;
   var readOnly = ''.obs;
+  var jobIssueId = ''.obs;
   final customerName = TextEditingController().obs;
   final contactPerson = TextEditingController().obs;
   final division = TextEditingController().obs;
@@ -47,6 +50,8 @@ class EditFillformController2 extends GetxController {
       Get.put(BatteryInformation());
   final JobDetailControllerPM jobDetailControllerPM =
       Get.put(JobDetailControllerPM());
+  final JobDetailController jobDetailController =
+      Get.put(JobDetailController());
   final BatteryUsage batteryUsageController = Get.put(BatteryUsage());
   final SpecicGravity specicGravityController = Get.put(SpecicGravity());
   final CorrectiveAction correctiveActionController =
@@ -60,6 +65,8 @@ class EditFillformController2 extends GetxController {
   final UserController userController = Get.put(UserController());
   final TicketPmDetailController ticketPmDetailController =
       Get.put(TicketPmDetailController());
+  final TicketDetailController ticketDetailController =
+      Get.put(TicketDetailController());
 
   var batteryReportList = <BatteryReportModel>[].obs;
 
@@ -84,7 +91,7 @@ class EditFillformController2 extends GetxController {
     );
   }
 
-  void fetchData(String jobId, readOnly) async {
+  void fetchData(String jobId, readOnly, jobIssueId) async {
     this.jobId.value = jobId;
     if (readOnly != null) {
       this.readOnly.value = readOnly;
@@ -92,9 +99,20 @@ class EditFillformController2 extends GetxController {
       this.readOnly.value = 'no';
     }
 
+    if (jobIssueId == null) {
+      this.jobIssueId.value = '';
+    } else {
+      this.jobIssueId.value = jobIssueId;
+    }
+
     String? token = await getToken();
     await userController.fetchData();
-    await fetchBatteryReportData(jobId, token ?? '', batteryReportList);
+    if (this.jobIssueId.value == '') {
+      await fetchBatteryReportData(jobId, token ?? '', batteryReportList);
+    } else {
+      await fetchBatteryReportData(
+          this.jobIssueId.value, token ?? '', batteryReportList);
+    }
 
     await fetchUserByZone(
       userController.userInfo.first.zone,
@@ -434,7 +452,7 @@ class EditFillformController2 extends GetxController {
       division.value.text = '-';
     }
     final Map<String, dynamic> data = {
-      "job_id": jobId.toString(),
+      "job_id": jobIssueId.value != '' ? jobIssueId.value : jobId.toString(),
       "battery_band": batteryinformation.batteryBand,
       "battery_model": batteryinformation.batteryModel,
       "manufacturer_no": batteryinformation.mfgNo,
@@ -482,16 +500,27 @@ class EditFillformController2 extends GetxController {
       if (response.statusCode == 200) {
         showWaitMessage();
         if (readOnly.value == 'yes') {
-          await fetchBatteryReportData(jobId.toString(), token ?? '',
-              ticketPmDetailController.reportList);
+          if (jobIssueId.value == '') {
+            await fetchBatteryReportData(jobId.toString(), token ?? '',
+                ticketPmDetailController.reportList);
+          } else {
+            await fetchBatteryReportData(jobIssueId.value, token ?? '',
+                ticketDetailController.reportBatteryList);
+          }
         } else {
           // await jobDetailControllerPM.fetchData(jobId.toString());
           // await fetchCommentJobInfo(
           //     jobId.toString(), token ?? '', jobDetailControllerPM.comment);
           // jobDetailControllerPM.commentCheck.value = true;
-          await fetchBatteryReportData(
-              jobId.toString(), token ?? '', jobDetailControllerPM.reportList);
-          jobDetailControllerPM.completeCheck.value = true;
+          if (jobIssueId.value == '') {
+            await fetchBatteryReportData(jobId.toString(), token ?? '',
+                jobDetailControllerPM.reportList);
+            jobDetailControllerPM.completeCheck.value = true;
+          } else {
+            await fetchBatteryReportData(jobIssueId.value, token ?? '',
+                jobDetailController.reportBatteryList);
+            jobDetailController.completeCheck.value = true;
+          }
         }
         showSaveMessage();
       } else {
