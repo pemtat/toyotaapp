@@ -110,7 +110,7 @@ class EditFillformController2 extends GetxController {
     if (this.jobIssueId.value == '') {
       await fetchBatteryReportData(jobId, token ?? '', batteryReportList);
     } else {
-      await fetchBatteryReportData(
+      await fetchJobBatteryReportData(
           this.jobIssueId.value, token ?? '', batteryReportList);
     }
 
@@ -310,7 +310,9 @@ class EditFillformController2 extends GetxController {
 
   Future<void> saveReport(BuildContext context) async {
     String? token = await getToken();
-    String apiUrl = updateBatteryReport();
+    String apiUrl = jobIssueId.value == ''
+        ? updateBatteryReport()
+        : updateJobsBatteryReport();
 
     saveCurrentDateTime(saveCompletedtime);
     if (correctiveActionController.correctiveAction.isNotEmpty) {
@@ -452,7 +454,8 @@ class EditFillformController2 extends GetxController {
       division.value.text = '-';
     }
     final Map<String, dynamic> data = {
-      "job_id": jobIssueId.value != '' ? jobIssueId.value : jobId.toString(),
+      "job_id": jobId.toString(),
+      if (jobIssueId.value != '') "job_issue_id": jobIssueId.value,
       "battery_band": batteryinformation.batteryBand,
       "battery_model": batteryinformation.batteryModel,
       "manufacturer_no": batteryinformation.mfgNo,
@@ -504,7 +507,7 @@ class EditFillformController2 extends GetxController {
             await fetchBatteryReportData(jobId.toString(), token ?? '',
                 ticketPmDetailController.reportList);
           } else {
-            await fetchBatteryReportData(jobIssueId.value, token ?? '',
+            await fetchJobBatteryReportData(jobIssueId.value, token ?? '',
                 ticketDetailController.reportBatteryList);
           }
         } else {
@@ -517,7 +520,7 @@ class EditFillformController2 extends GetxController {
                 jobDetailControllerPM.reportList);
             jobDetailControllerPM.completeCheck.value = true;
           } else {
-            await fetchBatteryReportData(jobIssueId.value, token ?? '',
+            await fetchJobBatteryReportData(jobIssueId.value, token ?? '',
                 jobDetailController.reportBatteryList);
             jobDetailController.completeCheck.value = true;
           }

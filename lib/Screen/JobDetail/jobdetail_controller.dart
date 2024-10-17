@@ -71,7 +71,7 @@ class JobDetailController extends GetxController {
       jobId = subjobId;
       await fetchReportData(
           subjobId, token ?? '', reportList, additionalReportList);
-      await fetchBatteryReportData(jobId, token ?? '', reportBatteryList);
+      await fetchJobBatteryReportData(jobId, token ?? '', reportBatteryList);
       if ((reportList.isNotEmpty || additionalReportList.isNotEmpty) ||
           reportBatteryList.isNotEmpty) {
         completeCheck.value = true;

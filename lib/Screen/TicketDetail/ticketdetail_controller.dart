@@ -53,7 +53,7 @@ class TicketDetailController extends GetxController {
     String? token = await getToken();
     await fetchReportData(
         subjobId, token ?? '', reportList, additionalReportList);
-    await fetchBatteryReportData(subjobId, token ?? '', reportBatteryList);
+    await fetchJobBatteryReportData(subjobId, token ?? '', reportBatteryList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
     await fetchUserById(subJobs.first.reporterId ?? '', userData);
     await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);

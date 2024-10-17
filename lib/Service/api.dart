@@ -200,6 +200,10 @@ String getSparePartbySearch(String partNumber) {
   return '$urlFSM/api/sparepart/search/$partNumber';
 }
 
+String updateJobsBatterySignature() {
+  return "$url/api/rest/jobs/jobs_update_btr_maintenance_signature";
+}
+
 String updateBatterySignature() {
   return "$url/api/rest/pm_jobs/update_btr_maintenance_signature";
 }

@@ -1173,6 +1173,41 @@ Future<void> changeIssueSignaturePM(
   }
 }
 
+Future<void> updateJobSignatureBattery(
+  String issueId,
+  String saveCompletedtime,
+  String signature,
+  String signaturePad
+) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {};
+
+    body = {
+      "job_issue_id": issueId,
+      "signature": signature,
+      "signature_pad": signaturePad,
+      "save_time": saveCompletedtime
+    };
+
+    final response2 = await http.post(
+      Uri.parse(updateJobsBatterySignature()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+    if (response2.statusCode == 200) {
+      print('update succesful');
+    } else {
+      return;
+    }
+  } catch (e) {
+    print(e);
+  }
+}
+
 void saveCurrentDateTime(Rx<String> datetime) {
   DateTime now = DateTime.now();
   datetime.value = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);

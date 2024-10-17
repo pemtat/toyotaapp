@@ -99,13 +99,12 @@ class SignatureWidget extends StatelessWidget {
               saveCurrentDateTime(saveCompletedtime);
               if (ticketId != null) {
                 if (option == 'battery') {
-                  await changeIssueSignaturePM(
+                  await updateJobSignatureBattery(
                       jobId,
                       saveCompletedtime.value,
                       signatureController.value.text,
-                      signaturePad.value,
-                      'battery');
-                  await fetchBatteryReportData(
+                      signaturePad.value);
+                  await fetchJobBatteryReportData(
                       jobId, token ?? '', jobController.reportBatteryList);
                 } else {
                   await updateSignatureJob(

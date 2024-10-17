@@ -145,7 +145,9 @@ class FillformController2 extends GetxController {
 
   Future<void> saveReport(BuildContext context) async {
     String? token = await getToken();
-    String apiUrl = createBatteryReport();
+    String apiUrl = jobIssueId.value == ''
+        ? createBatteryReport()
+        : createJobsBatteryReport();
 
     saveCurrentDateTime(saveCompletedtime);
     if (correctiveActionController.correctiveAction.isNotEmpty) {
@@ -287,7 +289,8 @@ class FillformController2 extends GetxController {
     }
 
     final Map<String, dynamic> data = {
-      "job_id": jobIssueId.value != '' ? jobIssueId.value : jobId.toString(),
+      "job_id": jobId.toString(),
+      if (jobIssueId.value != '') "job_issue_id": jobIssueId.value,
       "battery_band": batteryinformation.batteryBand,
       "battery_model": batteryinformation.batteryModel,
       "manufacturer_no": batteryinformation.mfgNo,
@@ -345,7 +348,7 @@ class FillformController2 extends GetxController {
               jobId.toString(), token ?? '', jobDetailControllerPM.reportList);
           jobDetailControllerPM.completeCheck.value = true;
         } else {
-          await fetchBatteryReportData(jobIssueId.value, token ?? '',
+          await fetchJobBatteryReportData(jobIssueId.value, token ?? '',
               jobDetailController.reportBatteryList);
           jobDetailController.completeCheck.value = true;
         }
