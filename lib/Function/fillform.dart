@@ -247,3 +247,37 @@ Future<String> fetchProductsReturnString(String placeNumber) async {
     return 'N/A';
   }
 }
+
+Future<String> fetchProductsReturnString2(String placeNumber) async {
+  String? token = await getToken();
+  RxList<Product> products = <Product>[].obs;
+  if (placeNumber != '-') {
+    try {
+      final response = await http.get(
+        Uri.parse(getSparePartSearch(placeNumber)),
+        headers: {'Authorization': token ?? ''},
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+
+        products.value =
+            responseData.map((job) => Product.fromJson(job)).toList();
+
+        if (products.isNotEmpty) {
+          return products.first.inventory.toString();
+        } else {
+          return '0';
+        }
+      } else {
+        print('Error: ${response.statusCode}');
+        return '0';
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+      return '0';
+    }
+  } else {
+    return '0';
+  }
+}

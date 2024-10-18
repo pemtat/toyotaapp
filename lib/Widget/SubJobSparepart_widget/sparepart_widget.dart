@@ -112,7 +112,7 @@ class SparePartDetail extends StatelessWidget {
                                         Text(data.quantity ?? '0'),
                                         const Text('/'),
                                         FutureBuilder<String>(
-                                          future: fetchProductsReturnString(
+                                          future: fetchProductsReturnString2(
                                               data.partNumber ?? ''),
                                           builder: (BuildContext context,
                                               AsyncSnapshot<String> snapshot) {
@@ -186,7 +186,7 @@ class SparePartDetail extends StatelessWidget {
                                         Text(data.quantity ?? '0'),
                                         const Text('/'),
                                         FutureBuilder<String>(
-                                          future: fetchProductsReturnString(
+                                          future: fetchProductsReturnString2(
                                               data.partNumber ?? ''),
                                           builder: (BuildContext context,
                                               AsyncSnapshot<String> snapshot) {

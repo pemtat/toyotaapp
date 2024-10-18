@@ -1265,15 +1265,15 @@ Future<void> updateJobSparePart(
       createQuotationHistory(jobId, 'tech', bugId, handlerId, '1');
     } else if (option == 'approve') {
       body = {'tech_manager_status': 1};
-      createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
-      sendNotificationToUser(
-          handlerId,
-          techHandlerId,
-          'Job ID : $jobId',
-          'ใบเบิก Spare Part ของคุณผ่านการอนุมัติเเล้ว',
-          reporterId,
-          bugId,
-          jobId);
+      // createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
+      // sendNotificationToUser(
+      //     handlerId,
+      //     techHandlerId,
+      //     'Job ID : $jobId',
+      //     'ใบเบิก Spare Part ของคุณผ่านการอนุมัติเเล้ว',
+      //     reporterId,
+      //     bugId,
+      //     jobId);
     } else if (option.contains('approve_add_sales')) {
       var parts = option.split(':');
       var salesId = parts[1].trim();
