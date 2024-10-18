@@ -74,7 +74,9 @@ class NotificationView extends StatelessWidget {
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: jobController.notificationHistory.length,
+                  itemCount: jobController.notificationHistory.length > 10
+                      ? 10
+                      : jobController.notificationHistory.length,
                   itemBuilder: (context, index) {
                     final notification =
                         jobController.notificationHistory[index];

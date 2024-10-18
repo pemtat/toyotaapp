@@ -92,12 +92,11 @@ Future<void> _showNotification(RemoteMessage message) async {
   // final Map<String, dynamic> gcmData = data['GCM']['data'];
 
   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-    channel.id,
-    channel.name,
-    channelDescription: channel.description,
-    importance: Importance.high,
-    priority: Priority.high,
-  );
+      channel.id, channel.name,
+      channelDescription: channel.description,
+      importance: Importance.high,
+      priority: Priority.high,
+      color: red1);
 
   var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(

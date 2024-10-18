@@ -126,7 +126,7 @@ class AddSparePartDetail extends StatelessWidget {
                       priceVat.value.text =
                           product.priceIncludesVat == true ? '1' : '0';
                       products.clear();
-                      FocusScope.of(context).requestFocus(FocusNode());
+                      // FocusScope.of(context).requestFocus(FocusNode());
                     },
                   );
                 },
