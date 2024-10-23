@@ -74,12 +74,12 @@ class PendingTaskView extends StatelessWidget {
           var subJob = penddingTaskController.subJobs.isNotEmpty
               ? penddingTaskController.subJobs.first
               : null;
-          var customerInfo = penddingTaskController.customerInfo.isNotEmpty
-              ? penddingTaskController.customerInfo.first
-              : null;
-          var userData = penddingTaskController.userData.isNotEmpty
-              ? penddingTaskController.userData.first.users!.first
-              : null;
+          // var customerInfo = penddingTaskController.customerInfo.isNotEmpty
+          //     ? penddingTaskController.customerInfo.first
+          //     : null;
+          // var userData = penddingTaskController.userData.isNotEmpty
+          //     ? penddingTaskController.userData.first.users!.first
+          //     : null;
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -121,38 +121,30 @@ class PendingTaskView extends StatelessWidget {
                             MoreDetailArrow(
                                 moreDetail: penddingTaskController.moreDetail),
                             8.kH,
-                            Obx(
-                              () {
-                                if (penddingTaskController
-                                    .warrantyInfo.isEmpty) {
-                                  return Center(
-                                      child: WarrantyBox(
-                                          model: '-',
-                                          serial: '-',
-                                          status: 0,
-                                          filePdf: filePdf));
-                                } else {
-                                  var warrantyInfo =
-                                      penddingTaskController.warrantyInfo.first;
-                                  return WarrantyBox(
-                                      model: warrantyInfo.model ?? '',
-                                      serial: warrantyInfo.serial ?? '',
-                                      status: warrantyInfo.warrantystatus == '1'
-                                          ? 1
-                                          : 0,
-                                      filePdf: filePdf);
-                                }
-                              },
-                            ),
+                            subJob == null
+                                ? Center(
+                                    child: WarrantyBox(
+                                        model: '-',
+                                        serial: '-',
+                                        status: 0,
+                                        filePdf: filePdf))
+                                : WarrantyBox(
+                                    model: subJob.model ?? '-',
+                                    serial: subJob.serialNo ?? '-',
+                                    status:
+                                        subJob.warrantyStatus == '1' ? 1 : 0,
+                                    filePdf: filePdf),
                             8.kH,
-                            CustomerInformation(
-                                context: context,
-                                contactName: issue.reporter.realName,
-                                email: issue.reporter.email,
-                                phoneNumber: userData!.phoneNo ?? '-',
-                                location: customerInfo!.customerAddress ?? '-',
-                                companyName: customerInfo.customerName ?? '',
-                                onTap: () {}),
+                            if (subJob != null)
+                              CustomerInformation(
+                                  context: context,
+                                  contactName: subJob.realName ?? '-',
+                                  email: subJob.email ?? '-',
+                                  phoneNumber: subJob.phoneNumber ?? '-',
+                                  location: subJob.address ?? '-',
+                                  companyName: subJob.companyName ?? '-',
+                                  onTap: () {}),
+
                             8.kH,
                             // AddNote(
                             //   notePic: penddingTaskController.notePic,

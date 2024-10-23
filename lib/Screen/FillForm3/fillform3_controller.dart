@@ -94,14 +94,12 @@ class FillformController3 extends GetxController {
       userByZone,
     );
 
-    customerName.value.text =
-        jobDetailControllerPM.customer.value.customerName ?? '';
-
-    if (jobDetailControllerPM.warrantyInfoList.isNotEmpty) {
-      product.value.text =
-          jobDetailControllerPM.warrantyInfoList.first.productName;
-      model.value.text = jobDetailControllerPM.warrantyInfoList.first.model;
-      serialNo.value.text = jobDetailControllerPM.warrantyInfoList.first.serial;
+    if (jobDetailControllerPM.pmJobs.isNotEmpty) {
+      customerName.value.text =
+          jobDetailControllerPM.pmJobs.first.customerName ?? '';
+      product.value.text = jobDetailControllerPM.pmJobs.first.tNo ?? '';
+      model.value.text = jobDetailControllerPM.pmJobs.first.tModel ?? '';
+      serialNo.value.text = jobDetailControllerPM.pmJobs.first.serialNo ?? '';
     }
   }
 

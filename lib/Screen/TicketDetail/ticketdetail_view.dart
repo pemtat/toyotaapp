@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editfillform_view.dart';
+import 'package:toyotamobile/Screen/EditFillForm2/editfillform2_view.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
 import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
@@ -69,12 +71,12 @@ class TicketDetailView extends StatelessWidget {
             var subJob = ticketController.subJobs.isNotEmpty
                 ? ticketController.subJobs.first
                 : null;
-            var customerInfo = ticketController.customerInfo.isNotEmpty
-                ? ticketController.customerInfo.first
-                : null;
-            var userData = ticketController.userData.isNotEmpty
-                ? ticketController.userData.first.users!.first
-                : null;
+            // var customerInfo = ticketController.customerInfo.isNotEmpty
+            //     ? ticketController.customerInfo.first
+            //     : null;
+            // var userData = ticketController.userData.isNotEmpty
+            //     ? ticketController.userData.first.users!.first
+            //     : null;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -168,50 +170,35 @@ class TicketDetailView extends StatelessWidget {
                                               moreDetail:
                                                   ticketController.moreDetail),
                                           8.kH,
-                                          Obx(
-                                            () {
-                                              if (ticketController
-                                                  .warrantyInfo.isEmpty) {
-                                                return Center(
-                                                    child: WarrantyBox(
-                                                        model: '-',
-                                                        serial: '-',
-                                                        status: 0,
-                                                        filePdf: filePdf));
-                                              } else {
-                                                var warrantyInfo =
-                                                    ticketController
-                                                        .warrantyInfo.first;
-                                                return WarrantyBox(
-                                                    model: warrantyInfo.model ??
-                                                        '',
-                                                    serial:
-                                                        warrantyInfo.serial ??
-                                                            '',
-                                                    status: warrantyInfo
-                                                                .warrantystatus ==
-                                                            '1'
-                                                        ? 1
-                                                        : 0,
-                                                    filePdf: filePdf);
-                                              }
-                                            },
-                                          ),
+                                          subJob == null
+                                              ? Center(
+                                                  child: WarrantyBox(
+                                                      model: '-',
+                                                      serial: '-',
+                                                      status: 0,
+                                                      filePdf: filePdf))
+                                              : WarrantyBox(
+                                                  model: subJob.model ?? '',
+                                                  serial: subJob.serialNo ?? '',
+                                                  status:
+                                                      subJob.warrantyStatus ==
+                                                              '1'
+                                                          ? 1
+                                                          : 0,
+                                                  filePdf: filePdf),
                                           8.kH,
-                                          CustomerInformation(
-                                              context: context,
-                                              contactName:
-                                                  issue.reporter.realName,
-                                              email: issue.reporter.email,
-                                              phoneNumber:
-                                                  userData!.phoneNo ?? '-',
-                                              location: customerInfo!
-                                                      .customerAddress ??
-                                                  '-',
-                                              companyName:
-                                                  customerInfo.customerName ??
-                                                      '',
-                                              onTap: () {}),
+                                          if (subJob != null)
+                                            CustomerInformation(
+                                                context: context,
+                                                contactName:
+                                                    subJob.realName ?? '',
+                                                email: subJob.email ?? '',
+                                                phoneNumber:
+                                                    subJob.phoneNumber ?? '',
+                                                location: subJob.address ?? '',
+                                                companyName:
+                                                    subJob.companyName ?? '',
+                                                onTap: () {}),
                                           // if (ticketController
                                           //     .notesFiles.isNotEmpty)
                                           //   8.kH,
@@ -414,6 +401,42 @@ class TicketDetailView extends StatelessWidget {
                                                   )
                                                 : Container()),
                                           ],
+                                        )
+                                      : Container())
+                                ],
+                              ),
+                              10.kH,
+                              BoxContainer(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleApp(
+                                          text: 'Battery Maintenance Report'),
+                                      issue.status.id != 90
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(() => EditFillFormView2(
+                                                    jobId: ticketId,
+                                                    jobIssueId: jobId,
+                                                    readOnly: 'yes'));
+                                              },
+                                            )
+                                          : Container()
+                                    ],
+                                  ),
+                                  Obx(() => ticketController
+                                          .reportBatteryList.isNotEmpty
+                                      ? ShowBatteryReportWidget(
+                                          reportData: ticketController
+                                              .reportBatteryList,
+                                          bugId: jobId,
+                                          pdfOption: 'fieldreport_btr',
+                                          timeStart: ticketController
+                                              .savedDateStartTime,
+                                          timeEnd:
+                                              ticketController.savedDateEndTime,
                                         )
                                       : Container())
                                 ],

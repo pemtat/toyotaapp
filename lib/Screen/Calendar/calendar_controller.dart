@@ -2,14 +2,10 @@ import 'package:cell_calendar/cell_calendar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
-import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
-import 'package:toyotamobile/Models/userinfobyid_model.dart';
-import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 
 enum EventType {
@@ -82,13 +78,15 @@ class CalendarController extends GetxController {
           "status": stringToStatus(pm.status ?? ''),
           "task": '',
           "customerName": pm.customerName,
-          'warrantyStatus': '',
+          'warrantyStatus': pm.tWarranty,
           "date": formatDateTimeCut(pm.dueDate ?? ''),
           'reporterId': pm.customerNo,
           "description": pm.description,
           "location": 'Service Zone ${pm.serviceZoneCode}',
           "serialNo": pm.serialNo,
+          "model": pm.tModel ?? '-',
           "type": EventType.PM,
+          "address": pm.address,
         };
 
         bool isDuplicate = tempEvents[dayKey]?.any((event) =>
@@ -138,13 +136,13 @@ class CalendarController extends GetxController {
 
         final formattedTime = DateFormat('hh:mm a').format(jobDate);
 
-        String? token = await getToken();
-        var warrantyInfo = <WarrantybyIdModel>[].obs;
+        // String? token = await getToken();
+        // var warrantyInfo = <WarrantybyIdModel>[].obs;
 
-        var userData = <UserById>[].obs;
-        await fetchUserById(job.reporterId ?? '', userData);
-        await fetchWarrantyById(
-            job.bugId.toString(), token ?? '', warrantyInfo);
+        // var userData = <UserById>[].obs;
+        // await fetchUserById(job.reporterId ?? '', userData);
+        // await fetchWarrantyById(
+        //     job.bugId.toString(), token ?? '', warrantyInfo);
         var jobDateString = job.dueDate == null ? DateTime.now() : job.dueDate;
         final eventData = {
           "jobid": job.id.toString(),
@@ -152,20 +150,16 @@ class CalendarController extends GetxController {
           "time": formattedTime,
           "techStatus": job.techStatus,
           "status": stringToStatus(job.status ?? ''),
-          "customerName": userData.first.users!.first.realName,
+          "customerName": job.realName ?? '',
           "companyName": job.companyName ?? '',
           "task": job.description,
-          "model": warrantyInfo.isEmpty || warrantyInfo.first.model == null
-              ? '-'
-              : warrantyInfo.first.model,
+          "model": job.model ?? '-',
           "date": jobDateString,
           'warrantyStatus': '',
           'reporterId': job.reporterId,
           "description": job.summaryBug,
-          "location": 'Bangkok',
-          "serialNo": warrantyInfo.isEmpty || warrantyInfo.first.serial == null
-              ? '-'
-              : warrantyInfo.first.serial,
+          "location": job.address ?? '',
+          "serialNo": job.serialNo ?? '',
           "type": EventType.Job,
         };
 

@@ -92,7 +92,9 @@ class PendingTaskViewPM extends StatelessWidget {
             var filePdf =
                 jobController.pdfList.isNotEmpty ? jobController.pdfList : null;
             var issue = jobController.issueData.first;
-
+            var pmJobs = jobController.pmJobs.isNotEmpty
+                ? jobController.pmJobs.first
+                : null;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -111,62 +113,46 @@ class PendingTaskViewPM extends StatelessWidget {
                                   jobController.moreTicketDetail.value =
                                       !jobController.moreTicketDetail.value;
                                 },
-                                child:
-                                    Obx(() => jobController.issueData.isNotEmpty
-                                        ? BoxContainer(
-                                            children: [
-                                              PMJobInfo(
-                                                  ticketId: issue.id,
-                                                  dateTime: issue.dueDate ??
-                                                      getFormattedDate(
-                                                          DateTime.now()),
-                                                  reporter: '',
-                                                  summary:
-                                                      '${issue.getCustomFieldValue("Customer Name")}',
-                                                  description:
-                                                      'Service Zone :  ${userController.userInfo.first.zone} ',
-                                                  detail: issue.description,
-                                                  status: stringToStatus(issue
-                                                      .status.id
-                                                      .toString()),
-                                                  location: issue
-                                                      .getCustomFieldValue(
-                                                          "Customer No")
-                                                      .toString(),
-                                                  contact: jobController
-                                                          .customer
-                                                          .value
-                                                          .phoneNo ??
-                                                      '-'),
-                                            ],
-                                          )
-                                        : Container()),
+                                child: Obx(() => jobController
+                                            .issueData.isNotEmpty &&
+                                        pmJobs != null
+                                    ? BoxContainer(
+                                        children: [
+                                          PMJobInfo(
+                                              ticketId: issue.id,
+                                              dateTime: issue.dueDate ??
+                                                  getFormattedDate(
+                                                      DateTime.now()),
+                                              reporter: '',
+                                              summary:
+                                                  pmJobs.customerName ?? '',
+                                              description:
+                                                  'Service Zone :  ${pmJobs.serviceZoneCode} ',
+                                              detail: issue.description,
+                                              status: stringToStatus(
+                                                  issue.status.id.toString()),
+                                              location: pmJobs.address ?? '',
+                                              contact: pmJobs.phoneNo ?? ''),
+                                        ],
+                                      )
+                                    : Container()),
                               ),
                               Column(
                                 children: [
                                   8.kH,
-                                  Obx(
-                                    () {
-                                      if (jobController
-                                          .warrantyInfoList.isEmpty) {
-                                        return Center(
-                                            child: WarrantyBox(
-                                                model: '-',
-                                                serial: '-',
-                                                status: 0,
-                                                filePdf: filePdf));
-                                      } else {
-                                        var warrantyInfo = jobController
-                                            .warrantyInfoList.first;
-                                        return WarrantyBox(
-                                            model: warrantyInfo.model,
-                                            serial: issue.getCustomFieldValue(
-                                                "Serial No"),
-                                            status: warrantyInfo.warrantyStatus,
-                                            filePdf: filePdf);
-                                      }
-                                    },
-                                  ),
+                                  pmJobs == null
+                                      ? Center(
+                                          child: WarrantyBox(
+                                              model: '-',
+                                              serial: '-',
+                                              status: 0,
+                                              filePdf: filePdf))
+                                      : WarrantyBox(
+                                          model: pmJobs.tModel ?? '-',
+                                          serial: pmJobs.serialNo ?? '-',
+                                          status:
+                                              pmJobs.tWarranty == '1' ? 1 : 0,
+                                          filePdf: filePdf),
                                 ],
                               ),
                               8.kH,

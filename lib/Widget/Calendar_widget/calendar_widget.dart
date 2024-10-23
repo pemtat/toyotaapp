@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkcustomer.dart';
-import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
-import 'package:toyotamobile/Function/ticketdata.dart';
-import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Calendar/calendar_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -13,7 +10,6 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
-import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class CalendarItem extends StatelessWidget {
@@ -30,7 +26,6 @@ class CalendarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var warrantyInfoList = <WarrantyInfo>[].obs;
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: Decoration1(
@@ -85,7 +80,7 @@ class CalendarItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Wrap(
-                            spacing: 4.0, // ระยะห่างระหว่างวิดเจ็ตภายใน Wrap
+                            spacing: 4.0,
                             children: [
                               Text(
                                 event['customerName'],
@@ -229,35 +224,11 @@ class CalendarItem extends StatelessWidget {
                             const Icon(Icons.location_on_outlined),
                             const SizedBox(width: 5),
                             Expanded(
-                              child: FutureBuilder<Map<String, String>>(
-                                future: fetchLocationById(event['reporterId']),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: SizedBox(
-                                        width: 20,
-                                        height: 20,
-                                        child: DataCircleLoading(),
-                                      ),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return const Text('-');
-                                  } else if (!snapshot.hasData ||
-                                      snapshot.data!.isEmpty) {
-                                    return const Text('-');
-                                  }
-
-                                  Map<String, String> userData = snapshot.data!;
-                                  return Text(
-                                    userData['location'] ?? '-',
-                                    style: TextStyleList.subtext1,
-                                    overflow: TextOverflow.visible,
-                                  );
-                                },
-                              ),
-                            ),
+                                child: Text(
+                              event['location'],
+                              style: TextStyleList.subtext1,
+                              overflow: TextOverflow.visible,
+                            )),
                           ],
                         )
                       : Row(
@@ -265,32 +236,10 @@ class CalendarItem extends StatelessWidget {
                             const Icon(Icons.location_on_outlined),
                             const SizedBox(width: 5),
                             Expanded(
-                              child: FutureBuilder<CustomerById>(
-                                future: fetchCustomerInfo(event['reporterId']),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: SizedBox(
-                                        width: 20,
-                                        height: 20,
-                                        child: DataCircleLoading(),
-                                      ),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return const Text('-');
-                                  } else if (!snapshot.hasData) {
-                                    return const Text('-');
-                                  }
-
-                                  CustomerById customer = snapshot.data!;
-                                  return Text(
-                                    customer.customerAddress ?? '-',
-                                    style: TextStyleList.subtext1,
-                                    overflow: TextOverflow.visible,
-                                  );
-                                },
+                              child: Text(
+                                event['address'] ?? '',
+                                style: TextStyleList.subtext1,
+                                overflow: TextOverflow.visible,
                               ),
                             ),
                           ],
@@ -307,194 +256,59 @@ class CalendarItem extends StatelessWidget {
                     ),
                   10.kH,
                   event['type'] == EventType.PM
-                      ? FutureBuilder<RxList<WarrantyInfo>>(
-                          future: checkWarrantyReturn(
-                              event['serialNo'], warrantyInfoList),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Container();
-                            } else if (snapshot.hasError) {
-                              return Obx(
-                                () => expandedIndex.value &&
-                                        expandedTicketId.value == event['jobid']
-                                    ? Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 0.0, right: 8, bottom: 8),
+                      ? Obx(
+                          () => expandedIndex.value &&
+                                  expandedTicketId.value == event['jobid']
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 0.0, right: 8, bottom: 8),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 0.5,
+                                        color: const Color(0xFFEAEAEA),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Container(
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: Decoration2(),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
                                           children: [
-                                            Container(
-                                              height: 0.5,
-                                              color: const Color(0xFFEAEAEA),
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Container(
-                                              padding: const EdgeInsets.all(10),
-                                              decoration: Decoration2(),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Model',
-                                                        style:
-                                                            TextStyleList.text3,
-                                                      ),
-                                                      Flexible(
-                                                        child: Text(
-                                                          '-',
-                                                          style: TextStyleList
-                                                              .text2,
-                                                          textAlign:
-                                                              TextAlign.end,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  const SizedBox(height: 3),
-                                                  BoxInfo(
-                                                    title: "Serial Number",
-                                                    value: event['serialNo'],
-                                                  ),
-                                                  const SizedBox(height: 3),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                              );
-                            } else if (!snapshot.hasData ||
-                                snapshot.data!.isEmpty) {
-                              return Obx(
-                                () => expandedIndex.value &&
-                                        expandedTicketId.value == event['jobid']
-                                    ? Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 0.0, right: 8, bottom: 8),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              height: 0.5,
-                                              color: const Color(0xFFEAEAEA),
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Container(
-                                              padding: const EdgeInsets.all(10),
-                                              decoration: Decoration2(),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Model',
-                                                        style:
-                                                            TextStyleList.text3,
-                                                      ),
-                                                      Flexible(
-                                                        child: Text(
-                                                          '-',
-                                                          style: TextStyleList
-                                                              .text2,
-                                                          textAlign:
-                                                              TextAlign.end,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  const SizedBox(height: 3),
-                                                  BoxInfo(
-                                                    title: "Serial Number",
-                                                    value: event['serialNo'],
-                                                  ),
-                                                  const SizedBox(height: 3),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                              );
-                            }
-                            var warrantyInfo = <WarrantyInfo>[].obs;
-                            warrantyInfo = snapshot.data!;
-                            return Obx(
-                              () => expandedIndex.value &&
-                                      expandedTicketId.value == event['jobid']
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 0.0, right: 8, bottom: 8),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height: 0.5,
-                                            color: const Color(0xFFEAEAEA),
-                                          ),
-                                          const SizedBox(height: 8),
-                                          Container(
-                                            padding: const EdgeInsets.all(10),
-                                            decoration: Decoration2(),
-                                            child: Column(
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      'Model',
-                                                      style:
-                                                          TextStyleList.text3,
-                                                    ),
-                                                    Flexible(
-                                                      child: Text(
-                                                        warrantyInfo
-                                                            .first.model,
-                                                        style:
-                                                            TextStyleList.text2,
-                                                        textAlign:
-                                                            TextAlign.end,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                Text(
+                                                  'Model',
+                                                  style: TextStyleList.text3,
                                                 ),
-                                                const SizedBox(height: 3),
-                                                BoxInfo(
-                                                  title: "Serial Number",
-                                                  value: event['serialNo'],
+                                                Flexible(
+                                                  child: Text(
+                                                    event['model'],
+                                                    style: TextStyleList.text2,
+                                                    textAlign: TextAlign.end,
+                                                  ),
                                                 ),
-                                                const SizedBox(height: 3),
                                               ],
                                             ),
-                                          ),
-                                        ],
+                                            const SizedBox(height: 3),
+                                            BoxInfo(
+                                              title: "Serial Number",
+                                              value: event['serialNo'],
+                                            ),
+                                            const SizedBox(height: 3),
+                                          ],
+                                        ),
                                       ),
-                                    )
-                                  : const SizedBox(),
-                            );
-                          },
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox(),
                         )
                       : Obx(
                           () => expandedIndex.value &&

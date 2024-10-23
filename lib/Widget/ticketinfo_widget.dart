@@ -153,78 +153,52 @@ class PMJobInfo extends StatelessWidget {
               // const SizedBox(height: 4),
               Wrap(
                 children: [
-                  FutureBuilder<CustomerById>(
-                    future: fetchCustomerInfo(location ?? ''),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: DataCircleLoading(),
-                            ),
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return const Text('-');
-                      } else if (!snapshot.hasData) {
-                        return const Text('-');
-                      }
-
-                      CustomerById customer = snapshot.data!;
-                      String customerAddress = customer.customerAddress ?? '-';
-
-                      return Row(
-                        children: [
-                          const Icon(Icons.location_on_outlined),
-                          const SizedBox(width: 5),
-                          Expanded(
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: customerAddress,
-                                    style: TextStyleList.subtext3,
-                                  ),
-                                  WidgetSpan(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        3.wH,
-                                        GoogleMapButton(
-                                          onTap: () async {
-                                            showDialog(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (BuildContext context) {
-                                                return const Center(
-                                                  child: DataCircleLoading(),
-                                                );
-                                              },
-                                            );
-
-                                            try {
-                                              await openGoogleMaps(
-                                                  customerAddress);
-                                            } catch (e) {
-                                              print(e);
-                                            } finally {
-                                              Navigator.of(context).pop();
-                                            }
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                  Row(
+                    children: [
+                      const Icon(Icons.location_on_outlined),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: location,
+                                style: TextStyleList.subtext3,
                               ),
-                            ),
+                              WidgetSpan(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    3.wH,
+                                    GoogleMapButton(
+                                      onTap: () async {
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return const Center(
+                                              child: DataCircleLoading(),
+                                            );
+                                          },
+                                        );
+
+                                        try {
+                                          await openGoogleMaps(location ?? '');
+                                        } catch (e) {
+                                          print(e);
+                                        } finally {
+                                          Navigator.of(context).pop();
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      );
-                    },
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -98,17 +98,27 @@ class SignatureWidget extends StatelessWidget {
                   });
               saveCurrentDateTime(saveCompletedtime);
               if (ticketId != null) {
-                await updateSignatureJob(
-                    jobId,
-                    ticketId ?? '',
-                    saveCompletedtime.value,
-                    signatureController.value.text,
-                    signaturePad.value);
-                await fetchReportData(
-                    jobId,
-                    token ?? '',
-                    jobController.reportList,
-                    jobController.additionalReportList);
+                if (option == 'battery') {
+                  await updateJobSignatureBattery(
+                      jobId,
+                      saveCompletedtime.value,
+                      signatureController.value.text,
+                      signaturePad.value);
+                  await fetchJobBatteryReportData(
+                      jobId, token ?? '', jobController.reportBatteryList);
+                } else {
+                  await updateSignatureJob(
+                      jobId,
+                      ticketId ?? '',
+                      saveCompletedtime.value,
+                      signatureController.value.text,
+                      signaturePad.value);
+                  await fetchReportData(
+                      jobId,
+                      token ?? '',
+                      jobController.reportList,
+                      jobController.additionalReportList);
+                }
                 // await jobController.fetchData(
                 //     ticketId.toString(), jobId.toString());
                 showSignatureSaveMessage();

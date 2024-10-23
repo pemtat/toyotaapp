@@ -116,19 +116,14 @@ class FillformController extends GetxController {
       token ?? '',
       userByZone,
     );
-    if (jobDetailController.customerInfo.isNotEmpty) {
+    if (jobDetailController.subJobs.isNotEmpty) {
       customerName.value.text =
-          jobDetailController.customerInfo.first.customerName ?? '';
-    }
-    if (jobDetailController.userData.isNotEmpty) {
+          jobDetailController.subJobs.first.companyName ?? '';
       contactedName.value.text =
-          jobDetailController.userData.first.users!.first.realName ?? '';
-    }
-    if (jobDetailController.warrantyInfo.isNotEmpty) {
-      product.value.text =
-          jobDetailController.warrantyInfo.first.nametruck ?? '';
-      model.value.text = jobDetailController.warrantyInfo.first.model ?? '';
-      serialNo.value.text = jobDetailController.warrantyInfo.first.serial ?? '';
+          jobDetailController.subJobs.first.realName ?? '';
+      product.value.text = jobDetailController.subJobs.first.nameTruck ?? '';
+      model.value.text = jobDetailController.subJobs.first.model ?? '';
+      serialNo.value.text = jobDetailController.subJobs.first.serialNo ?? '';
     }
   }
 

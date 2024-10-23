@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
@@ -29,7 +28,7 @@ class JobDetailControllerPM extends GetxController {
 
   var reportList = <BatteryReportModel>[].obs;
   var pmInfo = <PMJobInfoModel>[].obs;
-
+  var pmJobs = <PmModel>[].obs;
   var reportPreventiveList = <PreventivereportModel>[].obs;
   var saveCompletedtime = ''.obs;
   var isPicking = false.obs;
@@ -70,6 +69,7 @@ class JobDetailControllerPM extends GetxController {
 
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
+    await fetchPMJob(ticketId, token ?? '', pmJobs);
     await fetchPmJobInfo(jobId, token ?? '', pmInfo);
     if (reportList.isNotEmpty ||
         (reportPreventiveList.isNotEmpty &&
@@ -147,18 +147,18 @@ class JobDetailControllerPM extends GetxController {
       List<Issues>? issuesList = ticketModel.issues;
       issuesList!.map((issue) async {
         issueId = issue.id;
-        checkWarranty(
-            issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
-        String customerNo = issue.getCustomFieldValue('Customer No') ?? '';
-        if (customerNo.isNotEmpty) {
-          try {
-            customer.value = await fetchCustomerInfo(customerNo);
-          } catch (e) {
-            customer.value = CustomerById.getEmpty();
-          }
-        } else {
-          customer.value = CustomerById.getEmpty();
-        }
+        // checkWarranty(
+        //     issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
+        // String customerNo = issue.getCustomFieldValue('Customer No') ?? '';
+        // if (customerNo.isNotEmpty) {
+        //   try {
+        //     customer.value = await fetchCustomerInfo(customerNo);
+        //   } catch (e) {
+        //     customer.value = CustomerById.getEmpty();
+        //   }
+        // } else {
+        //   customer.value = CustomerById.getEmpty();
+        // }
       }).toList();
       issueData.value = issuesList;
     } else {}

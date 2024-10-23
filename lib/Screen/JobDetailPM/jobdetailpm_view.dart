@@ -99,7 +99,9 @@ class JobDetailViewPM extends StatelessWidget {
                   : null;
               var issue = jobController.issueData.first;
               var userData = userController.userInfo.first;
-
+              var pmJobs = jobController.pmJobs.isNotEmpty
+                  ? jobController.pmJobs.first
+                  : null;
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -120,7 +122,8 @@ class JobDetailViewPM extends StatelessWidget {
                                         !jobController.moreTicketDetail.value;
                                   },
                                   child: Obx(() => jobController
-                                          .issueData.isNotEmpty
+                                              .issueData.isNotEmpty &&
+                                          pmJobs != null
                                       ? BoxContainer(
                                           children: [
                                             PMJobInfo(
@@ -130,34 +133,25 @@ class JobDetailViewPM extends StatelessWidget {
                                                         DateTime.now()),
                                                 reporter: '',
                                                 summary:
-                                                    '${issue.getCustomFieldValue("Customer Name")}',
+                                                    pmJobs.customerName ?? '',
                                                 description:
-                                                    'Service Zone :  ${userController.userInfo.first.zone} ',
+                                                    'Service Zone :  ${pmJobs.serviceZoneCode ?? ''} ',
                                                 detail: issue.description,
                                                 status: stringToStatus(
                                                     issue.status.id.toString()),
-                                                location: issue
-                                                    .getCustomFieldValue(
-                                                        "Customer No")
-                                                    .toString(),
-                                                contact: jobController.customer
-                                                        .value.phoneNo ??
-                                                    '-'
-                                                        ''),
+                                                location: pmJobs.address ?? '',
+                                                contact: pmJobs.phoneNo ?? ''),
                                           ],
                                         )
                                       : Container()),
                                 ),
                                 8.kH,
-                                Obx(() => jobController.issueData.isNotEmpty
+                                Obx(() => jobController.issueData.isNotEmpty &&
+                                        pmJobs != null
                                     ? Intruction(
                                         context: context,
-                                        phoneNumber: jobController
-                                                .customer.value.phoneNo ??
-                                            '-',
-                                        location: issue
-                                            .getCustomFieldValue("Customer No")
-                                            .toString(),
+                                        phoneNumber: pmJobs.phoneNo ?? '',
+                                        location: pmJobs.address ?? '',
                                         fetchLocation: 'yes',
                                       )
                                     : Container()),
@@ -167,32 +161,22 @@ class JobDetailViewPM extends StatelessWidget {
                                       ? Column(
                                           children: [
                                             8.kH,
-                                            Obx(
-                                              () {
-                                                if (jobController
-                                                    .warrantyInfoList.isEmpty) {
-                                                  return Center(
-                                                      child: WarrantyBox(
-                                                          model: '-',
-                                                          serial: '-',
-                                                          status: 0,
-                                                          filePdf: filePdf));
-                                                } else {
-                                                  var warrantyInfo =
-                                                      jobController
-                                                          .warrantyInfoList
-                                                          .first;
-                                                  return WarrantyBox(
-                                                      model: warrantyInfo.model,
-                                                      serial: issue
-                                                          .getCustomFieldValue(
-                                                              "Serial No"),
-                                                      status: warrantyInfo
-                                                          .warrantyStatus,
-                                                      filePdf: filePdf);
-                                                }
-                                              },
-                                            ),
+                                            pmJobs == null
+                                                ? Center(
+                                                    child: WarrantyBox(
+                                                        model: '-',
+                                                        serial: '-',
+                                                        status: 0,
+                                                        filePdf: filePdf))
+                                                : WarrantyBox(
+                                                    model: pmJobs.tModel ?? '-',
+                                                    serial:
+                                                        pmJobs.serialNo ?? '-',
+                                                    status:
+                                                        pmJobs.tWarranty == '1'
+                                                            ? 1
+                                                            : 0,
+                                                    filePdf: filePdf),
                                           ],
                                         )
                                       : Container(),
@@ -449,6 +433,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                 reportData:
                                                     jobController.reportList,
                                                 bugId: ticketId.toString(),
+                                                pdfOption: 'btr',
                                                 timeStart: jobController
                                                     .savedDateStartTime,
                                                 timeEnd: jobController

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
@@ -22,6 +23,7 @@ class TicketDetailController extends GetxController {
   var pdfList = <Map<String, dynamic>>[].obs;
   var issueData = [].obs;
   var reportList = <RepairReportModel>[].obs;
+  var reportBatteryList = <BatteryReportModel>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
   var savedDateStartTime = ''.obs;
   var warrantyInfo = <WarrantybyIdModel>[].obs;
@@ -51,23 +53,23 @@ class TicketDetailController extends GetxController {
     String? token = await getToken();
     await fetchReportData(
         subjobId, token ?? '', reportList, additionalReportList);
+    await fetchJobBatteryReportData(subjobId, token ?? '', reportBatteryList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
-    await fetchUserById(subJobs.first.reporterId ?? '', userData);
-    await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
-
-    await fetchgetCustomerInfo(
-        userData.first.users!.first.companyId ?? '', customerInfo);
-    if (reportList.isNotEmpty || additionalReportList.isNotEmpty) {
+    // await fetchUserById(subJobs.first.reporterId ?? '', userData);
+    // await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
+    // await fetchgetCustomerInfo(
+    //     userData.first.users!.first.companyId ?? '', customerInfo);
+    if ((reportList.isNotEmpty || additionalReportList.isNotEmpty) ||
+        reportBatteryList.isNotEmpty) {
       await fetchSubJobSparePartId();
     }
 
     savedDateStartTime.value = subJobs.first.timeStart ?? '';
     savedDateEndTime.value = subJobs.first.timeEnd ?? '';
     try {
-      if (subJobs.first.imageUrlBefore != null &&
-          subJobs.first.imageUrlBefore != '') {
-        List<dynamic> imageBeforeList =
-            jsonDecode(subJobs.first.imageUrlBefore!);
+      if (subJobs.first.imgUrlBefore != null &&
+          subJobs.first.imgUrlBefore != '') {
+        List<dynamic> imageBeforeList = jsonDecode(subJobs.first.imgUrlBefore!);
 
         for (int i = 0; i < imageBeforeList.length; i++) {
           imagesBefore.add({
@@ -77,9 +79,9 @@ class TicketDetailController extends GetxController {
         }
       }
 
-      if (subJobs.first.imageUrlAfter != null &&
-          subJobs.first.imageUrlAfter != '') {
-        List<dynamic> imageAfterList = jsonDecode(subJobs.first.imageUrlAfter!);
+      if (subJobs.first.imgUrlAfter != null &&
+          subJobs.first.imgUrlAfter != '') {
+        List<dynamic> imageAfterList = jsonDecode(subJobs.first.imgUrlAfter!);
 
         for (int i = 0; i < imageAfterList.length; i++) {
           imagesAfter.add({

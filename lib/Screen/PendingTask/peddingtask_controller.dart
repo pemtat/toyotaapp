@@ -45,10 +45,10 @@ class PeddingtaskController extends GetxController {
     jobId = subjobId;
     // await fetchPdfData(ticketId, token ?? '', pdfList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
-    await fetchUserById(subJobs.first.reporterId ?? '', userData);
-    await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
-    await fetchgetCustomerInfo(
-        userData.first.users!.first.companyId ?? '', customerInfo);
+    // await fetchUserById(subJobs.first.reporterId ?? '', userData);
+    // await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
+    // await fetchgetCustomerInfo(
+    //     userData.first.users!.first.companyId ?? '', customerInfo);
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {

@@ -8,7 +8,6 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/notification_item_widget.dart';
-import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class NotificationView extends StatelessWidget {
   NotificationView({super.key});

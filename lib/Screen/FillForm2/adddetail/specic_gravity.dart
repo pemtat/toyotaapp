@@ -10,6 +10,7 @@ import 'package:toyotamobile/Widget/textfield_widget.dart';
 class SpecicGravity extends GetxController {
   int space = 24;
   void specicGravityModal(BuildContext context) {
+    specicGravityClear();
     ShowModalWidget(
       children: [
         Row(

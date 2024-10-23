@@ -24,6 +24,10 @@ String getWarrantyTruckByTicketId(String issueId) {
   return '$url/api/rest/issues/$issueId/warranty';
 }
 
+String getJobBatteryReportById(String id) {
+  return '$url/api/rest/jobs/jobs_btr_maintenance_data?job_issue_id=$id';
+}
+
 String getPdfPvtReportById(String issueId) {
   return '$url/api/rest/pm_jobs/pdf_pvt/$issueId';
 }
@@ -38,6 +42,10 @@ String getPdfFieldReportById(String issueId) {
 
 String getPdfEstimateReportById(String issueId) {
   return '$url/api/rest/pm_jobs/pdf_estimate/$issueId';
+}
+
+String getPdfJobsBtrReportById(String issueId) {
+  return '$url/api/rest/pm_jobs/pdf_fieldreport_btr/$issueId';
 }
 
 String getUserByZone(String zone) {
@@ -64,12 +72,24 @@ String createPeriodicReport() {
   return '$url/api/rest/pm_jobs/create_pvt_maintenance';
 }
 
+String createJobsBatteryReport() {
+  return '$url/api/rest/jobs/jobs_btr_maintenance_add';
+}
+
+String updateJobsBatteryReport() {
+  return '$url/api/rest/jobs/jobs_update_btr_maintenance';
+}
+
 String createBatteryReport() {
   return '$url/api/rest/pm_jobs/create_btr_maintenance';
 }
 
 String updateBatteryReport() {
   return '$url/api/rest/pm_jobs/update_btr_maintenance';
+}
+
+String updateJobsBatterySignature() {
+  return "$url/api/rest/jobs/jobs_update_btr_maintenance_signature";
 }
 
 String createPreventiveReport() {
@@ -84,8 +104,16 @@ String getPmJobInfoById(String id) {
   return '$url/api/rest/pm_jobs/job_working_details?job_id=$id';
 }
 
+String getCustomerBySearch(String id) {
+  return '$url/api/rest/users/customer_search/$id';
+}
+
 String getPmJobCommentById(String id) {
   return '$url/api/rest/pm_jobs/job_working_comment?job_id=$id';
+}
+
+String getPmJobbyId(String id) {
+  return '$url/api/rest/pm/get_by_id/$id';
 }
 
 String getPmJobPage(String handlerId, int page) {

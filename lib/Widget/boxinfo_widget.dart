@@ -82,15 +82,20 @@ class BoxInfo2 extends StatelessWidget {
           )
         : Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: TextStyleList.text15,
+              Flexible(
+                child: Text(
+                  title,
+                  style: TextStyleList.text15,
+                ),
               ),
               trailing ??
-                  Text(
-                    value,
-                    style: TextStyleList.text11,
+                  Flexible(
+                    child: Text(
+                      value,
+                      style: TextStyleList.text11,
+                    ),
                   ),
             ],
           );

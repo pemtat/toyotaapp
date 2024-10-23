@@ -109,151 +109,66 @@ class SubJobsTicket extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 2),
-              FutureBuilder<Map<String, String>>(
-                future: fetchTicketById(bugId),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on_outlined),
-                            5.wH,
-                            const Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Center(
-                                  child: SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: DataCircleLoading())),
-                            ),
-                          ],
-                        ),
-                        2.kH,
-                        const SizedBox(height: 8),
-                      ],
-                    );
-                  } else if (snapshot.hasError) {
-                    return Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on_outlined),
-                            5.wH,
-                            Expanded(
-                              child: RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: '',
-                                      style: TextStyleList.subtext1,
-                                    ),
-                                    WidgetSpan(
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          // GoogleMapButton(
-                                          //   onTap: () async {},
-                                          // ),
-                                          Text(
-                                            '-',
-                                            style: TextStyleList.subtext1,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        2.kH,
-                        Row(
-                          children: [
-                            2.wH,
-                            const Icon(Icons.forklift),
-                            5.wH,
-                            Text(
-                              '-',
-                              style: TextStyleList.subtext1,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                      ],
-                    );
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Container();
-                  }
-                  Map<String, String> userData = snapshot.data!;
-                  return Column(
-                    children: [
-                      Row(
+              Row(
+                children: [
+                  const Icon(Icons.location_on_outlined),
+                  5.wH,
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
                         children: [
-                          const Icon(Icons.location_on_outlined),
-                          5.wH,
-                          Expanded(
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: userData['location'] ?? '',
-                                    style: TextStyleList.subtext1,
-                                  ),
-                                  WidgetSpan(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        2.wH,
-                                        GoogleMapButton(
-                                          onTap: () async {
-                                            showDialog(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (BuildContext context) {
-                                                return const Center(
-                                                  child: DataCircleLoading(),
-                                                );
-                                              },
-                                            );
-
-                                            try {
-                                              await openGoogleMaps(
-                                                  userData['location'] ?? '');
-                                            } catch (e) {
-                                              print(e);
-                                            } finally {
-                                              Navigator.of(context).pop();
-                                            }
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      2.kH,
-                      Row(
-                        children: [
-                          2.wH,
-                          const Icon(Icons.forklift),
-                          5.wH,
-                          Text(
-                            '${userData['model'] ?? ''} / ${userData['serial']}',
+                          TextSpan(
+                            text: job.address ?? '',
                             style: TextStyleList.subtext1,
                           ),
+                          WidgetSpan(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                2.wH,
+                                GoogleMapButton(
+                                  onTap: () async {
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return const Center(
+                                          child: DataCircleLoading(),
+                                        );
+                                      },
+                                    );
+
+                                    try {
+                                      await openGoogleMaps(job.address ?? '');
+                                    } catch (e) {
+                                      print(e);
+                                    } finally {
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 8),
-                    ],
-                  );
-                },
+                    ),
+                  ),
+                ],
               ),
+              2.kH,
+              Row(
+                children: [
+                  2.wH,
+                  const Icon(Icons.forklift),
+                  5.wH,
+                  Text(
+                    '${job.model ?? ''} / ${job.serialNo}',
+                    style: TextStyleList.subtext1,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8)
             ],
           ),
         ),

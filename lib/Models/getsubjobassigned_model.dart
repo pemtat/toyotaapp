@@ -9,8 +9,6 @@ class SubJobAssgined {
   String? dateSubmitted;
   String? bugId;
   String? status;
-  String? techRemark;
-  String? techStatus;
   String? resolution;
   String? projection;
   String? categoryId;
@@ -23,15 +21,49 @@ class SubJobAssgined {
   String? timeStart;
   String? timeEnd;
   String? comment;
-  String? location;
-  String? serialNo;
-  String? summaryBug;
-  String? realName;
+  String? contentBefore;
+  String? imageBefore;
+  String? imageAfter;
+  String? contentAfter;
+  String? techRemark;
+  String? techStatus;
+  String? imgUrlBefore;
+  String? imgUrlAfter;
   String? salesStatus;
   String? techManagerStatus;
   String? techManagerRemark;
+  String? techManagerId;
+  String? specialDiscount;
+  String? vat;
+  String? salesManagerStatus;
+  String? salesManagerId;
+  String? salesDirectorStatus;
+  String? salesDirectorId;
+  String? quotation;
+  String? salesId;
+  String? estimateStatus;
+  String? adminStatus;
+  String? codeStatusSparePart;
+  String? adminId;
+  String? documentNo;
+  String? documentDate;
+  String? customerStatus;
+  String? purchaseOrderStatus;
+  String? summaryBug;
+  String? reportjobId;
   String? referenceCode;
+  String? bugStatus;
+  String? realName;
   String? companyName;
+  String? email;
+  String? emailCompany;
+  String? phoneNumber;
+  String? phoneCompany;
+  String? address;
+  String? nameTruck;
+  String? serialNo;
+  String? model;
+  String? warrantyStatus;
 
   SubJobAssgined(
       {this.id,
@@ -44,8 +76,6 @@ class SubJobAssgined {
       this.dateSubmitted,
       this.bugId,
       this.status,
-      this.techRemark,
-      this.techStatus,
       this.resolution,
       this.projection,
       this.categoryId,
@@ -58,19 +88,53 @@ class SubJobAssgined {
       this.timeStart,
       this.timeEnd,
       this.comment,
-      this.location,
-      this.serialNo,
-      this.summaryBug,
-      this.realName,
-      this.techManagerRemark,
-      this.techManagerStatus,
-      this.referenceCode,
+      this.contentBefore,
+      this.imageBefore,
+      this.imageAfter,
+      this.contentAfter,
+      this.techRemark,
+      this.techStatus,
+      this.imgUrlBefore,
+      this.imgUrlAfter,
       this.salesStatus,
-      this.companyName});
+      this.techManagerStatus,
+      this.techManagerRemark,
+      this.techManagerId,
+      this.specialDiscount,
+      this.vat,
+      this.salesManagerStatus,
+      this.salesManagerId,
+      this.salesDirectorStatus,
+      this.salesDirectorId,
+      this.quotation,
+      this.salesId,
+      this.estimateStatus,
+      this.adminStatus,
+      this.codeStatusSparePart,
+      this.adminId,
+      this.documentNo,
+      this.documentDate,
+      this.customerStatus,
+      this.purchaseOrderStatus,
+      this.summaryBug,
+      this.reportjobId,
+      this.referenceCode,
+      this.bugStatus,
+      this.realName,
+      this.companyName,
+      this.email,
+      this.emailCompany,
+      this.phoneNumber,
+      this.phoneCompany,
+      this.address,
+      this.nameTruck,
+      this.serialNo,
+      this.model,
+      this.warrantyStatus});
 
   SubJobAssgined.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    reporterId = json['reportjob_id'];
+    reporterId = json['reporter_id'];
     priority = json['priority'];
     severity = json['severity'];
     profileId = json['profile_id'];
@@ -79,8 +143,6 @@ class SubJobAssgined {
     dateSubmitted = json['date_submitted'];
     bugId = json['bug_id'];
     status = json['status'];
-    techRemark = json['tech_remark'];
-    techStatus = json['tech_status'];
     resolution = json['resolution'];
     projection = json['projection'];
     categoryId = json['category_id'];
@@ -93,13 +155,49 @@ class SubJobAssgined {
     timeStart = json['time_start'];
     timeEnd = json['time_end'];
     comment = json['comment'];
-    summaryBug = json['summary_bug'];
-    realName = json['realname'];
+    contentBefore = json['content_before'];
+    imageBefore = json['image_before'];
+    imageAfter = json['image_after'];
+    contentAfter = json['content_after'];
+    techRemark = json['tech_remark'];
+    techStatus = json['tech_status'];
+    imgUrlBefore = json['img_url_before'];
+    imgUrlAfter = json['img_url_after'];
     salesStatus = json['sales_status'];
     techManagerStatus = json['tech_manager_status'];
     techManagerRemark = json['tech_manager_remark'];
+    techManagerId = json['tech_manager_id'];
+    specialDiscount = json['special_discount'];
+    vat = json['vat'];
+    salesManagerStatus = json['sales_manager_status'];
+    salesManagerId = json['sales_manager_id'];
+    salesDirectorStatus = json['sales_director_status'];
+    salesDirectorId = json['sales_director_id'];
+    quotation = json['quotation'];
+    salesId = json['sales_id'];
+    estimateStatus = json['estimate_status'];
+    adminStatus = json['admin_status'];
+    codeStatusSparePart = json['code_status_spare_part'];
+    adminId = json['admin_id'];
+    documentNo = json['document_no'];
+    documentDate = json['document_date'];
+    customerStatus = json['customer_status'];
+    purchaseOrderStatus = json['purchase_order_status'];
+    summaryBug = json['summary_bug'];
+    reportjobId = json['reportjob_id'];
     referenceCode = json['reference_code'];
+    bugStatus = json['bug_status'];
+    realName = json['realname'];
     companyName = json['company_name'];
+    email = json['email'];
+    emailCompany = json['email_company'];
+    phoneNumber = json['phone_number'];
+    phoneCompany = json['phone_company'];
+    address = json['address'];
+    nameTruck = json['name_truck'];
+    serialNo = json['serial_no'];
+    model = json['model'];
+    warrantyStatus = json['warranty_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -114,8 +212,6 @@ class SubJobAssgined {
     data['date_submitted'] = dateSubmitted;
     data['bug_id'] = bugId;
     data['status'] = status;
-    data['tech_remark'] = techRemark;
-    data['tech_status'] = techStatus;
     data['resolution'] = resolution;
     data['projection'] = projection;
     data['category_id'] = categoryId;
@@ -128,13 +224,49 @@ class SubJobAssgined {
     data['time_start'] = timeStart;
     data['time_end'] = timeEnd;
     data['comment'] = comment;
-    data['summary_bug'] = summaryBug;
-    data['realname'] = realName;
+    data['content_before'] = contentBefore;
+    data['image_before'] = imageBefore;
+    data['image_after'] = imageAfter;
+    data['content_after'] = contentAfter;
+    data['tech_remark'] = techRemark;
+    data['tech_status'] = techStatus;
+    data['img_url_before'] = imgUrlBefore;
+    data['img_url_after'] = imgUrlAfter;
     data['sales_status'] = salesStatus;
     data['tech_manager_status'] = techManagerStatus;
     data['tech_manager_remark'] = techManagerRemark;
+    data['tech_manager_id'] = techManagerId;
+    data['special_discount'] = specialDiscount;
+    data['vat'] = vat;
+    data['sales_manager_status'] = salesManagerStatus;
+    data['sales_manager_id'] = salesManagerId;
+    data['sales_director_status'] = salesDirectorStatus;
+    data['sales_director_id'] = salesDirectorId;
+    data['quotation'] = quotation;
+    data['sales_id'] = salesId;
+    data['estimate_status'] = estimateStatus;
+    data['admin_status'] = adminStatus;
+    data['code_status_spare_part'] = codeStatusSparePart;
+    data['admin_id'] = adminId;
+    data['document_no'] = documentNo;
+    data['document_date'] = documentDate;
+    data['customer_status'] = customerStatus;
+    data['purchase_order_status'] = purchaseOrderStatus;
+    data['summary_bug'] = summaryBug;
+    data['reportjob_id'] = reportjobId;
     data['reference_code'] = referenceCode;
+    data['bug_status'] = bugStatus;
+    data['realname'] = realName;
     data['company_name'] = companyName;
+    data['email'] = email;
+    data['email_company'] = emailCompany;
+    data['phone_number'] = phoneNumber;
+    data['phone_company'] = phoneCompany;
+    data['address'] = address;
+    data['name_truck'] = nameTruck;
+    data['serial_no'] = serialNo;
+    data['model'] = model;
+    data['warranty_status'] = warrantyStatus;
     return data;
   }
 }

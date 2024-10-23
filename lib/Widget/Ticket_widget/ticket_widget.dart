@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/checkcustomer.dart';
-import 'package:toyotamobile/Function/checkwarranty.dart';
+
 import 'package:toyotamobile/Function/openmap.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
-import 'package:toyotamobile/Function/ticketdata.dart';
-import 'package:toyotamobile/Models/getcustomerbyid.dart';
-import 'package:toyotamobile/Models/warrantyInfo_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -38,8 +35,6 @@ class PmItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var warrantyInfoList = <WarrantyInfo>[].obs;
-
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(10),
@@ -126,75 +121,54 @@ class PmItemWidget extends StatelessWidget {
           const SizedBox(height: 2),
           Wrap(
             children: [
-              FutureBuilder<CustomerById>(
-                future: fetchCustomerInfo(job.customerNo ?? ''),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: DataCircleLoading(),
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return const Text('-');
-                  } else if (!snapshot.hasData) {
-                    return const Text('-');
-                  }
-
-                  CustomerById customer = snapshot.data!;
-                  String customerAddress = customer.customerAddress ?? '-';
-
-                  return Row(
-                    children: [
-                      const Icon(Icons.location_on_outlined),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: customerAddress,
-                                style: TextStyleList.subtext3,
-                              ),
-                              WidgetSpan(
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    2.wH,
-                                    GoogleMapButton(
-                                      onTap: () async {
-                                        showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (BuildContext context) {
-                                            return const Center(
-                                              child: DataCircleLoading(),
-                                            );
-                                          },
-                                        );
-
-                                        try {
-                                          await openGoogleMaps(customerAddress);
-                                        } catch (e) {
-                                          print(e);
-                                        } finally {
-                                          Navigator.of(context).pop();
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+              Row(
+                children: [
+                  const Icon(Icons.location_on_outlined),
+                  const SizedBox(width: 5),
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: job.address,
+                            style: TextStyleList.subtext3,
                           ),
-                        ),
+                          WidgetSpan(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                2.wH,
+                                GoogleMapButton(
+                                  onTap: () async {
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return const Center(
+                                          child: DataCircleLoading(),
+                                        );
+                                      },
+                                    );
+
+                                    try {
+                                      await openGoogleMaps(
+                                        job.address,
+                                      );
+                                    } catch (e) {
+                                      print(e);
+                                    } finally {
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  );
-                },
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -209,78 +183,24 @@ class PmItemWidget extends StatelessWidget {
             ],
           ),
           index != null
-              ? Obx(() => expandedIndex.value ==
-                      jobController.pmItems.indexOf(job)
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 0.5,
-                            color: const Color(0xFFEAEAEA),
-                          ),
-                          const SizedBox(height: 10),
-                          FutureBuilder<RxList<WarrantyInfo>>(
-                            future: checkWarrantyReturn(
-                                job.serialNo, warrantyInfoList),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: DataCircleLoading(),
-                                    ),
-                                  ),
-                                );
-                              } else if (snapshot.hasError) {
-                                return Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: Decoration2(),
-                                  child: Column(
-                                    children: [
-                                      const BoxInfo(title: "Model", value: '-'),
-                                      const SizedBox(height: 3),
-                                      BoxInfo(
-                                        title: "Serial Number",
-                                        value: job.serialNo,
-                                      ),
-                                      const SizedBox(height: 3),
-                                    ],
-                                  ),
-                                );
-                              } else if (!snapshot.hasData ||
-                                  snapshot.data!.isEmpty) {
-                                return Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: Decoration2(),
-                                  child: Column(
-                                    children: [
-                                      const BoxInfo(title: "Model", value: '-'),
-                                      const SizedBox(height: 3),
-                                      BoxInfo(
-                                        title: "Serial Number",
-                                        value: job.serialNo,
-                                      ),
-                                      const SizedBox(height: 3),
-                                    ],
-                                  ),
-                                );
-                              }
-                              var warrantyInfo = <WarrantyInfo>[].obs;
-                              warrantyInfo = snapshot.data!;
-                              return Container(
+              ? Obx(() =>
+                  expandedIndex.value == jobController.pmItems.indexOf(job)
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 0.5,
+                                color: const Color(0xFFEAEAEA),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: Decoration2(),
                                 child: Column(
                                   children: [
-                                    BoxInfo(
-                                        title: "Model",
-                                        value: warrantyInfo.first.model),
+                                    BoxInfo(title: "Model", value: job.tModel),
                                     const SizedBox(height: 3),
                                     BoxInfo(
                                       title: "Serial Number",
@@ -289,85 +209,29 @@ class PmItemWidget extends StatelessWidget {
                                     const SizedBox(height: 3),
                                   ],
                                 ),
-                              );
-                            },
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-                  : const SizedBox())
-              : Obx(() => expandedIndex.value ==
-                      jobController.pmItemsPage.indexOf(job)
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 0.5,
-                            color: const Color(0xFFEAEAEA),
-                          ),
-                          const SizedBox(height: 10),
-                          FutureBuilder<RxList<WarrantyInfo>>(
-                            future: checkWarrantyReturn(
-                                job.serialNo, warrantyInfoList),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: DataCircleLoading(),
-                                    ),
-                                  ),
-                                );
-                              } else if (snapshot.hasError) {
-                                return Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: Decoration2(),
-                                  child: Column(
-                                    children: [
-                                      const BoxInfo(title: "Model", value: '-'),
-                                      const SizedBox(height: 3),
-                                      BoxInfo(
-                                        title: "Serial Number",
-                                        value: job.serialNo,
-                                      ),
-                                      const SizedBox(height: 3),
-                                    ],
-                                  ),
-                                );
-                              } else if (!snapshot.hasData ||
-                                  snapshot.data!.isEmpty) {
-                                return Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: Decoration2(),
-                                  child: Column(
-                                    children: [
-                                      const BoxInfo(title: "Model", value: '-'),
-                                      const SizedBox(height: 3),
-                                      BoxInfo(
-                                        title: "Serial Number",
-                                        value: job.serialNo,
-                                      ),
-                                      const SizedBox(height: 3),
-                                    ],
-                                  ),
-                                );
-                              }
-                              var warrantyInfo = <WarrantyInfo>[].obs;
-                              warrantyInfo = snapshot.data!;
-                              return Container(
+                        )
+                      : const SizedBox())
+              : Obx(() =>
+                  expandedIndex.value == jobController.pmItemsPage.indexOf(job)
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 0.5,
+                                color: const Color(0xFFEAEAEA),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: Decoration2(),
                                 child: Column(
                                   children: [
-                                    BoxInfo(
-                                        title: "Model",
-                                        value: warrantyInfo.first.model),
+                                    BoxInfo(title: "Model", value: job.tModel),
                                     const SizedBox(height: 3),
                                     BoxInfo(
                                       title: "Serial Number",
@@ -376,13 +240,11 @@ class PmItemWidget extends StatelessWidget {
                                     const SizedBox(height: 3),
                                   ],
                                 ),
-                              );
-                            },
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-                  : const SizedBox())
+                        )
+                      : const SizedBox())
         ],
       ),
     );

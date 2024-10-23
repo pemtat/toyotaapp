@@ -17,6 +17,7 @@ import 'package:toyotamobile/Screen/FillForm2/adddetail/forklife_information.dar
 import 'package:toyotamobile/Screen/FillForm2/adddetail/repairpm.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/specic_gravity.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
@@ -27,6 +28,7 @@ import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 
 class FillformController2 extends GetxController {
   var jobId = ''.obs;
+  var jobIssueId = ''.obs;
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
   final TextEditingController signatureController = TextEditingController();
@@ -42,6 +44,8 @@ class FillformController2 extends GetxController {
       Get.put(BatteryInformation());
   final JobDetailControllerPM jobDetailControllerPM =
       Get.put(JobDetailControllerPM());
+  final JobDetailController jobDetailController =
+      Get.put(JobDetailController());
   final BatteryUsage batteryUsageController = Get.put(BatteryUsage());
   final SpecicGravity specicGravityController = Get.put(SpecicGravity());
   final CorrectiveAction correctiveActionController =
@@ -93,8 +97,13 @@ class FillformController2 extends GetxController {
     );
   }
 
-  void fetchData(String jobId) async {
+  void fetchData(String jobId, jobIssueId) async {
     this.jobId.value = jobId;
+    if (jobIssueId == null) {
+      this.jobIssueId.value = '';
+    } else {
+      this.jobIssueId.value = jobIssueId;
+    }
     String? token = await getToken();
     await userController.fetchData();
     await fetchUserByZone(
@@ -103,21 +112,38 @@ class FillformController2 extends GetxController {
       userByZone,
     );
 
-    customerName.value.text =
-        jobDetailControllerPM.customer.value.customerName ?? '';
-    if (jobDetailControllerPM.warrantyInfoList.isNotEmpty) {
-      forkLifeInformation.forklifeBrand.value.text =
-          jobDetailControllerPM.warrantyInfoList.first.productName;
-      forkLifeInformation.forklifeModel.value.text =
-          jobDetailControllerPM.warrantyInfoList.first.model;
-      forkLifeInformation.serialNo.value.text =
-          jobDetailControllerPM.warrantyInfoList.first.serial;
+    if (jobIssueId == null) {
+      if (jobDetailControllerPM.pmJobs.isNotEmpty) {
+        customerName.value.text =
+            jobDetailControllerPM.pmJobs.first.customerName ?? '';
+        forkLifeInformation.forklifeBrand.value.text =
+            jobDetailControllerPM.pmJobs.first.tNo ?? '';
+        forkLifeInformation.forklifeModel.value.text =
+            jobDetailControllerPM.pmJobs.first.tModel ?? '';
+        forkLifeInformation.serialNo.value.text =
+            jobDetailControllerPM.pmJobs.first.serialNo ?? '';
+      }
+    } else {
+      if (jobDetailController.subJobs.isNotEmpty) {
+        customerName.value.text =
+            jobDetailController.subJobs.first.companyName ?? '';
+        contactPerson.value.text =
+            jobDetailController.subJobs.first.realName ?? '';
+        forkLifeInformation.forklifeBrand.value.text =
+            jobDetailController.subJobs.first.nameTruck ?? '';
+        forkLifeInformation.forklifeModel.value.text =
+            jobDetailController.subJobs.first.model ?? '';
+        forkLifeInformation.serialNo.value.text =
+            jobDetailController.subJobs.first.serialNo ?? '';
+      }
     }
   }
 
   Future<void> saveReport(BuildContext context) async {
     String? token = await getToken();
-    String apiUrl = createBatteryReport();
+    String apiUrl = jobIssueId.value == ''
+        ? createBatteryReport()
+        : createJobsBatteryReport();
 
     saveCurrentDateTime(saveCompletedtime);
     if (correctiveActionController.correctiveAction.isNotEmpty) {
@@ -260,6 +286,7 @@ class FillformController2 extends GetxController {
 
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
+      if (jobIssueId.value != '') "job_issue_id": jobIssueId.value,
       "battery_band": batteryinformation.batteryBand,
       "battery_model": batteryinformation.batteryModel,
       "manufacturer_no": batteryinformation.mfgNo,
@@ -312,9 +339,15 @@ class FillformController2 extends GetxController {
         // await fetchCommentJobInfo(
         //     jobId.toString(), token ?? '', jobDetailControllerPM.comment);
         // jobDetailControllerPM.commentCheck.value = true;
-        await fetchBatteryReportData(
-            jobId.toString(), token ?? '', jobDetailControllerPM.reportList);
-        jobDetailControllerPM.completeCheck.value = true;
+        if (jobIssueId.value == '') {
+          await fetchBatteryReportData(
+              jobId.toString(), token ?? '', jobDetailControllerPM.reportList);
+          jobDetailControllerPM.completeCheck.value = true;
+        } else {
+          await fetchJobBatteryReportData(jobIssueId.value, token ?? '',
+              jobDetailController.reportBatteryList);
+          jobDetailController.completeCheck.value = true;
+        }
         showSaveMessage();
       } else {
         print('Failed to save report: ${response.statusCode}');

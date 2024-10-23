@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
@@ -26,6 +27,7 @@ class JobDetailController extends GetxController {
   final comment = TextEditingController().obs;
   final comment2 = TextEditingController().obs;
   var reportList = <RepairReportModel>[].obs;
+  var reportBatteryList = <BatteryReportModel>[].obs;
   var pdfList = <Map<String, dynamic>>[].obs;
   var subJobSparePart = <SubJobSparePart>[].obs;
   var additionalReportList = <RepairReportModel>[].obs;
@@ -69,16 +71,18 @@ class JobDetailController extends GetxController {
       jobId = subjobId;
       await fetchReportData(
           subjobId, token ?? '', reportList, additionalReportList);
-      if (reportList.isNotEmpty || additionalReportList.isNotEmpty) {
+      await fetchJobBatteryReportData(jobId, token ?? '', reportBatteryList);
+      if ((reportList.isNotEmpty || additionalReportList.isNotEmpty) ||
+          reportBatteryList.isNotEmpty) {
         completeCheck.value = true;
         await fetchSubJobSparePartId();
       }
 
       await fetchSubJob(subjobId, token ?? '', subJobs);
-      await fetchUserById(subJobs.first.reporterId ?? '', userData);
-      await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
-      await fetchgetCustomerInfo(
-          userData.first.users!.first.companyId ?? '', customerInfo);
+      // await fetchUserById(subJobs.first.reporterId ?? '', userData);
+      // await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
+      // await fetchgetCustomerInfo(
+      //     userData.first.users!.first.companyId ?? '', customerInfo);
       savedDateStartTime.value =
           formatDateTimeCut(subJobs.first.timeStart ?? '');
       savedDateEndTime.value = formatDateTimeCut(subJobs.first.timeEnd ?? '');
@@ -93,10 +97,10 @@ class JobDetailController extends GetxController {
 
       if (imagesAfter.isNotEmpty) imagesAfter.clear();
       try {
-        if (subJobs.first.imageUrlBefore != null &&
-            subJobs.first.imageUrlBefore != '') {
+        if (subJobs.first.imgUrlBefore != null &&
+            subJobs.first.imgUrlBefore != '') {
           List<dynamic> imageBeforeList =
-              jsonDecode(subJobs.first.imageUrlBefore!);
+              jsonDecode(subJobs.first.imgUrlBefore!);
 
           for (int i = 0; i < imageBeforeList.length; i++) {
             imagesBefore.add({
@@ -106,10 +110,9 @@ class JobDetailController extends GetxController {
           }
         }
 
-        if (subJobs.first.imageUrlAfter != null &&
-            subJobs.first.imageUrlAfter != '') {
-          List<dynamic> imageAfterList =
-              jsonDecode(subJobs.first.imageUrlAfter!);
+        if (subJobs.first.imgUrlAfter != null &&
+            subJobs.first.imgUrlAfter != '') {
+          List<dynamic> imageAfterList = jsonDecode(subJobs.first.imgUrlAfter!);
 
           for (int i = 0; i < imageAfterList.length; i++) {
             imagesAfter.add({

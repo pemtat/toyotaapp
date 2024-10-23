@@ -9,8 +9,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
+import 'package:toyotamobile/Models/customersearch_model.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/notificationhistory_model.dart';
+import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/pmcommentjob_model.dart';
 import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
@@ -55,6 +57,31 @@ Future<void> fetchSubJob(
       List<SubJobDetail> dataList =
           jsonResponse.map((json) => SubJobDetail.fromJson(json)).toList();
       subJobs.assignAll(dataList);
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> fetchPMJob(
+    String jobId, String token, RxList<PmModel> pmJobs) async {
+  try {
+    String? token = await getToken();
+    final response = await http.get(
+      Uri.parse(getPmJobbyId(jobId)),
+      headers: {
+        'Authorization': token ?? '',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      pmJobs.clear();
+      Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      PmModel pmJob = PmModel.fromJson(jsonResponse);
+      pmJobs.add(pmJob);
+      pmJobs.refresh();
     } else {
       print('Failed to load data: ${response.statusCode}');
     }
@@ -231,11 +258,11 @@ Future<void> fetchSubJobImg(
           jsonResponse.map((json) => SubJobDetail.fromJson(json)).toList();
       try {
         if (option == 'before') {
-          if (dataList.first.imageUrlBefore != null &&
-              dataList.first.imageUrlBefore != '') {
+          if (dataList.first.imgUrlBefore != null &&
+              dataList.first.imgUrlBefore != '') {
             file.clear();
             List<dynamic> imageBeforeList =
-                jsonDecode(dataList.first.imageUrlBefore!);
+                jsonDecode(dataList.first.imgUrlBefore!);
 
             for (int i = 0; i < imageBeforeList.length; i++) {
               file.add({
@@ -246,11 +273,11 @@ Future<void> fetchSubJobImg(
             file.refresh();
           }
         } else if (option == 'after') {
-          if (dataList.first.imageUrlAfter != null &&
-              dataList.first.imageUrlAfter != '') {
+          if (dataList.first.imgUrlAfter != null &&
+              dataList.first.imgUrlAfter != '') {
             file.clear();
             List<dynamic> imageAfterList =
-                jsonDecode(dataList.first.imageUrlAfter!);
+                jsonDecode(dataList.first.imgUrlAfter!);
 
             for (int i = 0; i < imageAfterList.length; i++) {
               file.add({
@@ -438,6 +465,68 @@ Future<void> fetchReportData(
   }
 }
 
+Future<void> fetchJobBatteryReportData(
+  String id,
+  String token,
+  RxList<BatteryReportModel> reportBatteryList,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getJobBatteryReportById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      String responseBody = response.body;
+      Map<String, dynamic>? responseData = jsonDecode(responseBody);
+      BtrMaintenance? btrMaintenance;
+      List<BtrSpareparts>? btrSpareparts;
+      List<BtrConditions>? btrConditions;
+      List<SpecicVoltageCheck>? specicVoltageCheck;
+
+      if (responseData != null) {
+        reportBatteryList.clear();
+        btrMaintenance = responseData['btr_maintenance'] != null
+            ? BtrMaintenance.fromJson(responseData['btr_maintenance'])
+            : null;
+
+        btrSpareparts = responseData['btr_spareparts'] != null
+            ? List<BtrSpareparts>.from(responseData['btr_spareparts']
+                .map((x) => BtrSpareparts.fromJson(x)))
+            : [];
+
+        btrConditions = responseData['btr_conditions'] != null
+            ? List<BtrConditions>.from(responseData['btr_conditions']
+                .map((x) => BtrConditions.fromJson(x)))
+            : [];
+
+        specicVoltageCheck = responseData['specic_voltage_check'] != null
+            ? List<SpecicVoltageCheck>.from(responseData['specic_voltage_check']
+                .map((x) => SpecicVoltageCheck.fromJson(x)))
+            : [];
+      } else {
+        print('No data found');
+      }
+
+      BatteryReportModel batteryReport = BatteryReportModel(
+        btrMaintenance: btrMaintenance,
+        btrSpareparts: btrSpareparts,
+        btrConditions: btrConditions,
+        specicVoltageCheck: specicVoltageCheck,
+      );
+
+      reportBatteryList.add(batteryReport);
+      reportBatteryList.refresh();
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
 Future<void> fetchBatteryReportData(
   String id,
   String token,
@@ -587,6 +676,31 @@ Future<void> fetchPmJobInfo(
   }
 }
 
+Future<void> fetchCustomerSearch(
+  String id,
+  String token,
+  RxList<CustomerModel> customerList,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getCustomerBySearch(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      customerList.clear();
+      var data = jsonDecode(response.body);
+      var customerInfo = CustomerModel.fromJson(data);
+      customerList.add(customerInfo);
+      customerList.refresh();
+    } else {}
+  } catch (e) {
+    print(e);
+  }
+}
+
 Future<void> fetchPdfReport(
     String id, String token, RxString pdfReport, String option) async {
   try {
@@ -596,6 +710,8 @@ Future<void> fetchPdfReport(
       apiUrl = getPdfEstimateReportById(id);
     } else if (option == 'fieldreport') {
       apiUrl = getPdfFieldReportById(id);
+    } else if (option == 'fieldreport_btr') {
+      apiUrl = getPdfJobsBtrReportById(id);
     } else if (option == 'btr') {
       apiUrl = getPdfBtrReportById(id);
     } else {
@@ -619,6 +735,9 @@ Future<void> fetchPdfReport(
         pdfReport.refresh();
       } else if (responseBody.containsKey('pdf_btr')) {
         pdfReport.value = responseBody['pdf_btr'];
+        pdfReport.refresh();
+      } else if (responseBody.containsKey('pdf_jobs_btr')) {
+        pdfReport.value = responseBody['pdf_jobs_btr'];
         pdfReport.refresh();
       } else if (responseBody.containsKey('pdf_report')) {
         pdfReport.value = responseBody['pdf_report'];
@@ -1265,7 +1384,7 @@ Future<void> updateJobSparePart(
       createQuotationHistory(jobId, 'tech', bugId, handlerId, '1');
     } else if (option == 'approve') {
       body = {'tech_manager_status': 1};
-      // createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
+      createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
       // sendNotificationToUser(
       //     handlerId,
       //     techHandlerId,
@@ -1511,6 +1630,37 @@ Future<void> updateSignatureJob(String jobId, String ticketId,
     }
   } catch (e) {
     print('Error: $e');
+  }
+}
+
+Future<void> updateJobSignatureBattery(String issueId, String saveCompletedtime,
+    String signature, String signaturePad) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {};
+
+    body = {
+      "job_issue_id": issueId,
+      "signature": signature,
+      "signature_pad": signaturePad,
+      "save_time": saveCompletedtime
+    };
+
+    final response2 = await http.post(
+      Uri.parse(updateJobsBatterySignature()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+    if (response2.statusCode == 200) {
+      print('update succesful');
+    } else {
+      return;
+    }
+  } catch (e) {
+    print(e);
   }
 }
 

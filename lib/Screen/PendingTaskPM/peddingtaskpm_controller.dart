@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Function/checkwarranty.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
@@ -27,6 +26,7 @@ class PendingTaskControllerPM extends GetxController {
   var reportList = <BatteryReportModel>[].obs;
   var reportPreventiveList = <PreventivereportModel>[].obs;
   var userData = <UserById>[].obs;
+  var pmJobs = <PmModel>[].obs;
   Rx<DateTime?> selectedDateTime = Rx<DateTime?>(null);
   var isPicking = false.obs;
   var issueData = [].obs;
@@ -61,12 +61,10 @@ class PendingTaskControllerPM extends GetxController {
     reportList = <BatteryReportModel>[].obs;
     reportPreventiveList = <PreventivereportModel>[].obs;
     jobId = ticketId;
-    final String apiUrl = getTicketbyId(ticketId);
 
     String? token = await getToken();
-    // await fetchBatteryReportData(jobId, token ?? '', reportList);
-    // await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
-    // fetchPdfData(ticketId, token ?? '', pdfList);
+    final String apiUrl = getTicketbyId(ticketId);
+    await fetchPMJob(ticketId, token ?? '', pmJobs);
 
     final response = await http.get(
       Uri.parse(apiUrl),
@@ -81,18 +79,18 @@ class PendingTaskControllerPM extends GetxController {
       List<Issues>? issuesList = ticketModel.issues;
       issuesList!.map((issue) async {
         issueId = issue.id;
-        checkWarranty(
-            issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
-        String customerNo = issue.getCustomFieldValue('Customer No') ?? '';
-        if (customerNo.isNotEmpty) {
-          try {
-            customer.value = await fetchCustomerInfo(customerNo);
-          } catch (e) {
-            customer.value = CustomerById.getEmpty();
-          }
-        } else {
-          customer.value = CustomerById.getEmpty();
-        }
+        // checkWarranty(
+        //     issue.getCustomFieldValue('Serial No') ?? '', warrantyInfoList);
+        // String customerNo = issue.getCustomFieldValue('Customer No') ?? '';
+        // if (customerNo.isNotEmpty) {
+        //   try {
+        //     customer.value = await fetchCustomerInfo(customerNo);
+        //   } catch (e) {
+        //     customer.value = CustomerById.getEmpty();
+        //   }
+        // } else {
+        //   customer.value = CustomerById.getEmpty();
+        // }
 
         fetchReadAttachment(issueId, token ?? '', issue.attachments,
             attachmentsData, attatchments);

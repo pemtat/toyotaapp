@@ -21,6 +21,7 @@ import 'package:toyotamobile/Screen/EditFillForm2/editdetail/repairpm.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/specic_gravity.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
+import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
@@ -32,6 +33,7 @@ import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 class EditFillformController2 extends GetxController {
   var jobId = ''.obs;
   var readOnly = ''.obs;
+  var jobIssueId = ''.obs;
   final customerName = TextEditingController().obs;
   final contactPerson = TextEditingController().obs;
   final division = TextEditingController().obs;
@@ -60,7 +62,8 @@ class EditFillformController2 extends GetxController {
   final UserController userController = Get.put(UserController());
   final TicketPmDetailController ticketPmDetailController =
       Get.put(TicketPmDetailController());
-
+  final TicketDetailController ticketDetailController =
+      Get.put(TicketDetailController());
   var batteryReportList = <BatteryReportModel>[].obs;
 
   var saveCompletedtime = ''.obs;
@@ -84,17 +87,27 @@ class EditFillformController2 extends GetxController {
     );
   }
 
-  void fetchData(String jobId, readOnly) async {
+  void fetchData(String jobId, readOnly, jobIssueId) async {
     this.jobId.value = jobId;
     if (readOnly != null) {
       this.readOnly.value = readOnly;
     } else {
       this.readOnly.value = 'no';
     }
+    if (jobIssueId == null) {
+      this.jobIssueId.value = '';
+    } else {
+      this.jobIssueId.value = jobIssueId;
+    }
 
     String? token = await getToken();
     await userController.fetchData();
-    await fetchBatteryReportData(jobId, token ?? '', batteryReportList);
+    if (this.jobIssueId.value == '') {
+      await fetchBatteryReportData(jobId, token ?? '', batteryReportList);
+    } else {
+      await fetchJobBatteryReportData(
+          this.jobIssueId.value, token ?? '', batteryReportList);
+    }
 
     await fetchUserByZone(
       userController.userInfo.first.zone,
@@ -292,7 +305,9 @@ class EditFillformController2 extends GetxController {
 
   Future<void> saveReport(BuildContext context) async {
     String? token = await getToken();
-    String apiUrl = updateBatteryReport();
+    String apiUrl = jobIssueId.value == ''
+        ? updateBatteryReport()
+        : updateJobsBatteryReport();
 
     saveCurrentDateTime(saveCompletedtime);
     if (correctiveActionController.correctiveAction.isNotEmpty) {
@@ -435,6 +450,7 @@ class EditFillformController2 extends GetxController {
     }
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
+      if (jobIssueId.value != '') "job_issue_id": jobIssueId.value,
       "battery_band": batteryinformation.batteryBand,
       "battery_model": batteryinformation.batteryModel,
       "manufacturer_no": batteryinformation.mfgNo,
@@ -482,16 +498,27 @@ class EditFillformController2 extends GetxController {
       if (response.statusCode == 200) {
         showWaitMessage();
         if (readOnly.value == 'yes') {
-          await fetchBatteryReportData(jobId.toString(), token ?? '',
-              ticketPmDetailController.reportList);
+          if (jobIssueId.value == '') {
+            await fetchBatteryReportData(jobId.toString(), token ?? '',
+                ticketPmDetailController.reportList);
+          } else {
+            await fetchJobBatteryReportData(jobIssueId.value, token ?? '',
+                ticketDetailController.reportBatteryList);
+          }
         } else {
           // await jobDetailControllerPM.fetchData(jobId.toString());
           // await fetchCommentJobInfo(
           //     jobId.toString(), token ?? '', jobDetailControllerPM.comment);
           // jobDetailControllerPM.commentCheck.value = true;
-          await fetchBatteryReportData(
-              jobId.toString(), token ?? '', jobDetailControllerPM.reportList);
-          jobDetailControllerPM.completeCheck.value = true;
+          if (jobIssueId.value == '') {
+            await fetchBatteryReportData(jobId.toString(), token ?? '',
+                jobDetailControllerPM.reportList);
+            jobDetailControllerPM.completeCheck.value = true;
+          } else {
+            await fetchJobBatteryReportData(jobIssueId.value, token ?? '',
+                jobDetailController.reportBatteryList);
+            jobDetailController.completeCheck.value = true;
+          }
         }
         showSaveMessage();
       } else {
