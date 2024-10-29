@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class LoginController extends GetxController {
   final LoginModel _loginModel = LoginModel();
@@ -100,7 +101,8 @@ class LoginController extends GetxController {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String deviceType;
     String deviceId;
-
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
     // Determine device type and get device ID
     if (Platform.isAndroid) {
       deviceType = 'Android';
@@ -131,7 +133,8 @@ class LoginController extends GetxController {
           "token": token,
           "device_id": deviceId,
           "device_type": deviceType,
-          "created_at": DateTime.now().toString()
+          "created_at": DateTime.now().toString(),
+          "app_version": version
         };
         try {
           final response = await http.post(

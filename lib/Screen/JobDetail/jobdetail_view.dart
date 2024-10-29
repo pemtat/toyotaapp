@@ -144,7 +144,7 @@ class JobDetailView extends StatelessWidget {
                                         dateTime:
                                             formatDateTime(issue.createdAt, ''),
                                         status: issue.status.name,
-                                        reporter: issue.reporter.realName,
+                                        reporter: issue.reporter.realName ?? '',
                                         more: jobController
                                             .moreTicketDetail.value,
                                       ),
@@ -218,7 +218,7 @@ class JobDetailView extends StatelessWidget {
                                       children: [
                                         JobInfo(
                                           jobId: 0,
-                                          jobIdString: subJob!.id,
+                                          jobIdString: subJob!.id ?? '',
                                           dateTime: subJob.dueDate ??
                                               'ยังไม่มีกำหนดการ',
                                           reporter: subJob.realName ?? '',
@@ -449,7 +449,7 @@ class JobDetailView extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         const TitleApp(
-                                            text: 'Field Service Report*'),
+                                            text: 'Field Service Report'),
                                         Obx(() => jobController
                                                 .reportList.isNotEmpty
                                             ? EditButton(
@@ -461,16 +461,14 @@ class JobDetailView extends StatelessWidget {
                                                       ));
                                                 },
                                               )
-                                            : subJob != null
-                                                ? AddButton(
-                                                    onTap: () {
-                                                      Get.to(() => FillFormView(
-                                                            ticketId: ticketId,
-                                                            jobId: jobId ?? '',
-                                                          ));
-                                                    },
-                                                  )
-                                                : Container())
+                                            : AddButton(
+                                                onTap: () {
+                                                  Get.to(() => FillFormView(
+                                                        ticketId: ticketId,
+                                                        jobId: jobId ?? '',
+                                                      ));
+                                                },
+                                              ))
                                       ],
                                     ),
                                     Text(

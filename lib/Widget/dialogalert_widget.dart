@@ -106,6 +106,7 @@ class AlertDialog1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: white3,
       title: Center(
           child: Text(
         'เเจ้งเตือน',
@@ -140,6 +141,7 @@ class AlertDialogPickImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: white3,
       title: Center(
           child: Text(
         'เเจ้งเตือน',

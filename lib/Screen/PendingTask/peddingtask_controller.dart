@@ -66,7 +66,7 @@ class PeddingtaskController extends GetxController {
             attachmentsData, attatchments);
       }).toList();
       issueData.value = issuesList;
-      notesFiles.assignAll(issueData.first.notes ?? []);
+      // notesFiles.assignAll(issueData.first.notes ?? []);
     } else {}
   }
 

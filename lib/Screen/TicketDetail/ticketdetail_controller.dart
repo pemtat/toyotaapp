@@ -116,7 +116,7 @@ class TicketDetailController extends GetxController {
 
       issueData.value = issuesList;
     } else {}
-    notesFiles.assignAll(issueData.first.notes ?? []);
+    // notesFiles.assignAll(issueData.first.notes ?? []);
   }
 
   Future<void> fetchSubJobSparePartId() async {

@@ -99,7 +99,7 @@ class PendingTaskControllerPM extends GetxController {
     } else {}
     // await fetchUserById(
     //     issueData.first.history.first.user.id.toString(), userData);
-    notesFiles.assignAll(issueData.first.notes ?? []);
+    // notesFiles.assignAll(issueData.first.notes ?? []);
   }
 
   void completeJob() async {

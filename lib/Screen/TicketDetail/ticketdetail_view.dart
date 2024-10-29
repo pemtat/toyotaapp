@@ -324,8 +324,9 @@ class TicketDetailView extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const TitleApp(
-                                          text: 'Field Service Report*'),
-                                      issue.status.id != 90
+                                          text: 'Field Service Report'),
+                                      ticketController.reportList.isNotEmpty &&
+                                              issue.status.id != 90
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView(
@@ -411,7 +412,9 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Battery Maintenance Report'),
-                                      issue.status.id != 90
+                                      ticketController.reportBatteryList
+                                                  .isNotEmpty &&
+                                              issue.status.id != 90
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView2(
