@@ -77,7 +77,6 @@ class JobDetailController extends GetxController {
         completeCheck.value = true;
         await fetchSubJobSparePartId();
       }
-
       await fetchSubJob(subjobId, token ?? '', subJobs);
       // await fetchUserById(subJobs.first.reporterId ?? '', userData);
       // await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
@@ -145,7 +144,7 @@ class JobDetailController extends GetxController {
       } else {}
       notesFiles.assignAll(issueData.first.notes ?? []);
     } catch (e) {
-      Get.to(() => BottomBarView());
+      print(e);
     }
   }
 

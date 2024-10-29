@@ -109,13 +109,49 @@ class AlertDialog1 extends StatelessWidget {
       title: Center(
           child: Text(
         'เเจ้งเตือน',
-        style: TextStyleList.subtitle1,
+        style: TextStyleList.title1,
       )),
       content: Row(
         children: [
           Text(
             'โปรดกรอกข้อมูลอย่างน้อย 1 รายการ',
             style: TextStyleList.text2,
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: Text(
+            'ตกลง',
+            style: TextStyleList.subtext3,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class AlertDialogPickImage extends StatelessWidget {
+  const AlertDialogPickImage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Center(
+          child: Text(
+        'เเจ้งเตือน',
+        style: TextStyleList.title1,
+      )),
+      content: Row(
+        children: [
+          Expanded(
+            child: Text(
+              'ระบบไม่รองรับไฟล์นามสกุลนี้ โปรดเลือกไฟล์นามสกุล  .jpg  .jpeg  .png',
+              style: TextStyleList.text2,
+            ),
           ),
         ],
       ),

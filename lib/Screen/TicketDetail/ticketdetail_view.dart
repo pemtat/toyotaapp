@@ -9,7 +9,6 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
-import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/customerinfo_widget.dart';
@@ -326,9 +325,7 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Field Service Report*'),
-                                      issue.status.id != 90 &&
-                                              (subJob.estimateStatus == '0' ||
-                                                  subJob.estimateStatus == '3')
+                                      issue.status.id != 90
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView(
@@ -360,46 +357,46 @@ class TicketDetailView extends StatelessWidget {
                                               timeEnd: ticketController
                                                   .savedDateEndTime,
                                             ),
-                                            Obx(() => (ticketController
-                                                        .subJobSparePart
-                                                        .isNotEmpty &&
-                                                    ticketController.reportList
-                                                            .first.signature !=
-                                                        '' &&
-                                                    ticketController
-                                                            .reportList
-                                                            .first
-                                                            .signaturePad !=
-                                                        '')
-                                                ? Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      ButtonColor(
-                                                        backgroundColor: red4,
-                                                        title:
-                                                            'View Part Detail',
-                                                        onTap: () {
-                                                          showDialog(
-                                                              context: context,
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  Obx(() =>
-                                                                      Material(
-                                                                        color: Colors
-                                                                            .transparent,
-                                                                        child:
-                                                                            SubJobSparePartWidget(
-                                                                          subJobSparePart: ticketController
-                                                                              .subJobSparePart
-                                                                              .first,
-                                                                        ),
-                                                                      )));
-                                                        },
-                                                      ),
-                                                    ],
-                                                  )
-                                                : Container()),
+                                            // Obx(() => (ticketController
+                                            //             .subJobSparePart
+                                            //             .isNotEmpty &&
+                                            //         ticketController.reportList
+                                            //                 .first.signature !=
+                                            //             '' &&
+                                            //         ticketController
+                                            //                 .reportList
+                                            //                 .first
+                                            //                 .signaturePad !=
+                                            //             '')
+                                            //     ? Row(
+                                            //         mainAxisAlignment:
+                                            //             MainAxisAlignment.end,
+                                            //         children: [
+                                            //           ButtonColor(
+                                            //             backgroundColor: red4,
+                                            //             title:
+                                            //                 'View Part Detail',
+                                            //             onTap: () {
+                                            //               showDialog(
+                                            //                   context: context,
+                                            //                   builder: (BuildContext
+                                            //                           context) =>
+                                            //                       Obx(() =>
+                                            //                           Material(
+                                            //                             color: Colors
+                                            //                                 .transparent,
+                                            //                             child:
+                                            //                                 SubJobSparePartWidget(
+                                            //                               subJobSparePart: ticketController
+                                            //                                   .subJobSparePart
+                                            //                                   .first,
+                                            //                             ),
+                                            //                           )));
+                                            //             },
+                                            //           ),
+                                            //         ],
+                                            //       )
+                                            //     : Container()),
                                           ],
                                         )
                                       : Container())

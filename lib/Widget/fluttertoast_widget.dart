@@ -9,6 +9,16 @@ void showMessage(String message) {
   );
 }
 
+void showMessageLong(String message) {
+  Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 3,
+    fontSize: 12.0,
+  );
+}
+
 void showWaitMessage() {
   Fluttertoast.showToast(
     msg: "กำลังบันทึกข้อมูล...",

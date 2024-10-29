@@ -931,8 +931,8 @@ void addNote(
   }
 }
 
-Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
-    String option, String ticketId, String jobId) async {
+Future<void> pickImage(BuildContext context, RxList<Map<String, String>> file,
+    Rx<bool> isPicking, String option, String ticketId, String jobId) async {
   if (isPicking.value) return;
   isPicking.value = true;
   try {
@@ -942,15 +942,25 @@ Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
       io.File imageFile = io.File(pickedFile.path);
       String fileName = pickedFile.name;
       String base64Content = base64Encode(await imageFile.readAsBytes());
+      String fileExtension = fileName.split('.').last.toLowerCase();
+      if (fileExtension == 'jpg' ||
+          fileExtension == 'png' ||
+          fileExtension == 'jpeg') {
+        var images = <Map<String, String>>[].obs;
+        images.add({
+          'filename': fileName,
+          'content': base64Content,
+        });
 
-      var images = <Map<String, String>>[].obs;
-      images.add({
-        'filename': fileName,
-        'content': base64Content,
-      });
-
-      await updateImgSubjobs(jobId, ticketId, images, option);
-      await fetchSubJobImg(file, jobId, option);
+        await updateImgSubjobs(jobId, ticketId, images, option);
+        await fetchSubJobImg(file, jobId, option);
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertDialogPickImage();
+            });
+      }
     }
   } finally {
     isPicking.value = false;
@@ -958,6 +968,7 @@ Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
 }
 
 Future<void> pickImagePM(
+    BuildContext context,
     RxList<Map<String, String>> file,
     Rx<bool> isPicking,
     String option,
@@ -974,18 +985,28 @@ Future<void> pickImagePM(
       io.File imageFile = io.File(pickedFile.path);
       String fileName = pickedFile.name;
       String base64Content = base64Encode(await imageFile.readAsBytes());
+      String fileExtension = fileName.split('.').last.toLowerCase();
       // file.add({
       //   'filename': fileName,
       //   'content': base64Content,
       // });
+      if (fileExtension == 'jpg' ||
+          fileExtension == 'png' ||
+          fileExtension == 'jpeg') {
+        Map<String, String> newImg = ({
+          'filename': fileName,
+          'content': base64Content,
+        });
 
-      Map<String, String> newImg = ({
-        'filename': fileName,
-        'content': base64Content,
-      });
-
-      await updateImgPMjobs(jobId, newImg, option, createById);
-      await fetchPmJobImg(jobId, imagesBefore, imagesAfter, option);
+        await updateImgPMjobs(jobId, newImg, option, createById);
+        await fetchPmJobImg(jobId, imagesBefore, imagesAfter, option);
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertDialogPickImage();
+            });
+      }
     }
   } finally {
     isPicking.value = false;

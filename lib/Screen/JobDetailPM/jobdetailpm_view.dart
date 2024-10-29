@@ -203,6 +203,7 @@ class JobDetailViewPM extends StatelessWidget {
                                     12.kH,
                                     UploadImageWidget(
                                       pickImage: () => pickImagePM(
+                                        context,
                                         jobController.imagesBefore,
                                         jobController.isPicking,
                                         'before',
@@ -290,6 +291,7 @@ class JobDetailViewPM extends StatelessWidget {
                                               12.kH,
                                               UploadImageWidget(
                                                 pickImage: () => pickImagePM(
+                                                    context,
                                                     jobController.imagesAfter,
                                                     jobController.isPicking,
                                                     'after',

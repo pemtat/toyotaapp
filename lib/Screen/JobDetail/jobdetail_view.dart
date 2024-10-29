@@ -254,6 +254,7 @@ class JobDetailView extends StatelessWidget {
                                     14.kH,
                                     UploadImageWidget(
                                         pickImage: () => pickImage(
+                                            context,
                                             jobController.imagesBefore,
                                             jobController.isPicking,
                                             'before',
@@ -335,6 +336,7 @@ class JobDetailView extends StatelessWidget {
                                               14.kH,
                                               UploadImageWidget(
                                                 pickImage: () => pickImage(
+                                                    context,
                                                     jobController.imagesAfter,
                                                     jobController.isPicking,
                                                     'after',
@@ -449,12 +451,7 @@ class JobDetailView extends StatelessWidget {
                                         const TitleApp(
                                             text: 'Field Service Report*'),
                                         Obx(() => jobController
-                                                    .reportList.isNotEmpty &&
-                                                (subJob != null &&
-                                                        subJob.estimateStatus ==
-                                                            '0' ||
-                                                    subJob!.estimateStatus ==
-                                                        '3')
+                                                .reportList.isNotEmpty
                                             ? EditButton(
                                                 onTap: () {
                                                   Get.to(() => EditFillFormView(
@@ -464,11 +461,7 @@ class JobDetailView extends StatelessWidget {
                                                       ));
                                                 },
                                               )
-                                            : subJob != null &&
-                                                    (subJob.estimateStatus ==
-                                                            '0' ||
-                                                        subJob.estimateStatus ==
-                                                            '3')
+                                            : subJob != null
                                                 ? AddButton(
                                                     onTap: () {
                                                       Get.to(() => FillFormView(
@@ -541,51 +534,51 @@ class JobDetailView extends StatelessWidget {
                                                       .shrink();
                                                 }
                                               }),
-                                              Obx(() => (jobController
-                                                          .subJobSparePart
-                                                          .isNotEmpty &&
-                                                      subJob != null &&
-                                                      jobController.reportList
-                                                          .isNotEmpty &&
-                                                      jobController
-                                                              .reportList
-                                                              .first
-                                                              .signature !=
-                                                          '' &&
-                                                      jobController
-                                                              .reportList
-                                                              .first
-                                                              .signaturePad !=
-                                                          '')
-                                                  ? Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        ButtonColor(
-                                                          backgroundColor: red4,
-                                                          title:
-                                                              'View Part Detail',
-                                                          onTap: () {
-                                                            showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    Obx(() =>
-                                                                        Material(
-                                                                          color:
-                                                                              Colors.transparent,
-                                                                          child:
-                                                                              SubJobSparePartWidget(
-                                                                            subJobSparePart:
-                                                                                jobController.subJobSparePart.first,
-                                                                          ),
-                                                                        )));
-                                                          },
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : Container()),
+                                              // Obx(() => (jobController
+                                              //             .subJobSparePart
+                                              //             .isNotEmpty &&
+                                              //         subJob != null &&
+                                              //         jobController.reportList
+                                              //             .isNotEmpty &&
+                                              //         jobController
+                                              //                 .reportList
+                                              //                 .first
+                                              //                 .signature !=
+                                              //             '' &&
+                                              //         jobController
+                                              //                 .reportList
+                                              //                 .first
+                                              //                 .signaturePad !=
+                                              //             '')
+                                              //     ? Row(
+                                              //         mainAxisAlignment:
+                                              //             MainAxisAlignment.end,
+                                              //         children: [
+                                              //           ButtonColor(
+                                              //             backgroundColor: red4,
+                                              //             title:
+                                              //                 'View Part Detail',
+                                              //             onTap: () {
+                                              //               showDialog(
+                                              //                   context:
+                                              //                       context,
+                                              //                   builder: (BuildContext
+                                              //                           context) =>
+                                              //                       Obx(() =>
+                                              //                           Material(
+                                              //                             color:
+                                              //                                 Colors.transparent,
+                                              //                             child:
+                                              //                                 SubJobSparePartWidget(
+                                              //                               subJobSparePart:
+                                              //                                   jobController.subJobSparePart.first,
+                                              //                             ),
+                                              //                           )));
+                                              //             },
+                                              //           ),
+                                              //         ],
+                                              //       )
+                                              //     : Container()),
                                             ],
                                           )
                                         : Container()),
