@@ -35,6 +35,8 @@ class SubJobSparePart {
   String? bugStatus;
   List<Sparepart>? sparepart;
   List<Sparepart>? additionalSparepart;
+  List<Sparepart>? btrSparepart;
+  List<Sparepart>? pvtSparepart;
   SubJobSparePart(
       {this.id,
       this.reporterId,
@@ -71,6 +73,8 @@ class SubJobSparePart {
       this.sparepart,
       this.bugStatus,
       this.additionalSparepart,
+      this.btrSparepart,
+      this.pvtSparepart,
       this.documentNo});
 
   SubJobSparePart.fromJson(Map<String, dynamic> json) {
@@ -120,6 +124,18 @@ class SubJobSparePart {
         additionalSparepart!.add(Sparepart.fromJson(v));
       });
     }
+    if (json['btr_sparepart'] != null) {
+      btrSparepart = <Sparepart>[];
+      json['btr_sparepart'].forEach((v) {
+        btrSparepart!.add(Sparepart.fromJson(v));
+      });
+    }
+    if (json['pvt_sparepart'] != null) {
+      pvtSparepart = <Sparepart>[];
+      json['pvt_sparepart'].forEach((v) {
+        pvtSparepart!.add(Sparepart.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -165,6 +181,12 @@ class SubJobSparePart {
       data['additional_sparepart'] =
           additionalSparepart!.map((v) => v.toJson()).toList();
     }
+    if (btrSparepart != null) {
+      data['btr_sparepart'] = btrSparepart!.map((v) => v.toJson()).toList();
+    }
+    if (pvtSparepart != null) {
+      data['pvt_sparepart'] = pvtSparepart!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -205,7 +227,7 @@ class Sparepart {
     quantity = json['quantity'];
     changeNow = json['change_now'];
     changeOnPm = json['change_on_pm'];
-    additional = json['additional'];
+    additional = json['additional'] is String ? false : json['additional'];
     unitMeasure = json['unit_of_measure'];
     salesPrice = json['price'];
     priceVat = json['price_includes_vat'];

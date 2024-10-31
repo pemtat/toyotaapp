@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/openmap.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
-import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/SubTicket/subticket_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';

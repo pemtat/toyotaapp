@@ -346,6 +346,8 @@ class FillformController2 extends GetxController {
         } else {
           await fetchJobBatteryReportData(jobIssueId.value, token ?? '',
               jobDetailController.reportBatteryList);
+          await fetchSubJobSparePartOption();
+          await jobDetailController.fetchSubJobSparePartId();
           jobDetailController.completeCheck.value = true;
         }
         showSaveMessage();

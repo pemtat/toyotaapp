@@ -66,7 +66,7 @@ class PeddingtaskController extends GetxController {
             attachmentsData, attatchments);
       }).toList();
       issueData.value = issuesList;
-      notesFiles.assignAll(issueData.first.notes ?? []);
+      // notesFiles.assignAll(issueData.first.notes ?? []);
     } else {}
   }
 
@@ -133,6 +133,7 @@ class PeddingtaskController extends GetxController {
             updateAcceptStatusSubjobs(jobId, issueId.toString(), '102');
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
+            // createQuotation(jobId, issueId, '1');
             showSaveMessage();
           },
         );

@@ -426,8 +426,8 @@ class HomeController extends GetxController {
     try {
       final response = await http.get(
         Uri.parse(option == 'tech'
-            ? getSparepartJobByHandler(id)
-            : getSparepartJobById(id)),
+            ? getSparepartJobByHandlerNew(id)
+            : getSparepartJobByIdNew(id)),
         headers: {
           'Authorization': '$token',
         },
@@ -443,9 +443,6 @@ class HomeController extends GetxController {
         List<SubJobSparePart> rejectedSparePart = [];
         for (var sparePart in itemList) {
           switch (sparePart.estimateStatus) {
-            case '0':
-              pendingSparePart.add(sparePart);
-              break;
             case '1':
               pendingSparePart.add(sparePart);
               break;

@@ -394,32 +394,35 @@ class EditFillFormView2 extends StatelessWidget {
                     child: Obx(() {
                       return GestureDetector(
                         onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                backgroundColor: white3,
-                                title: Center(child: Text('ผู้ตรวจซ่อม 2')),
-                                titleTextStyle: TextStyleList.text1,
-                                content: SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: fillformController2.userByZone
-                                        .map<Widget>((UsersZone user) {
-                                      return ListTile(
-                                        title: Text(user.realname ?? 'No data'),
-                                        onTap: () {
-                                          fillformController2.selectedUser
-                                              .value = user.realname ?? '';
-                                          Navigator.of(context).pop();
-                                        },
-                                      );
-                                    }).toList(),
+                          if (readOnly == null) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: white3,
+                                  title: Center(child: Text('ผู้ตรวจซ่อม 2')),
+                                  titleTextStyle: TextStyleList.text1,
+                                  content: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: fillformController2.userByZone
+                                          .map<Widget>((UsersZone user) {
+                                        return ListTile(
+                                          title:
+                                              Text(user.realname ?? 'No data'),
+                                          onTap: () {
+                                            fillformController2.selectedUser
+                                                .value = user.realname ?? '';
+                                            Navigator.of(context).pop();
+                                          },
+                                        );
+                                      }).toList(),
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          );
+                                );
+                              },
+                            );
+                          }
                         },
                         child: AbsorbPointer(
                           child: TextField(
@@ -433,18 +436,19 @@ class EditFillFormView2 extends StatelessWidget {
                       );
                     }),
                   ),
-                  Obx(() {
-                    if (fillformController2.selectedUser.value != '') {
-                      return InkWell(
-                        onTap: () {
-                          fillformController2.selectedUser.value = '';
-                        },
-                        child: Icon(Icons.close),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  })
+                  if (readOnly == null)
+                    Obx(() {
+                      if (fillformController2.selectedUser.value != '') {
+                        return InkWell(
+                          onTap: () {
+                            fillformController2.selectedUser.value = '';
+                          },
+                          child: Icon(Icons.close),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    })
                 ],
               ),
             ),

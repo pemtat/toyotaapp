@@ -29,11 +29,13 @@ import 'package:toyotamobile/Widget/warranty_widget.dart';
 class PendingTaskViewPM extends StatelessWidget {
   final String ticketId;
   final String? status;
+  final String? showOnly;
   final PendingTaskControllerPM jobController =
       Get.put(PendingTaskControllerPM());
   final HomeController homeController = Get.put(HomeController());
 
-  PendingTaskViewPM({super.key, required this.ticketId, this.status}) {
+  PendingTaskViewPM(
+      {super.key, required this.ticketId, this.status, this.showOnly}) {
     jobController.fetchData(ticketId);
   }
   final UserController userController = Get.put(UserController());
@@ -397,82 +399,85 @@ class PendingTaskViewPM extends StatelessWidget {
           }
         },
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: white3,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: EndButton(
-                onPressed: () {
-                  jobController.showAcceptDialog(
-                    context,
-                    'Are you sure to confirm?',
-                    'No',
-                    'Yes',
-                  );
-                },
-                text: 'Confirm',
-              ),
-            ),
-            13.wH,
-            Expanded(
-              child: EndButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        backgroundColor: white4,
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            10.kH,
-                            TextFieldType(
-                              hintText: 'Remark',
-                              textSet: jobController.cancelNote.value,
-                              maxLine: 5,
-                            ),
-                          ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              'No',
-                              style: TextStyleList.text1,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () async {
-                              await updateJobPM(
-                                  ticketId.toString(),
-                                  2,
-                                  jobController.cancelNote.value.text,
-                                  jobController.issueData.first.customerStatus,
-                                  'yes');
+      bottomNavigationBar: showOnly == null
+          ? BottomAppBar(
+              color: white3,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: EndButton(
+                      onPressed: () {
+                        jobController.showAcceptDialog(
+                          context,
+                          'Are you sure to confirm?',
+                          'No',
+                          'Yes',
+                        );
+                      },
+                      text: 'Confirm',
+                    ),
+                  ),
+                  13.wH,
+                  Expanded(
+                    child: EndButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: white4,
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  10.kH,
+                                  TextFieldType(
+                                    hintText: 'Remark',
+                                    textSet: jobController.cancelNote.value,
+                                    maxLine: 5,
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    'No',
+                                    style: TextStyleList.text1,
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    await updateJobPM(
+                                        ticketId.toString(),
+                                        2,
+                                        jobController.cancelNote.value.text,
+                                        jobController
+                                            .issueData.first.customerStatus,
+                                        'yes');
 
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              'Yes',
-                              style: TextStyleList.text1,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                text: 'Cancel',
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'Yes',
+                                    style: TextStyleList.text1,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      text: 'Cancel',
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-      ),
+            )
+          : null,
     );
   }
 }

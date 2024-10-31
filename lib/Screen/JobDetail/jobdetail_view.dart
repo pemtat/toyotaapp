@@ -254,6 +254,7 @@ class JobDetailView extends StatelessWidget {
                                     14.kH,
                                     UploadImageWidget(
                                         pickImage: () => pickImage(
+                                            context,
                                             jobController.imagesBefore,
                                             jobController.isPicking,
                                             'before',
@@ -335,6 +336,7 @@ class JobDetailView extends StatelessWidget {
                                               14.kH,
                                               UploadImageWidget(
                                                 pickImage: () => pickImage(
+                                                    context,
                                                     jobController.imagesAfter,
                                                     jobController.isPicking,
                                                     'after',
@@ -447,13 +449,15 @@ class JobDetailView extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         const TitleApp(
-                                            text: 'Field Service Report*'),
+                                            text: 'Field Service Report'),
                                         Obx(() => jobController
                                                     .reportList.isNotEmpty &&
                                                 (subJob != null &&
                                                         subJob.estimateStatus ==
-                                                            '0' ||
+                                                            null ||
                                                     subJob!.estimateStatus ==
+                                                        '0' ||
+                                                    subJob.estimateStatus ==
                                                         '3')
                                             ? EditButton(
                                                 onTap: () {
@@ -466,6 +470,8 @@ class JobDetailView extends StatelessWidget {
                                               )
                                             : subJob != null &&
                                                     (subJob.estimateStatus ==
+                                                            null ||
+                                                        subJob.estimateStatus ==
                                                             '0' ||
                                                         subJob.estimateStatus ==
                                                             '3')
@@ -677,7 +683,51 @@ class JobDetailView extends StatelessWidget {
                                                 )
                                             ],
                                           )
-                                        : Container())
+                                        : Container()),
+                                    Obx(() => (jobController
+                                                .subJobSparePart.isNotEmpty &&
+                                            jobController
+                                                .reportBatteryList.isNotEmpty &&
+                                            jobController
+                                                    .reportBatteryList
+                                                    .first
+                                                    .btrMaintenance!
+                                                    .signature !=
+                                                null &&
+                                            jobController
+                                                    .reportBatteryList
+                                                    .first
+                                                    .btrMaintenance!
+                                                    .signaturePad !=
+                                                null)
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              ButtonColor(
+                                                backgroundColor: red4,
+                                                title: 'View Part Detail',
+                                                onTap: () {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          Obx(() => Material(
+                                                                color: Colors
+                                                                    .transparent,
+                                                                child:
+                                                                    SubJobSparePartWidget(
+                                                                  subJobSparePart:
+                                                                      jobController
+                                                                          .subJobSparePart
+                                                                          .first,
+                                                                ),
+                                                              )));
+                                                },
+                                              ),
+                                            ],
+                                          )
+                                        : Container()),
                                   ],
                                 ),
                               ],

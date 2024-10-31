@@ -325,10 +325,15 @@ class TicketDetailView extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const TitleApp(
-                                          text: 'Field Service Report*'),
+                                          text: 'Field Service Report'),
                                       issue.status.id != 90 &&
-                                              (subJob.estimateStatus == '0' ||
-                                                  subJob.estimateStatus == '3')
+                                              (subJob.estimateStatus == null ||
+                                                  subJob.estimateStatus ==
+                                                      '0' ||
+                                                  subJob.estimateStatus ==
+                                                      '3') &&
+                                              ticketController
+                                                  .reportList.isNotEmpty
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView(
@@ -414,7 +419,9 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Battery Maintenance Report'),
-                                      issue.status.id != 90
+                                      issue.status.id != 90 &&
+                                              ticketController
+                                                  .reportBatteryList.isNotEmpty
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView2(
@@ -438,7 +445,51 @@ class TicketDetailView extends StatelessWidget {
                                           timeEnd:
                                               ticketController.savedDateEndTime,
                                         )
-                                      : Container())
+                                      : Container()),
+                                  Obx(() => (ticketController
+                                              .subJobSparePart.isNotEmpty &&
+                                          ticketController
+                                              .reportBatteryList.isNotEmpty &&
+                                          ticketController
+                                                  .reportBatteryList
+                                                  .first
+                                                  .btrMaintenance!
+                                                  .signature !=
+                                              null &&
+                                          ticketController
+                                                  .reportBatteryList
+                                                  .first
+                                                  .btrMaintenance!
+                                                  .signaturePad !=
+                                              null)
+                                      ? Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            ButtonColor(
+                                              backgroundColor: red4,
+                                              title: 'View Part Detail',
+                                              onTap: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        Obx(() => Material(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              child:
+                                                                  SubJobSparePartWidget(
+                                                                subJobSparePart:
+                                                                    ticketController
+                                                                        .subJobSparePart
+                                                                        .first,
+                                                              ),
+                                                            )));
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                      : Container()),
                                 ],
                               ),
                             ],

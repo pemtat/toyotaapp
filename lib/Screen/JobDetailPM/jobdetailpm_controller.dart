@@ -9,6 +9,7 @@ import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
+import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
@@ -25,7 +26,7 @@ class JobDetailControllerPM extends GetxController {
   var notesFiles = <Notes>[].obs;
   final comment = TextEditingController().obs;
   final comment2 = TextEditingController().obs;
-
+  var subJobSparePart = <SubJobSparePart>[].obs;
   var reportList = <BatteryReportModel>[].obs;
   var pmInfo = <PMJobInfoModel>[].obs;
   var pmJobs = <PmModel>[].obs;
@@ -75,7 +76,9 @@ class JobDetailControllerPM extends GetxController {
         (reportPreventiveList.isNotEmpty &&
             reportPreventiveList.first.pvtMaintenance != null)) {
       completeCheck.value = true;
+      await fetchSubJobSparePartIdPM();
     }
+
     comment2.value.clear();
     if (pmInfo.first.comment != null && pmInfo.first.comment != '') {
       comment.value.text = pmInfo.first.comment ?? '';
@@ -185,6 +188,20 @@ class JobDetailControllerPM extends GetxController {
     if (response.statusCode == 200) {
       jobController.fetchDataFromAssignJob();
       bottomController.currentIndex.value = 0;
+    }
+  }
+
+  Future<void> fetchSubJobSparePartIdPM() async {
+    try {
+      subJobSparePart.clear();
+      final filteredSpareParts = jobController.subJobSparePart
+          .where((element) => element.id == jobId)
+          .toList();
+
+      subJobSparePart.value = filteredSpareParts;
+      subJobSparePart.refresh();
+    } catch (e) {
+      print(e);
     }
   }
 

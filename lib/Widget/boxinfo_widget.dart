@@ -84,18 +84,17 @@ class BoxInfo2 extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: Text(
-                  title,
-                  style: TextStyleList.text15,
-                ),
+              Text(
+                title,
+                style: TextStyleList.text15,
               ),
               trailing ??
-                  Flexible(
-                    child: Text(
-                      value,
-                      style: TextStyleList.text11,
-                    ),
+                  Text(
+                    value.length > 20
+                        ? value.replaceAllMapped(
+                            RegExp(r'.{35}'), (match) => '${match.group(0)}\n')
+                        : value,
+                    style: TextStyleList.text11,
                   ),
             ],
           );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/additional_spare.dart';
+import 'package:toyotamobile/Screen/EditSparePart/editdetail/btr_sparepartlist.dart';
+import 'package:toyotamobile/Screen/EditSparePart/editdetail/pvt_sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editsparepart_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -19,23 +21,31 @@ import 'package:get/get.dart';
 class EditSparePartView extends StatelessWidget {
   final List<Sparepart> sparepart;
   final List<Sparepart> additionalSparepart;
+  final List<Sparepart> btrSparepart;
+  final List<Sparepart> pvtSparepart;
   final String jobId;
   final String bugId;
+  final String projectId;
   EditSparePartView(
       {super.key,
       required this.sparepart,
       required this.additionalSparepart,
       required this.jobId,
-      required this.bugId}) {
-    sparePartController.fetchForm(jobId, bugId, sparepart, additionalSparepart);
+      required this.bugId,
+      required this.projectId,
+      required this.btrSparepart,
+      required this.pvtSparepart}) {
+    sparePartController.fetchForm(jobId, bugId, sparepart, additionalSparepart,
+        btrSparepart, pvtSparepart, projectId);
   }
-  final AdditSparepartList additSparePartListController =
-      Get.put(AdditSparepartList());
-
-  final SparepartList sparePartListController = Get.put(SparepartList());
   final EditSparePartController sparePartController =
       Get.put(EditSparePartController());
 
+  final AdditSparepartList additSparePartListController =
+      Get.put(AdditSparepartList());
+  final SparepartList sparePartListController = Get.put(SparepartList());
+  final BtrSparepartList btrSparepartList = Get.put(BtrSparepartList());
+  final PvtSparepartList pvtSparepartList = Get.put(PvtSparepartList());
   int space = 8;
   @override
   Widget build(BuildContext context) {
@@ -53,82 +63,209 @@ class EditSparePartView extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Obx(() => BoxContainer(
-                  children: [
-                    TitleWithButton(
-                      titleText: 'Spare part list',
-                      button: AddButton(
-                        onTap: () {
-                          sparePartListController.sparePartListModal(context);
-                        },
-                      ),
-                    ),
-                    sparePartListController.sparePartList.isNotEmpty
-                        ? ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount:
-                                sparePartListController.sparePartList.length,
-                            itemBuilder: (context, index) {
-                              final part =
-                                  sparePartListController.sparePartList[index];
-                              return SparePartManageWidget(
-                                part: part,
-                                index: index,
-                                editFunction: () {
+        child: projectId == '1'
+            ? Column(
+                children: [
+                  if (sparepart.isNotEmpty || additionalSparepart.isNotEmpty)
+                    Obx(() => BoxContainer(
+                          children: [
+                            TitleWithButton(
+                              titleText: 'Spare part List',
+                              button: AddButton(
+                                onTap: () {
                                   sparePartListController
-                                      .sparePartListEditModal(context, part);
+                                      .sparePartListModal(context);
                                 },
-                                sparePartList:
-                                    sparePartListController.sparePartList,
-                              );
-                            },
-                          )
-                        : const SizedBox()
-                  ],
-                )),
-            space.kH,
-            Obx(() => BoxContainer(
-                  children: [
-                    TitleWithButton(
-                      titleText: 'Additional spare part list',
-                      button: AddButton(
-                        onTap: () {
-                          additSparePartListController
-                              .additSparePartListModal(context);
-                        },
-                      ),
-                    ),
-                    additSparePartListController.additSparePartList.isNotEmpty
-                        ? ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: additSparePartListController
-                                .additSparePartList.length,
-                            itemBuilder: (context, index) {
-                              final part = additSparePartListController
-                                  .additSparePartList[index];
-                              return SparePartManageWidget(
-                                part: part,
-                                index: index,
-                                editFunction: () {
+                              ),
+                            ),
+                            sparePartListController.sparePartList.isNotEmpty
+                                ? ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: sparePartListController
+                                        .sparePartList.length,
+                                    itemBuilder: (context, index) {
+                                      final part = sparePartListController
+                                          .sparePartList[index];
+                                      return SparePartManageWidget(
+                                        part: part,
+                                        index: index,
+                                        editFunction: () {
+                                          sparePartListController
+                                              .sparePartListEditModal(
+                                                  context, part);
+                                        },
+                                        sparePartList: sparePartListController
+                                            .sparePartList,
+                                      );
+                                    },
+                                  )
+                                : const SizedBox()
+                          ],
+                        )),
+                  space.kH,
+                  if (sparepart.isNotEmpty || additionalSparepart.isNotEmpty)
+                    Obx(() => BoxContainer(
+                          children: [
+                            TitleWithButton(
+                              titleText: 'Additional Spare Part List',
+                              button: AddButton(
+                                onTap: () {
                                   additSparePartListController
-                                      .additSparePartListEditModal(
-                                          context, part);
+                                      .additSparePartListModal(context);
                                 },
-                                sparePartList: additSparePartListController
-                                    .additSparePartList,
-                              );
-                            },
-                          )
-                        : const SizedBox()
-                  ],
-                )),
-            100.kH,
-          ],
-        ),
+                              ),
+                            ),
+                            additSparePartListController
+                                    .additSparePartList.isNotEmpty
+                                ? ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: additSparePartListController
+                                        .additSparePartList.length,
+                                    itemBuilder: (context, index) {
+                                      final part = additSparePartListController
+                                          .additSparePartList[index];
+                                      return SparePartManageWidget(
+                                        part: part,
+                                        index: index,
+                                        editFunction: () {
+                                          additSparePartListController
+                                              .additSparePartListEditModal(
+                                                  context, part);
+                                        },
+                                        sparePartList:
+                                            additSparePartListController
+                                                .additSparePartList,
+                                      );
+                                    },
+                                  )
+                                : const SizedBox(),
+                          ],
+                        )),
+                  space.kH,
+                  if (btrSparepart.isNotEmpty)
+                    Obx(() => BoxContainer(
+                          children: [
+                            TitleWithButton(
+                              titleText: 'Battery Spare Part List',
+                              button: AddButton(
+                                onTap: () {
+                                  btrSparepartList.sparePartListModal(context);
+                                },
+                              ),
+                            ),
+                            btrSparepartList.btrSparePartList.isNotEmpty
+                                ? ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: btrSparepartList
+                                        .btrSparePartList.length,
+                                    itemBuilder: (context, index) {
+                                      final part = btrSparepartList
+                                          .btrSparePartList[index];
+                                      return SparePartManageWidget(
+                                        part: part,
+                                        index: index,
+                                        editFunction: () {
+                                          btrSparepartList
+                                              .sparePartListEditModal(
+                                                  context, part);
+                                        },
+                                        sparePartList:
+                                            btrSparepartList.btrSparePartList,
+                                      );
+                                    },
+                                  )
+                                : const SizedBox()
+                          ],
+                        )),
+                  100.kH,
+                ],
+              )
+            : Column(
+                children: [
+                  if (btrSparepart.isNotEmpty)
+                    Obx(() => BoxContainer(
+                          children: [
+                            TitleWithButton(
+                              titleText: 'Battery Spare Part List',
+                              button: AddButton(
+                                onTap: () {
+                                  btrSparepartList.sparePartListModal(context);
+                                },
+                              ),
+                            ),
+                            btrSparepartList.btrSparePartList.isNotEmpty
+                                ? ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: btrSparepartList
+                                        .btrSparePartList.length,
+                                    itemBuilder: (context, index) {
+                                      final part = btrSparepartList
+                                          .btrSparePartList[index];
+                                      return SparePartManageWidget(
+                                        part: part,
+                                        index: index,
+                                        editFunction: () {
+                                          btrSparepartList
+                                              .sparePartListEditModal(
+                                                  context, part);
+                                        },
+                                        sparePartList:
+                                            btrSparepartList.btrSparePartList,
+                                      );
+                                    },
+                                  )
+                                : const SizedBox()
+                          ],
+                        )),
+                  space.kH,
+                  if (pvtSparepart.isNotEmpty)
+                    Obx(() => BoxContainer(
+                          children: [
+                            TitleWithButton(
+                              titleText: 'Periodic Spare Part List',
+                              button: AddButton(
+                                onTap: () {
+                                  pvtSparepartList.sparePartListModal(context);
+                                },
+                              ),
+                            ),
+                            pvtSparepartList.pvtSparePartList.isNotEmpty
+                                ? ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: pvtSparepartList
+                                        .pvtSparePartList.length,
+                                    itemBuilder: (context, index) {
+                                      final part = pvtSparepartList
+                                          .pvtSparePartList[index];
+                                      return SparePartManageWidget(
+                                        part: part,
+                                        index: index,
+                                        editFunction: () {
+                                          pvtSparepartList
+                                              .sparePartListEditModal(
+                                                  context, part);
+                                        },
+                                        sparePartList:
+                                            pvtSparepartList.pvtSparePartList,
+                                      );
+                                    },
+                                  )
+                                : const SizedBox()
+                          ],
+                        )),
+                  100.kH,
+                ],
+              ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: white3,

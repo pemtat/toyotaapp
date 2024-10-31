@@ -143,9 +143,9 @@ class JobDetailController extends GetxController {
         }).toList();
         issueData.value = issuesList;
       } else {}
-      notesFiles.assignAll(issueData.first.notes ?? []);
+      // notesFiles.assignAll(issueData.first.notes ?? []);
     } catch (e) {
-      Get.to(() => BottomBarView());
+      print(e);
     }
   }
 

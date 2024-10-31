@@ -200,7 +200,9 @@ class PmItemWidget extends StatelessWidget {
                                 decoration: Decoration2(),
                                 child: Column(
                                   children: [
-                                    BoxInfo(title: "Model", value: job.tModel),
+                                    BoxInfo(
+                                        title: "Model",
+                                        value: job.tModel ?? ''),
                                     const SizedBox(height: 3),
                                     BoxInfo(
                                       title: "Serial Number",
@@ -231,7 +233,9 @@ class PmItemWidget extends StatelessWidget {
                                 decoration: Decoration2(),
                                 child: Column(
                                   children: [
-                                    BoxInfo(title: "Model", value: job.tModel),
+                                    BoxInfo(
+                                        title: "Model",
+                                        value: job.tModel ?? ''),
                                     const SizedBox(height: 3),
                                     BoxInfo(
                                       title: "Serial Number",

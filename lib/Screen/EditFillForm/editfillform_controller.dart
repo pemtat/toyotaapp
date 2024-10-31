@@ -412,6 +412,8 @@ class EditFillformController extends GetxController {
                 token ?? '',
                 ticketDetailController.reportList,
                 ticketDetailController.additionalReportList);
+            await fetchSubJobSparePartOption();
+            await ticketDetailController.fetchSubJobSparePartId();
           } else {
             // jobDetailController.fetchData(
             //     ticketId.toString(), jobId.toString());
@@ -420,8 +422,11 @@ class EditFillformController extends GetxController {
                 token ?? '',
                 jobDetailController.reportList,
                 jobDetailController.additionalReportList);
+            await fetchSubJobSparePartOption();
+            await jobDetailController.fetchSubJobSparePartId();
             jobDetailController.completeCheck.value = true;
           }
+
           showSaveMessage();
         } else {
           print('Failed to save report: ${response.statusCode}');

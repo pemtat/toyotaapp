@@ -99,7 +99,7 @@ class PendingTaskControllerPM extends GetxController {
     } else {}
     // await fetchUserById(
     //     issueData.first.history.first.user.id.toString(), userData);
-    notesFiles.assignAll(issueData.first.notes ?? []);
+    // notesFiles.assignAll(issueData.first.notes ?? []);
   }
 
   void completeJob() async {
@@ -212,7 +212,7 @@ class PendingTaskControllerPM extends GetxController {
           onRightButtonPressed: () async {
             updateJobPM(jobId, 1, '-', issueData.first.customerStatus, 'yes');
             Navigator.pop(context);
-
+            // createQuotation('', issueId, '2');
             showSaveMessage();
           },
         );

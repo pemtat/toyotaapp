@@ -44,6 +44,10 @@ String getPdfEstimateReportById(String issueId) {
   return '$url/api/rest/pm_jobs/pdf_estimate/$issueId';
 }
 
+String getPdfEstimatePMReportById(String issueId) {
+  return '$url/api/rest/pm_jobs/pdf_estimate_pm/$issueId';
+}
+
 String getPdfJobsBtrReportById(String issueId) {
   return '$url/api/rest/pm_jobs/pdf_fieldreport_btr/$issueId';
 }
@@ -101,7 +105,7 @@ String updatePreventiveReport() {
 }
 
 String getPmJobInfoById(String id) {
-  return '$url/api/rest/pm_jobs/job_working_details?job_id=$id';
+  return '$url/api/rest/pm_jobs/job_working_details?=$id';
 }
 
 String getCustomerBySearch(String id) {
@@ -172,6 +176,10 @@ String getSubJobById(String subjobId) {
   return '$url/api/rest/jobs/$subjobId/sub_by_id';
 }
 
+String getSubJobByIdNew(String subjobId) {
+  return '$url/api/rest/jobs/$subjobId/sub_by_id_new';
+}
+
 String getSubJobByTicketId(String ticketId) {
   return '$url/api/rest/jobs/$ticketId/getById/';
 }
@@ -188,8 +196,16 @@ String getSparepartJobByHandler(String id) {
   return '$url/api/rest/jobs/getSparepartByHandlerId?handler_id=$id';
 }
 
+String getSparepartJobByHandlerNew(String id) {
+  return '$url/api/rest/jobs/getSparepartByHandlerIdNew?handler_id=$id';
+}
+
 String getSparepartJobById(String id) {
   return '$url/api/rest/jobs/getSparepartByHandlerId?tech_manager_id=$id';
+}
+
+String getSparepartJobByIdNew(String id) {
+  return '$url/api/rest/jobs/getSparepartByHandlerIdNew?tech_manager_id=$id';
 }
 
 String getSubJobsByHandlerPage(String id, int page) {
@@ -230,6 +246,22 @@ String updateReportById(String id) {
 
 String updateSparepart() {
   return "$url/api/rest/jobs/sparepart";
+}
+
+String updateJobsSparepartBtr() {
+  return "$url/api/rest/jobs/update_jobs_btr_sparepart";
+}
+
+String updateSparepartBtr() {
+  return "$url/api/rest/pm_jobs/update_btr_sparepart";
+}
+
+String updateSparepartPvt() {
+  return "$url/api/rest/pm_jobs/update_pvt_sparepart";
+}
+
+String updateSparepartPM() {
+  return "$url/api/rest/pm_jobs/update_pvt_sparepart";
 }
 
 String createSparepartNotes() {
@@ -282,6 +314,22 @@ String getHighRelelationReport() {
 
 String updateSubJobs(String jobId) {
   return '$url/api/rest/jobs/job_issue_update/$jobId';
+}
+
+String createQuotationReport() {
+  return '$url/api/rest/jobs/jobs_quotation_create';
+}
+
+String createQuotationReportPM() {
+  return '$url/api/rest/pm_jobs/jobs_quotation_create_pm';
+}
+
+String updateQuotation() {
+  return '$url/api/rest/jobs/jobs_quotation_update';
+}
+
+String updateQuotationPM() {
+  return '$url/api/rest/pm_jobs/jobs_quotation_update_pm';
 }
 
 String usernameProduct = 'VanSale-Dev';

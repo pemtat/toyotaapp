@@ -762,6 +762,8 @@ class FillformController3 extends GetxController {
         if (readOnly.value == 'yes') {
           await fetchPreventiveReportData(jobId.toString(), token ?? '',
               ticketPmDetailController.reportPreventiveList);
+          await fetchSubJobSparePartOption();
+          await ticketPmDetailController.fetchSubJobSparePartIdPM();
         } else {
           // await jobDetailControllerPM.fetchData(jobId.toString());
           // await fetchCommentJobInfo(
@@ -770,6 +772,8 @@ class FillformController3 extends GetxController {
           await fetchPreventiveReportData(jobId.toString(), token ?? '',
               jobDetailControllerPM.reportPreventiveList);
           jobDetailControllerPM.completeCheck.value = true;
+          await fetchSubJobSparePartOption();
+          await jobDetailControllerPM.fetchSubJobSparePartIdPM();
         }
         showSaveMessage();
       } else {

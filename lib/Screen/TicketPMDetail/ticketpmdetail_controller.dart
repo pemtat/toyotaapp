@@ -8,6 +8,7 @@ import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
 import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
+import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
 import 'package:toyotamobile/Models/warrantyInfo_model.dart';
@@ -48,6 +49,7 @@ class TicketPmDetailController extends GetxController {
   var savedDateStartTime = ''.obs;
   var savedDateEndTime = ''.obs;
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;
+  var subJobSparePart = <SubJobSparePart>[].obs;
 
   final HomeController jobController = Get.put(HomeController());
   final BottomBarController bottomController = Get.put(BottomBarController());
@@ -63,6 +65,12 @@ class TicketPmDetailController extends GetxController {
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     await fetchPMJob(ticketId, token ?? '', pmJobs);
     await fetchPmJobInfo(jobId, token ?? '', pmInfo);
+    if (reportList.isNotEmpty ||
+        (reportPreventiveList.isNotEmpty &&
+            reportPreventiveList.first.pvtMaintenance != null)) {
+      await fetchSubJobSparePartIdPM();
+    }
+
     savedDateStartTime.value = pmInfo.first.tStart ?? '';
     savedDateEndTime.value = pmInfo.first.tEnd ?? '';
 
@@ -199,6 +207,20 @@ class TicketPmDetailController extends GetxController {
         // fetchData(issueId.toString());
         notes.value.clear();
       }
+    }
+  }
+
+  Future<void> fetchSubJobSparePartIdPM() async {
+    try {
+      subJobSparePart.clear();
+      final filteredSpareParts = jobController.subJobSparePart
+          .where((element) => element.id == jobId)
+          .toList();
+
+      subJobSparePart.value = filteredSpareParts;
+      subJobSparePart.refresh();
+    } catch (e) {
+      print(e);
     }
   }
 

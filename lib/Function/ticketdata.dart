@@ -45,7 +45,7 @@ Future<void> fetchSubJob(
     String subjobId, String token, RxList<SubJobDetail> subJobs) async {
   try {
     final response = await http.get(
-      Uri.parse(getSubJobById(subjobId)),
+      Uri.parse(getSubJobByIdNew(subjobId)),
       headers: {
         'Authorization': token,
       },
@@ -708,6 +708,8 @@ Future<void> fetchPdfReport(
 
     if (option == 'estimate') {
       apiUrl = getPdfEstimateReportById(id);
+    } else if (option == 'estimate_pm') {
+      apiUrl = getPdfEstimatePMReportById(id);
     } else if (option == 'fieldreport') {
       apiUrl = getPdfFieldReportById(id);
     } else if (option == 'fieldreport_btr') {
@@ -729,6 +731,9 @@ Future<void> fetchPdfReport(
 
       if (responseBody.containsKey('pdf_estimate')) {
         pdfReport.value = responseBody['pdf_estimate'];
+        pdfReport.refresh();
+      } else if (responseBody.containsKey('pdf_estimate_pm')) {
+        pdfReport.value = responseBody['pdf_estimate_pm'];
         pdfReport.refresh();
       } else if (responseBody.containsKey('pdf_base64')) {
         pdfReport.value = responseBody['pdf_base64'];
@@ -931,8 +936,8 @@ void addNote(
   }
 }
 
-Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
-    String option, String ticketId, String jobId) async {
+Future<void> pickImage(BuildContext context, RxList<Map<String, String>> file,
+    Rx<bool> isPicking, String option, String ticketId, String jobId) async {
   if (isPicking.value) return;
   isPicking.value = true;
   try {
@@ -942,15 +947,25 @@ Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
       io.File imageFile = io.File(pickedFile.path);
       String fileName = pickedFile.name;
       String base64Content = base64Encode(await imageFile.readAsBytes());
+      String fileExtension = fileName.split('.').last.toLowerCase();
+      if (fileExtension == 'jpg' ||
+          fileExtension == 'png' ||
+          fileExtension == 'jpeg') {
+        var images = <Map<String, String>>[].obs;
+        images.add({
+          'filename': fileName,
+          'content': base64Content,
+        });
 
-      var images = <Map<String, String>>[].obs;
-      images.add({
-        'filename': fileName,
-        'content': base64Content,
-      });
-
-      await updateImgSubjobs(jobId, ticketId, images, option);
-      await fetchSubJobImg(file, jobId, option);
+        await updateImgSubjobs(jobId, ticketId, images, option);
+        await fetchSubJobImg(file, jobId, option);
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertDialogPickImage();
+            });
+      }
     }
   } finally {
     isPicking.value = false;
@@ -958,6 +973,7 @@ Future<void> pickImage(RxList<Map<String, String>> file, Rx<bool> isPicking,
 }
 
 Future<void> pickImagePM(
+    BuildContext context,
     RxList<Map<String, String>> file,
     Rx<bool> isPicking,
     String option,
@@ -974,18 +990,28 @@ Future<void> pickImagePM(
       io.File imageFile = io.File(pickedFile.path);
       String fileName = pickedFile.name;
       String base64Content = base64Encode(await imageFile.readAsBytes());
+      String fileExtension = fileName.split('.').last.toLowerCase();
       // file.add({
       //   'filename': fileName,
       //   'content': base64Content,
       // });
+      if (fileExtension == 'jpg' ||
+          fileExtension == 'png' ||
+          fileExtension == 'jpeg') {
+        Map<String, String> newImg = ({
+          'filename': fileName,
+          'content': base64Content,
+        });
 
-      Map<String, String> newImg = ({
-        'filename': fileName,
-        'content': base64Content,
-      });
-
-      await updateImgPMjobs(jobId, newImg, option, createById);
-      await fetchPmJobImg(jobId, imagesBefore, imagesAfter, option);
+        await updateImgPMjobs(jobId, newImg, option, createById);
+        await fetchPmJobImg(jobId, imagesBefore, imagesAfter, option);
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertDialogPickImage();
+            });
+      }
     }
   } finally {
     isPicking.value = false;
@@ -1353,14 +1379,16 @@ void updateTechSubjob(
 }
 
 Future<void> updateJobSparePart(
-    String jobId,
-    String techLevel,
-    String handlerId,
-    String remark,
-    String option,
-    String bugId,
-    String techHandlerId,
-    String reporterId) async {
+  String jobId,
+  String techLevel,
+  String handlerId,
+  String remark,
+  String option,
+  String bugId,
+  String techHandlerId,
+  String reporterId,
+  String projectId,
+) async {
   try {
     String? token = await getToken();
     Map<String, dynamic> body = {};
@@ -1379,11 +1407,16 @@ Future<void> updateJobSparePart(
         'sales_director_id': 0,
         'sales_director_status': 0,
         'customer_status': 0,
-        'quotation': 0
+        'quotation': 0,
+        "bug_id": int.parse(bugId),
+        if (projectId == '1') "job_issue_id": jobId else "bug_id": bugId,
       };
       createQuotationHistory(jobId, 'tech', bugId, handlerId, '1');
     } else if (option == 'approve') {
-      body = {'tech_manager_status': 1};
+      body = {
+        'tech_manager_status': 1,
+        if (projectId == '1') "job_issue_id": jobId else "bug_id": bugId,
+      };
       createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
       // sendNotificationToUser(
       //     handlerId,
@@ -1399,6 +1432,7 @@ Future<void> updateJobSparePart(
       body = {
         'tech_manager_status': 1,
         'sales_id': salesId,
+        if (projectId == '1') "job_issue_id": jobId else "bug_id": bugId,
       };
       createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
     } else if (option == 'reject') {
@@ -1406,6 +1440,7 @@ Future<void> updateJobSparePart(
         'tech_manager_status': 2,
         'tech_manager_remark': remark,
         'estimate_status': 3,
+        if (projectId == '1') "job_issue_id": jobId else "bug_id": bugId,
       };
       createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '2');
       sendNotificationToUser(
@@ -1419,10 +1454,17 @@ Future<void> updateJobSparePart(
     } else if (option == 'update_sparepart') {
       body = {
         'tech_manager_remark': remark,
+        if (projectId == '1') "job_issue_id": jobId else "bug_id": bugId,
       };
     }
-    final response = await http.put(
-      Uri.parse(updateSubJobs(jobId)),
+    final response = await http.post(
+      Uri.parse(option == 'send'
+          ? projectId == '1'
+              ? createQuotationReport()
+              : createQuotationReportPM()
+          : projectId == '1'
+              ? updateQuotation()
+              : updateQuotationPM()),
       headers: {
         'Authorization': '$token',
         'Content-Type': 'application/json',
@@ -1430,7 +1472,7 @@ Future<void> updateJobSparePart(
       body: jsonEncode(body),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       print('Update status done');
       if (techLevel == '1') {
         await jobController.fetchSubJobSparePart(handlerId, 'tech');
@@ -1683,6 +1725,33 @@ void updateAcceptStatusSubjobs(
     if (response.statusCode == 200) {
       // jobDetailController.fetchData(ticketId, jobId);
       changeIssueStatus(ticketId, 'onprocess');
+    } else {
+      print('Failed to update status: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+void createQuotation(String jobId, int ticketId, String projectId) async {
+  try {
+    String? token = await getToken();
+
+    Map<String, dynamic> body = {'bug_id': ticketId, 'job_issue_id': jobId};
+
+    final response = await http.post(
+      Uri.parse(projectId == '1'
+          ? createQuotationReport()
+          : createQuotationReportPM()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Created Done');
     } else {
       print('Failed to update status: ${response.statusCode}');
     }

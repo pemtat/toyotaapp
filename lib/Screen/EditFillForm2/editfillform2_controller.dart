@@ -235,27 +235,27 @@ class EditFillformController2 extends GetxController {
       sparePartListController.sparePartList.addAll(sparePartList);
     }
 
-    var additionalSparePartList = <SparePartModel>[].obs;
-    if (changeSpareparts.first.quantity != '0') {
-      for (var i = 0; i < changeSpareparts.length; i++) {
-        {
-          additionalSparePartList.add(SparePartModel(
-              cCodePage: changeSpareparts[i].cCode ?? '',
-              partNumber: changeSpareparts[i].partNumber ?? '',
-              partDetails: changeSpareparts[i].description ?? '',
-              quantity: int.tryParse(changeSpareparts[i].quantity ?? '') ?? 0,
-              salesPrice: changeSpareparts[i].salesPrice ?? '0',
-              priceVat: changeSpareparts[i].priceVat == true ? '1' : '0',
-              changeNow: "",
-              changeOnPM: "",
-              unitMeasure: changeSpareparts[i].unitMeasure ?? '',
-              relationId: "",
-              additional: 1));
-        }
-      }
-      additSparePartListController.additSparePartList
-          .addAll(additionalSparePartList);
-    }
+    // var additionalSparePartList = <SparePartModel>[].obs;
+    // if (changeSpareparts.first.quantity != '0') {
+    //   for (var i = 0; i < changeSpareparts.length; i++) {
+    //     {
+    //       additionalSparePartList.add(SparePartModel(
+    //           cCodePage: changeSpareparts[i].cCode ?? '',
+    //           partNumber: changeSpareparts[i].partNumber ?? '',
+    //           partDetails: changeSpareparts[i].description ?? '',
+    //           quantity: int.tryParse(changeSpareparts[i].quantity ?? '') ?? 0,
+    //           salesPrice: changeSpareparts[i].salesPrice ?? '0',
+    //           priceVat: changeSpareparts[i].priceVat == true ? '1' : '0',
+    //           changeNow: "",
+    //           changeOnPM: "",
+    //           unitMeasure: changeSpareparts[i].unitMeasure ?? '',
+    //           relationId: "",
+    //           additional: 1));
+    //     }
+    //   }
+    //   additSparePartListController.additSparePartList
+    //       .addAll(additionalSparePartList);
+    // }
 
     if (info1.repairPm != '') {
       if (info1.repairPm!.contains('Other')) {
@@ -501,9 +501,13 @@ class EditFillformController2 extends GetxController {
           if (jobIssueId.value == '') {
             await fetchBatteryReportData(jobId.toString(), token ?? '',
                 ticketPmDetailController.reportList);
+            await fetchSubJobSparePartOption();
+            await ticketPmDetailController.fetchSubJobSparePartIdPM();
           } else {
             await fetchJobBatteryReportData(jobIssueId.value, token ?? '',
                 ticketDetailController.reportBatteryList);
+            await fetchSubJobSparePartOption();
+            await ticketDetailController.fetchSubJobSparePartId();
           }
         } else {
           // await jobDetailControllerPM.fetchData(jobId.toString());
@@ -514,10 +518,16 @@ class EditFillformController2 extends GetxController {
             await fetchBatteryReportData(jobId.toString(), token ?? '',
                 jobDetailControllerPM.reportList);
             jobDetailControllerPM.completeCheck.value = true;
+
+            await fetchSubJobSparePartOption();
+            await jobDetailControllerPM.fetchSubJobSparePartIdPM();
           } else {
             await fetchJobBatteryReportData(jobIssueId.value, token ?? '',
                 jobDetailController.reportBatteryList);
             jobDetailController.completeCheck.value = true;
+
+            await fetchSubJobSparePartOption();
+            await jobDetailController.fetchSubJobSparePartId();
           }
         }
         showSaveMessage();

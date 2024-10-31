@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:toyotamobile/Models/login_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
@@ -100,7 +101,8 @@ class LoginController extends GetxController {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String deviceType;
     String deviceId;
-
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
     // Determine device type and get device ID
     if (Platform.isAndroid) {
       deviceType = 'Android';
@@ -131,7 +133,8 @@ class LoginController extends GetxController {
           "token": token,
           "device_id": deviceId,
           "device_type": deviceType,
-          "created_at": DateTime.now().toString()
+          "created_at": DateTime.now().toString(),
+          "app_version": version,
         };
         try {
           final response = await http.post(

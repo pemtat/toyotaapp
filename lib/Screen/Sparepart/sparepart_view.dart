@@ -4,6 +4,7 @@ import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
+import 'package:toyotamobile/Screen/PendingTaskPM/pendingtaskpm_view.dart';
 import 'package:toyotamobile/Screen/Sparepart/sparepart_controller.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -84,7 +85,7 @@ class SparePartView extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Pending (${jobController.sparePartPending.value})',
+                                  'On Process (${jobController.sparePartPending.value})',
                                   style:
                                       sparePartController.isSelected.value == 1
                                           ? TextStyleList.text7
@@ -172,7 +173,7 @@ class SparePartView extends StatelessWidget {
               ),
               Obx(() {
                 if (sparePartController.isSelected.value == 1) {
-                  return buildJobList(context, '01');
+                  return buildJobList(context, '1');
                 }
                 if (sparePartController.isSelected.value == 2) {
                   return buildJobList(context, '2');
@@ -221,7 +222,7 @@ class SparePartView extends StatelessWidget {
                   return searchQueryMatch &&
                       dateMatch &&
                       statusMatch &&
-                      status.contains(job.estimateStatus ?? '');
+                      status.contains(job.estimateStatus ?? '0');
                 }).toList();
 
                 if (filteredJobs.isEmpty) {
@@ -245,18 +246,33 @@ class SparePartView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return InkWell(
                         onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  Obx(() => Material(
-                                        color: Colors.transparent,
-                                        child: PendingTaskView(
-                                          ticketId:
-                                              filteredJobs[index].bugId ?? '',
-                                          jobId: filteredJobs[index].id ?? '',
-                                          showOnly: 'yes',
-                                        ),
-                                      )));
+                          filteredJobs[index].projectId == '1'
+                              ? showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      Obx(() => Material(
+                                            color: Colors.transparent,
+                                            child: PendingTaskView(
+                                              ticketId:
+                                                  filteredJobs[index].bugId ??
+                                                      '',
+                                              jobId:
+                                                  filteredJobs[index].id ?? '',
+                                              showOnly: 'yes',
+                                            ),
+                                          )))
+                              : showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      Obx(() => Material(
+                                            color: Colors.transparent,
+                                            child: PendingTaskViewPM(
+                                              ticketId:
+                                                  filteredJobs[index].bugId ??
+                                                      '',
+                                              showOnly: 'yes',
+                                            ),
+                                          )));
                         },
                         child: SubJobSparePartWidget(
                           subJobSparePart: filteredJobs[index],

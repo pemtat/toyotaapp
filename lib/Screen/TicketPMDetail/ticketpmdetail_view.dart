@@ -10,6 +10,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.dart';
 import 'package:toyotamobile/Widget/JobDetail_widget/showpreventive_widget.dart';
+import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
@@ -228,7 +229,51 @@ class TicketPMDetailView extends StatelessWidget {
                                           timeEnd:
                                               jobController.savedDateEndTime,
                                         )
-                                      : Container())
+                                      : Container()),
+                                  Obx(() =>
+                                      (jobController.reportList.isNotEmpty &&
+                                              jobController
+                                                  .subJobSparePart.isNotEmpty &&
+                                              (jobController
+                                                          .reportList
+                                                          .first
+                                                          .btrMaintenance!
+                                                          .signature !=
+                                                      null &&
+                                                  jobController
+                                                          .reportList
+                                                          .first
+                                                          .btrMaintenance!
+                                                          .signaturePad !=
+                                                      null))
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                ButtonColor(
+                                                  backgroundColor: red4,
+                                                  title: 'View Part Detail',
+                                                  onTap: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            Obx(() => Material(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  child:
+                                                                      SubJobSparePartWidget(
+                                                                    subJobSparePart:
+                                                                        jobController
+                                                                            .subJobSparePart
+                                                                            .first,
+                                                                  ),
+                                                                )));
+                                                  },
+                                                ),
+                                              ],
+                                            )
+                                          : Container()),
                                 ],
                               ),
                               8.kH,
@@ -272,7 +317,54 @@ class TicketPMDetailView extends StatelessWidget {
                                           timeEnd:
                                               jobController.savedDateEndTime,
                                         )
-                                      : Container())
+                                      : Container()),
+                                  Obx(() => ((jobController.reportPreventiveList
+                                                  .isNotEmpty &&
+                                              jobController.reportPreventiveList
+                                                      .first.pvtMaintenance !=
+                                                  null) &&
+                                          jobController
+                                              .subJobSparePart.isNotEmpty &&
+                                          (jobController
+                                                      .reportPreventiveList
+                                                      .first
+                                                      .pvtMaintenance!
+                                                      .signature !=
+                                                  null &&
+                                              jobController
+                                                      .reportPreventiveList
+                                                      .first
+                                                      .pvtMaintenance!
+                                                      .signaturePad !=
+                                                  null))
+                                      ? Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            ButtonColor(
+                                              backgroundColor: red4,
+                                              title: 'View Part Detail',
+                                              onTap: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        Obx(() => Material(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              child:
+                                                                  SubJobSparePartWidget(
+                                                                subJobSparePart:
+                                                                    jobController
+                                                                        .subJobSparePart
+                                                                        .first,
+                                                              ),
+                                                            )));
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                      : Container()),
                                 ],
                               ),
                               8.kH,

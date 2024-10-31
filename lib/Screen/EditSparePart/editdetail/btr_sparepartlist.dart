@@ -5,16 +5,17 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/SparepartDetail_widget/addsparepart.dart';
 import 'package:toyotamobile/Widget/SparepartDetail_widget/editsparepart.dart';
 
-class SparepartList extends GetxController {
+class BtrSparepartList extends GetxController {
+  int space = 24;
   void sparePartListModal(BuildContext context) {
     showModalBottomSheet(
       useSafeArea: true,
       isScrollControlled: true,
-      enableDrag: false,
       context: context,
+      enableDrag: false,
       builder: (BuildContext context) {
         return AddSparePartDetail(
-          title: 'Spare Part List',
+          title: 'Recommanded spare part',
           cCodePage: cCodePage,
           searchPartNumber: searchPartNumber,
           isLoading: isLoading,
@@ -27,8 +28,7 @@ class SparepartList extends GetxController {
           selectionsChoose2: selectionsChoose2,
           selections: selections,
           selections2: selections2,
-          sparePartList: sparePartList,
-          changeShow: 'yes',
+          sparePartList: btrSparePartList,
           additional: '0',
         );
       },
@@ -43,7 +43,7 @@ class SparepartList extends GetxController {
       enableDrag: false,
       builder: (BuildContext context) {
         return EditSparePartDetail(
-          title: 'Spare Part List',
+          title: 'Recommanded spare part',
           part: part,
           cCodePage: cCodePage,
           searchPartNumber: searchPartNumber,
@@ -57,20 +57,21 @@ class SparepartList extends GetxController {
           selectionsChoose2: selectionsChoose2,
           selections: selections,
           selections2: selections2,
-          sparePartList: sparePartList,
-          changeShow: 'yes',
+          sparePartList: btrSparePartList,
         );
       },
     );
   }
 
   var quantity = 1.obs;
-  var sparePartList = <SparePartModel>[].obs;
   final searchPartNumber = TextEditingController().obs;
+  var btrSparePartList = <SparePartModel>[].obs;
   final cCodePage = TextEditingController().obs;
   final partNumber = TextEditingController().obs;
   final partDetails = TextEditingController().obs;
   final unitMeasure = TextEditingController().obs;
+  final changeNow = TextEditingController().obs;
+  final changeonPM = TextEditingController().obs;
   var selections = List<String>.filled(2, '').obs;
   var selections2 = List<String>.filled(2, '').obs;
   var selectionsChoose = List<String>.filled(2, '').obs;
