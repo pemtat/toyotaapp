@@ -525,17 +525,17 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                   color: blue1,
                                                   title: 'Approve',
                                                   onTap: () async {
-                                                    var selectedUser = ''.obs;
-                                                    var selectedUserId = ''.obs;
-                                                    await fetchAllSales(
-                                                        usersList,
-                                                        subJobSparePart
-                                                                .projectId ??
-                                                            '',
-                                                        subJobSparePart.id ??
-                                                            '',
-                                                        subJobSparePart.bugId ??
-                                                            '');
+                                                    // var selectedUser = ''.obs;
+                                                    // var selectedUserId = ''.obs;
+                                                    // await fetchAllSales(
+                                                    //     usersList,
+                                                    //     subJobSparePart
+                                                    //             .projectId ??
+                                                    //         '',
+                                                    //     subJobSparePart.id ??
+                                                    //         '',
+                                                    //     subJobSparePart.bugId ??
+                                                    //         '');
                                                     showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -548,76 +548,76 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                 MainAxisSize
                                                                     .min,
                                                             children: [
-                                                              if (subJobSparePart
-                                                                      .quotation ==
-                                                                  '2')
-                                                                Row(
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child: Obx(
-                                                                          () {
-                                                                        return GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            showDialog(
-                                                                              context: context,
-                                                                              builder: (BuildContext context) {
-                                                                                return AlertDialog(
-                                                                                  backgroundColor: white3,
-                                                                                  title: Center(child: Text('เลือก Sales')),
-                                                                                  titleTextStyle: TextStyleList.text1,
-                                                                                  content: SingleChildScrollView(
-                                                                                    child: Column(
-                                                                                      mainAxisSize: MainAxisSize.min,
-                                                                                      children: usersList.map<Widget>((UsersSales user) {
-                                                                                        return ListTile(
-                                                                                          title: Text(user.realname ?? 'No data'),
-                                                                                          onTap: () {
-                                                                                            selectedUser.value = user.realname ?? '';
-                                                                                            selectedUserId.value = user.id ?? '';
-                                                                                            Navigator.of(context).pop();
-                                                                                          },
-                                                                                        );
-                                                                                      }).toList(),
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                            );
-                                                                          },
-                                                                          child:
-                                                                              AbsorbPointer(
-                                                                            child:
-                                                                                TextField(
-                                                                              controller: TextEditingController(text: selectedUser.value),
-                                                                              decoration: InputDecoration(labelText: 'Sales', labelStyle: TextStyleList.text9),
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      }),
-                                                                    ),
-                                                                    Obx(() {
-                                                                      if (selectedUser
-                                                                              .value !=
-                                                                          '') {
-                                                                        return InkWell(
-                                                                          onTap:
-                                                                              () {
-                                                                            selectedUser.value =
-                                                                                '';
-                                                                            selectedUserId.value =
-                                                                                '';
-                                                                          },
-                                                                          child:
-                                                                              const Icon(Icons.close),
-                                                                        );
-                                                                      } else {
-                                                                        return Container();
-                                                                      }
-                                                                    })
-                                                                  ],
-                                                                ),
-                                                              10.kH,
+                                                              // if (subJobSparePart
+                                                              //         .quotation ==
+                                                              //     '2')
+                                                              // Row(
+                                                              //   children: [
+                                                              //     Expanded(
+                                                              //       child: Obx(
+                                                              //           () {
+                                                              //         return GestureDetector(
+                                                              //           onTap:
+                                                              //               () {
+                                                              //             showDialog(
+                                                              //               context: context,
+                                                              //               builder: (BuildContext context) {
+                                                              //                 return AlertDialog(
+                                                              //                   backgroundColor: white3,
+                                                              //                   title: Center(child: Text('เลือก Sales')),
+                                                              //                   titleTextStyle: TextStyleList.text1,
+                                                              //                   content: SingleChildScrollView(
+                                                              //                     child: Column(
+                                                              //                       mainAxisSize: MainAxisSize.min,
+                                                              //                       children: usersList.map<Widget>((UsersSales user) {
+                                                              //                         return ListTile(
+                                                              //                           title: Text(user.realname ?? 'No data'),
+                                                              //                           onTap: () {
+                                                              //                             selectedUser.value = user.realname ?? '';
+                                                              //                             selectedUserId.value = user.id ?? '';
+                                                              //                             Navigator.of(context).pop();
+                                                              //                           },
+                                                              //                         );
+                                                              //                       }).toList(),
+                                                              //                     ),
+                                                              //                   ),
+                                                              //                 );
+                                                              //               },
+                                                              //             );
+                                                              //           },
+                                                              //           child:
+                                                              //               AbsorbPointer(
+                                                              //             child:
+                                                              //                 TextField(
+                                                              //               controller: TextEditingController(text: selectedUser.value),
+                                                              //               decoration: InputDecoration(labelText: 'Sales', labelStyle: TextStyleList.text9),
+                                                              //             ),
+                                                              //           ),
+                                                              //         );
+                                                              //       }),
+                                                              //     ),
+                                                              //     Obx(() {
+                                                              //       if (selectedUser
+                                                              //               .value !=
+                                                              //           '') {
+                                                              //         return InkWell(
+                                                              //           onTap:
+                                                              //               () {
+                                                              //             selectedUser.value =
+                                                              //                 '';
+                                                              //             selectedUserId.value =
+                                                              //                 '';
+                                                              //           },
+                                                              //           child:
+                                                              //               const Icon(Icons.close),
+                                                              //         );
+                                                              //       } else {
+                                                              //         return Container();
+                                                              //       }
+                                                              //     })
+                                                              //   ],
+                                                              // ),
+                                                              // 10.kH,
                                                               Obx(() => Column(
                                                                     children: [
                                                                       ...List.generate(
@@ -690,77 +690,87 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                 List<String>
                                                                     remarks =
                                                                     getAllRemarks();
+                                                                // if (subJobSparePart
+                                                                //             .quotation ==
+                                                                //         '2' &&
+                                                                //     selectedUserId
+                                                                //             .value ==
+                                                                //         '') {
+                                                                //   showMessage(
+                                                                //       'โปรดเลือก Sales');
+                                                                // } else {
+                                                                await createSparepartNote(
+                                                                    subJobSparePart
+                                                                            .id ??
+                                                                        '',
+                                                                    jobController
+                                                                        .techManageId
+                                                                        .value,
+                                                                    jobController
+                                                                        .techLevel
+                                                                        .value,
+                                                                    jobController
+                                                                        .handlerIdTech
+                                                                        .value,
+                                                                    remarks);
                                                                 if (subJobSparePart
-                                                                            .quotation ==
-                                                                        '2' &&
-                                                                    selectedUserId
-                                                                            .value ==
-                                                                        '') {
-                                                                  showMessage(
-                                                                      'โปรดเลือก Sales');
-                                                                } else {
-                                                                  await createSparepartNote(
+                                                                        .quotation ==
+                                                                    '1') {
+                                                                  await updateJobSparePart(
                                                                       subJobSparePart
                                                                               .id ??
                                                                           '',
-                                                                      jobController
-                                                                          .techManageId
-                                                                          .value,
                                                                       jobController
                                                                           .techLevel
                                                                           .value,
                                                                       jobController
                                                                           .handlerIdTech
                                                                           .value,
-                                                                      remarks);
-                                                                  if (subJobSparePart
-                                                                          .quotation ==
-                                                                      '1') {
-                                                                    await updateJobSparePart(
-                                                                        subJobSparePart.id ??
-                                                                            '',
-                                                                        jobController
-                                                                            .techLevel
-                                                                            .value,
-                                                                        jobController
-                                                                            .handlerIdTech
-                                                                            .value,
-                                                                        '',
-                                                                        'approve',
-                                                                        subJobSparePart.bugId ??
-                                                                            '',
-                                                                        subJobSparePart.handlerId ??
-                                                                            '',
-                                                                        subJobSparePart.reportjobId ??
-                                                                            '',
-                                                                        subJobSparePart.projectId ??
-                                                                            '');
-                                                                  } else {
-                                                                    await updateJobSparePart(
-                                                                        subJobSparePart.id ??
-                                                                            '',
-                                                                        jobController
-                                                                            .techLevel
-                                                                            .value,
-                                                                        jobController
-                                                                            .handlerIdTech
-                                                                            .value,
-                                                                        '',
-                                                                        'approve_add_sales:${selectedUserId.value}',
-                                                                        subJobSparePart.bugId ??
-                                                                            '',
-                                                                        subJobSparePart.handlerId ??
-                                                                            '',
-                                                                        subJobSparePart.reportjobId ??
-                                                                            '',
-                                                                        subJobSparePart.projectId ??
-                                                                            '');
-                                                                  }
-
-                                                                  Navigator.pop(
-                                                                      context);
+                                                                      '',
+                                                                      'approve',
+                                                                      subJobSparePart
+                                                                              .bugId ??
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .handlerId ??
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .reportjobId ??
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .projectId ??
+                                                                          '');
+                                                                } else {
+                                                                  await updateJobSparePart(
+                                                                      subJobSparePart
+                                                                              .id ??
+                                                                          '',
+                                                                      jobController
+                                                                          .techLevel
+                                                                          .value,
+                                                                      jobController
+                                                                          .handlerIdTech
+                                                                          .value,
+                                                                      '',
+                                                                      'approve_add_sales:${1}',
+                                                                      subJobSparePart
+                                                                              .bugId ??
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .handlerId ??
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .reportjobId ??
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .projectId ??
+                                                                          '');
                                                                 }
+
+                                                                Navigator.pop(
+                                                                    context);
                                                               },
+                                                              // },
                                                               child: Text('Yes',
                                                                   style:
                                                                       TextStyleList
