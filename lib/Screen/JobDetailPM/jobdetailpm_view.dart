@@ -103,6 +103,15 @@ class JobDetailViewPM extends StatelessWidget {
               var pmJobs = jobController.pmJobs.isNotEmpty
                   ? jobController.pmJobs.first
                   : null;
+              var subJobSparePart = jobController.subJobSparePart.isNotEmpty
+                  ? jobController.subJobSparePart.first
+                  : null;
+              if (subJobSparePart != null) {
+                if (subJobSparePart.estimateStatus == '1' ||
+                    subJobSparePart.estimateStatus == '2') {
+                  jobController.canEdit.value = false;
+                }
+              }
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -406,7 +415,8 @@ class JobDetailViewPM extends StatelessWidget {
                                         const TitleApp(
                                             text: 'Battery Maintenance Report'),
                                         Obx(() => jobController
-                                                .reportList.isNotEmpty
+                                                    .reportList.isNotEmpty &&
+                                                jobController.canEdit.value
                                             ? EditButton(
                                                 onTap: () {
                                                   Get.to(
@@ -415,13 +425,16 @@ class JobDetailViewPM extends StatelessWidget {
                                                           ));
                                                 },
                                               )
-                                            : AddButton(
-                                                onTap: () {
-                                                  Get.to(() => FillFormView2(
-                                                        jobId: ticketId,
-                                                      ));
-                                                },
-                                              )),
+                                            : jobController.canEdit.value
+                                                ? AddButton(
+                                                    onTap: () {
+                                                      Get.to(
+                                                          () => FillFormView2(
+                                                                jobId: ticketId,
+                                                              ));
+                                                    },
+                                                  )
+                                                : Container()),
                                       ],
                                     ),
                                     Text(
@@ -540,7 +553,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                         .reportPreventiveList
                                                         .first
                                                         .pvtMaintenance !=
-                                                    null
+                                                    null &&
+                                                jobController.canEdit.value
                                             ? EditButton(
                                                 onTap: () {
                                                   Get.to(
@@ -549,13 +563,16 @@ class JobDetailViewPM extends StatelessWidget {
                                                           ));
                                                 },
                                               )
-                                            : AddButton(
-                                                onTap: () {
-                                                  Get.to(() => FillFormView3(
-                                                        jobId: ticketId,
-                                                      ));
-                                                },
-                                              )),
+                                            : jobController.canEdit.value
+                                                ? AddButton(
+                                                    onTap: () {
+                                                      Get.to(
+                                                          () => FillFormView3(
+                                                                jobId: ticketId,
+                                                              ));
+                                                    },
+                                                  )
+                                                : Container()),
                                       ],
                                     ),
                                     Text(

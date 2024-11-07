@@ -40,7 +40,7 @@ class TicketDetailController extends GetxController {
   var attachmentsData = <Map<String, dynamic>>[].obs;
   // ignore: prefer_typing_uninitialized_variables
   var userData = <UserById>[].obs;
-
+  var canEdit = true.obs;
   var issueId;
   var jobId = ''.obs;
   RxList<WarrantyInfo> warrantyInfoList = <WarrantyInfo>[].obs;

@@ -60,6 +60,14 @@ String getAllSales() {
   return '$url/api/rest/jobs/user_all_sales';
 }
 
+String getAllSalesByIssueIdJobs(String id) {
+  return '$url/api/rest/jobs/user_all_sales_jobs?id=$id';
+}
+
+String getAllSalesByIssueIdPM(String id) {
+  return '$url/api/rest/pm_jobs/user_all_sales_pm?id=$id';
+}
+
 String getTrickdetailById(String id) {
   return '$urlFSM/api/serial/search/$id';
 }
@@ -105,7 +113,7 @@ String updatePreventiveReport() {
 }
 
 String getPmJobInfoById(String id) {
-  return '$url/api/rest/pm_jobs/job_working_details?=$id';
+  return '$url/api/rest/pm_jobs/job_working_details?job_id=$id';
 }
 
 String getCustomerBySearch(String id) {

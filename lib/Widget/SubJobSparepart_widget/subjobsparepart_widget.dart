@@ -87,6 +87,30 @@ class SubJobSparePartWidget extends StatelessWidget {
           });
         }
 
+        if (subJobSparePart.btrSparepart != null &&
+            subJobSparePart.btrSparepart!.isNotEmpty &&
+            subJobSparePart.btrSparepart!.first.quantity != '0') {
+          summary += subJobSparePart.btrSparepart!.fold(0, (total, item) {
+            int salesPrice = int.parse(item.salesPrice ?? '0');
+            int quantity = int.parse(item.quantity ?? '0');
+            int discount = int.parse(item.discount ?? '0');
+            double priceAfterDiscount = salesPrice * (1 - (discount / 100));
+            return total + (priceAfterDiscount * quantity).toInt();
+          });
+        }
+
+        if (subJobSparePart.pvtSparepart != null &&
+            subJobSparePart.pvtSparepart!.isNotEmpty &&
+            subJobSparePart.pvtSparepart!.first.quantity != '0') {
+          summary += subJobSparePart.pvtSparepart!.fold(0, (total, item) {
+            int salesPrice = int.parse(item.salesPrice ?? '0');
+            int quantity = int.parse(item.quantity ?? '0');
+            int discount = int.parse(item.discount ?? '0');
+            double priceAfterDiscount = salesPrice * (1 - (discount / 100));
+            return total + (priceAfterDiscount * quantity).toInt();
+          });
+        }
+
         return formatter.format(summary);
       } else {
         if (subJobSparePart.sparepart != null &&
@@ -104,6 +128,24 @@ class SubJobSparePartWidget extends StatelessWidget {
             subJobSparePart.additionalSparepart!.first.quantity != '0') {
           summary +=
               subJobSparePart.additionalSparepart!.fold(0, (total, item) {
+            int salesPrice = int.parse(item.salesPrice ?? '0');
+            int quantity = int.parse(item.quantity ?? '0');
+            return total + (salesPrice * quantity).toInt();
+          });
+        }
+        if (subJobSparePart.btrSparepart != null &&
+            subJobSparePart.btrSparepart!.isNotEmpty &&
+            subJobSparePart.btrSparepart!.first.quantity != '0') {
+          summary += subJobSparePart.btrSparepart!.fold(0, (total, item) {
+            int salesPrice = int.parse(item.salesPrice ?? '0');
+            int quantity = int.parse(item.quantity ?? '0');
+            return total + (salesPrice * quantity).toInt();
+          });
+        }
+        if (subJobSparePart.pvtSparepart != null &&
+            subJobSparePart.pvtSparepart!.isNotEmpty &&
+            subJobSparePart.pvtSparepart!.first.quantity != '0') {
+          summary += subJobSparePart.pvtSparepart!.fold(0, (total, item) {
             int salesPrice = int.parse(item.salesPrice ?? '0');
             int quantity = int.parse(item.quantity ?? '0');
             return total + (salesPrice * quantity).toInt();
@@ -486,8 +528,14 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                     var selectedUser = ''.obs;
                                                     var selectedUserId = ''.obs;
                                                     await fetchAllSales(
-                                                        usersList);
-                                                    addRemark();
+                                                        usersList,
+                                                        subJobSparePart
+                                                                .projectId ??
+                                                            '',
+                                                        subJobSparePart.id ??
+                                                            '',
+                                                        subJobSparePart.bugId ??
+                                                            '');
                                                     showDialog(
                                                       context: context,
                                                       builder: (BuildContext

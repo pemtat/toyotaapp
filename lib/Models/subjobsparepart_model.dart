@@ -78,7 +78,7 @@ class SubJobSparePart {
       this.documentNo});
 
   SubJobSparePart.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['job_id'];
     reporterId = json['reporter_id'];
     priority = json['priority'];
     severity = json['severity'];
@@ -140,7 +140,7 @@ class SubJobSparePart {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    data['job_id'] = id;
     data['reporter_id'] = reporterId;
     data['priority'] = priority;
     data['severity'] = severity;

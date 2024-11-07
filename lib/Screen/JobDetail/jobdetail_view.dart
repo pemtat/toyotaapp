@@ -104,6 +104,15 @@ class JobDetailView extends StatelessWidget {
               var subJob = jobController.subJobs.isNotEmpty
                   ? jobController.subJobs.first
                   : null;
+              var subJobSparePart = jobController.subJobSparePart.isNotEmpty
+                  ? jobController.subJobSparePart.first
+                  : null;
+              if (subJobSparePart != null) {
+                if (subJobSparePart.estimateStatus == '1' ||
+                    subJobSparePart.estimateStatus == '2') {
+                  jobController.canEdit.value = false;
+                }
+              }
               // var customerInfo = jobController.customerInfo.isNotEmpty
               //     ? jobController.customerInfo.first
               //     : null;
@@ -144,7 +153,7 @@ class JobDetailView extends StatelessWidget {
                                         dateTime:
                                             formatDateTime(issue.createdAt, ''),
                                         status: issue.status.name,
-                                        reporter: issue.reporter.realName,
+                                        reporter: issue.reporter.realName ?? '',
                                         more: jobController
                                             .moreTicketDetail.value,
                                       ),
@@ -452,13 +461,7 @@ class JobDetailView extends StatelessWidget {
                                             text: 'Field Service Report'),
                                         Obx(() => jobController
                                                     .reportList.isNotEmpty &&
-                                                (subJob != null &&
-                                                        subJob.estimateStatus ==
-                                                            null ||
-                                                    subJob!.estimateStatus ==
-                                                        '0' ||
-                                                    subJob.estimateStatus ==
-                                                        '3')
+                                                jobController.canEdit.value
                                             ? EditButton(
                                                 onTap: () {
                                                   Get.to(() => EditFillFormView(
@@ -468,13 +471,7 @@ class JobDetailView extends StatelessWidget {
                                                       ));
                                                 },
                                               )
-                                            : subJob != null &&
-                                                    (subJob.estimateStatus ==
-                                                            null ||
-                                                        subJob.estimateStatus ==
-                                                            '0' ||
-                                                        subJob.estimateStatus ==
-                                                            '3')
+                                            : jobController.canEdit.value
                                                 ? AddButton(
                                                     onTap: () {
                                                       Get.to(() => FillFormView(
@@ -607,7 +604,9 @@ class JobDetailView extends StatelessWidget {
                                         const TitleApp(
                                             text: 'Battery Maintenance Report'),
                                         Obx(() => jobController
-                                                .reportBatteryList.isNotEmpty
+                                                    .reportBatteryList
+                                                    .isNotEmpty &&
+                                                jobController.canEdit.value
                                             ? EditButton(
                                                 onTap: () {
                                                   Get.to(
@@ -618,15 +617,18 @@ class JobDetailView extends StatelessWidget {
                                                           ));
                                                 },
                                               )
-                                            : AddButton(
-                                                onTap: () {
-                                                  Get.to(() => FillFormView2(
-                                                        jobId: ticketId,
-                                                        jobIssueId:
-                                                            jobId.toString(),
-                                                      ));
-                                                },
-                                              )),
+                                            : jobController.canEdit.value
+                                                ? AddButton(
+                                                    onTap: () {
+                                                      Get.to(
+                                                          () => FillFormView2(
+                                                                jobId: ticketId,
+                                                                jobIssueId: jobId
+                                                                    .toString(),
+                                                              ));
+                                                    },
+                                                  )
+                                                : Container()),
                                       ],
                                     ),
                                     Text(

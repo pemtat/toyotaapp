@@ -52,7 +52,7 @@ class CalendarItem extends StatelessWidget {
                           ? Row(
                               children: [
                                 Text(
-                                  'Job ID : ${event['jobid'].toString().padLeft(6, '0')}',
+                                  'Job ID : ${event['jobid'].toString().padLeft(7, '0')}',
                                   style: TextStyleList.text9,
                                 ),
                                 4.wH,

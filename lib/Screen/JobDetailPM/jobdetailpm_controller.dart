@@ -34,6 +34,7 @@ class JobDetailControllerPM extends GetxController {
   var saveCompletedtime = ''.obs;
   var isPicking = false.obs;
   var commentCheck = false.obs;
+  var canEdit = true.obs;
   var issueData = [].obs;
   var saveCompletedtime2 = ''.obs;
   var attatchments = <Map<String, dynamic>>[].obs;
@@ -195,7 +196,7 @@ class JobDetailControllerPM extends GetxController {
     try {
       subJobSparePart.clear();
       final filteredSpareParts = jobController.subJobSparePart
-          .where((element) => element.id == jobId)
+          .where((element) => element.bugId == jobId)
           .toList();
 
       subJobSparePart.value = filteredSpareParts;

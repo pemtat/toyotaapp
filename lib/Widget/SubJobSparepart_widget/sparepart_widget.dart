@@ -54,27 +54,27 @@ class SparePartDetail extends StatelessWidget {
             width: double.infinity,
             child: Column(
               children: [
-                if (techLevel == '1' &&
-                    (estimateStatus == null ||
-                        estimateStatus == '0' ||
-                        estimateStatus == ''))
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      EditButton(onTap: () {
-                        Get.to(() => EditSparePartView(
-                              sparepart: sparepart,
-                              additionalSparepart: additionalSparepart,
-                              btrSparepart: btrSparepart,
-                              pvtSparepart: pvtSparepart,
-                              jobId: jobId,
-                              bugId: bugId,
-                              projectId: projectId,
-                            ));
-                      }),
-                      6.kH,
-                    ],
-                  ),
+                // if (techLevel == '1' &&
+                //     (estimateStatus == null ||
+                //         estimateStatus == '0' ||
+                //         estimateStatus == ''))
+                //   Row(
+                //     mainAxisAlignment: MainAxisAlignment.end,
+                //     children: [
+                //       EditButton(onTap: () {
+                //         Get.to(() => EditSparePartView(
+                //               sparepart: sparepart,
+                //               additionalSparepart: additionalSparepart,
+                //               btrSparepart: btrSparepart,
+                //               pvtSparepart: pvtSparepart,
+                //               jobId: jobId,
+                //               bugId: bugId,
+                //               projectId: projectId,
+                //             ));
+                //       }),
+                //       6.kH,
+                //     ],
+                //   ),
                 if (techLevel == '2' &&
                     techManagerStatus == '0' &&
                     estimateStatus == '1')
@@ -121,7 +121,9 @@ class SparePartDetail extends StatelessWidget {
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
-                                rows: sparepart.map((data) {
+                                rows: sparepart
+                                    .where((data) => data.quantity != '0')
+                                    .map((data) {
                                   return DataRow(cells: [
                                     DataCell(Text(data.partNumber ?? '')),
                                     DataCell(Center(
@@ -195,7 +197,9 @@ class SparePartDetail extends StatelessWidget {
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
-                                rows: additionalSparepart.map((data) {
+                                rows: additionalSparepart
+                                    .where((data) => data.quantity != '0')
+                                    .map((data) {
                                   return DataRow(cells: [
                                     DataCell(Text(data.partNumber ?? '')),
                                     DataCell(Center(
@@ -268,7 +272,9 @@ class SparePartDetail extends StatelessWidget {
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
-                                rows: btrSparepart.map((data) {
+                                rows: btrSparepart
+                                    .where((data) => data.quantity != '0')
+                                    .map((data) {
                                   return DataRow(cells: [
                                     DataCell(Text(data.partNumber ?? '')),
                                     DataCell(Center(
@@ -341,7 +347,9 @@ class SparePartDetail extends StatelessWidget {
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
-                                rows: pvtSparepart.map((data) {
+                                rows: pvtSparepart
+                                    .where((data) => data.quantity != '0')
+                                    .map((data) {
                                   return DataRow(cells: [
                                     DataCell(Text(data.partNumber ?? '')),
                                     DataCell(Center(

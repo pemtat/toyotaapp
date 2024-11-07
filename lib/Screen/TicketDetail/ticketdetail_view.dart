@@ -71,6 +71,15 @@ class TicketDetailView extends StatelessWidget {
             var subJob = ticketController.subJobs.isNotEmpty
                 ? ticketController.subJobs.first
                 : null;
+            var subJobSparePart = ticketController.subJobSparePart.isNotEmpty
+                ? ticketController.subJobSparePart.first
+                : null;
+            if (subJobSparePart != null) {
+              if (subJobSparePart.estimateStatus == '1' ||
+                  subJobSparePart.estimateStatus == '2') {
+                ticketController.canEdit.value = false;
+              }
+            }
             // var customerInfo = ticketController.customerInfo.isNotEmpty
             //     ? ticketController.customerInfo.first
             //     : null;
@@ -327,11 +336,7 @@ class TicketDetailView extends StatelessWidget {
                                       const TitleApp(
                                           text: 'Field Service Report'),
                                       issue.status.id != 90 &&
-                                              (subJob.estimateStatus == null ||
-                                                  subJob.estimateStatus ==
-                                                      '0' ||
-                                                  subJob.estimateStatus ==
-                                                      '3') &&
+                                              ticketController.canEdit.value &&
                                               ticketController
                                                   .reportList.isNotEmpty
                                           ? EditButton(
@@ -420,6 +425,7 @@ class TicketDetailView extends StatelessWidget {
                                       const TitleApp(
                                           text: 'Battery Maintenance Report'),
                                       issue.status.id != 90 &&
+                                              ticketController.canEdit.value &&
                                               ticketController
                                                   .reportBatteryList.isNotEmpty
                                           ? EditButton(

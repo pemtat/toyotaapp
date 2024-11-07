@@ -75,6 +75,15 @@ class TicketPMDetailView extends StatelessWidget {
             var pmJobs = jobController.pmJobs.isNotEmpty
                 ? jobController.pmJobs.first
                 : null;
+            var subJobSparePart = jobController.subJobSparePart.isNotEmpty
+                ? jobController.subJobSparePart.first
+                : null;
+            if (subJobSparePart != null) {
+              if (subJobSparePart.estimateStatus == '1' ||
+                  subJobSparePart.estimateStatus == '2') {
+                jobController.canEdit.value = false;
+              }
+            }
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -208,7 +217,8 @@ class TicketPMDetailView extends StatelessWidget {
                                                       .toString()) !=
                                                   'closed' &&
                                               jobController
-                                                  .reportList.isNotEmpty
+                                                  .reportList.isNotEmpty &&
+                                              jobController.canEdit.value
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView2(
@@ -292,7 +302,8 @@ class TicketPMDetailView extends StatelessWidget {
                                                   .isNotEmpty &&
                                               jobController.reportPreventiveList
                                                       .first.pvtMaintenance !=
-                                                  null
+                                                  null &&
+                                              jobController.canEdit.value
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView3(

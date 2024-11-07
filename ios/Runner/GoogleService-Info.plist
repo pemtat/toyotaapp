@@ -16,6 +16,8 @@
 	<string>t-service-4ace9.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
+	<key>firebase_messaging_auto_init_enabled</key>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
 	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>

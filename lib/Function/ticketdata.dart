@@ -118,7 +118,8 @@ Future<void> fetchUserByZone(
   }
 }
 
-Future<void> fetchAllSales(RxList<UsersSales> userAllSales) async {
+Future<void> fetchAllSales(RxList<UsersSales> userAllSales, String projectId,
+    String jobId, String bugId) async {
   String? token = await getToken();
   try {
     final response = await http.get(
@@ -1435,6 +1436,23 @@ Future<void> updateJobSparePart(
         if (projectId == '1') "job_issue_id": jobId else "bug_id": bugId,
       };
       createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
+      projectId == '1'
+          ? createHistoryJobs(
+              handlerId,
+              salesId,
+              'Job ID : ${jobId.toString().padLeft(7, '0')}',
+              'มีรายการใบเบิก Spare Part รออนุมัติใหม่',
+              reporterId,
+              bugId,
+              jobId)
+          : createHistoryJobs(
+              handlerId,
+              salesId,
+              'PM ID : ${bugId.toString().padLeft(7, '0')}',
+              'มีรายการใบเบิก Spare Part รออนุมัติใหม่',
+              reporterId,
+              bugId,
+              jobId);
     } else if (option == 'reject') {
       body = {
         'tech_manager_status': 2,
@@ -1443,14 +1461,23 @@ Future<void> updateJobSparePart(
         if (projectId == '1') "job_issue_id": jobId else "bug_id": bugId,
       };
       createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '2');
-      sendNotificationToUser(
-          handlerId,
-          techHandlerId,
-          'Job ID : $jobId',
-          'ใบเบิก Spare Part ของคุณไม่ผ่านการอนุมัติ',
-          reporterId,
-          bugId,
-          jobId);
+      projectId == '1'
+          ? sendNotificationToUser(
+              handlerId,
+              techHandlerId,
+              'Job ID : ${jobId.toString().padLeft(7, '0')}',
+              'ใบเบิก Spare Part ของคุณไม่ผ่านการอนุมัติ',
+              reporterId,
+              bugId,
+              jobId)
+          : sendNotificationToUser(
+              handlerId,
+              techHandlerId,
+              'PM ID : ${bugId.toString().padLeft(7, '0')}',
+              'ใบเบิก Spare Part ของคุณไม่ผ่านการอนุมัติ',
+              reporterId,
+              bugId,
+              jobId);
     } else if (option == 'update_sparepart') {
       body = {
         'tech_manager_remark': remark,
@@ -1595,7 +1622,8 @@ Future<void> sendNotificationToUser(
           "group_notify": "one",
           "group_report_by": "tech",
           "reference_code": reporterId,
-          "job_id": int.parse(jobId)
+          "job_id": int.parse(jobId),
+          "sales_id": 0
         };
         final response = await http.post(
           Uri.parse(createJobNotificationHistory()),
@@ -1616,6 +1644,44 @@ Future<void> sendNotificationToUser(
     }
   } catch (e) {
     print('Error: $e');
+  }
+}
+
+Future<void> createHistoryJobs(
+    String handlerId,
+    String receiverId,
+    String details,
+    String bodyDetail,
+    String reporterId,
+    String bugId,
+    String jobId) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body2 = {
+      "title": details,
+      "details": bodyDetail,
+      "bug_id": int.parse(bugId),
+      "user_id": int.parse(receiverId),
+      "report_by": int.parse(handlerId),
+      "group_notify": "one",
+      "group_report_by": "tech",
+      "reference_code": reporterId,
+      "job_id": int.parse(jobId),
+      "sales_id": int.parse(receiverId),
+    };
+    final response = await http.post(
+      Uri.parse(createJobNotificationHistory()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body2),
+    );
+    if (response.statusCode == 201) {
+      print('Updated History Notification');
+    }
+  } catch (e) {
+    print(e);
   }
 }
 

@@ -327,10 +327,10 @@ class JobInfo extends StatelessWidget {
                     jobIdString != null
                         ? TitleApp(
                             text:
-                                'Job ID: ${jobIdString.toString().padLeft(6, '0')}')
+                                'Job ID: ${jobIdString.toString().padLeft(7, '0')}')
                         : TitleApp(
                             text:
-                                'Job ID: ${jobId.toString().padLeft(6, '0')}'),
+                                'Job ID: ${jobId.toString().padLeft(7, '0')}'),
                     5.wH,
                     GestureDetector(
                       onTap: () {

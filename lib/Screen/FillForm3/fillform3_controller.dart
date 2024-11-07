@@ -509,7 +509,6 @@ class FillformController3 extends GetxController {
           body: jsonEncode(data));
 
       if (response.statusCode == 201) {
-        print('yes');
         showWaitMessage();
         await fetchPreventiveReportData(jobId.toString(), token ?? '',
             jobDetailControllerPM.reportPreventiveList);
@@ -519,6 +518,8 @@ class FillformController3 extends GetxController {
         //     jobId.toString(), token ?? '', jobDetailControllerPM.comment);
         // jobDetailControllerPM.commentCheck.value = true;
         showSaveMessage();
+        await fetchSubJobSparePartOption();
+        await jobDetailControllerPM.fetchSubJobSparePartIdPM();
       } else {
         print('Failed to save report: ${response.statusCode}');
       }

@@ -25,7 +25,7 @@ class TicketPmDetailController extends GetxController {
   final comment = TextEditingController().obs;
   var reportList = <BatteryReportModel>[].obs;
   var pmInfo = <PMJobInfoModel>[].obs;
-
+  var canEdit = true.obs;
   var reportPreventiveList = <PreventivereportModel>[].obs;
   var userData = <UserById>[].obs;
   var pmJobs = <PmModel>[].obs;
@@ -214,7 +214,7 @@ class TicketPmDetailController extends GetxController {
     try {
       subJobSparePart.clear();
       final filteredSpareParts = jobController.subJobSparePart
-          .where((element) => element.id == jobId)
+          .where((element) => element.bugId == jobId)
           .toList();
 
       subJobSparePart.value = filteredSpareParts;

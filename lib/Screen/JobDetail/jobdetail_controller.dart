@@ -40,6 +40,7 @@ class JobDetailController extends GetxController {
   Rx<String> expandedTicketId = Rx<String>('');
   var selectedDate = Rx<DateTime?>(null);
   var expandedIndex = false.obs;
+  var canEdit = true.obs;
   var saveCompletedtime = ''.obs;
   List<String> notePic = [];
   var attatchments = <Map<String, dynamic>>[].obs;

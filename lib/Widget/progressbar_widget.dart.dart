@@ -48,7 +48,7 @@ class TimeLineItem extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text('Job ID: ${jobid.toString().padLeft(6, '0')}',
+                    Text('Job ID: ${jobid.toString().padLeft(7, '0')}',
                         style: TextStyleList.subtext5),
                     3.wH,
                     Text(
