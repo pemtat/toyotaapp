@@ -254,7 +254,7 @@ class TicketPMDetailView extends StatelessWidget {
                                                           .reportList
                                                           .first
                                                           .btrMaintenance!
-                                                          .signaturePad !=
+                                                          .signaturePadUrl !=
                                                       null))
                                           ? Row(
                                               mainAxisAlignment:
@@ -346,7 +346,7 @@ class TicketPMDetailView extends StatelessWidget {
                                                       .reportPreventiveList
                                                       .first
                                                       .pvtMaintenance!
-                                                      .signaturePad !=
+                                                      .signaturePadUrl !=
                                                   null))
                                       ? Row(
                                           mainAxisAlignment:

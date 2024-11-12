@@ -61,6 +61,8 @@ class TicketPmDetailController extends GetxController {
     final String apiUrl = getTicketbyId(ticketId);
 
     String? token = await getToken();
+    subJobSparePart.clear();
+    canEdit.value = true;
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     await fetchPMJob(ticketId, token ?? '', pmJobs);
@@ -212,6 +214,7 @@ class TicketPmDetailController extends GetxController {
 
   Future<void> fetchSubJobSparePartIdPM() async {
     try {
+      jobController.subJobSparePart.refresh();
       subJobSparePart.clear();
       final filteredSpareParts = jobController.subJobSparePart
           .where((element) => element.bugId == jobId)

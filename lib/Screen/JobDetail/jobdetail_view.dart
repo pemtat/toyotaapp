@@ -111,6 +111,8 @@ class JobDetailView extends StatelessWidget {
                 if (subJobSparePart.estimateStatus == '1' ||
                     subJobSparePart.estimateStatus == '2') {
                   jobController.canEdit.value = false;
+                } else {
+                  jobController.canEdit.value = true;
                 }
               }
               // var customerInfo = jobController.customerInfo.isNotEmpty
@@ -513,11 +515,16 @@ class JobDetailView extends StatelessWidget {
                                                                 .first
                                                                 .signature ==
                                                             '' &&
-                                                        jobController
-                                                                .reportList
-                                                                .first
-                                                                .signaturePad ==
-                                                            '')) {
+                                                        (jobController
+                                                                    .reportList
+                                                                    .first
+                                                                    .signaturePadUrl ==
+                                                                '' ||
+                                                            jobController
+                                                                    .reportList
+                                                                    .first
+                                                                    .signaturePadUrl ==
+                                                                null))) {
                                                   return Column(
                                                     children: [
                                                       5.kH,
@@ -555,11 +562,16 @@ class JobDetailView extends StatelessWidget {
                                                               .first
                                                               .signature !=
                                                           '' &&
-                                                      jobController
-                                                              .reportList
-                                                              .first
-                                                              .signaturePad !=
-                                                          '')
+                                                      (jobController
+                                                                  .reportList
+                                                                  .first
+                                                                  .signaturePadUrl !=
+                                                              null &&
+                                                          jobController
+                                                                  .reportList
+                                                                  .first
+                                                                  .signaturePadUrl !=
+                                                              ''))
                                                   ? Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment.end,
@@ -659,7 +671,7 @@ class JobDetailView extends StatelessWidget {
                                                           .reportBatteryList
                                                           .first
                                                           .btrMaintenance!
-                                                          .signaturePad ==
+                                                          .signaturePadUrl ==
                                                       null)
                                                 Column(
                                                   children: [
@@ -700,7 +712,7 @@ class JobDetailView extends StatelessWidget {
                                                     .reportBatteryList
                                                     .first
                                                     .btrMaintenance!
-                                                    .signaturePad !=
+                                                    .signaturePadUrl !=
                                                 null)
                                         ? Row(
                                             mainAxisAlignment:

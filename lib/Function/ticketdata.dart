@@ -1210,13 +1210,14 @@ Future<void> changeIssueSignaturePM(
     if (option == 'battery') {
       body = {
         "job_id": issueId,
+        'name': 'ลายเซ็น.png',
+        'content': signaturePad,
         "signature": signature,
-        "signature_pad": signaturePad,
         "save_time": saveCompletedtime
       };
 
       final response2 = await http.post(
-        Uri.parse(updateBatterySignature()),
+        Uri.parse(updateBatterySignatureUrl()),
         headers: {
           'Authorization': '$token',
           'Content-Type': 'application/json',
@@ -1231,12 +1232,13 @@ Future<void> changeIssueSignaturePM(
     } else {
       body = {
         "job_id": issueId,
+        'name': 'ลายเซ็น.png',
+        'content': signaturePad,
         "signature": signature,
-        "signature_pad": signaturePad,
         "save_time": 0
       };
       final response2 = await http.post(
-        Uri.parse(updatePreventiveSignature()),
+        Uri.parse(updatePreventiveSignatureUrl()),
         headers: {
           'Authorization': '$token',
           'Content-Type': 'application/json',
@@ -1718,12 +1720,14 @@ Future<void> updateSignatureJob(String jobId, String ticketId,
     String? token = await getToken();
 
     Map<String, dynamic> body = {
+      'job_issue_id': jobId,
+      'name': 'ลายเซ็น.png',
+      'content': signaturePad,
       'save_time': saveCompletedtime,
-      'signature_pad': signaturePad,
       'signature': signature
     };
-    final response = await http.put(
-      Uri.parse(updateReportById(jobId)),
+    final response = await http.post(
+      Uri.parse(updateJobsSignatureUrl()),
       headers: {
         'Authorization': '$token',
         'Content-Type': 'application/json',
@@ -1749,13 +1753,14 @@ Future<void> updateJobSignatureBattery(String issueId, String saveCompletedtime,
 
     body = {
       "job_issue_id": issueId,
+      'name': 'ลายเซ็น.png',
+      'content': signaturePad,
       "signature": signature,
-      "signature_pad": signaturePad,
       "save_time": saveCompletedtime
     };
 
     final response2 = await http.post(
-      Uri.parse(updateJobsBatterySignature()),
+      Uri.parse(updateJobsBatterySignatureUrl()),
       headers: {
         'Authorization': '$token',
         'Content-Type': 'application/json',

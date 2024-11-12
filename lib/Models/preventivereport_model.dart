@@ -76,6 +76,7 @@ class PvtMaintenance {
   String? m;
   String? signature;
   String? signaturePad;
+  String? signaturePadUrl;
   String? saveTime;
   String? operationHour;
   String? mastType;
@@ -107,6 +108,7 @@ class PvtMaintenance {
     this.m,
     this.signature,
     this.signaturePad,
+    this.signaturePadUrl,
     this.saveTime,
     this.customerFleet,
     this.liftHeight,
@@ -140,6 +142,7 @@ class PvtMaintenance {
     m = json['m'];
     signature = json['signature'];
     signaturePad = json['signature_pad'];
+    signaturePadUrl = json['signature_pad_url'];
     saveTime = json['save_time'];
     customerFleet = json['customer_fleet'];
     liftHeight = json['lift_height'];
@@ -173,7 +176,7 @@ class PvtMaintenance {
     data['hr'] = hr;
     data['m'] = m;
     data['signature'] = signature;
-    data['signature_pad'] = signaturePad;
+    data['signature_pad_url'] = signaturePadUrl;
     data['save_time'] = saveTime;
     data['customer_fleet'] = customerFleet;
     data['lift_height'] = liftHeight;

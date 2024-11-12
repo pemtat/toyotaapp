@@ -70,6 +70,8 @@ class JobDetailController extends GetxController {
       String? token = await getToken();
       issueId = ticketId;
       jobId = subjobId;
+      subJobSparePart.clear();
+      canEdit.value = true;
       await fetchReportData(
           subjobId, token ?? '', reportList, additionalReportList);
       await fetchJobBatteryReportData(jobId, token ?? '', reportBatteryList);
@@ -152,6 +154,7 @@ class JobDetailController extends GetxController {
 
   Future<void> fetchSubJobSparePartId() async {
     try {
+      jobController.subJobSparePart.refresh();
       subJobSparePart.clear();
       final filteredSpareParts = jobController.subJobSparePart
           .where((element) => element.id == jobId)

@@ -9,6 +9,7 @@ import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/pdf_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/urlimg.dart';
 
 class ShowRepairReport extends StatelessWidget {
   final RxList<RepairReportModel> reportData;
@@ -235,7 +236,8 @@ class ShowRepairReport extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (data.signaturePad != '')
+                  if (data.signaturePadUrl != null &&
+                      data.signaturePadUrl != '')
                     Center(
                       child: Column(
                         children: [
@@ -243,7 +245,7 @@ class ShowRepairReport extends StatelessWidget {
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
                             height: 200,
-                            child: Base64ImageWidget(data.signaturePad ?? ''),
+                            child: UrlImageWidget(data.signaturePadUrl ?? ''),
                           ),
                           4.kH,
                           space.kH,

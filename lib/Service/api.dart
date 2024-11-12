@@ -248,6 +248,22 @@ String updatePreventiveSignature() {
   return "$url/api/rest/pm_jobs/update_pvt_maintenance_signature";
 }
 
+String updateJobsSignatureUrl() {
+  return "$url/api/rest/jobs/jobs_update_signature_url";
+}
+
+String updateJobsBatterySignatureUrl() {
+  return "$url/api/rest/jobs/jobs_btr_update_signature_url";
+}
+
+String updateBatterySignatureUrl() {
+  return "$url/api/rest/pm_jobs/btr_update_signature_url";
+}
+
+String updatePreventiveSignatureUrl() {
+  return "$url/api/rest/pm_jobs/pvt_update_signature_url";
+}
+
 String updateReportById(String id) {
   return "$url/api/rest/jobs/job_report_update?job_issue_id='$id'";
 }

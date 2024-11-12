@@ -465,7 +465,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                           .reportList
                                                           .first
                                                           .btrMaintenance!
-                                                          .signaturePad ==
+                                                          .signaturePadUrl ==
                                                       null)
                                                 Column(
                                                   children: [
@@ -504,7 +504,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                         .reportList
                                                         .first
                                                         .btrMaintenance!
-                                                        .signaturePad !=
+                                                        .signaturePadUrl !=
                                                     null))
                                         ? Row(
                                             mainAxisAlignment:
@@ -605,7 +605,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                           .reportPreventiveList
                                                           .first
                                                           .pvtMaintenance!
-                                                          .signaturePad ==
+                                                          .signaturePadUrl ==
                                                       null)
                                                 Column(
                                                   children: [
@@ -649,7 +649,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                                   .reportPreventiveList
                                                                   .first
                                                                   .pvtMaintenance!
-                                                                  .signaturePad !=
+                                                                  .signaturePadUrl !=
                                                               null))
                                                   ? Row(
                                                       mainAxisAlignment:

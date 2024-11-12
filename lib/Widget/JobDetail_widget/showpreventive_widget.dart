@@ -11,6 +11,7 @@ import 'package:toyotamobile/Widget/pdf_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
+import 'package:toyotamobile/Widget/urlimg.dart';
 
 class ShowPreventiveReportWidget extends StatelessWidget {
   final RxList<PreventivereportModel> reportData;
@@ -258,7 +259,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                   ],
                 ),
 
-                if (maintenance.signaturePad != null)
+                if (maintenance.signaturePadUrl != null)
                   Center(
                       child: Column(
                     children: [
@@ -267,8 +268,8 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,
-                          child: Base64ImageWidget(
-                              maintenance.signaturePad ?? '')),
+                          child: UrlImageWidget(
+                              maintenance.signaturePadUrl ?? '')),
                       6.kH,
                     ],
                   )),

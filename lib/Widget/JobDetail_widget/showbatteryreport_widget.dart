@@ -13,6 +13,7 @@ import 'package:toyotamobile/Widget/pdf_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
+import 'package:toyotamobile/Widget/urlimg.dart';
 
 class ShowBatteryReportWidget extends StatelessWidget {
   final RxList<BatteryReportModel> reportData;
@@ -401,7 +402,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     )
                   ],
                 ),
-                if (info1.signaturePad != null)
+                if (info1.signaturePadUrl != null)
                   Center(
                       child: Column(
                     children: [
@@ -410,7 +411,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,
-                          child: Base64ImageWidget(info1.signaturePad ?? '')),
+                          child: UrlImageWidget(info1.signaturePadUrl ?? '')),
                       6.kH,
                     ],
                   )),

@@ -17,6 +17,7 @@ class RepairReportModel {
   String? saveTime;
   String? signature;
   String? signaturePad;
+  String? signaturePadUrl;
   String? cCode;
   String? partNumber;
   String? description;
@@ -80,6 +81,7 @@ class RepairReportModel {
       this.tech2,
       this.tech1,
       this.priceVat,
+      this.signaturePadUrl,
       this.salesPrice});
 
   RepairReportModel.fromJson(Map<String, dynamic> json) {
@@ -101,6 +103,7 @@ class RepairReportModel {
     saveTime = json['save_time'];
     signature = json['signature'];
     signaturePad = json['signature_pad'];
+    signaturePadUrl = json['signature_pad_url'];
     cCode = json['c_code'];
     partNumber = json['part_number'];
     description = json['description'];
@@ -145,6 +148,7 @@ class RepairReportModel {
     data['save_time'] = saveTime;
     data['signature'] = signature;
     data['signature_pad'] = signaturePad;
+    data['signature_pad_url'] = signaturePadUrl;
     data['c_code'] = cCode;
     data['part_number'] = partNumber;
     data['description'] = description;

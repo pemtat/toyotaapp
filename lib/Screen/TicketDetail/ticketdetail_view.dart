@@ -379,7 +379,12 @@ class TicketDetailView extends StatelessWidget {
                                                     ticketController
                                                             .reportList
                                                             .first
-                                                            .signaturePad !=
+                                                            .signaturePadUrl !=
+                                                        null &&
+                                                    ticketController
+                                                            .reportList
+                                                            .first
+                                                            .signaturePadUrl !=
                                                         '')
                                                 ? Row(
                                                     mainAxisAlignment:
@@ -466,7 +471,7 @@ class TicketDetailView extends StatelessWidget {
                                                   .reportBatteryList
                                                   .first
                                                   .btrMaintenance!
-                                                  .signaturePad !=
+                                                  .signaturePadUrl !=
                                               null)
                                       ? Row(
                                           mainAxisAlignment:

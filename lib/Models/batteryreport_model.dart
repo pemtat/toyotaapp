@@ -92,6 +92,7 @@ class BtrMaintenance {
   String? repairPm;
   String? signature;
   String? signaturePad;
+  String? signaturePadUrl;
   String? saveTime;
   String? relationId;
   String? createdAtLocal;
@@ -124,6 +125,7 @@ class BtrMaintenance {
     this.repairPm,
     this.signature,
     this.signaturePad,
+    this.signaturePadUrl,
     this.saveTime,
     this.relationId,
     this.createdAtLocal,
@@ -160,6 +162,7 @@ class BtrMaintenance {
     repairPm = json['repair_pm'];
     signature = json['signature'];
     signaturePad = json['signature_pad'];
+    signaturePadUrl = json['signature_pad_url'];
     saveTime = json['save_time'];
     relationId = json['relation_id'];
     createdAtLocal = json['created_at_local'];
@@ -197,6 +200,7 @@ class BtrMaintenance {
     data['repair_pm'] = repairPm;
     data['signature'] = signature;
     data['signature_pad'] = signaturePad;
+    data['signature_pad_url'] = signaturePadUrl;
     data['save_time'] = saveTime;
     data['relation_id'] = relationId;
     data['created_at_local'] = createdAtLocal;

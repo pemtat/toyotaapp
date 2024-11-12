@@ -126,7 +126,12 @@ class LoginController extends GetxController {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      String? token = await messaging.getToken();
+      String? token = '';
+      if (deviceType == 'iOS') {
+        token = '';
+      } else {
+        token = await messaging.getToken();
+      }
       if (token != null) {
         Map<String, dynamic> body = {
           "user_id": userId,

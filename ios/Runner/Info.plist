@@ -28,6 +28,10 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>เราอยากเข้าถึงรูปภาพของคุณเพื่อให้คุณสามารถอัปโหลดรูปภาพในแอปของเราได้</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your app uses location services to [briefly describe the purpose, e.g., show your location on the map].</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your app needs continuous access to location to [explain the purpose, e.g., track your location even in the background for better service].</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
