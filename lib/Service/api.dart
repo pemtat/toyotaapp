@@ -164,6 +164,10 @@ String getUserInfoById(String userId) {
   return '$user/$userId';
 }
 
+String getLatestVersions() {
+  return '$url/api/rest/users/versions/get';
+}
+
 String getUserInfo() {
   return '$user/me';
 }

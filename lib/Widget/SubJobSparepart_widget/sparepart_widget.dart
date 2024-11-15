@@ -117,6 +117,7 @@ class SparePartDetail extends StatelessWidget {
                                 horizontalMargin: 0,
                                 columns: [
                                   const DataColumn(label: Text('Item')),
+                                  const DataColumn(label: Text('Description')),
                                   const DataColumn(label: Text('Unit/Store')),
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
@@ -126,6 +127,7 @@ class SparePartDetail extends StatelessWidget {
                                     .map((data) {
                                   return DataRow(cells: [
                                     DataCell(Text(data.partNumber ?? '')),
+                                    DataCell(Text(data.description ?? '')),
                                     DataCell(Center(
                                         child: Row(
                                       children: [
@@ -193,6 +195,7 @@ class SparePartDetail extends StatelessWidget {
                                 headingTextStyle: TextStyleList.detail2,
                                 columns: [
                                   const DataColumn(label: Text('Item')),
+                                  const DataColumn(label: Text('Description')),
                                   const DataColumn(label: Text('Unit/Store')),
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
@@ -202,6 +205,7 @@ class SparePartDetail extends StatelessWidget {
                                     .map((data) {
                                   return DataRow(cells: [
                                     DataCell(Text(data.partNumber ?? '')),
+                                    DataCell(Text(data.description ?? '')),
                                     DataCell(Center(
                                         child: Row(
                                       children: [
@@ -268,6 +272,7 @@ class SparePartDetail extends StatelessWidget {
                                 headingTextStyle: TextStyleList.detail2,
                                 columns: [
                                   const DataColumn(label: Text('Item')),
+                                  const DataColumn(label: Text('Description')),
                                   const DataColumn(label: Text('Unit/Store')),
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
@@ -277,6 +282,7 @@ class SparePartDetail extends StatelessWidget {
                                     .map((data) {
                                   return DataRow(cells: [
                                     DataCell(Text(data.partNumber ?? '')),
+                                    DataCell(Text(data.description ?? '')),
                                     DataCell(Center(
                                         child: Row(
                                       children: [
@@ -313,6 +319,7 @@ class SparePartDetail extends StatelessWidget {
                                         ),
                                       ],
                                     ))),
+                                    DataCell(Text(data.description ?? '')),
                                     if (techLevel == '2')
                                       DataCell(Text(formatter.format(
                                           int.parse(data.salesPrice ?? '0')))),
@@ -343,6 +350,7 @@ class SparePartDetail extends StatelessWidget {
                                 headingTextStyle: TextStyleList.detail2,
                                 columns: [
                                   const DataColumn(label: Text('Item')),
+                                  const DataColumn(label: Text('Description')),
                                   const DataColumn(label: Text('Unit/Store')),
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
@@ -352,6 +360,7 @@ class SparePartDetail extends StatelessWidget {
                                     .map((data) {
                                   return DataRow(cells: [
                                     DataCell(Text(data.partNumber ?? '')),
+                                    DataCell(Text(data.description ?? '')),
                                     DataCell(Center(
                                         child: Row(
                                       children: [
@@ -388,6 +397,7 @@ class SparePartDetail extends StatelessWidget {
                                         ),
                                       ],
                                     ))),
+                                    DataCell(Text(data.description ?? '')),
                                     if (techLevel == '2')
                                       DataCell(Text(formatter.format(
                                           int.parse(data.salesPrice ?? '0')))),

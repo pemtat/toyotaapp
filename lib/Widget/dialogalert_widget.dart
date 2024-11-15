@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Function/openappstore.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
@@ -154,6 +155,83 @@ class AlertDialogPickImage extends StatelessWidget {
               'ระบบไม่รองรับไฟล์นามสกุลนี้ โปรดเลือกไฟล์นามสกุล  .jpg  .jpeg  .png',
               style: TextStyleList.text2,
             ),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: Text(
+            'ตกลง',
+            style: TextStyleList.subtext3,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class AlertDialogVersions extends StatelessWidget {
+  String deviceType;
+  AlertDialogVersions({super.key, required this.deviceType});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: white3,
+      title: Center(
+          child: Text(
+        'เเจ้งเตือน',
+        style: TextStyleList.title1,
+      )),
+      content: Row(
+        children: [
+          Expanded(
+            child: Text(
+              'เวอร์ชั่นแอพมีการอัพเดทใหม่ กรุณาอัปเดตแอพเพื่อใช้งาน',
+              style: TextStyleList.text2,
+            ),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: Text(
+            'ตกลง',
+            style: TextStyleList.subtext3,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+            if (deviceType == 'iOS') {
+              openAppStore();
+            } else {}
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class AlertDialogNotComplete extends StatelessWidget {
+  const AlertDialogNotComplete({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: white3,
+      title: Center(
+          child: Text(
+        'เเจ้งเตือน',
+        style: TextStyleList.subtitle1,
+      )),
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'โปรดกรอกข้อมูลที่จำเป็นให้ครบถ้วน',
+            style: TextStyleList.text2,
           ),
         ],
       ),

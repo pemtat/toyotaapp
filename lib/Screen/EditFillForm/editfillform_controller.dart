@@ -213,6 +213,21 @@ class EditFillformController extends GetxController {
     }
   }
 
+  bool checkFormCompletion() {
+    if (fieldServiceReport.isEmpty ||
+        rcodeController.rCode.isEmpty ||
+        wcodeController.wCode.isEmpty ||
+        repairStaffController.repairStaff.isEmpty ||
+        repairResultController.maintenanceList.isEmpty ||
+        repairResultController.maintenanceList.first.chargingType.isEmpty ||
+        repairResultController.maintenanceList.first.hr == 0.0 ||
+        repairResultController.maintenanceList.first.people == 0.0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   void showSavedDialog(
       BuildContext context, String title, String left, String right) async {
     showDialog(

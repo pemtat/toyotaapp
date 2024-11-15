@@ -19,9 +19,11 @@ import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
+import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/maintenance_widget.dart';
+import 'package:toyotamobile/Widget/required_text_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
@@ -83,6 +85,9 @@ class EditFillFormView extends StatelessWidget {
                 6.kH,
                 BoxContainer(
                   children: [
+                    const RequiredTextLong(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                    ),
                     ListView.builder(
                       shrinkWrap: true,
                       itemCount:
@@ -224,6 +229,7 @@ class EditFillFormView extends StatelessWidget {
                   children: [
                     Obx(
                       () => AddEditBox(
+                          required: 'yes',
                           readOnly: readOnly == null ? null : 'yes',
                           titleText: 'R Code',
                           list: rcodeController.rCode,
@@ -237,6 +243,7 @@ class EditFillFormView extends StatelessWidget {
                   children: [
                     Obx(
                       () => AddEditBox(
+                          required: 'yes',
                           readOnly: readOnly == null ? null : 'yes',
                           titleText: 'W Code',
                           list: wcodeController.wCode,
@@ -363,6 +370,7 @@ class EditFillFormView extends StatelessWidget {
                   () => BoxContainer(
                     children: [
                       TitleWithButton(
+                          required: 'yes',
                           titleText: 'Repair Result',
                           button: repairResultController.maintenanceList.isEmpty
                               ? readOnly == null
@@ -405,6 +413,7 @@ class EditFillFormView extends StatelessWidget {
                   children: [
                     Obx(
                       () => AddEditBox(
+                          required: 'yes',
                           titleText: 'Process Staff',
                           readOnly: readOnly == null ? null : 'yes',
                           list: repairStaffController.repairStaff,
@@ -496,8 +505,16 @@ class EditFillFormView extends StatelessWidget {
           decoration: Decoration2(),
           child: EndButton(
               onPressed: () {
-                fillFormController.showSavedDialog(
-                    context, 'Are you confirm to save report?', 'No', 'Yes');
+                fillFormController.checkFormCompletion() == true ||
+                        readOnly != null
+                    ? fillFormController.showSavedDialog(
+                        context, 'Are you confirm to save report?', 'No', 'Yes')
+                    : showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const AlertDialogNotComplete();
+                        },
+                      );
               },
               text: 'Save'),
         ),

@@ -279,6 +279,12 @@ class TextStyleList {
       color: red1,
       decoration: TextDecoration.underline,
       decorationColor: red1);
+  static final TextStyle subtext10 = GoogleFonts.kanit(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: red1,
+  );
+
   //11
   static final TextStyle detailtext1 = GoogleFonts.kanit(
     fontSize: 11,
@@ -295,7 +301,8 @@ class TextStyleList {
     fontWeight: FontWeight.w400,
     color: const Color.fromARGB(255, 81, 79, 79),
   );
-
+  static final TextStyle detailtext4 =
+      GoogleFonts.kanit(fontSize: 11, fontWeight: FontWeight.w400, color: red1);
   //10
   static final TextStyle subdetail1 = GoogleFonts.kanit(
     fontSize: 10,
@@ -306,5 +313,10 @@ class TextStyleList {
     fontSize: 10,
     fontWeight: FontWeight.w400,
     color: Colors.black,
+  );
+  static final TextStyle subdetail3 = GoogleFonts.kanit(
+    fontSize: 10,
+    fontWeight: FontWeight.w400,
+    color: red1,
   );
 }

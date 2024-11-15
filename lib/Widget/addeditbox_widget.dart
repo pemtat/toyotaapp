@@ -10,19 +10,20 @@ class AddEditBox extends StatelessWidget {
   final VoidCallback onTap;
   final String? readOnly;
   final String moreText;
+  final String? required;
   final Rx<TextEditingController>? other;
   final Rx<TextEditingController>? other2;
 
-  const AddEditBox({
-    super.key,
-    required this.titleText,
-    required this.list,
-    required this.onTap,
-    required this.moreText,
-    this.readOnly,
-    this.other,
-    this.other2,
-  });
+  const AddEditBox(
+      {super.key,
+      required this.titleText,
+      required this.list,
+      required this.onTap,
+      required this.moreText,
+      this.readOnly,
+      this.other,
+      this.other2,
+      this.required});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class AddEditBox extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TitleWithButton(
+          required: required,
           titleText: titleText,
           button: readOnly == null
               ? list.isEmpty

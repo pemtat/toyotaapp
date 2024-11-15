@@ -45,6 +45,7 @@ class FillformController extends GetxController {
   var selectedUser = ''.obs;
 
   var usersList = <UsersZone>[].obs;
+  var isAllFieldsFilled = false.obs;
   final RepairProcedure rPController = Get.put(RepairProcedure());
   final SparepartList sparePartListController = Get.put(SparepartList());
   final AdditSparepartList additSparePartListController =
@@ -88,22 +89,19 @@ class FillformController extends GetxController {
     );
   }
 
-  void checkFormCompletion() {
-    bool isComplete = true;
-
-    if (fault.value.text.isEmpty ||
-        errorCode.value.text.isEmpty ||
-        workorderNumber.value.text.isEmpty ||
+  bool checkFormCompletion() {
+    if (fieldServiceReport.isEmpty ||
         rcodeController.rCode.isEmpty ||
         wcodeController.wCode.isEmpty ||
-        rPController.repairProcedure.value.text.isEmpty ||
-        rPController.causeProblem.value.text.isEmpty ||
+        processStaffController.repairStaff.isEmpty ||
         repairResultController.maintenanceList.isEmpty ||
-        processStaffController.repairStaff.isEmpty) {
-      isComplete = false;
+        repairResultController.maintenanceList.first.chargingType.isEmpty ||
+        repairResultController.maintenanceList.first.hr == 0.0 ||
+        repairResultController.maintenanceList.first.people == 0.0) {
+      return false;
+    } else {
+      return true;
     }
-
-    isFormComplete.value = isComplete;
   }
 
   void fetchData(String ticketId, String jobId) async {

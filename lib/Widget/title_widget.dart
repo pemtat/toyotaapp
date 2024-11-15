@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/required_text_widget.dart';
+import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class TitleApp extends StatelessWidget {
   final String text;
+  final String? required;
 
-  const TitleApp({super.key, required this.text});
+  const TitleApp({super.key, required this.text, this.required});
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyleList.subtitle1,
+    return Row(
+      children: [
+        Text(
+          text,
+          style: TextStyleList.subtitle1,
+        ),
+        if (required != null)
+          Row(
+            children: [
+              4.wH,
+              const Center(child: RequiredText()),
+            ],
+          ),
+      ],
     );
   }
 }
@@ -46,11 +60,13 @@ class TitleApp2 extends StatelessWidget {
 class TitleWithButton extends StatelessWidget {
   final String titleText;
   final Widget button;
+  final String? required;
   final bool? space;
 
   const TitleWithButton({
     super.key,
     this.space,
+    this.required,
     required this.titleText,
     required this.button,
   });
@@ -61,14 +77,18 @@ class TitleWithButton extends StatelessWidget {
         ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(child: TitleApp(text: titleText)),
+              Expanded(
+                  child: TitleApp(
+                text: titleText,
+                required: required,
+              )),
               button,
             ],
           )
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TitleApp(text: titleText),
+              TitleApp(text: titleText, required: required),
               button,
             ],
           );

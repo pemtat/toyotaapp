@@ -8,6 +8,8 @@ import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/userallsales_model.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
+import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
+import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -33,6 +35,10 @@ class SubJobSparePartWidget extends StatelessWidget {
   final JobDetailControllerPM jobDetailControllerPM =
       Get.put(JobDetailControllerPM());
 
+  final TicketDetailController ticketDetailController =
+      Get.put(TicketDetailController());
+  final TicketPmDetailController ticketPmDetailController =
+      Get.put(TicketPmDetailController());
   SubJobSparePartWidget(
       {super.key,
       required this.subJobSparePart,
@@ -198,7 +204,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                               style: TextStyleList.subtitle9,
                             )
                           : Text(
-                              'PM ID : ${subJobSparePart.id}',
+                              'PM ID : ${subJobSparePart.bugId}',
                               style: TextStyleList.subtitle9,
                             ),
                       Row(
@@ -502,7 +508,11 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                     '');
                                             await jobDetailController
                                                 .fetchSubJobSparePartId();
+                                            await ticketDetailController
+                                                .fetchSubJobSparePartId();
                                             await jobDetailControllerPM
+                                                .fetchSubJobSparePartIdPM();
+                                            await ticketPmDetailController
                                                 .fetchSubJobSparePartIdPM();
                                           }, red1);
                                         }))

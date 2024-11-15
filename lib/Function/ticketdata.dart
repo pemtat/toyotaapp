@@ -22,6 +22,7 @@ import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userallsales_model.dart';
 import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
+import 'package:toyotamobile/Models/versions_model.dart';
 import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
@@ -323,6 +324,34 @@ Future<String> getReportById(
   } else {
     print('Failed to load data: ${response.statusCode}');
     return '-';
+  }
+}
+
+Future<String> getVersions(String deviceType, String versionNow) async {
+  String? token = await getToken();
+  final response = await http.get(
+    Uri.parse(getLatestVersions()),
+    headers: {
+      'Authorization': '$token',
+    },
+  );
+  if (response.statusCode == 200) {
+    final dynamic responseData = jsonDecode(response.body);
+
+    if (responseData is Map<String, dynamic>) {
+      Versions versions = Versions.fromJson(responseData);
+      if (deviceType == 'Android') {
+        return versions.appVersionPlaystore ?? '';
+      } else if (deviceType == 'iOS') {
+        return versions.appVersionAppstore ?? '';
+      } else {
+        return versionNow;
+      }
+    } else {
+      return versionNow;
+    }
+  } else {
+    return versionNow;
   }
 }
 
