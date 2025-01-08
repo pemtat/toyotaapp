@@ -15,6 +15,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/Calendar_widget/calendar_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
+import 'package:toyotamobile/Widget/drawer_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -24,6 +25,10 @@ class CalendarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        width: 200,
+        child: sideDrawer(),
+      ),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(preferredSize),
         child: Column(

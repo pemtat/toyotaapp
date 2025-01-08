@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:toyotamobile/Function/checksparepart.dart';
 import 'package:toyotamobile/Function/gettoken.dart';
+import 'package:toyotamobile/Function/openmap.dart';
 import 'package:toyotamobile/Function/showdialogsave.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/userallsales_model.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
+import 'package:toyotamobile/Screen/Notification/notification_controller.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
+import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/SubJobSparepart_widget/sparepart_widget.dart';
 import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
+import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
@@ -39,6 +44,8 @@ class SubJobSparePartWidget extends StatelessWidget {
       Get.put(TicketDetailController());
   final TicketPmDetailController ticketPmDetailController =
       Get.put(TicketPmDetailController());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
   SubJobSparePartWidget(
       {super.key,
       required this.subJobSparePart,
@@ -163,7 +170,43 @@ class SubJobSparePartWidget extends StatelessWidget {
       }
     }
 
+    String summarySparePartTotal(String option) {
+      int summary = 0;
+
+      void addToSummary(List<dynamic>? items) {
+        if (items != null && items.isNotEmpty) {
+          for (var item in items) {
+            int quantity = int.parse(item.quantity ?? '0');
+            if (quantity != 0) {
+              int itemSummary = double.parse(item.summary ?? '0').toInt();
+              summary += itemSummary;
+            }
+          }
+        }
+      }
+
+      addToSummary(subJobSparePart.sparepart);
+      addToSummary(subJobSparePart.additionalSparepart);
+      addToSummary(subJobSparePart.btrSparepart);
+      addToSummary(subJobSparePart.pvtSparepart);
+      addToSummary(subJobSparePart.pvtSparepartIc);
+
+      if (option == 'discount') {
+        final formatter = NumberFormat("#,###");
+        return formatter.format(summary);
+      } else {
+        String summaryCheck = summary > 100000 ? '1' : '0';
+        return summaryCheck;
+      }
+    }
+
     var usersList = <UsersSales>[].obs;
+    bool emptySparePart = checkEmptySparePart(
+        subJobSparePart.sparepart ?? [],
+        subJobSparePart.additionalSparepart ?? [],
+        subJobSparePart.btrSparepart ?? [],
+        subJobSparePart.pvtSparepart ?? [],
+        subJobSparePart.pvtSparepartIc ?? []);
     final rejectNote = TextEditingController().obs;
     return SingleChildScrollView(
       child: Column(
@@ -232,7 +275,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                             )
                           : Container(),
                       subJobSparePart.quotation == '1' ||
-                              summarySparePart('') == '1'
+                              summarySparePartTotal('') == '1'
                           ? Row(
                               children: [
                                 Text(
@@ -275,7 +318,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                             )
                           : Container(),
                       if (subJobSparePart.quotation != '1' &&
-                          summarySparePart('') == '1')
+                          summarySparePartTotal('') == '1')
                         Row(
                           children: [
                             Text(
@@ -314,7 +357,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                               style: TextStyleList.title1,
                             ),
                             4.wH,
-                            StatusButton2(
+                            StatusButton4(
                                 status:
                                     subJobSparePart.purchaseStatus.toString())
                           ],
@@ -336,6 +379,19 @@ class SubJobSparePartWidget extends StatelessWidget {
                               status: subJobSparePart.warrantyStatus ?? '')
                         ],
                       ),
+                      if (jobController.techLevel.value == '1')
+                        if (subJobSparePart.trNoUrl != null &&
+                            subJobSparePart.trNoUrl != '')
+                          InkWell(
+                            onTap: () {
+                              showImageDialogUrlCode(
+                                  context, subJobSparePart.trNoUrl ?? '');
+                            },
+                            child: Text(
+                              subJobSparePart.trNo ?? '',
+                              style: TextStyleList.subtext9,
+                            ),
+                          ),
                       if (jobController.techLevel.value == '2')
                         InkWell(
                           onTap: () async {
@@ -353,7 +409,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                               await fetchPdfReport(subJobSparePart.id ?? '',
                                   token ?? '', pdfReport, 'estimate');
                             } else {
-                              await fetchPdfReport(subJobSparePart.id ?? '',
+                              await fetchPdfReport(subJobSparePart.bugId ?? '',
                                   token ?? '', pdfReport, 'estimate_pm');
                             }
                             Navigator.pop(context);
@@ -373,13 +429,35 @@ class SubJobSparePartWidget extends StatelessWidget {
                   4.kH,
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: Text(
                           'Issue Remark : ${subJobSparePart.description ?? ''}',
                           style: TextStyleList.text1,
                         ),
+                      ),
+                      GoogleMapButton(
+                        onTap: () async {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return const Center(
+                                child: DataCircleLoading(),
+                              );
+                            },
+                          );
+
+                          try {
+                            await openGoogleMaps(
+                                subJobSparePart.destinationAddress ?? '');
+                          } catch (e) {
+                            print(e);
+                          } finally {
+                            Navigator.of(context).pop();
+                          }
+                        },
                       ),
                     ],
                   ),
@@ -427,7 +505,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                           style: TextStyleList.text1,
                         ),
                         Text(
-                          'Total : ${summarySparePart('discount')}',
+                          'Total : ${summarySparePartTotal('discount')}',
                           style: TextStyleList.text1,
                         ),
                       ],
@@ -441,6 +519,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                               sparepart: subJobSparePart.sparepart ?? [],
                               btrSparepart: subJobSparePart.btrSparepart ?? [],
                               pvtSparepart: subJobSparePart.pvtSparepart ?? [],
+                              pvtSparepartIc:
+                                  subJobSparePart.pvtSparepartIc ?? [],
                               jobId: subJobSparePart.id ?? '',
                               bugId: subJobSparePart.bugId ?? '',
                               projectId: subJobSparePart.projectId ?? '',
@@ -457,6 +537,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                           sparepart: subJobSparePart.sparepart ?? [],
                           btrSparepart: subJobSparePart.btrSparepart ?? [],
                           pvtSparepart: subJobSparePart.pvtSparepart ?? [],
+                          pvtSparepartIc: subJobSparePart.pvtSparepartIc ?? [],
                           jobId: subJobSparePart.id ?? '',
                           bugId: subJobSparePart.bugId ?? '',
                           projectId: subJobSparePart.projectId ?? '',
@@ -472,7 +553,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                           children: [
                             if (expandedIndex == null)
                               SizedBox(
-                                  width: 120,
+                                  width: 70,
                                   child: ButtonRed(
                                       title: 'ปิด',
                                       onTap: () {
@@ -482,7 +563,9 @@ class SubJobSparePartWidget extends StatelessWidget {
                             subJobSparePart.bugStatus != '90' &&
                                     (subJobSparePart.estimateStatus == null ||
                                         subJobSparePart.estimateStatus == '0' ||
-                                        subJobSparePart.estimateStatus == '3')
+                                        subJobSparePart.estimateStatus ==
+                                            '3') &&
+                                    !emptySparePart
                                 ? SizedBox(
                                     width: 120,
                                     child: ButtonRed(
@@ -504,8 +587,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                 subJobSparePart.handlerId ?? '',
                                                 subJobSparePart.reportjobId ??
                                                     '',
-                                                subJobSparePart.projectId ??
-                                                    '');
+                                                subJobSparePart.projectId ?? '',
+                                                subJobSparePart.adminId ?? '0');
                                             await jobDetailController
                                                 .fetchSubJobSparePartId();
                                             await ticketDetailController
@@ -514,6 +597,13 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                 .fetchSubJobSparePartIdPM();
                                             await ticketPmDetailController
                                                 .fetchSubJobSparePartIdPM();
+                                            await notificationController
+                                                .fetchNotifySubJobSparePartId(
+                                                    subJobSparePart.id ?? '0',
+                                                    subJobSparePart.bugId ??
+                                                        '0',
+                                                    subJobSparePart.projectId ??
+                                                        '0');
                                           }, red1);
                                         }))
                                 : Container(),
@@ -523,8 +613,16 @@ class SubJobSparePartWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             subJobSparePart.techManagerStatus == '1' ||
-                                    subJobSparePart.techManagerStatus == '3'
-                                ? Container()
+                                    subJobSparePart.techManagerStatus == '2'
+                                ? expandedIndex == null
+                                    ? SizedBox(
+                                        width: 70,
+                                        child: ButtonRed(
+                                            title: 'ปิด',
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            }))
+                                    : Container()
                                 : (subJobSparePart.techManagerStatus == '0') &&
                                         subJobSparePart.estimateStatus == '1'
                                     ? Row(
@@ -535,9 +633,9 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                   color: blue1,
                                                   title: 'Approve',
                                                   onTap: () async {
-                                                    // var selectedUser = ''.obs;
                                                     // var selectedUserId = ''.obs;
-                                                    // await fetchAllSales(
+                                                    // var selectedUser = ''.obs;
+                                                    // await fetchAllSalesAdmin(
                                                     //     usersList,
                                                     //     subJobSparePart
                                                     //             .projectId ??
@@ -546,6 +644,15 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                     //         '',
                                                     //     subJobSparePart.bugId ??
                                                     //         '');
+                                                    // if (usersList.isNotEmpty) {
+                                                    //   selectedUserId.value =
+                                                    //       usersList.first.id ??
+                                                    //           '';
+                                                    //   selectedUser.value =
+                                                    //       usersList.first
+                                                    //               .realname ??
+                                                    //           '';
+                                                    // }
                                                     showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -559,8 +666,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                     .min,
                                                             children: [
                                                               // if (subJobSparePart
-                                                              //         .quotation ==
-                                                              //     '2')
+                                                              //       .quotation ==
+                                                              //   '2')
                                                               // Row(
                                                               //   children: [
                                                               //     Expanded(
@@ -574,14 +681,14 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                               //               builder: (BuildContext context) {
                                                               //                 return AlertDialog(
                                                               //                   backgroundColor: white3,
-                                                              //                   title: Center(child: Text('เลือก Sales')),
+                                                              //                   title: Center(child: Text('เลือก Sales Admin')),
                                                               //                   titleTextStyle: TextStyleList.text1,
                                                               //                   content: SingleChildScrollView(
                                                               //                     child: Column(
                                                               //                       mainAxisSize: MainAxisSize.min,
                                                               //                       children: usersList.map<Widget>((UsersSales user) {
                                                               //                         return ListTile(
-                                                              //                           title: Text(user.realname ?? 'No data'),
+                                                              //                           title: Text(user.realname ?? 'ไม่พบ Sales'),
                                                               //                           onTap: () {
                                                               //                             selectedUser.value = user.realname ?? '';
                                                               //                             selectedUserId.value = user.id ?? '';
@@ -600,7 +707,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                               //             child:
                                                               //                 TextField(
                                                               //               controller: TextEditingController(text: selectedUser.value),
-                                                              //               decoration: InputDecoration(labelText: 'Sales', labelStyle: TextStyleList.text9),
+                                                              //               decoration: InputDecoration(labelText: 'Sales Admin', labelStyle: TextStyleList.text9),
                                                               //             ),
                                                               //           ),
                                                               //         );
@@ -707,7 +814,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                 //             .value ==
                                                                 //         '') {
                                                                 //   showMessage(
-                                                                //       'โปรดเลือก Sales');
+                                                                //       'ไม่พบ Sales Admin');
                                                                 // } else {
                                                                 await createSparepartNote(
                                                                     subJobSparePart
@@ -749,7 +856,10 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                           '',
                                                                       subJobSparePart
                                                                               .projectId ??
-                                                                          '');
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .adminId ??
+                                                                          '0');
                                                                 } else {
                                                                   await updateJobSparePart(
                                                                       subJobSparePart
@@ -774,11 +884,25 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                           '',
                                                                       subJobSparePart
                                                                               .projectId ??
-                                                                          '');
+                                                                          '',
+                                                                      subJobSparePart
+                                                                              .adminId ??
+                                                                          '0');
                                                                 }
-
+                                                                await notificationController.fetchNotifySubJobSparePartId(
+                                                                    subJobSparePart
+                                                                            .id ??
+                                                                        '0',
+                                                                    subJobSparePart
+                                                                            .bugId ??
+                                                                        '0',
+                                                                    subJobSparePart
+                                                                            .projectId ??
+                                                                        '0');
                                                                 Navigator.pop(
                                                                     context);
+                                                                showMessage(
+                                                                    'ดำเนินการสำเร็จ');
                                                               },
                                                               // },
                                                               child: Text('Yes',
@@ -855,10 +979,26 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                     '',
                                                                 subJobSparePart
                                                                         .projectId ??
-                                                                    '');
+                                                                    '',
+                                                                subJobSparePart
+                                                                        .adminId ??
+                                                                    '0');
+                                                            await notificationController
+                                                                .fetchNotifySubJobSparePartId(
+                                                                    subJobSparePart
+                                                                            .id ??
+                                                                        '0',
+                                                                    subJobSparePart
+                                                                            .bugId ??
+                                                                        '0',
+                                                                    subJobSparePart
+                                                                            .projectId ??
+                                                                        '0');
 
                                                             Navigator.pop(
                                                                 context);
+                                                            showMessage(
+                                                                'ดำเนินการสำเร็จ');
                                                           },
                                                           child: Text(
                                                             'Yes',
@@ -873,6 +1013,16 @@ class SubJobSparePartWidget extends StatelessWidget {
                                               },
                                             ),
                                           ),
+                                          6.wH,
+                                          if (expandedIndex == null)
+                                            SizedBox(
+                                                width: 70,
+                                                child: ButtonGray(
+                                                    title: 'ปิด',
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                    })),
+                                          6.wH,
                                         ],
                                       )
                                     : Container()

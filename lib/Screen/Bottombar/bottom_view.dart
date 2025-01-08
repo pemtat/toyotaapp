@@ -1,4 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/Account/account_view.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ import 'package:toyotamobile/Screen/Ticket/ticket_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 
 class BottomBarView extends StatelessWidget {
-  final PageController _pageController = PageController();
   final List<Widget> _pages = [
     HomeView(),
     TicketView(),
@@ -29,7 +29,7 @@ class BottomBarView extends StatelessWidget {
     controller.checkAppVersion(context);
     return Scaffold(
       body: PageView(
-        controller: _pageController,
+        controller: bottomController.pageController,
         children: _pages,
         onPageChanged: (index) {
           controller.currentIndex.value = index;
@@ -49,14 +49,14 @@ class BottomBarView extends StatelessWidget {
             child: BottomNavigationBar(
               currentIndex: controller.currentIndex.value,
               onTap: (index) {
-                _pageController.animateToPage(
+                bottomController.pageController.animateToPage(
                   index,
                   duration: const Duration(milliseconds: 10),
                   curve: Curves.easeInOut,
                 );
-                if (index == 4) {
-                  controller.clearNotification();
-                }
+                // if (index == 4) {
+                //   controller.clearNotification();
+                // }
                 controller.currentIndex.value = index;
               },
               type: BottomNavigationBarType.fixed,
@@ -100,38 +100,32 @@ class BottomBarView extends StatelessWidget {
                   ),
                   label: 'Calendar',
                 ),
-                BottomNavigationBarItem(
-                  icon: Stack(
-                    children: [
-                      const ImageIcon(
-                        AssetImage('assets/bell.png'),
-                      ),
-                      if (controller.hasNotification.value)
-                        Positioned(
-                          top: 0,
-                          right: 2,
-                          child: Container(
-                            padding: const EdgeInsets.all(2),
-                            decoration: const BoxDecoration(
-                              color: red1,
-                              shape: BoxShape.circle,
-                            ),
-                            constraints: const BoxConstraints(
-                              minWidth: 8,
-                              minHeight: 8,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                  label: 'Notification',
-                ),
-                const BottomNavigationBarItem(
-                  icon: ImageIcon(
-                    AssetImage('assets/account.png'),
-                  ),
-                  label: 'Account',
-                ),
+                // BottomNavigationBarItem(
+                //   icon: Stack(
+                //     children: [
+                //       const ImageIcon(
+                //         AssetImage('assets/bell.png'),
+                //       ),
+                //       if (controller.hasNotification.value)
+                //         Positioned(
+                //           top: 0,
+                //           right: 2,
+                //           child: Container(
+                //             padding: const EdgeInsets.all(2),
+                //             decoration: const BoxDecoration(
+                //               color: red1,
+                //               shape: BoxShape.circle,
+                //             ),
+                //             constraints: const BoxConstraints(
+                //               minWidth: 8,
+                //               minHeight: 8,
+                //             ),
+                //           ),
+                //         ),
+                //     ],
+                //   ),
+                //   label: 'Notification',
+                // ),
               ],
             ),
           )),

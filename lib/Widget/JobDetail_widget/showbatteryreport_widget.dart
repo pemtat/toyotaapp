@@ -39,8 +39,9 @@ class ShowBatteryReportWidget extends StatelessWidget {
     condition!.sort((a, b) =>
         int.parse(a.itemId ?? '').compareTo(int.parse(b.itemId ?? '')));
     var sparepart = data.btrSpareparts;
-    var recommendedSpareparts =
-        sparepart!.where((sp) => sp.additional == 'recommended').toList();
+    var recommendedSpareparts = sparepart!
+        .where((sp) => sp.additional == 'recommended' && sp.quantity != '0')
+        .toList();
     var changeSpareparts =
         sparepart.where((sp) => sp.additional == 'change').toList();
     var filteredBatteryCondition = condition
@@ -269,59 +270,57 @@ class ShowBatteryReportWidget extends StatelessWidget {
                       style: TextStyleList.text3,
                     )),
                 space.kH,
-                if (recommendedSpareparts.isNotEmpty)
-                  recommendedSpareparts.first.quantity != '0'
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const TitleApp(text: "Recommanded Spare Part"),
-                            4.kH,
-                            ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: recommendedSpareparts.length,
-                              itemBuilder: (context, index) {
-                                final data = recommendedSpareparts[index];
-                                return Container(
-                                  margin: const EdgeInsets.only(bottom: 8),
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(width: 1, color: black3),
-                                      color: white1,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(6))),
-                                  child: Column(children: [
-                                    BoxInfo(
-                                        title: 'C-Code/Page',
-                                        value: data.cCode ?? '-'),
-                                    BoxInfo(
-                                        title: 'Part Number',
-                                        value: data.partNumber ?? '-'),
-                                    BoxInfo(
-                                        title: 'Description',
-                                        value: data.description ?? '-'),
-                                    BoxInfo(
-                                        title: 'Quantity',
-                                        value: data.quantity ?? '-'),
-                                  ]),
-                                );
-                              },
-                            ),
-                            space.kH,
-                          ],
-                        )
-                      : Column(
-                          children: [
-                            TitleWithButton(
-                                titleText: 'Recommanded Spare Part',
-                                button: Text(
-                                  '-',
-                                  style: TextStyleList.text3,
-                                )),
-                            space.kH,
-                          ],
-                        ),
+                recommendedSpareparts.isNotEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TitleApp(text: "Recommanded Spare Part"),
+                          4.kH,
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: recommendedSpareparts.length,
+                            itemBuilder: (context, index) {
+                              final data = recommendedSpareparts[index];
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border.all(width: 1, color: black3),
+                                    color: white1,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: Column(children: [
+                                  BoxInfo(
+                                      title: 'C-Code/Page',
+                                      value: data.cCode ?? '-'),
+                                  BoxInfo(
+                                      title: 'Part Number',
+                                      value: data.partNumber ?? '-'),
+                                  BoxInfo(
+                                      title: 'Description',
+                                      value: data.description ?? '-'),
+                                  BoxInfo(
+                                      title: 'Quantity',
+                                      value: data.quantity ?? '-'),
+                                ]),
+                              );
+                            },
+                          ),
+                          space.kH,
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          TitleWithButton(
+                              titleText: 'Recommanded Spare Part',
+                              button: Text(
+                                '-',
+                                style: TextStyleList.text3,
+                              )),
+                          space.kH,
+                        ],
+                      ),
                 TitleWithButton(
                     titleText: 'Repair P.M Battery',
                     button: Text(

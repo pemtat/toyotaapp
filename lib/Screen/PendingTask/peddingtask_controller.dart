@@ -45,6 +45,7 @@ class PeddingtaskController extends GetxController {
     jobId = subjobId;
     // await fetchPdfData(ticketId, token ?? '', pdfList);
     await fetchSubJob(subjobId, token ?? '', subJobs);
+    await fetchReadAttachmentList(ticketId, token ?? '', attatchments);
     // await fetchUserById(subJobs.first.reporterId ?? '', userData);
     // await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
     // await fetchgetCustomerInfo(
@@ -61,9 +62,6 @@ class PeddingtaskController extends GetxController {
       List<Issues>? issuesList = ticketModel.issues;
       issuesList!.map((issue) {
         issueId = issue.id;
-
-        fetchReadAttachment(issueId, token ?? '', issue.attachments,
-            attachmentsData, attatchments);
       }).toList();
       issueData.value = issuesList;
       // notesFiles.assignAll(issueData.first.notes ?? []);

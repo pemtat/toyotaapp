@@ -7,11 +7,13 @@ import 'package:toyotamobile/Models/sparepart_model.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/btr_sparepartlist.dart';
+import 'package:toyotamobile/Screen/EditSparePart/editdetail/pvt_ic_sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/pvt_sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
+import 'package:toyotamobile/Screen/Notification/notification_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -37,6 +39,10 @@ class EditSparePartController extends GetxController {
       Get.put(BtrSparepartList());
   final PvtSparepartList pvtSparepartListController =
       Get.put(PvtSparepartList());
+  final PvtIcSparepartList pvtIcSparepartListController =
+      Get.put(PvtIcSparepartList());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
   final rejectNote = TextEditingController().obs;
   var saveCompletedtime = ''.obs;
   var jobId = ''.obs;
@@ -50,6 +56,7 @@ class EditSparePartController extends GetxController {
       List<Sparepart> additionalSparepart,
       List<Sparepart> btrSparepart,
       List<Sparepart> pvtSparepart,
+      List<Sparepart> pvtIcSparepart,
       String projectId) async {
     this.jobId.value = jobId;
     this.bugId.value = bugId;
@@ -114,6 +121,21 @@ class EditSparePartController extends GetxController {
             additional: 0));
       }
     }
+    for (var reportDataList in pvtIcSparepart) {
+      if (reportDataList.quantity != '0') {
+        pvtIcSparepartListController.pvtIcSparePartList.add(SparePartModel(
+            cCodePage: reportDataList.cCode ?? '1',
+            partNumber: reportDataList.partNumber ?? '',
+            partDetails: reportDataList.description ?? '',
+            unitMeasure: reportDataList.unitMeasure ?? '',
+            salesPrice: reportDataList.salesPrice ?? '0',
+            priceVat: reportDataList.priceVat == true ? '1' : '0',
+            quantity: int.parse(reportDataList.quantity ?? ''),
+            changeNow: reportDataList.changeNow ?? '',
+            changeOnPM: reportDataList.changeOnPm ?? '',
+            additional: 0));
+      }
+    }
   }
 
   void showSavedDialog(
@@ -156,7 +178,8 @@ class EditSparePartController extends GetxController {
                       bugId.value,
                       '',
                       '',
-                      projectId.value);
+                      projectId.value,
+                      '0');
                   if (projectId.value == '1') {
                     saveReport(context);
                   } else {
@@ -325,6 +348,8 @@ class EditSparePartController extends GetxController {
       await fetchJobBatteryReportData(
           jobId.value, token ?? '', jobDetailController.reportBatteryList);
       await jobDetailController.fetchSubJobSparePartId();
+      await notificationController.fetchNotifySubJobSparePartId(
+          jobId.value, bugId.value, projectId.value);
     } catch (e) {
       print(e);
     }
@@ -446,12 +471,74 @@ class EditSparePartController extends GetxController {
         print('Error occurred while saving sparepart: $e');
       }
 
+      if (pvtIcSparepartListController.pvtIcSparePartList.isEmpty) {
+        final SparePartModel defaultSparePartPvt = SparePartModel(
+          cCodePage: "-",
+          partNumber: "-",
+          partDetails: "-",
+          quantity: 0,
+          additional: 0,
+          relationId: "",
+          unitMeasure: "-",
+          salesPrice: "0",
+          priceVat: "0",
+        );
+
+        pvtIcSparepartListController.pvtIcSparePartList
+            .add(defaultSparePartPvt);
+      }
+      List<Map<String, dynamic>> sparePartListPvtIc =
+          pvtIcSparepartListController.pvtIcSparePartList
+              .asMap()
+              .entries
+              .map((entry) {
+        int index = entry.key + 1;
+
+        SparePartModel sparePart = entry.value;
+        var price = double.tryParse(sparePart.salesPrice) ?? 0.0;
+        return {
+          "no": index,
+          "page_code": sparePart.cCodePage,
+          "description": sparePart.partDetails,
+          "part_number": sparePart.partNumber,
+          "qty": sparePart.quantity,
+          "unit_of_measure": sparePart.unitMeasure,
+          "price": price,
+          "price_includes_vat": sparePart.priceVat == '1' ? 1 : 0
+        };
+      }).toList();
+      final Map<String, dynamic> data3 = {
+        "job_id": bugId.value,
+        "created_by": int.parse(jobController.handlerIdTech.value),
+        "dar_details": sparePartListPvtIc,
+      };
+      try {
+        final response = await http.post(Uri.parse(updateSparepartPvtIc()),
+            headers: {
+              'Authorization': '$token',
+              'Content-Type': 'application/json',
+            },
+            body: jsonEncode(data3));
+
+        if (response.statusCode == 200) {
+          print('Pvt Sparepart IC Updated successfully');
+        } else {
+          print('Failed to save sparepart: ${response.body}');
+        }
+      } catch (e) {
+        print('Error occurred while saving sparepart: $e');
+      }
+
       await fetchSubJobSparePartOption();
       await fetchBatteryReportData(
           bugId.value, token ?? '', jobDetailControllerPM.reportList);
       await fetchPreventiveReportData(
           bugId.value, token ?? '', jobDetailControllerPM.reportPreventiveList);
+      await fetchPreventiveICReportData(bugId.value, token ?? '',
+          jobDetailControllerPM.reportPreventiveListIc);
       await jobDetailControllerPM.fetchSubJobSparePartIdPM();
+      await notificationController.fetchNotifySubJobSparePartId(
+          jobId.value, bugId.value, projectId.value);
     } catch (e) {
       print(e);
     }

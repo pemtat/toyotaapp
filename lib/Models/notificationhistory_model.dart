@@ -11,6 +11,10 @@ class NotificationHistory {
   String? groupReportBy;
   String? referenceCode;
   String? jobId;
+  String? notifyType;
+  String? bugStatus;
+  String? jobStatus;
+  String? projectId;
 
   NotificationHistory(
       {this.id,
@@ -24,7 +28,11 @@ class NotificationHistory {
       this.datetimeNotify,
       this.groupReportBy,
       this.referenceCode,
-      this.jobId});
+      this.jobId,
+      this.notifyType,
+      this.bugStatus,
+      this.jobStatus,
+      this.projectId});
 
   NotificationHistory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -39,6 +47,10 @@ class NotificationHistory {
     groupReportBy = json['group_report_by'];
     referenceCode = json['reference_code'];
     jobId = json['job_id'];
+    notifyType = json['notify_type'];
+    bugStatus = json['bug_status'];
+    jobStatus = json['job_status'];
+    projectId = json['project_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -55,6 +67,10 @@ class NotificationHistory {
     data['group_report_by'] = groupReportBy;
     data['reference_code'] = referenceCode;
     data['job_id'] = jobId;
+    data['notify_type'] = notifyType;
+    data['bug_status'] = bugStatus;
+    data['job_status'] = jobStatus;
+    data['project_id'] = projectId;
     return data;
   }
 }

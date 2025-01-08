@@ -124,22 +124,22 @@ class AccountView extends StatelessWidget {
                   )
                 ],
               ),
-              BoxContainer(
-                children: [
-                  TitleWithButton2(
-                    titleText: 'Logout',
-                    onTap: () {
-                      accountController.showLogoutDialog(
-                        context,
-                        'Are you sure to logout?',
-                        'Cancel',
-                        'Yes,Log out',
-                      );
-                    },
-                    button: false,
-                  )
-                ],
-              ),
+              // BoxContainer(
+              //   children: [
+              //     TitleWithButton2(
+              //       titleText: 'Logout',
+              //       onTap: () {
+              //         accountController.showLogoutDialog(
+              //           context,
+              //           'Are you sure to logout?',
+              //           'Cancel',
+              //           'Yes,Log out',
+              //         );
+              //       },
+              //       button: false,
+              //     )
+              //   ],
+              // ),
               BoxContainer(
                 children: [
                   TitleWithButton2(
@@ -147,7 +147,7 @@ class AccountView extends StatelessWidget {
                     onTap: () {
                       accountController.showDeleteDialog(
                         context,
-                        'Are you sure to delete account?',
+                        'Your account will be deleted within 30 days. Are you sure to delete account? ',
                         'Cancel',
                         'Yes',
                       );

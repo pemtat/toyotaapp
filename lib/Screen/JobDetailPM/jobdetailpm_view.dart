@@ -5,8 +5,10 @@ import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editfillform2_view.dart';
 import 'package:toyotamobile/Screen/EditFillForm3/editfillform3_view.dart';
+import 'package:toyotamobile/Screen/EditFillForm3_IC/editfillform3_ic_view.dart';
 import 'package:toyotamobile/Screen/FillForm2/fillform2_view.dart';
 import 'package:toyotamobile/Screen/FillForm3/fillform3_view.dart';
+import 'package:toyotamobile/Screen/FillForm3_IC/fillform3_ic_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Styles/boxdecoration.dart';
@@ -405,286 +407,459 @@ class JobDetailViewPM extends StatelessWidget {
                                         : Container()),
                                   ],
                                 ),
-                                8.kH,
-                                BoxContainer(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const TitleApp(
-                                            text: 'Battery Maintenance Report'),
-                                        Obx(() => jobController
-                                                    .reportList.isNotEmpty &&
-                                                jobController.canEdit.value
-                                            ? EditButton(
-                                                onTap: () {
-                                                  Get.to(
-                                                      () => EditFillFormView2(
-                                                            jobId: ticketId,
-                                                          ));
-                                                },
-                                              )
-                                            : jobController.canEdit.value
-                                                ? AddButton(
-                                                    onTap: () {
-                                                      Get.to(
-                                                          () => FillFormView2(
-                                                                jobId: ticketId,
-                                                              ));
-                                                    },
-                                                  )
-                                                : Container()),
-                                      ],
-                                    ),
-                                    Text(
-                                      'Please fill the bettery maintenance report',
-                                      style: TextStyleList.text16,
-                                    ),
-                                    Obx(() => jobController
-                                            .reportList.isNotEmpty
+                                Obx(() =>
+                                    jobController.savedDateEndTime.value != ''
                                         ? Column(
                                             children: [
-                                              ShowBatteryReportWidget(
-                                                reportData:
-                                                    jobController.reportList,
-                                                bugId: ticketId.toString(),
-                                                pdfOption: 'btr',
-                                                timeStart: jobController
-                                                    .savedDateStartTime,
-                                                timeEnd: jobController
-                                                    .savedDateEndTime,
+                                              8.kH,
+                                              BoxContainer(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const TitleApp(
+                                                          text:
+                                                              'Battery Maintenance Report'),
+                                                      Obx(() => jobController
+                                                                  .reportList
+                                                                  .isNotEmpty &&
+                                                              jobController
+                                                                  .canEdit.value
+                                                          ? EditButton(
+                                                              onTap: () {
+                                                                Get.to(() =>
+                                                                    EditFillFormView2(
+                                                                      jobId:
+                                                                          ticketId,
+                                                                    ));
+                                                              },
+                                                            )
+                                                          : jobController
+                                                                  .canEdit.value
+                                                              ? AddButton(
+                                                                  onTap: () {
+                                                                    Get.to(() =>
+                                                                        FillFormView2(
+                                                                          jobId:
+                                                                              ticketId,
+                                                                        ));
+                                                                  },
+                                                                )
+                                                              : Container()),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    'Please fill the bettery maintenance report',
+                                                    style: TextStyleList.text16,
+                                                  ),
+                                                  Obx(
+                                                      () =>
+                                                          jobController
+                                                                  .reportList
+                                                                  .isNotEmpty
+                                                              ? Column(
+                                                                  children: [
+                                                                    ShowBatteryReportWidget(
+                                                                      reportData:
+                                                                          jobController
+                                                                              .reportList,
+                                                                      bugId: ticketId
+                                                                          .toString(),
+                                                                      pdfOption:
+                                                                          'btr',
+                                                                      timeStart:
+                                                                          jobController
+                                                                              .savedDateStartTime,
+                                                                      timeEnd:
+                                                                          jobController
+                                                                              .savedDateEndTime,
+                                                                    ),
+                                                                    if (jobController.reportList.first.btrMaintenance!.signature ==
+                                                                            null &&
+                                                                        jobController.reportList.first.btrMaintenance!.signaturePadUrl ==
+                                                                            null)
+                                                                      Column(
+                                                                        children: [
+                                                                          5.kH,
+                                                                          ButtonRed(
+                                                                            title:
+                                                                                'บันทึกลายเซ็น',
+                                                                            onTap:
+                                                                                () {
+                                                                              showDialog(
+                                                                                context: context,
+                                                                                builder: (BuildContext context) => SignatureWidget(
+                                                                                  jobId: ticketId.toString(),
+                                                                                  option: 'battery',
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                        ],
+                                                                      )
+                                                                  ],
+                                                                )
+                                                              : Container()),
+                                                  Obx(() => (jobController
+                                                              .reportList
+                                                              .isNotEmpty &&
+                                                          jobController
+                                                              .subJobSparePart
+                                                              .isNotEmpty &&
+                                                          (jobController
+                                                                      .reportList
+                                                                      .first
+                                                                      .btrMaintenance!
+                                                                      .signature !=
+                                                                  null &&
+                                                              jobController
+                                                                      .reportList
+                                                                      .first
+                                                                      .btrMaintenance!
+                                                                      .signaturePadUrl !=
+                                                                  null))
+                                                      ? Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            ButtonColor(
+                                                              backgroundColor:
+                                                                  red4,
+                                                              title:
+                                                                  'View Part Detail',
+                                                              onTap: () {
+                                                                showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (BuildContext
+                                                                            context) =>
+                                                                        Obx(() =>
+                                                                            Material(
+                                                                              color: Colors.transparent,
+                                                                              child: SubJobSparePartWidget(
+                                                                                subJobSparePart: jobController.subJobSparePart.first,
+                                                                              ),
+                                                                            )));
+                                                              },
+                                                            ),
+                                                          ],
+                                                        )
+                                                      : Container()),
+                                                ],
                                               ),
-                                              if (jobController
-                                                          .reportList
-                                                          .first
-                                                          .btrMaintenance!
-                                                          .signature ==
-                                                      null &&
-                                                  jobController
-                                                          .reportList
-                                                          .first
-                                                          .btrMaintenance!
-                                                          .signaturePadUrl ==
-                                                      null)
-                                                Column(
-                                                  children: [
-                                                    5.kH,
-                                                    ButtonRed(
-                                                      title: 'บันทึกลายเซ็น',
-                                                      onTap: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              SignatureWidget(
-                                                            jobId: ticketId
-                                                                .toString(),
-                                                            option: 'battery',
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ],
-                                                )
                                             ],
                                           )
                                         : Container()),
-                                    Obx(() => (jobController
-                                                .reportList.isNotEmpty &&
-                                            jobController
-                                                .subJobSparePart.isNotEmpty &&
-                                            (jobController
-                                                        .reportList
-                                                        .first
-                                                        .btrMaintenance!
-                                                        .signature !=
-                                                    null &&
-                                                jobController
-                                                        .reportList
-                                                        .first
-                                                        .btrMaintenance!
-                                                        .signaturePadUrl !=
-                                                    null))
-                                        ? Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              ButtonColor(
-                                                backgroundColor: red4,
-                                                title: 'View Part Detail',
-                                                onTap: () {
-                                                  showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          Obx(() => Material(
-                                                                color: Colors
-                                                                    .transparent,
-                                                                child:
-                                                                    SubJobSparePartWidget(
-                                                                  subJobSparePart:
-                                                                      jobController
-                                                                          .subJobSparePart
-                                                                          .first,
-                                                                ),
-                                                              )));
-                                                },
-                                              ),
-                                            ],
-                                          )
-                                        : Container()),
-                                  ],
-                                ),
-                                8.kH,
-                                BoxContainer(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const TitleApp(
-                                            text:
-                                                'Periodic Maintenance Report'),
-                                        Obx(() => jobController
-                                                    .reportPreventiveList
-                                                    .isNotEmpty &&
-                                                jobController
-                                                        .reportPreventiveList
-                                                        .first
-                                                        .pvtMaintenance !=
-                                                    null &&
-                                                jobController.canEdit.value
-                                            ? EditButton(
-                                                onTap: () {
-                                                  Get.to(
-                                                      () => EditFillFormView3(
-                                                            jobId: ticketId,
-                                                          ));
-                                                },
-                                              )
-                                            : jobController.canEdit.value
-                                                ? AddButton(
-                                                    onTap: () {
-                                                      Get.to(
-                                                          () => FillFormView3(
-                                                                jobId: ticketId,
-                                                              ));
-                                                    },
-                                                  )
-                                                : Container()),
-                                      ],
-                                    ),
-                                    Text(
-                                      'Please fill the periodic maintenance report',
-                                      style: TextStyleList.text16,
-                                    ),
-                                    Obx(() => jobController.reportPreventiveList
-                                                .isNotEmpty &&
-                                            jobController.reportPreventiveList
-                                                    .first.pvtMaintenance !=
-                                                null
+                                Obx(() =>
+                                    jobController.savedDateEndTime.value != ''
                                         ? Column(
                                             children: [
-                                              ShowPreventiveReportWidget(
-                                                reportData: jobController
-                                                    .reportPreventiveList,
-                                                bugId: ticketId.toString(),
-                                                timeStart: jobController
-                                                    .savedDateStartTime,
-                                                timeEnd: jobController
-                                                    .savedDateEndTime,
-                                              ),
-                                              if (jobController
-                                                          .reportPreventiveList
-                                                          .first
-                                                          .pvtMaintenance!
-                                                          .signature ==
-                                                      null &&
-                                                  jobController
-                                                          .reportPreventiveList
-                                                          .first
-                                                          .pvtMaintenance!
-                                                          .signaturePadUrl ==
-                                                      null)
-                                                Column(
-                                                  children: [
-                                                    5.kH,
-                                                    ButtonRed(
-                                                      title: 'บันทึกลายเซ็น',
-                                                      onTap: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              SignatureWidget(
-                                                            jobId: ticketId
-                                                                .toString(),
-                                                            option:
-                                                                'preventive',
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              Obx(() => ((jobController
+                                              8.kH,
+                                              BoxContainer(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const TitleApp(
+                                                          text:
+                                                              'Periodic Maintenance Report'),
+                                                      Obx(() => jobController
+                                                                  .reportPreventiveList
+                                                                  .isNotEmpty &&
+                                                              jobController
+                                                                      .reportPreventiveList
+                                                                      .first
+                                                                      .pvtMaintenance !=
+                                                                  null &&
+                                                              jobController
+                                                                  .canEdit.value
+                                                          ? EditButton(
+                                                              onTap: () {
+                                                                Get.to(() =>
+                                                                    EditFillFormView3(
+                                                                      jobId:
+                                                                          ticketId,
+                                                                    ));
+                                                              },
+                                                            )
+                                                          : jobController
+                                                                  .canEdit.value
+                                                              ? AddButton(
+                                                                  onTap: () {
+                                                                    Get.to(() =>
+                                                                        FillFormView3(
+                                                                          jobId:
+                                                                              ticketId,
+                                                                        ));
+                                                                  },
+                                                                )
+                                                              : Container()),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    'Please fill the periodic maintenance report',
+                                                    style: TextStyleList.text16,
+                                                  ),
+                                                  Obx(() => jobController
                                                               .reportPreventiveList
                                                               .isNotEmpty &&
                                                           jobController
                                                                   .reportPreventiveList
                                                                   .first
                                                                   .pvtMaintenance !=
-                                                              null) &&
-                                                      jobController
-                                                          .subJobSparePart
-                                                          .isNotEmpty &&
-                                                      (jobController
-                                                                  .reportPreventiveList
-                                                                  .first
-                                                                  .pvtMaintenance!
-                                                                  .signature !=
-                                                              null &&
-                                                          jobController
-                                                                  .reportPreventiveList
-                                                                  .first
-                                                                  .pvtMaintenance!
-                                                                  .signaturePadUrl !=
-                                                              null))
-                                                  ? Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        ButtonColor(
-                                                          backgroundColor: red4,
-                                                          title:
-                                                              'View Part Detail',
-                                                          onTap: () {
-                                                            showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    Obx(() =>
-                                                                        Material(
-                                                                          color:
-                                                                              Colors.transparent,
-                                                                          child:
-                                                                              SubJobSparePartWidget(
-                                                                            subJobSparePart:
-                                                                                jobController.subJobSparePart.first,
-                                                                          ),
-                                                                        )));
-                                                          },
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : Container()),
+                                                              null
+                                                      ? Column(
+                                                          children: [
+                                                            ShowPreventiveReportWidget(
+                                                              reportData:
+                                                                  jobController
+                                                                      .reportPreventiveList,
+                                                              bugId: ticketId
+                                                                  .toString(),
+                                                              timeStart:
+                                                                  jobController
+                                                                      .savedDateStartTime,
+                                                              timeEnd: jobController
+                                                                  .savedDateEndTime,
+                                                            ),
+                                                            if (jobController
+                                                                        .reportPreventiveList
+                                                                        .first
+                                                                        .pvtMaintenance!
+                                                                        .signature ==
+                                                                    null &&
+                                                                jobController
+                                                                        .reportPreventiveList
+                                                                        .first
+                                                                        .pvtMaintenance!
+                                                                        .signaturePadUrl ==
+                                                                    null)
+                                                              Column(
+                                                                children: [
+                                                                  5.kH,
+                                                                  ButtonRed(
+                                                                    title:
+                                                                        'บันทึกลายเซ็น',
+                                                                    onTap: () {
+                                                                      showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (BuildContext context) =>
+                                                                                SignatureWidget(
+                                                                          jobId:
+                                                                              ticketId.toString(),
+                                                                          option:
+                                                                              'preventive',
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            Obx(() => ((jobController
+                                                                            .reportPreventiveList.isNotEmpty &&
+                                                                        jobController.reportPreventiveList.first.pvtMaintenance !=
+                                                                            null) &&
+                                                                    jobController
+                                                                        .subJobSparePart
+                                                                        .isNotEmpty &&
+                                                                    (jobController.reportPreventiveList.first.pvtMaintenance!.signature !=
+                                                                            null &&
+                                                                        jobController.reportPreventiveList.first.pvtMaintenance!.signaturePadUrl !=
+                                                                            null))
+                                                                ? Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .end,
+                                                                    children: [
+                                                                      ButtonColor(
+                                                                        backgroundColor:
+                                                                            red4,
+                                                                        title:
+                                                                            'View Part Detail',
+                                                                        onTap:
+                                                                            () {
+                                                                          showDialog(
+                                                                              context: context,
+                                                                              builder: (BuildContext context) => Obx(() => Material(
+                                                                                    color: Colors.transparent,
+                                                                                    child: SubJobSparePartWidget(
+                                                                                      subJobSparePart: jobController.subJobSparePart.first,
+                                                                                    ),
+                                                                                  )));
+                                                                        },
+                                                                      ),
+                                                                    ],
+                                                                  )
+                                                                : Container()),
+                                                          ],
+                                                        )
+                                                      : Container())
+                                                ],
+                                              ),
                                             ],
                                           )
-                                        : Container())
-                                  ],
-                                ),
+                                        : Container()),
+                                Obx(() =>
+                                    jobController.savedDateEndTime.value != ''
+                                        ? Column(
+                                            children: [
+                                              8.kH,
+                                              BoxContainer(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const TitleApp(
+                                                          text:
+                                                              'Periodic Maintenance Report IC'),
+                                                      Obx(() => jobController
+                                                                  .reportPreventiveListIc
+                                                                  .isNotEmpty &&
+                                                              jobController
+                                                                      .reportPreventiveListIc
+                                                                      .first
+                                                                      .pvtMaintenance !=
+                                                                  null &&
+                                                              jobController
+                                                                  .canEdit.value
+                                                          ? EditButton(
+                                                              onTap: () {
+                                                                Get.to(() =>
+                                                                    EditFillFormView3IC(
+                                                                      jobId:
+                                                                          ticketId,
+                                                                    ));
+                                                              },
+                                                            )
+                                                          : jobController
+                                                                  .canEdit.value
+                                                              ? AddButton(
+                                                                  onTap: () {
+                                                                    Get.to(() =>
+                                                                        FillFormView3IC(
+                                                                          jobId:
+                                                                              ticketId,
+                                                                        ));
+                                                                  },
+                                                                )
+                                                              : Container()),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    'Please fill the periodic maintenance report ic',
+                                                    style: TextStyleList.text16,
+                                                  ),
+                                                  Obx(() => jobController
+                                                              .reportPreventiveListIc
+                                                              .isNotEmpty &&
+                                                          jobController
+                                                                  .reportPreventiveListIc
+                                                                  .first
+                                                                  .pvtMaintenance !=
+                                                              null
+                                                      ? Column(
+                                                          children: [
+                                                            ShowPreventiveReportWidget(
+                                                              ic: 'yes',
+                                                              reportData:
+                                                                  jobController
+                                                                      .reportPreventiveListIc,
+                                                              bugId: ticketId
+                                                                  .toString(),
+                                                              timeStart:
+                                                                  jobController
+                                                                      .savedDateStartTime,
+                                                              timeEnd: jobController
+                                                                  .savedDateEndTime,
+                                                            ),
+                                                            if (jobController
+                                                                        .reportPreventiveListIc
+                                                                        .first
+                                                                        .pvtMaintenance!
+                                                                        .signature ==
+                                                                    null &&
+                                                                jobController
+                                                                        .reportPreventiveListIc
+                                                                        .first
+                                                                        .pvtMaintenance!
+                                                                        .signaturePadUrl ==
+                                                                    null)
+                                                              Column(
+                                                                children: [
+                                                                  5.kH,
+                                                                  ButtonRed(
+                                                                    title:
+                                                                        'บันทึกลายเซ็น',
+                                                                    onTap: () {
+                                                                      showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (BuildContext context) =>
+                                                                                SignatureWidget(
+                                                                          jobId:
+                                                                              ticketId.toString(),
+                                                                          option:
+                                                                              'preventive_ic',
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            Obx(() => ((jobController
+                                                                            .reportPreventiveListIc.isNotEmpty &&
+                                                                        jobController.reportPreventiveListIc.first.pvtMaintenance !=
+                                                                            null) &&
+                                                                    jobController
+                                                                        .subJobSparePart
+                                                                        .isNotEmpty &&
+                                                                    (jobController.reportPreventiveListIc.first.pvtMaintenance!.signature !=
+                                                                            null &&
+                                                                        jobController.reportPreventiveListIc.first.pvtMaintenance!.signaturePadUrl !=
+                                                                            null))
+                                                                ? Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .end,
+                                                                    children: [
+                                                                      ButtonColor(
+                                                                        backgroundColor:
+                                                                            red4,
+                                                                        title:
+                                                                            'View Part Detail',
+                                                                        onTap:
+                                                                            () {
+                                                                          showDialog(
+                                                                              context: context,
+                                                                              builder: (BuildContext context) => Obx(() => Material(
+                                                                                    color: Colors.transparent,
+                                                                                    child: SubJobSparePartWidget(
+                                                                                      subJobSparePart: jobController.subJobSparePart.first,
+                                                                                    ),
+                                                                                  )));
+                                                                        },
+                                                                      ),
+                                                                    ],
+                                                                  )
+                                                                : Container()),
+                                                          ],
+                                                        )
+                                                      : Container())
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                        : Container()),
                               ],
                             ),
                           ),

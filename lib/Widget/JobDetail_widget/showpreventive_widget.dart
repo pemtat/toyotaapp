@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
@@ -18,19 +19,21 @@ class ShowPreventiveReportWidget extends StatelessWidget {
   final String bugId;
   final RxString timeStart;
   final RxString timeEnd;
+  final String? ic;
   const ShowPreventiveReportWidget({
     super.key,
     required this.reportData,
     required this.bugId,
     required this.timeStart,
     required this.timeEnd,
+    this.ic,
   });
   @override
   Widget build(BuildContext context) {
     var data = reportData.first;
     var fullMaintenanceRecords = data.pvtCheckingTypeMaster;
     var maintenance = data.pvtMaintenance;
-    var sparePart = data.darDetails;
+    var sparePart = data.darDetails!.where((sp) => sp.qty != '0').toList();
 
     var space = 8;
     var space2 = 10;
@@ -52,15 +55,26 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 BoxInfo2(
                     title: 'Customer Name',
                     value: maintenance!.customerName ?? '-'),
-                space.kH,
-                BoxInfo2(
-                    title: 'Department', value: maintenance.department ?? '-'),
+                if (ic == null)
+                  Column(
+                    children: [
+                      space.kH,
+                      BoxInfo2(
+                          title: 'Department',
+                          value: maintenance.department ?? '-'),
+                    ],
+                  ),
                 space.kH,
                 BoxInfo2(
                     title: 'Contacted Name',
                     value: maintenance.contactedName ?? '-'),
                 space.kH,
-                BoxInfo2(title: 'Product', value: maintenance.product ?? '-'),
+                ic == null
+                    ? BoxInfo2(
+                        title: 'Product', value: maintenance.product ?? '-')
+                    : BoxInfo2(
+                        title: 'Service Type',
+                        value: maintenance.serviceType ?? '-'),
                 space.kH,
                 BoxInfo2(title: 'Model', value: maintenance.model ?? '-'),
                 space.kH,
@@ -78,9 +92,13 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 BoxInfo2(
                     title: 'Lift Hieght', value: maintenance.liftHeight ?? '-'),
                 space.kH,
-                BoxInfo2(
-                    title: 'Customer Fleet',
-                    value: maintenance.customerFleet ?? '-'),
+                ic == null
+                    ? BoxInfo2(
+                        title: 'Customer Fleet',
+                        value: maintenance.customerFleet ?? '-')
+                    : BoxInfo2(
+                        title: 'Chassis No',
+                        value: maintenance.chassicNo ?? '-'),
                 space.kH,
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
@@ -115,12 +133,20 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      BoxInfo(
-                                        title:
-                                            '[${subData.pvtCategoryCode}] ${subData.fullName}',
-                                        value: checkStatus(subData.ok ?? '',
-                                            subData.poor ?? ''),
-                                      ),
+                                      ic == null
+                                          ? BoxInfo(
+                                              title:
+                                                  '[${subData.pvtCategoryCode}] ${subData.fullName}',
+                                              value: checkStatus(
+                                                  subData.ok ?? '',
+                                                  subData.poor ?? ''),
+                                            )
+                                          : BoxInfo(
+                                              title:
+                                                  '[${subData.pvtCategoryCode}] ${subData.fullName}',
+                                              value: checkTextFormIc(
+                                                  subData.ok ?? '0'),
+                                            ),
                                       BoxInfo(
                                           title: 'Remark',
                                           value: subData.remark == ''
@@ -156,7 +182,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                         : maintenance.safetySeatBelt ?? ''),
 
                 // ignore: unrelated_type_equality_checks
-                sparePart!.first.qty != '0'
+                sparePart.isNotEmpty
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -212,7 +238,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                         ],
                       ),
                 space2.kH,
-                TitleWithButton(
+                TitleWithButton3(
                     space: true,
                     titleText:
                         'ผลการตรวจเช็คเเละการบำรุงรักษา (Maintenance and service result)',
@@ -251,11 +277,17 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    PdfFile(
-                      name: 'Periodic Maintenance Report',
-                      path: bugId,
-                      option: 'pvt',
-                    )
+                    ic == null
+                        ? PdfFile(
+                            name: 'Periodic Maintenance Report',
+                            path: bugId,
+                            option: 'pvt',
+                          )
+                        : PdfFile(
+                            name: 'Periodic Maintenance Report IC',
+                            path: bugId,
+                            option: 'pvt_ic',
+                          )
                   ],
                 ),
 

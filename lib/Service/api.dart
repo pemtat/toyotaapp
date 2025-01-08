@@ -5,7 +5,8 @@ const String user = '$url/api/rest/users';
 const String loginUrl = '$url/api/rest/users/login';
 const String tokenUrl = '$url/api/rest/users/me/token';
 const String searchProductUrl = '$urlFSM/api/serial/search';
-
+const String apkUrl =
+    'https://drive.google.com/file/d/1TVL378JFqXmkXDe6KdfcOMQXlHhiikHL/view?usp=drive_link';
 const String search = '$url/api/rest/users/me/token';
 
 const String getAssignJob =
@@ -30,6 +31,10 @@ String getJobBatteryReportById(String id) {
 
 String getPdfPvtReportById(String issueId) {
   return '$url/api/rest/pm_jobs/pdf_pvt/$issueId';
+}
+
+String getPdfPvtIcReportById(String issueId) {
+  return '$url/api/rest/pm_jobs/pdf_pvt_ic/$issueId';
 }
 
 String getPdfBtrReportById(String issueId) {
@@ -58,6 +63,10 @@ String getUserByZone(String zone) {
 
 String getAllSales() {
   return '$url/api/rest/jobs/user_all_sales';
+}
+
+String getAllSalesAdmin(String id) {
+  return '$url/api/rest/jobs/user_all_sales_admin?id=$id';
 }
 
 String getAllSalesByIssueIdJobs(String id) {
@@ -108,8 +117,16 @@ String createPreventiveReport() {
   return '$url/api/rest/pm_jobs/create_pvt_maintenance';
 }
 
+String createPreventiveIcReport() {
+  return '$url/api/rest/pm_jobs/create_pvt_maintenance_ic';
+}
+
 String updatePreventiveReport() {
   return '$url/api/rest/pm_jobs/update_pvt_maintenance';
+}
+
+String updatePreventiveIcReport() {
+  return '$url/api/rest/pm_jobs/update_pvt_maintenance_ic';
 }
 
 String getPmJobInfoById(String id) {
@@ -158,6 +175,10 @@ String updateJobIssueByIdPM() {
 
 String getAttachmentFileById(int issueId, int attachmentId) {
   return '$issue/$issueId/files/$attachmentId';
+}
+
+String getAllAttachmentFile(String issueId) {
+  return '$issue/$issueId/files';
 }
 
 String getUserInfoById(String userId) {
@@ -236,6 +257,10 @@ String getPreventiveReportById(String id) {
   return '$url/api/rest/pm_jobs/pvt_maintenance_data?job_id=$id';
 }
 
+String getPreventiveIcReportById(String id) {
+  return '$url/api/rest/pm_jobs/pvt_maintenance_ic_data?job_id=$id';
+}
+
 String getSparePartbySearch(String partNumber) {
   return '$urlFSM/api/sparepart/search/$partNumber';
 }
@@ -268,6 +293,10 @@ String updatePreventiveSignatureUrl() {
   return "$url/api/rest/pm_jobs/pvt_update_signature_url";
 }
 
+String updatePreventiveIcSignatureUrl() {
+  return "$url/api/rest/pm_jobs/pvt_ic_update_signature_url";
+}
+
 String updateReportById(String id) {
   return "$url/api/rest/jobs/job_report_update?job_issue_id='$id'";
 }
@@ -286,6 +315,10 @@ String updateSparepartBtr() {
 
 String updateSparepartPvt() {
   return "$url/api/rest/pm_jobs/update_pvt_sparepart";
+}
+
+String updateSparepartPvtIc() {
+  return "$url/api/rest/pm_jobs/update_pvt_ic_sparepart";
 }
 
 String updateSparepartPM() {
@@ -344,6 +377,10 @@ String updateSubJobs(String jobId) {
   return '$url/api/rest/jobs/job_issue_update/$jobId';
 }
 
+String finishedQuote() {
+  return '$url/api/rest/jobs/jobs_finished_quote';
+}
+
 String createQuotationReport() {
   return '$url/api/rest/jobs/jobs_quotation_create';
 }
@@ -358,6 +395,14 @@ String updateQuotation() {
 
 String updateQuotationPM() {
   return '$url/api/rest/pm_jobs/jobs_quotation_update_pm';
+}
+
+String userDisbled() {
+  return '$url/api/rest/users/rest_user_disbled';
+}
+
+String getTechReport(String id, String year) {
+  return '$url/api/rest/users/tech_user_report/get?handler_id=$id&year=$year';
 }
 
 String usernameProduct = 'VanSale-Dev';

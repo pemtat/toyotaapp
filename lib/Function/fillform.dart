@@ -87,6 +87,22 @@ void updateCheckbox3(String label, RxList<String> data) {
   data.add(label);
 }
 
+String checkTextFormIc(String data) {
+  if (data == '1') {
+    return '✓';
+  } else if (data == '2') {
+    return 'X';
+  } else if (data == '3') {
+    return '—';
+  } else if (data == '4') {
+    return 'O';
+  } else if (data == '5') {
+    return 'Ø';
+  } else {
+    return '';
+  }
+}
+
 void updateCheckbox3other(
     String label, RxList<String> data, Rx<TextEditingController> other) {
   data.clear();
@@ -216,7 +232,7 @@ Future<String> fetchProductsReturnString(String placeNumber) async {
 
     String basicAuth =
         'Basic ${base64Encode(utf8.encode('$username:$password'))}';
-    RxList<Product> products = <Product>[].obs;
+    RxList<ProductDetails> products = <ProductDetails>[].obs;
 
     try {
       final response = await http.get(
@@ -228,7 +244,7 @@ Future<String> fetchProductsReturnString(String placeNumber) async {
         List<dynamic> responseData = jsonDecode(response.body);
 
         products.value =
-            responseData.map((job) => Product.fromJson(job)).toList();
+            responseData.map((job) => ProductDetails.fromJson(job)).toList();
 
         if (products.isNotEmpty) {
           return products.first.inventory.toString();
@@ -244,7 +260,7 @@ Future<String> fetchProductsReturnString(String placeNumber) async {
       return '0';
     }
   } else {
-    return 'N/A';
+    return '0';
   }
 }
 

@@ -395,7 +395,8 @@ class AssignedjobsNew extends StatelessWidget {
                                                 .selectedDate.value!.day);
                                 return searchQueryMatch &&
                                     dateMatch &&
-                                    job.status == '103' &&
+                                    (job.status == '103' ||
+                                        job.status == '90') &&
                                     statusMatch;
                               }).toList();
                               if (filteredJobs.isEmpty) {

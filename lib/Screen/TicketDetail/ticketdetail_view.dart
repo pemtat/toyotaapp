@@ -335,7 +335,8 @@ class TicketDetailView extends StatelessWidget {
                                     children: [
                                       const TitleApp(
                                           text: 'Field Service Report'),
-                                      issue.status.id != 90 &&
+                                      subJob.status != '90' &&
+                                              issue.status.id != 90 &&
                                               ticketController.canEdit.value &&
                                               ticketController
                                                   .reportList.isNotEmpty

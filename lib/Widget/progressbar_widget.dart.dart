@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
@@ -103,5 +104,45 @@ class DashedLinePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
+  }
+}
+
+class ProgressBarWithText extends StatelessWidget {
+  final int value;
+  final int total;
+  final int label;
+  const ProgressBarWithText(
+      {super.key,
+      required this.value,
+      required this.total,
+      required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          width: 100,
+          height: 20,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey,
+            ),
+          ),
+          child: LinearProgressIndicator(
+            value: total == 0 ? value / 1 : value / total,
+            backgroundColor: Colors.white,
+            color: black1,
+          ),
+        ),
+        Positioned(
+          left: 5.0,
+          child: Center(
+            child: Text(label.toString(),
+                style: TextStyleList.text5.copyWith(color: black8)),
+          ),
+        ),
+      ],
+    );
   }
 }

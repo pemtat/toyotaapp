@@ -11,6 +11,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
+import 'package:toyotamobile/Widget/drawer_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
@@ -27,6 +28,10 @@ class TicketView extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        drawer: Drawer(
+          width: 200,
+          child: sideDrawer(),
+        ),
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(preferredSize),
           child: Column(

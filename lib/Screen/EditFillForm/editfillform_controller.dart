@@ -42,6 +42,8 @@ class EditFillformController extends GetxController {
   final customerFleetNo = TextEditingController().obs;
   final reportList = <RepairReportModel>[].obs;
   final additionalReportList = <RepairReportModel>[].obs;
+  final sparePartRemark = TextEditingController().obs;
+  final additionalSparePartRemark = TextEditingController().obs;
   final Rcode rcodeController = Get.put(Rcode());
   final Wcode wcodeController = Get.put(Wcode());
   final RepairProcedure rPController = Get.put(RepairProcedure());
@@ -113,6 +115,15 @@ class EditFillformController extends GetxController {
       selectedUser.value = reportData.tech2 ?? '';
       errorCode.value.text = reportData.errorCodeReport ?? '';
       workorderNumber.value.text = reportData.orderNo ?? '';
+      if ((reportData.sparePartRemark ?? '') != '') {
+        sparePartRemark.value.text = reportData.sparePartRemark ?? '';
+        sparePartRemark.refresh();
+      }
+      if ((reportData.sparePartRemark2 ?? '') != '') {
+        additionalSparePartRemark.value.text =
+            reportData.sparePartRemark2 ?? '';
+        additionalSparePartRemark.refresh();
+      }
 
       if (reportData.fieldReport != '-') {
         fieldServiceReport.add(reportData.fieldReport ?? '');
@@ -217,7 +228,13 @@ class EditFillformController extends GetxController {
     if (fieldServiceReport.isEmpty ||
         rcodeController.rCode.isEmpty ||
         wcodeController.wCode.isEmpty ||
-        repairStaffController.repairStaff.isEmpty ||
+        rPController.repairProcedureList.isEmpty ||
+        rPController.repairProcedureList.first.repairProcedure.isEmpty ||
+        rPController.repairProcedureList.first.repairProcedure == '' ||
+        rPController.repairProcedureList.first.repairProcedure == '-' ||
+        rPController.repairProcedureList.first.causeProblem.isEmpty ||
+        rPController.repairProcedureList.first.causeProblem == '' ||
+        rPController.repairProcedureList.first.causeProblem == '-' ||
         repairResultController.maintenanceList.isEmpty ||
         repairResultController.maintenanceList.first.chargingType.isEmpty ||
         repairResultController.maintenanceList.first.hr == 0.0 ||
@@ -315,6 +332,14 @@ class EditFillformController extends GetxController {
       if (customerFleetNo.value.text == '') {
         customerFleetNo.value.text = '-';
       }
+      if (sparePartRemark.value.text.isEmpty) {
+        sparePartRemark.value.text = '';
+      }
+
+      if (additionalSparePartRemark.value.text.isEmpty) {
+        additionalSparePartRemark.value.text = '';
+      }
+
       saveCurrentDateTime(saveCompletedtime);
       final Map<String, dynamic> data = {
         'field_report': fieldServiceReport.first,
@@ -342,6 +367,8 @@ class EditFillformController extends GetxController {
         'lift_height': lifeHeight.value.text,
         'tech2': selectedUser.value == '' ? '-' : selectedUser.value,
         'bugid': ticketId.value,
+        'spare_part_remark': sparePartRemark.value.text,
+        'spare_part_remark2': additionalSparePartRemark.value.text,
         'save_time': saveCompletedtime.value
       };
       List<SparePartModel> allSpareParts =

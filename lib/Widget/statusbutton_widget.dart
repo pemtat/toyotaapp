@@ -156,6 +156,48 @@ class StatusApproved extends StatelessWidget {
   }
 }
 
+class StatusNotApproved extends StatelessWidget {
+  const StatusNotApproved({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: green2),
+      child: Text(
+        "Not Approved",
+        style: GoogleFonts.kanit(
+            color: green3,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
+      ),
+    );
+  }
+}
+
+class StatusDone extends StatelessWidget {
+  const StatusDone({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: green2),
+      child: Text(
+        "Done",
+        style: GoogleFonts.kanit(
+            color: green3,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            decoration: TextDecoration.none),
+      ),
+    );
+  }
+}
+
 class StatusConfirmed extends StatelessWidget {
   const StatusConfirmed({super.key});
 
@@ -184,12 +226,13 @@ class StatusReject extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(10), color: white9),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Color.fromARGB(255, 247, 79, 67)),
       child: Text(
         "Reject",
         style: GoogleFonts.kanit(
-            color: const Color(0xff656565),
+            color: white3,
             fontSize: 14,
             fontWeight: FontWeight.w400,
             decoration: TextDecoration.none),

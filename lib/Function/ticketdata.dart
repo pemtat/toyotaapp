@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io' as io;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +11,7 @@ import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/pdfget.dart';
 import 'package:toyotamobile/Models/batteryreport_model.dart';
 import 'package:toyotamobile/Models/customersearch_model.dart';
+import 'package:toyotamobile/Models/getattacthmentall.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/notificationhistory_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
@@ -18,6 +20,7 @@ import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
+import 'package:toyotamobile/Models/techreport_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userallsales_model.dart';
 import 'package:toyotamobile/Models/userbyzone_model.dart';
@@ -125,6 +128,35 @@ Future<void> fetchAllSales(RxList<UsersSales> userAllSales, String projectId,
   try {
     final response = await http.get(
       Uri.parse(getAllSales()),
+      headers: {
+        'Authorization': token ?? '',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+
+      UserAllSales userData = UserAllSales.fromJson(data);
+
+      if (userData.users != null) {
+        userAllSales.assignAll(userData.users!);
+      } else {}
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+      userAllSales.clear();
+    }
+  } catch (e) {
+    print('Error: $e');
+    userAllSales.clear();
+  }
+}
+
+Future<void> fetchAllSalesAdmin(RxList<UsersSales> userAllSales,
+    String projectId, String jobId, String bugId) async {
+  String? token = await getToken();
+  try {
+    final response = await http.get(
+      Uri.parse(getAllSalesAdmin(jobId)),
       headers: {
         'Authorization': token ?? '',
       },
@@ -405,6 +437,55 @@ Future<void> fetchReadAttachment(
   }
 }
 
+Future<void> fetchReadAttachmentList(
+  String issueId,
+  String token,
+  List<Map<String, dynamic>> attachments,
+) async {
+  attachments.clear();
+  try {
+    final String getFileUrl = getAllAttachmentFile(issueId);
+
+    final response = await http.get(
+      Uri.parse(getFileUrl),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      GetAttatchmentAllModel dataList = GetAttatchmentAllModel.fromJson(data);
+      List<Files>? filesList = dataList.files;
+      List<Map<String, dynamic>> fileDataList = [];
+
+      filesList?.forEach((file) {
+        if (file.createdAt != null ||
+            (file.imageUrl != null &&
+                file.imageUrl != '' &&
+                (file.filename!.endsWith('.jpg') ||
+                    file.filename!.endsWith('.jpeg') ||
+                    file.filename!.endsWith('.png') ||
+                    file.filename!.endsWith('.heic') ||
+                    file.filename!.endsWith('.heif')))) {
+          Map<String, dynamic> fileData = {
+            'id': file.id,
+            'filename': file.filename,
+            'content': file.imageUrl,
+            'created_at': file.createdAt,
+          };
+          fileDataList.add(fileData);
+        }
+      });
+
+      attachments.addAll(fileDataList);
+    }
+  } catch (e) {
+    print('Error fetching attachments: $e');
+    attachments.clear();
+  }
+}
+
 Future<void> fetchNotesPic(
   List<Notes>? notes,
   RxList<Notes> notesFiles,
@@ -681,6 +762,68 @@ Future<void> fetchPreventiveReportData(
   }
 }
 
+Future<void> fetchPreventiveICReportData(
+  String id,
+  String token,
+  RxList<PreventivereportModel> reportList,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getPreventiveIcReportById(id)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      String responseBody = response.body;
+      Map<String, dynamic>? responseData = jsonDecode(responseBody);
+      PvtMaintenance? pvtMaintenance;
+      List<PvtCheckingTypeMaster>? pvtCheckingTypeMaster;
+      List<DarDetails>? darDetails;
+      List<MaintenanceRecords>? maintenanceRecords;
+
+      if (responseData != null) {
+        reportList.clear();
+        pvtMaintenance = responseData['pvt_maintenance'] is Map<String, dynamic>
+            ? PvtMaintenance.fromJson(responseData['pvt_maintenance'])
+            : null;
+
+        pvtCheckingTypeMaster = responseData['pvt_checking_type_master'] is List
+            ? List<PvtCheckingTypeMaster>.from(
+                responseData['pvt_checking_type_master']
+                    .map((x) => PvtCheckingTypeMaster.fromJson(x)))
+            : [];
+
+        darDetails = responseData['dar_details'] is List
+            ? List<DarDetails>.from(
+                responseData['dar_details'].map((x) => DarDetails.fromJson(x)))
+            : [];
+
+        maintenanceRecords = responseData['maintenance_records'] is List
+            ? List<MaintenanceRecords>.from(responseData['maintenance_records']
+                .map((x) => MaintenanceRecords.fromJson(x)))
+            : [];
+      } else {
+        print('No data found');
+      }
+
+      PreventivereportModel preventiveReport = PreventivereportModel(
+          pvtMaintenance: pvtMaintenance,
+          pvtCheckingTypeMaster: pvtCheckingTypeMaster,
+          darDetails: darDetails,
+          maintenanceRecords: maintenanceRecords);
+
+      reportList.add(preventiveReport);
+      reportList.refresh();
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
 Future<void> fetchPmJobInfo(
   String id,
   String token,
@@ -746,8 +889,10 @@ Future<void> fetchPdfReport(
       apiUrl = getPdfJobsBtrReportById(id);
     } else if (option == 'btr') {
       apiUrl = getPdfBtrReportById(id);
-    } else {
+    } else if (option == 'pvt') {
       apiUrl = getPdfPvtReportById(id);
+    } else {
+      apiUrl = getPdfPvtIcReportById(id);
     }
     final response = await http.get(
       Uri.parse(apiUrl),
@@ -776,6 +921,9 @@ Future<void> fetchPdfReport(
         pdfReport.refresh();
       } else if (responseBody.containsKey('pdf_report')) {
         pdfReport.value = responseBody['pdf_report'];
+        pdfReport.refresh();
+      } else if (responseBody.containsKey('pdf_ic_base64')) {
+        pdfReport.value = responseBody['pdf_ic_base64'];
         pdfReport.refresh();
       } else {
         pdfReport.value = '';
@@ -975,27 +1123,39 @@ Future<void> pickImage(BuildContext context, RxList<Map<String, String>> file,
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       io.File imageFile = io.File(pickedFile.path);
-      String fileName = pickedFile.name;
-      String base64Content = base64Encode(await imageFile.readAsBytes());
-      // String fileExtension = fileName.split('.').last.toLowerCase();
-      // if (fileExtension == 'jpg' ||
-      //     fileExtension == 'png' ||
-      //     fileExtension == 'jpeg') {
-      var images = <Map<String, String>>[].obs;
-      images.add({
-        'filename': fileName,
-        'content': base64Content,
-      });
+      final compressedImage = await FlutterImageCompress.compressWithFile(
+        imageFile.path,
+        quality: 50,
+        format: CompressFormat.png,
+        minWidth: 800,
+        minHeight: 600,
+      );
+      if (compressedImage != null) {
+        final compressedFile = io.File('${imageFile.path}_compressed')
+          ..writeAsBytesSync(compressedImage);
 
-      await updateImgSubjobs(jobId, ticketId, images, option);
-      await fetchSubJobImg(file, jobId, option);
-      // } else {
-      //   showDialog(
-      //       context: context,
-      //       builder: (BuildContext context) {
-      //         return const AlertDialogPickImage();
-      //       });
-      // }
+        String fileName = pickedFile.name;
+        String base64Content = base64Encode(await compressedFile.readAsBytes());
+        // String fileExtension = fileName.split('.').last.toLowerCase();
+        // if (fileExtension == 'jpg' ||
+        //     fileExtension == 'png' ||
+        //     fileExtension == 'jpeg') {
+        var images = <Map<String, String>>[].obs;
+        images.add({
+          'filename': fileName,
+          'content': base64Content,
+        });
+
+        await updateImgSubjobs(jobId, ticketId, images, option);
+        await fetchSubJobImg(file, jobId, option);
+        // } else {
+        //   showDialog(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return const AlertDialogPickImage();
+        //       });
+        // }
+      }
     }
   } finally {
     isPicking.value = false;
@@ -1018,30 +1178,41 @@ Future<void> pickImagePM(
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       io.File imageFile = io.File(pickedFile.path);
-      String fileName = pickedFile.name;
-      String base64Content = base64Encode(await imageFile.readAsBytes());
-      // String fileExtension = fileName.split('.').last.toLowerCase();
-      // file.add({
-      //   'filename': fileName,
-      //   'content': base64Content,
-      // });
-      // if (fileExtension == 'jpg' ||
-      //     fileExtension == 'png' ||
-      //     fileExtension == 'jpeg') {
-      Map<String, String> newImg = ({
-        'filename': fileName,
-        'content': base64Content,
-      });
+      final compressedImage = await FlutterImageCompress.compressWithFile(
+        imageFile.path,
+        quality: 50,
+        format: CompressFormat.png,
+        minWidth: 800,
+        minHeight: 600,
+      );
+      if (compressedImage != null) {
+        final compressedFile = io.File('${imageFile.path}_compressed')
+          ..writeAsBytesSync(compressedImage);
+        String fileName = pickedFile.name;
+        String base64Content = base64Encode(await compressedFile.readAsBytes());
+        // String fileExtension = fileName.split('.').last.toLowerCase();
+        // file.add({
+        //   'filename': fileName,
+        //   'content': base64Content,
+        // });
+        // if (fileExtension == 'jpg' ||
+        //     fileExtension == 'png' ||
+        //     fileExtension == 'jpeg') {
+        Map<String, String> newImg = ({
+          'filename': fileName,
+          'content': base64Content,
+        });
 
-      await updateImgPMjobs(jobId, newImg, option, createById);
-      await fetchPmJobImg(jobId, imagesBefore, imagesAfter, option);
-      // } else {
-      //   showDialog(
-      //       context: context,
-      //       builder: (BuildContext context) {
-      //         return const AlertDialogPickImage();
-      //       });
-      // }
+        await updateImgPMjobs(jobId, newImg, option, createById);
+        await fetchPmJobImg(jobId, imagesBefore, imagesAfter, option);
+        // } else {
+        //   showDialog(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return const AlertDialogPickImage();
+        //       });
+        // }
+      }
     }
   } finally {
     isPicking.value = false;
@@ -1258,7 +1429,7 @@ Future<void> changeIssueSignaturePM(
       } else {
         return;
       }
-    } else {
+    } else if (option == 'preventive') {
       body = {
         "job_id": issueId,
         'name': 'ลายเซ็น.png',
@@ -1268,6 +1439,27 @@ Future<void> changeIssueSignaturePM(
       };
       final response2 = await http.post(
         Uri.parse(updatePreventiveSignatureUrl()),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body),
+      );
+      if (response2.statusCode == 200) {
+        print('update succesful');
+      } else {
+        return;
+      }
+    } else {
+      body = {
+        "job_id": issueId,
+        'name': 'ลายเซ็น.png',
+        'content': signaturePad,
+        "signature": signature,
+        "save_time": 0
+      };
+      final response2 = await http.post(
+        Uri.parse(updatePreventiveIcSignatureUrl()),
         headers: {
           'Authorization': '$token',
           'Content-Type': 'application/json',
@@ -1420,6 +1612,7 @@ Future<void> updateJobSparePart(
   String techHandlerId,
   String reporterId,
   String projectId,
+  String adminId,
 ) async {
   try {
     String? token = await getToken();
@@ -1428,9 +1621,11 @@ Future<void> updateJobSparePart(
     if (option == 'send') {
       body = {
         'estimate_status': 1,
+        'purchase_order_status': 1,
         'tech_manager_id': 0,
         'tech_manager_status': 0,
         'tech_manager_remark': '',
+        'customer_reject_remark': '',
         'admin_status': 0,
         'sales_id': 0,
         'sales_status': 0,
@@ -1440,16 +1635,70 @@ Future<void> updateJobSparePart(
         'sales_director_status': 0,
         'customer_status': 0,
         'quotation': 0,
+        'condition': 0,
+        'sales_admin_id': 0,
+        'sales_admin_status': 0,
+        'special_discount': 0,
         "bug_id": int.parse(bugId),
         if (projectId == '1') "job_issue_id": jobId else "bug_id": bugId,
       };
       createQuotationHistory(jobId, 'tech', bugId, handlerId, '1');
+      projectId == '1'
+          ? createHistoryJobs(
+              handlerId,
+              '0',
+              'Job ID : ${jobId.toString().padLeft(7, '0')}',
+              'มีรายการใบเบิก Spare Part รออนุมัติใหม่',
+              'admin',
+              bugId,
+              jobId,
+              'QT',
+              'tech',
+              '0',
+              'group')
+          : createHistoryJobs(
+              handlerId,
+              '0',
+              'PM ID : ${bugId.toString().padLeft(7, '0')}',
+              'มีรายการใบเบิก Spare Part รออนุมัติใหม่',
+              'admin',
+              bugId,
+              jobId,
+              'QT',
+              'tech',
+              '0',
+              'group');
     } else if (option == 'approve') {
       body = {
         'tech_manager_status': 1,
         if (projectId == '1') "job_issue_id": jobId else "bug_id": bugId,
       };
       createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
+      projectId == '1'
+          ? createHistoryJobs(
+              handlerId,
+              adminId,
+              'Job ID : ${jobId.toString().padLeft(7, '0')}',
+              'มีรายการใบเบิก Spare Part รอตรวจสอบเอกสาร PO ใหม่',
+              adminId,
+              bugId,
+              jobId,
+              'QT',
+              'tech_manager',
+              '0',
+              'one')
+          : createHistoryJobs(
+              handlerId,
+              adminId,
+              'PM ID : ${bugId.toString().padLeft(7, '0')}',
+              'มีรายการใบเบิก Spare Part รอตรวจสอบเอกสาร PO ใหม่',
+              adminId,
+              bugId,
+              jobId,
+              'QT',
+              'tech_manager',
+              '0',
+              'one');
       // sendNotificationToUser(
       //     handlerId,
       //     techHandlerId,
@@ -1463,7 +1712,7 @@ Future<void> updateJobSparePart(
       var salesId = parts[1].trim();
       body = {
         'tech_manager_status': 1,
-        'sales_id': salesId,
+        'sales_admin_id': 1,
         if (projectId == '1') "job_issue_id": jobId else "bug_id": bugId,
       };
       createQuotationHistory(jobId, 'tech_manager', bugId, handlerId, '1');
@@ -1473,17 +1722,25 @@ Future<void> updateJobSparePart(
               salesId,
               'Job ID : ${jobId.toString().padLeft(7, '0')}',
               'มีรายการใบเบิก Spare Part รออนุมัติใหม่',
-              reporterId,
+              'sales_admin',
               bugId,
-              jobId)
+              jobId,
+              'QT',
+              'tech_manager',
+              salesId,
+              'group')
           : createHistoryJobs(
               handlerId,
               salesId,
               'PM ID : ${bugId.toString().padLeft(7, '0')}',
               'มีรายการใบเบิก Spare Part รออนุมัติใหม่',
-              reporterId,
+              'sales_admin',
               bugId,
-              jobId);
+              jobId,
+              'QT',
+              'tech_manager',
+              salesId,
+              'group');
     } else if (option == 'reject') {
       body = {
         'tech_manager_status': 2,
@@ -1544,6 +1801,18 @@ Future<void> updateJobSparePart(
     print('Error: $e');
   }
 }
+
+// void refreshSparePartJob($bugId, $jobId, projectId) {
+//   if (projectId == '2') {
+//     filteredSubJobSparePart = jobController.subJobSparePart
+//         .where((sparePart) => sparePart.bugId == $bugId)
+//         .toList();
+//   } else {
+//     filteredSubJobSparePart = jobController.subJobSparePart
+//         .where((sparePart) => sparePart.id == notification.jobId)
+//         .toList();
+//   }
+// }
 
 Future<void> createSparepartNote(String jobId, String techManagerId,
     String techLevel, String handlerId, List<String> remarkList) async {
@@ -1643,35 +1912,36 @@ Future<void> sendNotificationToUser(
 
     if (response.statusCode == 200) {
       print('Sent Notifcation');
-      try {
-        Map<String, dynamic> body2 = {
-          "title": details,
-          "details": bodyDetail,
-          "bug_id": int.parse(bugId),
-          "user_id": int.parse(techHandlerId),
-          "report_by": int.parse(handlerId),
-          "group_notify": "one",
-          "group_report_by": "tech",
-          "reference_code": reporterId,
-          "job_id": int.parse(jobId),
-          "sales_id": 0
-        };
-        final response = await http.post(
-          Uri.parse(createJobNotificationHistory()),
-          headers: {
-            'Authorization': '$token',
-            'Content-Type': 'application/json',
-          },
-          body: jsonEncode(body2),
-        );
-        if (response.statusCode == 201) {
-          print('Updated History Notification');
-        }
-      } catch (e) {
-        print(e);
-      }
     } else {
       print(response.statusCode);
+    }
+    try {
+      Map<String, dynamic> body2 = {
+        "title": details,
+        "details": bodyDetail,
+        "bug_id": int.parse(bugId),
+        "user_id": int.parse(techHandlerId),
+        "report_by": int.parse(handlerId),
+        "group_notify": "one",
+        "group_report_by": "tech_manager",
+        "reference_code": reporterId,
+        "job_id": int.parse(jobId),
+        "sales_id": 0,
+        "notify_type": 'QT'
+      };
+      final response = await http.post(
+        Uri.parse(createJobNotificationHistory()),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body2),
+      );
+      if (response.statusCode == 201) {
+        print('Updated History Notification');
+      }
+    } catch (e) {
+      print(e);
     }
   } catch (e) {
     print('Error: $e');
@@ -1679,26 +1949,32 @@ Future<void> sendNotificationToUser(
 }
 
 Future<void> createHistoryJobs(
-    String handlerId,
-    String receiverId,
-    String details,
-    String bodyDetail,
-    String reporterId,
-    String bugId,
-    String jobId) async {
+  String handlerId,
+  String receiverId,
+  String details,
+  String bodyDetail,
+  String reporterId,
+  String bugId,
+  String jobId,
+  String notifyType,
+  String groupReportBy,
+  String salesId,
+  String groupNotify,
+) async {
   try {
     String? token = await getToken();
     Map<String, dynamic> body2 = {
       "title": details,
       "details": bodyDetail,
       "bug_id": int.parse(bugId),
-      "user_id": int.parse(receiverId),
+      "user_id": receiverId,
       "report_by": int.parse(handlerId),
-      "group_notify": "one",
-      "group_report_by": "tech",
+      "group_notify": groupNotify,
+      "group_report_by": groupReportBy,
       "reference_code": reporterId,
       "job_id": int.parse(jobId),
-      "sales_id": int.parse(receiverId),
+      "sales_id": int.parse(salesId),
+      "notify_type": notifyType
     };
     final response = await http.post(
       Uri.parse(createJobNotificationHistory()),
@@ -1827,6 +2103,39 @@ void updateAcceptStatusSubjobs(
       changeIssueStatus(ticketId, 'onprocess');
     } else {
       print('Failed to update status: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+void finishedQuoteJobs(String jobId, String ticketId, String projectId,
+    String referenceCode, String userId) async {
+  try {
+    String? token = await getToken();
+
+    Map<String, dynamic> body = {
+      'bug_id': ticketId,
+      'job_issue_id': jobId,
+      'project_id': projectId,
+      'reference_code': referenceCode,
+      'user_id': userId
+    };
+
+    final response = await http.post(
+      Uri.parse(finishedQuote()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print('Finished Quote Done: ${response.body}');
+    } else {
+      print('Failed to update quote: ${response.body}');
     }
   } catch (e) {
     print('Error: $e');
@@ -2268,4 +2577,25 @@ Future<void> fetchSubJobSparePartOption() async {
     await jobController.fetchSubJobSparePart(
         jobController.handlerIdTech.value, 'leadtech');
   }
+}
+
+Future<void> fetchTechReport(
+    RxList<TechReportModel> techReport, String id, int year) async {
+  try {
+    String? token = await getToken();
+    final response = await http.get(
+      Uri.parse(getTechReport(id, year.toString())),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      techReport.value =
+          data.map((item) => TechReportModel.fromJson(item)).toList();
+    } else {
+      print("Failed to load data: ${response.statusCode}");
+    }
+  } catch (e) {}
 }

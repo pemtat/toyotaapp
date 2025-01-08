@@ -17,7 +17,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
 class Jobs extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
-  final JobsController jobs = Get.put(JobsController());
+  final JobsController jobsShowController = Get.put(JobsController());
   final SubTicketController subTicketController =
       Get.put(SubTicketController());
   final TicketController ticketController = Get.put(TicketController());
@@ -56,8 +56,16 @@ class Jobs extends StatelessWidget {
                         ),
                       );
                     }
-                    final filteredJobs =
-                        jobController.subJobAssignedPage.where((job) {
+                    final isFiltering =
+                        ticketController.searchQuery.value != '' ||
+                            ticketController.selectedStatus.isNotEmpty ||
+                            ticketController.selectedDate.value != null;
+
+                    final jobs = isFiltering
+                        ? jobController.subJobAssigned
+                        : jobController.subJobAssignedPage;
+
+                    final filteredJobs = jobs.where((job) {
                       final query =
                           ticketController.searchQuery.value.toLowerCase();
                       final searchQueryMatch =
@@ -81,7 +89,8 @@ class Jobs extends StatelessWidget {
                           statusMatch &&
                           (job.status == '101' ||
                               job.status == '102' ||
-                              job.status == '103');
+                              job.status == '103' ||
+                              job.status == '90');
                     }).toList();
 
                     if (filteredJobs.isEmpty) {
@@ -98,7 +107,9 @@ class Jobs extends StatelessWidget {
                       children: [
                         Expanded(
                           child: ListView.builder(
-                            controller: jobs.scrollController,
+                            controller: isFiltering
+                                ? null
+                                : jobsShowController.scrollController,
                             itemCount: filteredJobs.length,
                             itemBuilder: (context, index) {
                               final job = filteredJobs[index];
@@ -135,7 +146,7 @@ class Jobs extends StatelessWidget {
                             },
                           ),
                         ),
-                        if (jobs.loading.value)
+                        if (!isFiltering && jobsShowController.loading.value)
                           const Center(
                             child: DataCircleLoading(),
                           )

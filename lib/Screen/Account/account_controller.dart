@@ -122,5 +122,33 @@ class AccountController extends GetxController {
     Get.offAll(() => LoginView());
   }
 
-  Future<void> deleteAccount() async {}
+  Future<void> deleteAccount() async {
+    String? token = await getToken();
+    print(token);
+    Map<String, dynamic> body = {
+      "user_id": userController.userInfo.first.id,
+    };
+    print(body);
+    try {
+      final response = await http.post(
+        Uri.parse(userDisbled()),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token ?? '',
+        },
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        print(response);
+        print('Deleted Users');
+        await logout();
+      } else {
+        print(response.statusCode);
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error fetching token data: $e');
+    }
+  }
 }

@@ -5,6 +5,13 @@ import 'package:toyotamobile/Styles/color.dart';
 // 40px line height / 25px font size = 1.6
 
 class TextStyleList {
+  //35
+  static final TextStyle topheadingbar = GoogleFonts.kanit(
+      fontSize: 40,
+      fontWeight: FontWeight.w600,
+      color: black13,
+      height: 1.6,
+      decoration: TextDecoration.none);
   //34
   static final TextStyle headingbar = GoogleFonts.kanit(
       fontSize: 34,
@@ -18,6 +25,7 @@ class TextStyleList {
       color: red7,
       height: 1.6,
       decoration: TextDecoration.none);
+
   //25
   static final TextStyle heading = GoogleFonts.kanit(
       fontSize: 25,
@@ -239,6 +247,17 @@ class TextStyleList {
     color: black12,
     decoration: TextDecoration.underline,
   );
+  static final TextStyle text21 = GoogleFonts.kanit(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: blue1,
+      decoration: TextDecoration.underline,
+      decorationColor: blue1);
+  static final TextStyle text22 = GoogleFonts.kanit(
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+      color: white3,
+      decoration: TextDecoration.none);
 
   //12
   static final TextStyle subtext1 = GoogleFonts.kanit(

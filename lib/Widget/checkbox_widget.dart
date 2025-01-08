@@ -406,6 +406,56 @@ class CheckBoxList extends StatelessWidget {
   }
 }
 
+class CheckBoxListInBox extends StatelessWidget {
+  final RxList<String> selectionsChoose;
+  final Map<String, String> choiceMap;
+  final int index;
+
+  const CheckBoxListInBox({
+    super.key,
+    required this.selectionsChoose,
+    required this.index,
+    required this.choiceMap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: choiceMap.entries.map((entry) {
+          bool isSelected = selectionsChoose[index] == entry.key;
+          return InkWell(
+            onTap: () {
+              if (!isSelected) {
+                updateSelection(index, entry.key, selectionsChoose);
+              }
+            },
+            child: Container(
+                width: 35.0,
+                height: 35.0,
+                margin: EdgeInsets.symmetric(horizontal: 4.0),
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.red : Colors.grey[200],
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Center(
+                  child: Text(
+                    '${entry.value}',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight:
+                            !isSelected ? FontWeight.w400 : FontWeight.w600,
+                        color: !isSelected ? Colors.black : white3),
+                  ),
+                )),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
 class OldCheckBoxList extends StatelessWidget {
   final RxList<String> selectionsChoose;
   final int index;

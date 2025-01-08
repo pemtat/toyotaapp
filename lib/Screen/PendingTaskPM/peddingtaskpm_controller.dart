@@ -65,7 +65,7 @@ class PendingTaskControllerPM extends GetxController {
     String? token = await getToken();
     final String apiUrl = getTicketbyId(ticketId);
     await fetchPMJob(ticketId, token ?? '', pmJobs);
-
+    await fetchReadAttachmentList(ticketId, token ?? '', attatchments);
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {
@@ -91,9 +91,6 @@ class PendingTaskControllerPM extends GetxController {
         // } else {
         //   customer.value = CustomerById.getEmpty();
         // }
-
-        fetchReadAttachment(issueId, token ?? '', issue.attachments,
-            attachmentsData, attatchments);
       }).toList();
       issueData.value = issuesList;
     } else {}

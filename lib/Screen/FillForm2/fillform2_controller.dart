@@ -31,6 +31,7 @@ class FillformController2 extends GetxController {
   var jobIssueId = ''.obs;
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
+  final sparePartRemark = TextEditingController().obs;
   final TextEditingController signatureController = TextEditingController();
   final customerName = TextEditingController().obs;
   final contactPerson = TextEditingController().obs;
@@ -283,6 +284,9 @@ class FillformController2 extends GetxController {
     if (division.value.text == '') {
       division.value.text = '-';
     }
+    if (sparePartRemark.value.text.isEmpty) {
+      sparePartRemark.value.text = '';
+    }
 
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
@@ -323,6 +327,7 @@ class FillformController2 extends GetxController {
       "created_by": userController.userInfo.first.id,
       "btr_sparepart": combinedList,
       "specic_voltage_check": specicGravity,
+      'spare_part_remark': sparePartRemark.value.text,
       "btr_conditions": batteryCondition
     };
     try {

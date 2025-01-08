@@ -14,6 +14,8 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/FillForm_widget/repairprodecure_widget.dart';
+import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_view.dart';
+import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -210,6 +212,7 @@ class FillFormView extends StatelessWidget {
               () => BoxContainer(
                 children: [
                   TitleWithButton(
+                      required: 'yes',
                       titleText: 'Repair prodecure',
                       button: rPController.repairProcedureList.isEmpty
                           ? AddButton(
@@ -238,41 +241,61 @@ class FillFormView extends StatelessWidget {
               ),
             ),
             space.kH,
-            Obx(() => BoxContainer(
-                  children: [
-                    TitleWithButton(
-                      titleText: 'Spare part list',
-                      button: AddButton(
-                        onTap: () {
-                          sparePartListController.sparePartListModal(context);
-                        },
-                      ),
+            Obx(() => BoxContainer(children: [
+                  TitleWithButton(
+                    titleText: 'Spare part list',
+                    button: AddButton(
+                      onTap: () {
+                        sparePartListController.sparePartListModal(context);
+                      },
                     ),
-                    sparePartListController.sparePartList.isNotEmpty
-                        ? ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount:
-                                sparePartListController.sparePartList.length,
-                            itemBuilder: (context, index) {
-                              final part =
-                                  sparePartListController.sparePartList[index];
-                              return SparePartManageWidget(
-                                part: part,
-                                index: index,
-                                editFunction: () {
-                                  sparePartListController
-                                      .sparePartListEditModal(context, part);
-                                },
-                                sparePartList:
-                                    sparePartListController.sparePartList,
-                                changeShow: 'yes',
-                              );
+                  ),
+                  sparePartListController.sparePartList.isNotEmpty
+                      ? ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount:
+                              sparePartListController.sparePartList.length,
+                          itemBuilder: (context, index) {
+                            final part =
+                                sparePartListController.sparePartList[index];
+                            return SparePartManageWidget(
+                              part: part,
+                              index: index,
+                              editFunction: () {
+                                sparePartListController.sparePartListEditModal(
+                                    context, part);
+                              },
+                              sparePartList:
+                                  sparePartListController.sparePartList,
+                              changeShow: 'yes',
+                            );
+                          },
+                        )
+                      : const SizedBox(),
+                  Obx(
+                    () => fillFormController.sparePartRemark.value.text.isEmpty
+                        ? RemarkButton(
+                            title: '+ เพิ่มหมายเหตุ',
+                            onTap: () {
+                              sparePartRemarkEditModal(
+                                  context,
+                                  fillFormController.sparePartRemark,
+                                  'Spare Part Remark');
                             },
+                            backgroundColor: black3,
                           )
-                        : const SizedBox()
-                  ],
-                )),
+                        : SparePartRemarkShow(
+                            remark: fillFormController.sparePartRemark,
+                            editFunction: () {
+                              sparePartRemarkEditModal(
+                                  context,
+                                  fillFormController.sparePartRemark,
+                                  'Spare Part Remark');
+                            },
+                          ),
+                  ),
+                ])),
             space.kH,
             Obx(() => BoxContainer(
                   children: [
@@ -308,7 +331,33 @@ class FillFormView extends StatelessWidget {
                               );
                             },
                           )
-                        : const SizedBox()
+                        : const SizedBox(),
+                    Obx(
+                      () => fillFormController
+                              .additionalSparePartRemark.value.text.isEmpty
+                          ? RemarkButton(
+                              title: '+ เพิ่มหมายเหตุ',
+                              onTap: () {
+                                sparePartRemarkEditModal(
+                                    context,
+                                    fillFormController
+                                        .additionalSparePartRemark,
+                                    'Additional Spare Part Remark');
+                              },
+                              backgroundColor: black3,
+                            )
+                          : SparePartRemarkShow(
+                              remark:
+                                  fillFormController.additionalSparePartRemark,
+                              editFunction: () {
+                                sparePartRemarkEditModal(
+                                    context,
+                                    fillFormController
+                                        .additionalSparePartRemark,
+                                    'Additional Spare Part Remark');
+                              },
+                            ),
+                    ),
                   ],
                 )),
             space.kH,
@@ -356,7 +405,6 @@ class FillFormView extends StatelessWidget {
               children: [
                 Obx(
                   () => AddEditBox(
-                      required: 'yes',
                       titleText: 'Process Staff',
                       list: processStaffController.repairStaff,
                       onTap: () =>

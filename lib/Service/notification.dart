@@ -25,10 +25,26 @@ class NotificationService {
             (NotificationResponse notificationResponse) async {});
   }
 
+  bool _isRequestingPermission = false;
   Future<void> _requestNotificationPermissions() async {
-    PermissionStatus permissionStatus = await Permission.notification.request();
+    if (_isRequestingPermission) {
+      return;
+    }
 
-    if (permissionStatus != PermissionStatus.granted) {}
+    _isRequestingPermission = true;
+
+    try {
+      PermissionStatus permissionStatus =
+          await Permission.notification.request();
+
+      if (permissionStatus != PermissionStatus.granted) {
+        print('Notification permission denied.');
+      }
+    } catch (e) {
+      print('Error requesting permission: $e');
+    } finally {
+      _isRequestingPermission = false;
+    }
   }
 
   notificationDetails() {

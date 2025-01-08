@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/btr_sparepartlist.dart';
+import 'package:toyotamobile/Screen/EditSparePart/editdetail/pvt_ic_sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/pvt_sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editdetail/sparepartlist.dart';
 import 'package:toyotamobile/Screen/EditSparePart/editsparepart_controller.dart';
@@ -23,6 +24,7 @@ class EditSparePartView extends StatelessWidget {
   final List<Sparepart> additionalSparepart;
   final List<Sparepart> btrSparepart;
   final List<Sparepart> pvtSparepart;
+  final List<Sparepart> pvtIcSparepart;
   final String jobId;
   final String bugId;
   final String projectId;
@@ -34,9 +36,10 @@ class EditSparePartView extends StatelessWidget {
       required this.bugId,
       required this.projectId,
       required this.btrSparepart,
-      required this.pvtSparepart}) {
+      required this.pvtSparepart,
+      required this.pvtIcSparepart}) {
     sparePartController.fetchForm(jobId, bugId, sparepart, additionalSparepart,
-        btrSparepart, pvtSparepart, projectId);
+        btrSparepart, pvtSparepart, pvtIcSparepart, projectId);
   }
   final EditSparePartController sparePartController =
       Get.put(EditSparePartController());
@@ -46,6 +49,7 @@ class EditSparePartView extends StatelessWidget {
   final SparepartList sparePartListController = Get.put(SparepartList());
   final BtrSparepartList btrSparepartList = Get.put(BtrSparepartList());
   final PvtSparepartList pvtSparepartList = Get.put(PvtSparepartList());
+  final PvtIcSparepartList pvtIcSparepartList = Get.put(PvtIcSparepartList());
   int space = 8;
   @override
   Widget build(BuildContext context) {
@@ -257,6 +261,45 @@ class EditSparePartView extends StatelessWidget {
                                         },
                                         sparePartList:
                                             pvtSparepartList.pvtSparePartList,
+                                      );
+                                    },
+                                  )
+                                : const SizedBox()
+                          ],
+                        )),
+                  space.kH,
+                  if (pvtIcSparepart.isNotEmpty)
+                    Obx(() => BoxContainer(
+                          children: [
+                            TitleWithButton(
+                              titleText: 'Periodic IC Spare Part List',
+                              button: AddButton(
+                                onTap: () {
+                                  pvtIcSparepartList
+                                      .sparePartListModal(context);
+                                },
+                              ),
+                            ),
+                            pvtIcSparepartList.pvtIcSparePartList.isNotEmpty
+                                ? ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: pvtIcSparepartList
+                                        .pvtIcSparePartList.length,
+                                    itemBuilder: (context, index) {
+                                      final part = pvtIcSparepartList
+                                          .pvtIcSparePartList[index];
+                                      return SparePartManageWidget(
+                                        part: part,
+                                        index: index,
+                                        editFunction: () {
+                                          pvtIcSparepartList
+                                              .sparePartListEditModal(
+                                                  context, part);
+                                        },
+                                        sparePartList: pvtIcSparepartList
+                                            .pvtIcSparePartList,
                                       );
                                     },
                                   )

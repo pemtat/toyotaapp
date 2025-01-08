@@ -27,6 +27,7 @@ class TicketPmDetailController extends GetxController {
   var pmInfo = <PMJobInfoModel>[].obs;
   var canEdit = true.obs;
   var reportPreventiveList = <PreventivereportModel>[].obs;
+  var reportPreventiveListIc = <PreventivereportModel>[].obs;
   var userData = <UserById>[].obs;
   var pmJobs = <PmModel>[].obs;
   var isPicking = false.obs;
@@ -65,6 +66,8 @@ class TicketPmDetailController extends GetxController {
     canEdit.value = true;
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
+    await fetchPreventiveICReportData(
+        jobId, token ?? '', reportPreventiveListIc);
     await fetchPMJob(ticketId, token ?? '', pmJobs);
     await fetchPmJobInfo(jobId, token ?? '', pmInfo);
     if (reportList.isNotEmpty ||

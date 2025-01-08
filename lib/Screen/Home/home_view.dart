@@ -3,8 +3,13 @@ import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
+import 'package:toyotamobile/Screen/Account/account_controller.dart';
+import 'package:toyotamobile/Screen/Account/account_view.dart';
 import 'package:toyotamobile/Screen/Allticket/AssignedJobs/assignedjobs_view.dart';
 import 'package:toyotamobile/Screen/Allticket/PMAssignedJobs/pmAssignedjobs_view.dart';
+import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
+import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
+import 'package:toyotamobile/Screen/Notification/notification_view.dart';
 import 'package:toyotamobile/Screen/Overdue/overduejob_view.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
@@ -15,6 +20,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
 import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/drawer_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/titleheader_widget.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -31,6 +37,7 @@ class HomeView extends StatelessWidget {
   final SubTicketController subticketController =
       Get.put(SubTicketController());
   final AssignedjobsNew assignedjobsNew = Get.put(AssignedjobsNew());
+
   @override
   Widget build(BuildContext context) {
     double marginInside = 26;
@@ -46,6 +53,10 @@ class HomeView extends StatelessWidget {
           onWillPop: () async => false,
           child: Scaffold(
             backgroundColor: white5,
+            drawer: Drawer(
+              width: 200,
+              child: sideDrawer(),
+            ),
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(preferredSize),
               child: Column(

@@ -90,39 +90,44 @@ class PvtMaintenance {
   String? product;
   String? model;
   String? serialNo;
-  PvtMaintenance({
-    this.id,
-    this.jobId,
-    this.safetyTravelAlarm,
-    this.safetyRearviewMirror,
-    this.safetySeatBelt,
-    this.mtServiceResult,
-    this.officerChecking,
-    this.customerChecking,
-    this.customerScore,
-    this.customerDescription,
-    this.createdAt,
-    this.createdBy,
-    this.lastUpdated,
-    this.hr,
-    this.m,
-    this.signature,
-    this.signaturePad,
-    this.signaturePadUrl,
-    this.saveTime,
-    this.customerFleet,
-    this.liftHeight,
-    this.mastType,
-    this.operationHour,
-    this.tech2,
-    this.tech1,
-    this.contactedName,
-    this.customerName,
-    this.department,
-    this.model,
-    this.product,
-    this.serialNo,
-  });
+  String? sparePartRemark;
+  String? serviceType;
+  String? chassicNo;
+  PvtMaintenance(
+      {this.id,
+      this.jobId,
+      this.safetyTravelAlarm,
+      this.safetyRearviewMirror,
+      this.safetySeatBelt,
+      this.mtServiceResult,
+      this.officerChecking,
+      this.customerChecking,
+      this.customerScore,
+      this.customerDescription,
+      this.createdAt,
+      this.createdBy,
+      this.lastUpdated,
+      this.hr,
+      this.m,
+      this.signature,
+      this.signaturePad,
+      this.signaturePadUrl,
+      this.saveTime,
+      this.customerFleet,
+      this.liftHeight,
+      this.mastType,
+      this.operationHour,
+      this.tech2,
+      this.tech1,
+      this.contactedName,
+      this.customerName,
+      this.department,
+      this.model,
+      this.product,
+      this.serialNo,
+      this.serviceType,
+      this.chassicNo,
+      this.sparePartRemark});
 
   PvtMaintenance.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -156,6 +161,9 @@ class PvtMaintenance {
     model = json['model'];
     product = json['product'];
     serialNo = json['serial_no'];
+    sparePartRemark = json['spare_part_remark'];
+    serviceType = json['service_type'];
+    chassicNo = json['chassis_no'];
   }
 
   Map<String, dynamic> toJson() {
@@ -190,7 +198,9 @@ class PvtMaintenance {
     data['model'] = model;
     data['product'] = product;
     data['serial_no'] = serialNo;
-
+    data['spare_part_remark'] = sparePartRemark;
+    data['service_type'] = serviceType;
+    data['chassis_no'] = chassicNo;
     return data;
   }
 }

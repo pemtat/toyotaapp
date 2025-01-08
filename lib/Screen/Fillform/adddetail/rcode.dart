@@ -56,20 +56,20 @@ class Rcode extends GetxController {
   var rCodeChoose = <String>[].obs;
   List<String> rCodeList = [
     'Broken',
-    'No grease',
-    'No oil',
-    'Misassembled',
+    'Lack of grease',
+    'Lack of oil',
+    'Incorrect Assembly',
     'Dirty',
-    'Eroded',
+    'Worn out',
     'Short circuit',
-    'Disintegrated',
+    'Corroded',
+    'Vibration',
+    'Mechanically Locked',
+    'Leakage',
     'Loose',
-    'Vibrating',
-    'Stuck',
-    'Leaking',
-    'Usually loud noise',
-    'Wrong equipment installed',
-    'Overheating',
+    'Abnormal noise',
+    'Missing part',
+    'Overheated',
     'Other'
   ];
 }

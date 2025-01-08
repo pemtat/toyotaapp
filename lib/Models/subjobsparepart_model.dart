@@ -30,13 +30,20 @@ class SubJobSparePart {
   String? description;
   String? reportjobId;
   String? summaryBug;
+  String? createdDate;
   String? realname;
   String? referenceCode;
   String? bugStatus;
+  String? trNoUrl;
+  String? trNo;
+  String? customerId;
+  String? destinationAddress;
+  String? adminId;
   List<Sparepart>? sparepart;
   List<Sparepart>? additionalSparepart;
   List<Sparepart>? btrSparepart;
   List<Sparepart>? pvtSparepart;
+  List<Sparepart>? pvtSparepartIc;
   SubJobSparePart(
       {this.id,
       this.reporterId,
@@ -67,6 +74,7 @@ class SubJobSparePart {
       this.description,
       this.purchaseStatus,
       this.reportjobId,
+      this.createdDate,
       this.summaryBug,
       this.realname,
       this.referenceCode,
@@ -75,6 +83,11 @@ class SubJobSparePart {
       this.additionalSparepart,
       this.btrSparepart,
       this.pvtSparepart,
+      this.pvtSparepartIc,
+      this.trNoUrl,
+      this.adminId,
+      this.destinationAddress,
+      this.trNo,
       this.documentNo});
 
   SubJobSparePart.fromJson(Map<String, dynamic> json) {
@@ -102,6 +115,7 @@ class SubJobSparePart {
     handlerId = json['handler_id'];
     reproducibility = json['reproducibility'];
     dueDate = json['due_date'];
+    createdDate = json['created_date'];
     lastUpdated = json['last_updated'];
     warrantyStatus = json['warranty_status'];
     description = json['description'];
@@ -109,6 +123,10 @@ class SubJobSparePart {
     documentNo = json['document_no'];
     summaryBug = json['summary_bug'];
     realname = json['realname'];
+    trNoUrl = json['tr_no_url'];
+    trNo = json['tr_no'];
+    adminId = json['admin_id'];
+    destinationAddress = json['destination_address'];
     purchaseStatus = json['purchase_order_status'];
     bugStatus = json['bug_status'];
     referenceCode = json['reference_code'];
@@ -134,6 +152,12 @@ class SubJobSparePart {
       pvtSparepart = <Sparepart>[];
       json['pvt_sparepart'].forEach((v) {
         pvtSparepart!.add(Sparepart.fromJson(v));
+      });
+    }
+    if (json['pvt_sparepart_ic'] != null) {
+      pvtSparepartIc = <Sparepart>[];
+      json['pvt_sparepart_ic'].forEach((v) {
+        pvtSparepartIc!.add(Sparepart.fromJson(v));
       });
     }
   }
@@ -174,6 +198,11 @@ class SubJobSparePart {
     data['realname'] = realname;
     data['reference_code'] = referenceCode;
     data['bug_status'] = bugStatus;
+    data['tr_no_url'] = trNoUrl;
+    data['tr_no'] = trNo;
+    data['admin_id'] = adminId;
+    data['created_date'] = createdDate;
+    data['destination_address'] = destinationAddress;
     if (sparepart != null) {
       data['sparepart'] = sparepart!.map((v) => v.toJson()).toList();
     }
@@ -186,6 +215,10 @@ class SubJobSparePart {
     }
     if (pvtSparepart != null) {
       data['pvt_sparepart'] = pvtSparepart!.map((v) => v.toJson()).toList();
+    }
+    if (pvtSparepartIc != null) {
+      data['pvt_sparepart_ic'] =
+          pvtSparepartIc!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -204,7 +237,7 @@ class Sparepart {
   bool? priceVat;
   bool? additional;
   String? discount;
-
+  String? summary;
   Sparepart(
       {this.id,
       this.cCode,
@@ -217,7 +250,8 @@ class Sparepart {
       this.unitMeasure,
       this.priceVat,
       this.salesPrice,
-      this.discount});
+      this.discount,
+      this.summary});
 
   Sparepart.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -232,6 +266,7 @@ class Sparepart {
     salesPrice = json['price'];
     priceVat = json['price_includes_vat'];
     discount = json['discount'];
+    summary = json['summary'];
   }
 
   Map<String, dynamic> toJson() {
@@ -248,6 +283,7 @@ class Sparepart {
     data['price'] = salesPrice;
     data['price_includes_vat'] = priceVat;
     data['discount'] = discount;
+    data['summary'] = summary;
     return data;
   }
 }

@@ -31,6 +31,7 @@ class JobDetailControllerPM extends GetxController {
   var pmInfo = <PMJobInfoModel>[].obs;
   var pmJobs = <PmModel>[].obs;
   var reportPreventiveList = <PreventivereportModel>[].obs;
+  var reportPreventiveListIc = <PreventivereportModel>[].obs;
   var saveCompletedtime = ''.obs;
   var isPicking = false.obs;
   var commentCheck = false.obs;
@@ -64,23 +65,29 @@ class JobDetailControllerPM extends GetxController {
   Future<void> fetchData(String ticketId) async {
     reportList = <BatteryReportModel>[].obs;
     reportPreventiveList = <PreventivereportModel>[].obs;
+    reportPreventiveListIc = <PreventivereportModel>[].obs;
     jobId = ticketId;
     final String apiUrl = getTicketbyId(ticketId);
 
     String? token = await getToken();
-    subJobSparePart.clear();
+
     canEdit.value = true;
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
+    await fetchPreventiveICReportData(
+        jobId, token ?? '', reportPreventiveListIc);
     await fetchPMJob(ticketId, token ?? '', pmJobs);
     await fetchPmJobInfo(jobId, token ?? '', pmInfo);
     if (reportList.isNotEmpty ||
         (reportPreventiveList.isNotEmpty &&
-            reportPreventiveList.first.pvtMaintenance != null)) {
+            reportPreventiveList.first.pvtMaintenance != null) ||
+        (reportPreventiveListIc.isNotEmpty &&
+            reportPreventiveListIc.first.pvtMaintenance != null)) {
       completeCheck.value = true;
       await fetchSubJobSparePartIdPM();
     }
-
+    savedDateStartTime = ''.obs;
+    savedDateEndTime = ''.obs;
     comment2.value.clear();
     if (pmInfo.first.comment != null && pmInfo.first.comment != '') {
       comment.value.text = pmInfo.first.comment ?? '';

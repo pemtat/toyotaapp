@@ -13,6 +13,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
+import 'package:toyotamobile/Widget/drawer_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 
@@ -28,6 +29,10 @@ class SparePartView extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => true,
       child: Scaffold(
+        drawer: Drawer(
+          width: 200,
+          child: sideDrawer(),
+        ),
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
           child: Column(
@@ -173,13 +178,19 @@ class SparePartView extends StatelessWidget {
               ),
               Obx(() {
                 if (sparePartController.isSelected.value == 1) {
-                  return buildJobList(context, '1');
+                  return jobController.techLevel.value == '1'
+                      ? buildJobList(context, '1')
+                      : buildJobListTechManager(context, '0');
                 }
                 if (sparePartController.isSelected.value == 2) {
-                  return buildJobList(context, '2');
+                  return jobController.techLevel.value == '1'
+                      ? buildJobList(context, '2')
+                      : buildJobListTechManager(context, '1');
                 }
                 if (sparePartController.isSelected.value == 3) {
-                  return buildJobList(context, '3');
+                  return jobController.techLevel.value == '1'
+                      ? buildJobList(context, '3')
+                      : buildJobListTechManager(context, '2');
                 } else {
                   return const SizedBox();
                 }
@@ -202,10 +213,12 @@ class SparePartView extends StatelessWidget {
             Expanded(
               child: Obx(() {
                 final filteredJobs = jobController.subJobSparePart.where((job) {
-                  final searchQueryMatch =
-                      job.id!.contains(sparePartController.searchQuery.value) ||
-                          job.description!
-                              .contains(sparePartController.searchQuery.value);
+                  final searchQueryMatch = job.id!
+                          .contains(sparePartController.searchQuery.value) ||
+                      job.bugId!
+                          .contains(sparePartController.searchQuery.value) ||
+                      job.description!
+                          .contains(sparePartController.searchQuery.value);
                   final statusMatch =
                       sparePartController.selectedStatus.isEmpty ||
                           sparePartController.selectedStatus
@@ -238,8 +251,109 @@ class SparePartView extends StatelessWidget {
                     ),
                   );
                 }
-                filteredJobs
-                    .sort((a, b) => b.dueDate!.compareTo(a.dueDate ?? ''));
+                filteredJobs.sort(
+                    (a, b) => b.createdDate!.compareTo(a.createdDate ?? ''));
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: filteredJobs.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                        onTap: () {
+                          filteredJobs[index].projectId == '1'
+                              ? showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      Obx(() => Material(
+                                            color: Colors.transparent,
+                                            child: PendingTaskView(
+                                              ticketId:
+                                                  filteredJobs[index].bugId ??
+                                                      '',
+                                              jobId:
+                                                  filteredJobs[index].id ?? '',
+                                              showOnly: 'yes',
+                                            ),
+                                          )))
+                              : showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      Obx(() => Material(
+                                            color: Colors.transparent,
+                                            child: PendingTaskViewPM(
+                                              ticketId:
+                                                  filteredJobs[index].bugId ??
+                                                      '',
+                                              showOnly: 'yes',
+                                            ),
+                                          )));
+                        },
+                        child: SubJobSparePartWidget(
+                          subJobSparePart: filteredJobs[index],
+                          expandedTicketId:
+                              sparePartController.expandedTicketId,
+                          expandedIndex: sparePartController.expandedIndex,
+                        ));
+                  },
+                );
+              }),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildJobListTechManager(BuildContext context, String status) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(paddingApp),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            5.kH,
+            Expanded(
+              child: Obx(() {
+                final filteredJobs = jobController.subJobSparePart.where((job) {
+                  final searchQueryMatch = job.id!
+                          .contains(sparePartController.searchQuery.value) ||
+                      job.bugId!
+                          .contains(sparePartController.searchQuery.value) ||
+                      job.description!
+                          .contains(sparePartController.searchQuery.value);
+                  final statusMatch =
+                      sparePartController.selectedStatus.isEmpty ||
+                          sparePartController.selectedStatus
+                              .contains(stringToStatus(job.status ?? ''));
+                  final jobDate = formatDateTimeString(job.dueDate ?? '');
+                  final dateMatch = sparePartController.selectedDate.value ==
+                          null ||
+                      (jobDate.year ==
+                              sparePartController.selectedDate.value!.year &&
+                          jobDate.month ==
+                              sparePartController.selectedDate.value!.month &&
+                          jobDate.day ==
+                              sparePartController.selectedDate.value!.day);
+                  return searchQueryMatch &&
+                      dateMatch &&
+                      statusMatch &&
+                      status.contains(job.techManagerStatus ?? '0');
+                }).toList();
+
+                if (filteredJobs.isEmpty) {
+                  return SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 15),
+                      child: Center(
+                          child: Text(
+                        'No jobs available.',
+                        style: TextStyleList.subtitle2,
+                      )),
+                    ),
+                  );
+                }
+                filteredJobs.sort(
+                    (a, b) => b.createdDate!.compareTo(a.createdDate ?? ''));
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: filteredJobs.length,

@@ -30,7 +30,10 @@ class ShowRepairReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var space = 8;
-
+    final filteredSparePart =
+        reportData.where((data) => data.quantity != '0').toList();
+    final filteredAdditionalSparePart =
+        additionalReportData.where((data) => data.quantity != '0').toList();
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
       child: Stack(
@@ -105,7 +108,7 @@ class ShowRepairReport extends StatelessWidget {
                       space: true),
                   space.kH,
                   4.kH,
-                  reportData.first.quantity != '0'
+                  filteredSparePart.isNotEmpty
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -114,9 +117,9 @@ class ShowRepairReport extends StatelessWidget {
                             ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: reportData.length,
+                              itemCount: filteredSparePart.length,
                               itemBuilder: (context, index) {
-                                final data = reportData[index];
+                                final data = filteredSparePart[index];
                                 return Container(
                                   margin: const EdgeInsets.only(bottom: 8),
                                   padding: const EdgeInsets.all(10),
@@ -155,59 +158,57 @@ class ShowRepairReport extends StatelessWidget {
                         )
                       : const BoxInfo2(title: 'Spare part List', value: '-'),
                   8.kH,
-                  if (additionalReportData.isNotEmpty)
-                    additionalReportData.first.quantity != '0'
-                        ? Column(
-                            children: [
-                              const BoxInfo2(
-                                  title: 'Additional spare part list',
-                                  value: ''),
-                              4.kH,
-                              ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: additionalReportData.length,
-                                itemBuilder: (context, index) {
-                                  final data = additionalReportData[index];
-                                  return Container(
-                                    margin: const EdgeInsets.only(
-                                        bottom: 6, top: 2),
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        border:
-                                            Border.all(width: 1, color: black3),
-                                        color: white1,
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(6))),
-                                    child: Column(
-                                      children: [
-                                        BoxInfo(
-                                            title: 'C-Code',
-                                            value: data.cCode ?? ''),
-                                        BoxInfo(
-                                            title: 'Part Number',
-                                            value: data.partNumber ?? ''),
-                                        BoxInfo(
-                                            title: 'Description',
-                                            value: data.description ?? ''),
-                                        BoxInfo(
-                                            title: 'Quantity',
-                                            value: data.quantity ?? ''),
-                                        BoxInfo(
-                                            title: 'Change Now',
-                                            value: data.changeNow ?? '-'),
-                                        BoxInfo(
-                                            title: 'Change on PM',
-                                            value: data.changeOnPm ?? '-'),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          )
-                        : const BoxInfo2(
-                            title: 'Additional spare part list', value: '-'),
+                  filteredAdditionalSparePart.isNotEmpty
+                      ? Column(
+                          children: [
+                            const BoxInfo2(
+                                title: 'Additional spare part list', value: ''),
+                            4.kH,
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: filteredAdditionalSparePart.length,
+                              itemBuilder: (context, index) {
+                                final data = filteredAdditionalSparePart[index];
+                                return Container(
+                                  margin:
+                                      const EdgeInsets.only(bottom: 6, top: 2),
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(width: 1, color: black3),
+                                      color: white1,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: Column(
+                                    children: [
+                                      BoxInfo(
+                                          title: 'C-Code',
+                                          value: data.cCode ?? ''),
+                                      BoxInfo(
+                                          title: 'Part Number',
+                                          value: data.partNumber ?? ''),
+                                      BoxInfo(
+                                          title: 'Description',
+                                          value: data.description ?? ''),
+                                      BoxInfo(
+                                          title: 'Quantity',
+                                          value: data.quantity ?? ''),
+                                      BoxInfo(
+                                          title: 'Change Now',
+                                          value: data.changeNow ?? '-'),
+                                      BoxInfo(
+                                          title: 'Change on PM',
+                                          value: data.changeOnPm ?? '-'),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        )
+                      : const BoxInfo2(
+                          title: 'Additional spare part list', value: '-'),
                   space.kH,
                   BoxInfo2(
                       title: 'Repair Result', value: data.repairResult ?? ''),

@@ -21,12 +21,14 @@ class SparePartDetail extends StatelessWidget {
   final List<Sparepart> additionalSparepart;
   final List<Sparepart> btrSparepart;
   final List<Sparepart> pvtSparepart;
+  final List<Sparepart> pvtSparepartIc;
   const SparePartDetail(
       {super.key,
       required this.additionalSparepart,
       required this.sparepart,
       required this.btrSparepart,
       required this.pvtSparepart,
+      required this.pvtSparepartIc,
       required this.jobId,
       required this.bugId,
       required this.projectId,
@@ -37,11 +39,27 @@ class SparePartDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formatter = NumberFormat("#,###");
-    return (sparepart.isEmpty || sparepart.first.quantity == '0') &&
-            (additionalSparepart.isEmpty ||
-                additionalSparepart.first.quantity == '0') &&
-            (btrSparepart.isEmpty || btrSparepart.first.quantity == '0') &&
-            (pvtSparepart.isEmpty || pvtSparepart.first.quantity == '0')
+    final filteredSparepart = sparepart.isNotEmpty
+        ? sparepart.where((item) => item.quantity != '0').toList()
+        : sparepart;
+    final filteredAdditionalSparepart = additionalSparepart.isNotEmpty
+        ? additionalSparepart.where((item) => item.quantity != '0').toList()
+        : additionalSparepart;
+    final filteredBtrSparepart = btrSparepart.isNotEmpty
+        ? btrSparepart.where((item) => item.quantity != '0').toList()
+        : btrSparepart;
+    final filteredPvtSparepart = pvtSparepart.isNotEmpty
+        ? pvtSparepart.where((item) => item.quantity != '0').toList()
+        : pvtSparepart;
+    final filteredPvtIcSparepart = pvtSparepartIc.isNotEmpty
+        ? pvtSparepartIc.where((item) => item.quantity != '0').toList()
+        : pvtSparepartIc;
+
+    return filteredSparepart.isEmpty &&
+            filteredAdditionalSparepart.isEmpty &&
+            filteredBtrSparepart.isEmpty &&
+            filteredPvtSparepart.isEmpty &&
+            filteredPvtIcSparepart.isEmpty
         ? Padding(
             padding: const EdgeInsets.all(16.0),
             child: Center(
@@ -83,10 +101,11 @@ class SparePartDetail extends StatelessWidget {
                     children: [
                       EditButton(onTap: () {
                         Get.to(() => EditSparePartView(
-                              sparepart: sparepart,
-                              additionalSparepart: additionalSparepart,
-                              btrSparepart: btrSparepart,
-                              pvtSparepart: pvtSparepart,
+                              sparepart: filteredSparepart,
+                              additionalSparepart: filteredAdditionalSparepart,
+                              btrSparepart: filteredBtrSparepart,
+                              pvtSparepart: filteredPvtSparepart,
+                              pvtIcSparepart: filteredPvtIcSparepart,
                               jobId: jobId,
                               bugId: bugId,
                               projectId: projectId,
@@ -95,7 +114,7 @@ class SparePartDetail extends StatelessWidget {
                       6.kH,
                     ],
                   ),
-                sparepart.isNotEmpty && sparepart.first.quantity != '0'
+                filteredSparepart.isNotEmpty
                     ? Column(
                         children: [
                           6.kH,
@@ -112,8 +131,11 @@ class SparePartDetail extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: DataTable(
-                                dataTextStyle: TextStyleList.text9,
-                                headingTextStyle: TextStyleList.detail2,
+                                columnSpacing: 10,
+                                dataTextStyle:
+                                    TextStyleList.text9.copyWith(fontSize: 13),
+                                headingTextStyle: TextStyleList.detail2
+                                    .copyWith(fontSize: 14),
                                 horizontalMargin: 0,
                                 columns: [
                                   const DataColumn(label: Text('Item')),
@@ -122,7 +144,7 @@ class SparePartDetail extends StatelessWidget {
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
-                                rows: sparepart
+                                rows: filteredSparepart
                                     .where((data) => data.quantity != '0')
                                     .map((data) {
                                   return DataRow(cells: [
@@ -134,7 +156,7 @@ class SparePartDetail extends StatelessWidget {
                                         Text(data.quantity ?? '0'),
                                         const Text('/'),
                                         FutureBuilder<String>(
-                                          future: fetchProductsReturnString2(
+                                          future: fetchProductsReturnString(
                                               data.partNumber ?? ''),
                                           builder: (BuildContext context,
                                               AsyncSnapshot<String> snapshot) {
@@ -173,8 +195,7 @@ class SparePartDetail extends StatelessWidget {
                         ],
                       )
                     : Container(),
-                additionalSparepart.isNotEmpty &&
-                        additionalSparepart.first.quantity != '0'
+                filteredAdditionalSparepart.isNotEmpty
                     ? Column(
                         children: [
                           const AppDivider(),
@@ -190,9 +211,12 @@ class SparePartDetail extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: DataTable(
+                                columnSpacing: 10,
+                                dataTextStyle:
+                                    TextStyleList.text9.copyWith(fontSize: 13),
+                                headingTextStyle: TextStyleList.detail2
+                                    .copyWith(fontSize: 14),
                                 horizontalMargin: 0,
-                                dataTextStyle: TextStyleList.text9,
-                                headingTextStyle: TextStyleList.detail2,
                                 columns: [
                                   const DataColumn(label: Text('Item')),
                                   const DataColumn(label: Text('Description')),
@@ -200,7 +224,7 @@ class SparePartDetail extends StatelessWidget {
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
-                                rows: additionalSparepart
+                                rows: filteredAdditionalSparepart
                                     .where((data) => data.quantity != '0')
                                     .map((data) {
                                   return DataRow(cells: [
@@ -212,7 +236,7 @@ class SparePartDetail extends StatelessWidget {
                                         Text(data.quantity ?? '0'),
                                         const Text('/'),
                                         FutureBuilder<String>(
-                                          future: fetchProductsReturnString2(
+                                          future: fetchProductsReturnString(
                                               data.partNumber ?? ''),
                                           builder: (BuildContext context,
                                               AsyncSnapshot<String> snapshot) {
@@ -251,7 +275,7 @@ class SparePartDetail extends StatelessWidget {
                         ],
                       )
                     : Container(),
-                btrSparepart.isNotEmpty && btrSparepart.first.quantity != '0'
+                filteredBtrSparepart.isNotEmpty
                     ? Column(
                         children: [
                           const AppDivider(),
@@ -267,9 +291,12 @@ class SparePartDetail extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: DataTable(
+                                columnSpacing: 10,
+                                dataTextStyle:
+                                    TextStyleList.text9.copyWith(fontSize: 13),
+                                headingTextStyle: TextStyleList.detail2
+                                    .copyWith(fontSize: 14),
                                 horizontalMargin: 0,
-                                dataTextStyle: TextStyleList.text9,
-                                headingTextStyle: TextStyleList.detail2,
                                 columns: [
                                   const DataColumn(label: Text('Item')),
                                   const DataColumn(label: Text('Description')),
@@ -277,7 +304,7 @@ class SparePartDetail extends StatelessWidget {
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
-                                rows: btrSparepart
+                                rows: filteredBtrSparepart
                                     .where((data) => data.quantity != '0')
                                     .map((data) {
                                   return DataRow(cells: [
@@ -289,7 +316,7 @@ class SparePartDetail extends StatelessWidget {
                                         Text(data.quantity ?? '0'),
                                         const Text('/'),
                                         FutureBuilder<String>(
-                                          future: fetchProductsReturnString2(
+                                          future: fetchProductsReturnString(
                                               data.partNumber ?? ''),
                                           builder: (BuildContext context,
                                               AsyncSnapshot<String> snapshot) {
@@ -319,7 +346,6 @@ class SparePartDetail extends StatelessWidget {
                                         ),
                                       ],
                                     ))),
-                                    DataCell(Text(data.description ?? '')),
                                     if (techLevel == '2')
                                       DataCell(Text(formatter.format(
                                           int.parse(data.salesPrice ?? '0')))),
@@ -329,7 +355,7 @@ class SparePartDetail extends StatelessWidget {
                         ],
                       )
                     : Container(),
-                pvtSparepart.isNotEmpty && pvtSparepart.first.quantity != '0'
+                filteredPvtSparepart.isNotEmpty
                     ? Column(
                         children: [
                           const AppDivider(),
@@ -345,9 +371,12 @@ class SparePartDetail extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: DataTable(
+                                columnSpacing: 10,
+                                dataTextStyle:
+                                    TextStyleList.text9.copyWith(fontSize: 13),
+                                headingTextStyle: TextStyleList.detail2
+                                    .copyWith(fontSize: 14),
                                 horizontalMargin: 0,
-                                dataTextStyle: TextStyleList.text9,
-                                headingTextStyle: TextStyleList.detail2,
                                 columns: [
                                   const DataColumn(label: Text('Item')),
                                   const DataColumn(label: Text('Description')),
@@ -355,7 +384,7 @@ class SparePartDetail extends StatelessWidget {
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
-                                rows: pvtSparepart
+                                rows: filteredPvtSparepart
                                     .where((data) => data.quantity != '0')
                                     .map((data) {
                                   return DataRow(cells: [
@@ -367,7 +396,7 @@ class SparePartDetail extends StatelessWidget {
                                         Text(data.quantity ?? '0'),
                                         const Text('/'),
                                         FutureBuilder<String>(
-                                          future: fetchProductsReturnString2(
+                                          future: fetchProductsReturnString(
                                               data.partNumber ?? ''),
                                           builder: (BuildContext context,
                                               AsyncSnapshot<String> snapshot) {
@@ -397,7 +426,86 @@ class SparePartDetail extends StatelessWidget {
                                         ),
                                       ],
                                     ))),
+                                    if (techLevel == '2')
+                                      DataCell(Text(formatter.format(
+                                          int.parse(data.salesPrice ?? '0')))),
+                                  ]);
+                                }).toList()),
+                          ),
+                        ],
+                      )
+                    : Container(),
+                filteredPvtIcSparepart.isNotEmpty
+                    ? Column(
+                        children: [
+                          const AppDivider(),
+                          10.kH,
+                          Row(
+                            children: [
+                              Text(
+                                'Periodic IC Spare Part List',
+                                style: TextStyleList.subtitle4,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: DataTable(
+                                columnSpacing: 10,
+                                dataTextStyle:
+                                    TextStyleList.text9.copyWith(fontSize: 13),
+                                headingTextStyle: TextStyleList.detail2
+                                    .copyWith(fontSize: 14),
+                                horizontalMargin: 0,
+                                columns: [
+                                  const DataColumn(label: Text('Item')),
+                                  const DataColumn(label: Text('Description')),
+                                  const DataColumn(label: Text('Unit/Store')),
+                                  if (techLevel == '2')
+                                    const DataColumn(label: Text('Price'))
+                                ],
+                                rows: filteredPvtIcSparepart
+                                    .where((data) => data.quantity != '0')
+                                    .map((data) {
+                                  return DataRow(cells: [
+                                    DataCell(Text(data.partNumber ?? '')),
                                     DataCell(Text(data.description ?? '')),
+                                    DataCell(Center(
+                                        child: Row(
+                                      children: [
+                                        Text(data.quantity ?? '0'),
+                                        const Text('/'),
+                                        FutureBuilder<String>(
+                                          future: fetchProductsReturnString(
+                                              data.partNumber ?? ''),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot<String> snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return const Padding(
+                                                padding: EdgeInsets.all(2.0),
+                                                child: SizedBox(
+                                                    width: 10,
+                                                    height: 10,
+                                                    child: DataCircleLoading()),
+                                              );
+                                            } else if (snapshot.hasError) {
+                                              return Center(
+                                                  child: Text(
+                                                      'Error: ${snapshot.error}'));
+                                            } else if (snapshot.hasData) {
+                                              return Center(
+                                                  child: Text(
+                                                      snapshot.data ?? '-'));
+                                            } else {
+                                              return const Center(
+                                                  child: Text(
+                                                      'No data available'));
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    ))),
                                     if (techLevel == '2')
                                       DataCell(Text(formatter.format(
                                           int.parse(data.salesPrice ?? '0')))),

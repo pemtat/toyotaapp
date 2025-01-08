@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:toyotamobile/Function/openappstore.dart';
+import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
@@ -186,14 +189,43 @@ class AlertDialogVersions extends StatelessWidget {
         'เเจ้งเตือน',
         style: TextStyleList.title1,
       )),
-      content: Row(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Text(
-              'เวอร์ชั่นแอพมีการอัพเดทใหม่ กรุณาอัปเดตแอพเพื่อใช้งาน',
-              style: TextStyleList.text2,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'เวอร์ชั่นแอพมีการอัพเดทใหม่ กรุณาอัปเดตแอพเพื่อใช้งาน',
+                  style: TextStyleList.text2,
+                ),
+              ),
+            ],
           ),
+          if (deviceType == 'Android') 8.kH,
+          if (deviceType == 'Android')
+            GestureDetector(
+              onTap: () {
+                Clipboard.setData(const ClipboardData(text: apkUrl));
+                Fluttertoast.showToast(
+                    msg: "คัดลอกข้อความ",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    fontSize: 12.0);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'คัดลอกลิ้ง APK',
+                    style: TextStyleList.text21,
+                  ),
+                  2.wH,
+                  Image.asset('assets/ticketblock.png'),
+                ],
+              ),
+            )
         ],
       ),
       actions: <Widget>[
@@ -203,7 +235,6 @@ class AlertDialogVersions extends StatelessWidget {
             style: TextStyleList.subtext3,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
             if (deviceType == 'iOS') {
               openAppStore();
             } else {}

@@ -18,6 +18,8 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/EditFIllForm2_widget/batteryInformation_widget.dart';
 import 'package:toyotamobile/Widget/EditFIllForm2_widget/batteryusage_widget.dart';
 import 'package:toyotamobile/Widget/EditFIllForm2_widget/forkliftinformation_widget.dart';
+import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_view.dart';
+import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_widget.dart';
 import 'package:toyotamobile/Widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/EditFIllForm2_widget/specicgravity_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
@@ -296,7 +298,7 @@ class EditFillFormView2 extends StatelessWidget {
             Obx(() => BoxContainer(
                   children: [
                     TitleWithButton(
-                        titleText: 'Recommanded spare Part',
+                        titleText: 'Recommended spare Part',
                         button: sparePartListController.sparePartList.length < 3
                             ? AddButton(
                                 onTap: () {
@@ -326,7 +328,30 @@ class EditFillFormView2 extends StatelessWidget {
                               );
                             },
                           )
-                        : const SizedBox()
+                        : const SizedBox(),
+                    Obx(
+                      () =>
+                          fillformController2.sparePartRemark.value.text.isEmpty
+                              ? RemarkButton(
+                                  title: '+ เพิ่มหมายเหตุ',
+                                  onTap: () {
+                                    sparePartRemarkEditModal(
+                                        context,
+                                        fillformController2.sparePartRemark,
+                                        'Spare Part Remark');
+                                  },
+                                  backgroundColor: black3,
+                                )
+                              : SparePartRemarkShow(
+                                  remark: fillformController2.sparePartRemark,
+                                  editFunction: () {
+                                    sparePartRemarkEditModal(
+                                        context,
+                                        fillformController2.sparePartRemark,
+                                        'Spare Part Remark');
+                                  },
+                                ),
+                    ),
                   ],
                 )),
             space.kH,

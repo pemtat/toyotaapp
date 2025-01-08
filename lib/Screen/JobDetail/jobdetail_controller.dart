@@ -80,8 +80,10 @@ class JobDetailController extends GetxController {
         completeCheck.value = true;
         await fetchSubJobSparePartId();
       }
-
       await fetchSubJob(subjobId, token ?? '', subJobs);
+      savedDateStartTime = ''.obs;
+      savedDateEndTime = ''.obs;
+      await fetchReadAttachmentList(ticketId, token ?? '', attatchments);
       // await fetchUserById(subJobs.first.reporterId ?? '', userData);
       // await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
       // await fetchgetCustomerInfo(
@@ -140,9 +142,6 @@ class JobDetailController extends GetxController {
         List<Issues>? issuesList = ticketModel.issues;
         issuesList!.map((issue) {
           issueId = issue.id;
-
-          fetchReadAttachment(issueId, token ?? '', issue.attachments,
-              attachmentsData, attatchments);
         }).toList();
         issueData.value = issuesList;
       } else {}
@@ -253,6 +252,20 @@ class JobDetailController extends GetxController {
             saveCurrentDateTime(saveCompletedtime);
             showWaitMessage();
             updateStatusSubjobs(jobId, issueId.toString());
+            if (subJobs.isNotEmpty) {
+              var subJobsData = subJobs.first;
+              if (reportList.isNotEmpty) {
+                String fieldReport = reportList.first.fieldReport ?? '';
+                if (fieldReport == 'Inspection') {
+                  finishedQuoteJobs(
+                      jobId,
+                      issueId.toString(),
+                      subJobsData.projectId ?? '1',
+                      subJobsData.referenceCode ?? '',
+                      subJobsData.handlerId ?? '0');
+                }
+              }
+            }
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
             showSaveMessage();

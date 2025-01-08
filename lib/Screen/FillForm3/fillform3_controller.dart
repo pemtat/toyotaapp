@@ -50,6 +50,7 @@ class FillformController3 extends GetxController {
   final mastType = TextEditingController().obs;
   final lifeHeight = TextEditingController().obs;
   final customerFleetNo = TextEditingController().obs;
+  final sparePartRemark = TextEditingController().obs;
   var userByZone = <UsersZone>[].obs;
   var selectedUser = ''.obs;
   final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());
@@ -472,6 +473,9 @@ class FillformController3 extends GetxController {
     if (customerFleetNo.value.text == '') {
       customerFleetNo.value.text = '-';
     }
+    if (sparePartRemark.value.text.isEmpty) {
+      sparePartRemark.value.text = '';
+    }
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
       "safety_travel_alarm": safety.selections[0],
@@ -498,7 +502,8 @@ class FillformController3 extends GetxController {
       "m": maintenance.maintenanceList.first.people,
       "created_by": userController.userInfo.first.id,
       "pvt_maintenance_details": combinedList,
-      "dar_details": sparePartList
+      "dar_details": sparePartList,
+      'spare_part_remark': sparePartRemark.value.text,
     };
     try {
       final response = await http.post(Uri.parse(apiUrl),

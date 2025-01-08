@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/refresh.dart';
+import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
+import 'package:toyotamobile/Screen/JobDetail/jobdetail_view.dart';
+import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_view.dart';
 import 'package:toyotamobile/Screen/Notification/notification_controller.dart';
+import 'package:toyotamobile/Screen/PendingTask/pendingtask_view.dart';
+import 'package:toyotamobile/Screen/PendingTaskPM/pendingtaskpm_view.dart';
+import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_view.dart';
+import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/notification_item_widget.dart';
 
@@ -79,7 +88,70 @@ class NotificationView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final notification =
                         jobController.notificationHistory[index];
-                    return NotificationItem(notification: notification);
+                    return InkWell(
+                        onTap: () async {
+                          if (notification.notifyType == 'QT') {
+                            await notificationController
+                                .fetchNotifySubJobSparePartId(
+                                    notification.jobId ?? '0',
+                                    notification.bugId ?? '0',
+                                    notification.projectId ?? '0');
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => Obx(
+                                () => Material(
+                                  color: Colors.transparent,
+                                  child: SubJobSparePartWidget(
+                                    subJobSparePart: notificationController
+                                        .subJobSparePart.first,
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else if (notification.notifyType == 'NJ') {
+                            if (notification.projectId == '2') {
+                            } else {
+                              if (notification.jobStatus == '101') {
+                                Get.to(() => PendingTaskView(
+                                      ticketId: notification.bugId ?? '',
+                                      jobId: notification.jobId ?? '',
+                                    ));
+                              } else if (notification.jobStatus == '102') {
+                                Get.to(() => JobDetailView(
+                                      ticketId: notification.bugId ?? '',
+                                      jobId: notification.jobId ?? '',
+                                    ));
+                              } else {
+                                Get.to(() => TicketDetailView(
+                                      ticketId: notification.bugId ?? '',
+                                      jobId: notification.jobId ?? '',
+                                    ));
+                              }
+                            }
+                          } else if (notification.notifyType == 'NJPM') {
+                            if (notification.projectId == '2') {
+                            } else {
+                              if (stringToStatus(
+                                      notification.bugStatus ?? '') ==
+                                  'pending') {
+                                Get.to(() => PendingTaskViewPM(
+                                    ticketId: notification.bugStatus ?? ''));
+                              } else if (stringToStatus(
+                                      notification.bugStatus ?? '') ==
+                                  'confirmed') {
+                                Get.to(() => JobDetailViewPM(
+                                    ticketId: notification.bugStatus ?? ''));
+                              } else if (stringToStatus(
+                                      notification.bugStatus ?? '') ==
+                                  'closed') {
+                                Get.to(() => TicketPMDetailView(
+                                    ticketId: notification.bugStatus ?? ''));
+                              }
+                            }
+                          }
+                        },
+                        child: NotificationItem(notification: notification));
                   },
                 );
               }),

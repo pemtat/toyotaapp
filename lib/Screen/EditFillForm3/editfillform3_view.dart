@@ -26,6 +26,8 @@ import 'package:toyotamobile/Styles/boxdecoration.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_view.dart';
+import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_widget.dart';
 import 'package:toyotamobile/Widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
@@ -761,7 +763,30 @@ class EditFillFormView3 extends StatelessWidget {
                                   sparePartList: sparepartList.sparePartList);
                             },
                           )
-                        : const SizedBox()
+                        : const SizedBox(),
+                    Obx(
+                      () =>
+                          fillformController3.sparePartRemark.value.text.isEmpty
+                              ? RemarkButton(
+                                  title: '+ เพิ่มหมายเหตุ',
+                                  onTap: () {
+                                    sparePartRemarkEditModal(
+                                        context,
+                                        fillformController3.sparePartRemark,
+                                        'Spare Part Remark');
+                                  },
+                                  backgroundColor: black3,
+                                )
+                              : SparePartRemarkShow(
+                                  remark: fillformController3.sparePartRemark,
+                                  editFunction: () {
+                                    sparePartRemarkEditModal(
+                                        context,
+                                        fillformController3.sparePartRemark,
+                                        'Spare Part Remark');
+                                  },
+                                ),
+                    ),
                   ],
                 )),
             space.kH,
@@ -769,6 +794,7 @@ class EditFillFormView3 extends StatelessWidget {
               () => BoxContainer(
                 children: [
                   TitleWithButton(
+                      required: 'yes',
                       titleText: 'Maintenance and Service Result',
                       button: readOnly == null
                           ? maintenance.maintenanceList.isEmpty

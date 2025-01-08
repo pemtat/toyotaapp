@@ -402,6 +402,8 @@ class HomeController extends GetxController {
                 break;
               case '103':
                 completedSubJobs.add(subJob);
+              case '90':
+                completedSubJobs.add(subJob);
                 break;
             }
           }
@@ -441,17 +443,33 @@ class HomeController extends GetxController {
         List<SubJobSparePart> pendingSparePart = [];
         List<SubJobSparePart> completedSparePart = [];
         List<SubJobSparePart> rejectedSparePart = [];
-        for (var sparePart in itemList) {
-          switch (sparePart.estimateStatus) {
-            case '1':
-              pendingSparePart.add(sparePart);
-              break;
-            case '2':
-              completedSparePart.add(sparePart);
-              break;
-            case '3':
-              rejectedSparePart.add(sparePart);
-              break;
+        if (techLevel.value == '1') {
+          for (var sparePart in itemList) {
+            switch (sparePart.estimateStatus) {
+              case '1':
+                pendingSparePart.add(sparePart);
+                break;
+              case '2':
+                completedSparePart.add(sparePart);
+                break;
+              case '3':
+                rejectedSparePart.add(sparePart);
+                break;
+            }
+          }
+        } else {
+          for (var sparePart in itemList) {
+            switch (sparePart.techManagerStatus) {
+              case '0':
+                pendingSparePart.add(sparePart);
+                break;
+              case '1':
+                completedSparePart.add(sparePart);
+                break;
+              case '2':
+                rejectedSparePart.add(sparePart);
+                break;
+            }
           }
         }
         sparePartPending.value = pendingSparePart.length;

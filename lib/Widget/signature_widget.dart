@@ -144,7 +144,7 @@ class SignatureWidget extends StatelessWidget {
                   await fetchBatteryReportData(
                       jobId, token ?? '', jobControllerPM.reportList);
                   showSignatureSaveMessage();
-                } else {
+                } else if (option == 'preventive') {
                   await changeIssueSignaturePM(
                       jobId,
                       saveCompletedtime.value,
@@ -153,6 +153,16 @@ class SignatureWidget extends StatelessWidget {
                       'preventive');
                   await fetchPreventiveReportData(
                       jobId, token ?? '', jobControllerPM.reportPreventiveList);
+                  showSignatureSaveMessage();
+                } else {
+                  await changeIssueSignaturePM(
+                      jobId,
+                      saveCompletedtime.value,
+                      signatureController.value.text,
+                      signaturePad.value,
+                      'preventive_ic');
+                  await fetchPreventiveICReportData(jobId, token ?? '',
+                      jobControllerPM.reportPreventiveListIc);
                   showSignatureSaveMessage();
                 }
                 Navigator.pop(context);

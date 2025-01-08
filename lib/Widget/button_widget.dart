@@ -322,6 +322,39 @@ class ButtonRed extends StatelessWidget {
   }
 }
 
+class ButtonGray extends StatelessWidget {
+  final title;
+  final VoidCallback onTap;
+  final Color? color;
+  const ButtonGray(
+      {super.key, required this.title, required this.onTap, this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: color ?? Color.fromARGB(255, 154, 154, 154),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            ),
+            child: Text(
+              title,
+              style: TextStyleList.text7.copyWith(color: Colors.white),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class ButtonColor extends StatelessWidget {
   final title;
   final Color backgroundColor;
@@ -346,6 +379,36 @@ class ButtonColor extends StatelessWidget {
       child: Text(
         title,
         style: TextStyleList.text7.copyWith(color: Colors.white),
+      ),
+    );
+  }
+}
+
+class RemarkButton extends StatelessWidget {
+  final title;
+  final Color backgroundColor;
+  final VoidCallback onTap;
+  const RemarkButton(
+      {super.key,
+      required this.title,
+      required this.onTap,
+      required this.backgroundColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size(10, 10),
+        backgroundColor: backgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 6.0),
+      ),
+      child: Text(
+        title,
+        style: TextStyleList.subtext1.copyWith(color: Colors.white),
       ),
     );
   }

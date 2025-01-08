@@ -37,6 +37,8 @@ class FillformController extends GetxController {
   final mastType = TextEditingController().obs;
   final lifeHeight = TextEditingController().obs;
   final customerFleetNo = TextEditingController().obs;
+  final sparePartRemark = TextEditingController().obs;
+  final additionalSparePartRemark = TextEditingController().obs;
   final Rcode rcodeController = Get.put(Rcode());
   final Wcode wcodeController = Get.put(Wcode());
   var userByZone = <UsersZone>[].obs;
@@ -93,7 +95,13 @@ class FillformController extends GetxController {
     if (fieldServiceReport.isEmpty ||
         rcodeController.rCode.isEmpty ||
         wcodeController.wCode.isEmpty ||
-        processStaffController.repairStaff.isEmpty ||
+        rPController.repairProcedureList.isEmpty ||
+        rPController.repairProcedureList.first.repairProcedure.isEmpty ||
+        rPController.repairProcedureList.first.repairProcedure == '' ||
+        rPController.repairProcedureList.first.repairProcedure == '-' ||
+        rPController.repairProcedureList.first.causeProblem.isEmpty ||
+        rPController.repairProcedureList.first.causeProblem == '' ||
+        rPController.repairProcedureList.first.causeProblem == '-' ||
         repairResultController.maintenanceList.isEmpty ||
         repairResultController.maintenanceList.first.chargingType.isEmpty ||
         repairResultController.maintenanceList.first.hr == 0.0 ||
@@ -214,6 +222,13 @@ class FillformController extends GetxController {
     if (customerFleetNo.value.text == '') {
       customerFleetNo.value.text = '-';
     }
+    if (sparePartRemark.value.text.isEmpty) {
+      sparePartRemark.value.text = '';
+    }
+
+    if (additionalSparePartRemark.value.text.isEmpty) {
+      additionalSparePartRemark.value.text = '';
+    }
 
     saveCurrentDateTime(saveCompletedtime);
     final Map<String, dynamic> data = {
@@ -244,6 +259,8 @@ class FillformController extends GetxController {
       'tech1': userController.userInfo.first.realName,
       'tech2': selectedUser.value == '' ? '-' : selectedUser.value,
       'bugid': ticketId.value,
+      'spare_part_remark': sparePartRemark.value.text,
+      'spare_part_remark2': additionalSparePartRemark.value.text,
       'save_time': saveCompletedtime.value
     };
     List<SparePartModel> allSpareParts =

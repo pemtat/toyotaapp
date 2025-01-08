@@ -57,6 +57,7 @@ class FillformController3 extends GetxController {
   final customerFleetNo = TextEditingController().obs;
   var userByZone = <UsersZone>[].obs;
   var selectedUser = ''.obs;
+  final sparePartRemark = TextEditingController().obs;
   final AuxiliaryMotor auxiliaryMotor = Get.put(AuxiliaryMotor());
   final DriveMotorChecks driveMotorChecks = Get.put(DriveMotorChecks());
   final InitialChecks initialChecks = Get.put(InitialChecks());
@@ -298,6 +299,10 @@ class FillformController3 extends GetxController {
       product.value.text = maintenances.product ?? '';
       model.value.text = maintenances.model ?? '';
       serialNo.value.text = maintenances.serialNo ?? '';
+      if ((maintenances.sparePartRemark ?? '') != '') {
+        sparePartRemark.value.text = maintenances.sparePartRemark ?? '';
+        sparePartRemark.refresh();
+      }
       if (maintenances.safetyTravelAlarm == '' &&
           maintenances.safetyRearviewMirror == '' &&
           maintenances.safetySeatBelt == '') {
@@ -331,25 +336,24 @@ class FillformController3 extends GetxController {
 
     if (sparePart != []) {
       var sparePartListData = <SparePartModel>[].obs;
-      if (sparePart!.first.qty != '0') {
-        for (var i = 0; i < sparePart.length; i++) {
-          {
-            sparePartListData.add(SparePartModel(
-                cCodePage: sparePart[i].pageCode ?? '',
-                partNumber: sparePart[i].partNumber ?? '',
-                partDetails: sparePart[i].description ?? '',
-                quantity: int.tryParse(sparePart[i].qty ?? '') ?? 0,
-                salesPrice: sparePart[i].salesPrice ?? '0',
-                priceVat: sparePart[i].priceVat == true ? '1' : '0',
-                changeNow: "",
-                changeOnPM: "",
-                relationId: "",
-                unitMeasure: sparePart[i].unitMeasure ?? '',
-                additional: 0));
-          }
+
+      for (var i = 0; i < sparePart!.length; i++) {
+        if (sparePart[i].qty != '0') {
+          sparePartListData.add(SparePartModel(
+              cCodePage: sparePart[i].pageCode ?? '',
+              partNumber: sparePart[i].partNumber ?? '',
+              partDetails: sparePart[i].description ?? '',
+              quantity: int.tryParse(sparePart[i].qty ?? '') ?? 0,
+              salesPrice: sparePart[i].salesPrice ?? '0',
+              priceVat: sparePart[i].priceVat == true ? '1' : '0',
+              changeNow: "",
+              changeOnPM: "",
+              relationId: "",
+              unitMeasure: sparePart[i].unitMeasure ?? '',
+              additional: 0));
         }
-        sparepartList.sparePartList.addAll(sparePartListData);
       }
+      sparepartList.sparePartList.addAll(sparePartListData);
     }
   }
 
@@ -721,6 +725,11 @@ class FillformController3 extends GetxController {
     if (customerFleetNo.value.text == '') {
       customerFleetNo.value.text = '-';
     }
+
+    if (sparePartRemark.value.text.isEmpty) {
+      sparePartRemark.value.text = '';
+    }
+
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
       "safety_travel_alarm": safety.selections[0],
@@ -746,7 +755,8 @@ class FillformController3 extends GetxController {
       "m": maintenance.maintenanceList.first.people,
       "created_by": userController.userInfo.first.id,
       "pvt_maintenance_details": combinedList,
-      "dar_details": sparePartList
+      "dar_details": sparePartList,
+      'spare_part_remark': sparePartRemark.value.text,
     };
     try {
       final response = await http.post(Uri.parse(apiUrl),

@@ -15,6 +15,8 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/EditFillForm_widget/repairprodecure_widget.dart';
+import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_view.dart';
+import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -257,7 +259,8 @@ class EditFillFormView extends StatelessWidget {
                   () => BoxContainer(
                     children: [
                       TitleWithButton(
-                          titleText: 'Repair prodecure',
+                          required: 'yes',
+                          titleText: 'Repair Prodecure',
                           button: readOnly == null
                               ? rPController.repairProcedureList.isEmpty
                                   ? AddButton(
@@ -323,7 +326,30 @@ class EditFillFormView extends StatelessWidget {
                                   );
                                 },
                               )
-                            : const SizedBox()
+                            : const SizedBox(),
+                        Obx(
+                          () => fillFormController
+                                  .sparePartRemark.value.text.isEmpty
+                              ? RemarkButton(
+                                  title: '+ เพิ่มหมายเหตุ',
+                                  onTap: () {
+                                    sparePartRemarkEditModal(
+                                        context,
+                                        fillFormController.sparePartRemark,
+                                        'Spare Part Remark');
+                                  },
+                                  backgroundColor: black3,
+                                )
+                              : SparePartRemarkShow(
+                                  remark: fillFormController.sparePartRemark,
+                                  editFunction: () {
+                                    sparePartRemarkEditModal(
+                                        context,
+                                        fillFormController.sparePartRemark,
+                                        'Spare Part Remark');
+                                  },
+                                ),
+                        ),
                       ],
                     )),
                 space.kH,
@@ -362,7 +388,33 @@ class EditFillFormView extends StatelessWidget {
                                   );
                                 },
                               )
-                            : const SizedBox()
+                            : const SizedBox(),
+                        Obx(
+                          () => fillFormController
+                                  .additionalSparePartRemark.value.text.isEmpty
+                              ? RemarkButton(
+                                  title: '+ เพิ่มหมายเหตุ',
+                                  onTap: () {
+                                    sparePartRemarkEditModal(
+                                        context,
+                                        fillFormController
+                                            .additionalSparePartRemark,
+                                        'Additional Spare Part Remark');
+                                  },
+                                  backgroundColor: black3,
+                                )
+                              : SparePartRemarkShow(
+                                  remark: fillFormController
+                                      .additionalSparePartRemark,
+                                  editFunction: () {
+                                    sparePartRemarkEditModal(
+                                        context,
+                                        fillFormController
+                                            .additionalSparePartRemark,
+                                        'Additional Spare Part Remark');
+                                  },
+                                ),
+                        ),
                       ],
                     )),
                 space.kH,
@@ -413,7 +465,6 @@ class EditFillFormView extends StatelessWidget {
                   children: [
                     Obx(
                       () => AddEditBox(
-                          required: 'yes',
                           titleText: 'Process Staff',
                           readOnly: readOnly == null ? null : 'yes',
                           list: repairStaffController.repairStaff,

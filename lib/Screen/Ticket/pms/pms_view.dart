@@ -40,7 +40,16 @@ class Pms extends StatelessWidget {
                 5.kH,
                 Expanded(
                   child: Obx(() {
-                    final filteredJobs = jobController.pmItemsPage.where((job) {
+                    final isFiltering =
+                        ticketController.searchQuery.value != '' ||
+                            ticketController.selectedStatus.isNotEmpty ||
+                            ticketController.selectedDate.value != null;
+
+                    final jobs = isFiltering
+                        ? jobController.pmItems
+                        : jobController.pmItemsPage;
+
+                    final filteredJobs = jobs.where((job) {
                       final searchQueryMatch = job.customerName!
                               .contains(ticketController.searchQuery.value) ||
                           job.description!
@@ -84,7 +93,9 @@ class Pms extends StatelessWidget {
                       children: [
                         Expanded(
                           child: ListView.builder(
-                            controller: pmsController.scrollController,
+                            controller: isFiltering
+                                ? null
+                                : pmsController.scrollController,
                             shrinkWrap: true,
                             itemCount: filteredJobs.length,
                             itemBuilder: (context, index) {
@@ -127,7 +138,7 @@ class Pms extends StatelessWidget {
                             },
                           ),
                         ),
-                        if (pmsController.loading.value)
+                        if (!isFiltering && pmsController.loading.value)
                           const Center(
                             child: DataCircleLoading(),
                           )

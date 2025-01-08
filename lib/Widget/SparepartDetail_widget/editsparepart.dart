@@ -112,10 +112,6 @@ class EditSparePartDetail extends StatelessWidget {
                           'No: ${product.no}',
                           style: TextStyleList.text3,
                         ),
-                        trailing: Text(
-                          product.inventory.toString(),
-                          style: TextStyleList.text3,
-                        ),
                         onTap: () async {
                           partNumber.value.text = product.no;
                           searchPartNumber.value.text = product.no;

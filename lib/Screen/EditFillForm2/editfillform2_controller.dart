@@ -41,6 +41,7 @@ class EditFillformController2 extends GetxController {
   var selectedUser = ''.obs;
   var isSignatureEmpty = true.obs;
   var signaturePad = ''.obs;
+  final sparePartRemark = TextEditingController().obs;
   final TextEditingController signatureController = TextEditingController();
   final SparepartList sparePartListController = Get.put(SparepartList());
   final AdditSparepartList additSparePartListController =
@@ -133,6 +134,10 @@ class EditFillformController2 extends GetxController {
     contactPerson.value.text = info1.contactPerson ?? '';
     division.value.text = info1.division ?? '';
     selectedUser.value = info1.tech2 ?? '';
+    if ((info1.sparePartRemark ?? '') != '') {
+      sparePartRemark.value.text = info1.sparePartRemark ?? '';
+      sparePartRemark.refresh();
+    }
 
     final newBatteryInfo = BatteryInformationModel(
       batteryBand: info1.batteryBand ?? '-',
@@ -214,26 +219,24 @@ class EditFillformController2 extends GetxController {
     }
 
     var sparePartList = <SparePartModel>[].obs;
-    if (recommendedSpareparts.first.quantity != '0') {
-      for (var i = 0; i < recommendedSpareparts.length; i++) {
-        {
-          sparePartList.add(SparePartModel(
-              cCodePage: recommendedSpareparts[i].cCode ?? '',
-              partNumber: recommendedSpareparts[i].partNumber ?? '',
-              partDetails: recommendedSpareparts[i].description ?? '',
-              quantity:
-                  int.tryParse(recommendedSpareparts[i].quantity ?? '') ?? 0,
-              salesPrice: recommendedSpareparts[i].salesPrice ?? '0',
-              priceVat: recommendedSpareparts[i].priceVat == true ? '1' : '0',
-              changeNow: "",
-              changeOnPM: "",
-              unitMeasure: recommendedSpareparts[i].unitMeasure ?? '',
-              relationId: "",
-              additional: 0));
-        }
+    for (var i = 0; i < recommendedSpareparts.length; i++) {
+      if (recommendedSpareparts[i].quantity != '0') {
+        sparePartList.add(SparePartModel(
+            cCodePage: recommendedSpareparts[i].cCode ?? '',
+            partNumber: recommendedSpareparts[i].partNumber ?? '',
+            partDetails: recommendedSpareparts[i].description ?? '',
+            quantity:
+                int.tryParse(recommendedSpareparts[i].quantity ?? '') ?? 0,
+            salesPrice: recommendedSpareparts[i].salesPrice ?? '0',
+            priceVat: recommendedSpareparts[i].priceVat == true ? '1' : '0',
+            changeNow: "",
+            changeOnPM: "",
+            unitMeasure: recommendedSpareparts[i].unitMeasure ?? '',
+            relationId: "",
+            additional: 0));
       }
-      sparePartListController.sparePartList.addAll(sparePartList);
     }
+    sparePartListController.sparePartList.addAll(sparePartList);
 
     // var additionalSparePartList = <SparePartModel>[].obs;
     // if (changeSpareparts.first.quantity != '0') {
@@ -448,6 +451,10 @@ class EditFillformController2 extends GetxController {
     if (division.value.text == '') {
       division.value.text = '-';
     }
+
+    if (sparePartRemark.value.text.isEmpty) {
+      sparePartRemark.value.text = '';
+    }
     final Map<String, dynamic> data = {
       "job_id": jobId.toString(),
       if (jobIssueId.value != '') "job_issue_id": jobIssueId.value,
@@ -485,7 +492,8 @@ class EditFillformController2 extends GetxController {
       "created_by": userController.userInfo.first.id,
       "btr_sparepart": combinedList,
       "specic_voltage_check": specicGravity,
-      "btr_conditions": batteryCondition
+      "btr_conditions": batteryCondition,
+      'spare_part_remark': sparePartRemark.value.text,
     };
     try {
       final response = await http.post(Uri.parse(apiUrl),

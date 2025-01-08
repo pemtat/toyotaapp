@@ -3,6 +3,7 @@ import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editfillform2_view.dart';
 import 'package:toyotamobile/Screen/EditFillForm3/editfillform3_view.dart';
+import 'package:toyotamobile/Screen/EditFillForm3_IC/editfillform3_ic_view.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
@@ -379,6 +380,106 @@ class TicketPMDetailView extends StatelessWidget {
                                 ],
                               ),
                               8.kH,
+                              BoxContainer(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleApp(
+                                          text:
+                                              'Periodic Maintenance Report IC'),
+                                      stringToStatus(issue.status.id
+                                                      .toString()) !=
+                                                  'closed' &&
+                                              jobController
+                                                  .reportPreventiveListIc
+                                                  .isNotEmpty &&
+                                              jobController
+                                                      .reportPreventiveListIc
+                                                      .first
+                                                      .pvtMaintenance !=
+                                                  null &&
+                                              jobController.canEdit.value
+                                          ? EditButton(
+                                              onTap: () {
+                                                Get.to(() =>
+                                                    EditFillFormView3IC(
+                                                        jobId: ticketId,
+                                                        readOnly: 'yes'));
+                                              },
+                                            )
+                                          : Container()
+                                    ],
+                                  ),
+                                  Obx(() => jobController.reportPreventiveListIc
+                                              .isNotEmpty &&
+                                          jobController.reportPreventiveListIc
+                                                  .first.pvtMaintenance !=
+                                              null
+                                      ? ShowPreventiveReportWidget(
+                                          ic: 'yes',
+                                          reportData: jobController
+                                              .reportPreventiveListIc,
+                                          bugId: ticketId.toString(),
+                                          timeStart:
+                                              jobController.savedDateStartTime,
+                                          timeEnd:
+                                              jobController.savedDateEndTime,
+                                        )
+                                      : Container()),
+                                  Obx(() => ((jobController
+                                                  .reportPreventiveListIc
+                                                  .isNotEmpty &&
+                                              jobController
+                                                      .reportPreventiveListIc
+                                                      .first
+                                                      .pvtMaintenance !=
+                                                  null) &&
+                                          jobController
+                                              .subJobSparePart.isNotEmpty &&
+                                          (jobController
+                                                      .reportPreventiveListIc
+                                                      .first
+                                                      .pvtMaintenance!
+                                                      .signature !=
+                                                  null &&
+                                              jobController
+                                                      .reportPreventiveListIc
+                                                      .first
+                                                      .pvtMaintenance!
+                                                      .signaturePadUrl !=
+                                                  null))
+                                      ? Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            ButtonColor(
+                                              backgroundColor: red4,
+                                              title: 'View Part Detail',
+                                              onTap: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        Obx(() => Material(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              child:
+                                                                  SubJobSparePartWidget(
+                                                                subJobSparePart:
+                                                                    jobController
+                                                                        .subJobSparePart
+                                                                        .first,
+                                                              ),
+                                                            )));
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                      : Container()),
+                                ],
+                              ),
                             ],
                           ),
                         ),

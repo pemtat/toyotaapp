@@ -123,3 +123,41 @@ class TitleWithButton2 extends StatelessWidget {
         ]));
   }
 }
+
+class TitleWithButton3 extends StatelessWidget {
+  final String titleText;
+  final Widget button;
+  final String? required;
+  final bool? space;
+
+  const TitleWithButton3({
+    super.key,
+    this.space,
+    this.required,
+    required this.titleText,
+    required this.button,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return space == null
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                  child: TitleApp(
+                text: titleText,
+                required: required,
+              )),
+              button,
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TitleApp2(text: titleText),
+              button,
+            ],
+          );
+  }
+}

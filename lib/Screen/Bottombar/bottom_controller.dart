@@ -10,6 +10,7 @@ import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 class BottomBarController extends GetxController {
   var currentIndex = 0.obs;
   var hasNotification = false.obs;
+  final PageController pageController = PageController();
 
   Future<bool> checkNotification() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -41,6 +42,7 @@ class BottomBarController extends GetxController {
     String versionBase = await getVersions(deviceType, version);
     if (version != versionBase) {
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialogVersions(

@@ -75,7 +75,29 @@ class StatusButton3 extends StatelessWidget {
       case '2':
         return const StatusApproved();
       case '3':
-        return const StatusReject();
+        return const StatusNotApproved();
+      default:
+        return const StatusWaitForPending();
+    }
+  }
+}
+
+class StatusButton4 extends StatelessWidget {
+  final String status;
+
+  const StatusButton4({super.key, required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    switch (status) {
+      case '0':
+        return const StatusNewButton();
+      case '1':
+        return const StatusNewButton();
+      case '2':
+        return const StatusOnprocessButton();
+      case '3':
+        return const StatusDone();
       default:
         return const StatusWaitForPending();
     }
