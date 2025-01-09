@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:toyotamobile/Function/refresh.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
@@ -30,6 +31,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'home_controller.dart';
+import 'package:toyotamobile/Service/app_localizations.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeView extends StatelessWidget {
@@ -66,7 +68,8 @@ class HomeView extends StatelessWidget {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('My Jobs', style: TextStyleList.title1),
+                        Text(AppLocalizations.of(context).translate('my_job'),
+                            style: TextStyleList.title1),
                         Text(getFormattedDate(DateTime.now()),
                             style: TextStyleList.title1),
                       ],

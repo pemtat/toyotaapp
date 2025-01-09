@@ -37,11 +37,7 @@ class LanguageView extends StatelessWidget {
         InkWell(
           onTap: () {
             languageController.showConfirmDialog(
-              context,
-              'Are you confirm to change?',
-              'Cancel',
-              'Yes',
-            );
+                context, 'Are you confirm to change?', 'Cancel', 'Yes', 'th');
           },
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -65,11 +61,7 @@ class LanguageView extends StatelessWidget {
         InkWell(
           onTap: () {
             languageController.showConfirmDialog(
-              context,
-              'Are you confirm to change?',
-              'Cancel',
-              'Yes',
-            );
+                context, 'Are you confirm to change?', 'Cancel', 'Yes', 'en');
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16),

@@ -2,9 +2,12 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
+import 'package:toyotamobile/Screen/Account/Language/language_controller.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_view.dart';
+import 'package:toyotamobile/Service/app_localizations.dart';
 import 'package:toyotamobile/Service/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/firebase_options.dart';
 import 'Screen/Login/login_view.dart';
+// ใช้จาก Flutter SDK
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -40,7 +44,11 @@ void main() async {
   await _setupLocalNotifications();
   _setupForegroundNotificationListener();
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessageHandler);
-  runApp(MyApp(home: await getHomeWidget(prefs)));
+  String languageCode = await languageController.getLanguage();
+  runApp(MyApp(
+    home: await getHomeWidget(prefs),
+    languageCode: languageCode,
+  ));
 }
 
 Future<void> _requestPermissionToUser() async {
@@ -110,6 +118,7 @@ Future<void> _showNotification(RemoteMessage message) async {
   );
 }
 
+final LanguageController languageController = Get.put(LanguageController());
 Future<Widget> getHomeWidget(SharedPreferences prefs) async {
   String? getStr = prefs.getString('verify');
   return getStr == "pass" ? BottomBarView() : LoginView();
@@ -117,12 +126,24 @@ Future<Widget> getHomeWidget(SharedPreferences prefs) async {
 
 class MyApp extends StatelessWidget {
   final Widget? home;
-  const MyApp({super.key, this.home});
+  final String? languageCode;
+  const MyApp({super.key, this.home, this.languageCode});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      locale: Locale(languageCode ?? 'th'),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en', 'US'),
+        Locale('th', 'TH'),
+      ],
       title: 'Login',
       theme: ThemeData(
         primarySwatch: Colors.blue,
