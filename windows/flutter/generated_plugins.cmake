@@ -5,7 +5,6 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_windows
   firebase_core
-  flutter_localization
   geolocator_windows
   local_auth_windows
   pdfx
