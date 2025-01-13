@@ -739,13 +739,11 @@ class EditFillFormView3 extends StatelessWidget {
                     TitleWithButton(
                         titleText:
                             'Description Problem / Action and Result \nRecommend spare part chaged',
-                        button: sparepartList.sparePartList.length < 8
-                            ? AddButton(
-                                onTap: () {
-                                  sparepartList.sparePartListModal(context);
-                                },
-                              )
-                            : Container()),
+                        button: AddButton(
+                          onTap: () {
+                            sparepartList.sparePartListModal(context);
+                          },
+                        )),
                     sparepartList.sparePartList.isNotEmpty
                         ? ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),

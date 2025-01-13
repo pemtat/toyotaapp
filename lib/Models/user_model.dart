@@ -15,6 +15,7 @@ class User {
   final String resourceNo;
   final String zone;
   final String phoneNo;
+  final String locale;
   User(
       {required this.id,
       required this.name,
@@ -28,7 +29,8 @@ class User {
       required this.companyId,
       required this.resourceNo,
       required this.zone,
-      required this.phoneNo});
+      required this.phoneNo,
+      required this.locale});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -48,6 +50,7 @@ class User {
       resourceNo: json['resource_no'] ?? '',
       zone: json['zone'] ?? '',
       phoneNo: json['phone_no'] ?? '',
+      locale: json['locale'] ?? 'th',
     );
   }
 }

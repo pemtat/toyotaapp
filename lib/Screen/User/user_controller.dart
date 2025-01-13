@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,9 +28,15 @@ class UserController extends GetxController {
           List<User> userList =
               responseData.map((json) => User.fromJson(json)).toList();
           userInfo.value = userList;
+          Locale newLocale;
+          newLocale = Locale(userList.first.locale);
+          Get.updateLocale(newLocale);
         } else if (responseData is Map<String, dynamic>) {
           User user = User.fromJson(responseData);
           userInfo.value = [user];
+          Locale newLocale;
+          newLocale = Locale(userInfo.first.locale);
+          Get.updateLocale(newLocale);
         } else {
           print('Invalid data format');
         }

@@ -25,6 +25,7 @@ import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/userallsales_model.dart';
 import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
+import 'package:toyotamobile/Models/usertoken.dart';
 import 'package:toyotamobile/Models/versions_model.dart';
 import 'package:toyotamobile/Models/warrantybyid_model.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
@@ -177,6 +178,34 @@ Future<void> fetchAllSalesAdmin(RxList<UsersSales> userAllSales,
   } catch (e) {
     print('Error: $e');
     userAllSales.clear();
+  }
+}
+
+Future<void> fetchAllTech(RxList<UsersSales> userAllTech) async {
+  String? token = await getToken();
+  try {
+    final response = await http.get(
+      Uri.parse(getAllTech()),
+      headers: {
+        'Authorization': token ?? '',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+
+      UserAllSales userData = UserAllSales.fromJson(data);
+
+      if (userData.users != null) {
+        userAllTech.assignAll(userData.users!);
+      } else {}
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+      userAllTech.clear();
+    }
+  } catch (e) {
+    print('Error: $e');
+    userAllTech.clear();
   }
 }
 
@@ -384,6 +413,28 @@ Future<String> getVersions(String deviceType, String versionNow) async {
     }
   } else {
     return versionNow;
+  }
+}
+
+Future<String> getUserVersion(String deviceId) async {
+  String? token = await getToken();
+  final response = await http.get(
+    Uri.parse(getUserTokenNotification(deviceId)),
+    headers: {
+      'Authorization': '$token',
+    },
+  );
+  if (response.statusCode == 200) {
+    final dynamic responseData = jsonDecode(response.body);
+
+    if (responseData is Map<String, dynamic>) {
+      UserToken userToken = UserToken.fromJson(responseData);
+      return userToken.appVersion ?? '';
+    } else {
+      return '';
+    }
+  } else {
+    return '';
   }
 }
 
@@ -1877,6 +1928,36 @@ Future<void> createQuotationHistory(
 
     if (response.statusCode == 201) {
       print('Update Done');
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> updateTokenNotification(
+  String deviceId,
+  String appVersion,
+) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {
+      'device_id': deviceId,
+      "app_version": appVersion,
+    };
+
+    final response = await http.post(
+      Uri.parse(updateUserTokenNotification()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Update App Version Done');
     } else {
       print(response.statusCode);
     }

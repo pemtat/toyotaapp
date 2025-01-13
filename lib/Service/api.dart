@@ -61,6 +61,10 @@ String getUserByZone(String zone) {
   return '$url/api/rest/jobs/user_by_zone?zone=$zone';
 }
 
+String getAllTech() {
+  return '$url/api/rest/users/user_all_tech/get';
+}
+
 String getAllSales() {
   return '$url/api/rest/jobs/user_all_sales';
 }
@@ -337,6 +341,10 @@ String createUserTokenNotification() {
   return "$url/api/rest/users/create_token_notification";
 }
 
+String updateUserTokenNotification() {
+  return "$url/api/rest/users/update_token_notification";
+}
+
 String createJobNotificationHistory() {
   return "$url/api/rest/jobs/job_notification_create";
 }
@@ -347,6 +355,10 @@ String getJobNotificationHistory(String id) {
 
 String sendUserNotification() {
   return "$url/api/rest/users/rest_user_send_notification";
+}
+
+String getUserTokenNotification(String id) {
+  return "$url/api/rest/users/get_user_token_notification/$id";
 }
 
 String deleteTokenNotification() {
@@ -399,6 +411,10 @@ String updateQuotationPM() {
 
 String userDisbled() {
   return '$url/api/rest/users/rest_user_disbled';
+}
+
+String userUpdateLocale() {
+  return '$url/api/rest/users/rest_user_update_language';
 }
 
 String getTechReport(String id, String year) {

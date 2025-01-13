@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -30,16 +31,30 @@ class BottomBarController extends GetxController {
 
   Future<void> checkAppVersion(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String version = packageInfo.version;
+    String deviceId = '';
     String deviceType;
     if (Platform.isAndroid) {
       deviceType = 'Android';
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      deviceId = androidInfo.id;
     } else if (Platform.isIOS) {
       deviceType = 'iOS';
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      deviceId = iosInfo.identifierForVendor ?? 'Unknown';
     } else {
       deviceType = 'Unknown';
     }
     String versionBase = await getVersions(deviceType, version);
+    String versionUser = await getUserVersion(deviceId);
+
+    if (versionUser != versionBase && versionUser != '') {
+      if (version == versionBase) {
+        updateTokenNotification(deviceId, version);
+      }
+    }
+
     if (version != versionBase) {
       showDialog(
         barrierDismissible: false,

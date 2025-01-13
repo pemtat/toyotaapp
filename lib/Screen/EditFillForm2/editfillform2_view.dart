@@ -299,14 +299,11 @@ class EditFillFormView2 extends StatelessWidget {
                   children: [
                     TitleWithButton(
                         titleText: 'Recommended spare Part',
-                        button: sparePartListController.sparePartList.length < 3
-                            ? AddButton(
-                                onTap: () {
-                                  sparePartListController
-                                      .sparePartListModal(context);
-                                },
-                              )
-                            : Container()),
+                        button: AddButton(
+                          onTap: () {
+                            sparePartListController.sparePartListModal(context);
+                          },
+                        )),
                     sparePartListController.sparePartList.isNotEmpty
                         ? ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),

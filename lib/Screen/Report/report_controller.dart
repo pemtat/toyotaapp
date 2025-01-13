@@ -1,13 +1,16 @@
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/techreport_model.dart';
+import 'package:toyotamobile/Models/userallsales_model.dart';
 import 'package:toyotamobile/Screen/Home/home_controller.dart';
 import 'package:toyotamobile/Widget/chart_widget.dart';
 
 class ReportController extends GetxController {
   final HomeController jobController = Get.put(HomeController());
   var techReport = <TechReportModel>[].obs;
+  var usersAllTech = <UsersSales>[].obs;
   var selectedYear = Rx<int?>(null);
+  var selectedTech = Rx<int?>(null);
   late List<int> years;
   final chartData = <ChartData>[];
   final chartData2 = <ChartData>[];
@@ -33,6 +36,7 @@ class ReportController extends GetxController {
     int currentYear = DateTime.now().year;
     years = List.generate(6, (index) => currentYear - index);
     selectedYear.value = currentYear;
+    await fetchAllTech(usersAllTech);
     await fetchTechReport(
         techReport, jobController.handlerIdTech.value, currentYear);
     if (techReport.isNotEmpty) {
@@ -42,11 +46,33 @@ class ReportController extends GetxController {
 
   Future<void> updateYear(int? year) async {
     selectedYear.value = year;
-    // techReport.clear();
+    if (selectedTech.value != null) {
+      await fetchTechReport(
+          techReport, selectedTech.value.toString(), selectedYear.value ?? 0);
+    } else {
+      await fetchTechReport(techReport, jobController.handlerIdTech.value,
+          selectedYear.value ?? 0);
+    }
+    fetchChart(techReport);
+    techReport.refresh();
+  }
+
+  Future<void> updateTech(int? techId) async {
+    selectedTech.value = techId;
+    await fetchTechReport(
+        techReport, techId.toString(), selectedYear.value ?? 0);
+    fetchChart(techReport);
+    techReport.refresh();
+  }
+
+  Future<void> resetFilter() async {
+    int currentYear = DateTime.now().year;
+    selectedYear.value = currentYear;
     await fetchTechReport(
         techReport, jobController.handlerIdTech.value, selectedYear.value ?? 0);
     fetchChart(techReport);
     techReport.refresh();
+    selectedTech.value = null;
   }
 
   Future<void> fetchChart(RxList<TechReportModel> techReport) async {

@@ -24,11 +24,43 @@ class ReportView extends StatelessWidget {
         child: Column(
           children: [
             AppBar(
+              centerTitle: false,
               backgroundColor: white3,
-              title: Text('Report', style: TextStyleList.title1),
               actions: [
+                if (jobController.techLevel.value == '2')
+                  Obx(() {
+                    return DropdownButton<int>(
+                      style: TextStyleList.subtitle2,
+                      value: reportController.selectedTech.value,
+                      alignment: Alignment.centerRight,
+                      hint: const Text('เลือกช่าง',
+                          style: TextStyle(color: Colors.black)),
+                      items: reportController.usersAllTech.map((user) {
+                        return DropdownMenuItem<int>(
+                          value: int.parse(user.id ?? '0'),
+                          child: Row(
+                            children: [
+                              Text(user.username ?? '',
+                                  style: TextStyleList.detail2
+                                      .copyWith(fontWeight: FontWeight.bold)),
+                              6.wH,
+                              Text(user.realname ?? '',
+                                  style: TextStyleList.detail2
+                                      .copyWith(fontWeight: FontWeight.w200)),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) async {
+                        await reportController.updateTech(value);
+                      },
+                      dropdownColor: Colors.white,
+                      underline: const SizedBox(),
+                    );
+                  }),
                 Obx(() {
                   return DropdownButton<int>(
+                    alignment: Alignment.centerRight,
                     style: TextStyleList.subtitle2,
                     value: reportController.selectedYear.value,
                     hint: const Text('เลือกปี',
@@ -47,6 +79,16 @@ class ReportView extends StatelessWidget {
                     underline: const SizedBox(),
                   );
                 }),
+                InkWell(
+                  onTap: () async {
+                    await reportController.resetFilter();
+                  },
+                  child: Text(
+                    'Reset',
+                    style: TextStyleList.text1,
+                  ),
+                ),
+                8.wH,
               ],
             ),
             const AppDivider(),
