@@ -30,6 +30,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 import 'home_controller.dart';
 import 'package:toyotamobile/Service/app_localizations.dart';
 
@@ -68,8 +69,7 @@ class HomeView extends StatelessWidget {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(AppLocalizations.of(context).translate('my_job'),
-                            style: TextStyleList.title1),
+                        Text(context.tr('my_job'), style: TextStyleList.title1),
                         Text(getFormattedDate(DateTime.now()),
                             style: TextStyleList.title1),
                       ],
@@ -118,7 +118,7 @@ class HomeView extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      'Service Zone : ',
+                                      '${context.tr('service_zone')} : ',
                                       style: TextStyleList.title3,
                                     ),
                                     Text(
