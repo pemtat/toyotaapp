@@ -1,4 +1,4 @@
-const String url = 'https://fsm-dev.vansales.asia';
+const String url = 'https://tsadmin.tmh-wst.com';
 const String urlFSM = 'http://tscapitest.tmh-wst.com';
 const String issue = '$url/api/rest/issues';
 const String user = '$url/api/rest/users';
@@ -7,6 +7,8 @@ const String tokenUrl = '$url/api/rest/users/me/token';
 const String searchProductUrl = '$urlFSM/api/serial/search';
 const String apkUrl =
     'https://drive.google.com/file/d/1TVL378JFqXmkXDe6KdfcOMQXlHhiikHL/view?usp=drive_link';
+const String apkUrlTest =
+    'https://drive.google.com/file/d/1mVdeMV-HLZD9T18eyElGFB4_0vcuTvre/view?usp=drive_link';
 const String search = '$url/api/rest/users/me/token';
 
 const String getAssignJob =
