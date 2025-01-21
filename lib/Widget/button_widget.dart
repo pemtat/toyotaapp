@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class GoogleMapButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -56,7 +57,7 @@ class AddButton extends StatelessWidget {
           ),
           const SizedBox(width: 4.0),
           Text(
-            'Add',
+            context.tr('add'),
             style: TextStyleList.text8,
           ),
         ],
@@ -87,7 +88,7 @@ class EditButton extends StatelessWidget {
           ),
           const SizedBox(width: 4.0),
           Text(
-            'Edit',
+            context.tr('edit'),
             style: TextStyleList.text8,
           ),
         ],

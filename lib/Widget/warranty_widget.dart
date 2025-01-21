@@ -5,6 +5,7 @@ import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class WarrantyBox extends StatelessWidget {
   final String model;
@@ -22,15 +23,15 @@ class WarrantyBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return BoxContainer(
       children: [
-        const TitleApp(text: "Machine Detail"),
+        TitleApp(text: context.tr('machine_details')),
         8.kH,
         BoxInfo(
-          title: "Model",
+          title: context.tr('model'),
           value: model,
         ),
         3.kH,
         BoxInfo(
-          title: "Serial Number",
+          title: context.tr('serial_number'),
           value: serial,
         ),
         3.kH,

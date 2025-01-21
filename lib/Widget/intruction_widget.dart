@@ -6,6 +6,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class Intruction extends StatelessWidget {
   final String phoneNumber;
@@ -23,11 +24,11 @@ class Intruction extends StatelessWidget {
   Widget build(BuildContext context) {
     return BoxContainer(
       children: [
-        const TitleApp(text: 'Intruction'),
+        TitleApp(text: context.tr('intruction')),
         Row(
           children: [
             Text(
-              'Step 1: Contact reporter',
+              '${context.tr('step_1')}: ${context.tr('contact_reporter')}',
               style: TextStyleList.text4,
             ),
             3.wH,
@@ -40,14 +41,14 @@ class Intruction extends StatelessWidget {
                 children: [
                   RichText(
                       text: TextSpan(
-                    text: 'Step 2 ',
+                    text: '${context.tr('step_2')} ',
                     style: TextStyleList.text4,
                     children: [
                       TextSpan(
-                          text: 'Go to the machine',
+                          text: context.tr('go_to_machine'),
                           style: TextStyleList.text4),
                       TextSpan(
-                          text: ' (Location: $location)   ',
+                          text: ' (${context.tr('location')}: $location)   ',
                           style: TextStyleList.subtext3),
                       WidgetSpan(
                         child: Row(
@@ -85,14 +86,14 @@ class Intruction extends StatelessWidget {
                 children: [
                   RichText(
                     text: TextSpan(
-                      text: 'Step 2 ',
+                      text: '${context.tr('step_2')}: ',
                       style: TextStyleList.text4,
                       children: [
                         TextSpan(
-                            text: 'Go to the machine',
+                            text: context.tr('go_to_machine'),
                             style: TextStyleList.text4),
                         TextSpan(
-                          text: ' (Location: $location)   ',
+                          text: ' (${context.tr('location')}: $location)   ',
                           style: TextStyleList.subtext3,
                         ),
                         WidgetSpan(
@@ -130,12 +131,12 @@ class Intruction extends StatelessWidget {
               ),
         3.kH,
         Text(
-          'Step 3: Report to admin about machine',
+          '${context.tr('step_3')}: ${context.tr('report_to_admin')}',
           style: TextStyleList.text4,
         ),
         3.kH,
         Text(
-          'Step 4: Complete investigation',
+          '${context.tr('step_4')}: ${context.tr('complete_investigation')}',
           style: TextStyleList.text4,
         ),
       ],

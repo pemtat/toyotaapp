@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Models/sparepart_model.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SparePartManageWidget extends StatelessWidget {
   final SparePartModel part;
@@ -73,7 +74,7 @@ class SparePartManageWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Quantity',
+                  context.tr('quantity'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -86,7 +87,7 @@ class SparePartManageWidget extends StatelessWidget {
                     children: [
                       const SizedBox(height: 8),
                       Text(
-                        'Change Now',
+                        context.tr('change_now'),
                         style: TextStyleList.subtext1,
                       ),
                       Text(
@@ -101,7 +102,7 @@ class SparePartManageWidget extends StatelessWidget {
                     children: [
                       const SizedBox(height: 8),
                       Text(
-                        'Change on PM',
+                        context.tr('change_on_pm'),
                         style: TextStyleList.subtext1,
                       ),
                       Text(
@@ -128,13 +129,14 @@ class SparePartManageWidget extends StatelessWidget {
                   PopupMenuItem(
                     value: 'edit',
                     child: Text(
-                      'Edit',
+                      context.tr('edit'),
                       style: TextStyleList.text9,
                     ),
                   ),
                   PopupMenuItem(
                     value: 'delete',
-                    child: Text('Delete', style: TextStyleList.text9),
+                    child:
+                        Text(context.tr('delete'), style: TextStyleList.text9),
                   ),
                 ],
                 child: Image.asset(

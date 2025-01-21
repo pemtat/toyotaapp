@@ -5,6 +5,7 @@ import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class MoreDetail extends StatelessWidget {
   final RxList<Map<String, dynamic>>? file;
@@ -33,7 +34,7 @@ class MoreDetail extends StatelessWidget {
     return BoxContainer(
       children: [
         Text(
-          'Summary of issue',
+          context.tr('summary_issue'),
           style: TextStyleList.text16,
         ),
         Row(
@@ -112,7 +113,7 @@ class MoreDetailArrow extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'More details',
+                        context.tr('more_details'),
                         style: TextStyleList.text16,
                       ),
                       Image.asset('assets/arrowdown.png')
@@ -126,7 +127,7 @@ class MoreDetailArrow extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Less details',
+                        context.tr('less_details'),
                         style: TextStyleList.text16,
                       ),
                       Image.asset('assets/arrowup.png')

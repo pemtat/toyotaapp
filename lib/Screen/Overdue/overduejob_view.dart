@@ -15,6 +15,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class OverduejobView extends StatelessWidget {
   final OverduejobController overduejobController =
@@ -34,7 +35,8 @@ class OverduejobView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('Overdue Jobs', style: TextStyleList.title1),
+                title: Text(context.tr('overdue_jobs'),
+                    style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,

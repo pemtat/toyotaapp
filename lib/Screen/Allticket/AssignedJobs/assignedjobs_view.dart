@@ -17,6 +17,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class AssignedjobsNew extends StatelessWidget {
   final int? selectIndex;
@@ -44,7 +45,7 @@ class AssignedjobsNew extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('My Jobs', style: TextStyleList.title1),
+                title: Text(context.tr('my_job'), style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,
@@ -96,7 +97,7 @@ class AssignedjobsNew extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Pending (${jobController.subjobList.value})',
+                                  '${context.tr('pending')} (${jobController.subjobList.value})',
                                   style:
                                       assignedController.isSelected.value == 1
                                           ? TextStyleList.text7
@@ -134,7 +135,7 @@ class AssignedjobsNew extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Confirmed (${jobController.subjobListPending.value})',
+                                  '${context.tr('confirmed')} (${jobController.subjobListPending.value})',
                                   style:
                                       assignedController.isSelected.value == 2
                                           ? TextStyleList.text7
@@ -168,7 +169,7 @@ class AssignedjobsNew extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Completed (${jobController.subjobListClosed.value})',
+                                  '${context.tr('completed')} (${jobController.subjobListClosed.value})',
                                   style:
                                       assignedController.isSelected.value == 3
                                           ? TextStyleList.text7
@@ -230,7 +231,7 @@ class AssignedjobsNew extends StatelessWidget {
                                     margin: const EdgeInsets.only(top: 15),
                                     child: Center(
                                         child: Text(
-                                      'No jobs available.',
+                                      context.tr('no_jobs_avb'),
                                       style: TextStyleList.subtitle2,
                                     )),
                                   ),
@@ -321,7 +322,7 @@ class AssignedjobsNew extends StatelessWidget {
                                     margin: const EdgeInsets.only(top: 15),
                                     child: Center(
                                         child: Text(
-                                      'No jobs available.',
+                                      context.tr('no_jobs_avb'),
                                       style: TextStyleList.subtitle2,
                                     )),
                                   ),
@@ -407,7 +408,7 @@ class AssignedjobsNew extends StatelessWidget {
                                     margin: const EdgeInsets.only(top: 15),
                                     child: Center(
                                         child: Text(
-                                      'No jobs available.',
+                                      context.tr('no_jobs_avb'),
                                       style: TextStyleList.subtitle2,
                                     )),
                                   ),

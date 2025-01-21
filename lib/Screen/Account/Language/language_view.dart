@@ -6,6 +6,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: must_be_immutable
 class LanguageView extends StatelessWidget {
@@ -23,7 +24,7 @@ class LanguageView extends StatelessWidget {
             AppBar(
               centerTitle: true,
               backgroundColor: white3,
-              title: Text('Language', style: TextStyleList.title1),
+              title: Text(context.tr('language'), style: TextStyleList.title1),
             ),
             Container(
               height: 0.5,
@@ -37,7 +38,11 @@ class LanguageView extends StatelessWidget {
         InkWell(
           onTap: () {
             languageController.showConfirmDialog(
-                context, 'Are you confirm to change?', 'Cancel', 'Yes', 'th');
+                context,
+                context.tr('language_message'),
+                context.tr('cancel'),
+                context.tr('yes'),
+                'th');
           },
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -61,7 +66,11 @@ class LanguageView extends StatelessWidget {
         InkWell(
           onTap: () {
             languageController.showConfirmDialog(
-                context, 'Are you confirm to change?', 'Cancel', 'Yes', 'en');
+                context,
+                context.tr('language_message'),
+                context.tr('cancel'),
+                context.tr('yes'),
+                'en');
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16),

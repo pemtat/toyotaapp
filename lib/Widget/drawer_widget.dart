@@ -8,6 +8,7 @@ import 'package:toyotamobile/Screen/Report/report_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class sideDrawer extends StatelessWidget {
   sideDrawer({super.key});
@@ -27,7 +28,7 @@ class sideDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Menu', style: TextStyleList.headingbar),
+                Text(context.tr('menu'), style: TextStyleList.headingbar),
                 2.wH,
                 const Padding(
                   padding: EdgeInsets.only(top: 0.0),
@@ -66,7 +67,8 @@ class sideDrawer extends StatelessWidget {
                   ),
               ],
             ),
-            title: Text('Notification', style: TextStyleList.subtitle3),
+            title: Text(context.tr('notification'),
+                style: TextStyleList.subtitle3),
             onTap: () {
               Navigator.pop(context);
               bottomController.hasNotification.value = false;
@@ -75,7 +77,7 @@ class sideDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.assessment_outlined),
-            title: Text('Report', style: TextStyleList.subtitle3),
+            title: Text(context.tr('report'), style: TextStyleList.subtitle3),
             onTap: () {
               Navigator.pop(context);
               Get.to(() => ReportView());
@@ -86,7 +88,7 @@ class sideDrawer extends StatelessWidget {
               'assets/account.png',
               color: black2,
             )),
-            title: Text('Account', style: TextStyleList.subtitle3),
+            title: Text(context.tr('account'), style: TextStyleList.subtitle3),
             onTap: () {
               Navigator.pop(context);
 
@@ -95,13 +97,13 @@ class sideDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.logout),
-            title: Text('Logout', style: TextStyleList.subtitle3),
+            title: Text(context.tr('logout'), style: TextStyleList.subtitle3),
             onTap: () {
               accountController.showLogoutDialog(
                 context,
-                'Are you sure to logout?',
-                'Cancel',
-                'Yes,Log out',
+                context.tr('logout_message'),
+                context.tr('cancel'),
+                context.tr('logout_confirm'),
               );
             },
           ),

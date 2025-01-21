@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/dashedborder_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class UploadImageWidget extends StatelessWidget {
   final VoidCallback pickImage;
@@ -16,14 +17,14 @@ class UploadImageWidget extends StatelessWidget {
         height: 40,
         child: CustomPaint(
           painter: DashedBorderPainter(),
-          child: const Center(
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.upload, size: 18, color: Colors.black),
                 SizedBox(height: 2),
                 Text(
-                  'Upload Image',
+                  context.tr('upload_image'),
                   style: TextStyle(fontSize: 8, color: Colors.black),
                   textAlign: TextAlign.center,
                 ),

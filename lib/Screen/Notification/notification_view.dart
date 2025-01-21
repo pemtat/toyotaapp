@@ -17,6 +17,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/notification_item_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class NotificationView extends StatelessWidget {
   NotificationView({super.key});
@@ -33,7 +34,8 @@ class NotificationView extends StatelessWidget {
           children: [
             AppBar(
               backgroundColor: white3,
-              title: Text('Notification', style: TextStyleList.title1),
+              title:
+                  Text(context.tr('notification'), style: TextStyleList.title1),
             ),
             const AppDivider(),
             Container(

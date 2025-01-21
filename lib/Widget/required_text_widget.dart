@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class RequiredText extends StatelessWidget {
   final MainAxisAlignment? mainAxisAlignment;
@@ -31,7 +32,7 @@ class RequiredTextLong extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
       children: [
         Text(
-          '(จำเป็นต้องเลือก)',
+          '(${context.tr('require_field')})',
           style: TextStyleList.detailtext4,
         ),
       ],

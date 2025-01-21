@@ -19,6 +19,7 @@ import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class PendingTaskView extends StatelessWidget {
   final PeddingtaskController penddingTaskController =
@@ -52,7 +53,7 @@ class PendingTaskView extends StatelessWidget {
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Job Detail', style: TextStyleList.title1),
+                  Text(context.tr('job_detail'), style: TextStyleList.title1),
                 ],
               ),
               leading: const BackIcon(),
@@ -193,12 +194,12 @@ class PendingTaskView extends StatelessWidget {
                       onPressed: () {
                         penddingTaskController.showAcceptDialog(
                           context,
-                          'Do you confirm to accept this job?',
-                          'No',
-                          'Yes',
+                          context.tr('accept_job'),
+                          context.tr('no'),
+                          context.tr('yes'),
                         );
                       },
-                      text: 'Accept',
+                      text: context.tr('accept'),
                     ),
                   ),
                   13.wH,
@@ -215,7 +216,7 @@ class PendingTaskView extends StatelessWidget {
                                 children: [
                                   10.kH,
                                   TextFieldType(
-                                    hintText: 'Remark',
+                                    hintText: context.tr('remark'),
                                     textSet:
                                         penddingTaskController.cancelNote.value,
                                     maxLine: 5,
@@ -228,7 +229,7 @@ class PendingTaskView extends StatelessWidget {
                                     Navigator.of(context).pop();
                                   },
                                   child: Text(
-                                    'No',
+                                    context.tr('no'),
                                     style: TextStyleList.text1,
                                   ),
                                 ),
@@ -245,7 +246,7 @@ class PendingTaskView extends StatelessWidget {
                                     homeController.fetchDataFromAssignJob();
                                   },
                                   child: Text(
-                                    'Yes',
+                                    context.tr('yes'),
                                     style: TextStyleList.text1,
                                   ),
                                 ),
@@ -254,7 +255,7 @@ class PendingTaskView extends StatelessWidget {
                           },
                         );
                       },
-                      text: 'Cancel',
+                      text: context.tr('cancel'),
                     ),
                   ),
                 ],

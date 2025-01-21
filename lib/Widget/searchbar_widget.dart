@@ -80,7 +80,7 @@ class SearchFilter extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Status',
+                              context.tr('status'),
                               style: TextStyleList.text2,
                             ),
                             InkWell(

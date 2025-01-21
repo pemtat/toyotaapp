@@ -17,6 +17,7 @@ import 'package:toyotamobile/Widget/Calendar_widget/calendar_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/drawer_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: use_key_in_widget_constructors
 class CalendarView extends StatelessWidget {
@@ -38,7 +39,7 @@ class CalendarView extends StatelessWidget {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Calendar', style: TextStyleList.title1),
+                  Text(context.tr('calendar'), style: TextStyleList.title1),
                   5.wH,
                   InkWell(
                       onTap: () {
@@ -282,8 +283,9 @@ class CalendarView extends StatelessWidget {
                 final isToday = isSameDay(selectedDay, DateTime.now());
                 final formattedDate =
                     calendarController.formatDateTime(selectedDay);
-                final displayDate =
-                    isToday ? 'Today, $formattedDate' : formattedDate;
+                final displayDate = isToday
+                    ? '${context.tr('today')}, $formattedDate'
+                    : formattedDate;
                 return Column(
                   children: [
                     Container(
@@ -304,7 +306,7 @@ class CalendarView extends StatelessWidget {
                             padding: const EdgeInsets.all(16.0),
                             child: Center(
                                 child: Text(
-                              'No jobs for this day.',
+                              context.tr('no_jobs'),
                               style: TextStyleList.subtitle2,
                             )),
                           )

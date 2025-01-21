@@ -31,6 +31,7 @@ import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/uploadimage_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: use_key_in_widget_constructors
 class JobDetailView extends StatelessWidget {
@@ -248,7 +249,7 @@ class JobDetailView extends StatelessWidget {
                                 BoxContainer(
                                   children: [
                                     Text(
-                                      'ภาพก่อนการเเก้ไข',
+                                      context.tr('before_image'),
                                       style: TextStyleList.text11,
                                     ),
                                     8.kH,
@@ -283,9 +284,10 @@ class JobDetailView extends StatelessWidget {
                                                         saveTime: (datetime) {
                                                           showTimeDialog(
                                                               context,
-                                                              'Are you sure to confirm?',
-                                                              'No',
-                                                              'Yes',
+                                                              context.tr(
+                                                                  'confirm_message'),
+                                                              context.tr('no'),
+                                                              context.tr('yes'),
                                                               datetime,
                                                               jobId ?? '',
                                                               'timestart',
@@ -293,7 +295,8 @@ class JobDetailView extends StatelessWidget {
                                                         },
                                                         time: jobController
                                                             .savedDateStartTime,
-                                                        title: 'Start Time',
+                                                        title: context
+                                                            .tr('start_time'),
                                                       )
                                                     : Column(
                                                         children: [
@@ -304,7 +307,7 @@ class JobDetailView extends StatelessWidget {
                                                                   .access_time),
                                                               4.wH,
                                                               Text(
-                                                                "Start Time : ${jobController.savedDateStartTime.value}",
+                                                                "${context.tr('start_time')} : ${jobController.savedDateStartTime.value}",
                                                                 style:
                                                                     TextStyleList
                                                                         .text6,
@@ -330,7 +333,7 @@ class JobDetailView extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'ภาพหลังการเเก้ไข',
+                                                context.tr('after_image'),
                                                 style: TextStyleList.text11,
                                               ),
                                               10.kH,
@@ -365,7 +368,8 @@ class JobDetailView extends StatelessWidget {
                                         ? Column(
                                             children: [
                                               TextFieldType(
-                                                hintText: 'Add Comment',
+                                                hintText:
+                                                    context.tr('add_comment'),
                                                 textSet: jobController
                                                     .comment2.value,
                                               ),
@@ -390,7 +394,7 @@ class JobDetailView extends StatelessWidget {
                                                                 .comment);
                                                       }
                                                     },
-                                                    text: 'Submit',
+                                                    text: context.tr('submit'),
                                                   ),
                                                 ],
                                               )
@@ -416,9 +420,10 @@ class JobDetailView extends StatelessWidget {
                                                       saveTime: (datetime) {
                                                         showTimeDialog(
                                                             context,
-                                                            'Are you sure to confirm?',
-                                                            'No',
-                                                            'Yes',
+                                                            context.tr(
+                                                                'confirm_message'),
+                                                            context.tr('no'),
+                                                            context.tr('yes'),
                                                             datetime,
                                                             jobId ?? '',
                                                             'timeend',
@@ -426,7 +431,8 @@ class JobDetailView extends StatelessWidget {
                                                       },
                                                       time: jobController
                                                           .savedDateEndTime,
-                                                      title: 'End Time',
+                                                      title: context
+                                                          .tr('end_time'),
                                                     )
                                                   : Column(
                                                       children: [
@@ -437,7 +443,7 @@ class JobDetailView extends StatelessWidget {
                                                                 .access_time),
                                                             4.wH,
                                                             Text(
-                                                              "End Time : ${jobController.savedDateEndTime.value}",
+                                                              "${context.tr('end_time')} : ${jobController.savedDateEndTime.value}",
                                                               style:
                                                                   TextStyleList
                                                                       .text6,
@@ -466,9 +472,10 @@ class JobDetailView extends StatelessWidget {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          const TitleApp(
-                                                              text:
-                                                                  'Field Service Report'),
+                                                          TitleApp(
+                                                            text: context.tr(
+                                                                'field_service_report'),
+                                                          ),
                                                           Obx(() => jobController
                                                                       .reportList
                                                                       .isNotEmpty &&
@@ -505,7 +512,7 @@ class JobDetailView extends StatelessWidget {
                                                         ],
                                                       ),
                                                       Text(
-                                                        'Please fill the field service report',
+                                                        '${context.tr('fill_request')} ${context.tr('field_service_report')}',
                                                         style: TextStyleList
                                                             .text16,
                                                       ),
@@ -546,7 +553,7 @@ class JobDetailView extends StatelessWidget {
                                                                         5.kH,
                                                                         ButtonRed(
                                                                           title:
-                                                                              'บันทึกลายเซ็น',
+                                                                              context.tr('save_signature'),
                                                                           onTap:
                                                                               () {
                                                                             showDialog(
@@ -585,7 +592,7 @@ class JobDetailView extends StatelessWidget {
                                                                             backgroundColor:
                                                                                 red4,
                                                                             title:
-                                                                                'View Part Detail',
+                                                                                context.tr('view_part_detail'),
                                                                             onTap:
                                                                                 () {
                                                                               showDialog(

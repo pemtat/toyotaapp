@@ -13,6 +13,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class TicketInfo extends StatelessWidget {
   final int ticketId;
@@ -269,7 +270,7 @@ class TicketInfoStatus extends StatelessWidget {
             ),
             const SizedBox(height: 1),
             Text(
-              '$dateTime\nReported by $reporter',
+              '$dateTime\n${context.tr('reported_by')} $reporter',
               style: TextStyleList.subtext1,
             ),
           ],
@@ -352,7 +353,7 @@ class JobInfo extends StatelessWidget {
                 ),
                 4.kH,
                 Text(
-                  '${formatDateTime(dateTime, 'time')}\nReported by $reporter',
+                  '${formatDateTime(dateTime, 'time')}\n${context.tr('reported_by')} $reporter',
                   style: TextStyleList.subtext1,
                 ),
               ],

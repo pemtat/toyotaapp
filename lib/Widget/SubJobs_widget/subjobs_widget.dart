@@ -11,6 +11,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SubJobsTicket extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -93,7 +94,7 @@ class SubJobsTicket extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                'Reported by ${job.realName}',
+                '${context.tr('reported_by')} ${job.realName}',
                 style: TextStyleList.subtext4,
               ),
               const SizedBox(height: 2),

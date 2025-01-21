@@ -9,6 +9,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/Calendar_widget/fullcalendar_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class CalendarView2 extends StatelessWidget {
   final String? other;
@@ -103,8 +104,9 @@ class CalendarView2 extends StatelessWidget {
                 final isToday = isSameDay(selectedDay, DateTime.now());
                 final formattedDate =
                     calendarController.formatDateTime(selectedDay);
-                final displayDate =
-                    isToday ? 'Today, $formattedDate' : formattedDate;
+                final displayDate = isToday
+                    ? '${context.tr('today')}, $formattedDate'
+                    : formattedDate;
                 Get.to(() => FullCalendarWidget(
                     eventsOnTheDate: eventsOnTheDate,
                     expandedIndex: calendarController.expandedIndex,

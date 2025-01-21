@@ -29,6 +29,7 @@ import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: must_be_immutable
 class FillFormView extends StatelessWidget {
@@ -58,8 +59,8 @@ class FillFormView extends StatelessWidget {
           children: [
             AppBar(
                 backgroundColor: white3,
-                title:
-                    Text('Field Service Report', style: TextStyleList.title1),
+                title: Text(context.tr('field_service_report'),
+                    style: TextStyleList.title1),
                 leading: const CloseIcon()),
           ],
         ),
@@ -97,20 +98,20 @@ class FillFormView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
-                          text: 'Customer Name',
+                          text: context.tr('customer_name'),
                           textSet: fillFormController.customerName.value),
                     ),
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
-                          text: 'Department',
+                          text: context.tr('department'),
                           textSet: fillFormController.department.value),
                     ),
                   ],
                 ),
                 20.kH,
                 TextFieldWidget(
-                    text: 'Contacted Name',
+                    text: context.tr('contacted_name'),
                     textSet: fillFormController.contactedName.value),
                 20.kH,
                 Row(
@@ -133,7 +134,7 @@ class FillFormView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
-                          text: 'Operation Hour',
+                          text: context.tr('operation_hour'),
                           textSet: fillFormController.operationHour.value),
                     ),
                     10.wH,
@@ -149,20 +150,20 @@ class FillFormView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
-                          text: 'Mast Type',
+                          text: context.tr('mast_type'),
                           textSet: fillFormController.mastType.value),
                     ),
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
-                          text: 'Lift Height',
+                          text: context.tr('lift_height'),
                           textSet: fillFormController.lifeHeight.value),
                     ),
                   ],
                 ),
                 20.kH,
                 TextFieldWidget(
-                    text: 'Customer Fleet No.',
+                    text: context.tr('customer_fleet_no'),
                     textSet: fillFormController.customerFleetNo.value)
               ],
             ),
@@ -170,7 +171,8 @@ class FillFormView extends StatelessWidget {
             BoxContainer(
               children: [
                 TextFieldWidget(
-                    text: 'Fault', textSet: fillFormController.fault.value),
+                    text: context.tr('fault'),
+                    textSet: fillFormController.fault.value),
                 20.kH,
                 TextFieldWidget(
                     text: 'Error Code',
@@ -213,7 +215,7 @@ class FillFormView extends StatelessWidget {
                 children: [
                   TitleWithButton(
                       required: 'yes',
-                      titleText: 'Repair prodecure',
+                      titleText: context.tr('repair_prodecure'),
                       button: rPController.repairProcedureList.isEmpty
                           ? AddButton(
                               onTap: () {
@@ -243,7 +245,7 @@ class FillFormView extends StatelessWidget {
             space.kH,
             Obx(() => BoxContainer(children: [
                   TitleWithButton(
-                    titleText: 'Spare part list',
+                    titleText: context.tr('spare_part_list'),
                     button: AddButton(
                       onTap: () {
                         sparePartListController.sparePartListModal(context);
@@ -276,12 +278,12 @@ class FillFormView extends StatelessWidget {
                   Obx(
                     () => fillFormController.sparePartRemark.value.text.isEmpty
                         ? RemarkButton(
-                            title: '+ เพิ่มหมายเหตุ',
+                            title: '+ ${context.tr('add_remark')}',
                             onTap: () {
                               sparePartRemarkEditModal(
                                   context,
                                   fillFormController.sparePartRemark,
-                                  'Spare Part Remark');
+                                  context.tr('spare_part_remark'));
                             },
                             backgroundColor: black3,
                           )
@@ -291,7 +293,7 @@ class FillFormView extends StatelessWidget {
                               sparePartRemarkEditModal(
                                   context,
                                   fillFormController.sparePartRemark,
-                                  'Spare Part Remark');
+                                  context.tr('spare_part_remark'));
                             },
                           ),
                   ),
@@ -300,7 +302,7 @@ class FillFormView extends StatelessWidget {
             Obx(() => BoxContainer(
                   children: [
                     TitleWithButton(
-                      titleText: 'Additional spare part list',
+                      titleText: context.tr('additional_spare_part_list'),
                       button: AddButton(
                         onTap: () {
                           additSparePartListController
@@ -336,13 +338,13 @@ class FillFormView extends StatelessWidget {
                       () => fillFormController
                               .additionalSparePartRemark.value.text.isEmpty
                           ? RemarkButton(
-                              title: '+ เพิ่มหมายเหตุ',
+                              title: '+ ${context.tr('add_remark')}',
                               onTap: () {
                                 sparePartRemarkEditModal(
                                     context,
                                     fillFormController
                                         .additionalSparePartRemark,
-                                    'Additional Spare Part Remark');
+                                    context.tr('additional_spare_part_remark'));
                               },
                               backgroundColor: black3,
                             )
@@ -354,7 +356,7 @@ class FillFormView extends StatelessWidget {
                                     context,
                                     fillFormController
                                         .additionalSparePartRemark,
-                                    'Additional Spare Part Remark');
+                                    context.tr('additional_spare_part_remark'));
                               },
                             ),
                     ),
@@ -366,7 +368,7 @@ class FillFormView extends StatelessWidget {
                 children: [
                   TitleWithButton(
                       required: 'yes',
-                      titleText: 'Repair Result',
+                      titleText: context.tr('repair_result'),
                       button: repairResultController.maintenanceList.isEmpty
                           ? AddButton(
                               onTap: () {
@@ -405,7 +407,7 @@ class FillFormView extends StatelessWidget {
               children: [
                 Obx(
                   () => AddEditBox(
-                      titleText: 'Process Staff',
+                      titleText: context.tr('process_staff'),
                       list: processStaffController.repairStaff,
                       onTap: () =>
                           processStaffController.repairStaffModal(context),
@@ -427,7 +429,8 @@ class FillFormView extends StatelessWidget {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 backgroundColor: white3,
-                                title: Center(child: Text('ผู้ตรวจซ่อม 2')),
+                                title: Center(
+                                    child: Text(context.tr('inspector_2'))),
                                 titleTextStyle: TextStyleList.text1,
                                 content: SingleChildScrollView(
                                   child: Column(
@@ -454,7 +457,7 @@ class FillFormView extends StatelessWidget {
                             controller: TextEditingController(
                                 text: fillFormController.selectedUser.value),
                             decoration: InputDecoration(
-                                labelText: 'ผู้ตรวจซ่อม 2',
+                                labelText: context.tr('inspector_2'),
                                 labelStyle: TextStyleList.text9),
                           ),
                         ),
@@ -488,7 +491,10 @@ class FillFormView extends StatelessWidget {
               onPressed: () {
                 fillFormController.checkFormCompletion() == true
                     ? fillFormController.showSavedDialog(
-                        context, 'Are you confirm to save report?', 'No', 'Yes')
+                        context,
+                        context.tr('save_message'),
+                        context.tr('no'),
+                        context.tr('yes'))
                     : showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -496,7 +502,7 @@ class FillFormView extends StatelessWidget {
                         },
                       );
               },
-              text: 'Save'),
+              text: context.tr('save')),
         ),
       ),
     );

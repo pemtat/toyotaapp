@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SparePartRemarkShow extends StatelessWidget {
   final Rx<TextEditingController> remark;
@@ -45,7 +46,7 @@ class SparePartRemarkShow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'หมายเหตุ : ',
+                      '${context.tr('remark')} : ',
                       style: TextStyleList.text15,
                     ),
                     Expanded(
@@ -74,13 +75,14 @@ class SparePartRemarkShow extends StatelessWidget {
                   PopupMenuItem(
                     value: 'edit',
                     child: Text(
-                      'Edit',
+                      context.tr('edit'),
                       style: TextStyleList.text9,
                     ),
                   ),
                   PopupMenuItem(
                     value: 'delete',
-                    child: Text('Delete', style: TextStyleList.text9),
+                    child:
+                        Text(context.tr('delete'), style: TextStyleList.text9),
                   ),
                 ],
                 child: Image.asset(

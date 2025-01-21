@@ -7,6 +7,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class CustomerInformation extends StatelessWidget {
   final String contactName;
@@ -30,20 +31,20 @@ class CustomerInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return BoxContainer(
       children: [
-        const TitleApp(text: "Customer Information"),
+        TitleApp(text: context.tr('customer_information')),
         8.kH,
         BoxInfo(
-          title: "Contact name",
+          title: context.tr('contact_name'),
           value: contactName,
         ),
         3.kH,
         BoxInfo(
-          title: "Email",
+          title: context.tr('email'),
           value: email,
         ),
         3.kH,
         BoxInfo(
-          title: "Phone number",
+          title: context.tr('phone_number'),
           value: phoneNumber,
         ),
         5.kH,
@@ -56,7 +57,7 @@ class CustomerInformation extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Location',
+                    context.tr('location'),
                     style: TextStyleList.text3,
                   ),
                 ),

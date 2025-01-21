@@ -18,6 +18,7 @@ import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class PmAssignedJobsView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -38,7 +39,7 @@ class PmAssignedJobsView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('PM Jobs', style: TextStyleList.title1),
+                title: Text(context.tr('pm_job'), style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,
@@ -90,7 +91,7 @@ class PmAssignedJobsView extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Pending (${jobController.pmjobList.value})',
+                                  '${context.tr('pending')} (${jobController.pmjobList.value})',
                                   style:
                                       pmAssignedController.isSelected.value == 1
                                           ? TextStyleList.text7
@@ -129,7 +130,7 @@ class PmAssignedJobsView extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Confirmed (${jobController.pmjobListConfirmed.value})',
+                                  '${context.tr('confirmed')} (${jobController.pmjobListConfirmed.value})',
                                   style:
                                       pmAssignedController.isSelected.value == 2
                                           ? TextStyleList.text7
@@ -164,7 +165,7 @@ class PmAssignedJobsView extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Completed (${jobController.pmCompletedList.value})',
+                                  '${context.tr('completed')} (${jobController.pmCompletedList.value})',
                                   style:
                                       pmAssignedController.isSelected.value == 3
                                           ? TextStyleList.text7

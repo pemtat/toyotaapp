@@ -13,6 +13,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class AccountView extends StatelessWidget {
   const AccountView({super.key});
@@ -30,7 +31,7 @@ class AccountView extends StatelessWidget {
           children: [
             AppBar(
               backgroundColor: white3,
-              title: Text('Account', style: TextStyleList.title1),
+              title: Text(context.tr('account'), style: TextStyleList.title1),
             ),
           ],
         ),
@@ -76,7 +77,7 @@ class AccountView extends StatelessWidget {
                                     style: TextStyleList.subtitle1,
                                   ),
                                   Text(
-                                    'Joined on ${getFormattedDate2(userController.userInfo.first.createdAt)}',
+                                    '${context.tr('join_on')} ${getFormattedDate2(userController.userInfo.first.createdAt)}',
                                     style: TextStyleList.subtext1,
                                   ),
                                   6.kH,
@@ -116,7 +117,7 @@ class AccountView extends StatelessWidget {
               BoxContainer(
                 children: [
                   TitleWithButton2(
-                    titleText: 'Language',
+                    titleText: context.tr('language'),
                     onTap: () {
                       Get.to(() => LanguageView());
                     },
@@ -143,13 +144,13 @@ class AccountView extends StatelessWidget {
               BoxContainer(
                 children: [
                   TitleWithButton2(
-                    titleText: 'Delete Account',
+                    titleText: context.tr('delete_account'),
                     onTap: () {
                       accountController.showDeleteDialog(
                         context,
-                        'Your account will be deleted within 30 days. Are you sure to delete account? ',
-                        'Cancel',
-                        'Yes',
+                        context.tr('delete_account_message'),
+                        context.tr('cancel'),
+                        context.tr('yes'),
                       );
                     },
                     button: false,
@@ -165,7 +166,7 @@ class AccountView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            'Version : ${accountController.version.value}',
+                            '${context.tr('version')} : ${accountController.version.value}',
                             style: TextStyleList.subtext1,
                           )
                         ],

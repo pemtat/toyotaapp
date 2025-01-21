@@ -12,6 +12,7 @@ import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class EditSparePartDetail extends StatelessWidget {
   final String title;
@@ -87,7 +88,7 @@ class EditSparePartDetail extends StatelessWidget {
                         })),
                 4.kH,
                 Text(
-                  '(โปรดกรอก 4 ตัวอักษรขึ้นไปเพื่อค้นหา)',
+                  context.tr('fill_more_4'),
                   style: TextStyleList.text1,
                 ),
                 Obx(() {
@@ -139,7 +140,7 @@ class EditSparePartDetail extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Quantity"),
+                Text(context.tr('quantity')),
                 4.kH,
                 Row(
                   children: [
@@ -219,12 +220,12 @@ class EditSparePartDetail extends StatelessWidget {
                 children: [
                   space.kH,
                   CheckBoxNew(
-                    text: 'Change Now',
+                    text: context.tr('change_now'),
                     itemSet: selectionsChoose,
                   ),
                   space.kH,
                   CheckBoxNew(
-                    text: 'Change on PM',
+                    text: context.tr('change_on_pm'),
                     itemSet: selectionsChoose,
                   ),
                 ],

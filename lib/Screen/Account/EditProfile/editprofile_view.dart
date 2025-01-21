@@ -9,6 +9,7 @@ import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class EditProfileView extends StatelessWidget {
   const EditProfileView({super.key});
@@ -27,7 +28,7 @@ class EditProfileView extends StatelessWidget {
           children: [
             AppBar(
               backgroundColor: white3,
-              title: Text('Profile', style: TextStyleList.title1),
+              title: Text(context.tr('profile'), style: TextStyleList.title1),
             ),
           ],
         ),
@@ -65,17 +66,17 @@ class EditProfileView extends StatelessWidget {
                     ),
                     16.kH,
                     Text(
-                      'Tech Information',
+                      context.tr('tech_information'),
                       style: TextStyleList.subtitle2,
                     ),
                     16.kH,
                     TextFormFieldBar(
-                      label: 'Name',
+                      label: context.tr('name'),
                       controller: editProfileController.name.value,
                     ),
                     16.kH,
                     TextFormFieldBar(
-                      label: 'Email',
+                      label: context.tr('email'),
                       controller: editProfileController.email.value,
                     ),
                     // 16.kH,
@@ -85,12 +86,12 @@ class EditProfileView extends StatelessWidget {
                     // ),
                     16.kH,
                     TextFormFieldBar(
-                      label: 'Resource No',
+                      label: context.tr('resource_no'),
                       controller: editProfileController.resourceNo.value,
                     ),
                     16.kH,
                     TextFormFieldBar(
-                      label: 'Service Zone',
+                      label: context.tr('service_zone'),
                       controller: editProfileController.serviceZone.value,
                     ),
 
