@@ -163,11 +163,11 @@ class HomeView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Total Jobs',
+                                  context.tr('total_jobs'),
                                   style: TextStyleList.title4,
                                 ),
                                 Text(
-                                  'Closed',
+                                  context.tr('closed'),
                                   style: TextStyleList.title4,
                                 )
                               ],
@@ -222,11 +222,13 @@ class HomeView extends StatelessWidget {
                               onTap: () {
                                 Get.to(() => PmAssignedJobsView());
                               },
-                              child: Container(
-                                child: _buildInfoCard(
-                                  icon: Icons.inbox,
-                                  value: jobController.incomingJobs.value,
-                                  label: 'Incoming',
+                              child: Center(
+                                child: Container(
+                                  child: _buildInfoCard(
+                                    icon: Icons.inbox,
+                                    value: jobController.incomingJobs.value,
+                                    label: context.tr('pending'),
+                                  ),
                                 ),
                               ),
                             ),
@@ -240,7 +242,7 @@ class HomeView extends StatelessWidget {
                                 child: _buildInfoCard(
                                   icon: Icons.build,
                                   value: jobController.onProcessJobs.value,
-                                  label: 'On Process',
+                                  label: context.tr('on_process'),
                                 ),
                               ),
                             ),
@@ -252,7 +254,7 @@ class HomeView extends StatelessWidget {
                                 child: _buildInfoCard(
                                   icon: Icons.warning,
                                   value: jobController.overdueJobs.value,
-                                  label: 'Overdue',
+                                  label: context.tr('overdue'),
                                   labelColor: Colors.red,
                                 ),
                               ),
@@ -261,8 +263,8 @@ class HomeView extends StatelessWidget {
                     ),
                     const AppDivider(),
                     10.kH,
-                    const JobTitle(
-                      headerText: 'Recently Jobs',
+                    JobTitle(
+                      headerText: context.tr('recently_jobs'),
                       buttonText: '',
                     ),
                     Padding(
@@ -423,8 +425,8 @@ class HomeView extends StatelessWidget {
   }) {
     return Container(
       width: 112,
-      height: 108,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      height: 118,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: white3,
         border: Border.all(color: black1),

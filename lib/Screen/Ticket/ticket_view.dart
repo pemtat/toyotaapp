@@ -14,6 +14,7 @@ import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/drawer_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class TicketView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -38,7 +39,7 @@ class TicketView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('All Ticket', style: TextStyleList.title1),
+                title: Text(context.tr('ticket'), style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,

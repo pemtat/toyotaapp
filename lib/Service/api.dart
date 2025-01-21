@@ -1,4 +1,4 @@
-const String url = 'https://tsadmin.tmh-wst.com';
+const String url = 'https://fsm-dev.vansales.asia';
 const String urlFSM = 'http://tscapitest.tmh-wst.com';
 const String issue = '$url/api/rest/issues';
 const String user = '$url/api/rest/users';

@@ -6,6 +6,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SearchFilter extends StatelessWidget {
   final TextEditingController searchController;
@@ -32,7 +33,7 @@ class SearchFilter extends StatelessWidget {
             child: TextField(
               controller: searchController,
               decoration: InputDecoration(
-                hintText: 'Search by ID or title',
+                hintText: context.tr('search_filter'),
                 hintStyle: TextStyleList.detail1,
                 filled: true,
                 fillColor: black5,
@@ -87,7 +88,7 @@ class SearchFilter extends StatelessWidget {
                                   clearFilters();
                                 },
                                 child: Text(
-                                  'reset',
+                                  context.tr('reset'),
                                   style: TextStyleList.text1,
                                 )),
                           ],
@@ -97,7 +98,7 @@ class SearchFilter extends StatelessWidget {
                         const AppDivider(),
                         8.kH,
                         Text(
-                          'Date',
+                          context.tr('date'),
                           style: TextStyleList.text2,
                         ),
                         8.kH,
@@ -122,7 +123,7 @@ class SearchFilter extends StatelessWidget {
                                   ),
                                   readOnly: true,
                                   decoration: InputDecoration(
-                                    hintText: "Select date",
+                                    hintText: context.tr('select_date'),
                                     hintStyle: TextStyleList.text5,
                                     suffixIcon:
                                         const Icon(Icons.calendar_today),

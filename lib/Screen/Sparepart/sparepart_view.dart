@@ -16,6 +16,7 @@ import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/drawer_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SparePartView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -90,7 +91,7 @@ class SparePartView extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'On Process (${jobController.sparePartPending.value})',
+                                  '${context.tr('on_process')} (${jobController.sparePartPending.value})',
                                   style:
                                       sparePartController.isSelected.value == 1
                                           ? TextStyleList.text7
@@ -128,7 +129,7 @@ class SparePartView extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Approved (${jobController.sparePartApproved.value})',
+                                  '${context.tr('approved')} (${jobController.sparePartApproved.value})',
                                   style:
                                       sparePartController.isSelected.value == 2
                                           ? TextStyleList.text7
@@ -162,7 +163,7 @@ class SparePartView extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Rejected (${jobController.sparePartReject.value})',
+                                  '${context.tr('rejected')} (${jobController.sparePartReject.value})',
                                   style:
                                       sparePartController.isSelected.value == 3
                                           ? TextStyleList.text7

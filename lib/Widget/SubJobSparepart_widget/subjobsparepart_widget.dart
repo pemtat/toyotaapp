@@ -29,6 +29,7 @@ import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/pdfviewer_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SubJobSparePartWidget extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -225,7 +226,7 @@ class SubJobSparePartWidget extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  'Sparepart Request Status',
+                  context.tr('spare_part_request_status'),
                   style: TextStyleList.detail2,
                 ),
               ],

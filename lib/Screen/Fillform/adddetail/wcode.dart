@@ -59,7 +59,7 @@ class Wcode extends GetxController {
   List<String> wCodeList = [
     'CM Repair works when the repair is first reported',
     'CMC Repair/part replacement work',
-    'Inspection repair work that is in the conditions',
+    'WA Inspection repair work that is in the conditions',
     'AC repair work result from an accident',
     'FF in-depth  problem anaylsis work',
     'SOT helps other people or other team',
