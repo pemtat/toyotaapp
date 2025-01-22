@@ -323,6 +323,46 @@ class ButtonRed extends StatelessWidget {
   }
 }
 
+class ButtonCustom extends StatelessWidget {
+  final title;
+  final VoidCallback onTap;
+  final Color? color;
+  final TextStyle? style;
+  final EdgeInsetsGeometry? padding;
+  const ButtonCustom(
+      {super.key,
+      required this.title,
+      required this.onTap,
+      this.style,
+      this.padding,
+      this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: color ?? Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              padding: padding ??
+                  EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            ),
+            child: Text(
+              title,
+              style: style ?? TextStyleList.text7.copyWith(color: Colors.white),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class ButtonGray extends StatelessWidget {
   final title;
   final VoidCallback onTap;
