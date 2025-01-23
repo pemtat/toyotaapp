@@ -7,6 +7,7 @@ import 'package:toyotamobile/Screen/EditFillForm2/editdetail/batteryusage_widget
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class BatteryUsageWidget extends StatelessWidget {
   final BatteryUsageModel info;
@@ -46,7 +47,7 @@ class BatteryUsageWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Shift Time',
+                  context.tr('shift_time'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -55,7 +56,7 @@ class BatteryUsageWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'Hrs. per shift',
+                  context.tr('hrs_per_shift'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -64,7 +65,7 @@ class BatteryUsageWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'Ratio',
+                  context.tr('ratio'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -95,13 +96,14 @@ class BatteryUsageWidget extends StatelessWidget {
                     PopupMenuItem(
                       value: 'edit',
                       child: Text(
-                        'Edit',
+                        context.tr('edit'),
                         style: TextStyleList.text9,
                       ),
                     ),
                     PopupMenuItem(
                       value: 'delete',
-                      child: Text('Delete', style: TextStyleList.text9),
+                      child: Text(context.tr('delete'),
+                          style: TextStyleList.text9),
                     ),
                   ],
                   child: Image.asset(

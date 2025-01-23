@@ -8,6 +8,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class HydraulicmMotor extends GetxController {
   int space = 24;
@@ -22,7 +23,7 @@ class HydraulicmMotor extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Hydraulic motor & Pump checks",
+              context.tr('hydraulic_checks'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -97,7 +98,7 @@ class HydraulicmMotor extends GetxController {
                   8.kH,
                   TextField(
                     controller: controller,
-                    decoration: InputDecoration1(text: 'Remark'),
+                    decoration: InputDecoration1(text: context.tr('remark')),
                     onChanged: (value) {
                       updateSelection(index, value, remarksChoose);
                     },
@@ -126,7 +127,7 @@ class HydraulicmMotor extends GetxController {
               );
             }
           },
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ],
     ).showModal(context);

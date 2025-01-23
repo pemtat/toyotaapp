@@ -6,6 +6,7 @@ import 'package:toyotamobile/Screen/EditFillForm2/editdetail/forklife_informatio
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ForkliftinformationWidget extends StatelessWidget {
   final ForkliftInformationModel info;
@@ -45,7 +46,7 @@ class ForkliftinformationWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Forklife Brand',
+                  context.tr('forklift_brand'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -54,7 +55,7 @@ class ForkliftinformationWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'Forklife Model',
+                  context.tr('forklift_model'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -63,7 +64,7 @@ class ForkliftinformationWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'Serial No',
+                  context.tr('forklift_serial_no'),
                   style: TextStyleList.subtext1,
                 ),
                 8.kH,
@@ -73,7 +74,7 @@ class ForkliftinformationWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'Forklife Operation',
+                  context.tr('forklift_operation'),
                   style: TextStyleList.subtext1,
                 ),
                 8.kH,
@@ -101,13 +102,14 @@ class ForkliftinformationWidget extends StatelessWidget {
                     PopupMenuItem(
                       value: 'edit',
                       child: Text(
-                        'Edit',
+                        context.tr('edit'),
                         style: TextStyleList.text9,
                       ),
                     ),
                     PopupMenuItem(
                       value: 'delete',
-                      child: Text('Delete', style: TextStyleList.text9),
+                      child: Text(context.tr('delete'),
+                          style: TextStyleList.text9),
                     ),
                   ],
                   child: Image.asset(

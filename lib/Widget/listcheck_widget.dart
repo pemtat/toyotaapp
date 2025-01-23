@@ -6,6 +6,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ListChecksWidget extends StatelessWidget {
   final RxList<String> selection;
@@ -204,13 +205,14 @@ class ListChecksWidget extends StatelessWidget {
                       PopupMenuItem(
                         value: 'edit',
                         child: Text(
-                          'Edit',
+                          context.tr('edit'),
                           style: TextStyleList.text9,
                         ),
                       ),
                       PopupMenuItem(
                         value: 'delete',
-                        child: Text('Delete', style: TextStyleList.text9),
+                        child: Text(context.tr('delete'),
+                            style: TextStyleList.text9),
                       ),
                     ],
                     child: Image.asset(

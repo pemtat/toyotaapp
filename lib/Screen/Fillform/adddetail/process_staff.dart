@@ -44,13 +44,14 @@ class ProcessStaff extends GetxController {
         ),
         8.kH,
         EndButton(
-            onPressed: () {
-              repairStaff.clear();
-              repairStaff.addAll(repairStaffChoose);
+          onPressed: () {
+            repairStaff.clear();
+            repairStaff.addAll(repairStaffChoose);
 
-              Navigator.pop(context);
-            },
-            text: 'Save')
+            Navigator.pop(context);
+          },
+          text: context.tr('save'),
+        )
       ],
     ).showModal(context);
   }

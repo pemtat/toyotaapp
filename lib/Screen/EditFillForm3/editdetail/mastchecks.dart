@@ -8,6 +8,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class MastChecks extends GetxController {
   int space = 24;
@@ -22,7 +23,7 @@ class MastChecks extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Mast Checks",
+              context.tr('mast_checks'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -145,7 +146,7 @@ class MastChecks extends GetxController {
                   8.kH,
                   TextField(
                     controller: controller,
-                    decoration: InputDecoration1(text: 'Remark'),
+                    decoration: InputDecoration1(text: context.tr('remark')),
                     onChanged: (value) {
                       updateSelection(index, value, remarksChoose);
                     },
@@ -174,7 +175,7 @@ class MastChecks extends GetxController {
               );
             }
           },
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ],
     ).showModal(context);

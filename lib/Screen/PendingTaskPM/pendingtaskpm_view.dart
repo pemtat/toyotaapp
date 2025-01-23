@@ -24,6 +24,7 @@ import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: use_key_in_widget_constructors
 class PendingTaskViewPM extends StatelessWidget {
@@ -58,8 +59,10 @@ class PendingTaskViewPM extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Loading...', style: TextStyleList.title1),
-                          Text('Loading...', style: TextStyleList.text16),
+                          Text(context.tr('loading'),
+                              style: TextStyleList.title1),
+                          Text(context.tr('loading'),
+                              style: TextStyleList.text16),
                         ],
                       );
                     } else {
@@ -129,7 +132,7 @@ class PendingTaskViewPM extends StatelessWidget {
                                               summary:
                                                   pmJobs.customerName ?? '',
                                               description:
-                                                  'Service Zone :  ${pmJobs.serviceZoneCode} ',
+                                                  '${context.tr('service_zone')} :  ${pmJobs.serviceZoneCode} ',
                                               detail: issue.description,
                                               status: stringToStatus(
                                                   issue.status.id.toString()),
@@ -170,7 +173,7 @@ class PendingTaskViewPM extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const TitleApp(text: "History"),
+                                        TitleApp(text: context.tr('history')),
                                         Obx(() =>
                                             jobController.moreHistory.value ==
                                                     false
@@ -192,7 +195,7 @@ class PendingTaskViewPM extends StatelessWidget {
                                       if (filteredJobs.isEmpty) {
                                         return Center(
                                             child: Text(
-                                          'No jobs history',
+                                          context.tr('no_jobs_history'),
                                           style: TextStyleList.text1,
                                         ));
                                       }
@@ -410,12 +413,12 @@ class PendingTaskViewPM extends StatelessWidget {
                       onPressed: () {
                         jobController.showAcceptDialog(
                           context,
-                          'Are you sure to confirm?',
-                          'No',
-                          'Yes',
+                          context.tr('confirm_message'),
+                          context.tr('no'),
+                          context.tr('yes'),
                         );
                       },
-                      text: 'Confirm',
+                      text: context.tr('confirm'),
                     ),
                   ),
                   13.wH,
@@ -432,7 +435,7 @@ class PendingTaskViewPM extends StatelessWidget {
                                 children: [
                                   10.kH,
                                   TextFieldType(
-                                    hintText: 'Remark',
+                                    hintText: context.tr('remark'),
                                     textSet: jobController.cancelNote.value,
                                     maxLine: 5,
                                   ),
@@ -444,7 +447,7 @@ class PendingTaskViewPM extends StatelessWidget {
                                     Navigator.of(context).pop();
                                   },
                                   child: Text(
-                                    'No',
+                                    context.tr('no'),
                                     style: TextStyleList.text1,
                                   ),
                                 ),
@@ -462,7 +465,7 @@ class PendingTaskViewPM extends StatelessWidget {
                                     Navigator.pop(context);
                                   },
                                   child: Text(
-                                    'Yes',
+                                    context.tr('yes'),
                                     style: TextStyleList.text1,
                                   ),
                                 ),
@@ -471,7 +474,7 @@ class PendingTaskViewPM extends StatelessWidget {
                           },
                         );
                       },
-                      text: 'Cancel',
+                      text: context.tr('cancel'),
                     ),
                   ),
                 ],

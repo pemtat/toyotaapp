@@ -8,6 +8,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ForSpecial extends GetxController {
   int space = 24;
@@ -22,7 +23,7 @@ class ForSpecial extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "For Special Equipment",
+              context.tr('for_special'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -67,7 +68,7 @@ class ForSpecial extends GetxController {
                   8.kH,
                   TextField(
                     controller: controller,
-                    decoration: InputDecoration1(text: 'Remark'),
+                    decoration: InputDecoration1(text: context.tr('remark')),
                     onChanged: (value) {
                       updateSelection(index, value, remarksChoose);
                     },
@@ -95,7 +96,7 @@ class ForSpecial extends GetxController {
               );
             }
           },
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ],
     ).showModal(context);

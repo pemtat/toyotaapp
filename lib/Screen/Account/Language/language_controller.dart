@@ -9,6 +9,7 @@ import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class LanguageController extends GetxController {
   RxString languageCode = 'th'.obs;
@@ -23,8 +24,9 @@ class LanguageController extends GetxController {
           leftButton: left,
           rightButton: right,
           onRightButtonPressed: () async {
-            await changeLanguage(languageCode, context);
-            showMessage('บันทึกการเปลี่ยนแปลง');
+            changeLanguage(languageCode, context);
+            showMessage(context.tr('save_change'));
+            Navigator.pop(context);
           },
         );
       },

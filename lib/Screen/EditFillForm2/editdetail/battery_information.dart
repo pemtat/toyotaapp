@@ -4,31 +4,32 @@ import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class BatteryInformation extends GetxController {
   int space = 24;
   void batteryInformationModal(BuildContext context) {
     batteryInfoClear();
     ShowModalWidget2(
-      title: 'Battery Information',
+      title: context.tr('battery_information'),
       children: [
         TextFieldWidget(
-          text: 'Battery Band',
+          text: context.tr('battery_band'),
           textSet: batteryBand.value,
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Battery Model',
+          text: context.tr('battery_model'),
           textSet: batteryModel.value,
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Manufacturer No.',
+          text: context.tr('manufacturer_no'),
           textSet: mfgNo.value,
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Serial No.',
+          text: context.tr('battery_lifespan'),
           textSet: serialNo.value,
         ),
         space.kH,
@@ -40,14 +41,14 @@ class BatteryInformation extends GetxController {
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Voltage',
+          text: context.tr('voltage'),
           textSet: voltage.value,
           number: TextInputType.number,
           addtionalText: 'V',
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Capacity',
+          text: context.tr('capacity'),
           textSet: capacity.value,
           number: TextInputType.number,
           addtionalText: 'Ah',
@@ -66,45 +67,45 @@ class BatteryInformation extends GetxController {
       BuildContext context, BatteryInformationModel batteryInfo) {
     batteryInfoRead(batteryInfo);
     ShowModalWidget2(
-      title: 'Battery Information',
+      title: context.tr('battery_information'),
       children: [
         space.kH,
         TextFieldEditWidget(
-          text: 'Battery Band',
+          text: context.tr('battery_band'),
           textSet: batteryBand.value,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Battery Model',
+          text: context.tr('battery_model'),
           textSet: batteryModel.value,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Manufacturer No.',
+          text: context.tr('manufacturer_no'),
           textSet: mfgNo.value,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Serial No.',
+          text: context.tr('battery_serial'),
           textSet: serialNo.value,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Battery Lifespan',
+          text: context.tr('battery_lifespan'),
           textSet: batteryLifespan.value,
           addtionalText: 'Y',
           number: TextInputType.number,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Voltage',
+          text: context.tr('voltage'),
           textSet: voltage.value,
           addtionalText: 'V',
           number: TextInputType.number,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Capacity',
+          text: context.tr('capacity'),
           textSet: capacity.value,
           addtionalText: 'Ah',
           number: TextInputType.number,

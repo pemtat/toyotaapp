@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 void sparePartRemarkEditModal(
     BuildContext context, Rx<TextEditingController> remark, String title) {
@@ -28,7 +29,7 @@ void sparePartRemarkEditModal(
                   controller: remarkNow.value,
                   maxLines: 6,
                   decoration: InputDecoration(
-                    hintText: 'หมายเหตุ',
+                    hintText: context.tr('remark'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: const BorderSide(
@@ -55,7 +56,7 @@ void sparePartRemarkEditModal(
               Navigator.pop(context);
             },
             child: Text(
-              'บันทึก',
+              context.tr('save'),
               style: TextStyleList.text5,
             ),
           ),
@@ -65,7 +66,7 @@ void sparePartRemarkEditModal(
               Navigator.pop(context);
             },
             child: Text(
-              'ยกเลิก',
+              context.tr('cancel'),
               style: TextStyleList.text5,
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class CorrectiveAction extends GetxController {
   int space = 24;
@@ -20,7 +21,7 @@ class CorrectiveAction extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Corrective Action",
+              context.tr('corrective_action'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -53,7 +54,7 @@ class CorrectiveAction extends GetxController {
               children: [
                 6.kH,
                 TextFieldEditWidget(
-                  text: 'Other',
+                  text: context.tr('other'),
                   textSet: otherChoose.value,
                 ),
               ],
@@ -71,7 +72,7 @@ class CorrectiveAction extends GetxController {
             correctiveAction.addAll(correctiveActionChoose);
             Navigator.pop(context);
           },
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ],
     ).showModal(context);

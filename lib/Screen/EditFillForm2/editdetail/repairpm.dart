@@ -6,6 +6,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class RepairPM extends GetxController {
   int space = 24;
@@ -20,7 +21,7 @@ class RepairPM extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Repair P.M Battery",
+              context.tr('repair_pm_battery'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -54,7 +55,7 @@ class RepairPM extends GetxController {
               children: [
                 6.kH,
                 TextFieldEditWidget(
-                  text: 'Other',
+                  text: context.tr('other'),
                   textSet: otherChoose.value,
                 ),
               ],
@@ -69,7 +70,7 @@ class RepairPM extends GetxController {
               children: [
                 6.kH,
                 TextFieldEditWidget(
-                  text: 'Cell Battery',
+                  text: context.tr('cell_battery'),
                   textSet: otherCellChoose.value,
                 ),
               ],
@@ -89,7 +90,7 @@ class RepairPM extends GetxController {
             repairPm.addAll(repairPmChoose);
             Navigator.pop(context);
           },
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ],
     ).showModal(context);

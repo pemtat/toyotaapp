@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ShowModalWidget extends StatelessWidget {
   final List<Widget>? children;
@@ -64,6 +65,7 @@ class ShowModalWidget2 extends StatelessWidget {
           child: AppBar(
             automaticallyImplyLeading: false,
             title: Text(
+              textAlign: TextAlign.start,
               title,
               style: TextStyleList.subheading,
             ),
@@ -99,7 +101,7 @@ class ShowModalWidget2 extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: EndButton(
           onPressed: onPressed,
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ),
     );

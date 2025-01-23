@@ -5,6 +5,7 @@ import 'package:toyotamobile/Models/repair_procedure.dart';
 import 'package:toyotamobile/Screen/EditFillForm/editdetail/repair_procedure.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class RepairProdecureWidget extends StatelessWidget {
   final RepairProcedureModel part;
@@ -45,7 +46,7 @@ class RepairProdecureWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Repair Procedure',
+                  context.tr('repair_prodecure'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -54,7 +55,7 @@ class RepairProdecureWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Cause of the problem',
+                  context.tr('cause_problem'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -81,13 +82,14 @@ class RepairProdecureWidget extends StatelessWidget {
                     PopupMenuItem(
                       value: 'edit',
                       child: Text(
-                        'Edit',
+                        context.tr('edit'),
                         style: TextStyleList.text9,
                       ),
                     ),
                     PopupMenuItem(
                       value: 'delete',
-                      child: Text('Delete', style: TextStyleList.text9),
+                      child: Text(context.tr('delete'),
+                          style: TextStyleList.text9),
                     ),
                   ],
                   child: Image.asset(

@@ -7,6 +7,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class BatteryUsage extends GetxController {
   int space = 24;
@@ -18,7 +19,7 @@ class BatteryUsage extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Battery Usage",
+              context.tr('battery_usage'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -31,19 +32,19 @@ class BatteryUsage extends GetxController {
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Shift time',
+          text: context.tr('shift_time'),
           textSet: shiftTime.value,
           number: TextInputType.number,
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Hrs. per shift',
+          text: context.tr('hrs_per_shift'),
           textSet: hrsPerShift.value,
           number: TextInputType.number,
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Ratio',
+          text: context.tr('ratio'),
           textSet: ratio.value,
           number: TextInputType.number,
         ),
@@ -52,7 +53,7 @@ class BatteryUsage extends GetxController {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Charging Type',
+              context.tr('charging_type'),
               style: TextStyleList.subtitle3,
             ),
           ],
@@ -78,7 +79,7 @@ class BatteryUsage extends GetxController {
             batteryUsageClear();
             Navigator.pop(context);
           },
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ],
     ).showModal(context);
@@ -93,7 +94,7 @@ class BatteryUsage extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Battery Usage",
+              context.tr('battery_usage'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -105,24 +106,24 @@ class BatteryUsage extends GetxController {
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Shift time',
+          text: context.tr('shift_time'),
           textSet: shiftTime.value,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Hrs. per shift',
+          text: context.tr('hrs_per_shift'),
           textSet: hrsPerShift.value,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Ratio',
+          text: context.tr('ratio'),
           textSet: ratio.value,
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Charging Type',
+              context.tr('charging_type'),
               style: TextStyleList.subtitle3,
             ),
           ],
@@ -149,7 +150,7 @@ class BatteryUsage extends GetxController {
               batteryUsageClear();
               Navigator.pop(context);
             },
-            text: 'Save')
+            text: context.tr('save'))
       ],
     ).showModal(context);
   }

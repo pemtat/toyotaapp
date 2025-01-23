@@ -7,6 +7,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class BatteryCondition extends GetxController {
   int space = 24;
@@ -16,7 +17,7 @@ class BatteryCondition extends GetxController {
     chooseClear();
     chooseAdd();
     ShowModalWidget2(
-      title: 'Battery Condition',
+      title: context.tr('battery_condition'),
       children: [
         8.kH,
         ListView(
@@ -83,7 +84,8 @@ class BatteryCondition extends GetxController {
                   8.kH,
                   TextField(
                     controller: controller,
-                    decoration: InputDecoration1(text: 'Description'),
+                    decoration:
+                        InputDecoration1(text: context.tr('description')),
                     onChanged: (value) {
                       updateSelection(index, value, remarksChoose);
                     },

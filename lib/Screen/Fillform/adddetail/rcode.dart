@@ -5,6 +5,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class Rcode extends GetxController {
   void rCodeModal(BuildContext context) {
@@ -47,7 +48,7 @@ class Rcode extends GetxController {
               rCode.addAll(rCodeChoose);
               Navigator.pop(context);
             },
-            text: 'Save')
+            text: context.tr('save'))
       ],
     ).showModal(context);
   }

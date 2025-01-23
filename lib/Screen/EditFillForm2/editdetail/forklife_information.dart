@@ -6,6 +6,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ForklifeInformation extends GetxController {
   int space = 24;
@@ -17,7 +18,7 @@ class ForklifeInformation extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Forklife Information",
+              context.tr('forklift_information'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -30,22 +31,22 @@ class ForklifeInformation extends GetxController {
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Forklife Brand',
+          text: context.tr('forklift_brand'),
           textSet: forklifeBrand.value,
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Forklife Model',
+          text: context.tr('forklift_model'),
           textSet: forklifeModel.value,
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Serial No',
+          text: context.tr('forklift_serial_no'),
           textSet: serialNo.value,
         ),
         space.kH,
         TextFieldWidget(
-          text: 'ForkLife Operation',
+          text: context.tr('forklift_operation'),
           textSet: forklifeOperation.value,
           number: TextInputType.number,
           addtionalText: 'Hrs',
@@ -57,7 +58,7 @@ class ForklifeInformation extends GetxController {
             forklifeClear();
             Navigator.pop(context);
           },
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ],
     ).showModal(context);
@@ -72,7 +73,7 @@ class ForklifeInformation extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Forklife Information",
+              context.tr('forklift_information'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -84,22 +85,22 @@ class ForklifeInformation extends GetxController {
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Forklife Brand',
+          text: context.tr('forklift_brand'),
           textSet: forklifeBrand.value,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Forklife Model',
+          text: context.tr('forklift_model'),
           textSet: forklifeModel.value,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Serial No',
+          text: context.tr('forklift_serial_no'),
           textSet: serialNo.value,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'ForkLife Operation',
+          text: context.tr('forklift_operation'),
           textSet: forklifeOperation.value,
           number: TextInputType.number,
           addtionalText: 'Hrs',
@@ -112,7 +113,7 @@ class ForklifeInformation extends GetxController {
               forklifeClear();
               Navigator.pop(context);
             },
-            text: 'Save')
+            text: context.tr('save'))
       ],
     ).showModal(context);
   }

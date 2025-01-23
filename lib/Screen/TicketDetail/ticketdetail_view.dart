@@ -23,6 +23,7 @@ import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: use_key_in_widget_constructors
 class TicketDetailView extends StatelessWidget {
@@ -48,7 +49,7 @@ class TicketDetailView extends StatelessWidget {
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('View Detail', style: TextStyleList.title1),
+                  Text(context.tr('view_detail'), style: TextStyleList.title1),
                 ],
               ),
               leading: const BackIcon(),
@@ -272,7 +273,7 @@ class TicketDetailView extends StatelessWidget {
                                       Icon(Icons.access_time),
                                       4.wH,
                                       Text(
-                                        "Start Time : ${formatDateTimeCut(subJob.timeStart ?? '- ')}",
+                                        "${context.tr('start_time')} : ${formatDateTimeCut(subJob.timeStart ?? '- ')}",
                                         style: TextStyleList.text6,
                                       ),
                                     ],
@@ -296,7 +297,7 @@ class TicketDetailView extends StatelessWidget {
                                           Icon(Icons.access_time),
                                           4.wH,
                                           Text(
-                                            "End Time : ${formatDateTimeCut(subJob.timeEnd ?? '-')}",
+                                            "${context.tr('end_time')} : ${formatDateTimeCut(subJob.timeEnd ?? '-')}",
                                             style: TextStyleList.text6,
                                           ),
                                         ],
@@ -333,8 +334,9 @@ class TicketDetailView extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const TitleApp(
-                                          text: 'Field Service Report'),
+                                      TitleApp(
+                                          text: context
+                                              .tr('field_service_report')),
                                       subJob.status != '90' &&
                                               issue.status.id != 90 &&
                                               ticketController.canEdit.value &&
@@ -393,8 +395,8 @@ class TicketDetailView extends StatelessWidget {
                                                     children: [
                                                       ButtonColor(
                                                         backgroundColor: red4,
-                                                        title:
-                                                            'View Part Detail',
+                                                        title: context.tr(
+                                                            'view_part_detail'),
                                                         onTap: () {
                                                           showDialog(
                                                               context: context,
@@ -428,8 +430,9 @@ class TicketDetailView extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const TitleApp(
-                                          text: 'Battery Maintenance Report'),
+                                      TitleApp(
+                                          text: context.tr(
+                                              'battery_maintenance_report')),
                                       issue.status.id != 90 &&
                                               ticketController.canEdit.value &&
                                               ticketController
@@ -480,7 +483,8 @@ class TicketDetailView extends StatelessWidget {
                                           children: [
                                             ButtonColor(
                                               backgroundColor: red4,
-                                              title: 'View Part Detail',
+                                              title: context
+                                                  .tr('view_part_detail'),
                                               onTap: () {
                                                 showDialog(
                                                     context: context,

@@ -7,6 +7,7 @@ import 'package:toyotamobile/Models/maintenance_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class MaintenanceShowWidget extends StatelessWidget {
   final MaintenanceModel info;
@@ -62,7 +63,7 @@ class MaintenanceShowWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'จำนวนคน',
+                  'จำนวนคน (M)',
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -89,13 +90,14 @@ class MaintenanceShowWidget extends StatelessWidget {
                     PopupMenuItem(
                       value: 'edit',
                       child: Text(
-                        'Edit',
+                        context.tr('edit'),
                         style: TextStyleList.text9,
                       ),
                     ),
                     PopupMenuItem(
                       value: 'delete',
-                      child: Text('Delete', style: TextStyleList.text9),
+                      child: Text(context.tr('delete'),
+                          style: TextStyleList.text9),
                     ),
                   ],
                   child: Image.asset(

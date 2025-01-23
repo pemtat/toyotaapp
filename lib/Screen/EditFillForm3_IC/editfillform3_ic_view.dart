@@ -33,6 +33,7 @@ import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class EditFillFormView3IC extends StatelessWidget {
   final String jobId;
@@ -67,7 +68,7 @@ class EditFillFormView3IC extends StatelessWidget {
           children: [
             AppBar(
                 backgroundColor: white3,
-                title: Text('Periodic Maintenance Report IC',
+                title: Text(context.tr('pm_report_ic'),
                     style: TextStyleList.title1),
                 leading: const CloseIcon()),
           ],
@@ -82,7 +83,7 @@ class EditFillFormView3IC extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
-                        text: 'Customer Name',
+                        text: context.tr('customer_name'),
                         textSet: fillformController3.customerName.value,
                         readOnly: readOnly == null ? null : 'yes',
                       ),
@@ -90,7 +91,7 @@ class EditFillFormView3IC extends StatelessWidget {
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
-                        text: 'Contacted Name',
+                        text: context.tr('contacted_name'),
                         textSet: fillformController3.contactedName.value,
                         readOnly: readOnly == null ? null : 'yes',
                       ),
@@ -99,7 +100,7 @@ class EditFillFormView3IC extends StatelessWidget {
                 ),
                 20.kH,
                 TextFieldWidget(
-                  text: 'Service Type',
+                  text: context.tr('service_type'),
                   textSet: fillformController3.serviceType.value,
                   readOnly: readOnly == null ? null : 'yes',
                 ),
@@ -128,7 +129,7 @@ class EditFillFormView3IC extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
-                        text: 'Mast Type',
+                        text: context.tr('mast_type'),
                         textSet: fillformController3.mastType.value,
                         readOnly: readOnly == null ? null : 'yes',
                       ),
@@ -136,7 +137,7 @@ class EditFillFormView3IC extends StatelessWidget {
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
-                        text: 'Lift Height',
+                        text: context.tr('lift_height'),
                         textSet: fillformController3.lifeHeight.value,
                         readOnly: readOnly == null ? null : 'yes',
                       ),
@@ -148,7 +149,7 @@ class EditFillFormView3IC extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
-                        text: 'Chassis Number',
+                        text: context.tr('chassis_no'),
                         textSet: fillformController3.chassisNo.value,
                         readOnly: readOnly == null ? null : 'yes',
                       ),
@@ -156,7 +157,7 @@ class EditFillFormView3IC extends StatelessWidget {
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
-                        text: 'Operation Hour',
+                        text: context.tr('operation_hour'),
                         textSet: fillformController3.operationHour.value,
                         readOnly: readOnly == null ? null : 'yes',
                       ),
@@ -205,7 +206,7 @@ class EditFillFormView3IC extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Motor Checks',
+                    titleText: context.tr('motor_checks'),
                     button: readOnly == null
                         ? Obx(() => !motorChecks.isAllFieldsFilled.value
                             ? AddButton(
@@ -232,7 +233,7 @@ class EditFillFormView3IC extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Engine Checks',
+                    titleText: context.tr('engine_checks'),
                     button: readOnly == null
                         ? Obx(() => !engineChecks.isAllFieldsFilled.value
                             ? AddButton(
@@ -259,7 +260,7 @@ class EditFillFormView3IC extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Power Transmission System Checks',
+                    titleText: context.tr('power_trans_system'),
                     button: readOnly == null
                         ? Obx(() => !powerTransChecks.isAllFieldsFilled.value
                             ? AddButton(
@@ -286,7 +287,7 @@ class EditFillFormView3IC extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Steering System Checks',
+                    titleText: context.tr('steering_system'),
                     button: readOnly == null
                         ? Obx(() => !steeringChecks.isAllFieldsFilled.value
                             ? AddButton(
@@ -313,7 +314,7 @@ class EditFillFormView3IC extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Brake System Checks',
+                    titleText: context.tr('brake_system'),
                     button: readOnly == null
                         ? Obx(() => !breakSystemChecks.isAllFieldsFilled.value
                             ? AddButton(
@@ -340,7 +341,7 @@ class EditFillFormView3IC extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Hydraulic System Checks',
+                    titleText: context.tr('hydraulic_system'),
                     button: readOnly == null
                         ? Obx(() => !hydraulicChecks.isAllFieldsFilled.value
                             ? AddButton(
@@ -367,7 +368,7 @@ class EditFillFormView3IC extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Safety System Checks',
+                    titleText: context.tr('safety_system'),
                     button: readOnly == null
                         ? Obx(() => !safetyChecks.isAllFieldsFilled.value
                             ? AddButton(
@@ -394,7 +395,7 @@ class EditFillFormView3IC extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Fuel Cell',
+                    titleText: context.tr('fuel_cell'),
                     button: readOnly == null
                         ? Obx(() => !fuelCell.isAllFieldsFilled.value
                             ? AddButton(
@@ -421,7 +422,7 @@ class EditFillFormView3IC extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: "Safety",
+                    titleText: context.tr('safety'),
                     button: readOnly == null
                         ? Obx(() => !safety.isAllFieldsFilled.value
                             ? AddButton(
@@ -449,8 +450,7 @@ class EditFillFormView3IC extends StatelessWidget {
             Obx(() => BoxContainer(
                   children: [
                     TitleWithButton(
-                        titleText:
-                            'Description Problem / Action and Result \nRecommend spare part chaged',
+                        titleText: context.tr('pm_sparepart'),
                         button: AddButton(
                           onTap: () {
                             sparepartList.sparePartListModal(context);
@@ -478,12 +478,12 @@ class EditFillFormView3IC extends StatelessWidget {
                       () =>
                           fillformController3.sparePartRemark.value.text.isEmpty
                               ? RemarkButton(
-                                  title: '+ เพิ่มหมายเหตุ',
+                                  title: '+ ${context.tr('add_remark')}',
                                   onTap: () {
                                     sparePartRemarkEditModal(
                                         context,
                                         fillformController3.sparePartRemark,
-                                        'Spare Part Remark');
+                                        context.tr('spare_part_remark'));
                                   },
                                   backgroundColor: black3,
                                 )
@@ -493,7 +493,7 @@ class EditFillFormView3IC extends StatelessWidget {
                                     sparePartRemarkEditModal(
                                         context,
                                         fillformController3.sparePartRemark,
-                                        'Spare Part Remark');
+                                        context.tr('spare_part_remark'));
                                   },
                                 ),
                     ),
@@ -505,7 +505,7 @@ class EditFillFormView3IC extends StatelessWidget {
                 children: [
                   TitleWithButton(
                       required: 'yes',
-                      titleText: 'Maintenance and Service Result',
+                      titleText: context.tr('maintenance_service'),
                       button: readOnly == null
                           ? maintenance.maintenanceList.isEmpty
                               ? AddButton(
@@ -544,7 +544,7 @@ class EditFillFormView3IC extends StatelessWidget {
                 Obx(
                   () => AddEditBox(
                       readOnly: readOnly == null ? null : 'yes',
-                      titleText: 'Process Staff',
+                      titleText: context.tr('process_staff'),
                       list: processStaff.repairStaff,
                       onTap: () => processStaff.repairStaffModal(context),
                       moreText: getDisplayString(processStaff.repairStaff)),
@@ -565,7 +565,8 @@ class EditFillFormView3IC extends StatelessWidget {
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   backgroundColor: white3,
-                                  title: Center(child: Text('ผู้ตรวจซ่อม 2')),
+                                  title: Center(
+                                      child: Text(context.tr('inspector_2'))),
                                   titleTextStyle: TextStyleList.text1,
                                   content: SingleChildScrollView(
                                     child: Column(
@@ -594,7 +595,7 @@ class EditFillFormView3IC extends StatelessWidget {
                             controller: TextEditingController(
                                 text: fillformController3.selectedUser.value),
                             decoration: InputDecoration(
-                                labelText: 'ผู้ตรวจซ่อม 2',
+                                labelText: context.tr('inspector_2'),
                                 labelStyle: TextStyleList.text9),
                           ),
                         ),
@@ -628,7 +629,10 @@ class EditFillFormView3IC extends StatelessWidget {
           child: EndButton(
               onPressed: () {
                 fillformController3.showSaveDialog(
-                    context, 'Are you confirm to save report?', 'No', 'Yes');
+                    context,
+                    context.tr('save_message'),
+                    context.tr('no'),
+                    context.tr('yes'));
               },
               text: 'Save'),
         ),

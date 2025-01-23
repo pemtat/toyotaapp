@@ -6,6 +6,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SpecicGravity extends GetxController {
   int space = 24;
@@ -17,7 +18,7 @@ class SpecicGravity extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Specic Gravity and Voltage Check",
+              context.tr('specic_gravity'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -30,19 +31,19 @@ class SpecicGravity extends GetxController {
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Temperature',
+          text: context.tr('temperature'),
           textSet: temperature.value,
           number: TextInputType.number,
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Sp.Gr',
+          text: context.tr('sp_gr'),
           textSet: thp.value,
           number: TextInputType.number,
         ),
         space.kH,
         TextFieldWidget(
-          text: 'Voltage',
+          text: context.tr('voltage'),
           textSet: voltage.value,
           number: TextInputType.number,
         ),
@@ -53,7 +54,7 @@ class SpecicGravity extends GetxController {
             specicGravityClear();
             Navigator.pop(context);
           },
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ],
     ).showModal(context);
@@ -67,7 +68,7 @@ class SpecicGravity extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Specic Gravity and Voltage Check",
+              context.tr('specic_gravity'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -79,19 +80,19 @@ class SpecicGravity extends GetxController {
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Temperature',
+          text: context.tr('temperature'),
           textSet: temperature.value,
           number: TextInputType.number,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Sp.Gr',
+          text: context.tr('sp_gr'),
           textSet: thp.value,
           number: TextInputType.number,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Voltage',
+          text: context.tr('voltage'),
           textSet: voltage.value,
           number: TextInputType.number,
         ),
@@ -103,7 +104,7 @@ class SpecicGravity extends GetxController {
               specicGravityClear();
               Navigator.pop(context);
             },
-            text: 'Save')
+            text: context.tr('save'))
       ],
     ).showModal(context);
   }

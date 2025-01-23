@@ -47,7 +47,7 @@ class TicketInfo extends StatelessWidget {
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: ticketId.toString()));
                     Fluttertoast.showToast(
-                        msg: "คัดลอกข้อความ",
+                        msg: context.tr('copy_text'),
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.BOTTOM,
                         fontSize: 12.0);
@@ -119,7 +119,7 @@ class PMJobInfo extends StatelessWidget {
                       Clipboard.setData(
                           ClipboardData(text: ticketId.toString()));
                       Fluttertoast.showToast(
-                          msg: "คัดลอกข้อความ",
+                          msg: context.tr('copy_text'),
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
                           fontSize: 12.0);
@@ -257,7 +257,7 @@ class TicketInfoStatus extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: ticketId.toString()));
-                    showMessage('คัดลอกข้อความ');
+                    showMessage(context.tr('copy_message'));
                   },
                   child: Image.asset('assets/ticketblock.png'),
                 )
@@ -338,7 +338,7 @@ class JobInfo extends StatelessWidget {
                         Clipboard.setData(
                             ClipboardData(text: jobId.toString()));
                         Fluttertoast.showToast(
-                            msg: "คัดลอกข้อความ",
+                            msg: context.tr('copy_text'),
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             fontSize: 12.0);

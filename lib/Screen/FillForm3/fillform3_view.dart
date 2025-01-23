@@ -39,6 +39,7 @@ import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class FillFormView3 extends StatelessWidget {
   final String jobId;
@@ -80,8 +81,8 @@ class FillFormView3 extends StatelessWidget {
           children: [
             AppBar(
                 backgroundColor: white3,
-                title: Text('Periodic Maintenance Report',
-                    style: TextStyleList.title1),
+                title:
+                    Text(context.tr('pm_report'), style: TextStyleList.title1),
                 leading: const CloseIcon()),
           ],
         ),
@@ -95,20 +96,20 @@ class FillFormView3 extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
-                          text: 'Customer Name',
+                          text: context.tr('customer_name'),
                           textSet: fillformController3.customerName.value),
                     ),
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
-                          text: 'Department',
+                          text: context.tr('department'),
                           textSet: fillformController3.department.value),
                     ),
                   ],
                 ),
                 20.kH,
                 TextFieldWidget(
-                    text: 'Contacted Name',
+                    text: context.tr('contacted_name'),
                     textSet: fillformController3.contactedName.value),
                 20.kH,
                 Row(
@@ -131,7 +132,7 @@ class FillFormView3 extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
-                          text: 'Operation Hour',
+                          text: context.tr('operation_hour'),
                           textSet: fillformController3.operationHour.value),
                     ),
                     10.wH,
@@ -147,20 +148,20 @@ class FillFormView3 extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
-                          text: 'Mast Type',
+                          text: context.tr('mast_type'),
                           textSet: fillformController3.mastType.value),
                     ),
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
-                          text: 'Lift Height',
+                          text: context.tr('lift_height'),
                           textSet: fillformController3.lifeHeight.value),
                     ),
                   ],
                 ),
                 20.kH,
                 TextFieldWidget(
-                    text: 'Customer Fleet No.',
+                    text: context.tr('customer_fleet_no'),
                     textSet: fillformController3.customerFleetNo.value)
               ],
             ),
@@ -201,7 +202,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Intial Checks',
+                    titleText: context.tr('intial_checks'),
                     button: Obx(() => !initialChecks.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -225,7 +226,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Chassis Checks',
+                    titleText: context.tr('chassis_checks'),
                     button: Obx(() => !chassisChecks.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -254,7 +255,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Hydraulic motor & Punp Checks',
+                    titleText: context.tr('hydraulic_checks'),
                     button: Obx(() => !hydraulicmMotor.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -281,8 +282,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText:
-                        'Steering Motor & Hydraulic steering\nsystem checks (CBE)',
+                    titleText: context.tr('steering_checks'),
                     button: Obx(() => !steeringMotor.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -309,7 +309,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Auxiliary Motor Checks (Raymond)',
+                    titleText: context.tr('auxiliary_checks'),
                     button: Obx(() => !auxiliaryMotor.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -336,7 +336,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Drive Motor Checks',
+                    titleText: context.tr('drive_checks'),
                     button: Obx(() => !driveMotorChecks.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -363,7 +363,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Brake System Checks',
+                    titleText: context.tr('brake_checks'),
                     button: Obx(() => !breakSystemChecks.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -392,7 +392,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Controller, Logic Box Checks',
+                    titleText: context.tr('controller_checks'),
                     button: Obx(() => !controllerLogic.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -417,7 +417,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Powertrain Checks',
+                    titleText: context.tr('powertrain_checks'),
                     button: Obx(() => !powertrainChecks.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -442,7 +442,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Battery Checks',
+                    titleText: context.tr('battery_checks'),
                     button: Obx(() => !batteryChecks.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -476,7 +476,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Charger Checks',
+                    titleText: context.tr('charger_checks'),
                     button: Obx(() => !chargerChecks.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -501,7 +501,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Meterial Handling System Checks',
+                    titleText: context.tr('meterial_checks'),
                     button: Obx(() => !meterialHandling.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -526,7 +526,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Mast Checks',
+                    titleText: context.tr('mast_checks'),
                     button: Obx(() => !mastChecks.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -559,7 +559,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'PT/PS เเละ OS / List for MHE class 3',
+                    titleText: context.tr('mhe'),
                     button: Obx(() => !ptPsOm.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -587,7 +587,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: "VNA เเละ OM / List for VNA & OME model",
+                    titleText: context.tr('vna_om_checks'),
                     button: Obx(() => !vnaOm.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -615,7 +615,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: "For Special equipment",
+                    titleText: context.tr('for_special'),
                     button: Obx(() => !forSpecial.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -640,7 +640,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: "Safety",
+                    titleText: context.tr('safety'),
                     button: Obx(() => !safety.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {
@@ -665,8 +665,7 @@ class FillFormView3 extends StatelessWidget {
             Obx(() => BoxContainer(
                   children: [
                     TitleWithButton(
-                        titleText:
-                            'Description Problem / Action and Result \nRecommend spare part chaged',
+                        titleText: context.tr('pm_sparepart'),
                         button: AddButton(
                           onTap: () {
                             sparepartList.sparePartListModal(context);
@@ -694,12 +693,12 @@ class FillFormView3 extends StatelessWidget {
                       () =>
                           fillformController3.sparePartRemark.value.text.isEmpty
                               ? RemarkButton(
-                                  title: '+ เพิ่มหมายเหตุ',
+                                  title: '+ ${context.tr('add_remark')}',
                                   onTap: () {
                                     sparePartRemarkEditModal(
                                         context,
                                         fillformController3.sparePartRemark,
-                                        'Spare Part Remark');
+                                        context.tr('spare_part_remark'));
                                   },
                                   backgroundColor: black3,
                                 )
@@ -709,7 +708,7 @@ class FillFormView3 extends StatelessWidget {
                                     sparePartRemarkEditModal(
                                         context,
                                         fillformController3.sparePartRemark,
-                                        'Spare Part Remark');
+                                        context.tr('spare_part_remark'));
                                   },
                                 ),
                     ),
@@ -721,7 +720,7 @@ class FillFormView3 extends StatelessWidget {
                 children: [
                   TitleWithButton(
                       required: 'yes',
-                      titleText: 'Maintenance and Service Result',
+                      titleText: context.tr('maintenance_service'),
                       button: maintenance.maintenanceList.isEmpty
                           ? AddButton(
                               onTap: () {
@@ -756,7 +755,7 @@ class FillFormView3 extends StatelessWidget {
               children: [
                 Obx(
                   () => AddEditBox(
-                      titleText: 'Process Staff',
+                      titleText: context.tr('process_staff'),
                       list: processStaff.repairStaff,
                       onTap: () => processStaff.repairStaffModal(context),
                       moreText: getDisplayString(processStaff.repairStaff)),
@@ -776,7 +775,8 @@ class FillFormView3 extends StatelessWidget {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 backgroundColor: white3,
-                                title: Center(child: Text('ผู้ตรวจซ่อม 2')),
+                                title: Center(
+                                    child: Text(context.tr('inspector_2'))),
                                 titleTextStyle: TextStyleList.text1,
                                 content: SingleChildScrollView(
                                   child: Column(
@@ -803,7 +803,7 @@ class FillFormView3 extends StatelessWidget {
                             controller: TextEditingController(
                                 text: fillformController3.selectedUser.value),
                             decoration: InputDecoration(
-                                labelText: 'ผู้ตรวจซ่อม 2',
+                                labelText: context.tr('inspector_2'),
                                 labelStyle: TextStyleList.text9),
                           ),
                         ),
@@ -836,9 +836,12 @@ class FillFormView3 extends StatelessWidget {
           child: EndButton(
               onPressed: () {
                 fillformController3.showSaveDialog(
-                    context, 'Are you confirm to save report?', 'No', 'Yes');
+                    context,
+                    context.tr('save_message'),
+                    context.tr('no'),
+                    context.tr('yes'));
               },
-              text: 'Save'),
+              text: context.tr('save')),
         ),
       ),
     );

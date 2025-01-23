@@ -5,6 +5,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ProcessStaff extends GetxController {
   void repairStaffModal(BuildContext context) {
@@ -16,7 +17,7 @@ class ProcessStaff extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Process Staff",
+              context.tr('process_staff'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -49,7 +50,7 @@ class ProcessStaff extends GetxController {
 
               Navigator.pop(context);
             },
-            text: 'Save')
+            text: context.tr('save'))
       ],
     ).showModal(context);
   }

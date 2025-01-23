@@ -7,6 +7,7 @@ import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class RepairProcedure extends GetxController {
   int space = 24;
@@ -18,7 +19,7 @@ class RepairProcedure extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Repair Procedure",
+              context.tr('repair_prodecure'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -30,12 +31,12 @@ class RepairProcedure extends GetxController {
         ),
         20.kH,
         TextFieldType(
-          hintText: 'Repair Procedure',
+          hintText: context.tr('repair_prodecure'),
           textSet: repairProcedure.value,
         ),
         20.kH,
         TextFieldType(
-          hintText: 'Cause of the problem',
+          hintText: context.tr('cause_problem'),
           textSet: causeProblem.value,
         ),
         20.kH,
@@ -45,7 +46,7 @@ class RepairProcedure extends GetxController {
               rPClear();
               Navigator.pop(context);
             },
-            text: 'Save')
+            text: context.tr('save'))
       ],
     ).showModal(context);
   }
@@ -58,7 +59,7 @@ class RepairProcedure extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Repair prodecure",
+              context.tr('repair_prodecure'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -70,12 +71,12 @@ class RepairProcedure extends GetxController {
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Repair Procedure',
+          text: context.tr('repair_prodecure'),
           textSet: repairProcedure.value,
         ),
         space.kH,
         TextFieldEditWidget(
-          text: 'Cause of the problem',
+          text: context.tr('cause_problem'),
           textSet: causeProblem.value,
         ),
         space.kH,
@@ -86,7 +87,7 @@ class RepairProcedure extends GetxController {
               rPClear();
               Navigator.pop(context);
             },
-            text: 'Save')
+            text: context.tr('save'))
       ],
     ).showModal(context);
   }

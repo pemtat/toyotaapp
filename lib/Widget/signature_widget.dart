@@ -12,6 +12,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 import 'package:toyotamobile/Widget/loadingdata.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: must_be_immutable
 class SignatureWidget extends StatelessWidget {
@@ -42,7 +43,7 @@ class SignatureWidget extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
         backgroundColor: white4,
-        title: Text('บันทึกลายเซ็น', style: TextStyleList.title1),
+        title: Text(context.tr('save_signature'), style: TextStyleList.title1),
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -69,14 +70,15 @@ class SignatureWidget extends StatelessWidget {
                 InkWell(
                   onTap: clearSignature,
                   child: Text(
-                    'Clear',
+                    context.tr('clear'),
                     style: TextStyleList.text20,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 10),
-            TextFieldWidget(text: 'ลงชื่อ', textSet: signatureController),
+            TextFieldWidget(
+                text: context.tr('sign'), textSet: signatureController),
           ],
         ),
       ),
@@ -84,9 +86,9 @@ class SignatureWidget extends StatelessWidget {
         TextButton(
           onPressed: () async {
             if (signaturePad.value == '') {
-              showMessage('โปรดลงชื่อก่อนบันทึกข้อมูล');
+              showMessage(context.tr('signature_require_1'));
             } else if (signatureController.value.text == '') {
-              showMessage('โปรดเพิ่มลายเซ็นก่อนบันทึกข้อมูล');
+              showMessage(context.tr('signature_require_2'));
             } else {
               var token = await getToken();
               showDialog(
@@ -172,7 +174,7 @@ class SignatureWidget extends StatelessWidget {
             }
           },
           child: Text(
-            'บันทึก',
+            context.tr('save'),
             style: TextStyleList.text5,
           ),
         ),
@@ -181,7 +183,7 @@ class SignatureWidget extends StatelessWidget {
             Navigator.pop(context);
           },
           child: Text(
-            'ยกเลิก',
+            context.tr('cancel'),
             style: TextStyleList.text5,
           ),
         ),

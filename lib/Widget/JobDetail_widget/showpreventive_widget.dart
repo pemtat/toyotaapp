@@ -13,6 +13,7 @@ import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:toyotamobile/Widget/urlimg.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ShowPreventiveReportWidget extends StatelessWidget {
   final RxList<PreventivereportModel> reportData;
@@ -53,27 +54,27 @@ class ShowPreventiveReportWidget extends StatelessWidget {
               children: [
                 space.kH,
                 BoxInfo2(
-                    title: 'Customer Name',
+                    title: context.tr('customer_name'),
                     value: maintenance!.customerName ?? '-'),
                 if (ic == null)
                   Column(
                     children: [
                       space.kH,
                       BoxInfo2(
-                          title: 'Department',
+                          title: context.tr('department'),
                           value: maintenance.department ?? '-'),
                     ],
                   ),
                 space.kH,
                 BoxInfo2(
-                    title: 'Contacted Name',
+                    title: context.tr('contacted_name'),
                     value: maintenance.contactedName ?? '-'),
                 space.kH,
                 ic == null
                     ? BoxInfo2(
                         title: 'Product', value: maintenance.product ?? '-')
                     : BoxInfo2(
-                        title: 'Service Type',
+                        title: context.tr('service_type'),
                         value: maintenance.serviceType ?? '-'),
                 space.kH,
                 BoxInfo2(title: 'Model', value: maintenance.model ?? '-'),
@@ -82,22 +83,24 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                     title: 'Serial No', value: maintenance.serialNo ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: 'Operation Hour',
+                    title: context.tr('operation_hour'),
                     value: maintenance.operationHour ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: 'Mast Type', value: maintenance.mastType ?? '-'),
+                    title: context.tr('mast_type'),
+                    value: maintenance.mastType ?? '-'),
                 space.kH,
 
                 BoxInfo2(
-                    title: 'Lift Hieght', value: maintenance.liftHeight ?? '-'),
+                    title: context.tr('lift_height'),
+                    value: maintenance.liftHeight ?? '-'),
                 space.kH,
                 ic == null
                     ? BoxInfo2(
-                        title: 'Customer Fleet',
+                        title: context.tr('customer_fleet_no'),
                         value: maintenance.customerFleet ?? '-')
                     : BoxInfo2(
-                        title: 'Chassis No',
+                        title: context.tr('chassis_no'),
                         value: maintenance.chassicNo ?? '-'),
                 space.kH,
                 ListView.builder(
@@ -148,7 +151,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                                                   subData.ok ?? '0'),
                                             ),
                                       BoxInfo(
-                                          title: 'Remark',
+                                          title: context.tr('remark'),
                                           value: subData.remark == ''
                                               ? '-'
                                               : subData.remark ?? ''),
@@ -162,8 +165,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                   },
                 ),
                 space.kH,
-                const TitleApp2(
-                    text: 'ความสมบูรณ์ของอุปกรณ์ Safety ตามกฎกระทราวง'),
+                TitleApp2(text: context.tr('safety_maintenance')),
                 4.kH,
                 BoxInfo(
                     title: 'Travel Alarm',
@@ -187,9 +189,8 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           space.kH,
-                          const TitleApp2(
-                            text:
-                                'Description Problem / Action and Result / Recommend spare part changed',
+                          TitleApp2(
+                            text: context.tr('pm_sparepart_1'),
                             moreText: '',
                           ),
                           6.kH,
@@ -230,9 +231,8 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                     : Column(
                         children: [
                           space.kH,
-                          const TitleApp2(
-                            text:
-                                'Description Problem / Action and Result / Recommend spare part changed',
+                          TitleApp2(
+                            text: context.tr('pm_sparepart_1'),
                             moreText: '-',
                           ),
                         ],
@@ -240,8 +240,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 space2.kH,
                 TitleWithButton3(
                     space: true,
-                    titleText:
-                        'ผลการตรวจเช็คเเละการบำรุงรักษา (Maintenance and service result)',
+                    titleText: context.tr('maintenance_service'),
                     button: Text(
                       maintenance.mtServiceResult == ''
                           ? '-'
@@ -260,7 +259,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                 ),
                 space2.kH,
                 TitleApp2(
-                  text: 'สำหรับเจ้าหน้าที่',
+                  text: context.tr('process_staff'),
                   moreText: maintenance.officerChecking == ''
                       ? '-'
                       : maintenance.officerChecking,
@@ -268,10 +267,12 @@ class ShowPreventiveReportWidget extends StatelessWidget {
 
                 space.kH,
                 TitleApp2(
-                    text: 'ผู้ตรวจซ่อม 1', moreText: maintenance.tech1 ?? ''),
+                    text: context.tr('inspector_1'),
+                    moreText: maintenance.tech1 ?? ''),
                 space.kH,
                 TitleApp2(
-                    text: 'ผู้ตรวจซ่อม 2', moreText: maintenance.tech2 ?? ''),
+                    text: context.tr('inspector_2'),
+                    moreText: maintenance.tech2 ?? ''),
 
                 4.kH,
                 Row(
@@ -279,12 +280,12 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                   children: [
                     ic == null
                         ? PdfFile(
-                            name: 'Periodic Maintenance Report',
+                            name: context.tr('pm_report'),
                             path: bugId,
                             option: 'pvt',
                           )
                         : PdfFile(
-                            name: 'Periodic Maintenance Report IC',
+                            name: context.tr('pm_report_ic'),
                             path: bugId,
                             option: 'pvt_ic',
                           )
@@ -310,7 +311,7 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                     children: [
                       space.kH,
                       ShowTextFieldWidget(
-                          text: 'ลงชื่อ',
+                          text: context.tr('sign'),
                           hintText: maintenance.signature ?? ''),
                     ],
                   ),

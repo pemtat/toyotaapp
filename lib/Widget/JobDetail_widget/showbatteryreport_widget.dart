@@ -14,6 +14,7 @@ import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:toyotamobile/Widget/urlimg.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ShowBatteryReportWidget extends StatelessWidget {
   final RxList<BatteryReportModel> reportData;
@@ -64,111 +65,131 @@ class ShowBatteryReportWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TitleApp2(text: "Battery Maintenance Report"),
+                TitleApp2(
+                  text: context.tr('battery_maintenance_report'),
+                ),
                 10.kH,
                 BoxInfo2(
-                    title: 'Customer Name', value: info1!.customerName ?? '-'),
+                    title: context.tr('customer_name'),
+                    value: info1!.customerName ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: 'Contact Person', value: info1.contactPerson ?? '-'),
+                    title: context.tr('contact_person'),
+                    value: info1.contactPerson ?? '-'),
                 space.kH,
-                BoxInfo2(title: 'Division', value: info1.division ?? '-'),
+                BoxInfo2(
+                    title: context.tr('division'),
+                    value: info1.division ?? '-'),
                 10.kH,
                 BoxInfo2(
-                    title: 'Battery Brand', value: info1.batteryBand ?? '-'),
+                    title: context.tr('battery_band'),
+                    value: info1.batteryBand ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: 'Battery Model', value: info1.batteryModel ?? '-'),
+                    title: context.tr('battery_model'),
+                    value: info1.batteryModel ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: 'ManuFacturer No.',
+                    title: context.tr('manufacturer_no'),
                     value: info1.manufacturerNo ?? '-'),
                 space.kH,
-                BoxInfo2(title: 'Serial No.', value: info1.serialNo ?? '-'),
+                BoxInfo2(
+                    title: context.tr('battery_serial_no'),
+                    value: info1.serialNo ?? '-'),
                 space.kH,
                 (info1.batteryLifespan == '0' &&
                         info1.informationVoltage == '0' &&
                         info1.capacity == '0')
                     ? Column(
                         children: [
-                          const BoxInfo2(title: 'Battery Lifespan', value: '-'),
+                          BoxInfo2(
+                              title: context.tr('battery_lifespan'),
+                              value: '-'),
                           space.kH,
-                          const BoxInfo2(title: 'Voltage', value: '-'),
+                          BoxInfo2(title: context.tr('voltage'), value: '-'),
                           space.kH,
-                          const BoxInfo2(title: 'Capacity', value: '-'),
+                          BoxInfo2(title: context.tr('capacity'), value: '-'),
                         ],
                       )
                     : Column(
                         children: [
                           BoxInfo2(
-                              title: 'Battery Lifespan',
+                              title: context.tr('battery_lifespan'),
                               value: info1.batteryLifespan ?? '-'),
                           space.kH,
                           BoxInfo2(
-                              title: 'Voltage',
+                              title: context.tr('voltage'),
                               value: info1.informationVoltage ?? '-'),
                           space.kH,
                           BoxInfo2(
-                              title: 'Capacity', value: info1.capacity ?? '-'),
+                              title: context.tr('capacity'),
+                              value: info1.capacity ?? '-'),
                         ],
                       ),
                 space.kH,
                 10.kH,
-                const TitleApp2(text: "Forklife Information"),
+                TitleApp2(text: context.tr('forklift_operation')),
                 space.kH,
                 BoxInfo2(
-                    title: 'Forklife Brand', value: info1.forkliftBrand ?? '-'),
+                    title: context.tr('forklift_brand'),
+                    value: info1.forkliftBrand ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: 'Forklife Model', value: info1.forkliftModel ?? '-'),
+                    title: context.tr('forklift_model'),
+                    value: info1.forkliftModel ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: 'Serial No', value: info1.forkliftSerial ?? '-'),
+                    title: context.tr('forklift_serial'),
+                    value: info1.forkliftSerial ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: 'Forklife Operation',
+                    title: context.tr('forklift_operation'),
                     value: info1.forkliftOperation == '0'
                         ? '-'
                         : info1.forkliftOperation ?? '-'),
                 space.kH,
                 10.kH,
-                const TitleApp2(text: "Battery Usage"),
+                TitleApp2(text: context.tr('battery_usage')),
                 space.kH,
                 (info1.shiftTime == '0' &&
                         info1.hrs == '0' &&
                         info1.ratio == '0')
                     ? Column(
                         children: [
-                          const BoxInfo2(title: 'Shift time', value: '-'),
+                          BoxInfo2(title: context.tr('shift_time'), value: '-'),
                           space.kH,
-                          const BoxInfo2(title: 'Hrs. per shift', value: '-'),
+                          BoxInfo2(
+                              title: context.tr('hrs_per_shift'), value: '-'),
                           space.kH,
-                          const BoxInfo2(title: 'Ratio', value: '-'),
+                          BoxInfo2(title: context.tr('ratio'), value: '-'),
                         ],
                       )
                     : Column(
                         children: [
                           BoxInfo2(
-                              title: 'Shift time',
+                              title: context.tr('shift_time'),
                               value: info1.shiftTime ?? '-'),
                           space.kH,
                           BoxInfo2(
-                              title: 'Hrs. per shift', value: info1.hrs ?? '-'),
+                              title: context.tr('hrs_per_shift'),
+                              value: info1.hrs ?? '-'),
                           space.kH,
-                          BoxInfo2(title: 'Ratio', value: info1.ratio ?? '-'),
+                          BoxInfo2(
+                              title: context.tr('ratio'),
+                              value: info1.ratio ?? '-'),
                         ],
                       ),
                 space.kH,
                 BoxInfo2(
-                    title: 'Charging Type', value: info1.chargingType ?? '-'),
+                    title: context.tr('charging_type'),
+                    value: info1.chargingType ?? '-'),
                 4.kH,
                 10.kH,
                 info1.totalVoltage != '0'
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const TitleApp2(
-                              text: "Specic Gravity and Voltage Checks"),
+                          TitleApp2(text: context.tr('specic_gravity')),
                           4.kH,
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
@@ -186,12 +207,13 @@ class ShowBatteryReportWidget extends StatelessWidget {
                                         Radius.circular(6))),
                                 child: Column(children: [
                                   BoxInfo(
-                                      title: 'Temperature',
+                                      title: context.tr('temperature'),
                                       value: data.temperature ?? '-'),
                                   BoxInfo(
-                                      title: 'Sp.Gr', value: data.thp ?? '-'),
+                                      title: context.tr('sp_gr'),
+                                      value: data.thp ?? '-'),
                                   BoxInfo(
-                                      title: 'Voltage',
+                                      title: context.tr('voltage'),
                                       value: data.voltageCheck ?? '-'),
                                 ]),
                               );
@@ -202,15 +224,15 @@ class ShowBatteryReportWidget extends StatelessWidget {
                             children: [
                               4.wH,
                               Text(
-                                'Total Voltage ${info1.totalVoltage}V.',
+                                '${context.tr('total_voltage')} ${info1.totalVoltage}V.',
                                 style: TextStyleList.text2,
                               ),
                             ],
                           )
                         ],
                       )
-                    : const TitleApp2(
-                        text: "Specic Gravity and Voltage Checks",
+                    : TitleApp2(
+                        text: context.tr('specic_gravity'),
                         moreText: '-',
                       ),
                 10.kH,
@@ -218,7 +240,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const TitleApp(text: "Battery Condition"),
+                          TitleApp(text: context.tr('battery_condition')),
                           4.kH,
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
@@ -256,13 +278,13 @@ class ShowBatteryReportWidget extends StatelessWidget {
                           ),
                         ],
                       )
-                    : const TitleApp2(
-                        text: "Battery Condition",
+                    : TitleApp2(
+                        text: context.tr('battery_condition'),
                         moreText: '-',
                       ),
                 space.kH,
                 TitleWithButton(
-                    titleText: 'Corrective Action',
+                    titleText: context.tr('corrective_action'),
                     button: Text(
                       info1.correctiveAction == ''
                           ? '-'
@@ -274,7 +296,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const TitleApp(text: "Recommanded Spare Part"),
+                          TitleApp(text: context.tr('bm_sparepart')),
                           4.kH,
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
@@ -301,7 +323,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                                       title: 'Description',
                                       value: data.description ?? '-'),
                                   BoxInfo(
-                                      title: 'Quantity',
+                                      title: context.tr('quantity'),
                                       value: data.quantity ?? '-'),
                                 ]),
                               );
@@ -313,7 +335,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     : Column(
                         children: [
                           TitleWithButton(
-                              titleText: 'Recommanded Spare Part',
+                              titleText: context.tr('bm_sparepart'),
                               button: Text(
                                 '-',
                                 style: TextStyleList.text3,
@@ -322,7 +344,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                         ],
                       ),
                 TitleWithButton(
-                    titleText: 'Repair P.M Battery',
+                    titleText: context.tr('repair_pm_battery'),
                     button: Text(
                       info1.repairPm == '' ? '-' : info1.repairPm ?? '-',
                       style: TextStyleList.text3,
@@ -376,15 +398,19 @@ class ShowBatteryReportWidget extends StatelessWidget {
                 //             style: TextStyleList.text3,
                 //           )),
                 // space.kH,
-                TitleApp2(text: 'ผู้ตรวจซ่อม 1', moreText: info1.tech1 ?? ''),
+                TitleApp2(
+                    text: context.tr('inspector_1'),
+                    moreText: info1.tech1 ?? ''),
                 space.kH,
-                TitleApp2(text: 'ผู้ตรวจซ่อม 2', moreText: info1.tech2 ?? ''),
+                TitleApp2(
+                    text: context.tr('inspector_2'),
+                    moreText: info1.tech2 ?? ''),
                 Obx(() => (timeStart.value != '' && timeEnd.value != '')
                     ? Column(
                         children: [
                           space.kH,
                           TitleApp2(
-                              text: 'ระยะเวลาการทำงาน',
+                              text: context.tr('working_period'),
                               moreText:
                                   calculateTimeDifference(timeStart, timeEnd)),
                         ],
@@ -395,7 +421,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     PdfFile(
-                      name: 'Battery Maintenance Report',
+                      name: context.tr('battery_maintenance_report'),
                       path: bugId,
                       option: pdfOption == 'btr' ? 'btr' : 'fieldreport_btr',
                     )
@@ -419,7 +445,8 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     children: [
                       space.kH,
                       ShowTextFieldWidget(
-                          text: 'ลงชื่อ', hintText: info1.signature ?? ''),
+                          text: context.tr('sign'),
+                          hintText: info1.signature ?? ''),
                     ],
                   ),
               ],

@@ -4,6 +4,7 @@ import 'package:toyotamobile/Models/sparepartseach.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/SparepartDetail_widget/addsparepart.dart';
 import 'package:toyotamobile/Widget/SparepartDetail_widget/editsparepart.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SparepartList extends GetxController {
   int space = 24;
@@ -15,8 +16,7 @@ class SparepartList extends GetxController {
       enableDrag: false,
       builder: (BuildContext context) {
         return AddSparePartDetail(
-          title:
-              "Description Problem / Action and Result / Recommend spare part chaged",
+          title: context.tr('pm_sparepart_1'),
           cCodePage: cCodePage,
           searchPartNumber: searchPartNumber,
           isLoading: isLoading,
@@ -44,8 +44,7 @@ class SparepartList extends GetxController {
       enableDrag: false,
       builder: (BuildContext context) {
         return EditSparePartDetail(
-          title:
-              "Description Problem / Action and Result / Recommend spare part chaged",
+          title: context.tr('pm_sparepart_1'),
           part: part,
           cCodePage: cCodePage,
           searchPartNumber: searchPartNumber,

@@ -10,6 +10,7 @@ import 'package:toyotamobile/Widget/pdf_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/urlimg.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ShowRepairReport extends StatelessWidget {
   final RxList<RepairReportModel> reportData;
@@ -55,16 +56,19 @@ class ShowRepairReport extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BoxInfo2(
-                      title: 'Field Service Report',
+                      title: context.tr('field_service_report'),
                       value: data.fieldReport ?? '-'),
                   space.kH,
                   BoxInfo2(
-                      title: 'Customer Name', value: data.customerName ?? '-'),
-                  space.kH,
-                  BoxInfo2(title: 'Department', value: data.department ?? '-'),
+                      title: context.tr('customer_name'),
+                      value: data.customerName ?? '-'),
                   space.kH,
                   BoxInfo2(
-                      title: 'Contacted Name',
+                      title: context.tr('department'),
+                      value: data.department ?? '-'),
+                  space.kH,
+                  BoxInfo2(
+                      title: context.tr('contacted_name'),
                       value: data.contactedName ?? '-'),
                   space.kH,
                   BoxInfo2(title: 'Product', value: data.product ?? '-'),
@@ -74,22 +78,27 @@ class ShowRepairReport extends StatelessWidget {
                   BoxInfo2(title: 'Serial No', value: data.serialNo ?? '-'),
                   space.kH,
                   BoxInfo2(
-                      title: 'Operation Hour',
+                      title: context.tr('operation_hour'),
                       value: data.operationHour ?? '-'),
                   space.kH,
-                  BoxInfo2(title: 'Mast Type', value: data.mastType ?? '-'),
-                  space.kH,
-                  BoxInfo2(title: 'Lift Hieght', value: data.liftHeight ?? '-'),
+                  BoxInfo2(
+                      title: context.tr('mast_type'),
+                      value: data.mastType ?? '-'),
                   space.kH,
                   BoxInfo2(
-                      title: 'Customer Fleet',
+                      title: context.tr('lift_height'),
+                      value: data.liftHeight ?? '-'),
+                  space.kH,
+                  BoxInfo2(
+                      title: context.tr('customer_fleet_no'),
                       value: data.customerFleet ?? '-'),
                   space.kH,
                   BoxInfo2(
                       title: 'Error Code', value: data.errorCodeReport ?? '-'),
                   space.kH,
                   BoxInfo2(
-                      title: 'Work Order Number', value: data.orderNo ?? '-'),
+                      title: context.tr('order_no'),
+                      value: data.orderNo ?? '-'),
                   space.kH,
                   BoxInfo2(
                       title: 'R Code', value: data.rCode ?? '-', space: true),
@@ -98,12 +107,12 @@ class ShowRepairReport extends StatelessWidget {
                       title: 'W Code', value: data.wCode ?? '-', space: true),
                   space.kH,
                   BoxInfo2(
-                      title: 'Repair Procedure',
+                      title: context.tr('repair_prodecure'),
                       value: data.produre ?? '-',
                       space: true),
                   space.kH,
                   BoxInfo2(
-                      title: 'Problem',
+                      title: context.tr('cause_problem'),
                       value: data.problem ?? '-',
                       space: true),
                   space.kH,
@@ -112,7 +121,9 @@ class ShowRepairReport extends StatelessWidget {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const BoxInfo2(title: 'Spare part List', value: ''),
+                            BoxInfo2(
+                                title: context.tr('spare_part_list'),
+                                value: ''),
                             4.kH,
                             ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
@@ -141,13 +152,13 @@ class ShowRepairReport extends StatelessWidget {
                                           title: 'Description',
                                           value: data.description ?? '-'),
                                       BoxInfo(
-                                          title: 'Quantity',
+                                          title: context.tr('quantity'),
                                           value: data.quantity ?? '-'),
                                       BoxInfo(
-                                          title: 'Change Now',
+                                          title: context.tr('change_now'),
                                           value: data.changeNow ?? '-'),
                                       BoxInfo(
-                                          title: 'Change on PM',
+                                          title: context.tr('change_on_pm'),
                                           value: data.changeOnPm ?? '-'),
                                     ],
                                   ),
@@ -156,13 +167,15 @@ class ShowRepairReport extends StatelessWidget {
                             ),
                           ],
                         )
-                      : const BoxInfo2(title: 'Spare part List', value: '-'),
+                      : BoxInfo2(
+                          title: context.tr('spare_part_list'), value: '-'),
                   8.kH,
                   filteredAdditionalSparePart.isNotEmpty
                       ? Column(
                           children: [
-                            const BoxInfo2(
-                                title: 'Additional spare part list', value: ''),
+                            BoxInfo2(
+                                title: context.tr('additional_spare_part_list'),
+                                value: ''),
                             4.kH,
                             ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
@@ -192,13 +205,13 @@ class ShowRepairReport extends StatelessWidget {
                                           title: 'Description',
                                           value: data.description ?? ''),
                                       BoxInfo(
-                                          title: 'Quantity',
+                                          title: context.tr('quantity'),
                                           value: data.quantity ?? ''),
                                       BoxInfo(
-                                          title: 'Change Now',
+                                          title: context.tr('change_now'),
                                           value: data.changeNow ?? '-'),
                                       BoxInfo(
-                                          title: 'Change on PM',
+                                          title: context.tr('change_on_pm'),
                                           value: data.changeOnPm ?? '-'),
                                     ],
                                   ),
@@ -207,11 +220,13 @@ class ShowRepairReport extends StatelessWidget {
                             ),
                           ],
                         )
-                      : const BoxInfo2(
-                          title: 'Additional spare part list', value: '-'),
+                      : BoxInfo2(
+                          title: context.tr('additional_spare_part_list'),
+                          value: '-'),
                   space.kH,
                   BoxInfo2(
-                      title: 'Repair Result', value: data.repairResult ?? ''),
+                      title: context.tr('repair_result'),
+                      value: data.repairResult ?? ''),
                   space.kH,
                   BoxInfo2(
                       title: 'ประมาณการซ่อม ชั่วโมง(HR)', value: data.hr ?? ''),
@@ -221,17 +236,22 @@ class ShowRepairReport extends StatelessWidget {
                       value: data.m == '0' ? '-' : data.m ?? '-'),
                   space.kH,
                   BoxInfo2(
-                      title: 'Process staff', value: data.processStaff ?? ''),
+                      title: context.tr('process_staff'),
+                      value: data.processStaff ?? ''),
                   space.kH,
-                  BoxInfo2(title: 'ผู้ตรวจซ่อม 1', value: data.tech1 ?? ''),
+                  BoxInfo2(
+                      title: context.tr('inspector_1'),
+                      value: data.tech1 ?? ''),
                   space.kH,
-                  BoxInfo2(title: 'ผู้ตรวจซ่อม 2', value: data.tech2 ?? ''),
+                  BoxInfo2(
+                      title: context.tr('inspector_2'),
+                      value: data.tech2 ?? ''),
                   4.kH,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       PdfFile(
-                        name: 'Field Service Report',
+                        name: context.tr('field_service_report'),
                         path: jobId,
                         option: 'fieldreport',
                       ),
@@ -255,7 +275,8 @@ class ShowRepairReport extends StatelessWidget {
                     ),
                   if (data.signature != '')
                     ShowTextFieldWidget(
-                        text: 'ลงชื่อ', hintText: data.signature ?? ''),
+                        text: context.tr('sign'),
+                        hintText: data.signature ?? ''),
                 ],
               );
             }),

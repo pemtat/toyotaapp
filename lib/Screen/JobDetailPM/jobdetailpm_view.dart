@@ -33,6 +33,7 @@ import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/uploadimage_widget.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: use_key_in_widget_constructors
 class JobDetailViewPM extends StatelessWidget {
@@ -63,8 +64,10 @@ class JobDetailViewPM extends StatelessWidget {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Loading...', style: TextStyleList.title1),
-                            Text('Loading...', style: TextStyleList.text16),
+                            Text(context.tr('loading'),
+                                style: TextStyleList.title1),
+                            Text(context.tr('loading'),
+                                style: TextStyleList.text16),
                           ],
                         );
                       } else {
@@ -147,7 +150,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                 summary:
                                                     pmJobs.customerName ?? '',
                                                 description:
-                                                    'Service Zone :  ${pmJobs.serviceZoneCode ?? ''} ',
+                                                    '${context.tr('service_zone')} :  ${pmJobs.serviceZoneCode ?? ''} ',
                                                 detail: issue.description,
                                                 status: stringToStatus(
                                                     issue.status.id.toString()),
@@ -197,7 +200,7 @@ class JobDetailViewPM extends StatelessWidget {
                                 BoxContainer(
                                   children: [
                                     Text(
-                                      'ภาพก่อนการเเก้ไข',
+                                      context.tr('before_image'),
                                       style: TextStyleList.text11,
                                     ),
                                     8.kH,
@@ -240,9 +243,10 @@ class JobDetailViewPM extends StatelessWidget {
                                                         saveTime: (datetime) {
                                                           showTimeDialogPM(
                                                               context,
-                                                              'Are you sure to confirm?',
-                                                              'No',
-                                                              'Yes',
+                                                              context.tr(
+                                                                  'confirm_message'),
+                                                              context.tr('no'),
+                                                              context.tr('yes'),
                                                               datetime,
                                                               ticketId,
                                                               'timestart',
@@ -251,7 +255,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                         },
                                                         time: jobController
                                                             .savedDateStartTime,
-                                                        title: 'Start Time',
+                                                        title: context
+                                                            .tr('start_time'),
                                                       ),
                                                       6.kH,
                                                     ],
@@ -265,7 +270,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                               .access_time),
                                                           4.wH,
                                                           Text(
-                                                            "Start Time : ${jobController.savedDateStartTime.value}",
+                                                            "${context.tr('start_time')} : ${jobController.savedDateStartTime.value}",
                                                             style: TextStyleList
                                                                 .text6,
                                                           ),
@@ -284,7 +289,7 @@ class JobDetailViewPM extends StatelessWidget {
                                             children: [
                                               10.kH,
                                               Text(
-                                                'ภาพหลังการเเก้ไข',
+                                                context.tr('before_image'),
                                                 style: TextStyleList.text11,
                                               ),
                                               8.kH,
@@ -317,43 +322,42 @@ class JobDetailViewPM extends StatelessWidget {
                                           )
                                         : Container()),
                                     2.kH,
-                                    Obx(() =>
-                                        jobController.comment.value.text == ''
-                                            ? Column(
+                                    Obx(() => jobController
+                                                .comment.value.text ==
+                                            ''
+                                        ? Column(
+                                            children: [
+                                              4.kH,
+                                              TextFieldType(
+                                                hintText:
+                                                    context.tr('add_comment'),
+                                                textSet: jobController
+                                                    .comment2.value,
+                                              ),
+                                              8.kH,
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
                                                 children: [
-                                                  4.kH,
-                                                  TextFieldType(
-                                                    hintText: 'Add Comment',
-                                                    textSet: jobController
-                                                        .comment2.value,
+                                                  CustomElevatedButton(
+                                                    onPressed: () async {
+                                                      await changeIssueStatusPMComment(
+                                                          ticketId.toString(),
+                                                          102,
+                                                          jobController.comment2
+                                                              .value.text,
+                                                          jobController
+                                                              .comment);
+                                                    },
+                                                    text: context.tr('submit'),
                                                   ),
-                                                  8.kH,
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      CustomElevatedButton(
-                                                        onPressed: () async {
-                                                          await changeIssueStatusPMComment(
-                                                              ticketId
-                                                                  .toString(),
-                                                              102,
-                                                              jobController
-                                                                  .comment2
-                                                                  .value
-                                                                  .text,
-                                                              jobController
-                                                                  .comment);
-                                                        },
-                                                        text: 'Submit',
-                                                      ),
-                                                    ],
-                                                  )
                                                 ],
                                               )
-                                            : Obx(() => ShowTextFieldType(
-                                                hintText: jobController
-                                                    .comment.value.text))),
+                                            ],
+                                          )
+                                        : Obx(() => ShowTextFieldType(
+                                            hintText: jobController
+                                                .comment.value.text))),
                                     Obx(() => jobController
                                                 .imagesAfter.isNotEmpty &&
                                             jobController.comment.value.text !=
@@ -371,9 +375,10 @@ class JobDetailViewPM extends StatelessWidget {
                                                       saveTime: (datetime) {
                                                         showTimeDialogPM(
                                                             context,
-                                                            'Are you sure to confirm?',
-                                                            'No',
-                                                            'Yes',
+                                                            context.tr(
+                                                                'confirm_message'),
+                                                            context.tr('no'),
+                                                            context.tr('yes'),
                                                             datetime,
                                                             ticketId,
                                                             'timeend',
@@ -382,7 +387,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                       },
                                                       time: jobController
                                                           .savedDateEndTime,
-                                                      title: 'End Time',
+                                                      title: context
+                                                          .tr('end_time'),
                                                     )
                                                   : Column(
                                                       children: [
@@ -393,7 +399,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                                 .access_time),
                                                             4.wH,
                                                             Text(
-                                                              "End Time : ${jobController.savedDateEndTime.value}",
+                                                              "${context.tr('end_time')} : ${jobController.savedDateEndTime.value}",
                                                               style:
                                                                   TextStyleList
                                                                       .text6,
@@ -407,55 +413,59 @@ class JobDetailViewPM extends StatelessWidget {
                                         : Container()),
                                   ],
                                 ),
-                                Obx(() =>
-                                    jobController.savedDateEndTime.value != ''
-                                        ? Column(
-                                            children: [
-                                              8.kH,
-                                              BoxContainer(
+                                Obx(
+                                    () =>
+                                        jobController.savedDateEndTime.value !=
+                                                ''
+                                            ? Column(
                                                 children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                  8.kH,
+                                                  BoxContainer(
                                                     children: [
-                                                      const TitleApp(
-                                                          text:
-                                                              'Battery Maintenance Report'),
-                                                      Obx(() => jobController
-                                                                  .reportList
-                                                                  .isNotEmpty &&
-                                                              jobController
-                                                                  .canEdit.value
-                                                          ? EditButton(
-                                                              onTap: () {
-                                                                Get.to(() =>
-                                                                    EditFillFormView2(
-                                                                      jobId:
-                                                                          ticketId,
-                                                                    ));
-                                                              },
-                                                            )
-                                                          : jobController
-                                                                  .canEdit.value
-                                                              ? AddButton(
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          TitleApp(
+                                                              text: context.tr(
+                                                                  'battery_maintenance_report')),
+                                                          Obx(() => jobController
+                                                                      .reportList
+                                                                      .isNotEmpty &&
+                                                                  jobController
+                                                                      .canEdit
+                                                                      .value
+                                                              ? EditButton(
                                                                   onTap: () {
                                                                     Get.to(() =>
-                                                                        FillFormView2(
+                                                                        EditFillFormView2(
                                                                           jobId:
                                                                               ticketId,
                                                                         ));
                                                                   },
                                                                 )
-                                                              : Container()),
-                                                    ],
-                                                  ),
-                                                  Text(
-                                                    'Please fill the bettery maintenance report',
-                                                    style: TextStyleList.text16,
-                                                  ),
-                                                  Obx(
-                                                      () =>
+                                                              : jobController
+                                                                      .canEdit
+                                                                      .value
+                                                                  ? AddButton(
+                                                                      onTap:
+                                                                          () {
+                                                                        Get.to(() =>
+                                                                            FillFormView2(
+                                                                              jobId: ticketId,
+                                                                            ));
+                                                                      },
+                                                                    )
+                                                                  : Container()),
+                                                        ],
+                                                      ),
+                                                      Text(
+                                                        '${context.tr('fill_request')} ${context.tr('battery_maintenance_report')}',
+                                                        style: TextStyleList
+                                                            .text16,
+                                                      ),
+                                                      Obx(() =>
                                                           jobController
                                                                   .reportList
                                                                   .isNotEmpty
@@ -485,7 +495,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                                           5.kH,
                                                                           ButtonRed(
                                                                             title:
-                                                                                'บันทึกลายเซ็น',
+                                                                                context.tr('save_signature'),
                                                                             onTap:
                                                                                 () {
                                                                               showDialog(
@@ -502,57 +512,54 @@ class JobDetailViewPM extends StatelessWidget {
                                                                   ],
                                                                 )
                                                               : Container()),
-                                                  Obx(() => (jobController
-                                                              .reportList
-                                                              .isNotEmpty &&
-                                                          jobController
-                                                              .subJobSparePart
-                                                              .isNotEmpty &&
-                                                          (jobController
-                                                                      .reportList
-                                                                      .first
-                                                                      .btrMaintenance!
-                                                                      .signature !=
-                                                                  null &&
+                                                      Obx(() => (jobController
+                                                                  .reportList.isNotEmpty &&
                                                               jobController
-                                                                      .reportList
-                                                                      .first
-                                                                      .btrMaintenance!
-                                                                      .signaturePadUrl !=
-                                                                  null))
-                                                      ? Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            ButtonColor(
-                                                              backgroundColor:
-                                                                  red4,
-                                                              title:
-                                                                  'View Part Detail',
-                                                              onTap: () {
-                                                                showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder: (BuildContext
-                                                                            context) =>
-                                                                        Obx(() =>
+                                                                  .subJobSparePart
+                                                                  .isNotEmpty &&
+                                                              (jobController
+                                                                          .reportList
+                                                                          .first
+                                                                          .btrMaintenance!
+                                                                          .signature !=
+                                                                      null &&
+                                                                  jobController
+                                                                          .reportList
+                                                                          .first
+                                                                          .btrMaintenance!
+                                                                          .signaturePadUrl !=
+                                                                      null))
+                                                          ? Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                ButtonColor(
+                                                                  backgroundColor:
+                                                                      red4,
+                                                                  title: context
+                                                                      .tr('view_part_detail'),
+                                                                  onTap: () {
+                                                                    showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder: (BuildContext context) => Obx(() =>
                                                                             Material(
                                                                               color: Colors.transparent,
                                                                               child: SubJobSparePartWidget(
                                                                                 subJobSparePart: jobController.subJobSparePart.first,
                                                                               ),
                                                                             )));
-                                                              },
-                                                            ),
-                                                          ],
-                                                        )
-                                                      : Container()),
+                                                                  },
+                                                                ),
+                                                              ],
+                                                            )
+                                                          : Container()),
+                                                    ],
+                                                  ),
                                                 ],
-                                              ),
-                                            ],
-                                          )
-                                        : Container()),
+                                              )
+                                            : Container()),
                                 Obx(() =>
                                     jobController.savedDateEndTime.value != ''
                                         ? Column(
@@ -565,9 +572,9 @@ class JobDetailViewPM extends StatelessWidget {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      const TitleApp(
-                                                          text:
-                                                              'Periodic Maintenance Report'),
+                                                      TitleApp(
+                                                          text: context
+                                                              .tr('pm_report')),
                                                       Obx(() => jobController
                                                                   .reportPreventiveList
                                                                   .isNotEmpty &&
@@ -602,7 +609,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                     ],
                                                   ),
                                                   Text(
-                                                    'Please fill the periodic maintenance report',
+                                                    '${context.tr('fill_request')} ${context.tr('pm_report')}',
                                                     style: TextStyleList.text16,
                                                   ),
                                                   Obx(() => jobController
@@ -643,8 +650,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                                 children: [
                                                                   5.kH,
                                                                   ButtonRed(
-                                                                    title:
-                                                                        'บันทึกลายเซ็น',
+                                                                    title: context
+                                                                        .tr('save_signature'),
                                                                     onTap: () {
                                                                       showDialog(
                                                                         context:
@@ -681,8 +688,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                                       ButtonColor(
                                                                         backgroundColor:
                                                                             red4,
-                                                                        title:
-                                                                            'View Part Detail',
+                                                                        title: context
+                                                                            .tr('view_part_detail'),
                                                                         onTap:
                                                                             () {
                                                                           showDialog(
@@ -718,9 +725,9 @@ class JobDetailViewPM extends StatelessWidget {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      const TitleApp(
-                                                          text:
-                                                              'Periodic Maintenance Report IC'),
+                                                      TitleApp(
+                                                          text: context.tr(
+                                                              'pm_report_ic')),
                                                       Obx(() => jobController
                                                                   .reportPreventiveListIc
                                                                   .isNotEmpty &&
@@ -755,7 +762,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                     ],
                                                   ),
                                                   Text(
-                                                    'Please fill the periodic maintenance report ic',
+                                                    '${context.tr('fill_request')} ${context.tr('pm_report_ic')}',
                                                     style: TextStyleList.text16,
                                                   ),
                                                   Obx(() => jobController
@@ -797,8 +804,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                                 children: [
                                                                   5.kH,
                                                                   ButtonRed(
-                                                                    title:
-                                                                        'บันทึกลายเซ็น',
+                                                                    title: context
+                                                                        .tr('save_signature'),
                                                                     onTap: () {
                                                                       showDialog(
                                                                         context:
@@ -835,8 +842,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                                       ButtonColor(
                                                                         backgroundColor:
                                                                             red4,
-                                                                        title:
-                                                                            'View Part Detail',
+                                                                        title: context
+                                                                            .tr('view_part_detail'),
                                                                         onTap:
                                                                             () {
                                                                           showDialog(
@@ -880,10 +887,13 @@ class JobDetailViewPM extends StatelessWidget {
                     decoration: Decoration2(),
                     child: EndButton(
                         onPressed: () {
-                          jobController.showCompletedDialog(context,
-                              'Are you sure to complete?', 'No', 'Yes');
+                          jobController.showCompletedDialog(
+                              context,
+                              context.tr('complete_message'),
+                              context.tr('no'),
+                              context.tr('yes'));
                         },
-                        text: 'Complete'),
+                        text: context.tr('complete')),
                   ),
                 )
               : SizedBox.shrink();

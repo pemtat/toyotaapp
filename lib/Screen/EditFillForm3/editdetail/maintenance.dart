@@ -7,6 +7,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class Maintenance extends GetxController {
   int space = 24;
@@ -18,7 +19,7 @@ class Maintenance extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Maintenance and Service Result",
+              context.tr('maintenance_service'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -63,7 +64,7 @@ class Maintenance extends GetxController {
             batteryUsageClear();
             Navigator.pop(context);
           },
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ],
     ).showModal(context);
@@ -78,7 +79,7 @@ class Maintenance extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Maintenance and Service Result",
+              context.tr('maintenance_service'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -114,13 +115,14 @@ class Maintenance extends GetxController {
         ),
         space.kH,
         EndButton(
-            onPressed: () {
-              batteryUsageUpdate(batteryInfo);
-              maintenanceList.refresh();
-              batteryUsageClear();
-              Navigator.pop(context);
-            },
-            text: 'Save')
+          onPressed: () {
+            batteryUsageUpdate(batteryInfo);
+            maintenanceList.refresh();
+            batteryUsageClear();
+            Navigator.pop(context);
+          },
+          text: context.tr('save'),
+        )
       ],
     ).showModal(context);
   }

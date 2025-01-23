@@ -6,6 +6,7 @@ import 'package:toyotamobile/Service/api.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class DialogAlert extends StatelessWidget {
   final String title;
@@ -113,13 +114,13 @@ class AlertDialog1 extends StatelessWidget {
       backgroundColor: white3,
       title: Center(
           child: Text(
-        'เเจ้งเตือน',
+        context.tr('warning'),
         style: TextStyleList.subtitle1,
       )),
       content: Row(
         children: [
           Text(
-            'โปรดกรอกข้อมูลอย่างน้อย 1 รายการ',
+            context.tr('warning_message_1'),
             style: TextStyleList.text2,
           ),
         ],
@@ -127,7 +128,7 @@ class AlertDialog1 extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           child: Text(
-            'ตกลง',
+            context.tr('warning_yes'),
             style: TextStyleList.subtext3,
           ),
           onPressed: () {
@@ -209,7 +210,7 @@ class AlertDialogVersions extends StatelessWidget {
               onTap: () {
                 Clipboard.setData(const ClipboardData(text: apkUrl));
                 Fluttertoast.showToast(
-                    msg: "คัดลอกข้อความ",
+                    msg: context.tr('copy_text'),
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
                     fontSize: 12.0);

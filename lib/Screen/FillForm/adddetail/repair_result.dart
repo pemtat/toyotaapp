@@ -64,7 +64,7 @@ class RepairResult extends GetxController {
             repairResultClear();
             Navigator.pop(context);
           },
-          text: 'Save',
+          text: context.tr('save'),
         ),
       ],
     ).showModal(context);
@@ -79,7 +79,7 @@ class RepairResult extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Maintenance and Service Result",
+              context.tr('repair_result'),
               style: TextStyleList.subheading,
             ),
             InkWell(
@@ -121,7 +121,7 @@ class RepairResult extends GetxController {
               repairResultClear();
               Navigator.pop(context);
             },
-            text: 'Save')
+            text: context.tr('save'))
       ],
     ).showModal(context);
   }

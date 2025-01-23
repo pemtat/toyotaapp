@@ -6,6 +6,7 @@ import 'package:toyotamobile/Screen/EditFillForm2/editdetail/specic_gravity.dart
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SpecicGravityWidget extends StatelessWidget {
   final SpecicGravityModel info;
@@ -45,7 +46,7 @@ class SpecicGravityWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Temperature',
+                  context.tr('temperature'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -54,7 +55,7 @@ class SpecicGravityWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'Sp.Gr',
+                  context.tr('sp_gr'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -63,7 +64,7 @@ class SpecicGravityWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'Voltage',
+                  context.tr('voltage'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -89,12 +90,12 @@ class SpecicGravityWidget extends StatelessWidget {
                     PopupMenuItem(
                       value: 'edit',
                       child: Text(
-                        'Edit',
+                        context.tr('edit'),
                         style: TextStyleList.text9,
                       ),
                     ),
                     PopupMenuItem(
-                      value: 'delete',
+                      value: context.tr('delete'),
                       child: Text('Delete', style: TextStyleList.text9),
                     ),
                   ],

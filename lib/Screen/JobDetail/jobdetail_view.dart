@@ -63,8 +63,10 @@ class JobDetailView extends StatelessWidget {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Loading...', style: TextStyleList.title1),
-                            Text('Loading...', style: TextStyleList.text16),
+                            Text(context.tr('loading'),
+                                style: TextStyleList.title1),
+                            Text(context.tr('loading'),
+                                style: TextStyleList.text16),
                           ],
                         );
                       } else {
@@ -630,9 +632,9 @@ class JobDetailView extends StatelessWidget {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          const TitleApp(
-                                                              text:
-                                                                  'Battery Maintenance Report'),
+                                                          TitleApp(
+                                                              text: context.tr(
+                                                                  'battery_maintenance_report')),
                                                           Obx(() => jobController
                                                                       .reportBatteryList
                                                                       .isNotEmpty &&
@@ -667,7 +669,7 @@ class JobDetailView extends StatelessWidget {
                                                         ],
                                                       ),
                                                       Text(
-                                                        'Please fill the bettery maintenance report',
+                                                        '${context.tr('fill_request')} ${context.tr('battery_maintenance_report')}',
                                                         style: TextStyleList
                                                             .text16,
                                                       ),
@@ -708,8 +710,8 @@ class JobDetailView extends StatelessWidget {
                                                                     children: [
                                                                       5.kH,
                                                                       ButtonRed(
-                                                                        title:
-                                                                            'บันทึกลายเซ็น',
+                                                                        title: context
+                                                                            .tr('save_signature'),
                                                                         onTap:
                                                                             () {
                                                                           showDialog(
@@ -755,8 +757,8 @@ class JobDetailView extends StatelessWidget {
                                                                 ButtonColor(
                                                                   backgroundColor:
                                                                       red4,
-                                                                  title:
-                                                                      'View Part Detail',
+                                                                  title: context
+                                                                      .tr('view_part_detail'),
                                                                   onTap: () {
                                                                     showDialog(
                                                                         context:
@@ -798,10 +800,13 @@ class JobDetailView extends StatelessWidget {
                     decoration: Decoration2(),
                     child: EndButton(
                         onPressed: () {
-                          jobController.showCompletedDialog(context,
-                              'Are you sure to complete?', 'No', 'Yes');
+                          jobController.showCompletedDialog(
+                              context,
+                              context.tr('complete_message'),
+                              context.tr('no'),
+                              context.tr('yes'));
                         },
-                        text: 'Complete'),
+                        text: context.tr('complete')),
                   ),
                 )
               : const SizedBox.shrink();

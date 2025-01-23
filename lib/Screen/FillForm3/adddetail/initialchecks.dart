@@ -7,6 +7,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/showmodal_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class InitialChecks extends GetxController {
   int space = 24;
@@ -16,7 +17,7 @@ class InitialChecks extends GetxController {
     chooseClear();
     chooseAdd();
     ShowModalWidget2(
-      title: "Initial Checks",
+      title: context.tr('intial_checks'),
       children: [
         8.kH,
         ListView(
@@ -52,7 +53,7 @@ class InitialChecks extends GetxController {
                   8.kH,
                   TextField(
                     controller: controller,
-                    decoration: InputDecoration1(text: 'Remark'),
+                    decoration: InputDecoration1(text: context.tr('remark')),
                     onChanged: (value) {
                       updateSelection(index, value, remarksChoose);
                     },

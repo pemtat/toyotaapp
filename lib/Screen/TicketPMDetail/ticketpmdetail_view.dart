@@ -23,6 +23,7 @@ import 'package:toyotamobile/Widget/ticketinfo_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Widget/warranty_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: use_key_in_widget_constructors
 class TicketPMDetailView extends StatelessWidget {
@@ -53,7 +54,8 @@ class TicketPMDetailView extends StatelessWidget {
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('View Detail', style: TextStyleList.title1),
+                      Text(context.tr('view_detail'),
+                          style: TextStyleList.title1),
                     ],
                   ),
                   leading: const BackIcon(),
@@ -117,7 +119,7 @@ class TicketPMDetailView extends StatelessWidget {
                                               summary:
                                                   pmJobs.customerName ?? '',
                                               description:
-                                                  'Service Zone :  ${pmJobs.serviceZoneCode ?? ''} ',
+                                                  '${context.tr('service_zone')} :  ${pmJobs.serviceZoneCode ?? ''} ',
                                               detail: issue.description,
                                               status: stringToStatus(
                                                   issue.status.id.toString()),
@@ -153,7 +155,7 @@ class TicketPMDetailView extends StatelessWidget {
                                       Icon(Icons.access_time),
                                       4.wH,
                                       Text(
-                                        "Start Time : ${formatDateTimeCut(pmData.tStart ?? '- ')}",
+                                        "${context.tr('start_time')} : ${formatDateTimeCut(pmData.tStart ?? '- ')}",
                                         style: TextStyleList.text6,
                                       ),
                                     ],
@@ -176,7 +178,7 @@ class TicketPMDetailView extends StatelessWidget {
                                           Icon(Icons.access_time),
                                           4.wH,
                                           Text(
-                                            "End Time : ${formatDateTimeCut(pmData.tEnd ?? '- ')}",
+                                            "${context.tr('end_time')} : ${formatDateTimeCut(pmData.tEnd ?? '- ')}",
                                             style: TextStyleList.text6,
                                           ),
                                         ],
@@ -212,8 +214,9 @@ class TicketPMDetailView extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const TitleApp(
-                                          text: 'Battery Maintenance Report'),
+                                      TitleApp(
+                                          text: context.tr(
+                                              'battery_maintenance_report')),
                                       stringToStatus(issue.status.id
                                                       .toString()) !=
                                                   'closed' &&
@@ -263,7 +266,8 @@ class TicketPMDetailView extends StatelessWidget {
                                               children: [
                                                 ButtonColor(
                                                   backgroundColor: red4,
-                                                  title: 'View Part Detail',
+                                                  title: context
+                                                      .tr('view_part_detail'),
                                                   onTap: () {
                                                     showDialog(
                                                         context: context,
@@ -294,8 +298,7 @@ class TicketPMDetailView extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const TitleApp(
-                                          text: 'Periodic Maintenance Report'),
+                                      TitleApp(text: context.tr('pm_report')),
                                       stringToStatus(issue.status.id
                                                       .toString()) !=
                                                   'closed' &&
@@ -355,7 +358,8 @@ class TicketPMDetailView extends StatelessWidget {
                                           children: [
                                             ButtonColor(
                                               backgroundColor: red4,
-                                              title: 'View Part Detail',
+                                              title: context
+                                                  .tr('view_part_detail'),
                                               onTap: () {
                                                 showDialog(
                                                     context: context,
@@ -386,9 +390,8 @@ class TicketPMDetailView extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const TitleApp(
-                                          text:
-                                              'Periodic Maintenance Report IC'),
+                                      TitleApp(
+                                          text: context.tr('pm_report_ic')),
                                       stringToStatus(issue.status.id
                                                       .toString()) !=
                                                   'closed' &&
@@ -456,7 +459,8 @@ class TicketPMDetailView extends StatelessWidget {
                                           children: [
                                             ButtonColor(
                                               backgroundColor: red4,
-                                              title: 'View Part Detail',
+                                              title: context
+                                                  .tr('view_part_detail'),
                                               onTap: () {
                                                 showDialog(
                                                     context: context,

@@ -6,6 +6,7 @@ import 'package:toyotamobile/Screen/EditFillForm2/editdetail/battery_information
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class BatteryInfoDetailWidget extends StatelessWidget {
   final BatteryInformationModel info;
@@ -45,7 +46,7 @@ class BatteryInfoDetailWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Battery Brand',
+                  context.tr('battery_band'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -54,7 +55,7 @@ class BatteryInfoDetailWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Battery Model',
+                  context.tr('battery_model'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -63,7 +64,7 @@ class BatteryInfoDetailWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Mfg.No',
+                  context.tr('mfg_no'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -72,7 +73,7 @@ class BatteryInfoDetailWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Serial No',
+                  context.tr('battery_serial'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -81,7 +82,7 @@ class BatteryInfoDetailWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Battery Lifespan',
+                  context.tr('battery_lifespan'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -90,7 +91,7 @@ class BatteryInfoDetailWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Voltage',
+                  context.tr('voltage'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -99,7 +100,7 @@ class BatteryInfoDetailWidget extends StatelessWidget {
                 ),
                 8.kH,
                 Text(
-                  'Capacity',
+                  context.tr('capacity'),
                   style: TextStyleList.subtext1,
                 ),
                 Text(
@@ -125,13 +126,14 @@ class BatteryInfoDetailWidget extends StatelessWidget {
                     PopupMenuItem(
                       value: 'edit',
                       child: Text(
-                        'Edit',
+                        context.tr('edit'),
                         style: TextStyleList.text9,
                       ),
                     ),
                     PopupMenuItem(
                       value: 'delete',
-                      child: Text('Delete', style: TextStyleList.text9),
+                      child: Text(context.tr('delete'),
+                          style: TextStyleList.text9),
                     ),
                   ],
                   child: Image.asset(

@@ -31,6 +31,7 @@ import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class FillFormView2 extends StatelessWidget {
   final String jobId;
@@ -67,7 +68,7 @@ class FillFormView2 extends StatelessWidget {
           children: [
             AppBar(
                 backgroundColor: white3,
-                title: Text('Battery Maintenance Report',
+                title: Text(context.tr('battery_maintenance_report'),
                     style: TextStyleList.title1),
                 leading: const CloseIcon()),
           ],
@@ -80,17 +81,17 @@ class FillFormView2 extends StatelessWidget {
             BoxContainer(
               children: [
                 TextFieldWidget(
-                  text: 'Customer Name',
+                  text: context.tr('customer_name'),
                   textSet: fillformController2.customerName.value,
                 ),
                 20.kH,
                 TextFieldWidget(
-                  text: 'Contact Person',
+                  text: context.tr('contact_person'),
                   textSet: fillformController2.contactPerson.value,
                 ),
                 20.kH,
                 TextFieldWidget(
-                  text: 'Division',
+                  text: context.tr('division'),
                   textSet: fillformController2.division.value,
                 )
               ],
@@ -100,7 +101,7 @@ class FillFormView2 extends StatelessWidget {
               () => BoxContainer(
                 children: [
                   TitleWithButton(
-                    titleText: 'Bettery Information',
+                    titleText: context.tr('battery_information'),
                     button: batteryInfoController.batteryInformationList.isEmpty
                         ? AddButton(
                             onTap: () {
@@ -135,7 +136,7 @@ class FillFormView2 extends StatelessWidget {
               () => BoxContainer(
                 children: [
                   TitleWithButton(
-                      titleText: 'Forklife Information',
+                      titleText: context.tr('forklift_information'),
                       button: forkLifeInformation.forklifeList.isEmpty
                           ? AddButton(
                               onTap: () {
@@ -168,7 +169,7 @@ class FillFormView2 extends StatelessWidget {
               () => BoxContainer(
                 children: [
                   TitleWithButton(
-                      titleText: 'Bettery Usage',
+                      titleText: context.tr('battery_usage'),
                       button: batteryUsageController.batteryUsageList.isEmpty
                           ? AddButton(
                               onTap: () {
@@ -202,7 +203,7 @@ class FillFormView2 extends StatelessWidget {
               () => BoxContainer(
                 children: [
                   TitleWithButton(
-                    titleText: 'Specic Gravity and Voltage Check',
+                    titleText: context.tr('specic_gravity'),
                     button: AddButton(
                       onTap: () {
                         specicGravityController.specicGravityModal(context);
@@ -233,7 +234,7 @@ class FillFormView2 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: 'Battery Condition',
+                    titleText: context.tr('battery_condition'),
                     button: Obx(() => !batteryConditionController
                             .isAllFieldsFilled.value
                         ? AddButton(
@@ -261,7 +262,7 @@ class FillFormView2 extends StatelessWidget {
             Obx(() => BoxContainer(
                   children: [
                     AddEditBox(
-                      titleText: 'Corrective Action',
+                      titleText: context.tr('corrective_action'),
                       list: correctiveActionController.correctiveAction,
                       onTap: () => correctiveActionController
                           .correctiveActionModal(context),
@@ -275,7 +276,7 @@ class FillFormView2 extends StatelessWidget {
             Obx(() => BoxContainer(
                   children: [
                     TitleWithButton(
-                        titleText: 'Recommanded spare Part',
+                        titleText: context.tr('bm_sparepart'),
                         button: AddButton(
                           onTap: () {
                             sparePartListController.sparePartListModal(context);
@@ -307,12 +308,12 @@ class FillFormView2 extends StatelessWidget {
                       () =>
                           fillformController2.sparePartRemark.value.text.isEmpty
                               ? RemarkButton(
-                                  title: '+ เพิ่มหมายเหตุ',
+                                  title: '+ ${context.tr('add_remark')}',
                                   onTap: () {
                                     sparePartRemarkEditModal(
                                         context,
                                         fillformController2.sparePartRemark,
-                                        'Spare Part Remark');
+                                        context.tr('spare_part_remark'));
                                   },
                                   backgroundColor: black3,
                                 )
@@ -322,7 +323,7 @@ class FillFormView2 extends StatelessWidget {
                                     sparePartRemarkEditModal(
                                         context,
                                         fillformController2.sparePartRemark,
-                                        'Spare Part Remark');
+                                        context.tr('spare_part_remark'));
                                   },
                                 ),
                     ),
@@ -333,7 +334,7 @@ class FillFormView2 extends StatelessWidget {
               children: [
                 Obx(
                   () => AddEditBox(
-                    titleText: 'Repair P.M Battery',
+                    titleText: context.tr('repair_pm_battery'),
                     list: repairPmController.repairPm,
                     onTap: () => repairPmController.repairPMModal(context),
                     moreText: getDisplayString(repairPmController.repairPm),
@@ -397,7 +398,8 @@ class FillFormView2 extends StatelessWidget {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 backgroundColor: white3,
-                                title: Center(child: Text('ผู้ตรวจซ่อม 2')),
+                                title: Center(
+                                    child: Text(context.tr('inspector_2'))),
                                 titleTextStyle: TextStyleList.text1,
                                 content: SingleChildScrollView(
                                   child: Column(
@@ -424,7 +426,7 @@ class FillFormView2 extends StatelessWidget {
                             controller: TextEditingController(
                                 text: fillformController2.selectedUser.value),
                             decoration: InputDecoration(
-                                labelText: 'ผู้ตรวจซ่อม 2',
+                                labelText: context.tr('inspector_2'),
                                 labelStyle: TextStyleList.text9),
                           ),
                         ),
@@ -457,9 +459,12 @@ class FillFormView2 extends StatelessWidget {
           child: EndButton(
               onPressed: () {
                 fillformController2.showSaveDialog(
-                    context, 'Are you confirm to save report?', 'No', 'Yes');
+                    context,
+                    context.tr('save_message'),
+                    context.tr('no'),
+                    context.tr('yes'));
               },
-              text: 'Save'),
+              text: context.tr('save')),
         ),
       ),
     );
