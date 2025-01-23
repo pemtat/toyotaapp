@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class SubJobSparePart {
   String? id;
   String? reporterId;
@@ -238,6 +240,8 @@ class Sparepart {
   bool? additional;
   String? discount;
   String? summary;
+  String? lineNo;
+  RxString returnNo = '0'.obs;
   Sparepart(
       {this.id,
       this.cCode,
@@ -251,7 +255,11 @@ class Sparepart {
       this.priceVat,
       this.salesPrice,
       this.discount,
-      this.summary});
+      this.summary,
+      this.lineNo,
+      String? returnNo}) {
+    this.returnNo.value = returnNo ?? '';
+  }
 
   Sparepart.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -267,6 +275,8 @@ class Sparepart {
     priceVat = json['price_includes_vat'];
     discount = json['discount'];
     summary = json['summary'];
+    returnNo.value = json['return_no'] ?? '0';
+    lineNo = json['line_no'];
   }
 
   Map<String, dynamic> toJson() {
@@ -284,6 +294,8 @@ class Sparepart {
     data['price_includes_vat'] = priceVat;
     data['discount'] = discount;
     data['summary'] = summary;
+    data['line_no'] = lineNo;
+    data['return_no'] = returnNo.value;
     return data;
   }
 }
