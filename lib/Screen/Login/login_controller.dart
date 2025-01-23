@@ -50,8 +50,7 @@ class LoginController extends GetxController {
         final accessToken = responseData['access_token'] as String;
         await fetchAndStoreTokenData(accessToken);
       } else {
-        Get.snackbar(
-            'เข้าสู่ระบบผิดพลาด', 'ชื่อผู้ใช้ หรือ รหัสผ่านไม่ถูกต้อง');
+        Get.snackbar('Login Failed', 'Username or password is incorrect');
       }
     } catch (e) {
       // ignore: avoid_print
@@ -85,7 +84,7 @@ class LoginController extends GetxController {
         jobController.fetchDataFromAssignJob();
         userController.fetchData();
         Get.offAll(() => BottomBarView());
-        Get.snackbar('เข้าสู่ระบบสำเร็จ', 'ยินดีต้อนรับสู่ T-Service');
+        Get.snackbar('Login Successful', 'Welcome to T-Service');
       } else {
         Get.snackbar('Error', 'Could not retrieve data');
       }

@@ -18,11 +18,14 @@ class RepairPM extends GetxController {
     ShowModalWidget(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              context.tr('repair_pm_battery'),
-              style: TextStyleList.subheading,
+            Expanded(
+              child: Text(
+                context.tr('repair_pm_battery'),
+                style: TextStyleList.subheading,
+              ),
             ),
             InkWell(
               onTap: () {

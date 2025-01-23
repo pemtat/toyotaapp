@@ -255,8 +255,8 @@ class JobDetailViewPM extends StatelessWidget {
                                                         },
                                                         time: jobController
                                                             .savedDateStartTime,
-                                                        title: context
-                                                            .tr('start_time'),
+                                                        title: context.tr(
+                                                            'save_start_time'),
                                                       ),
                                                       6.kH,
                                                     ],
@@ -388,7 +388,7 @@ class JobDetailViewPM extends StatelessWidget {
                                                       time: jobController
                                                           .savedDateEndTime,
                                                       title: context
-                                                          .tr('end_time'),
+                                                          .tr('save_end_time'),
                                                     )
                                                   : Column(
                                                       children: [

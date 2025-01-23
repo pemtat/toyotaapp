@@ -12,6 +12,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/Calendar_widget/calendar_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class FullCalendarWidget extends StatelessWidget {
   final String displayDate;
@@ -55,7 +56,7 @@ class FullCalendarWidget extends StatelessWidget {
                 ? Expanded(
                     child: Center(
                       child: Text(
-                        'No jobs for this day.',
+                        context.tr('no_jobs'),
                         style: TextStyleList.subtitle2,
                       ),
                     ),

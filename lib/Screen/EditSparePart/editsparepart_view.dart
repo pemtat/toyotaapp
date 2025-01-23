@@ -17,6 +17,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: must_be_immutable
 class EditSparePartView extends StatelessWidget {
@@ -317,9 +318,12 @@ class EditSparePartView extends StatelessWidget {
           child: EndButton(
               onPressed: () {
                 sparePartController.showSavedDialog(
-                    context, 'Are you confirm to save report?', 'No', 'Yes');
+                    context,
+                    context.tr('save_message'),
+                    context.tr('no'),
+                    context.tr('yes'));
               },
-              text: 'Save'),
+              text: context.tr('save')),
         ),
       ),
     );

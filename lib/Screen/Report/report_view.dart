@@ -9,6 +9,7 @@ import 'package:toyotamobile/Widget/chart_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/report_title_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ReportView extends StatelessWidget {
   ReportView({super.key});
@@ -84,7 +85,7 @@ class ReportView extends StatelessWidget {
                     await reportController.resetFilter();
                   },
                   child: Text(
-                    'Reset',
+                    context.tr('reset_1'),
                     style: TextStyleList.text1,
                   ),
                 ),

@@ -63,9 +63,9 @@ class ShowModalWidget2 extends StatelessWidget {
         preferredSize: const Size.fromHeight(preferredSize),
         child: SafeArea(
           child: AppBar(
+            centerTitle: false,
             automaticallyImplyLeading: false,
             title: Text(
-              textAlign: TextAlign.start,
               title,
               style: TextStyleList.subheading,
             ),

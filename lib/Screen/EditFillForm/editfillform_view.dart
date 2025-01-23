@@ -574,7 +574,7 @@ class EditFillFormView extends StatelessWidget {
                         },
                       );
               },
-              text: 'Save'),
+              text: context.tr('save')),
         ),
       ),
     );

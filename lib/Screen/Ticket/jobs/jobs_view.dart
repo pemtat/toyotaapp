@@ -14,6 +14,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/SubJobs_widget/subjobs_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class Jobs extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -50,7 +51,7 @@ class Jobs extends StatelessWidget {
                           margin: const EdgeInsets.only(top: 15),
                           child: Center(
                               child: Text(
-                            'No jobs available.',
+                            context.tr('no_jobs_avb'),
                             style: TextStyleList.subtitle2,
                           )),
                         ),

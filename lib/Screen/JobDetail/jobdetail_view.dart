@@ -275,51 +275,50 @@ class JobDetailView extends StatelessWidget {
                                             ticketId,
                                             jobId ?? '')),
                                     14.kH,
-                                    Obx(() =>
-                                        jobController.imagesBefore.isNotEmpty
-                                            ? Obx(
-                                                () => jobController
-                                                            .savedDateStartTime
-                                                            .value ==
-                                                        ''
-                                                    ? ButtonTime(
-                                                        saveTime: (datetime) {
-                                                          showTimeDialog(
-                                                              context,
-                                                              context.tr(
-                                                                  'confirm_message'),
-                                                              context.tr('no'),
-                                                              context.tr('yes'),
-                                                              datetime,
-                                                              jobId ?? '',
-                                                              'timestart',
-                                                              ticketId);
-                                                        },
-                                                        time: jobController
-                                                            .savedDateStartTime,
-                                                        title: context
-                                                            .tr('start_time'),
-                                                      )
-                                                    : Column(
+                                    Obx(() => jobController
+                                            .imagesBefore.isNotEmpty
+                                        ? Obx(
+                                            () => jobController
+                                                        .savedDateStartTime
+                                                        .value ==
+                                                    ''
+                                                ? ButtonTime(
+                                                    saveTime: (datetime) {
+                                                      showTimeDialog(
+                                                          context,
+                                                          context.tr(
+                                                              'confirm_message'),
+                                                          context.tr('no'),
+                                                          context.tr('yes'),
+                                                          datetime,
+                                                          jobId ?? '',
+                                                          'timestart',
+                                                          ticketId);
+                                                    },
+                                                    time: jobController
+                                                        .savedDateStartTime,
+                                                    title: context
+                                                        .tr('save_start_time'),
+                                                  )
+                                                : Column(
+                                                    children: [
+                                                      6.kH,
+                                                      Row(
                                                         children: [
-                                                          6.kH,
-                                                          Row(
-                                                            children: [
-                                                              const Icon(Icons
-                                                                  .access_time),
-                                                              4.wH,
-                                                              Text(
-                                                                "${context.tr('start_time')} : ${jobController.savedDateStartTime.value}",
-                                                                style:
-                                                                    TextStyleList
-                                                                        .text6,
-                                                              ),
-                                                            ],
+                                                          const Icon(Icons
+                                                              .access_time),
+                                                          4.wH,
+                                                          Text(
+                                                            "${context.tr('start_time')} : ${jobController.savedDateStartTime.value}",
+                                                            style: TextStyleList
+                                                                .text6,
                                                           ),
                                                         ],
                                                       ),
-                                              )
-                                            : Container()),
+                                                    ],
+                                                  ),
+                                          )
+                                        : Container()),
                                     18.kH,
                                     Container(
                                       height: 0.5,
@@ -434,7 +433,7 @@ class JobDetailView extends StatelessWidget {
                                                       time: jobController
                                                           .savedDateEndTime,
                                                       title: context
-                                                          .tr('end_time'),
+                                                          .tr('save_end_time'),
                                                     )
                                                   : Column(
                                                       children: [

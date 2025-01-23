@@ -149,7 +149,8 @@ class ShowRepairReport extends StatelessWidget {
                                           title: 'Part Number',
                                           value: data.partNumber ?? '-'),
                                       BoxInfo(
-                                          title: 'Description',
+                                          title: context
+                                              .tr('description_spare_part'),
                                           value: data.description ?? '-'),
                                       BoxInfo(
                                           title: context.tr('quantity'),
@@ -202,7 +203,8 @@ class ShowRepairReport extends StatelessWidget {
                                           title: 'Part Number',
                                           value: data.partNumber ?? ''),
                                       BoxInfo(
-                                          title: 'Description',
+                                          title: context
+                                              .tr('description_spare_part'),
                                           value: data.description ?? ''),
                                       BoxInfo(
                                           title: context.tr('quantity'),

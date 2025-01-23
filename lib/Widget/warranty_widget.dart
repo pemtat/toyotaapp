@@ -26,12 +26,12 @@ class WarrantyBox extends StatelessWidget {
         TitleApp(text: context.tr('machine_details')),
         8.kH,
         BoxInfo(
-          title: context.tr('model'),
+          title: 'Model',
           value: model,
         ),
         3.kH,
         BoxInfo(
-          title: context.tr('serial_number'),
+          title: 'Serial Number',
           value: serial,
         ),
         3.kH,

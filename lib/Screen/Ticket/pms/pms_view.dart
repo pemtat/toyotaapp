@@ -15,6 +15,7 @@ import 'package:toyotamobile/Widget/Ticket_widget/ticket_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class Pms extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -83,7 +84,7 @@ class Pms extends StatelessWidget {
                           margin: EdgeInsets.only(top: 15),
                           child: Center(
                               child: Text(
-                            'No jobs available.',
+                            context.tr('no_jobs_avb'),
                             style: TextStyleList.subtitle2,
                           )),
                         ),

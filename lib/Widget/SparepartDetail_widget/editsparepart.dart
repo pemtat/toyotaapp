@@ -81,7 +81,7 @@ class EditSparePartDetail extends StatelessWidget {
                       }
                     },
                     decoration: InputDecoration2(
-                        labelText: 'Enter Part Number',
+                        labelText: '${context.tr('enter')} Part Number',
                         function: () {
                           fetchProducts(
                               searchPartNumber.value.text, isLoading, products);
@@ -133,7 +133,8 @@ class EditSparePartDetail extends StatelessWidget {
             ),
             space.kH,
             TextFieldEditType(
-              hintText: 'Part Details (Description)',
+              hintText:
+                  'Part Details (${context.tr('description_spare_part')})',
               textSet: partDetails.value,
             ),
             space.kH,

@@ -422,7 +422,7 @@ class EditFillFormView3IC extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: context.tr('safety'),
+                    titleText: context.tr('safety_maintenance'),
                     button: readOnly == null
                         ? Obx(() => !safety.isAllFieldsFilled.value
                             ? AddButton(
@@ -634,7 +634,7 @@ class EditFillFormView3IC extends StatelessWidget {
                     context.tr('no'),
                     context.tr('yes'));
               },
-              text: 'Save'),
+              text: context.tr('save')),
         ),
       ),
     );

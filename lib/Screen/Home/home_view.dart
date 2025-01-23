@@ -454,6 +454,7 @@ class HomeView extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
+            textAlign: TextAlign.center,
             label,
             style: TextStyleList.subtitle4,
           ),

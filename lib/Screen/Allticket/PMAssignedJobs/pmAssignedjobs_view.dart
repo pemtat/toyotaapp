@@ -281,7 +281,7 @@ class PmAssignedJobsView extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 15),
                       child: Center(
                           child: Text(
-                        'No jobs available.',
+                        context.tr('no_jobs_avb'),
                         style: TextStyleList.subtitle2,
                       )),
                     ),

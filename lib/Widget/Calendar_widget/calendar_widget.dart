@@ -11,6 +11,7 @@ import 'package:toyotamobile/Widget/arrowIcon_widget.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class CalendarItem extends StatelessWidget {
   final Map<String, dynamic> event;
@@ -189,7 +190,7 @@ class CalendarItem extends StatelessWidget {
                             children: [
                               3.kH,
                               Text(
-                                'Reported by ${event['customerName']}',
+                                '${context.tr('reported_by')} ${event['customerName']}',
                                 style: TextStyleList.subtext1,
                               ),
                               const SizedBox(height: 5),

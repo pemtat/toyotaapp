@@ -216,10 +216,11 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                                       title: 'Part Number',
                                       value: data.partNumber ?? '-'),
                                   BoxInfo(
-                                      title: 'Description',
+                                      title:
+                                          context.tr('description_spare_part'),
                                       value: data.description ?? '-'),
                                   BoxInfo(
-                                      title: 'Quantity',
+                                      title: context.tr('quantity'),
                                       value: data.qty ?? '-'),
                                 ]),
                               );

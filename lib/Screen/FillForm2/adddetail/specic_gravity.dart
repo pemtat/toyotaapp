@@ -15,11 +15,14 @@ class SpecicGravity extends GetxController {
     ShowModalWidget(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              context.tr('specic_gravity'),
-              style: TextStyleList.subheading,
+            Expanded(
+              child: Text(
+                context.tr('specic_gravity'),
+                style: TextStyleList.subheading,
+              ),
             ),
             InkWell(
               onTap: () {
@@ -65,11 +68,14 @@ class SpecicGravity extends GetxController {
     ShowModalWidget(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              context.tr('specic_gravity'),
-              style: TextStyleList.subheading,
+            Expanded(
+              child: Text(
+                context.tr('specic_gravity'),
+                style: TextStyleList.subheading,
+              ),
             ),
             InkWell(
                 onTap: () {

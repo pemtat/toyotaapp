@@ -41,7 +41,7 @@ class Intruction extends StatelessWidget {
                 children: [
                   RichText(
                       text: TextSpan(
-                    text: '${context.tr('step_2')} ',
+                    text: '${context.tr('step_2')}: ',
                     style: TextStyleList.text4,
                     children: [
                       TextSpan(

@@ -149,14 +149,14 @@ class AlertDialogPickImage extends StatelessWidget {
       backgroundColor: white3,
       title: Center(
           child: Text(
-        'เเจ้งเตือน',
+        context.tr('warning'),
         style: TextStyleList.title1,
       )),
       content: Row(
         children: [
           Expanded(
             child: Text(
-              'ระบบไม่รองรับไฟล์นามสกุลนี้ โปรดเลือกไฟล์นามสกุล  .jpg  .jpeg  .png',
+              context.tr('warning_file'),
               style: TextStyleList.text2,
             ),
           ),
@@ -165,7 +165,7 @@ class AlertDialogPickImage extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           child: Text(
-            'ตกลง',
+            context.tr('warning_yes'),
             style: TextStyleList.subtext3,
           ),
           onPressed: () {
@@ -187,7 +187,7 @@ class AlertDialogVersions extends StatelessWidget {
       backgroundColor: white3,
       title: Center(
           child: Text(
-        'เเจ้งเตือน',
+        context.tr('warning'),
         style: TextStyleList.title1,
       )),
       content: Column(
@@ -198,7 +198,7 @@ class AlertDialogVersions extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'เวอร์ชั่นแอพมีการอัพเดทใหม่ กรุณาอัปเดตแอพเพื่อใช้งาน',
+                  context.tr('warning_update'),
                   style: TextStyleList.text2,
                 ),
               ),
@@ -219,7 +219,7 @@ class AlertDialogVersions extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'คัดลอกลิ้ง APK',
+                    context.tr('copy_apk_link'),
                     style: TextStyleList.text21,
                   ),
                   2.wH,
@@ -232,7 +232,7 @@ class AlertDialogVersions extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           child: Text(
-            'ตกลง',
+            context.tr('warning_yes'),
             style: TextStyleList.subtext3,
           ),
           onPressed: () {
@@ -255,14 +255,14 @@ class AlertDialogNotComplete extends StatelessWidget {
       backgroundColor: white3,
       title: Center(
           child: Text(
-        'เเจ้งเตือน',
+        context.tr('warning'),
         style: TextStyleList.subtitle1,
       )),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'โปรดกรอกข้อมูลที่จำเป็นให้ครบถ้วน',
+            context.tr('warning_message_2'),
             style: TextStyleList.text2,
           ),
         ],
@@ -270,7 +270,7 @@ class AlertDialogNotComplete extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           child: Text(
-            'ตกลง',
+            context.tr('warning_yes'),
             style: TextStyleList.subtext3,
           ),
           onPressed: () {

@@ -65,7 +65,7 @@ class SparePartManageWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Part Details (Description)',
+                  'Part Details (${context.tr('description_spare_part')})',
                   style: TextStyleList.subtext1,
                 ),
                 Text(

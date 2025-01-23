@@ -63,7 +63,7 @@ class TicketInfo extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '$dateTime\nReported by $reporter',
+              '$dateTime\n${context.tr('reported_by')} $reporter',
               style: TextStyleList.subtext1,
             ),
           ],

@@ -65,10 +65,10 @@ class ShowBatteryReportWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TitleApp2(
-                  text: context.tr('battery_maintenance_report'),
-                ),
-                10.kH,
+                // TitleApp2(
+                //   text: context.tr('battery_maintenance_report'),
+                // ),
+                // 10.kH,
                 BoxInfo2(
                     title: context.tr('customer_name'),
                     value: info1!.customerName ?? '-'),
@@ -94,7 +94,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     value: info1.manufacturerNo ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: context.tr('battery_serial_no'),
+                    title: context.tr('battery_serial'),
                     value: info1.serialNo ?? '-'),
                 space.kH,
                 (info1.batteryLifespan == '0' &&
@@ -139,7 +139,7 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     value: info1.forkliftModel ?? '-'),
                 space.kH,
                 BoxInfo2(
-                    title: context.tr('forklift_serial'),
+                    title: context.tr('forklift_serial_no'),
                     value: info1.forkliftSerial ?? '-'),
                 space.kH,
                 BoxInfo2(
@@ -258,17 +258,17 @@ class ShowBatteryReportWidget extends StatelessWidget {
                                         Radius.circular(6))),
                                 child: Column(children: [
                                   BoxInfo(
-                                    title: 'Name',
+                                    title: context.tr('item'),
                                     value: data.nameEn ?? '-',
                                     more: data.checking,
                                   ),
                                   BoxInfo(
-                                      title: 'Option',
+                                      title: context.tr('option'),
                                       value: data.status == ''
                                           ? '-'
                                           : data.status ?? '-'),
                                   BoxInfo(
-                                      title: 'Description',
+                                      title: context.tr('description'),
                                       value: data.description == ''
                                           ? '-'
                                           : data.description ?? '-'),
@@ -320,7 +320,8 @@ class ShowBatteryReportWidget extends StatelessWidget {
                                       title: 'Part Number',
                                       value: data.partNumber ?? '-'),
                                   BoxInfo(
-                                      title: 'Description',
+                                      title:
+                                          context.tr('description_spare_part'),
                                       value: data.description ?? '-'),
                                   BoxInfo(
                                       title: context.tr('quantity'),
@@ -343,12 +344,10 @@ class ShowBatteryReportWidget extends StatelessWidget {
                           space.kH,
                         ],
                       ),
-                TitleWithButton(
-                    titleText: context.tr('repair_pm_battery'),
-                    button: Text(
-                      info1.repairPm == '' ? '-' : info1.repairPm ?? '-',
-                      style: TextStyleList.text3,
-                    )),
+                TitleApp2(
+                  text: context.tr('repair_pm_battery'),
+                  moreText: info1.repairPm == '' ? '-' : info1.repairPm ?? '-',
+                ),
                 space.kH,
                 // if (changeSpareparts.isNotEmpty)
                 //   changeSpareparts.first.quantity != '0'

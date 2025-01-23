@@ -19,11 +19,14 @@ class Safety extends GetxController {
     ShowModalWidget(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              context.tr('safety'),
-              style: TextStyleList.subheading,
+            Expanded(
+              child: Text(
+                context.tr('safety_maintenance'),
+                style: TextStyleList.subheading,
+              ),
             ),
             InkWell(
               onTap: () {
