@@ -228,5 +228,8 @@
   "warning_yes" : "ตกลง",
   "service_type" : "ประเภทงานบริการ",
   "chassis_no" : "หมายเลขตัวถัง",
-    "safety_maintenance" : "ความสมบูรณ์ของอุปกรณ์ Safety ตามกฎกระทรวง"
+    "safety_maintenance" : "ความสมบูรณ์ของอุปกรณ์ Safety ตามกฎกระทรวง",
+    "saving_data" : "กำลังบันทึกข้อมูล...",
+    "save_successful" : "บันทึกข้อมูลสำเร็จ",
+     "signature_save" : "บันทึกลายเซ็นสำเร็จ"
 }
