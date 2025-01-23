@@ -22,3 +22,29 @@ String stringToStatus(String status) {
       return 'pending';
   }
 }
+
+String stringToStatusQuotation(String status) {
+  switch (status) {
+    case '1':
+      return 'pending';
+    case '2':
+      return 'approved';
+    case '3':
+      return "rejected";
+    default:
+      return 'pending';
+  }
+}
+
+String stringToStatusQuotationTechMG(String status) {
+  switch (status) {
+    case '0':
+      return 'pending';
+    case '1':
+      return 'approved';
+    case '2':
+      return "rejected";
+    default:
+      return 'pending';
+  }
+}

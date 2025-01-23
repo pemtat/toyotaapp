@@ -22,7 +22,7 @@ class Safety extends GetxController {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              context.tr('safety'),
+              context.tr('safety_maintenance'),
               style: TextStyleList.subheading,
             ),
             InkWell(

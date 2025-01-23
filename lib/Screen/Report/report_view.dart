@@ -34,7 +34,7 @@ class ReportView extends StatelessWidget {
                       style: TextStyleList.subtitle2,
                       value: reportController.selectedTech.value,
                       alignment: Alignment.centerRight,
-                      hint: const Text('เลือกช่าง',
+                      hint: Text(context.tr('select_tech'),
                           style: TextStyle(color: Colors.black)),
                       items: reportController.usersAllTech.map((user) {
                         return DropdownMenuItem<int>(

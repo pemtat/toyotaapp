@@ -40,7 +40,8 @@ class SparePartView extends StatelessWidget {
             children: [
               AppBar(
                 backgroundColor: white3,
-                title: Text('Spare Part', style: TextStyleList.title1),
+                title: Text(context.tr('spare_part_request'),
+                    style: TextStyleList.title1),
               ),
               Container(
                 height: 0.5,
@@ -220,10 +221,10 @@ class SparePartView extends StatelessWidget {
                           .contains(sparePartController.searchQuery.value) ||
                       job.description!
                           .contains(sparePartController.searchQuery.value);
-                  final statusMatch =
-                      sparePartController.selectedStatus.isEmpty ||
-                          sparePartController.selectedStatus
-                              .contains(stringToStatus(job.status ?? ''));
+                  final statusMatch = sparePartController
+                          .selectedStatus.isEmpty ||
+                      sparePartController.selectedStatus.contains(
+                          stringToStatusQuotation(job.estimateStatus ?? ''));
                   final jobDate = formatDateTimeString(job.dueDate ?? '');
                   final dateMatch = sparePartController.selectedDate.value ==
                           null ||
@@ -323,8 +324,9 @@ class SparePartView extends StatelessWidget {
                           .contains(sparePartController.searchQuery.value);
                   final statusMatch =
                       sparePartController.selectedStatus.isEmpty ||
-                          sparePartController.selectedStatus
-                              .contains(stringToStatus(job.status ?? ''));
+                          sparePartController.selectedStatus.contains(
+                              stringToStatusQuotationTechMG(
+                                  job.techManagerStatus ?? ''));
                   final jobDate = formatDateTimeString(job.dueDate ?? '');
                   final dateMatch = sparePartController.selectedDate.value ==
                           null ||

@@ -640,7 +640,7 @@ class FillFormView3 extends StatelessWidget {
             BoxContainer(
               children: [
                 TitleWithButton(
-                    titleText: context.tr('safety'),
+                    titleText: context.tr('safety_maintenance'),
                     button: Obx(() => !safety.isAllFieldsFilled.value
                         ? AddButton(
                             onTap: () {

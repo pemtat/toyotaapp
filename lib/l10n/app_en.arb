@@ -26,6 +26,7 @@
   "view_profile": "View Profile",
   "recently_jobs": "Recently Jobs",
   "overdue_jobs": "Overdue Jobs",
+  "total_sparepart": "Total",
   "total_jobs": "Total Jobs",
   "field_service_report": "Field Service Report",
   "battery_maintenance_report": "Battery Maintenance Report",
@@ -71,6 +72,7 @@
   "start_time": "Start Time",
   "end_time": "End Time",
   "spare_part_request_status": "Sparepart Request Status",
+  "spare_part_request": "Spare Part",
   "no_jobs": "No jobs for this day.",
   "no_jobs_avb": "No jobs available.",
   "select_date": "Select Date",
@@ -160,6 +162,8 @@
   "co": "Assembly/Installation work, dismantling",
   "repair_prodecure": "Repair Prodecure",
   "cause_problem": "Cause of the problem",
+  "request": "Request",
+  "request_message": "Are you sure to request?",
   "spare_part": "Spare Part",
   "recommended_spare_part_list": "Recommended Spare Part",
   "spare_part_list": "Spare Part List",
@@ -241,5 +245,10 @@
   "copy_apk_link": "Copy APK link",
   "enter":  "Enter",
   "option":  "Option",
-  "item":  "Item"
+  "item":  "Item",
+  "close":  "Close",
+  "approve" : "Approve",
+  "not_approve" : "Not Approve",
+  "quotation" : "Quotation",
+  "select_tech" : "Select Tech"
 }

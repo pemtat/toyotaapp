@@ -255,7 +255,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Status :',
+                            '${context.tr('status')} :',
                             style: TextStyleList.detail2,
                           ),
                           4.wH,
@@ -341,29 +341,28 @@ class SubJobSparePartWidget extends StatelessWidget {
                   6.kH,
                   if (subJobSparePart.documentNo != null)
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           'OJ no. : ${subJobSparePart.documentNo ?? ''}',
                           style: TextStyleList.subtitle9,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              'Purchase Order',
-                              style: TextStyleList.detail2,
-                            ),
-                            Text(
-                              ' :',
-                              style: TextStyleList.title1,
-                            ),
-                            4.wH,
-                            StatusButton4(
-                                status:
-                                    subJobSparePart.purchaseStatus.toString())
-                          ],
-                        )
+                        // Row(
+                        //   children: [
+                        //     Text(
+                        //       'Purchase Order',
+                        //       style: TextStyleList.detail2,
+                        //     ),
+                        //     Text(
+                        //       ' :',
+                        //       style: TextStyleList.title1,
+                        //     ),
+                        //     4.wH,
+                        //     StatusButton4(
+                        //         status:
+                        //             subJobSparePart.purchaseStatus.toString())
+                        //   ],
+                        // )
                       ],
                     ),
                   8.kH,
@@ -452,7 +451,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                             }
                           },
                           child: Text(
-                            'View PDF',
+                            context.tr('view_pdf'),
                             style: TextStyleList.subtext9,
                           ),
                         ),
@@ -465,7 +464,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Issue Remark : ${subJobSparePart.description ?? ''}',
+                          '${context.tr('summary_issue')} : ${subJobSparePart.description ?? ''}',
                           style: TextStyleList.text1,
                         ),
                       ),
@@ -499,7 +498,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Remark : ${subJobSparePart.techManagerRemark == '' || subJobSparePart.techManagerRemark == null ? '-' : subJobSparePart.techManagerRemark}',
+                        '${context.tr('remark')} : ${subJobSparePart.techManagerRemark == '' || subJobSparePart.techManagerRemark == null ? '-' : subJobSparePart.techManagerRemark}',
                         style: TextStyleList.text1,
                       ),
                       if (expandedIndex != null && expandedTicketId != null)
@@ -533,11 +532,11 @@ class SubJobSparePartWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Quotation : ${subJobSparePart.quotation == '1' ? 'No' : 'Yes'}',
+                          '${context.tr('quotation')} : ${subJobSparePart.quotation == '1' ? context.tr('no') : context.tr('yes')}',
                           style: TextStyleList.text1,
                         ),
                         Text(
-                          'Total : ${summarySparePartTotal('discount')}',
+                          '${context.tr('total_sparepart')} : ${summarySparePartTotal('discount')}',
                           style: TextStyleList.text1,
                         ),
                       ],
@@ -587,7 +586,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                               SizedBox(
                                   width: 70,
                                   child: ButtonRed(
-                                      title: 'ปิด',
+                                      title: context.tr('close'),
                                       onTap: () {
                                         Navigator.pop(context);
                                       })),
@@ -601,13 +600,13 @@ class SubJobSparePartWidget extends StatelessWidget {
                                 ? SizedBox(
                                     width: 120,
                                     child: ButtonRed(
-                                        title: 'ขออนุมัติ',
+                                        title: context.tr('request'),
                                         onTap: () {
                                           showApproveSparePart(
                                               context,
-                                              'Are you sure to request?',
-                                              'No',
-                                              'Yes', () async {
+                                              context.tr('request_message'),
+                                              context.tr('no'),
+                                              context.tr('yes'), () async {
                                             await updateJobSparePart(
                                                 subJobSparePart.id ?? '',
                                                 jobController.techLevel.value,
@@ -650,7 +649,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                     ? SizedBox(
                                         width: 70,
                                         child: ButtonRed(
-                                            title: 'ปิด',
+                                            title: context.tr('close'),
                                             onTap: () {
                                               Navigator.pop(context);
                                             }))
@@ -663,7 +662,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                               width: 120,
                                               child: ButtonRed(
                                                   color: blue1,
-                                                  title: 'Approve',
+                                                  title: context.tr('approve'),
                                                   onTap: () async {
                                                     // var selectedUserId = ''.obs;
                                                     // var selectedUser = ''.obs;
@@ -782,7 +781,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                             children: [
                                                                               Expanded(
                                                                                 child: TextFieldType(
-                                                                                  hintText: 'หมายเหตุ',
+                                                                                  hintText: context.tr('remark'),
                                                                                   textSet: remarkControllers[index],
                                                                                 ),
                                                                               ),
@@ -812,7 +811,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                                 addRemark();
                                                                               },
                                                                               child: Text(
-                                                                                'เพิ่มหมายเหตุ',
+                                                                                context.tr('add_remark'),
                                                                                 style: TextStyleList.text3,
                                                                               )),
                                                                         ],
@@ -828,7 +827,9 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                         context)
                                                                     .pop();
                                                               },
-                                                              child: Text('No',
+                                                              child: Text(
+                                                                  context
+                                                                      .tr('no'),
                                                                   style:
                                                                       TextStyleList
                                                                           .text1),
@@ -937,7 +938,9 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                     'ดำเนินการสำเร็จ');
                                                               },
                                                               // },
-                                                              child: Text('Yes',
+                                                              child: Text(
+                                                                  context.tr(
+                                                                      'yes'),
                                                                   style:
                                                                       TextStyleList
                                                                           .text1),
@@ -951,7 +954,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                           SizedBox(
                                             width: 120,
                                             child: ButtonRed(
-                                              title: 'Not Approve',
+                                              title: context.tr('not_approve'),
                                               onTap: () {
                                                 showDialog(
                                                   context: context,
@@ -965,7 +968,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                         children: [
                                                           10.kH,
                                                           TextFieldType(
-                                                            hintText: 'Remark',
+                                                            hintText: context
+                                                                .tr('remark'),
                                                             textSet: rejectNote
                                                                 .value,
                                                             maxLine: 5,
@@ -980,7 +984,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                 .pop();
                                                           },
                                                           child: Text(
-                                                            'No',
+                                                            context.tr('no'),
                                                             style: TextStyleList
                                                                 .text1,
                                                           ),
@@ -1033,7 +1037,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                                                 'ดำเนินการสำเร็จ');
                                                           },
                                                           child: Text(
-                                                            'Yes',
+                                                            context.tr('yes'),
                                                             style: TextStyleList
                                                                 .text1,
                                                           ),
@@ -1050,7 +1054,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                                             SizedBox(
                                                 width: 70,
                                                 child: ButtonGray(
-                                                    title: 'ปิด',
+                                                    title: context.tr('close'),
                                                     onTap: () {
                                                       Navigator.pop(context);
                                                     })),
