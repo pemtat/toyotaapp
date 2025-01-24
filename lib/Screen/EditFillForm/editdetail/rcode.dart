@@ -11,6 +11,24 @@ class Rcode extends GetxController {
   void rCodeModal(BuildContext context) {
     rCodeChoose.clear();
     rCodeChoose.addAll(rCode);
+    List<String> rCodeListTrans = [
+      context.tr('broken'),
+      context.tr('lack_of_grease'),
+      context.tr('lack_of_oil'),
+      context.tr('incorrect_assembly'),
+      context.tr('dirty'),
+      context.tr('worn_out'),
+      context.tr('short_circuit'),
+      context.tr('corroded'),
+      context.tr('vibration'),
+      context.tr('mechanically_locked'),
+      context.tr('leakage'),
+      context.tr('loose'),
+      context.tr('abnormal_noise'),
+      context.tr('missing_part'),
+      context.tr('overheated'),
+      context.tr('other'),
+    ];
     ShowModalWidget(
       children: [
         Row(
@@ -35,9 +53,11 @@ class Rcode extends GetxController {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: CheckBoxWidget(
-                  text: rCodeList[index],
-                  listItem: rCodeChoose,
-                  itemSet: rCodeChoose),
+                text: rCodeList[index],
+                listItem: rCodeChoose,
+                itemSet: rCodeChoose,
+                transText: rCodeListTrans[index],
+              ),
             );
           },
         ),

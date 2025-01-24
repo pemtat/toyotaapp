@@ -11,6 +11,17 @@ class Wcode extends GetxController {
   void wCodeModal(BuildContext context) {
     wCodeChoose.clear();
     wCodeChoose.addAll(wCode);
+    List<String> wCodeListTrans = [
+      context.tr('cm'),
+      context.tr('cmc'),
+      context.tr('wa'),
+      context.tr('ac'),
+      context.tr('ff'),
+      context.tr('sot'),
+      context.tr('mo'),
+      context.tr('sb'),
+      context.tr('co'),
+    ];
     ShowModalWidget(
       children: [
         Row(
@@ -39,6 +50,7 @@ class Wcode extends GetxController {
                   text: wCodeList[index],
                   listItem: wCodeChoose,
                   itemSet: wCodeChoose,
+                  transText: wCodeListTrans[index],
                 ));
           },
         ),
