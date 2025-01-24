@@ -192,7 +192,8 @@ class FillFormView extends StatelessWidget {
                       titleText: 'R Code',
                       list: rcodeController.rCode,
                       onTap: () => rcodeController.rCodeModal(context),
-                      moreText: getDisplayString(rcodeController.rCode)),
+                      moreText: getTranslateText(
+                          rcodeController.rCode, context, 'rCode')),
                 ),
               ],
             ),
@@ -205,7 +206,8 @@ class FillFormView extends StatelessWidget {
                       titleText: 'W Code',
                       list: wcodeController.wCode,
                       onTap: () => wcodeController.wCodeModal(context),
-                      moreText: getDisplayString(wcodeController.wCode)),
+                      moreText: getTranslateText(
+                          wcodeController.wCode, context, 'wCode')),
                 ),
               ],
             ),

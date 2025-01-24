@@ -62,6 +62,11 @@ class AddEditBox extends StatelessWidget {
                     'Other : ${other!.value.text}',
                     style: TextStyleList.text12,
                   ),
+                if (list.contains('Other') && other == null && list.length == 1)
+                  Text(
+                    'Other',
+                    style: TextStyleList.text12,
+                  ),
                 if (list.contains('Replace new cell battery') && other2 != null)
                   Text(
                     'Replace new cell battery : ${other2!.value.text}',

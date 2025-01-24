@@ -284,14 +284,12 @@ class ShowBatteryReportWidget extends StatelessWidget {
                         moreText: '-',
                       ),
                 space.kH,
-                TitleWithButton(
-                    titleText: context.tr('corrective_action'),
-                    button: Text(
-                      info1.correctiveAction == ''
-                          ? '-'
-                          : info1.correctiveAction ?? '-',
-                      style: TextStyleList.text3,
-                    )),
+                TitleApp2(
+                  text: context.tr('corrective_action'),
+                  moreText: info1.correctiveAction == ''
+                      ? '-'
+                      : info1.correctiveAction ?? '-',
+                ),
                 space.kH,
                 recommendedSpareparts.isNotEmpty
                     ? Column(

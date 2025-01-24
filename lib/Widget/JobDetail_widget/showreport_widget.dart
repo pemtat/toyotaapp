@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/Function/fillform.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
@@ -102,10 +103,16 @@ class ShowRepairReport extends StatelessWidget {
                       value: data.orderNo ?? '-'),
                   space.kH,
                   BoxInfo2(
-                      title: 'R Code', value: data.rCode ?? '-', space: true),
+                      title: 'R Code',
+                      value: getTranslateTextString(
+                          data.rCode ?? '', context, 'rCode'),
+                      space: true),
                   space.kH,
                   BoxInfo2(
-                      title: 'W Code', value: data.wCode ?? '-', space: true),
+                      title: 'W Code',
+                      value: getTranslateTextString(
+                          data.wCode ?? '', context, 'wCode'),
+                      space: true),
                   space.kH,
                   BoxInfo2(
                       title: context.tr('repair_prodecure'),

@@ -7,6 +7,7 @@ import 'package:toyotamobile/Models/sparepartseach.dart';
 import 'package:toyotamobile/Models/sparepartseachdetails_model.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 String getDisplayString(RxList<String> data) {
   int displayCount = 3;
@@ -296,4 +297,114 @@ Future<String> fetchProductsReturnString2(String placeNumber) async {
   } else {
     return '0';
   }
+}
+
+String getTranslateText(
+    RxList<String> data, BuildContext context, String option) {
+  int displayCount = 3;
+  List<String> words = [];
+  Map<String, String> transMap = {};
+
+  if (option == 'wCode') {
+    transMap = {
+      'CM': context.tr('cm'),
+      'CMC': context.tr('cmc'),
+      'WA': context.tr('wa'),
+      'AC': context.tr('ac'),
+      'FF': context.tr('ff'),
+      'SOT': context.tr('sot'),
+      'MO': context.tr('mo'),
+      'SB': context.tr('sb'),
+      'CO': context.tr('co'),
+    };
+  } else if ((option == 'rCode')) {
+    transMap = {
+      'Broken': context.tr('broken'),
+      'Lack of grease': context.tr('lack_of_grease'),
+      'Lack of oil': context.tr('lack_of_oil'),
+      'Incorrect Assembly': context.tr('incorrect_assembly'),
+      'Dirty': context.tr('dirty'),
+      'Worn out': context.tr('worn_out'),
+      'Short circuit': context.tr('short_circuit'),
+      'Corroded': context.tr('corroded'),
+      'Vibration': context.tr('vibration'),
+      'Mechanically Locked': context.tr('mechanically_locked'),
+      'Leakage': context.tr('leakage'),
+      'Loose': context.tr('loose'),
+      'Abnormal noise': context.tr('abnormal_noise'),
+      'Missing part': context.tr('missing_part'),
+      'Overheated': context.tr('overheated'),
+      'Other': context.tr('other'),
+    };
+  }
+  for (var item in data) {
+    if (option == 'rCode') {
+      words.add(transMap.containsKey(item) ? transMap[item]! : item);
+    } else {
+      int spaceIndex = item.indexOf(' ');
+      String key = spaceIndex != -1 ? item.substring(0, spaceIndex) : item;
+      words.add(transMap.containsKey(key) ? transMap[key]! : item);
+    }
+  }
+  if (words.length <= displayCount) {
+    return words.join(' ');
+  } else {
+    String displayedItems = words.sublist(0, displayCount).join(' ');
+    int remainingCount = words.length - displayCount;
+    return '$displayedItems +$remainingCount more';
+  }
+}
+
+String getTranslateTextString(
+    String data, BuildContext context, String option) {
+  List<String> words = [];
+  Map<String, String> transMap = {};
+
+  if (option == 'wCode') {
+    transMap = {
+      'CM': context.tr('cm'),
+      'CMC': context.tr('cmc'),
+      'WA': context.tr('wa'),
+      'AC': context.tr('ac'),
+      'FF': context.tr('ff'),
+      'SOT': context.tr('sot'),
+      'MO': context.tr('mo'),
+      'SB': context.tr('sb'),
+      'CO': context.tr('co'),
+    };
+  } else if (option == 'rCode') {
+    transMap = {
+      'Broken': context.tr('broken'),
+      'Lack of grease': context.tr('lack_of_grease'),
+      'Lack of oil': context.tr('lack_of_oil'),
+      'Incorrect Assembly': context.tr('incorrect_assembly'),
+      'Dirty': context.tr('dirty'),
+      'Worn out': context.tr('worn_out'),
+      'Short circuit': context.tr('short_circuit'),
+      'Corroded': context.tr('corroded'),
+      'Vibration': context.tr('vibration'),
+      'Mechanically Locked': context.tr('mechanically_locked'),
+      'Leakage': context.tr('leakage'),
+      'Loose': context.tr('loose'),
+      'Abnormal noise': context.tr('abnormal_noise'),
+      'Missing part': context.tr('missing_part'),
+      'Overheated': context.tr('overheated'),
+      'Other': context.tr('other'),
+    };
+  }
+
+  List<String> items = data.split(',');
+
+  for (var item in items) {
+    item = item.trim();
+    if (option == 'rCode') {
+      words.add(transMap.containsKey(item) ? transMap[item]! : item);
+    } else {
+      int spaceIndex = item.indexOf(' ');
+      String key = spaceIndex != -1 ? item.substring(0, spaceIndex) : item;
+      words.add(transMap.containsKey(key) ? transMap[key]! : item);
+    }
+  }
+
+  return words.join(', ');
 }
