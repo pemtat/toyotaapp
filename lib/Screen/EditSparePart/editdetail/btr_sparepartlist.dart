@@ -15,7 +15,7 @@ class BtrSparepartList extends GetxController {
       enableDrag: false,
       builder: (BuildContext context) {
         return AddSparePartDetail(
-          title: 'Recommanded spare part',
+          title: 'Recommend spare part',
           cCodePage: cCodePage,
           searchPartNumber: searchPartNumber,
           isLoading: isLoading,
@@ -43,7 +43,7 @@ class BtrSparepartList extends GetxController {
       enableDrag: false,
       builder: (BuildContext context) {
         return EditSparePartDetail(
-          title: 'Recommanded spare part',
+          title: 'Recommend spare part',
           part: part,
           cCodePage: cCodePage,
           searchPartNumber: searchPartNumber,

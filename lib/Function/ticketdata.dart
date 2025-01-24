@@ -1449,12 +1449,14 @@ Future<void> updateJobPM(String issueId, int status, String comment,
 }
 
 Future<void> changeIssueSignaturePM(
-  String issueId,
-  String saveCompletedtime,
-  String signature,
-  String signaturePad,
-  String option,
-) async {
+    String issueId,
+    String saveCompletedtime,
+    String signature,
+    String signaturePad,
+    String option,
+    int customerChecking,
+    int customerScore,
+    String customerDescription) async {
   try {
     String? token = await getToken();
     Map<String, dynamic> body = {};
@@ -1464,7 +1466,10 @@ Future<void> changeIssueSignaturePM(
         'name': 'ลายเซ็น.png',
         'content': signaturePad,
         "signature": signature,
-        "save_time": saveCompletedtime
+        "save_time": saveCompletedtime,
+        'customer_checking': customerChecking,
+        'customer_score': customerScore,
+        'customer_description': customerDescription,
       };
 
       final response2 = await http.post(
@@ -1486,7 +1491,10 @@ Future<void> changeIssueSignaturePM(
         'name': 'ลายเซ็น.png',
         'content': signaturePad,
         "signature": signature,
-        "save_time": 0
+        "save_time": 0,
+        'customer_checking': customerChecking,
+        'customer_score': customerScore,
+        'customer_description': customerDescription,
       };
       final response2 = await http.post(
         Uri.parse(updatePreventiveSignatureUrl()),
@@ -1507,7 +1515,10 @@ Future<void> changeIssueSignaturePM(
         'name': 'ลายเซ็น.png',
         'content': signaturePad,
         "signature": signature,
-        "save_time": 0
+        "save_time": 0,
+        'customer_checking': customerChecking,
+        'customer_score': customerScore,
+        'customer_description': customerDescription,
       };
       final response2 = await http.post(
         Uri.parse(updatePreventiveIcSignatureUrl()),
@@ -2100,8 +2111,15 @@ Future<void> updateCommentJobs(String jobId, String comment, String ticketId,
   }
 }
 
-Future<void> updateSignatureJob(String jobId, String ticketId,
-    String saveCompletedtime, String signature, String signaturePad) async {
+Future<void> updateSignatureJob(
+    String jobId,
+    String ticketId,
+    String saveCompletedtime,
+    String signature,
+    String signaturePad,
+    int customerChecking,
+    int customerScore,
+    String customerDescription) async {
   try {
     String? token = await getToken();
 
@@ -2110,7 +2128,10 @@ Future<void> updateSignatureJob(String jobId, String ticketId,
       'name': 'ลายเซ็น.png',
       'content': signaturePad,
       'save_time': saveCompletedtime,
-      'signature': signature
+      'signature': signature,
+      'customer_checking': customerChecking,
+      'customer_score': customerScore,
+      'customer_description': customerDescription,
     };
     final response = await http.post(
       Uri.parse(updateJobsSignatureUrl()),
@@ -2131,8 +2152,14 @@ Future<void> updateSignatureJob(String jobId, String ticketId,
   }
 }
 
-Future<void> updateJobSignatureBattery(String issueId, String saveCompletedtime,
-    String signature, String signaturePad) async {
+Future<void> updateJobSignatureBattery(
+    String issueId,
+    String saveCompletedtime,
+    String signature,
+    String signaturePad,
+    int customerChecking,
+    int customerScore,
+    String customerDescription) async {
   try {
     String? token = await getToken();
     Map<String, dynamic> body = {};
@@ -2142,7 +2169,10 @@ Future<void> updateJobSignatureBattery(String issueId, String saveCompletedtime,
       'name': 'ลายเซ็น.png',
       'content': signaturePad,
       "signature": signature,
-      "save_time": saveCompletedtime
+      "save_time": saveCompletedtime,
+      'customer_checking': customerChecking,
+      'customer_score': customerScore,
+      'customer_description': customerDescription,
     };
 
     final response2 = await http.post(

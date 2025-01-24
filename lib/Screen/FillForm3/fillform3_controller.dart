@@ -483,7 +483,7 @@ class FillformController3 extends GetxController {
       "safety_seat_belt": safety.selections[2],
       "mt_service_result": maintenance.maintenanceList.first.chargingType.first,
       "officer_checking": officer,
-      "customer_checking": "",
+      "customer_checking": 0,
       "customer_score": 0,
       "customer_description": "",
       'customer_name': customerName.value.text,

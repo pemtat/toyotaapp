@@ -7,6 +7,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/pdf_widget.dart';
+import 'package:toyotamobile/Widget/showcustomerscore_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/urlimg.dart';
@@ -259,12 +260,19 @@ class ShowRepairReport extends StatelessWidget {
                       ),
                     ],
                   ),
+                  space.kH,
                   if (data.signaturePadUrl != null &&
                       data.signaturePadUrl != '')
                     Center(
                       child: Column(
                         children: [
                           12.kH,
+                          ShowCustomerScoreWidget(
+                              customerChecking: data.customerChecking ?? '0',
+                              customerScore: data.customerScore ?? '0',
+                              customerDescription:
+                                  data.customerDescription ?? ''),
+                          16.kH,
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
                             height: 200,

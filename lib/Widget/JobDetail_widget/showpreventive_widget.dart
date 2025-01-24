@@ -9,6 +9,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/pdf_widget.dart';
+import 'package:toyotamobile/Widget/showcustomerscore_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
@@ -299,6 +300,12 @@ class ShowPreventiveReportWidget extends StatelessWidget {
                     children: [
                       space.kH,
                       6.kH,
+                      ShowCustomerScoreWidget(
+                          customerChecking: maintenance.customerChecking ?? '0',
+                          customerScore: maintenance.customerScore ?? '0',
+                          customerDescription:
+                              maintenance.customerDescription ?? ''),
+                      16.kH,
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,

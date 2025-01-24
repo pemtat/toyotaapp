@@ -10,6 +10,7 @@ import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class ReturnSparePartDetail extends StatelessWidget {
   final String jobId;
@@ -64,7 +65,7 @@ class ReturnSparePartDetail extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Center(
                 child: Text(
-              'ไม่มี Spare Part',
+              context.tr('no_spare_part'),
               style: TextStyleList.text5,
             )),
           )

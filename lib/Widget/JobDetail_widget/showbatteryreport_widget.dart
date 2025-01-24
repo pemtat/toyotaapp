@@ -10,6 +10,7 @@ import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/boxinfo_widget.dart';
 import 'package:toyotamobile/Widget/pdf_widget.dart';
+import 'package:toyotamobile/Widget/showcustomerscore_widget.dart';
 import 'package:toyotamobile/Widget/showtextfield_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/title_widget.dart';
@@ -432,6 +433,11 @@ class ShowBatteryReportWidget extends StatelessWidget {
                     children: [
                       space.kH,
                       6.kH,
+                      ShowCustomerScoreWidget(
+                          customerChecking: info1.customerChecking ?? '0',
+                          customerScore: info1.customerScore ?? '0',
+                          customerDescription: info1.customerDescription ?? ''),
+                      16.kH,
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 200,

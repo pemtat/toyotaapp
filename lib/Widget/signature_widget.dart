@@ -11,7 +11,9 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 import 'package:toyotamobile/Widget/loadingdata.dart';
+import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/extensions/context_extension.dart';
 
 // ignore: must_be_immutable
@@ -34,6 +36,9 @@ class SignatureWidget extends StatelessWidget {
       Get.put(JobDetailControllerPM());
 
   var signaturePad = ''.obs;
+  var customerChecking = 0.obs;
+  var customerScore = 0.obs;
+  var customerDescription = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var saveCompletedtime = ''.obs;
@@ -47,7 +52,70 @@ class SignatureWidget extends StatelessWidget {
       ),
       content: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(context.tr('customer_checking'),
+                style: TextStyleList.detail2
+                    .copyWith(decoration: TextDecoration.underline)),
+            Obx(() => Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Radio(
+                      activeColor: Colors.red,
+                      value: 1,
+                      groupValue: customerChecking.value,
+                      onChanged: (value) {
+                        customerChecking.value = value as int;
+                      },
+                    ),
+                    Text(context.tr('checking_done')),
+                    Radio(
+                      activeColor: Colors.red,
+                      value: 2,
+                      groupValue: customerChecking.value,
+                      onChanged: (value) {
+                        customerChecking.value = value as int;
+                      },
+                    ),
+                    Text(context.tr('checking_not_done')),
+                  ],
+                )),
+            10.kH,
+            Text(context.tr('customer_score'),
+                style: TextStyleList.detail2
+                    .copyWith(decoration: TextDecoration.underline)),
+            Column(
+              children: List.generate(5, (index) {
+                return Obx(() => Row(
+                      children: [
+                        Radio(
+                          activeColor: Colors.red,
+                          value: index + 1,
+                          groupValue: customerScore.value,
+                          onChanged: (value) {
+                            customerScore.value = value as int;
+                          },
+                        ),
+                        Text([
+                          context.tr('very_satisfied'),
+                          context.tr('satisfied'),
+                          context.tr('neutral'),
+                          context.tr('dissatisfied'),
+                          context.tr('need_improvement'),
+                        ][index]),
+                      ],
+                    ));
+              }),
+            ),
+            10.kH,
+            Text(context.tr('customer_description'),
+                style: TextStyleList.detail2
+                    .copyWith(decoration: TextDecoration.underline)),
+            10.kH,
+            TextFieldType(
+                hintText: context.tr('description'),
+                textSet: customerDescription),
+            16.kH,
             Container(
               height: 200,
               width: MediaQuery.of(context).size.width,
@@ -85,6 +153,11 @@ class SignatureWidget extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: () async {
+            String customerDescriptionText =
+                customerDescription.value.text.isNotEmpty
+                    ? customerDescription.value.text
+                    : '';
+
             if (signaturePad.value == '') {
               showMessage(context.tr('signature_require_1'));
             } else if (signatureController.value.text == '') {
@@ -105,7 +178,10 @@ class SignatureWidget extends StatelessWidget {
                       jobId,
                       saveCompletedtime.value,
                       signatureController.value.text,
-                      signaturePad.value);
+                      signaturePad.value,
+                      customerChecking.value,
+                      customerScore.value,
+                      customerDescriptionText);
                   await fetchJobBatteryReportData(
                       jobId, token ?? '', jobController.reportBatteryList);
                 } else {
@@ -114,7 +190,10 @@ class SignatureWidget extends StatelessWidget {
                       ticketId ?? '',
                       saveCompletedtime.value,
                       signatureController.value.text,
-                      signaturePad.value);
+                      signaturePad.value,
+                      customerChecking.value,
+                      customerScore.value,
+                      customerDescriptionText);
                   await fetchReportData(
                       jobId,
                       token ?? '',
@@ -141,7 +220,10 @@ class SignatureWidget extends StatelessWidget {
                       saveCompletedtime.value,
                       signatureController.value.text,
                       signaturePad.value,
-                      'battery');
+                      'battery',
+                      customerChecking.value,
+                      customerScore.value,
+                      customerDescriptionText);
                   // await jobControllerPM.fetchData(jobId.toString());
                   await fetchBatteryReportData(
                       jobId, token ?? '', jobControllerPM.reportList);
@@ -152,7 +234,10 @@ class SignatureWidget extends StatelessWidget {
                       saveCompletedtime.value,
                       signatureController.value.text,
                       signaturePad.value,
-                      'preventive');
+                      'preventive',
+                      customerChecking.value,
+                      customerScore.value,
+                      customerDescriptionText);
                   await fetchPreventiveReportData(
                       jobId, token ?? '', jobControllerPM.reportPreventiveList);
                   showSignatureSaveMessage();
@@ -162,7 +247,10 @@ class SignatureWidget extends StatelessWidget {
                       saveCompletedtime.value,
                       signatureController.value.text,
                       signaturePad.value,
-                      'preventive_ic');
+                      'preventive_ic',
+                      customerChecking.value,
+                      customerScore.value,
+                      customerDescriptionText);
                   await fetchPreventiveICReportData(jobId, token ?? '',
                       jobControllerPM.reportPreventiveListIc);
                   showSignatureSaveMessage();

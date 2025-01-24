@@ -101,6 +101,9 @@ class BtrMaintenance {
   String? tech1;
   String? tech2;
   String? sparePartRemark;
+  String? customerChecking;
+  String? customerScore;
+  String? customerDescription;
 
   BtrMaintenance(
       {this.id,
@@ -137,7 +140,10 @@ class BtrMaintenance {
       this.division,
       this.tech2,
       this.tech1,
-      this.sparePartRemark});
+      this.sparePartRemark,
+      this.customerChecking,
+      this.customerDescription,
+      this.customerScore});
 
   BtrMaintenance.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -175,6 +181,9 @@ class BtrMaintenance {
     tech1 = json['tech1'];
     tech2 = json['tech2'];
     sparePartRemark = json['spare_part_remark'];
+    customerChecking = json['customer_checking'];
+    customerScore = json['customer_score'];
+    customerDescription = json['customer_description'];
   }
 
   Map<String, dynamic> toJson() {
@@ -214,6 +223,9 @@ class BtrMaintenance {
     data['tech1'] = tech1;
     data['tech2'] = tech2;
     data['spare_part_remark'] = sparePartRemark;
+    data['customer_checking'] = customerChecking;
+    data['customer_score'] = customerScore;
+    data['customer_description'] = customerDescription;
     return data;
   }
 }

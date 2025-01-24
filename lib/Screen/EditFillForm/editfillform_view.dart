@@ -489,30 +489,66 @@ class EditFillFormView extends StatelessWidget {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
+                                    TextEditingController searchController =
+                                        TextEditingController();
+
+                                    RxList<UsersZone> filteredUsers =
+                                        RxList<UsersZone>(
+                                            fillFormController.userByZone);
+
                                     return AlertDialog(
                                       backgroundColor: white3,
-                                      title: Center(
-                                          child:
-                                              Text(context.tr('inspector_2'))),
+                                      title: Column(
+                                        children: [
+                                          Center(
+                                              child: Text(
+                                                  context.tr('inspector_2'))),
+                                          10.kH,
+                                          TextField(
+                                            controller: searchController,
+                                            decoration: InputDecoration(
+                                              hintText:
+                                                  context.tr('search_name'),
+                                              prefixIcon: Icon(Icons.search),
+                                              border: OutlineInputBorder(),
+                                            ),
+                                            onChanged: (query) {
+                                              filteredUsers.value =
+                                                  fillFormController.userByZone
+                                                      .where((user) =>
+                                                          user.realname !=
+                                                              null &&
+                                                          user.realname!
+                                                              .toLowerCase()
+                                                              .contains(query
+                                                                  .toLowerCase()))
+                                                      .toList();
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                       titleTextStyle: TextStyleList.text1,
-                                      content: SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: fillFormController
-                                              .userByZone
-                                              .map<Widget>((UsersZone user) {
-                                            return ListTile(
-                                              title: Text(
-                                                  user.realname ?? 'No data'),
-                                              onTap: () {
-                                                fillFormController
-                                                        .selectedUser.value =
-                                                    user.realname ?? '';
-                                                Navigator.of(context).pop();
-                                              },
-                                            );
-                                          }).toList(),
-                                        ),
+                                      content: SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                        width: 300,
+                                        child: Obx(() => ListView(
+                                              children: filteredUsers
+                                                  .map<Widget>(
+                                                      (UsersZone user) {
+                                                return ListTile(
+                                                  title: Text(user.realname ??
+                                                      'No data'),
+                                                  onTap: () {
+                                                    fillFormController
+                                                            .selectedUser
+                                                            .value =
+                                                        user.realname ?? '';
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                );
+                                              }).toList(),
+                                            )),
                                       ),
                                     );
                                   },

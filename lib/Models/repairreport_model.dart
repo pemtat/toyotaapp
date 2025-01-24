@@ -42,6 +42,9 @@ class RepairReportModel {
   String? sparePartRemark;
   String? sparePartRemark2;
   bool? additional;
+  String? customerChecking;
+  String? customerScore;
+  String? customerDescription;
 
   RepairReportModel(
       {this.id,
@@ -86,7 +89,10 @@ class RepairReportModel {
       this.signaturePadUrl,
       this.sparePartRemark,
       this.sparePartRemark2,
-      this.salesPrice});
+      this.salesPrice,
+      this.customerChecking,
+      this.customerDescription,
+      this.customerScore});
 
   RepairReportModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -132,6 +138,9 @@ class RepairReportModel {
     sparePartRemark2 = json['spare_part_remark2'];
     salesPrice = json['price'];
     priceVat = json['price_includes_vat'];
+    customerChecking = json['customer_checking'];
+    customerScore = json['customer_score'];
+    customerDescription = json['customer_description'];
   }
 
   Map<String, dynamic> toJson() {
@@ -179,6 +188,9 @@ class RepairReportModel {
     data['spare_part_remark2'] = sparePartRemark2;
     data['price'] = salesPrice;
     data['price_includes_vat'] = priceVat;
+    data['customer_checking'] = customerChecking;
+    data['customer_score'] = customerScore;
+    data['customer_description'] = customerDescription;
     return data;
   }
 }

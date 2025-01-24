@@ -250,5 +250,17 @@
   "approve" : "อนุมัติ",
   "not_approve" : "ไม่อนุมัติ",
   "quotation" : "เสนอราคา",
-  "select_tech" : "เลือกช่าง"
+  "select_tech" : "เลือกช่าง",
+  "search_name" : "ค้นหาชื่อ",
+  "customer_checking" : "พนักงาน TOYOTA ได้ทำความสะอาดพื้นที่ที่ทำงาน",
+  "customer_score" : "โปรดให้คะแนนความพึงพอใจในการรับบริการ",
+  "customer_description" : "ข้อเสนอแนะเพื่อปรับปรุงการบริการ",
+  "very_satisfied" : "มากที่สุด",
+  "satisfied" : "มาก",
+  "neutral" : "พอใช้",
+  "dissatisfied" : "น้อย",
+  "need_improvement" : "ควรปรับปรุง",
+  "checking_done" : "เรียบร้อย",
+  "checking_not_done" : "ไม่เรียบร้อย",
+  "no_spare_part" : "ไม่พบรายการอะไหล่"
 }
