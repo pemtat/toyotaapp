@@ -14,6 +14,7 @@ import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class PmCompleteJobsView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -102,7 +103,7 @@ class PmCompleteJobsView extends StatelessWidget {
                           if (filteredJobs.isEmpty) {
                             return Center(
                                 child: Text(
-                              'No new jobs available.',
+                              context.tr('no_new_jobs'),
                               style: TextStyleList.subtitle2,
                             ));
                           }

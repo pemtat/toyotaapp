@@ -14,6 +14,7 @@ import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class CompleteJobsView extends StatelessWidget {
   final HomeController jobController = Get.put(HomeController());
@@ -94,7 +95,10 @@ class CompleteJobsView extends StatelessWidget {
                         job.status != '10';
                   }).toList();
                   if (filteredJobs.isEmpty) {
-                    return const Center(child: Text('No new jobs available.'));
+                    return Center(
+                        child: Text(
+                      context.tr('no_new_jobs'),
+                    ));
                   }
                   return ListView.builder(
                     itemCount: filteredJobs.length,

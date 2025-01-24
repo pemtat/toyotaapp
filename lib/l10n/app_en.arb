@@ -222,6 +222,7 @@
   "signature_require_2": "Please add a signature before saving the data.",
   "complete_message": "Are you sure to complete?",
   "no_jobs_history": "No jobs history",
+  "no_new_jobs": "No new jobs available.",
   "battery_condition": "Battery Condition",
   "description": "Description",
   "cell_battery": "Cell Battery",

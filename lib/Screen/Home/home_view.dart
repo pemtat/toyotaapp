@@ -303,7 +303,7 @@ class HomeView extends StatelessWidget {
                         if (combinedData.isEmpty) {
                           return Center(
                             child: Text(
-                              'No new jobs available.',
+                              context.tr('no_new_jobs'),
                               style: TextStyleList.text3,
                             ),
                           );

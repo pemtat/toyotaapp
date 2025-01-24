@@ -222,6 +222,7 @@
   "signature_require_2": "โปรดเพิ่มลายเซ็นก่อนบันทึกข้อมูล",
   "complete_message": "คุณยืนยันที่จะดำเนินการต่อ?",
   "no_jobs_history": "ไม่มีประวัติงาน",
+  "no_new_jobs": "ไม่มีงานใหม่",
   "battery_condition": "สภาพโดยรวมของแบตเตอรี่",
   "description": "รายละเอียด",
   "cell_battery": "เซลล์แบตเตอรี่",

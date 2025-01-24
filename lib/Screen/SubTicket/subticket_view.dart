@@ -15,6 +15,7 @@ import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/searchbar_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SubTicketView extends StatelessWidget {
   final String ticketId;
@@ -71,7 +72,7 @@ class SubTicketView extends StatelessWidget {
                             if (subticketController.subJobs.isEmpty) {
                               return Center(
                                   child: Text(
-                                'No new jobs available.',
+                                context.tr('no_new_jobs'),
                                 style: TextStyleList.subtitle2,
                               ));
                             }
