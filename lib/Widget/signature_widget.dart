@@ -86,11 +86,12 @@ class SignatureWidget extends StatelessWidget {
                     .copyWith(decoration: TextDecoration.underline)),
             Column(
               children: List.generate(5, (index) {
+                int score = 5 - index;
                 return Obx(() => Row(
                       children: [
                         Radio(
                           activeColor: Colors.red,
-                          value: index + 1,
+                          value: score,
                           groupValue: customerScore.value,
                           onChanged: (value) {
                             customerScore.value = value as int;

@@ -365,36 +365,36 @@ class SubJobSparePartWidget extends StatelessWidget {
                         // )
                       ],
                     ),
-                  8.kH,
-                  if (subJobSparePart.trNo != '' &&
-                      subJobSparePart.trNo != null &&
-                      jobController.techLevel.value == '1')
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                            width: 130,
-                            child: ButtonCustom(
-                              title: 'Return Spare Part',
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        Obx(() => Material(
-                                              color: Colors.transparent,
-                                              child: ReturnSparepartView(
-                                                subJobSparePart:
-                                                    subJobSparePart,
-                                              ),
-                                            )));
-                              },
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 8.0, vertical: 6.0),
-                              style: TextStyleList.text7
-                                  .copyWith(color: Colors.white, fontSize: 13),
-                            )),
-                      ],
-                    ),
+                  // 8.kH,
+                  // if (subJobSparePart.trNo != '' &&
+                  //     subJobSparePart.trNo != null &&
+                  //     jobController.techLevel.value == '1')
+                  //   Row(
+                  //     mainAxisAlignment: MainAxisAlignment.end,
+                  //     children: [
+                  //       SizedBox(
+                  //           width: 130,
+                  //           child: ButtonCustom(
+                  //             title: 'Return Spare Part',
+                  //             onTap: () {
+                  //               showDialog(
+                  //                   context: context,
+                  //                   builder: (BuildContext context) =>
+                  //                       Obx(() => Material(
+                  //                             color: Colors.transparent,
+                  //                             child: ReturnSparepartView(
+                  //                               subJobSparePart:
+                  //                                   subJobSparePart,
+                  //                             ),
+                  //                           )));
+                  //             },
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: 8.0, vertical: 6.0),
+                  //             style: TextStyleList.text7
+                  //                 .copyWith(color: Colors.white, fontSize: 13),
+                  //           )),
+                  //     ],
+                  //   ),
                   8.kH,
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -446,7 +446,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                             Navigator.pop(context);
                             if (pdfReport.value != '') {
                               Get.to(() => PdfBase64View(
-                                  name: 'Estimate Report',
+                                  name: context.tr('estimate_report'),
                                   path: pdfReport.value));
                             }
                           },

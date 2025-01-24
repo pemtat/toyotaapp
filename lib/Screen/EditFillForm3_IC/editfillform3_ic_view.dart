@@ -118,7 +118,7 @@ class EditFillFormView3IC extends StatelessWidget {
                     Expanded(
                       child: TextFieldWidget(
                         text: 'Serial',
-                        textSet: fillformController3.model.value,
+                        textSet: fillformController3.serialNo.value,
                         readOnly: readOnly == null ? null : 'yes',
                       ),
                     ),

@@ -262,5 +262,6 @@
   "need_improvement" : "ควรปรับปรุง",
   "checking_done" : "เรียบร้อย",
   "checking_not_done" : "ไม่เรียบร้อย",
-  "no_spare_part" : "ไม่พบรายการอะไหล่"
+  "no_spare_part" : "ไม่พบรายการอะไหล่",
+  "estimate_report" : "ใบประเมินราคา"
 }

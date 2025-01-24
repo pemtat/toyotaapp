@@ -355,8 +355,8 @@ class SparePartView extends StatelessWidget {
                     ),
                   );
                 }
-                filteredJobs.sort(
-                    (a, b) => b.createdDate!.compareTo(a.createdDate ?? ''));
+                filteredJobs.sort((a, b) =>
+                    (b.createdDate ?? '').compareTo(a.createdDate ?? ''));
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: filteredJobs.length,

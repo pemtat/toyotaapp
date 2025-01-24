@@ -27,6 +27,7 @@ class ShowCustomerScoreWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Radio(
+              splashRadius: 5,
               activeColor: Colors.red,
               value: 1,
               groupValue: int.parse(customerChecking),
@@ -34,6 +35,7 @@ class ShowCustomerScoreWidget extends StatelessWidget {
             ),
             Text(context.tr('checking_done')),
             Radio(
+              splashRadius: 5,
               activeColor: Colors.red,
               value: 2,
               groupValue: int.parse(customerChecking),
@@ -48,13 +50,14 @@ class ShowCustomerScoreWidget extends StatelessWidget {
                 .copyWith(decoration: TextDecoration.underline)),
         Wrap(
           children: List.generate(5, (index) {
+            int score = 5 - index;
             return Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Radio(
-                  splashRadius: 0,
+                  splashRadius: 5,
                   activeColor: Colors.red,
-                  value: index + 1,
+                  value: score,
                   groupValue: int.parse(customerScore),
                   onChanged: (value) {},
                 ),

@@ -262,5 +262,6 @@
   "need_improvement" : "Need Improvement",
   "checking_done" : "Neat",
   "checking_not_done" : "Messy",
-  "no_spare_part" : "No spare parts found"
+  "no_spare_part" : "No spare parts found",
+  "estimate_report" : "Estimate Report"
 }
