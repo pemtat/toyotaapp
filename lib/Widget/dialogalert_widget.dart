@@ -208,7 +208,7 @@ class AlertDialogVersions extends StatelessWidget {
           if (deviceType == 'Android')
             GestureDetector(
               onTap: () {
-                Clipboard.setData(const ClipboardData(text: apkUrl));
+                Clipboard.setData(const ClipboardData(text: apkUrlTest));
                 Fluttertoast.showToast(
                     msg: context.tr('copy_text'),
                     toastLength: Toast.LENGTH_SHORT,
