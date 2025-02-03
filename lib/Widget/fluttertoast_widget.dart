@@ -40,6 +40,26 @@ void showSaveMessage() {
   );
 }
 
+void showWaitMessageNew(BuildContext context) {
+  Fluttertoast.showToast(
+    msg: "กำลังบันทึกข้อมูล...",
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 3,
+    fontSize: 12.0,
+  );
+}
+
+void showSaveMessageNew(BuildContext context) {
+  Fluttertoast.showToast(
+    msg: context.tr('save_successful'),
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 3,
+    fontSize: 12.0,
+  );
+}
+
 void showSignatureSaveMessage(BuildContext context) {
   Fluttertoast.showToast(
     msg: context.tr('signature_save'),

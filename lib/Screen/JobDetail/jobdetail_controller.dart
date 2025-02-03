@@ -250,7 +250,7 @@ class JobDetailController extends GetxController {
           rightButton: right,
           onRightButtonPressed: () {
             saveCurrentDateTime(saveCompletedtime);
-            showWaitMessage();
+            showWaitMessageNew(context);
             updateStatusSubjobs(jobId, issueId.toString());
             if (subJobs.isNotEmpty) {
               var subJobsData = subJobs.first;
@@ -268,7 +268,7 @@ class JobDetailController extends GetxController {
             }
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
-            showSaveMessage();
+            showSaveMessageNew(context);
           },
         );
       },
@@ -287,11 +287,11 @@ class JobDetailController extends GetxController {
           rightButton: right,
           onRightButtonPressed: () {
             saveCurrentDateTime(saveCompletedtime);
-            showWaitMessage();
+            showWaitMessageNew(context);
             updateStatusSubjobs(jobId, issueId.toString());
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);
-            showSaveMessage();
+            showSaveMessageNew(context);
           },
         );
       },
