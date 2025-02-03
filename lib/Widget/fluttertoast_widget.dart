@@ -40,9 +40,9 @@ void showSaveMessage() {
   );
 }
 
-void showSignatureSaveMessage() {
+void showSignatureSaveMessage(BuildContext context) {
   Fluttertoast.showToast(
-    msg: "บันทึกลายเซ็นสำเร็จ",
+    msg: context.tr('signature_save'),
     toastLength: Toast.LENGTH_LONG,
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 3,
