@@ -208,7 +208,7 @@ class AlertDialogVersions extends StatelessWidget {
           if (deviceType == 'Android')
             GestureDetector(
               onTap: () {
-                Clipboard.setData(const ClipboardData(text: apkUrlTest));
+                Clipboard.setData(const ClipboardData(text: apkUrl));
                 Fluttertoast.showToast(
                     msg: context.tr('copy_text'),
                     toastLength: Toast.LENGTH_SHORT,
@@ -263,6 +263,42 @@ class AlertDialogNotComplete extends StatelessWidget {
         children: [
           Text(
             context.tr('warning_message_2'),
+            style: TextStyleList.text2,
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: Text(
+            context.tr('warning_yes'),
+            style: TextStyleList.subtext3,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class AlertDialogCustom extends StatelessWidget {
+  String message;
+  AlertDialogCustom({super.key, required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: white3,
+      title: Center(
+          child: Text(
+        context.tr('warning'),
+        style: TextStyleList.subtitle1,
+      )),
+      content: Row(
+        children: [
+          Text(
+            message,
             style: TextStyleList.text2,
           ),
         ],

@@ -239,6 +239,10 @@ String getSparepartJobByHandlerNew(String id) {
   return '$url/api/rest/jobs/getSparepartByHandlerIdNew?handler_id=$id';
 }
 
+String getSparepartJobReturn(String id) {
+  return '$url/api/rest/jobs/getSparepartReturn?handler_id=$id';
+}
+
 String getSparepartJobById(String id) {
   return '$url/api/rest/jobs/getSparepartByHandlerId?tech_manager_id=$id';
 }
@@ -339,6 +343,10 @@ String createHistoryQuotation() {
   return "$url/api/rest/jobs/history_quotation_add";
 }
 
+String createHistoryReturnQuotation() {
+  return "$url/api/rest/jobs/history_quotation_return_add";
+}
+
 String createUserTokenNotification() {
   return "$url/api/rest/users/create_token_notification";
 }
@@ -421,6 +429,18 @@ String userUpdateLocale() {
 
 String getTechReport(String id, String year) {
   return '$url/api/rest/users/tech_user_report/get?handler_id=$id&year=$year';
+}
+
+String updateReturnSparePart() {
+  return "$url/api/rest/jobs/update_return_spare_part";
+}
+
+String createQuotationReturn() {
+  return '$url/api/rest/jobs/quotation_return_create';
+}
+
+String updateQuotationReturn() {
+  return '$url/api/rest/jobs/quotation_return_update';
 }
 
 String usernameProduct = 'VanSale-Dev';

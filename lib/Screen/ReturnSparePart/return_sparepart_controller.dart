@@ -1,9 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 
-class ReturnSparepartController extends GetxController {
-  final RxList<Sparepart> selectedSpareParts = <Sparepart>[].obs;
-  void updateReturnNo(int index, String newValue, List<Sparepart> spareparts) {
-    spareparts[index].returnNo.value = newValue;
+class ReturnSparePartController extends GetxController {
+  final TextEditingController searchController = TextEditingController();
+  final RxString searchQuery = ''.obs;
+  final isSelected = 1.obs;
+  Rx<String> expandedTicketId = Rx<String>('');
+  var selectedDate = Rx<DateTime?>(null);
+  var expandedIndex = false.obs;
+
+  final selectedStatus = <String>{}.obs;
+  void clearFilters() {
+    selectedStatus.clear();
+    selectedDate.value = null;
   }
 }

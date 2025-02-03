@@ -1947,6 +1947,44 @@ Future<void> createQuotationHistory(
   }
 }
 
+Future<void> createQuotationReturnHistory(
+  String jobId,
+  String details,
+  String bugId,
+  String createBy,
+  String status,
+  String refNo,
+) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {
+      'job_issue_id': jobId,
+      "details": details,
+      "bug_id": int.parse(bugId),
+      "create_by": int.parse(createBy),
+      "status": int.parse(status),
+      "ref_no": int.parse(status)
+    };
+
+    final response = await http.post(
+      Uri.parse(createHistoryReturnQuotation()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 201) {
+      print('Update Done');
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
 Future<void> updateTokenNotification(
   String deviceId,
   String appVersion,

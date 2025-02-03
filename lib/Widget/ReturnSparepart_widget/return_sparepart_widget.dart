@@ -24,6 +24,8 @@ class ReturnSparePartDetail extends StatelessWidget {
   final List<Sparepart> btrSparepart;
   final List<Sparepart> pvtSparepart;
   final List<Sparepart> pvtSparepartIc;
+  final SubJobSparePart subJobSparePart;
+  final bool? edit;
   const ReturnSparePartDetail(
       {super.key,
       required this.additionalSparepart,
@@ -36,7 +38,9 @@ class ReturnSparePartDetail extends StatelessWidget {
       required this.projectId,
       required this.techLevel,
       required this.techManagerStatus,
-      required this.estimateStatus});
+      required this.estimateStatus,
+      required this.subJobSparePart,
+      this.edit});
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +91,11 @@ class ReturnSparePartDetail extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SparepartDetailsWidget(sparepart: filteredSparepart)
+                          SparepartDetailsWidget(
+                            sparepart: filteredSparepart,
+                            subJobSparePart: subJobSparePart,
+                            edit: edit,
+                          )
                         ],
                       )
                     : Container(),
@@ -105,7 +113,10 @@ class ReturnSparePartDetail extends StatelessWidget {
                             ],
                           ),
                           SparepartDetailsWidget(
-                              sparepart: filteredAdditionalSparepart)
+                            sparepart: filteredAdditionalSparepart,
+                            subJobSparePart: subJobSparePart,
+                            edit: edit,
+                          )
                         ],
                       )
                     : Container(),
@@ -123,7 +134,10 @@ class ReturnSparePartDetail extends StatelessWidget {
                             ],
                           ),
                           SparepartDetailsWidget(
-                              sparepart: filteredBtrSparepart)
+                            sparepart: filteredBtrSparepart,
+                            subJobSparePart: subJobSparePart,
+                            edit: edit,
+                          )
                         ],
                       )
                     : Container(),
@@ -141,7 +155,10 @@ class ReturnSparePartDetail extends StatelessWidget {
                             ],
                           ),
                           SparepartDetailsWidget(
-                              sparepart: filteredPvtSparepart)
+                            sparepart: filteredPvtSparepart,
+                            subJobSparePart: subJobSparePart,
+                            edit: edit,
+                          )
                         ],
                       )
                     : Container(),
@@ -159,7 +176,10 @@ class ReturnSparePartDetail extends StatelessWidget {
                             ],
                           ),
                           SparepartDetailsWidget(
-                              sparepart: filteredPvtIcSparepart)
+                            sparepart: filteredPvtIcSparepart,
+                            subJobSparePart: subJobSparePart,
+                            edit: edit,
+                          )
                         ],
                       )
                     : Container()

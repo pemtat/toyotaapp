@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
-import 'package:toyotamobile/Screen/ReturnSparePart/return_sparepart_controller.dart';
+import 'package:toyotamobile/Screen/ReturnSparePartShow/return_sparepart_show_controller.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 
 class SparepartDetailsWidget extends StatelessWidget {
   final List<Sparepart> sparepart;
+  final SubJobSparePart subJobSparePart;
+  final bool? edit;
   final ReturnSparepartController returnSparepartController =
       Get.put(ReturnSparepartController());
-  SparepartDetailsWidget({super.key, required this.sparepart});
+  SparepartDetailsWidget(
+      {super.key,
+      required this.sparepart,
+      required this.subJobSparePart,
+      this.edit});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +31,12 @@ class SparepartDetailsWidget extends StatelessWidget {
             DataColumn(label: Text('Description')),
             DataColumn(label: Text('Unit')),
             DataColumn(
-              label: Text('Return'),
+              label: Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text('Return'),
+                ),
+              ),
             ),
             DataColumn(
               label: Expanded(
@@ -37,13 +48,97 @@ class SparepartDetailsWidget extends StatelessWidget {
             ),
           ],
           rows: sparepart.where((data) => data.quantity != '0').map((data) {
+            int index = sparepart.indexOf(data);
             return DataRow(cells: [
               DataCell(Text(data.partNumber ?? '')),
               DataCell(Text(data.description ?? '')),
-              DataCell(Text(data.quantity ?? '0')),
-              DataCell(Text(data.returnNo.value)),
+              DataCell(Text(
+                data.quantity ?? '0',
+                style: TextStyleList.text9,
+              )),
               DataCell(
-                data.lineNo != '' && data.lineNo != null
+                Obx(() {
+                  bool isChecked = returnSparepartController.selectedSpareParts
+                          .contains(data) ||
+                      data.lineNo == null ||
+                      data.lineNo == '' ||
+                      data.returnRef != '0';
+                  if (edit == true) {
+                    isChecked = data.returnRef == '0' ||
+                        returnSparepartController.selectedSpareParts
+                            .contains(data);
+                  }
+
+                  return Row(
+                    mainAxisAlignment: !isChecked
+                        ? MainAxisAlignment.end
+                        : MainAxisAlignment.center,
+                    children: [
+                      if (!isChecked)
+                        IconButton(
+                          icon: const Icon(Icons.remove, size: 18),
+                          onPressed: isChecked
+                              ? null
+                              : () {
+                                  int current =
+                                      int.tryParse(data.returnNo.value) ?? 0;
+                                  if (current > 0) {
+                                    returnSparepartController.updateReturnNo(
+                                        index,
+                                        (current - 1).toString(),
+                                        sparepart);
+                                  }
+                                },
+                        ),
+                      SizedBox(
+                        width: 30,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          enabled: !isChecked,
+                          style: TextStyleList.text9,
+                          controller:
+                              TextEditingController(text: data.returnNo.value),
+                          onSubmitted: (value) {
+                            int current = int.tryParse(value) ?? 0;
+                            int quantityValue =
+                                int.tryParse(data.quantity ?? '0') ?? 0;
+
+                            if (current > 0 && current <= quantityValue) {
+                              returnSparepartController.updateReturnNo(
+                                  index, value, sparepart);
+                            } else {
+                              data.returnNo.value = '0';
+                              data.returnNo.refresh();
+                            }
+                          },
+                        ),
+                      ),
+                      if (!isChecked)
+                        IconButton(
+                          icon: const Icon(Icons.add, size: 18),
+                          onPressed: isChecked
+                              ? null
+                              : () {
+                                  int current =
+                                      int.tryParse(data.returnNo.value) ?? 0;
+                                  if (current <
+                                      int.parse(data.quantity ?? '0')) {
+                                    returnSparepartController.updateReturnNo(
+                                        index,
+                                        (current + 1).toString(),
+                                        sparepart);
+                                  }
+                                },
+                        ),
+                    ],
+                  );
+                }),
+              ),
+              DataCell(
+                ((data.lineNo != '' && data.lineNo != null) &&
+                            data.returnRef == '0') ||
+                        (edit == true && subJobSparePart.adminStatus == '2')
                     ? Obx(() => Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [

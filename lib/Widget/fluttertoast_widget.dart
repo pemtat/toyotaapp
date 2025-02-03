@@ -1,8 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 void showMessage(String message) {
   Fluttertoast.showToast(
     msg: message,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    fontSize: 12.0,
+  );
+}
+
+void showMessageNew(String message, BuildContext context) {
+  Fluttertoast.showToast(
+    msg: context.tr(message),
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
     fontSize: 12.0,

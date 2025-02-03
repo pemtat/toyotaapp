@@ -15,6 +15,7 @@ class SubJobSparePart {
   String? quotation;
   String? techStatus;
   String? techRemark;
+  String? remark;
   String? salesStatus;
   String? techManagerStatus;
   String? techManagerRemark;
@@ -38,9 +39,14 @@ class SubJobSparePart {
   String? bugStatus;
   String? trNoUrl;
   String? trNo;
+  String? tiNoUrl;
+  String? tiNo;
+  String? returnId;
+  String? refId;
   String? customerId;
   String? destinationAddress;
   String? adminId;
+  String? adminStatus;
   List<Sparepart>? sparepart;
   List<Sparepart>? additionalSparepart;
   List<Sparepart>? btrSparepart;
@@ -87,10 +93,16 @@ class SubJobSparePart {
       this.pvtSparepart,
       this.pvtSparepartIc,
       this.trNoUrl,
+      this.refId,
       this.adminId,
       this.destinationAddress,
       this.trNo,
-      this.documentNo});
+      this.tiNo,
+      this.tiNoUrl,
+      this.returnId,
+      this.documentNo,
+      this.remark,
+      this.adminStatus});
 
   SubJobSparePart.fromJson(Map<String, dynamic> json) {
     id = json['job_id'];
@@ -127,7 +139,13 @@ class SubJobSparePart {
     realname = json['realname'];
     trNoUrl = json['tr_no_url'];
     trNo = json['tr_no'];
+    tiNoUrl = json['ti_no_url'];
+    tiNo = json['ti_no'];
+    refId = json['ref_id'];
+    returnId = json['return_id'];
     adminId = json['admin_id'];
+    adminStatus = json['admin_status'];
+    remark = json['remark'];
     destinationAddress = json['destination_address'];
     purchaseStatus = json['purchase_order_status'];
     bugStatus = json['bug_status'];
@@ -202,8 +220,14 @@ class SubJobSparePart {
     data['bug_status'] = bugStatus;
     data['tr_no_url'] = trNoUrl;
     data['tr_no'] = trNo;
+    data['ti_no_url'] = tiNoUrl;
+    data['ti_no'] = tiNo;
+    data['return_id'] = returnId;
     data['admin_id'] = adminId;
+    data['admin_status'] = adminId;
     data['created_date'] = createdDate;
+    data['remark'] = remark;
+    data['ref_id'] = refId;
     data['destination_address'] = destinationAddress;
     if (sparepart != null) {
       data['sparepart'] = sparepart!.map((v) => v.toJson()).toList();
@@ -241,6 +265,8 @@ class Sparepart {
   String? discount;
   String? summary;
   String? lineNo;
+  String? returnRef;
+  String? type;
   RxString returnNo = '0'.obs;
   Sparepart(
       {this.id,
@@ -257,6 +283,8 @@ class Sparepart {
       this.discount,
       this.summary,
       this.lineNo,
+      this.returnRef,
+      this.type,
       String? returnNo}) {
     this.returnNo.value = returnNo ?? '';
   }
@@ -277,6 +305,8 @@ class Sparepart {
     summary = json['summary'];
     returnNo.value = json['return_no'] ?? '0';
     lineNo = json['line_no'];
+    returnRef = json['return_ref'];
+    type = json['type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -296,6 +326,8 @@ class Sparepart {
     data['summary'] = summary;
     data['line_no'] = lineNo;
     data['return_no'] = returnNo.value;
+    data['return_ref'] = returnRef;
+    data['type'] = type;
     return data;
   }
 }

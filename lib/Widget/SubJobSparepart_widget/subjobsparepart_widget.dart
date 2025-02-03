@@ -11,7 +11,7 @@ import 'package:toyotamobile/Models/userallsales_model.dart';
 import 'package:toyotamobile/Screen/JobDetail/jobdetail_controller.dart';
 import 'package:toyotamobile/Screen/JobDetailPM/jobdetailpm_controller.dart';
 import 'package:toyotamobile/Screen/Notification/notification_controller.dart';
-import 'package:toyotamobile/Screen/ReturnSparePart/return_sparepart_view.dart';
+import 'package:toyotamobile/Screen/ReturnSparePartShow/return_sparepart_show.dart';
 import 'package:toyotamobile/Screen/TicketDetail/ticketdetail_controller.dart';
 import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
@@ -365,36 +365,36 @@ class SubJobSparePartWidget extends StatelessWidget {
                         // )
                       ],
                     ),
-                  // 8.kH,
-                  // if (subJobSparePart.trNo != '' &&
-                  //     subJobSparePart.trNo != null &&
-                  //     jobController.techLevel.value == '1')
-                  //   Row(
-                  //     mainAxisAlignment: MainAxisAlignment.end,
-                  //     children: [
-                  //       SizedBox(
-                  //           width: 130,
-                  //           child: ButtonCustom(
-                  //             title: 'Return Spare Part',
-                  //             onTap: () {
-                  //               showDialog(
-                  //                   context: context,
-                  //                   builder: (BuildContext context) =>
-                  //                       Obx(() => Material(
-                  //                             color: Colors.transparent,
-                  //                             child: ReturnSparepartView(
-                  //                               subJobSparePart:
-                  //                                   subJobSparePart,
-                  //                             ),
-                  //                           )));
-                  //             },
-                  //             padding: EdgeInsets.symmetric(
-                  //                 horizontal: 8.0, vertical: 6.0),
-                  //             style: TextStyleList.text7
-                  //                 .copyWith(color: Colors.white, fontSize: 13),
-                  //           )),
-                  //     ],
-                  //   ),
+                  8.kH,
+                  if (subJobSparePart.trNo != '' &&
+                      subJobSparePart.trNo != null &&
+                      jobController.techLevel.value == '1')
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                            width: 130,
+                            child: ButtonCustom(
+                              title: 'Return Spare Part',
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        Obx(() => Material(
+                                              color: Colors.transparent,
+                                              child: ReturnSparepartShow(
+                                                subJobSparePart:
+                                                    subJobSparePart,
+                                              ),
+                                            )));
+                              },
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 6.0),
+                              style: TextStyleList.text7
+                                  .copyWith(color: Colors.white, fontSize: 13),
+                            )),
+                      ],
+                    ),
                   8.kH,
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -420,7 +420,8 @@ class SubJobSparePartWidget extends StatelessWidget {
                             },
                             child: Text(
                               subJobSparePart.trNo ?? '',
-                              style: TextStyleList.subtext9,
+                              style:
+                                  TextStyleList.subtext9.copyWith(fontSize: 15),
                             ),
                           ),
                       if (jobController.techLevel.value == '2')

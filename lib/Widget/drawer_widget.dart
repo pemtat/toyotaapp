@@ -5,6 +5,7 @@ import 'package:toyotamobile/Screen/Account/account_view.dart';
 import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:toyotamobile/Screen/Notification/notification_view.dart';
 import 'package:toyotamobile/Screen/Report/report_view.dart';
+import 'package:toyotamobile/Screen/ReturnSparePart/return_sparepart_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
@@ -44,6 +45,15 @@ class sideDrawer extends StatelessWidget {
                 // ),
               ],
             )),
+          ),
+          ListTile(
+            leading: const Icon(Icons.archive_outlined),
+            title: Text(context.tr('return_spare_part'),
+                style: TextStyleList.subtitle3),
+            onTap: () {
+              Navigator.pop(context);
+              Get.to(() => ReturnSparePartView());
+            },
           ),
           ListTile(
             leading: Stack(

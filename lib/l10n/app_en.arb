@@ -264,5 +264,10 @@
   "checking_done" : "Neat",
   "checking_not_done" : "Messy",
   "no_spare_part" : "No spare parts found",
-  "estimate_report" : "Estimate Report"
+  "estimate_report" : "Estimate Report",
+  "warning_require_sparepart" : "Please select a spare parts list to continue.",
+  "return_spare_part" : "Return Spare Part",
+  "return_spare_part_status" : "Return Spare Part Status",
+  "return_spare_part_action" : "Return Spare Part",
+  "edit_part" : "Edit Part"
 }

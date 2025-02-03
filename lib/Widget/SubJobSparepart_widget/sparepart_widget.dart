@@ -18,6 +18,7 @@ class SparePartDetail extends StatelessWidget {
   final String techManagerStatus;
   final String? estimateStatus;
   final String projectId;
+  final String? returnStatus;
   final List<Sparepart> sparepart;
   final List<Sparepart> additionalSparepart;
   final List<Sparepart> btrSparepart;
@@ -33,6 +34,7 @@ class SparePartDetail extends StatelessWidget {
       required this.jobId,
       required this.bugId,
       required this.projectId,
+      this.returnStatus,
       required this.techLevel,
       required this.techManagerStatus,
       required this.estimateStatus});
@@ -141,7 +143,10 @@ class SparePartDetail extends StatelessWidget {
                                 columns: [
                                   const DataColumn(label: Text('Item')),
                                   const DataColumn(label: Text('Description')),
-                                  const DataColumn(label: Text('Unit/Store')),
+                                  DataColumn(
+                                      label: returnStatus != null
+                                          ? const Text('Return/Unit')
+                                          : const Text('Unit/Store')),
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
@@ -154,37 +159,48 @@ class SparePartDetail extends StatelessWidget {
                                     DataCell(Center(
                                         child: Row(
                                       children: [
-                                        Text(data.quantity ?? '0'),
+                                        Text(returnStatus != null
+                                            ? data.returnNo.value
+                                            : data.quantity ?? '0'),
                                         const Text('/'),
-                                        FutureBuilder<String>(
-                                          future: fetchProductsReturnString(
-                                              data.partNumber ?? ''),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<String> snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return const Padding(
-                                                padding: EdgeInsets.all(2.0),
-                                                child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DataCircleLoading()),
-                                              );
-                                            } else if (snapshot.hasError) {
-                                              return Center(
-                                                  child: Text(
-                                                      'Error: ${snapshot.error}'));
-                                            } else if (snapshot.hasData) {
-                                              return Center(
-                                                  child: Text(
-                                                      snapshot.data ?? '-'));
-                                            } else {
-                                              return const Center(
-                                                  child: Text(
-                                                      'No data available'));
-                                            }
-                                          },
-                                        ),
+                                        returnStatus != null
+                                            ? Text(data.quantity ?? '0')
+                                            : FutureBuilder<String>(
+                                                future:
+                                                    fetchProductsReturnString(
+                                                        data.partNumber ?? ''),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot<String>
+                                                        snapshot) {
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(2.0),
+                                                      child: SizedBox(
+                                                          width: 10,
+                                                          height: 10,
+                                                          child:
+                                                              DataCircleLoading()),
+                                                    );
+                                                  } else if (snapshot
+                                                      .hasError) {
+                                                    return Center(
+                                                        child: Text(
+                                                            'Error: ${snapshot.error}'));
+                                                  } else if (snapshot.hasData) {
+                                                    return Center(
+                                                        child: Text(
+                                                            snapshot.data ??
+                                                                '-'));
+                                                  } else {
+                                                    return const Center(
+                                                        child: Text(
+                                                            'No data available'));
+                                                  }
+                                                },
+                                              ),
                                       ],
                                     ))),
                                     if (techLevel == '2')
@@ -221,7 +237,10 @@ class SparePartDetail extends StatelessWidget {
                                 columns: [
                                   const DataColumn(label: Text('Item')),
                                   const DataColumn(label: Text('Description')),
-                                  const DataColumn(label: Text('Unit/Store')),
+                                  DataColumn(
+                                      label: returnStatus != null
+                                          ? const Text('Return/Unit')
+                                          : const Text('Unit/Store')),
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
@@ -234,37 +253,48 @@ class SparePartDetail extends StatelessWidget {
                                     DataCell(Center(
                                         child: Row(
                                       children: [
-                                        Text(data.quantity ?? '0'),
+                                        Text(returnStatus != null
+                                            ? data.returnNo.value
+                                            : data.quantity ?? '0'),
                                         const Text('/'),
-                                        FutureBuilder<String>(
-                                          future: fetchProductsReturnString(
-                                              data.partNumber ?? ''),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<String> snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return const Padding(
-                                                padding: EdgeInsets.all(2.0),
-                                                child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DataCircleLoading()),
-                                              );
-                                            } else if (snapshot.hasError) {
-                                              return Center(
-                                                  child: Text(
-                                                      'Error: ${snapshot.error}'));
-                                            } else if (snapshot.hasData) {
-                                              return Center(
-                                                  child: Text(
-                                                      snapshot.data ?? '-'));
-                                            } else {
-                                              return const Center(
-                                                  child: Text(
-                                                      'No data available'));
-                                            }
-                                          },
-                                        ),
+                                        returnStatus != null
+                                            ? Text(data.quantity ?? '0')
+                                            : FutureBuilder<String>(
+                                                future:
+                                                    fetchProductsReturnString(
+                                                        data.partNumber ?? ''),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot<String>
+                                                        snapshot) {
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(2.0),
+                                                      child: SizedBox(
+                                                          width: 10,
+                                                          height: 10,
+                                                          child:
+                                                              DataCircleLoading()),
+                                                    );
+                                                  } else if (snapshot
+                                                      .hasError) {
+                                                    return Center(
+                                                        child: Text(
+                                                            'Error: ${snapshot.error}'));
+                                                  } else if (snapshot.hasData) {
+                                                    return Center(
+                                                        child: Text(
+                                                            snapshot.data ??
+                                                                '-'));
+                                                  } else {
+                                                    return const Center(
+                                                        child: Text(
+                                                            'No data available'));
+                                                  }
+                                                },
+                                              ),
                                       ],
                                     ))),
                                     if (techLevel == '2')
@@ -301,7 +331,10 @@ class SparePartDetail extends StatelessWidget {
                                 columns: [
                                   const DataColumn(label: Text('Item')),
                                   const DataColumn(label: Text('Description')),
-                                  const DataColumn(label: Text('Unit/Store')),
+                                  DataColumn(
+                                      label: returnStatus != null
+                                          ? const Text('Return/Unit')
+                                          : const Text('Unit/Store')),
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
@@ -314,37 +347,48 @@ class SparePartDetail extends StatelessWidget {
                                     DataCell(Center(
                                         child: Row(
                                       children: [
-                                        Text(data.quantity ?? '0'),
+                                        Text(returnStatus != null
+                                            ? data.returnNo.value
+                                            : data.quantity ?? '0'),
                                         const Text('/'),
-                                        FutureBuilder<String>(
-                                          future: fetchProductsReturnString(
-                                              data.partNumber ?? ''),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<String> snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return const Padding(
-                                                padding: EdgeInsets.all(2.0),
-                                                child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DataCircleLoading()),
-                                              );
-                                            } else if (snapshot.hasError) {
-                                              return Center(
-                                                  child: Text(
-                                                      'Error: ${snapshot.error}'));
-                                            } else if (snapshot.hasData) {
-                                              return Center(
-                                                  child: Text(
-                                                      snapshot.data ?? '-'));
-                                            } else {
-                                              return const Center(
-                                                  child: Text(
-                                                      'No data available'));
-                                            }
-                                          },
-                                        ),
+                                        returnStatus != null
+                                            ? Text(data.quantity ?? '0')
+                                            : FutureBuilder<String>(
+                                                future:
+                                                    fetchProductsReturnString(
+                                                        data.partNumber ?? ''),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot<String>
+                                                        snapshot) {
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(2.0),
+                                                      child: SizedBox(
+                                                          width: 10,
+                                                          height: 10,
+                                                          child:
+                                                              DataCircleLoading()),
+                                                    );
+                                                  } else if (snapshot
+                                                      .hasError) {
+                                                    return Center(
+                                                        child: Text(
+                                                            'Error: ${snapshot.error}'));
+                                                  } else if (snapshot.hasData) {
+                                                    return Center(
+                                                        child: Text(
+                                                            snapshot.data ??
+                                                                '-'));
+                                                  } else {
+                                                    return const Center(
+                                                        child: Text(
+                                                            'No data available'));
+                                                  }
+                                                },
+                                              ),
                                       ],
                                     ))),
                                     if (techLevel == '2')
@@ -381,7 +425,10 @@ class SparePartDetail extends StatelessWidget {
                                 columns: [
                                   const DataColumn(label: Text('Item')),
                                   const DataColumn(label: Text('Description')),
-                                  const DataColumn(label: Text('Unit/Store')),
+                                  DataColumn(
+                                      label: returnStatus != null
+                                          ? const Text('Return/Unit')
+                                          : const Text('Unit/Store')),
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
@@ -394,37 +441,48 @@ class SparePartDetail extends StatelessWidget {
                                     DataCell(Center(
                                         child: Row(
                                       children: [
-                                        Text(data.quantity ?? '0'),
+                                        Text(returnStatus != null
+                                            ? data.returnNo.value
+                                            : data.quantity ?? '0'),
                                         const Text('/'),
-                                        FutureBuilder<String>(
-                                          future: fetchProductsReturnString(
-                                              data.partNumber ?? ''),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<String> snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return const Padding(
-                                                padding: EdgeInsets.all(2.0),
-                                                child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DataCircleLoading()),
-                                              );
-                                            } else if (snapshot.hasError) {
-                                              return Center(
-                                                  child: Text(
-                                                      'Error: ${snapshot.error}'));
-                                            } else if (snapshot.hasData) {
-                                              return Center(
-                                                  child: Text(
-                                                      snapshot.data ?? '-'));
-                                            } else {
-                                              return const Center(
-                                                  child: Text(
-                                                      'No data available'));
-                                            }
-                                          },
-                                        ),
+                                        returnStatus != null
+                                            ? Text(data.quantity ?? '0')
+                                            : FutureBuilder<String>(
+                                                future:
+                                                    fetchProductsReturnString(
+                                                        data.partNumber ?? ''),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot<String>
+                                                        snapshot) {
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(2.0),
+                                                      child: SizedBox(
+                                                          width: 10,
+                                                          height: 10,
+                                                          child:
+                                                              DataCircleLoading()),
+                                                    );
+                                                  } else if (snapshot
+                                                      .hasError) {
+                                                    return Center(
+                                                        child: Text(
+                                                            'Error: ${snapshot.error}'));
+                                                  } else if (snapshot.hasData) {
+                                                    return Center(
+                                                        child: Text(
+                                                            snapshot.data ??
+                                                                '-'));
+                                                  } else {
+                                                    return const Center(
+                                                        child: Text(
+                                                            'No data available'));
+                                                  }
+                                                },
+                                              ),
                                       ],
                                     ))),
                                     if (techLevel == '2')
@@ -461,7 +519,10 @@ class SparePartDetail extends StatelessWidget {
                                 columns: [
                                   const DataColumn(label: Text('Item')),
                                   const DataColumn(label: Text('Description')),
-                                  const DataColumn(label: Text('Unit/Store')),
+                                  DataColumn(
+                                      label: returnStatus != null
+                                          ? const Text('Return/Unit')
+                                          : const Text('Unit/Store')),
                                   if (techLevel == '2')
                                     const DataColumn(label: Text('Price'))
                                 ],
@@ -474,37 +535,48 @@ class SparePartDetail extends StatelessWidget {
                                     DataCell(Center(
                                         child: Row(
                                       children: [
-                                        Text(data.quantity ?? '0'),
+                                        Text(returnStatus != null
+                                            ? data.returnNo.value
+                                            : data.quantity ?? '0'),
                                         const Text('/'),
-                                        FutureBuilder<String>(
-                                          future: fetchProductsReturnString(
-                                              data.partNumber ?? ''),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<String> snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return const Padding(
-                                                padding: EdgeInsets.all(2.0),
-                                                child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DataCircleLoading()),
-                                              );
-                                            } else if (snapshot.hasError) {
-                                              return Center(
-                                                  child: Text(
-                                                      'Error: ${snapshot.error}'));
-                                            } else if (snapshot.hasData) {
-                                              return Center(
-                                                  child: Text(
-                                                      snapshot.data ?? '-'));
-                                            } else {
-                                              return const Center(
-                                                  child: Text(
-                                                      'No data available'));
-                                            }
-                                          },
-                                        ),
+                                        returnStatus != null
+                                            ? Text(data.quantity ?? '0')
+                                            : FutureBuilder<String>(
+                                                future:
+                                                    fetchProductsReturnString(
+                                                        data.partNumber ?? ''),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot<String>
+                                                        snapshot) {
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(2.0),
+                                                      child: SizedBox(
+                                                          width: 10,
+                                                          height: 10,
+                                                          child:
+                                                              DataCircleLoading()),
+                                                    );
+                                                  } else if (snapshot
+                                                      .hasError) {
+                                                    return Center(
+                                                        child: Text(
+                                                            'Error: ${snapshot.error}'));
+                                                  } else if (snapshot.hasData) {
+                                                    return Center(
+                                                        child: Text(
+                                                            snapshot.data ??
+                                                                '-'));
+                                                  } else {
+                                                    return const Center(
+                                                        child: Text(
+                                                            'No data available'));
+                                                  }
+                                                },
+                                              ),
                                       ],
                                     ))),
                                     if (techLevel == '2')

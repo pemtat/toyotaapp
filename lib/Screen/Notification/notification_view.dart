@@ -14,6 +14,7 @@ import 'package:toyotamobile/Screen/TicketPMDetail/ticketpmdetail_view.dart';
 import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
+import 'package:toyotamobile/Widget/SubJobSparepartReturn_widget%20copy/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/divider_widget.dart';
 import 'package:toyotamobile/Widget/notification_item_widget.dart';
@@ -107,6 +108,25 @@ class NotificationView extends StatelessWidget {
                                   child: SubJobSparePartWidget(
                                     subJobSparePart: notificationController
                                         .subJobSparePart.first,
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else if (notification.notifyType == 'QTR') {
+                            await notificationController
+                                .fetchNotifySubJobSparePartReturnId(
+                                    notification.jobId ?? '0',
+                                    notification.bugId ?? '0',
+                                    notification.projectId ?? '0');
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => Obx(
+                                () => Material(
+                                  color: Colors.transparent,
+                                  child: SubJobSparePartReturnWidget(
+                                    subJobSparePart: notificationController
+                                        .subJobSparePartReturn.first,
                                   ),
                                 ),
                               ),

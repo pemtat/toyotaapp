@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
-import 'package:toyotamobile/Screen/ReturnSparePart/return_sparepart_controller.dart';
+import 'package:toyotamobile/Screen/ReturnSparePartShow/return_sparepart_show_controller.dart';
 import 'package:toyotamobile/Styles/text.dart';
 
 class SparepartDetailsWidget extends StatelessWidget {

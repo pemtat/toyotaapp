@@ -8,7 +8,7 @@ import 'package:toyotamobile/Screen/Home/home_controller.dart';
 class NotificationController extends GetxController {
   final HomeController jobController = Get.put(HomeController());
   var subJobSparePart = <SubJobSparePart>[].obs;
-
+  var subJobSparePartReturn = <SubJobSparePart>[].obs;
   List<Issues> get todayNotifications {
     final now = DateTime.now();
     final today = DateFormat('yyyy-MM-dd').format(now);
@@ -50,6 +50,30 @@ class NotificationController extends GetxController {
 
       subJobSparePart.value = filteredSpareParts;
       subJobSparePart.refresh();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> fetchNotifySubJobSparePartReturnId(
+      String jobId, String bugId, String projectId) async {
+    try {
+      jobController.subJobSparePart.refresh();
+      subJobSparePart.clear();
+      List<SubJobSparePart> filteredSpareParts = [];
+
+      if (projectId == '1') {
+        filteredSpareParts = jobController.subJobSparePartReturn
+            .where((element) => element.id == jobId)
+            .toList();
+      } else {
+        filteredSpareParts = jobController.subJobSparePartReturn
+            .where((element) => element.bugId == bugId)
+            .toList();
+      }
+
+      subJobSparePartReturn.value = filteredSpareParts;
+      subJobSparePartReturn.refresh();
     } catch (e) {
       print(e);
     }

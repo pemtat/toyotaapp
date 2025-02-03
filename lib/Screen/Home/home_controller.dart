@@ -28,6 +28,7 @@ class HomeController extends GetxController {
   var subJobAssignedList = <SubJobAssgined>[].obs;
   var subJobAssigned = <SubJobAssgined>[].obs;
   var subJobSparePart = <SubJobSparePart>[].obs;
+  var subJobSparePartReturn = <SubJobSparePart>[].obs;
   var notificationHistory = <NotificationHistory>[].obs;
   var subJobAssignedPage = <SubJobAssgined>[].obs;
   final BottomBarController notificationController =
@@ -45,6 +46,9 @@ class HomeController extends GetxController {
   final RxInt sparePartPending = 0.obs;
   final RxInt sparePartApproved = 0.obs;
   final RxInt sparePartReject = 0.obs;
+  final RxInt sparePartReturnPending = 0.obs;
+  final RxInt sparePartReturnApproved = 0.obs;
+  final RxInt sparePartReturnReject = 0.obs;
   final RxInt subjobList = 0.obs;
   final RxInt subjobListPending = 0.obs;
   final RxInt subjobListClosed = 0.obs;
@@ -97,6 +101,8 @@ class HomeController extends GetxController {
       await fetchPMdata(handlerId);
       await fetchSubJobsdata(handlerId);
       subJobSparePart.clear();
+      subJobSparePartReturn.clear();
+      fetchSubJobSparePartReturn(handlerId.toString(), 'tech');
       if (techLevel.value == '1') {
         await fetchSubJobSparePart(handlerId.toString(), 'tech');
       } else {
@@ -476,6 +482,66 @@ class HomeController extends GetxController {
         sparePartApproved.value = completedSparePart.length;
         sparePartReject.value = rejectedSparePart.length;
         subJobSparePart.value = itemList;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> fetchSubJobSparePartReturn(String id, String option) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    try {
+      final response = await http.get(
+        Uri.parse(option == 'tech'
+            ? getSparepartJobReturn(id)
+            : getSparepartJobReturn(id)),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(response.body);
+        List<SubJobSparePart> itemList =
+            responseData.map((job) => SubJobSparePart.fromJson(job)).toList();
+
+        List<SubJobSparePart> pendingSparePart = [];
+        List<SubJobSparePart> completedSparePart = [];
+        List<SubJobSparePart> rejectedSparePart = [];
+        // if (techLevel.value == '1') {
+        for (var sparePart in itemList) {
+          switch (sparePart.estimateStatus) {
+            case '1':
+              pendingSparePart.add(sparePart);
+              break;
+            case '2':
+              completedSparePart.add(sparePart);
+              break;
+            case '3':
+              rejectedSparePart.add(sparePart);
+              break;
+          }
+        }
+        // } else {
+        //   for (var sparePart in itemList) {
+        //     switch (sparePart.techManagerStatus) {
+        //       case '0':
+        //         pendingSparePart.add(sparePart);
+        //         break;
+        //       case '1':
+        //         completedSparePart.add(sparePart);
+        //         break;
+        //       case '2':
+        //         rejectedSparePart.add(sparePart);
+        //         break;
+        //     }
+        //   }
+        // }
+        sparePartReturnPending.value = pendingSparePart.length;
+        sparePartReturnApproved.value = completedSparePart.length;
+        sparePartReturnReject.value = rejectedSparePart.length;
+        subJobSparePartReturn.value = itemList;
       }
     } catch (e) {
       print(e.toString());
