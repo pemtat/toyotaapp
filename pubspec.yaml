@@ -52,6 +52,7 @@ dependencies:
   fluttertoast: ^8.2.5
   cell_calendar: ^0.8.0
   url_launcher: ^6.3.0
+  share_plus: ^10.1.4
   geolocator: ^13.0.1
   pdfx: ^2.6.0
   advance_pdf_viewer2: any
