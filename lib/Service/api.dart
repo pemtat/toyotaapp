@@ -443,5 +443,9 @@ String updateQuotationReturn() {
   return '$url/api/rest/jobs/quotation_return_update';
 }
 
+String deleteS3ImageJob() {
+  return '$url/api/rest/jobs/delete_s3_subjob_image';
+}
+
 String usernameProduct = 'VanSale-Dev';
 String passwordProduct = 'c8doEpdFC0CFkUWHUEXv';

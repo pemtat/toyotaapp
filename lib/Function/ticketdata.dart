@@ -2458,6 +2458,24 @@ Future<void> deleteImgSubJob(
   }
 }
 
+Future<void> deleteS3Image(String imageUrl) async {
+  try {
+    String? token = await getToken();
+    Uri uri = Uri.parse(imageUrl);
+    Map<String, dynamic> body = {"path": uri.toString()};
+    http.post(
+      Uri.parse(deleteS3ImageJob()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+  } catch (e) {
+    print('Error deleting image: $e');
+  }
+}
+
 Future<Map<String, String>> fetchTicketById(String id) async {
   String? token = await getToken();
   final response = await http.get(
