@@ -81,6 +81,7 @@ class FillFormView2 extends StatelessWidget {
             BoxContainer(
               children: [
                 TextFieldWidget(
+                  readOnly: 'yes',
                   text: context.tr('customer_name'),
                   textSet: fillformController2.customerName.value,
                 ),

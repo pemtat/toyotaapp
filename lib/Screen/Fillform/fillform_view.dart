@@ -98,6 +98,7 @@ class FillFormView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
+                          readOnly: 'yes',
                           text: context.tr('customer_name'),
                           textSet: fillFormController.customerName.value),
                     ),
@@ -111,6 +112,7 @@ class FillFormView extends StatelessWidget {
                 ),
                 20.kH,
                 TextFieldWidget(
+                    readOnly: 'yes',
                     text: context.tr('contacted_name'),
                     textSet: fillFormController.contactedName.value),
                 20.kH,
@@ -118,12 +120,14 @@ class FillFormView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
+                          readOnly: 'yes',
                           text: 'Product',
                           textSet: fillFormController.product.value),
                     ),
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
+                          readOnly: 'yes',
                           text: 'Model',
                           textSet: fillFormController.model.value),
                     ),
@@ -140,6 +144,7 @@ class FillFormView extends StatelessWidget {
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
+                          readOnly: 'yes',
                           text: 'Serial No',
                           textSet: fillFormController.serialNo.value),
                     ),

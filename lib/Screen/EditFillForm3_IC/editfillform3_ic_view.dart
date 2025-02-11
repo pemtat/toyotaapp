@@ -85,7 +85,7 @@ class EditFillFormView3IC extends StatelessWidget {
                       child: TextFieldWidget(
                         text: context.tr('customer_name'),
                         textSet: fillformController3.customerName.value,
-                        readOnly: readOnly == null ? null : 'yes',
+                        readOnly: 'yes',
                       ),
                     ),
                     10.wH,
@@ -111,7 +111,7 @@ class EditFillFormView3IC extends StatelessWidget {
                       child: TextFieldWidget(
                         text: 'Model',
                         textSet: fillformController3.model.value,
-                        readOnly: readOnly == null ? null : 'yes',
+                        readOnly: 'yes',
                       ),
                     ),
                     10.wH,
@@ -119,7 +119,7 @@ class EditFillFormView3IC extends StatelessWidget {
                       child: TextFieldWidget(
                         text: 'Serial',
                         textSet: fillformController3.serialNo.value,
-                        readOnly: readOnly == null ? null : 'yes',
+                        readOnly: 'yes',
                       ),
                     ),
                   ],

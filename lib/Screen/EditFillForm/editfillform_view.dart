@@ -119,7 +119,7 @@ class EditFillFormView extends StatelessWidget {
                           child: TextFieldWidget(
                             text: context.tr('customer_name'),
                             textSet: fillFormController.customerName.value,
-                            readOnly: readOnly == null ? null : 'yes',
+                            readOnly: 'yes',
                           ),
                         ),
                         10.wH,
@@ -136,7 +136,7 @@ class EditFillFormView extends StatelessWidget {
                     TextFieldWidget(
                       text: context.tr('contacted_name'),
                       textSet: fillFormController.contactedName.value,
-                      readOnly: readOnly == null ? null : 'yes',
+                      readOnly: 'yes',
                     ),
                     20.kH,
                     Row(
@@ -145,7 +145,7 @@ class EditFillFormView extends StatelessWidget {
                           child: TextFieldWidget(
                             text: 'Product',
                             textSet: fillFormController.product.value,
-                            readOnly: readOnly == null ? null : 'yes',
+                            readOnly: 'yes',
                           ),
                         ),
                         10.wH,
@@ -153,7 +153,7 @@ class EditFillFormView extends StatelessWidget {
                           child: TextFieldWidget(
                             text: 'Model',
                             textSet: fillFormController.model.value,
-                            readOnly: readOnly == null ? null : 'yes',
+                            readOnly: 'yes',
                           ),
                         ),
                       ],
@@ -173,7 +173,7 @@ class EditFillFormView extends StatelessWidget {
                           child: TextFieldWidget(
                             text: 'Serial No',
                             textSet: fillFormController.serialNo.value,
-                            readOnly: readOnly == null ? null : 'yes',
+                            readOnly: 'yes',
                           ),
                         ),
                       ],

@@ -96,6 +96,7 @@ class FillFormView3 extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
+                          readOnly: 'yes',
                           text: context.tr('customer_name'),
                           textSet: fillformController3.customerName.value),
                     ),
@@ -116,12 +117,14 @@ class FillFormView3 extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
+                          readOnly: 'yes',
                           text: 'Product',
                           textSet: fillformController3.product.value),
                     ),
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
+                          readOnly: 'yes',
                           text: 'Model',
                           textSet: fillformController3.model.value),
                     ),
@@ -138,6 +141,7 @@ class FillFormView3 extends StatelessWidget {
                     10.wH,
                     Expanded(
                       child: TextFieldWidget(
+                          readOnly: 'yes',
                           text: 'Serial No',
                           textSet: fillformController3.serialNo.value),
                     ),

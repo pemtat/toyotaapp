@@ -211,14 +211,14 @@ class TextFieldEditWidget extends StatelessWidget {
   final TextEditingController textSet;
   final TextInputType? number;
   final String? addtionalText;
-
-  const TextFieldEditWidget({
-    super.key,
-    required this.text,
-    required this.textSet,
-    this.number,
-    this.addtionalText,
-  });
+  final String? readOnly;
+  const TextFieldEditWidget(
+      {super.key,
+      required this.text,
+      required this.textSet,
+      this.number,
+      this.addtionalText,
+      this.readOnly});
 
   @override
   Widget build(BuildContext context) {
@@ -229,6 +229,7 @@ class TextFieldEditWidget extends StatelessWidget {
           Expanded(
             flex: 8,
             child: TextField(
+              readOnly: readOnly != null ? true : false,
               controller: textSet,
               keyboardType: number ?? TextInputType.text,
               decoration: InputDecoration(

@@ -30,16 +30,19 @@ class ForklifeInformation extends GetxController {
         ),
         space.kH,
         TextFieldWidget(
+          readOnly: 'yes',
           text: context.tr('forklift_brand'),
           textSet: forklifeBrand.value,
         ),
         space.kH,
         TextFieldWidget(
+          readOnly: 'yes',
           text: context.tr('forklift_model'),
           textSet: forklifeModel.value,
         ),
         space.kH,
         TextFieldWidget(
+          readOnly: 'yes',
           text: context.tr('forklift_serial_no'),
           textSet: serialNo.value,
         ),
@@ -84,16 +87,19 @@ class ForklifeInformation extends GetxController {
         ),
         space.kH,
         TextFieldEditWidget(
+          readOnly: 'yes',
           text: context.tr('forklift_brand'),
           textSet: forklifeBrand.value,
         ),
         space.kH,
         TextFieldEditWidget(
+          readOnly: 'yes',
           text: context.tr('forklift_model'),
           textSet: forklifeModel.value,
         ),
         space.kH,
         TextFieldEditWidget(
+          readOnly: 'yes',
           text: context.tr('forklift_serial_no'),
           textSet: serialNo.value,
         ),
