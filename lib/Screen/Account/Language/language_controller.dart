@@ -78,7 +78,7 @@ class LanguageController extends GetxController {
     if (userController.userInfo.isNotEmpty) {
       return userController.userInfo.first.locale;
     }
-    return 'en';
+    return 'th';
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // return prefs.getString('language') ?? 'th';
   }

@@ -50,7 +50,7 @@ class User {
       resourceNo: json['resource_no'] ?? '',
       zone: json['zone'] ?? '',
       phoneNo: json['phone_no'] ?? '',
-      locale: json['locale'] ?? 'en',
+      locale: json['locale'] ?? 'th',
     );
   }
 }

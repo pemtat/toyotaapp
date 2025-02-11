@@ -5,6 +5,7 @@ import 'package:toyotamobile/Styles/color.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
+import 'package:toyotamobile/extensions/context_extension.dart';
 
 class CheckBoxWidget extends StatelessWidget {
   final String text;
@@ -332,7 +333,7 @@ class buildCheckbox extends StatelessWidget {
             },
           ),
           Text(
-            status.capitalizeFirst!,
+            context.tr(status),
             style: isSelected ? TextStyleList.text9 : null,
           ),
         ],
