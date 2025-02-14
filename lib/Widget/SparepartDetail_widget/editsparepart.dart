@@ -221,12 +221,12 @@ class EditSparePartDetail extends StatelessWidget {
                 children: [
                   space.kH,
                   CheckBoxNew(
-                    text: context.tr('change_now'),
+                    text: 'Change Now',
                     itemSet: selectionsChoose,
                   ),
                   space.kH,
                   CheckBoxNew(
-                    text: context.tr('change_on_pm'),
+                    text: 'Change on PM',
                     itemSet: selectionsChoose,
                   ),
                 ],

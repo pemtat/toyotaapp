@@ -47,7 +47,7 @@ class ReturnSparepartShow extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  'Return Spare Part',
+                  context.tr('return_spare_part_action'),
                   style: TextStyleList.detail2,
                 ),
               ],

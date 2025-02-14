@@ -375,7 +375,7 @@ class SubJobSparePartWidget extends StatelessWidget {
                         SizedBox(
                             width: 130,
                             child: ButtonCustom(
-                              title: 'Return Spare Part',
+                              title: context.tr('return_spare_part_action'),
                               onTap: () {
                                 showDialog(
                                     context: context,
