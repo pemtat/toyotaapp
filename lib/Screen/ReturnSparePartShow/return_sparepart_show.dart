@@ -122,13 +122,21 @@ class ReturnSparepartShow extends StatelessWidget {
                                             subJobSparePart.id ?? '0',
                                             subJobSparePart.handlerId ?? '0',
                                             subJobSparePart.projectId ?? '1');
-                                    createQuotationReturnHistory(
-                                        subJobSparePart.id ?? '0',
-                                        'tech',
-                                        subJobSparePart.bugId ?? '0',
-                                        subJobSparePart.handlerId ?? '0',
-                                        '1',
-                                        subJobSparePart.refId ?? '1');
+                                    edit == true
+                                        ? createQuotationReturnHistory(
+                                            subJobSparePart.id ?? '0',
+                                            'tech',
+                                            subJobSparePart.bugId ?? '0',
+                                            subJobSparePart.handlerId ?? '0',
+                                            '1',
+                                            subJobSparePart.refId ?? '1')
+                                        : createQuotationReturnHistory(
+                                            subJobSparePart.id ?? '0',
+                                            'tech',
+                                            subJobSparePart.bugId ?? '0',
+                                            subJobSparePart.handlerId ?? '0',
+                                            '1',
+                                            'none');
                                     await notificationController
                                         .fetchNotifySubJobSparePartReturnId(
                                             subJobSparePart.id ?? '0',
@@ -141,8 +149,8 @@ class ReturnSparepartShow extends StatelessWidget {
                                             'Job ID : ${subJobSparePart.id.toString().padLeft(7, '0')}',
                                             'มีรายการใบคืน Spare Part รออนุมัติใหม่',
                                             'admin',
-                                            subJobSparePart.id ?? '0',
                                             subJobSparePart.bugId ?? '0',
+                                            subJobSparePart.id ?? '0',
                                             'QTR',
                                             'tech',
                                             '0',
@@ -153,8 +161,8 @@ class ReturnSparepartShow extends StatelessWidget {
                                             'PM ID : ${subJobSparePart.bugId.toString().padLeft(7, '0')}',
                                             'มีรายการใบคืน Spare Part รออนุมัติใหม่',
                                             'admin',
-                                            subJobSparePart.id ?? '0',
                                             subJobSparePart.bugId ?? '0',
+                                            subJobSparePart.id ?? '0',
                                             'QTR',
                                             'tech',
                                             '0',

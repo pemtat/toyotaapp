@@ -1819,7 +1819,8 @@ Future<void> updateJobSparePart(
               'ใบเบิก Spare Part ของคุณไม่ผ่านการอนุมัติ',
               reporterId,
               bugId,
-              jobId)
+              jobId,
+              'QT')
           : sendNotificationToUser(
               handlerId,
               techHandlerId,
@@ -1827,7 +1828,8 @@ Future<void> updateJobSparePart(
               'ใบเบิก Spare Part ของคุณไม่ผ่านการอนุมัติ',
               reporterId,
               bugId,
-              jobId);
+              jobId,
+              'QT');
     } else if (option == 'update_sparepart') {
       body = {
         'tech_manager_remark': remark,
@@ -1855,6 +1857,107 @@ Future<void> updateJobSparePart(
         await jobController.fetchSubJobSparePart(handlerId, 'tech');
       } else {
         await jobController.fetchSubJobSparePart(handlerId, 'techlead');
+      }
+    } else {
+      print(response.statusCode);
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> updateJobSparePartReturn(
+    String jobId,
+    String techLevel,
+    String handlerId,
+    String remark,
+    String option,
+    String bugId,
+    String techHandlerId,
+    String reporterId,
+    String projectId,
+    String adminId,
+    String returnId,
+    String refNo) async {
+  try {
+    String? token = await getToken();
+    Map<String, dynamic> body = {};
+
+    if (option == 'approve') {
+      body = {'return_id': returnId, 'tech_manager_status': 1};
+
+      createQuotationReturnHistory(
+          jobId, 'tech_manager', bugId, handlerId, '1', refNo);
+      projectId == '1'
+          ? createHistoryJobs(
+              handlerId,
+              adminId,
+              'Job ID : ${jobId.toString().padLeft(7, '0')}',
+              'มีรายการใบคืน Spare Part รอตรวจสอบใหม่',
+              adminId,
+              bugId,
+              jobId,
+              'QTR',
+              'tech_manager',
+              '0',
+              'one')
+          : createHistoryJobs(
+              handlerId,
+              adminId,
+              'PM ID : ${bugId.toString().padLeft(7, '0')}',
+              'มีรายการใบคืน Spare Part รอตรวจสอบใหม่',
+              adminId,
+              bugId,
+              jobId,
+              'QTR',
+              'tech_manager',
+              '0',
+              'one');
+    } else if (option == 'reject') {
+      body = {
+        'tech_manager_status': 2,
+        'remark': remark,
+        'estimate_status': 3,
+        'purchase_order_status': 3,
+        'return_id': returnId,
+      };
+      createQuotationReturnHistory(
+          jobId, 'tech_manager', bugId, handlerId, '2', refNo);
+      projectId == '1'
+          ? sendNotificationToUser(
+              handlerId,
+              techHandlerId,
+              'Job ID : ${jobId.toString().padLeft(7, '0')}',
+              'ใบคืน Spare Part ของคุณไม่ผ่านการอนุมัติ',
+              reporterId,
+              bugId,
+              jobId,
+              'QTR')
+          : sendNotificationToUser(
+              handlerId,
+              techHandlerId,
+              'PM ID : ${bugId.toString().padLeft(7, '0')}',
+              'ใบคืน Spare Part ของคุณไม่ผ่านการอนุมัติ',
+              reporterId,
+              bugId,
+              jobId,
+              'QTR');
+    }
+    final response = await http.post(
+      Uri.parse(updateQuotationReturn()),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print('Update status done');
+      if (techLevel == '1') {
+        await jobController.fetchSubJobSparePartReturn(handlerId, 'tech');
+      } else {
+        await jobController.fetchSubJobSparePartReturn(handlerId, 'techlead');
       }
     } else {
       print(response.statusCode);
@@ -1963,7 +2066,7 @@ Future<void> createQuotationReturnHistory(
       "bug_id": int.parse(bugId),
       "create_by": int.parse(createBy),
       "status": int.parse(status),
-      "ref_no": int.parse(status)
+      if (refNo != 'none') "ref_no": int.parse(refNo)
     };
 
     final response = await http.post(
@@ -2022,7 +2125,8 @@ Future<void> sendNotificationToUser(
     String bodyDetail,
     String reporterId,
     String bugId,
-    String jobId) async {
+    String jobId,
+    String notifyType) async {
   try {
     String? token = await getToken();
     Map<String, dynamic> body = {
@@ -2057,7 +2161,7 @@ Future<void> sendNotificationToUser(
         "reference_code": reporterId,
         "job_id": int.parse(jobId),
         "sales_id": 0,
-        "notify_type": 'QT'
+        "notify_type": notifyType
       };
       final response = await http.post(
         Uri.parse(createJobNotificationHistory()),

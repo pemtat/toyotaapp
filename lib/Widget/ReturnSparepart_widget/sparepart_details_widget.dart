@@ -138,7 +138,9 @@ class SparepartDetailsWidget extends StatelessWidget {
               DataCell(
                 ((data.lineNo != '' && data.lineNo != null) &&
                             data.returnRef == '0') ||
-                        (edit == true && subJobSparePart.adminStatus == '2')
+                        (edit == true &&
+                            (subJobSparePart.adminStatus == '2' ||
+                                subJobSparePart.techManagerStatus == '2'))
                     ? Obx(() => Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [

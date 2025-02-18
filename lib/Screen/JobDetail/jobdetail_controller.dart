@@ -254,17 +254,12 @@ class JobDetailController extends GetxController {
             updateStatusSubjobs(jobId, issueId.toString());
             if (subJobs.isNotEmpty) {
               var subJobsData = subJobs.first;
-              if (reportList.isNotEmpty) {
-                String fieldReport = reportList.first.fieldReport ?? '';
-                if (fieldReport == 'Inspection') {
-                  finishedQuoteJobs(
-                      jobId,
-                      issueId.toString(),
-                      subJobsData.projectId ?? '1',
-                      subJobsData.referenceCode ?? '',
-                      subJobsData.handlerId ?? '0');
-                }
-              }
+              finishedQuoteJobs(
+                  jobId,
+                  issueId.toString(),
+                  subJobsData.projectId ?? '1',
+                  subJobsData.referenceCode ?? '',
+                  subJobsData.handlerId ?? '0');
             }
             jobController.fetchDataFromAssignJob();
             Navigator.pop(context);

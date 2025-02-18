@@ -243,6 +243,10 @@ String getSparepartJobReturn(String id) {
   return '$url/api/rest/jobs/getSparepartReturn?handler_id=$id';
 }
 
+String getSparepartJobReturnManager(String id) {
+  return '$url/api/rest/jobs/getSparepartReturn?tech_manager_id=$id';
+}
+
 String getSparepartJobById(String id) {
   return '$url/api/rest/jobs/getSparepartByHandlerId?tech_manager_id=$id';
 }

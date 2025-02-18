@@ -102,7 +102,12 @@ class HomeController extends GetxController {
       await fetchSubJobsdata(handlerId);
       subJobSparePart.clear();
       subJobSparePartReturn.clear();
-      fetchSubJobSparePartReturn(handlerId.toString(), 'tech');
+      if (techLevel.value == '1') {
+        fetchSubJobSparePartReturn(handlerId.toString(), 'tech');
+      } else {
+        fetchSubJobSparePartReturn(handlerId.toString(), 'leadtech');
+      }
+
       if (techLevel.value == '1') {
         await fetchSubJobSparePart(handlerId.toString(), 'tech');
       } else {
@@ -495,7 +500,7 @@ class HomeController extends GetxController {
       final response = await http.get(
         Uri.parse(option == 'tech'
             ? getSparepartJobReturn(id)
-            : getSparepartJobReturn(id)),
+            : getSparepartJobReturnManager(id)),
         headers: {
           'Authorization': '$token',
         },
@@ -509,35 +514,35 @@ class HomeController extends GetxController {
         List<SubJobSparePart> pendingSparePart = [];
         List<SubJobSparePart> completedSparePart = [];
         List<SubJobSparePart> rejectedSparePart = [];
-        // if (techLevel.value == '1') {
-        for (var sparePart in itemList) {
-          switch (sparePart.estimateStatus) {
-            case '1':
-              pendingSparePart.add(sparePart);
-              break;
-            case '2':
-              completedSparePart.add(sparePart);
-              break;
-            case '3':
-              rejectedSparePart.add(sparePart);
-              break;
+        if (techLevel.value == '1') {
+          for (var sparePart in itemList) {
+            switch (sparePart.estimateStatus) {
+              case '1':
+                pendingSparePart.add(sparePart);
+                break;
+              case '2':
+                completedSparePart.add(sparePart);
+                break;
+              case '3':
+                rejectedSparePart.add(sparePart);
+                break;
+            }
+          }
+        } else {
+          for (var sparePart in itemList) {
+            switch (sparePart.techManagerStatus) {
+              case '0':
+                pendingSparePart.add(sparePart);
+                break;
+              case '1':
+                completedSparePart.add(sparePart);
+                break;
+              case '2':
+                rejectedSparePart.add(sparePart);
+                break;
+            }
           }
         }
-        // } else {
-        //   for (var sparePart in itemList) {
-        //     switch (sparePart.techManagerStatus) {
-        //       case '0':
-        //         pendingSparePart.add(sparePart);
-        //         break;
-        //       case '1':
-        //         completedSparePart.add(sparePart);
-        //         break;
-        //       case '2':
-        //         rejectedSparePart.add(sparePart);
-        //         break;
-        //     }
-        //   }
-        // }
         sparePartReturnPending.value = pendingSparePart.length;
         sparePartReturnApproved.value = completedSparePart.length;
         sparePartReturnReject.value = rejectedSparePart.length;

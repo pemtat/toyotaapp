@@ -186,13 +186,19 @@ class ReturnSparePartView extends StatelessWidget {
               ),
               Obx(() {
                 if (returnSparePartController.isSelected.value == 1) {
-                  return buildJobList(context, '1');
+                  return jobController.techLevel.value == '1'
+                      ? buildJobList(context, '1')
+                      : buildJobListManager(context, '0');
                 }
                 if (returnSparePartController.isSelected.value == 2) {
-                  return buildJobList(context, '2');
+                  return jobController.techLevel.value == '1'
+                      ? buildJobList(context, '2')
+                      : buildJobListManager(context, '1');
                 }
                 if (returnSparePartController.isSelected.value == 3) {
-                  return buildJobList(context, '3');
+                  return jobController.techLevel.value == '1'
+                      ? buildJobList(context, '3')
+                      : buildJobListManager(context, '2');
                 } else {
                   return const SizedBox();
                 }
@@ -242,6 +248,85 @@ class ReturnSparePartView extends StatelessWidget {
                       dateMatch &&
                       statusMatch &&
                       status.contains(job.estimateStatus ?? '0');
+                }).toList();
+
+                if (filteredJobs.isEmpty) {
+                  return SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 15),
+                      child: Center(
+                          child: Text(
+                        context.tr('no_jobs_avb'),
+                        style: TextStyleList.subtitle2,
+                      )),
+                    ),
+                  );
+                }
+                filteredJobs.sort(
+                    (a, b) => b.createdDate!.compareTo(a.createdDate ?? ''));
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: filteredJobs.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                        onTap: () {},
+                        child: SubJobSparePartReturnWidget(
+                          subJobSparePart: filteredJobs[index],
+                          expandedTicketId:
+                              returnSparePartController.expandedTicketId,
+                          expandedIndex:
+                              returnSparePartController.expandedIndex,
+                        ));
+                  },
+                );
+              }),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildJobListManager(BuildContext context, String status) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(paddingApp),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            5.kH,
+            Expanded(
+              child: Obx(() {
+                final filteredJobs =
+                    jobController.subJobSparePartReturn.where((job) {
+                  final searchQueryMatch = job.id!.contains(
+                          returnSparePartController.searchQuery.value) ||
+                      job.bugId!.contains(
+                          returnSparePartController.searchQuery.value) ||
+                      job.description!.contains(
+                          returnSparePartController.searchQuery.value);
+                  final statusMatch =
+                      returnSparePartController.selectedStatus.isEmpty ||
+                          returnSparePartController.selectedStatus.contains(
+                              stringToStatusQuotationTechMG(
+                                  job.techManagerStatus ?? ''));
+                  final jobDate = formatDateTimeString(job.dueDate ?? '');
+                  final dateMatch =
+                      returnSparePartController.selectedDate.value == null ||
+                          (jobDate.year ==
+                                  returnSparePartController
+                                      .selectedDate.value!.year &&
+                              jobDate.month ==
+                                  returnSparePartController
+                                      .selectedDate.value!.month &&
+                              jobDate.day ==
+                                  returnSparePartController
+                                      .selectedDate.value!.day);
+                  return searchQueryMatch &&
+                      dateMatch &&
+                      statusMatch &&
+                      status.contains(job.techManagerStatus ?? '0');
                 }).toList();
 
                 if (filteredJobs.isEmpty) {

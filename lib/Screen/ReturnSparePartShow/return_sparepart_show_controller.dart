@@ -59,6 +59,8 @@ class ReturnSparepartController extends GetxController {
       final Map<String, dynamic> data = {
         "admin_id": 0,
         "admin_status": 0,
+        "tech_manager_id": 0,
+        "tech_manager_status": 0,
         "estimate_status": 1,
         "purchase_order_status": 1,
         'ref_id': refId,

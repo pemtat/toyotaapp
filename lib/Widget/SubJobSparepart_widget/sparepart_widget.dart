@@ -98,7 +98,8 @@ class SparePartDetail extends StatelessWidget {
                 //   ),
                 if (techLevel == '2' &&
                     techManagerStatus == '0' &&
-                    estimateStatus == '1')
+                    estimateStatus == '1' &&
+                    returnStatus == null)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

@@ -20,9 +20,12 @@ import 'package:toyotamobile/Widget/base64img.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/checkstatus.dart';
 import 'package:toyotamobile/Widget/checkstatus_widget.dart';
+import 'package:toyotamobile/Widget/dialogalert_widget.dart';
+import 'package:toyotamobile/Widget/fluttertoast_widget.dart';
 import 'package:toyotamobile/Widget/loadingcircle_widget.dart';
 import 'package:toyotamobile/Widget/pdfviewer_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
+import 'package:toyotamobile/Widget/textfieldtype_widget.dart';
 import 'package:toyotamobile/extensions/context_extension.dart';
 
 class SubJobSparePartReturnWidget extends StatelessWidget {
@@ -96,6 +99,8 @@ class SubJobSparePartReturnWidget extends StatelessWidget {
         return summaryCheck;
       }
     }
+
+    final rejectNote = TextEditingController().obs;
 
     return SingleChildScrollView(
       child: Column(
@@ -187,6 +192,19 @@ class SubJobSparePartReturnWidget extends StatelessWidget {
                               style: TextStyleList.subtitle9,
                             )
                           : Container(),
+                      if (jobController.techLevel.value == '1')
+                        Row(
+                          children: [
+                            Text(
+                              'Tech Manager \nStatus :',
+                              style: TextStyleList.detail2,
+                            ),
+                            4.wH,
+                            StatusButton2(
+                                status: subJobSparePart.techManagerStatus
+                                    .toString()),
+                          ],
+                        )
                     ],
                   ),
                   6.kH,
@@ -382,19 +400,149 @@ class SubJobSparePartReturnWidget extends StatelessWidget {
                           estimateStatus: subJobSparePart.estimateStatus ?? '',
                         ),
                   6.kH,
+                  if (subJobSparePart.techManagerStatus == '0' &&
+                      jobController.techLevel.value == '2')
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                            width: 120,
+                            child: ButtonRed(
+                                color: blue1,
+                                title: context.tr('approve'),
+                                onTap: () async {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return DialogAlert(
+                                        title: context.tr('approve_message'),
+                                        leftButton: context.tr('no'),
+                                        rightButton: context.tr('yes'),
+                                        rightColor: red1,
+                                        onRightButtonPressed: () async {
+                                          await updateJobSparePartReturn(
+                                              subJobSparePart.id ?? '',
+                                              jobController.techLevel.value,
+                                              jobController.handlerIdTech.value,
+                                              '',
+                                              'approve',
+                                              subJobSparePart.bugId ?? '',
+                                              subJobSparePart.handlerId ?? '',
+                                              subJobSparePart.reportjobId ?? '',
+                                              subJobSparePart.projectId ?? '',
+                                              subJobSparePart.adminId ?? '0',
+                                              subJobSparePart.returnId ?? '0',
+                                              subJobSparePart.refId ?? '0');
+
+                                          await notificationController
+                                              .fetchNotifySubJobSparePartReturnId(
+                                                  subJobSparePart.id ?? '0',
+                                                  subJobSparePart.bugId ?? '0',
+                                                  subJobSparePart.projectId ??
+                                                      '0');
+
+                                          showMessage('ดำเนินการสำเร็จ');
+                                        },
+                                      );
+                                    },
+                                  );
+                                })),
+                        6.wH,
+                        SizedBox(
+                          width: 120,
+                          child: ButtonRed(
+                            title: context.tr('not_approve'),
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    backgroundColor: white4,
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        10.kH,
+                                        TextFieldType(
+                                          hintText: context.tr('remark'),
+                                          textSet: rejectNote.value,
+                                          maxLine: 5,
+                                        ),
+                                      ],
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          context.tr('no'),
+                                          style: TextStyleList.text1,
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          await updateJobSparePartReturn(
+                                              subJobSparePart.id ?? '',
+                                              jobController.techLevel.value,
+                                              jobController.handlerIdTech.value,
+                                              rejectNote.value.text,
+                                              'reject',
+                                              subJobSparePart.bugId ?? '',
+                                              subJobSparePart.handlerId ?? '',
+                                              subJobSparePart.reportjobId ?? '',
+                                              subJobSparePart.projectId ?? '',
+                                              subJobSparePart.adminId ?? '0',
+                                              subJobSparePart.returnId ?? '0',
+                                              subJobSparePart.refId ?? '0');
+                                          await notificationController
+                                              .fetchNotifySubJobSparePartReturnId(
+                                                  subJobSparePart.id ?? '0',
+                                                  subJobSparePart.bugId ?? '0',
+                                                  subJobSparePart.projectId ??
+                                                      '0');
+
+                                          Navigator.pop(context);
+                                          showMessage('ดำเนินการสำเร็จ');
+                                        },
+                                        child: Text(
+                                          context.tr('yes'),
+                                          style: TextStyleList.text1,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                        6.wH,
+                        if (expandedIndex == null)
+                          SizedBox(
+                              width: 70,
+                              child: ButtonRed(
+                                  title: context.tr('close'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  })),
+                      ],
+                    ),
+                  6.wH,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      if (expandedIndex == null)
-                        SizedBox(
-                            width: 70,
-                            child: ButtonRed(
-                                title: context.tr('close'),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                })),
-                      6.wH,
-                      if (subJobSparePart.adminStatus == '2')
+                      // if (expandedIndex == null)
+                      //   SizedBox(
+                      //       width: 70,
+                      //       child: ButtonRed(
+                      //           title: context.tr('close'),
+                      //           onTap: () {
+                      //             Navigator.pop(context);
+                      //           })),
+
+                      if ((subJobSparePart.adminStatus == '2' ||
+                              subJobSparePart.techManagerStatus == '2') &&
+                          jobController.techLevel.value == '1')
                         SizedBox(
                             width: 100,
                             child: ButtonCustom(
@@ -415,6 +563,14 @@ class SubJobSparePartReturnWidget extends StatelessWidget {
                               style: TextStyleList.text7
                                   .copyWith(color: Colors.white, fontSize: 13),
                             )),
+                      if (expandedIndex == null)
+                        SizedBox(
+                            width: 70,
+                            child: ButtonRed(
+                                title: context.tr('close'),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                })),
                     ],
                   )
                 ],
