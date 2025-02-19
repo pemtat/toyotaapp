@@ -98,6 +98,8 @@ class HomeController extends GetxController {
 
       // await userController.fetchData();
       // techManageId.value = userController.userInfo.first.id.toString();
+      notificationHistory.clear();
+      await fetchJobNotification(handlerId.toString());
       await fetchPMdata(handlerId);
       await fetchSubJobsdata(handlerId);
       subJobSparePart.clear();
@@ -105,11 +107,11 @@ class HomeController extends GetxController {
       if (techLevel.value == '1') {
         fetchSubJobSparePartReturn(handlerId.toString(), 'tech');
       } else {
-        fetchSubJobSparePartReturn(handlerId.toString(), 'leadtech');
+        await fetchSubJobSparePartReturn(handlerId.toString(), 'leadtech');
       }
 
       if (techLevel.value == '1') {
-        await fetchSubJobSparePart(handlerId.toString(), 'tech');
+        fetchSubJobSparePart(handlerId.toString(), 'tech');
       } else {
         await fetchSubJobSparePart(handlerId.toString(), 'leadtech');
       }
@@ -118,8 +120,7 @@ class HomeController extends GetxController {
       subJobAssignedPage.clear();
       await fetchPMdataPage(1, userController.userInfo.first.id.toString());
       await fetchJobdataPage(1, userController.userInfo.first.id.toString());
-      notificationHistory.clear();
-      await fetchJobNotification(handlerId.toString());
+
       isLoading.value = false;
 
       // final response = await http.get(
