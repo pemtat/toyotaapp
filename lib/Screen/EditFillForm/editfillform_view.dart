@@ -136,7 +136,7 @@ class EditFillFormView extends StatelessWidget {
                     TextFieldWidget(
                       text: context.tr('contacted_name'),
                       textSet: fillFormController.contactedName.value,
-                      readOnly: 'yes',
+                      readOnly: readOnly == null ? null : 'yes',
                     ),
                     20.kH,
                     Row(

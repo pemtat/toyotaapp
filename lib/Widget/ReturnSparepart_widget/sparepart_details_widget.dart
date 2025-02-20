@@ -22,11 +22,13 @@ class SparepartDetailsWidget extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: DataTable(
-          columnSpacing: 10,
+          columnSpacing: 0,
           dataTextStyle: TextStyleList.text9.copyWith(fontSize: 13),
-          headingTextStyle: TextStyleList.detail2.copyWith(fontSize: 14),
-          horizontalMargin: 0,
+          headingTextStyle: TextStyleList.detail2.copyWith(fontSize: 13),
           columns: const [
+            DataColumn(
+              label: SizedBox(width: 0, child: Text('')),
+            ),
             DataColumn(label: Text('Item')),
             DataColumn(label: Text('Description')),
             DataColumn(label: Text('Unit')),
@@ -38,23 +40,72 @@ class SparepartDetailsWidget extends StatelessWidget {
                 ),
               ),
             ),
-            DataColumn(
-              label: Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(''),
-                ),
-              ),
-            ),
           ],
           rows: sparepart.where((data) => data.quantity != '0').map((data) {
             int index = sparepart.indexOf(data);
             return DataRow(cells: [
-              DataCell(Text(data.partNumber ?? '')),
-              DataCell(Text(data.description ?? '')),
-              DataCell(Text(
-                data.quantity ?? '0',
-                style: TextStyleList.text9,
+              DataCell(
+                ((data.lineNo != '' && data.lineNo != null) &&
+                            data.returnRef == '0') ||
+                        (edit == true &&
+                            (subJobSparePart.adminStatus == '2' ||
+                                subJobSparePart.techManagerStatus == '2'))
+                    ? Obx(() => Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                              checkColor: Colors.white,
+                              fillColor: WidgetStateProperty.resolveWith<Color>(
+                                  (states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return Colors.red;
+                                }
+                                return white3;
+                              }),
+                              value: returnSparepartController
+                                  .selectedSpareParts
+                                  .contains(data),
+                              onChanged: (bool? selected) {
+                                if (selected == true) {
+                                  returnSparepartController.selectedSpareParts
+                                      .add(data);
+                                } else {
+                                  returnSparepartController.selectedSpareParts
+                                      .remove(data);
+                                }
+                              },
+                            ),
+                          ],
+                        ))
+                    : Container(),
+              ),
+              DataCell(
+                SingleChildScrollView(
+                  child: SizedBox(
+                    width: 70,
+                    child: Text(
+                      data.partNumber ?? '',
+                      maxLines: 4,
+                    ),
+                  ),
+                ),
+              ),
+              DataCell(
+                SingleChildScrollView(
+                  child: SizedBox(
+                    width: 70,
+                    child: Text(
+                      data.description ?? '',
+                      maxLines: 4,
+                    ),
+                  ),
+                ),
+              ),
+              DataCell(Center(
+                child: Text(
+                  data.quantity ?? '0',
+                  style: TextStyleList.text9,
+                ),
               )),
               DataCell(
                 Obx(() {
@@ -71,12 +122,12 @@ class SparepartDetailsWidget extends StatelessWidget {
 
                   return Row(
                     mainAxisAlignment: !isChecked
-                        ? MainAxisAlignment.end
+                        ? MainAxisAlignment.start
                         : MainAxisAlignment.center,
                     children: [
                       if (!isChecked)
                         IconButton(
-                          icon: const Icon(Icons.remove, size: 18),
+                          icon: const Icon(Icons.remove, size: 15),
                           onPressed: isChecked
                               ? null
                               : () {
@@ -116,7 +167,7 @@ class SparepartDetailsWidget extends StatelessWidget {
                       ),
                       if (!isChecked)
                         IconButton(
-                          icon: const Icon(Icons.add, size: 18),
+                          icon: const Icon(Icons.add, size: 15),
                           onPressed: isChecked
                               ? null
                               : () {
@@ -134,41 +185,6 @@ class SparepartDetailsWidget extends StatelessWidget {
                     ],
                   );
                 }),
-              ),
-              DataCell(
-                ((data.lineNo != '' && data.lineNo != null) &&
-                            data.returnRef == '0') ||
-                        (edit == true &&
-                            (subJobSparePart.adminStatus == '2' ||
-                                subJobSparePart.techManagerStatus == '2'))
-                    ? Obx(() => Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Checkbox(
-                              checkColor: Colors.white,
-                              fillColor: WidgetStateProperty.resolveWith<Color>(
-                                  (states) {
-                                if (states.contains(WidgetState.selected)) {
-                                  return Colors.red;
-                                }
-                                return white3;
-                              }),
-                              value: returnSparepartController
-                                  .selectedSpareParts
-                                  .contains(data),
-                              onChanged: (bool? selected) {
-                                if (selected == true) {
-                                  returnSparepartController.selectedSpareParts
-                                      .add(data);
-                                } else {
-                                  returnSparepartController.selectedSpareParts
-                                      .remove(data);
-                                }
-                              },
-                            ),
-                          ],
-                        ))
-                    : Container(),
               ),
             ]);
           }).toList()),

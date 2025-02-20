@@ -112,7 +112,6 @@ class FillFormView extends StatelessWidget {
                 ),
                 20.kH,
                 TextFieldWidget(
-                    readOnly: 'yes',
                     text: context.tr('contacted_name'),
                     textSet: fillFormController.contactedName.value),
                 20.kH,

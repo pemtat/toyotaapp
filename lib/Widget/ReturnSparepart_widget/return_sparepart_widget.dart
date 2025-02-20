@@ -73,117 +73,140 @@ class ReturnSparePartDetail extends StatelessWidget {
               style: TextStyleList.text5,
             )),
           )
-        : SizedBox(
-            width: double.infinity,
-            child: Column(
-              children: [
-                filteredSparepart.isNotEmpty
-                    ? Column(
-                        children: [
-                          6.kH,
-                          const AppDivider(),
-                          6.kH,
-                          Row(
-                            children: [
-                              Text(
-                                'Spare Part List',
-                                style: TextStyleList.subtitle4,
+        : SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  filteredSparepart.isNotEmpty
+                      ? Column(
+                          children: [
+                            6.kH,
+                            const AppDivider(),
+                            6.kH,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Spare Part List',
+                                    style: TextStyleList.subtitle4,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          SparepartDetailsWidget(
-                            sparepart: filteredSparepart,
-                            subJobSparePart: subJobSparePart,
-                            edit: edit,
-                          )
-                        ],
-                      )
-                    : Container(),
-                filteredAdditionalSparepart.isNotEmpty
-                    ? Column(
-                        children: [
-                          const AppDivider(),
-                          10.kH,
-                          Row(
-                            children: [
-                              Text(
-                                'Additional Spare Part List',
-                                style: TextStyleList.subtitle4,
+                            ),
+                            SparepartDetailsWidget(
+                              sparepart: filteredSparepart,
+                              subJobSparePart: subJobSparePart,
+                              edit: edit,
+                            )
+                          ],
+                        )
+                      : Container(),
+                  filteredAdditionalSparepart.isNotEmpty
+                      ? Column(
+                          children: [
+                            const AppDivider(),
+                            10.kH,
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Text(
+                                    'Additional Spare Part List',
+                                    style: TextStyleList.subtitle4,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SparepartDetailsWidget(
+                              sparepart: filteredAdditionalSparepart,
+                              subJobSparePart: subJobSparePart,
+                              edit: edit,
+                            )
+                          ],
+                        )
+                      : Container(),
+                  filteredBtrSparepart.isNotEmpty
+                      ? Column(
+                          children: [
+                            const AppDivider(),
+                            10.kH,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Battery Spare Part List',
+                                    style: TextStyleList.subtitle4,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          SparepartDetailsWidget(
-                            sparepart: filteredAdditionalSparepart,
-                            subJobSparePart: subJobSparePart,
-                            edit: edit,
-                          )
-                        ],
-                      )
-                    : Container(),
-                filteredBtrSparepart.isNotEmpty
-                    ? Column(
-                        children: [
-                          const AppDivider(),
-                          10.kH,
-                          Row(
-                            children: [
-                              Text(
-                                'Battery Spare Part List',
-                                style: TextStyleList.subtitle4,
+                            ),
+                            SparepartDetailsWidget(
+                              sparepart: filteredBtrSparepart,
+                              subJobSparePart: subJobSparePart,
+                              edit: edit,
+                            )
+                          ],
+                        )
+                      : Container(),
+                  filteredPvtSparepart.isNotEmpty
+                      ? Column(
+                          children: [
+                            const AppDivider(),
+                            10.kH,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Periodic Spare Part List',
+                                    style: TextStyleList.subtitle4,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          SparepartDetailsWidget(
-                            sparepart: filteredBtrSparepart,
-                            subJobSparePart: subJobSparePart,
-                            edit: edit,
-                          )
-                        ],
-                      )
-                    : Container(),
-                filteredPvtSparepart.isNotEmpty
-                    ? Column(
-                        children: [
-                          const AppDivider(),
-                          10.kH,
-                          Row(
-                            children: [
-                              Text(
-                                'Periodic Spare Part List',
-                                style: TextStyleList.subtitle4,
+                            ),
+                            SparepartDetailsWidget(
+                              sparepart: filteredPvtSparepart,
+                              subJobSparePart: subJobSparePart,
+                              edit: edit,
+                            )
+                          ],
+                        )
+                      : Container(),
+                  filteredPvtIcSparepart.isNotEmpty
+                      ? Column(
+                          children: [
+                            const AppDivider(),
+                            10.kH,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Periodic IC Spare Part List',
+                                    style: TextStyleList.subtitle4,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          SparepartDetailsWidget(
-                            sparepart: filteredPvtSparepart,
-                            subJobSparePart: subJobSparePart,
-                            edit: edit,
-                          )
-                        ],
-                      )
-                    : Container(),
-                filteredPvtIcSparepart.isNotEmpty
-                    ? Column(
-                        children: [
-                          const AppDivider(),
-                          10.kH,
-                          Row(
-                            children: [
-                              Text(
-                                'Periodic IC Spare Part List',
-                                style: TextStyleList.subtitle4,
-                              ),
-                            ],
-                          ),
-                          SparepartDetailsWidget(
-                            sparepart: filteredPvtIcSparepart,
-                            subJobSparePart: subJobSparePart,
-                            edit: edit,
-                          )
-                        ],
-                      )
-                    : Container()
-              ],
+                            ),
+                            SparepartDetailsWidget(
+                              sparepart: filteredPvtIcSparepart,
+                              subJobSparePart: subJobSparePart,
+                              edit: edit,
+                            )
+                          ],
+                        )
+                      : Container()
+                ],
+              ),
             ),
           );
   }

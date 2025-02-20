@@ -55,7 +55,6 @@ class ReturnSparepartShow extends StatelessWidget {
           ),
           Container(
               margin: const EdgeInsets.only(bottom: 10),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
               decoration: Decoration3(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,116 +77,120 @@ class ReturnSparepartShow extends StatelessWidget {
                         edit: edit,
                       ))),
                   16.kH,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                          width: 100,
-                          child: ButtonRed(
-                              title: 'ขออนุมัติ',
-                              onTap: () {
-                                showApproveSparePart(
-                                    context,
-                                    context.tr('request_message'),
-                                    context.tr('no'),
-                                    context.tr('yes'), () async {
-                                  if (returnSparepartController
-                                      .selectedSpareParts.isNotEmpty) {
-                                    Navigator.pop(context);
-                                    edit == true
-                                        ? await returnSparepartController
-                                            .updateQuotation(
-                                                context,
-                                                subJobSparePart.bugId ?? '0',
-                                                subJobSparePart.id ?? '0',
-                                                subJobSparePart.handlerId ??
-                                                    '0',
-                                                subJobSparePart.projectId ??
-                                                    '1',
-                                                subJobSparePart.returnId ?? '0',
-                                                subJobSparePart.refId ?? '0')
-                                        : await returnSparepartController
-                                            .createQuotation(
-                                                context,
-                                                subJobSparePart.bugId ?? '0',
-                                                subJobSparePart.id ?? '0',
-                                                subJobSparePart.handlerId ??
-                                                    '0',
-                                                subJobSparePart.projectId ??
-                                                    '1');
-                                    await returnSparepartController
-                                        .saveSparePart(
-                                            context,
-                                            subJobSparePart.bugId ?? '0',
-                                            subJobSparePart.id ?? '0',
-                                            subJobSparePart.handlerId ?? '0',
-                                            subJobSparePart.projectId ?? '1');
-                                    edit == true
-                                        ? createQuotationReturnHistory(
-                                            subJobSparePart.id ?? '0',
-                                            'tech',
-                                            subJobSparePart.bugId ?? '0',
-                                            subJobSparePart.handlerId ?? '0',
-                                            '1',
-                                            subJobSparePart.refId ?? '1')
-                                        : createQuotationReturnHistory(
-                                            subJobSparePart.id ?? '0',
-                                            'tech',
-                                            subJobSparePart.bugId ?? '0',
-                                            subJobSparePart.handlerId ?? '0',
-                                            '1',
-                                            'none');
-                                    await notificationController
-                                        .fetchNotifySubJobSparePartReturnId(
-                                            subJobSparePart.id ?? '0',
-                                            subJobSparePart.bugId ?? '0',
-                                            subJobSparePart.projectId ?? '0');
-                                    subJobSparePart.projectId == '1'
-                                        ? createHistoryJobs(
-                                            subJobSparePart.handlerId ?? '0',
-                                            '0',
-                                            'Job ID : ${subJobSparePart.id.toString().padLeft(7, '0')}',
-                                            'มีรายการใบคืน Spare Part รออนุมัติใหม่',
-                                            'admin',
-                                            subJobSparePart.bugId ?? '0',
-                                            subJobSparePart.id ?? '0',
-                                            'QTR',
-                                            'tech',
-                                            '0',
-                                            'group')
-                                        : createHistoryJobs(
-                                            subJobSparePart.handlerId ?? '0',
-                                            '0',
-                                            'PM ID : ${subJobSparePart.bugId.toString().padLeft(7, '0')}',
-                                            'มีรายการใบคืน Spare Part รออนุมัติใหม่',
-                                            'admin',
-                                            subJobSparePart.bugId ?? '0',
-                                            subJobSparePart.id ?? '0',
-                                            'QTR',
-                                            'tech',
-                                            '0',
-                                            'group');
-                                    showMessage('ดำเนินการสำเร็จ');
-                                  } else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialogCustom(
-                                              message: context.tr(
-                                                  'warning_require_sparepart'));
-                                        });
-                                  }
-                                }, red1);
-                              })),
-                      8.wH,
-                      SizedBox(
-                          width: 70,
-                          child: ButtonRed(
-                              title: 'ปิด',
-                              onTap: () {
-                                Navigator.pop(context);
-                              })),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                            width: 100,
+                            child: ButtonRed(
+                                title: 'ขออนุมัติ',
+                                onTap: () {
+                                  showApproveSparePart(
+                                      context,
+                                      context.tr('request_message'),
+                                      context.tr('no'),
+                                      context.tr('yes'), () async {
+                                    if (returnSparepartController
+                                        .selectedSpareParts.isNotEmpty) {
+                                      Navigator.pop(context);
+                                      edit == true
+                                          ? await returnSparepartController
+                                              .updateQuotation(
+                                                  context,
+                                                  subJobSparePart.bugId ?? '0',
+                                                  subJobSparePart.id ?? '0',
+                                                  subJobSparePart.handlerId ??
+                                                      '0',
+                                                  subJobSparePart.projectId ??
+                                                      '1',
+                                                  subJobSparePart.returnId ??
+                                                      '0',
+                                                  subJobSparePart.refId ?? '0')
+                                          : await returnSparepartController
+                                              .createQuotation(
+                                                  context,
+                                                  subJobSparePart.bugId ?? '0',
+                                                  subJobSparePart.id ?? '0',
+                                                  subJobSparePart.handlerId ??
+                                                      '0',
+                                                  subJobSparePart.projectId ??
+                                                      '1');
+                                      await returnSparepartController
+                                          .saveSparePart(
+                                              context,
+                                              subJobSparePart.bugId ?? '0',
+                                              subJobSparePart.id ?? '0',
+                                              subJobSparePart.handlerId ?? '0',
+                                              subJobSparePart.projectId ?? '1');
+                                      edit == true
+                                          ? createQuotationReturnHistory(
+                                              subJobSparePart.id ?? '0',
+                                              'tech',
+                                              subJobSparePart.bugId ?? '0',
+                                              subJobSparePart.handlerId ?? '0',
+                                              '1',
+                                              subJobSparePart.refId ?? '1')
+                                          : createQuotationReturnHistory(
+                                              subJobSparePart.id ?? '0',
+                                              'tech',
+                                              subJobSparePart.bugId ?? '0',
+                                              subJobSparePart.handlerId ?? '0',
+                                              '1',
+                                              'none');
+                                      await notificationController
+                                          .fetchNotifySubJobSparePartReturnId(
+                                              subJobSparePart.id ?? '0',
+                                              subJobSparePart.bugId ?? '0',
+                                              subJobSparePart.projectId ?? '0');
+                                      subJobSparePart.projectId == '1'
+                                          ? createHistoryJobs(
+                                              subJobSparePart.handlerId ?? '0',
+                                              '0',
+                                              'Job ID : ${subJobSparePart.id.toString().padLeft(7, '0')}',
+                                              'มีรายการใบคืน Spare Part รออนุมัติใหม่',
+                                              'admin',
+                                              subJobSparePart.bugId ?? '0',
+                                              subJobSparePart.id ?? '0',
+                                              'QTR',
+                                              'tech',
+                                              '0',
+                                              'group')
+                                          : createHistoryJobs(
+                                              subJobSparePart.handlerId ?? '0',
+                                              '0',
+                                              'PM ID : ${subJobSparePart.bugId.toString().padLeft(7, '0')}',
+                                              'มีรายการใบคืน Spare Part รออนุมัติใหม่',
+                                              'admin',
+                                              subJobSparePart.bugId ?? '0',
+                                              subJobSparePart.id ?? '0',
+                                              'QTR',
+                                              'tech',
+                                              '0',
+                                              'group');
+                                      showMessage('ดำเนินการสำเร็จ');
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialogCustom(
+                                                message: context.tr(
+                                                    'warning_require_sparepart'));
+                                          });
+                                    }
+                                  }, red1);
+                                })),
+                        8.wH,
+                        SizedBox(
+                            width: 70,
+                            child: ButtonRed(
+                                title: 'ปิด',
+                                onTap: () {
+                                  Navigator.pop(context);
+                                })),
+                      ],
+                    ),
                   )
                 ],
               )),
