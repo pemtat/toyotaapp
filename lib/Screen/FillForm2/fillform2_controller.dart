@@ -114,29 +114,20 @@ class FillformController2 extends GetxController {
     );
 
     if (jobIssueId == null) {
-      if (jobDetailControllerPM.pmJobs.isNotEmpty) {
-        customerName.value.text =
-            jobDetailControllerPM.pmJobs.first.customerName ?? '';
-        forkLifeInformation.forklifeBrand.value.text =
-            jobDetailControllerPM.pmJobs.first.tNo ?? '';
-        forkLifeInformation.forklifeModel.value.text =
-            jobDetailControllerPM.pmJobs.first.tModel ?? '';
-        forkLifeInformation.serialNo.value.text =
-            jobDetailControllerPM.pmJobs.first.serialNo ?? '';
-      }
+      await fetchPmTruckById(
+          jobId,
+          forkLifeInformation.forklifeBrand,
+          forkLifeInformation.serialNo,
+          forkLifeInformation.forklifeModel,
+          customerName);
     } else {
-      if (jobDetailController.subJobs.isNotEmpty) {
-        customerName.value.text =
-            jobDetailController.subJobs.first.companyName ?? '';
-        contactPerson.value.text =
-            jobDetailController.subJobs.first.realName ?? '';
-        forkLifeInformation.forklifeBrand.value.text =
-            jobDetailController.subJobs.first.nameTruck ?? '';
-        forkLifeInformation.forklifeModel.value.text =
-            jobDetailController.subJobs.first.model ?? '';
-        forkLifeInformation.serialNo.value.text =
-            jobDetailController.subJobs.first.serialNo ?? '';
-      }
+      await fetchJobTruckById(
+          jobId,
+          forkLifeInformation.forklifeBrand,
+          forkLifeInformation.serialNo,
+          forkLifeInformation.forklifeModel,
+          customerName,
+          contactPerson);
     }
   }
 

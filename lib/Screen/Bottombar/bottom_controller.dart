@@ -46,25 +46,30 @@ class BottomBarController extends GetxController {
     } else {
       deviceType = 'Unknown';
     }
-    String versionBase = await getVersions(deviceType, version);
+    Map<String, dynamic> versionData = {};
+    versionData = await getVersions(deviceType, version);
+    String versionBase = versionData['version'] ?? '';
+    bool versionStatus = versionData['status'] ?? true;
     String versionUser = await getUserVersion(deviceId);
 
-    if (versionUser != versionBase && versionUser != '') {
-      if (version == versionBase) {
-        updateTokenNotification(deviceId, version);
+    if (versionStatus == true) {
+      if (versionUser != versionBase && versionUser != '') {
+        if (version == versionBase) {
+          updateTokenNotification(deviceId, version);
+        }
       }
-    }
 
-    if (version != versionBase) {
-      showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return AlertDialogVersions(
-            deviceType: deviceType,
-          );
-        },
-      );
+      if (version != versionBase) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialogVersions(
+              deviceType: deviceType,
+            );
+          },
+        );
+      }
     }
   }
 }

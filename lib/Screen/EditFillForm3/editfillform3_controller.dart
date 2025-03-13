@@ -108,6 +108,7 @@ class FillformController3 extends GetxController {
       token ?? '',
       userByZone,
     );
+
     var data = reportPreventiveList.first;
     var fullMaintenanceRecords = data.pvtCheckingTypeMaster;
     var maintenances = data.pvtMaintenance;
@@ -355,6 +356,8 @@ class FillformController3 extends GetxController {
       }
       sparepartList.sparePartList.addAll(sparePartListData);
     }
+
+    // await fetchPmTruckById(jobId, product, serialNo, model, customerName);
   }
 
   Future<void> saveSignature() async {

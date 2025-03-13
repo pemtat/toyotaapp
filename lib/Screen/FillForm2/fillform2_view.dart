@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm2/adddetail/batterycondition.dart';
@@ -77,7 +78,42 @@ class FillFormView2 extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            14.kH,
+            10.kH,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 160,
+                  child: ButtonRed(
+                      title: context.tr('load_customer'),
+                      onTap: () {
+                        if (jobIssueId == null) {
+                          fetchPmTruckById(
+                              fillformController2.jobId.value,
+                              fillformController2
+                                  .forkLifeInformation.forklifeBrand,
+                              fillformController2.forkLifeInformation.serialNo,
+                              fillformController2
+                                  .forkLifeInformation.forklifeModel,
+                              fillformController2.customerName);
+                        } else {
+                          fetchJobTruckById(
+                              fillformController2.jobId.value,
+                              fillformController2
+                                  .forkLifeInformation.forklifeBrand,
+                              fillformController2.forkLifeInformation.serialNo,
+                              fillformController2
+                                  .forkLifeInformation.forklifeModel,
+                              fillformController2.customerName,
+                              fillformController2.contactPerson);
+                        }
+                      }),
+                ),
+                16.wH,
+              ],
+            ),
+            10.kH,
+
             BoxContainer(
               children: [
                 TextFieldWidget(

@@ -304,6 +304,15 @@ class EditFillformController2 extends GetxController {
       batteryConditionController.remarksChoose[i] =
           condition[i].description ?? '';
     }
+
+    // if (jobIssueId == null) {
+    //   await fetchPmTruckById(
+    //       jobId,
+    //       forkLifeInformation.forklifeBrand,
+    //       forkLifeInformation.serialNo,
+    //       forkLifeInformation.forklifeModel,
+    //       customerName);
+    // }
   }
 
   Future<void> saveReport(BuildContext context) async {

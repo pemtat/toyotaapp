@@ -122,15 +122,9 @@ class FillformController extends GetxController {
       token ?? '',
       userByZone,
     );
-    if (jobDetailController.subJobs.isNotEmpty) {
-      customerName.value.text =
-          jobDetailController.subJobs.first.companyName ?? '';
-      contactedName.value.text =
-          jobDetailController.subJobs.first.realName ?? '';
-      product.value.text = jobDetailController.subJobs.first.nameTruck ?? '';
-      model.value.text = jobDetailController.subJobs.first.model ?? '';
-      serialNo.value.text = jobDetailController.subJobs.first.serialNo ?? '';
-    }
+
+    await fetchJobTruckById(
+        ticketId, product, serialNo, model, customerName, contactedName);
   }
 
   void clearSignature() {

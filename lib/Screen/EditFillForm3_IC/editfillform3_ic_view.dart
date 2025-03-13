@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/EditFillForm3_IC/editdetail/brakesystemchecks.dart';
 import 'package:toyotamobile/Screen/EditFillForm3_IC/editdetail/chargerchecks.dart';
@@ -79,6 +80,25 @@ class EditFillFormView3IC extends StatelessWidget {
           children: [
             BoxContainer(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: 160,
+                      child: ButtonRed(
+                          title: context.tr('load_customer'),
+                          onTap: () {
+                            fetchPmTruckById(
+                                fillformController3.jobId.value,
+                                fillformController3.product,
+                                fillformController3.serialNo,
+                                fillformController3.model,
+                                fillformController3.customerName);
+                          }),
+                    )
+                  ],
+                ),
+                10.kH,
                 Row(
                   children: [
                     Expanded(

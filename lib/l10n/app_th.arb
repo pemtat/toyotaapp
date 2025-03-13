@@ -270,5 +270,6 @@
   "return_spare_part_status" : "สถานะการขออนุมัติคืนอะไหล่",
   "return_spare_part_action" : "คืนอะไหล่",
   "edit_part" : "เเก้ไขอะไหล่",
-  "approve_message": "โปรดยืนยืนการอนุมัติ"
+  "approve_message": "โปรดยืนยืนการอนุมัติ",
+  "load_customer": "โหลดข้อมูลลูกค้าใหม่"
 }

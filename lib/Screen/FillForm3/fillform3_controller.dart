@@ -94,14 +94,7 @@ class FillformController3 extends GetxController {
       token ?? '',
       userByZone,
     );
-
-    if (jobDetailControllerPM.pmJobs.isNotEmpty) {
-      customerName.value.text =
-          jobDetailControllerPM.pmJobs.first.customerName ?? '';
-      product.value.text = jobDetailControllerPM.pmJobs.first.tNo ?? '';
-      model.value.text = jobDetailControllerPM.pmJobs.first.tModel ?? '';
-      serialNo.value.text = jobDetailControllerPM.pmJobs.first.serialNo ?? '';
-    }
+    await fetchPmTruckById(jobId, product, serialNo, model, customerName);
   }
 
   Future<void> saveSignature() async {

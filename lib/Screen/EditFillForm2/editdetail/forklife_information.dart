@@ -11,7 +11,6 @@ import 'package:toyotamobile/extensions/context_extension.dart';
 class ForklifeInformation extends GetxController {
   int space = 24;
   void forklifeInformationModal(BuildContext context) {
-    forklifeClear();
     ShowModalWidget(
       children: [
         Row(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/FillForm/adddetail/process_staff.dart';
@@ -94,6 +95,26 @@ class FillFormView extends StatelessWidget {
             14.kH,
             BoxContainer(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: 160,
+                      child: ButtonRed(
+                          title: context.tr('load_customer'),
+                          onTap: () {
+                            fetchJobTruckById(
+                                fillFormController.ticketId.value,
+                                fillFormController.product,
+                                fillFormController.serialNo,
+                                fillFormController.model,
+                                fillFormController.customerName,
+                                fillFormController.contactedName);
+                          }),
+                    )
+                  ],
+                ),
+                10.kH,
                 Row(
                   children: [
                     Expanded(

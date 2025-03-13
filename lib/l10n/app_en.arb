@@ -270,5 +270,6 @@
   "return_spare_part_status" : "Return Spare Part Status",
   "return_spare_part_action" : "Return Spare Part",
   "edit_part" : "Edit Part",
-  "approve_message": "Are you sure to approve?"
+  "approve_message": "Are you sure to approve?",
+  "load_customer": "Fetch Customer"
 }

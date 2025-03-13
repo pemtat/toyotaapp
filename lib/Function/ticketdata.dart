@@ -22,6 +22,7 @@ import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
 import 'package:toyotamobile/Models/techreport_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
+import 'package:toyotamobile/Models/truck_by_id_model.dart';
 import 'package:toyotamobile/Models/userallsales_model.dart';
 import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
@@ -120,6 +121,74 @@ Future<void> fetchUserByZone(
   } catch (e) {
     print('Error: $e');
     userByZone.clear();
+  }
+}
+
+Future<void> fetchPmTruckById(
+    String id,
+    Rx<TextEditingController> product,
+    Rx<TextEditingController> serialNo,
+    Rx<TextEditingController> model,
+    Rx<TextEditingController> customerName) async {
+  try {
+    String? token = await getToken();
+    final response = await http.get(
+      Uri.parse(getPmTruckById(id)),
+      headers: {
+        'Authorization': token ?? '',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+
+      if (data.isNotEmpty) {
+        TruckByIdModel truckData = TruckByIdModel.fromJson(data);
+        product.value.text = truckData.tNo ?? '';
+        serialNo.value.text = truckData.tSerialNo ?? '';
+        model.value.text = truckData.tModel ?? '';
+        customerName.value.text = truckData.customerName ?? '';
+      } else {}
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+Future<void> fetchJobTruckById(
+    String id,
+    Rx<TextEditingController> product,
+    Rx<TextEditingController> serialNo,
+    Rx<TextEditingController> model,
+    Rx<TextEditingController> customerName,
+    Rx<TextEditingController> contactName) async {
+  try {
+    String? token = await getToken();
+    final response = await http.get(
+      Uri.parse(getJobTruckById(id)),
+      headers: {
+        'Authorization': token ?? '',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+
+      if (data.isNotEmpty) {
+        TruckByIdModel truckData = TruckByIdModel.fromJson(data);
+        product.value.text = truckData.tNo ?? '';
+        serialNo.value.text = truckData.tSerialNo ?? '';
+        model.value.text = truckData.tModel ?? '';
+        customerName.value.text = truckData.customerName ?? '';
+        contactName.value.text = truckData.contactName ?? '';
+      } else {}
+    } else {
+      print('Failed to load data: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
   }
 }
 
@@ -388,7 +457,8 @@ Future<String> getReportById(
   }
 }
 
-Future<String> getVersions(String deviceType, String versionNow) async {
+Future<Map<String, dynamic>> getVersions(
+    String deviceType, String versionNow) async {
   String? token = await getToken();
   final response = await http.get(
     Uri.parse(getLatestVersions()),
@@ -396,23 +466,29 @@ Future<String> getVersions(String deviceType, String versionNow) async {
       'Authorization': '$token',
     },
   );
+
+  Map<String, dynamic> data = {'version': '', 'status': true};
   if (response.statusCode == 200) {
     final dynamic responseData = jsonDecode(response.body);
 
     if (responseData is Map<String, dynamic>) {
       Versions versions = Versions.fromJson(responseData);
       if (deviceType == 'Android') {
-        return versions.appVersionPlaystore ?? '';
+        data['version'] = versions.appVersionPlaystore ?? '';
+        data['status'] = versions.status;
+        return data;
       } else if (deviceType == 'iOS') {
-        return versions.appVersionAppstore ?? '';
+        data['version'] = versions.appVersionAppstore ?? '';
+        data['status'] = versions.status;
+        return data;
       } else {
-        return versionNow;
+        return data;
       }
     } else {
-      return versionNow;
+      return data;
     }
   } else {
-    return versionNow;
+    return data;
   }
 }
 

@@ -63,6 +63,14 @@ String getUserByZone(String zone) {
   return '$url/api/rest/jobs/user_by_zone?zone=$zone';
 }
 
+String getPmTruckById(String id) {
+  return '$url/api/rest/pm/get_truck_by_id/$id';
+}
+
+String getJobTruckById(String id) {
+  return '$url/api/rest/jobs/get_job_truck_by_id/$id';
+}
+
 String getAllTech() {
   return '$url/api/rest/users/user_all_tech/get';
 }

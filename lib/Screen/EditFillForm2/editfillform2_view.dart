@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyotamobile/Function/fillform.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/userbyzone_model.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/additional_spare.dart';
 import 'package:toyotamobile/Screen/EditFillForm2/editdetail/batterycondition.dart';
@@ -82,6 +83,40 @@ class EditFillFormView2 extends StatelessWidget {
             14.kH,
             BoxContainer(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: 160,
+                      child: ButtonRed(
+                          title: context.tr('load_customer'),
+                          onTap: () {
+                            if (jobIssueId == null) {
+                              fetchPmTruckById(
+                                  fillformController2.jobId.value,
+                                  fillformController2
+                                      .forkLifeInformation.forklifeBrand,
+                                  fillformController2
+                                      .forkLifeInformation.serialNo,
+                                  fillformController2
+                                      .forkLifeInformation.forklifeModel,
+                                  fillformController2.customerName);
+                            }
+                            fetchJobTruckById(
+                                fillformController2.jobId.value,
+                                fillformController2
+                                    .forkLifeInformation.forklifeBrand,
+                                fillformController2
+                                    .forkLifeInformation.serialNo,
+                                fillformController2
+                                    .forkLifeInformation.forklifeModel,
+                                fillformController2.customerName,
+                                fillformController2.contactPerson);
+                          }),
+                    )
+                  ],
+                ),
+                10.kH,
                 TextFieldWidget(
                   text: context.tr('customer_name'),
                   textSet: fillformController2.customerName.value,

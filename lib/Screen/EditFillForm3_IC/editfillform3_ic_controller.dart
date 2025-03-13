@@ -227,6 +227,7 @@ class FillformController3IC extends GetxController {
       }
       sparepartList.sparePartList.addAll(sparePartListData);
     }
+    // await fetchPmTruckById(jobId, product, serialNo, model, customerName);
   }
 
   Future<void> saveSignature() async {
