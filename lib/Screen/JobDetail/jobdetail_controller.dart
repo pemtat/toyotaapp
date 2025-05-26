@@ -39,6 +39,7 @@ class JobDetailController extends GetxController {
   var completeCheck = false.obs;
   Rx<String> expandedTicketId = Rx<String>('');
   var selectedDate = Rx<DateTime?>(null);
+  var canStartTime = false.obs;
   var expandedIndex = false.obs;
   var canEdit = true.obs;
   var saveCompletedtime = ''.obs;
@@ -72,6 +73,7 @@ class JobDetailController extends GetxController {
       jobId = subjobId;
       subJobSparePart.clear();
       canEdit.value = true;
+      canStartTime.value = false;
       await fetchReportData(
           subjobId, token ?? '', reportList, additionalReportList);
       await fetchJobBatteryReportData(jobId, token ?? '', reportBatteryList);
@@ -84,6 +86,8 @@ class JobDetailController extends GetxController {
       savedDateStartTime = ''.obs;
       savedDateEndTime = ''.obs;
       await fetchReadAttachmentList(ticketId, token ?? '', attatchments);
+      canStartTime.value =
+          await checkJobsOnProcess(subJobs.first.handlerId ?? '', token ?? '');
       // await fetchUserById(subJobs.first.reporterId ?? '', userData);
       // await fetchWarrantyById(ticketId, token ?? '', warrantyInfo);
       // await fetchgetCustomerInfo(

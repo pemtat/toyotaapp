@@ -459,5 +459,13 @@ String deleteS3ImageJob() {
   return '$url/api/rest/jobs/delete_s3_subjob_image';
 }
 
+String getJobsOnProcess(String id) {
+  return '$url/api/rest/jobs/check_jobs_on_process/$id';
+}
+
+String getTicketOnProcess(String id) {
+  return '$url/api/rest/pm_jobs/check_ticket_on_process/$id';
+}
+
 String usernameProduct = 'VanSale-Dev';
 String passwordProduct = 'c8doEpdFC0CFkUWHUEXv';

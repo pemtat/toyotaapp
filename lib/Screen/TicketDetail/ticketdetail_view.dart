@@ -75,9 +75,13 @@ class TicketDetailView extends StatelessWidget {
             var subJobSparePart = ticketController.subJobSparePart.isNotEmpty
                 ? ticketController.subJobSparePart.first
                 : null;
+            var partDisable = false;
             if (subJobSparePart != null) {
-              if (subJobSparePart.estimateStatus == '1' ||
-                  subJobSparePart.estimateStatus == '2') {
+              partDisable =
+                  subJob != null ? (subJob.partDisable ?? false) : false;
+              if ((subJobSparePart.estimateStatus == '1' ||
+                      subJobSparePart.estimateStatus == '2') &&
+                  partDisable == false) {
                 ticketController.canEdit.value = false;
               }
             }
@@ -349,6 +353,7 @@ class TicketDetailView extends StatelessWidget {
                                                       reportId: jobId,
                                                       ticketId: ticketId,
                                                       jobId: jobId.toString(),
+                                                      partDisable: partDisable,
                                                     ));
                                               },
                                             )
@@ -440,9 +445,11 @@ class TicketDetailView extends StatelessWidget {
                                           ? EditButton(
                                               onTap: () {
                                                 Get.to(() => EditFillFormView2(
-                                                    jobId: ticketId,
-                                                    jobIssueId: jobId,
-                                                    readOnly: 'yes'));
+                                                      jobId: ticketId,
+                                                      jobIssueId: jobId,
+                                                      readOnly: 'yes',
+                                                      partDisable: partDisable,
+                                                    ));
                                               },
                                             )
                                           : Container()

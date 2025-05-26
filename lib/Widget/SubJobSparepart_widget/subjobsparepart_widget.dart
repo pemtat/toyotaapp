@@ -591,54 +591,6 @@ class SubJobSparePartWidget extends StatelessWidget {
                                       onTap: () {
                                         Navigator.pop(context);
                                       })),
-                            6.wH,
-                            subJobSparePart.bugStatus != '90' &&
-                                    (subJobSparePart.estimateStatus == null ||
-                                        subJobSparePart.estimateStatus == '0' ||
-                                        subJobSparePart.estimateStatus ==
-                                            '3') &&
-                                    !emptySparePart
-                                ? SizedBox(
-                                    width: 120,
-                                    child: ButtonRed(
-                                        title: context.tr('request'),
-                                        onTap: () {
-                                          showApproveSparePart(
-                                              context,
-                                              context.tr('request_message'),
-                                              context.tr('no'),
-                                              context.tr('yes'), () async {
-                                            await updateJobSparePart(
-                                                subJobSparePart.id ?? '',
-                                                jobController.techLevel.value,
-                                                jobController
-                                                    .handlerIdTech.value,
-                                                '',
-                                                'send',
-                                                subJobSparePart.bugId ?? '',
-                                                subJobSparePart.handlerId ?? '',
-                                                subJobSparePart.reportjobId ??
-                                                    '',
-                                                subJobSparePart.projectId ?? '',
-                                                subJobSparePart.adminId ?? '0');
-                                            await jobDetailController
-                                                .fetchSubJobSparePartId();
-                                            await ticketDetailController
-                                                .fetchSubJobSparePartId();
-                                            await jobDetailControllerPM
-                                                .fetchSubJobSparePartIdPM();
-                                            await ticketPmDetailController
-                                                .fetchSubJobSparePartIdPM();
-                                            await notificationController
-                                                .fetchNotifySubJobSparePartId(
-                                                    subJobSparePart.id ?? '0',
-                                                    subJobSparePart.bugId ??
-                                                        '0',
-                                                    subJobSparePart.projectId ??
-                                                        '0');
-                                          }, red1);
-                                        }))
-                                : Container(),
                           ],
                         )
                       : Row(

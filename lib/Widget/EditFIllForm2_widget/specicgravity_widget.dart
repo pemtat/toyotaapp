@@ -95,8 +95,9 @@ class SpecicGravityWidget extends StatelessWidget {
                       ),
                     ),
                     PopupMenuItem(
-                      value: context.tr('delete'),
-                      child: Text('Delete', style: TextStyleList.text9),
+                      value: 'delete',
+                      child: Text(context.tr('delete'),
+                          style: TextStyleList.text9),
                     ),
                   ],
                   child: Image.asset(

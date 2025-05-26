@@ -297,9 +297,11 @@ class AlertDialogCustom extends StatelessWidget {
       )),
       content: Row(
         children: [
-          Text(
-            message,
-            style: TextStyleList.text2,
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyleList.text2,
+            ),
           ),
         ],
       ),

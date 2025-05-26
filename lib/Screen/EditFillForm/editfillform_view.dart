@@ -40,13 +40,16 @@ class EditFillFormView extends StatelessWidget {
   final String ticketId;
   final String jobId;
   final String? readOnly;
+  final bool? partDisable;
   EditFillFormView(
       {super.key,
       required this.reportId,
       required this.ticketId,
       required this.jobId,
-      this.readOnly}) {
-    fillFormController.fetchForm(reportId, ticketId, jobId, readOnly);
+      this.readOnly,
+      this.partDisable}) {
+    fillFormController.fetchForm(
+        reportId, ticketId, jobId, readOnly, partDisable);
   }
 
   final Rcode rcodeController = Get.put(Rcode());
@@ -320,12 +323,14 @@ class EditFillFormView extends StatelessWidget {
                       children: [
                         TitleWithButton(
                           titleText: context.tr('spare_part_list'),
-                          button: AddButton(
-                            onTap: () {
-                              sparePartListController
-                                  .sparePartListModal(context);
-                            },
-                          ),
+                          button: partDisable == true
+                              ? Container()
+                              : AddButton(
+                                  onTap: () {
+                                    sparePartListController
+                                        .sparePartListModal(context);
+                                  },
+                                ),
                         ),
                         sparePartListController.sparePartList.isNotEmpty
                             ? ListView.builder(
@@ -339,6 +344,8 @@ class EditFillFormView extends StatelessWidget {
                                   return SparePartManageWidget(
                                     part: part,
                                     index: index,
+                                    readOnly:
+                                        partDisable == true ? 'yes' : null,
                                     editFunction: () {
                                       sparePartListController
                                           .sparePartListEditModal(
@@ -501,6 +508,7 @@ class EditFillFormView extends StatelessWidget {
                     ),
                   ],
                 ),
+                space.kH,
                 BoxContainer(
                   child: Row(
                     children: [
@@ -625,7 +633,8 @@ class EditFillFormView extends StatelessWidget {
                         context,
                         context.tr('save_message'),
                         context.tr('no'),
-                        context.tr('yes'))
+                        context.tr('yes'),
+                        partDisable)
                     : showDialog(
                         context: context,
                         builder: (BuildContext context) {

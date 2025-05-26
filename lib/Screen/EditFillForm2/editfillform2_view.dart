@@ -21,12 +21,14 @@ import 'package:toyotamobile/Widget/EditFIllForm2_widget/batteryusage_widget.dar
 import 'package:toyotamobile/Widget/EditFIllForm2_widget/forkliftinformation_widget.dart';
 import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_view.dart';
 import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_widget.dart';
+import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/EditFIllForm2_widget/specicgravity_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
+import 'package:toyotamobile/Widget/required_text_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
@@ -38,8 +40,13 @@ class EditFillFormView2 extends StatelessWidget {
   final String jobId;
   final String? readOnly;
   final String? jobIssueId;
+  final bool? partDisable;
   EditFillFormView2(
-      {super.key, required this.jobId, this.readOnly, this.jobIssueId}) {
+      {super.key,
+      required this.jobId,
+      this.readOnly,
+      this.jobIssueId,
+      this.partDisable}) {
     fillformController2.fetchData(jobId, readOnly, jobIssueId);
   }
   final BatteryInformation batteryInfoController =
@@ -80,7 +87,38 @@ class EditFillFormView2 extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            14.kH,
+            if (jobIssueId != null)
+              Column(
+                children: [
+                  6.kH,
+                  BoxContainer(
+                    children: [
+                      const RequiredTextLong(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount:
+                            fillformController2.fieldServiceReportList.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: CheckBoxWidget(
+                              text: fillformController2
+                                  .fieldServiceReportList[index],
+                              listItem: fillformController2.fieldServiceReport,
+                              itemSet: fillformController2.fieldServiceReport,
+                              option: 'true',
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+            10.kH,
             BoxContainer(
               children: [
                 Row(
@@ -335,11 +373,14 @@ class EditFillFormView2 extends StatelessWidget {
                   children: [
                     TitleWithButton(
                         titleText: context.tr('bm_sparepart'),
-                        button: AddButton(
-                          onTap: () {
-                            sparePartListController.sparePartListModal(context);
-                          },
-                        )),
+                        button: partDisable == true
+                            ? Container()
+                            : AddButton(
+                                onTap: () {
+                                  sparePartListController
+                                      .sparePartListModal(context);
+                                },
+                              )),
                     sparePartListController.sparePartList.isNotEmpty
                         ? ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
@@ -352,6 +393,7 @@ class EditFillFormView2 extends StatelessWidget {
                               return SparePartManageWidget(
                                 part: part,
                                 index: index,
+                                readOnly: partDisable == true ? 'yes' : null,
                                 editFunction: () {
                                   sparePartListController
                                       .sparePartListEditModal(context, part);

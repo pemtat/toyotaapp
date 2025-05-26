@@ -68,7 +68,14 @@ class EditFillformController2 extends GetxController {
   var batteryReportList = <BatteryReportModel>[].obs;
 
   var saveCompletedtime = ''.obs;
-
+  List<String> fieldServiceReportList = [
+    'Inspection',
+    'Repairing',
+    'Re-repairing',
+    'Commissioning',
+    'Other',
+  ];
+  var fieldServiceReport = <String>[].obs;
   void showSaveDialog(
       BuildContext context, String title, String left, String right) {
     showDialog(
@@ -130,10 +137,14 @@ class EditFillformController2 extends GetxController {
     //         (item.description != null && item.description!.isNotEmpty) &&
     //         (item.nameEn != null))
     //     .toList();
+
     customerName.value.text = info1!.customerName ?? '';
     contactPerson.value.text = info1.contactPerson ?? '';
     division.value.text = info1.division ?? '';
     selectedUser.value = info1.tech2 ?? '';
+    if (info1.fieldReport != '-') {
+      fieldServiceReport.add(info1.fieldReport ?? '');
+    }
     if ((info1.sparePartRemark ?? '') != '') {
       sparePartRemark.value.text = info1.sparePartRemark ?? '';
       sparePartRemark.refresh();
@@ -193,11 +204,12 @@ class EditFillformController2 extends GetxController {
               voltage: double.tryParse(item.voltageCheck ?? '') ?? 0,
             ))
         .toList();
-
-    if (specicGravity.first.temperature != '0' ||
-        specicGravity.first.thp != '0' ||
-        specicGravity.first.voltageCheck != '0') {
-      specicGravityController.specicGravityList.addAll(newSpecicGravityList);
+    if (specicGravity.isNotEmpty) {
+      if (specicGravity.first.temperature != '0' ||
+          specicGravity.first.thp != '0' ||
+          specicGravity.first.voltageCheck != '0') {
+        specicGravityController.specicGravityList.addAll(newSpecicGravityList);
+      }
     }
 
     if (info1.correctiveAction != '') {
@@ -353,7 +365,9 @@ class EditFillformController2 extends GetxController {
     var batteryinformation = batteryInfoController.batteryInformationList.first;
     var forklifeinformation = forkLifeInformation.forklifeList.first;
     var batteryusage = batteryUsageController.batteryUsageList.first;
-
+    if (fieldServiceReport.isEmpty) {
+      fieldServiceReport.add('-');
+    }
     if (sparePartListController.sparePartList.isEmpty) {
       final SparePartModel defaultSparePart = SparePartModel(
         cCodePage: "-",
@@ -503,6 +517,7 @@ class EditFillformController2 extends GetxController {
       "specic_voltage_check": specicGravity,
       "btr_conditions": batteryCondition,
       'spare_part_remark': sparePartRemark.value.text,
+      'field_report': fieldServiceReport.first,
     };
     try {
       final response = await http.post(Uri.parse(apiUrl),

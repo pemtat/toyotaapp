@@ -16,6 +16,7 @@ import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.da
 import 'package:toyotamobile/Widget/JobDetail_widget/showreport_widget.dart';
 import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
+import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -42,7 +43,10 @@ class JobDetailView extends StatelessWidget {
   final SparePartController subjob = Get.put(SparePartController());
 
   JobDetailView({super.key, required this.ticketId, this.jobId, this.status}) {
-    jobController.fetchData(ticketId, jobId ?? '');
+    jobController.fetchData(
+      ticketId,
+      jobId ?? '',
+    );
   }
 
   @override
@@ -110,9 +114,13 @@ class JobDetailView extends StatelessWidget {
               var subJobSparePart = jobController.subJobSparePart.isNotEmpty
                   ? jobController.subJobSparePart.first
                   : null;
+              var partDisable = false;
               if (subJobSparePart != null) {
-                if (subJobSparePart.estimateStatus == '1' ||
-                    subJobSparePart.estimateStatus == '2') {
+                partDisable =
+                    subJob != null ? (subJob.partDisable ?? false) : false;
+                if ((subJobSparePart.estimateStatus == '1' ||
+                        subJobSparePart.estimateStatus == '2') &&
+                    partDisable == false) {
                   jobController.canEdit.value = false;
                 } else {
                   jobController.canEdit.value = true;
@@ -284,16 +292,32 @@ class JobDetailView extends StatelessWidget {
                                                     ''
                                                 ? ButtonTime(
                                                     saveTime: (datetime) {
-                                                      showTimeDialog(
-                                                          context,
-                                                          context.tr(
-                                                              'confirm_message'),
-                                                          context.tr('no'),
-                                                          context.tr('yes'),
-                                                          datetime,
-                                                          jobId ?? '',
-                                                          'timestart',
-                                                          ticketId);
+                                                      if (jobController
+                                                              .canStartTime
+                                                              .value ==
+                                                          false) {
+                                                        showTimeDialog(
+                                                            context,
+                                                            context.tr(
+                                                                'confirm_message'),
+                                                            context.tr('no'),
+                                                            context.tr('yes'),
+                                                            datetime,
+                                                            jobId ?? '',
+                                                            'timestart',
+                                                            ticketId);
+                                                      } else {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return AlertDialogCustom(
+                                                                message: context
+                                                                    .tr('warning_jobs_start'),
+                                                              );
+                                                            });
+                                                      }
                                                     },
                                                     time: jobController
                                                         .savedDateStartTime,
@@ -493,6 +517,8 @@ class JobDetailView extends StatelessWidget {
                                                                               ticketId,
                                                                           jobId:
                                                                               jobId.toString(),
+                                                                          partDisable:
+                                                                              partDisable,
                                                                         ));
                                                                   },
                                                                 )
@@ -648,6 +674,8 @@ class JobDetailView extends StatelessWidget {
                                                                               ticketId,
                                                                           jobIssueId:
                                                                               jobId.toString(),
+                                                                          partDisable:
+                                                                              partDisable,
                                                                         ));
                                                                   },
                                                                 )

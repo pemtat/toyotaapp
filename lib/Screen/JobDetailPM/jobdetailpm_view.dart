@@ -19,6 +19,7 @@ import 'package:toyotamobile/Widget/JobDetail_widget/showbatteryreport_widget.da
 import 'package:toyotamobile/Widget/JobDetail_widget/showpreventive_widget.dart';
 import 'package:toyotamobile/Widget/SubJobSparepart_widget/subjobsparepart_widget.dart';
 import 'package:toyotamobile/Widget/base64img.dart';
+import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
@@ -241,17 +242,37 @@ class JobDetailViewPM extends StatelessWidget {
                                                       2.kH,
                                                       ButtonTime(
                                                         saveTime: (datetime) {
-                                                          showTimeDialogPM(
-                                                              context,
-                                                              context.tr(
-                                                                  'confirm_message'),
-                                                              context.tr('no'),
-                                                              context.tr('yes'),
-                                                              datetime,
-                                                              ticketId,
-                                                              'timestart',
-                                                              userData.id
-                                                                  .toString());
+                                                          if (jobController
+                                                                  .canStartTime
+                                                                  .value ==
+                                                              false) {
+                                                            showTimeDialogPM(
+                                                                context,
+                                                                context.tr(
+                                                                    'confirm_message'),
+                                                                context
+                                                                    .tr('no'),
+                                                                context
+                                                                    .tr('yes'),
+                                                                datetime,
+                                                                ticketId,
+                                                                'timestart',
+                                                                userData.id
+                                                                    .toString());
+                                                          } else {
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                                  return AlertDialogCustom(
+                                                                    message:
+                                                                        context.tr(
+                                                                            'warning_jobs_start'),
+                                                                  );
+                                                                });
+                                                          }
                                                         },
                                                         time: jobController
                                                             .savedDateStartTime,

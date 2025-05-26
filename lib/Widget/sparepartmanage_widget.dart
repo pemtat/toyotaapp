@@ -13,14 +13,15 @@ class SparePartManageWidget extends StatelessWidget {
   final VoidCallback editFunction;
   final String? changeShow;
   final RxList<SparePartModel> sparePartList;
-  const SparePartManageWidget({
-    super.key,
-    required this.part,
-    required this.index,
-    required this.editFunction,
-    required this.sparePartList,
-    this.changeShow,
-  });
+  final String? readOnly;
+  const SparePartManageWidget(
+      {super.key,
+      required this.part,
+      required this.index,
+      required this.editFunction,
+      required this.sparePartList,
+      this.changeShow,
+      this.readOnly});
 
   @override
   Widget build(BuildContext context) {
@@ -114,46 +115,47 @@ class SparePartManageWidget extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            top: 16,
-            right: 16,
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                popupMenuTheme: const PopupMenuThemeData(
-                  color: white3,
+          if (readOnly != 'yes')
+            Positioned(
+              top: 16,
+              right: 16,
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  popupMenuTheme: const PopupMenuThemeData(
+                    color: white3,
+                  ),
                 ),
-              ),
-              child: PopupMenuButton(
-                offset: const Offset(0, 30),
-                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                  PopupMenuItem(
-                    value: 'edit',
-                    child: Text(
-                      context.tr('edit'),
-                      style: TextStyleList.text9,
+                child: PopupMenuButton(
+                  offset: const Offset(0, 30),
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                    PopupMenuItem(
+                      value: 'edit',
+                      child: Text(
+                        context.tr('edit'),
+                        style: TextStyleList.text9,
+                      ),
                     ),
+                    PopupMenuItem(
+                      value: 'delete',
+                      child: Text(context.tr('delete'),
+                          style: TextStyleList.text9),
+                    ),
+                  ],
+                  child: Image.asset(
+                    'assets/boxedit.png',
+                    width: 24,
+                    height: 24,
                   ),
-                  PopupMenuItem(
-                    value: 'delete',
-                    child:
-                        Text(context.tr('delete'), style: TextStyleList.text9),
-                  ),
-                ],
-                child: Image.asset(
-                  'assets/boxedit.png',
-                  width: 24,
-                  height: 24,
+                  onSelected: (value) {
+                    if (value == 'edit') {
+                      editFunction();
+                    } else if (value == 'delete') {
+                      sparePartList.removeAt(index);
+                    }
+                  },
                 ),
-                onSelected: (value) {
-                  if (value == 'edit') {
-                    editFunction();
-                  } else if (value == 'delete') {
-                    sparePartList.removeAt(index);
-                  }
-                },
               ),
-            ),
-          )
+            )
         ],
       ),
     );

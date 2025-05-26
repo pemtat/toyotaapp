@@ -2946,3 +2946,52 @@ Future<void> fetchTechReport(
     }
   } catch (e) {}
 }
+
+Future<bool> checkJobsOnProcess(
+  String handlerId,
+  String token,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getJobsOnProcess(handlerId)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+
+      bool status = data['status'] ?? false;
+      return status;
+    }
+    return false;
+  } catch (e) {
+    print('Error : $e');
+    return false;
+  }
+}
+
+Future<bool> checkTicketOnProcess(
+  String handlerId,
+  String token,
+) async {
+  try {
+    final response = await http.get(
+      Uri.parse(getTicketOnProcess(handlerId)),
+      headers: {
+        'Authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      bool status = data['status'] ?? false;
+      return status;
+    }
+    return false;
+  } catch (e) {
+    print('Error : $e');
+    return false;
+  }
+}

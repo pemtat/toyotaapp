@@ -79,8 +79,9 @@ class EditFillformController extends GetxController {
   var ticketId = ''.obs;
   var jobId = ''.obs;
   var readOnly = ''.obs;
-  void fetchForm(
-      String reportId, String ticketId, String jobId, readOnly) async {
+  var partDisable = false.obs;
+  void fetchForm(String reportId, String ticketId, String jobId, readOnly,
+      partDisable) async {
     String? token = await getToken();
     this.ticketId.value = ticketId;
     this.jobId.value = jobId;
@@ -95,7 +96,7 @@ class EditFillformController extends GetxController {
     } else {
       this.readOnly.value = 'no';
     }
-
+    this.partDisable.value = partDisable;
     await fetchReportData(
         reportId, token ?? '', reportList, additionalReportList);
 
@@ -163,10 +164,12 @@ class EditFillformController extends GetxController {
       //     wcodeController.wCode.add(wCode.trim());
       //   }
       // }
-      rPController.repairProcedureList.add(RepairProcedureModel(
-        repairProcedure: reportData.produre ?? '',
-        causeProblem: reportData.problem ?? '',
-      ));
+      if (reportData.problem != '' || reportData.produre != '') {
+        rPController.repairProcedureList.add(RepairProcedureModel(
+          repairProcedure: reportData.produre ?? '',
+          causeProblem: reportData.problem ?? '',
+        ));
+      }
 
       // ignore: curly_braces_in_flow_control_structures
       for (var reportDataList in reportList + additionalReportList) {
@@ -245,8 +248,8 @@ class EditFillformController extends GetxController {
     }
   }
 
-  void showSavedDialog(
-      BuildContext context, String title, String left, String right) async {
+  void showSavedDialog(BuildContext context, String title, String left,
+      String right, partDisable) async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -256,7 +259,7 @@ class EditFillformController extends GetxController {
           rightButton: right,
           rightColor: red1,
           onRightButtonPressed: () {
-            saveReport(context);
+            saveReport(context, partDisable);
             Navigator.pop(context);
           },
         );
@@ -264,7 +267,7 @@ class EditFillformController extends GetxController {
     );
   }
 
-  Future<void> saveReport(BuildContext context) async {
+  Future<void> saveReport(BuildContext context, partDisable) async {
     String? token = await getToken();
     try {
       repairResultController.maintenanceList.isEmpty
@@ -371,9 +374,11 @@ class EditFillformController extends GetxController {
         'spare_part_remark2': additionalSparePartRemark.value.text,
         'save_time': saveCompletedtime.value
       };
-      List<SparePartModel> allSpareParts =
-          List.from(sparePartListController.sparePartList);
+      List<SparePartModel> allSpareParts = [];
+
+      allSpareParts = List.from(sparePartListController.sparePartList);
       allSpareParts.addAll(additSparePartListController.additSparePartList);
+
       if (sparePartListController.sparePartList.isEmpty) {
         final SparePartModel defaultSparePart = SparePartModel(
           cCodePage: "-",

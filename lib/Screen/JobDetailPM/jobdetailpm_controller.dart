@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -36,6 +37,7 @@ class JobDetailControllerPM extends GetxController {
   var isPicking = false.obs;
   var commentCheck = false.obs;
   var canEdit = true.obs;
+  var canStartTime = false.obs;
   var issueData = [].obs;
   var saveCompletedtime2 = ''.obs;
   var attatchments = <Map<String, dynamic>>[].obs;
@@ -72,6 +74,7 @@ class JobDetailControllerPM extends GetxController {
     String? token = await getToken();
 
     canEdit.value = true;
+    canStartTime.value = false;
     await fetchBatteryReportData(jobId, token ?? '', reportList);
     await fetchPreventiveReportData(jobId, token ?? '', reportPreventiveList);
     await fetchPreventiveICReportData(
@@ -86,6 +89,8 @@ class JobDetailControllerPM extends GetxController {
       completeCheck.value = true;
       await fetchSubJobSparePartIdPM();
     }
+    canStartTime.value = await checkTicketOnProcess(
+        jobController.handlerIdTech.value, token ?? '');
     savedDateStartTime = ''.obs;
     savedDateEndTime = ''.obs;
     comment2.value.clear();

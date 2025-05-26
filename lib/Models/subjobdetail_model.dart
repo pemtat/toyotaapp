@@ -64,6 +64,7 @@ class SubJobDetail {
   String? serialNo;
   String? model;
   String? warrantyStatus;
+  bool? partDisable;
 
   SubJobDetail(
       {this.id,
@@ -130,7 +131,8 @@ class SubJobDetail {
       this.nameTruck,
       this.serialNo,
       this.model,
-      this.warrantyStatus});
+      this.warrantyStatus,
+      this.partDisable});
 
   SubJobDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -198,6 +200,7 @@ class SubJobDetail {
     serialNo = json['serial_no'];
     model = json['model'];
     warrantyStatus = json['warranty_status'];
+    partDisable = json['part_disable'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -267,6 +270,7 @@ class SubJobDetail {
     data['serial_no'] = serialNo;
     data['model'] = model;
     data['warranty_status'] = warrantyStatus;
+    data['part_disable'] = partDisable;
     return data;
   }
 }

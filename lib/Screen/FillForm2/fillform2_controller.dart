@@ -59,6 +59,14 @@ class FillformController2 extends GetxController {
   final GlobalKey<SfSignaturePadState> signature = GlobalKey();
   final UserController userController = Get.put(UserController());
   var saveCompletedtime = ''.obs;
+  List<String> fieldServiceReportList = [
+    'Inspection',
+    'Repairing',
+    'Re-repairing',
+    'Commissioning',
+    'Other',
+  ];
+  var fieldServiceReport = <String>[].obs;
   void clearSignature() {
     isSignatureEmpty.value = true;
     signature.currentState!.clear();
@@ -138,6 +146,10 @@ class FillformController2 extends GetxController {
         : createJobsBatteryReport();
 
     saveCurrentDateTime(saveCompletedtime);
+    if (fieldServiceReport.isEmpty) {
+      fieldServiceReport.add('-');
+    }
+
     if (correctiveActionController.correctiveAction.isNotEmpty) {
       if (correctiveActionController.correctiveAction.first == 'Other') {
         correctiveActionController.correctiveAction.clear();
@@ -145,6 +157,7 @@ class FillformController2 extends GetxController {
             .add('Other : ${correctiveActionController.other.value.text}');
       }
     }
+
     if (repairPmController.repairPm.isNotEmpty) {
       if (repairPmController.repairPm.first == 'Other') {
         repairPmController.repairPm.clear();
@@ -319,7 +332,8 @@ class FillformController2 extends GetxController {
       "btr_sparepart": combinedList,
       "specic_voltage_check": specicGravity,
       'spare_part_remark': sparePartRemark.value.text,
-      "btr_conditions": batteryCondition
+      "btr_conditions": batteryCondition,
+      'field_report': fieldServiceReport.first,
     };
     try {
       final response = await http.post(Uri.parse(apiUrl),

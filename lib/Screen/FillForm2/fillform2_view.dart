@@ -21,12 +21,14 @@ import 'package:toyotamobile/Widget/FIllForm2_widget/batteryusage_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/forkliftinformation_widget.dart';
 import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_view.dart';
 import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_widget.dart';
+import 'package:toyotamobile/Widget/checkbox_widget.dart';
 import 'package:toyotamobile/Widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/specicgravity_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
 import 'package:toyotamobile/Widget/button_widget.dart';
 import 'package:toyotamobile/Widget/icon_widget.dart';
+import 'package:toyotamobile/Widget/required_text_widget.dart';
 import 'package:toyotamobile/Widget/sizedbox_widget.dart';
 import 'package:toyotamobile/Widget/sparepartmanage_widget.dart';
 import 'package:toyotamobile/Widget/textfield_widget.dart';
@@ -78,6 +80,37 @@ class FillFormView2 extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            if (jobIssueId != null)
+              Column(
+                children: [
+                  6.kH,
+                  BoxContainer(
+                    children: [
+                      const RequiredTextLong(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount:
+                            fillformController2.fieldServiceReportList.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: CheckBoxWidget(
+                              text: fillformController2
+                                  .fieldServiceReportList[index],
+                              listItem: fillformController2.fieldServiceReport,
+                              itemSet: fillformController2.fieldServiceReport,
+                              option: 'true',
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
             10.kH,
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
