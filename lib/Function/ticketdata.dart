@@ -19,7 +19,9 @@ import 'package:toyotamobile/Models/pmcommentjob_model.dart';
 import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
+import 'package:toyotamobile/Models/sparepart_status_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
+import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/techreport_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/truck_by_id_model.dart';
@@ -2994,4 +2996,84 @@ Future<bool> checkTicketOnProcess(
     print('Error : $e');
     return false;
   }
+}
+
+Future<void> fetchSubJobSparePartPage({
+  required String id,
+  required String option,
+  required RxList<SubJobSparePart> subJobSparePart,
+  int offset = 0,
+  int limit = 10,
+  String? search,
+  String? techManagerStatus,
+  String? estimateStatus,
+  String? createdDate,
+  bool reset = false,
+}) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('token');
+
+  try {
+    final uri = Uri.parse(
+      option == 'tech'
+          ? getSparepartJobNewPage(
+              id: id,
+              isTechManagerMode: false,
+              offset: offset,
+              limit: limit,
+              search: search,
+              techManagerStatus: techManagerStatus,
+              estimateStatus: estimateStatus,
+              createdDate: createdDate)
+          : getSparepartJobNewPage(
+              id: id,
+              isTechManagerMode: true,
+              offset: offset,
+              limit: limit,
+              search: search,
+              techManagerStatus: techManagerStatus,
+              estimateStatus: estimateStatus,
+              createdDate: createdDate),
+    );
+
+    final response = await http.get(
+      uri,
+      headers: {'Authorization': '$token'},
+    );
+    print(uri);
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = jsonDecode(response.body);
+      List<SubJobSparePart> itemList =
+          responseData.map((job) => SubJobSparePart.fromJson(job)).toList();
+
+      if (reset) {
+        subJobSparePart.value = [];
+      }
+
+      subJobSparePart.value += itemList;
+    }
+  } catch (e) {
+    print(e.toString());
+  }
+}
+
+Future<void> fetchStatusSparePart(
+    Rx<SparepartStatusModel?> statusSparePart, String id, String option) async {
+  try {
+    String? token = await getToken();
+    final response = await http.get(
+      Uri.parse(getStatusSparepart(id, option)),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final model = SparepartStatusModel.fromJson(data);
+      statusSparePart.value = model;
+    } else {
+      print("Failed to load data: ${response.statusCode}");
+    }
+  } catch (e) {}
 }

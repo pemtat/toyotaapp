@@ -259,6 +259,35 @@ String getSparepartJobById(String id) {
   return '$url/api/rest/jobs/getSparepartByHandlerId?tech_manager_id=$id';
 }
 
+String getSparepartJobNewPage({
+  required String id,
+  required bool isTechManagerMode,
+  required int offset,
+  required int limit,
+  String? search,
+  String? techManagerStatus,
+  String? estimateStatus,
+  String? createdDate,
+}) {
+  final queryParams = {
+    isTechManagerMode ? 'tech_manager_id' : 'handler_id': id,
+    'offset': offset.toString(),
+    'limit': limit.toString(),
+    if (search != null && search.isNotEmpty) 'search': search,
+    if (techManagerStatus != null && techManagerStatus.isNotEmpty)
+      'tech_manager_status': techManagerStatus,
+    if (estimateStatus != null && estimateStatus.isNotEmpty)
+      'estimate_status': estimateStatus,
+    if (createdDate != null && createdDate.isNotEmpty)
+      'created_date': createdDate,
+  };
+
+  final uri = Uri.parse('$url/api/rest/jobs/getSparepartByHandlerIdNewPage')
+      .replace(queryParameters: queryParams);
+
+  return uri.toString();
+}
+
 String getSparepartJobByIdNew(String id) {
   return '$url/api/rest/jobs/getSparepartByHandlerIdNew?tech_manager_id=$id';
 }
@@ -465,6 +494,10 @@ String getJobsOnProcess(String id) {
 
 String getTicketOnProcess(String id) {
   return '$url/api/rest/pm_jobs/check_ticket_on_process/$id';
+}
+
+String getStatusSparepart(String id, String option) {
+  return '$url/api/rest/jobs/getSparepartByHandlerCount?$option=$id';
 }
 
 String usernameProduct = 'VanSale-Dev';

@@ -1,10 +1,12 @@
 import 'package:toyotamobile/Function/gettoken.dart';
 import 'package:toyotamobile/Function/stringtostatus.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/getcustomerbyid.dart';
 import 'package:toyotamobile/Models/getsubjobassigned_model.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:toyotamobile/Models/notificationhistory_model.dart';
 import 'package:toyotamobile/Models/pm_model.dart';
+import 'package:toyotamobile/Models/sparepart_status_model.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart' as ticket;
 import 'package:toyotamobile/Models/userinfobyid_model.dart';
@@ -12,11 +14,14 @@ import 'package:toyotamobile/Screen/Bottombar/bottom_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:toyotamobile/Screen/Sparepart/sparepart_controller.dart';
 import 'package:toyotamobile/Screen/User/user_controller.dart';
 import 'package:toyotamobile/Service/api.dart';
 import 'dart:convert';
 
 class HomeController extends GetxController {
+  final SparePartController sparePartController =
+      Get.put(SparePartController());
   var jobList = <Issues>[].obs;
   var userInfo = <UserById>[].obs;
   var ticketJobList = <Issues>[].obs;
@@ -31,6 +36,8 @@ class HomeController extends GetxController {
   var subJobSparePartReturn = <SubJobSparePart>[].obs;
   var notificationHistory = <NotificationHistory>[].obs;
   var subJobAssignedPage = <SubJobAssgined>[].obs;
+  final statusSparePart = Rx<SparepartStatusModel?>(null);
+
   final BottomBarController notificationController =
       Get.put(BottomBarController());
   int currentPage = 1;
@@ -92,6 +99,7 @@ class HomeController extends GetxController {
       String? tokenResponse = prefs.getString('token_response');
       Map<String, dynamic> tokenData = json.decode(tokenResponse ?? '');
       // String? accessToken = tokenData['token'];
+
       handlerIdTech.value = tokenData['user']['id'].toString();
       int handlerId = tokenData['user']['id'];
       techLevel.value = tokenData['user']['tech_level'];
@@ -109,11 +117,13 @@ class HomeController extends GetxController {
       } else {
         await fetchSubJobSparePartReturn(handlerId.toString(), 'leadtech');
       }
-
+      sparePartController.fetchJobs(reset: true);
       if (techLevel.value == '1') {
-        fetchSubJobSparePart(handlerId.toString(), 'tech');
+        await fetchStatusSparePart(
+            statusSparePart, handlerId.toString(), 'handler_id');
       } else {
-        await fetchSubJobSparePart(handlerId.toString(), 'leadtech');
+        await fetchStatusSparePart(
+            statusSparePart, handlerId.toString(), 'tech_manager_id');
       }
 
       pmItemsPage.clear();

@@ -14,6 +14,7 @@ class SearchFilter extends StatelessWidget {
   final List<Widget> statusCheckboxes;
   final Rx<DateTime?> selectedDate;
   final Function clearFilters;
+  final bool disableFilter; // ✅ เพิ่มตรงนี้
 
   const SearchFilter(
       {super.key,
@@ -21,7 +22,8 @@ class SearchFilter extends StatelessWidget {
       required this.searchQuery,
       required this.statusCheckboxes,
       required this.selectedDate,
-      required this.clearFilters});
+      required this.clearFilters,
+      this.disableFilter = false});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +95,7 @@ class SearchFilter extends StatelessWidget {
                                 )),
                           ],
                         ),
-                        ...statusCheckboxes,
+                        if (disableFilter == false) ...statusCheckboxes,
                         8.kH,
                         const AppDivider(),
                         8.kH,

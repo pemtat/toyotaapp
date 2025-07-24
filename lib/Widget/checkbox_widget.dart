@@ -307,11 +307,12 @@ class SingleCheckBoxWidget2 extends StatelessWidget {
 class buildCheckbox extends StatelessWidget {
   final String status;
   final RxSet<String> selectedStatus;
-
+  final bool singleSelect; // ✅ เพิ่มตรงนี้
   const buildCheckbox({
     super.key,
     required this.status,
     required this.selectedStatus,
+    this.singleSelect = false,
   });
 
   @override
@@ -326,6 +327,9 @@ class buildCheckbox extends StatelessWidget {
             value: isSelected,
             onChanged: (value) {
               if (value != null && value) {
+                if (singleSelect) {
+                  selectedStatus.clear();
+                }
                 selectedStatus.add(status);
               } else {
                 selectedStatus.remove(status);

@@ -342,7 +342,7 @@ class FillformController extends GetxController {
         jobDetailController.completeCheck.value = true;
         showSaveMessage();
       } else {
-        print('Failed to save report: ${response.statusCode}');
+        print('Failed to save report: ${response.body}');
       }
     } catch (e) {
       print('Error occurred while saving report: $e');
