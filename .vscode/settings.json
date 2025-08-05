@@ -8,5 +8,6 @@
   "files.watcherExclude": {
     "**/.fvm": true
   },
-  "java.configuration.updateBuildConfiguration": "disabled"
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "cmake.sourceDirectory": "/Users/vansales/Project/mainapp-main/linux"
 }

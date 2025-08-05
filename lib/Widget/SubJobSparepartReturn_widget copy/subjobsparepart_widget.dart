@@ -163,10 +163,15 @@ class SubJobSparePartReturnWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       subJobSparePart.projectId == '1'
-                          ? Text(
-                              'Ticket : ${subJobSparePart.bugId}',
-                              style: TextStyleList.subtitle9,
-                            )
+                          ? subJobSparePart.realProjectId == '1'
+                              ? Text(
+                                  'Ticket : ${subJobSparePart.bugId}',
+                                  style: TextStyleList.subtitle9,
+                                )
+                              : Text(
+                                  'PM ID: ${subJobSparePart.bugId}',
+                                  style: TextStyleList.subtitle9,
+                                )
                           : Container(),
                       Row(
                         children: [
@@ -187,10 +192,12 @@ class SubJobSparePartReturnWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       subJobSparePart.projectId == '1'
-                          ? Text(
-                              'BB no. : ${subJobSparePart.referenceCode ?? ''}',
-                              style: TextStyleList.subtitle9,
-                            )
+                          ? subJobSparePart.referenceCode != null
+                              ? Text(
+                                  'BB no. : ${subJobSparePart.referenceCode ?? ''}',
+                                  style: TextStyleList.subtitle9,
+                                )
+                              : Container()
                           : Container(),
                       if (jobController.techLevel.value == '1')
                         Row(
@@ -207,7 +214,7 @@ class SubJobSparePartReturnWidget extends StatelessWidget {
                         )
                     ],
                   ),
-                  6.kH,
+                  if (subJobSparePart.referenceCode != null) 6.kH,
                   if (subJobSparePart.documentNo != null)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,

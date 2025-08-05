@@ -1,11 +1,15 @@
 import 'package:intl/intl.dart';
 
 String formatDateTime(String dateTime, String option) {
-  DateTime parsedDate = DateTime.parse(dateTime);
-  if (option == 'time') {
-    return DateFormat('dd MMMM yyyy HH:mm').format(parsedDate);
-  } else {
-    return DateFormat('dd MMMM yyyy').format(parsedDate);
+  try {
+    DateTime parsedDate = DateTime.parse(dateTime);
+    if (option == 'time') {
+      return DateFormat('dd MMMM yyyy HH:mm').format(parsedDate);
+    } else {
+      return DateFormat('dd MMMM yyyy').format(parsedDate);
+    }
+  } catch (e) {
+    return dateTime;
   }
 }
 

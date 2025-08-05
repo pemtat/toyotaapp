@@ -133,7 +133,7 @@ class PtPsOm extends GetxController {
   List<String> ListData = [
     'สภาพตัวยึด Platform เเละการคืนตำแหน่ง',
     'จุดยึดเเละแกนบังคับ (Tiller arm)',
-    'ตรวจสอบ การทำงาน Steering Arm',
+    'ตรวจสอบ การทำงาน Street Arm, ปุ่ม Safety Revers',
     'สภาพ/ความหนาล้อ Castor',
     'สภาพ Locking pin, bush เเละ Wheel fork',
     'ตรวจเช็คระบบช่วงล่างอยู่ในสภาพดี (ออกตัวแรงๆเเล้วเบรก) "ตัวรถ กับ ระบบช่วงล่าง" ต้องไม่โยกออกจากกัน',

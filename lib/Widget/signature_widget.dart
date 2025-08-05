@@ -54,9 +54,26 @@ class SignatureWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(context.tr('customer_checking'),
-                style: TextStyleList.detail2
-                    .copyWith(decoration: TextDecoration.underline)),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: context.tr('customer_checking'),
+                    style: TextStyleList.detail2
+                        .copyWith(decoration: TextDecoration.underline),
+                  ),
+                  TextSpan(
+                    text: ' *',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: TextStyleList.detail2.fontSize,
+                      fontWeight: TextStyleList.detail2.fontWeight,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Obx(() => Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -81,9 +98,26 @@ class SignatureWidget extends StatelessWidget {
                   ],
                 )),
             10.kH,
-            Text(context.tr('customer_score'),
-                style: TextStyleList.detail2
-                    .copyWith(decoration: TextDecoration.underline)),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: context.tr('customer_score'),
+                    style: TextStyleList.detail2
+                        .copyWith(decoration: TextDecoration.underline),
+                  ),
+                  TextSpan(
+                    text: ' *',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: TextStyleList.detail2.fontSize,
+                      fontWeight: TextStyleList.detail2.fontWeight,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Column(
               children: List.generate(5, (index) {
                 int score = 5 - index;
@@ -163,6 +197,9 @@ class SignatureWidget extends StatelessWidget {
               showMessage(context.tr('signature_require_1'));
             } else if (signatureController.value.text == '') {
               showMessage(context.tr('signature_require_2'));
+            } else if (customerScore.value == 0 ||
+                customerChecking.value == 0) {
+              showMessage(context.tr('signature_require_3'));
             } else {
               var token = await getToken();
               showDialog(

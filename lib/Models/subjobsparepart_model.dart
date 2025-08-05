@@ -25,6 +25,7 @@ class SubJobSparePart {
   String? documentNo;
   String? purchaseStatus;
   String? projectId;
+  String? realProjectId;
   String? handlerId;
   String? reproducibility;
   String? dueDate;
@@ -74,6 +75,7 @@ class SubJobSparePart {
       this.projection,
       this.categoryId,
       this.projectId,
+      this.realProjectId,
       this.handlerId,
       this.reproducibility,
       this.dueDate,
@@ -126,6 +128,7 @@ class SubJobSparePart {
     projection = json['projection'];
     categoryId = json['category_id'];
     projectId = json['project_id'];
+    realProjectId = json['real_project_id'];
     handlerId = json['handler_id'];
     reproducibility = json['reproducibility'];
     dueDate = json['due_date'];
@@ -205,6 +208,7 @@ class SubJobSparePart {
     data['projection'] = projection;
     data['category_id'] = categoryId;
     data['project_id'] = projectId;
+    data['real_project_id'] = realProjectId;
     data['handler_id'] = handlerId;
     data['purchase_order_status'] = purchaseStatus;
     data['reproducibility'] = reproducibility;

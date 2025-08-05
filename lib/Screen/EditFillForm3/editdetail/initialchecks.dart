@@ -101,7 +101,7 @@ class InitialChecks extends GetxController {
     "แป้นเหยียบเซฟตี้/ เบรกมือ/ Dead man's handle",
     'ฟังชั่นระบบไฮดรอลิค,ยก,สไลด์,กระดก,เลื่อนงานซ้าย-ขวา,หมุนงา(Mini mast)',
     'ทดสอบ ระบบ Parking brake',
-    'เช็คสภาพไฟ, Cover',
+    'เช็คสภาพไฟ, Cover, สวิตซ์เบาะนั่ง, Seat Switch',
     'สภาพเเละความสะอาดโดยทั่วไปรอบตัวรถ',
   ];
   List<String> typeData = ['I'];
