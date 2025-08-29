@@ -121,6 +121,7 @@ class TicketDetailView extends StatelessWidget {
                                     status: issue.status.name,
                                     more:
                                         ticketController.moreTicketDetail.value,
+                                    projectId: issue.project.id ?? 1,
                                   ),
                                 ]),
                               ),

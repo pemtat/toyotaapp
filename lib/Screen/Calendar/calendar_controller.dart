@@ -87,6 +87,7 @@ class CalendarController extends GetxController {
           "model": pm.tModel ?? '-',
           "type": EventType.PM,
           "address": pm.address,
+          "projectId": '2'
         };
 
         bool isDuplicate = tempEvents[dayKey]?.any((event) =>
@@ -161,6 +162,7 @@ class CalendarController extends GetxController {
           "location": job.address ?? '',
           "serialNo": job.serialNo ?? '',
           "type": EventType.Job,
+          "projectId": job.projectId
         };
 
         bool isDuplicate = tempEvents[dayKey]?.any((event) =>

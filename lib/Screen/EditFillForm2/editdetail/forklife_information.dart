@@ -52,6 +52,7 @@ class ForklifeInformation extends GetxController {
           textSet: forklifeOperation.value,
           number: TextInputType.number,
           addtionalText: 'Hrs',
+          required: true,
         ),
         space.kH,
         EndButton(
@@ -109,6 +110,7 @@ class ForklifeInformation extends GetxController {
           textSet: forklifeOperation.value,
           number: TextInputType.number,
           addtionalText: 'Hrs',
+          required: true,
         ),
         space.kH,
         EndButton(

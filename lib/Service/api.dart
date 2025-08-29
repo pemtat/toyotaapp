@@ -1,5 +1,5 @@
 const String url = 'https://fsm-dev.vansales.asia';
-const String urlFSM = 'http://tscapitest.tmh-wst.com';
+const String urlFSM = 'https://cloudtestapi.tmh-wst.com';
 const String issue = '$url/api/rest/issues';
 const String user = '$url/api/rest/users';
 const String loginUrl = '$url/api/rest/users/login';
@@ -245,6 +245,13 @@ String getSparepartJobByHandler(String id) {
 
 String getSparepartJobByHandlerNew(String id) {
   return '$url/api/rest/jobs/getSparepartByHandlerIdNew?handler_id=$id';
+}
+
+String getSparepartJobId(String id, String option) {
+  if (option == 'pm') {
+    return '$url/api/rest/jobs/getSparepartByHandlerNewById?bug_id=$id';
+  }
+  return '$url/api/rest/jobs/getSparepartByHandlerNewById?job_id=$id';
 }
 
 String getSparepartJobReturn(String id) {

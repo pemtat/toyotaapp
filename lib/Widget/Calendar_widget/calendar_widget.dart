@@ -57,10 +57,15 @@ class CalendarItem extends StatelessWidget {
                                   style: TextStyleList.text9,
                                 ),
                                 4.wH,
-                                Text(
-                                  '(Ticket #${event['bugid'].toString().padLeft(7, '0')})',
-                                  style: TextStyleList.text1,
-                                ),
+                                event['projectId'] == '1'
+                                    ? Text(
+                                        '(Ticket #${event['bugid'].toString().padLeft(7, '0')})',
+                                        style: TextStyleList.text1,
+                                      )
+                                    : Text(
+                                        '(PM #${event['bugid'].toString().padLeft(7, '0')})',
+                                        style: TextStyleList.text1,
+                                      )
                               ],
                             )
                           : Text(

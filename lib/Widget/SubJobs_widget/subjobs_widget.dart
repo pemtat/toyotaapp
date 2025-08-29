@@ -60,10 +60,15 @@ class SubJobsTicket extends StatelessWidget {
                 style: TextStyleList.subtitle1,
               ),
               const SizedBox(width: 5),
-              Text(
-                ('(Ticket #${bugId.toString().padLeft(7, '0')})'),
-                style: TextStyleList.text11,
-              ),
+              job.projectId == '1'
+                  ? Text(
+                      ('(Ticket #${bugId.toString().padLeft(7, '0')})'),
+                      style: TextStyleList.text11,
+                    )
+                  : Text(
+                      ('(PM #${bugId.toString().padLeft(7, '0')})'),
+                      style: TextStyleList.text11,
+                    ),
               const Spacer(),
               confirm == null
                   ? StatusButton(status: status ?? '')

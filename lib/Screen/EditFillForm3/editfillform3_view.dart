@@ -29,6 +29,7 @@ import 'package:toyotamobile/Styles/margin.dart';
 import 'package:toyotamobile/Styles/text.dart';
 import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_view.dart';
 import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_widget.dart';
+import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
 import 'package:toyotamobile/Widget/boxdetail_widget.dart';
@@ -166,6 +167,7 @@ class EditFillFormView3 extends StatelessWidget {
                         text: context.tr('operation_hour'),
                         textSet: fillformController3.operationHour.value,
                         readOnly: readOnly == null ? null : 'yes',
+                        required: true,
                       ),
                     ),
                     10.wH,
@@ -969,11 +971,18 @@ class EditFillFormView3 extends StatelessWidget {
           decoration: Decoration3(),
           child: EndButton(
               onPressed: () {
-                fillformController3.showSaveDialog(
-                    context,
-                    context.tr('save_message'),
-                    context.tr('no'),
-                    context.tr('yes'));
+                fillformController3.checkFormCompletion() == true
+                    ? fillformController3.showSaveDialog(
+                        context,
+                        context.tr('save_message'),
+                        context.tr('no'),
+                        context.tr('yes'))
+                    : showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const AlertDialogNotOperationHour();
+                        },
+                      );
               },
               text: context.tr('save')),
         ),

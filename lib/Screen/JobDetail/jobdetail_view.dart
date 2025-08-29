@@ -169,6 +169,7 @@ class JobDetailView extends StatelessWidget {
                                         reporter: issue.reporter.realName ?? '',
                                         more: jobController
                                             .moreTicketDetail.value,
+                                        projectId: issue.project.id ?? 1,
                                       ),
                                     ],
                                   ),
@@ -180,7 +181,8 @@ class JobDetailView extends StatelessWidget {
                                             8.kH,
                                             MoreDetail(
                                               file: file,
-                                              description: issue.description,
+                                              description:
+                                                  subJob?.description ?? '',
                                               moreDetail:
                                                   jobController.moreDetail,
                                               ediefile: false,

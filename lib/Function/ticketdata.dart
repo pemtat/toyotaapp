@@ -20,6 +20,7 @@ import 'package:toyotamobile/Models/pmjobinfo_model.dart';
 import 'package:toyotamobile/Models/preventivereport_model.dart';
 import 'package:toyotamobile/Models/repairreport_model.dart';
 import 'package:toyotamobile/Models/subjobdetail_model.dart';
+import 'package:toyotamobile/Models/subjobsparepart_model.dart';
 import 'package:toyotamobile/Models/techreport_model.dart';
 import 'package:toyotamobile/Models/ticketbyid_model.dart';
 import 'package:toyotamobile/Models/truck_by_id_model.dart';
@@ -2993,5 +2994,31 @@ Future<bool> checkTicketOnProcess(
   } catch (e) {
     print('Error : $e');
     return false;
+  }
+}
+
+Future<void> fetchSparepartById(String ticketId, String jobId, String option,
+    RxList<SubJobSparePart> subJobSparePart) async {
+  try {
+    String? token = await getToken();
+    final response = await http.get(
+      Uri.parse(getSparepartJobId(jobId, option)),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+
+      final List<SubJobSparePart> spareparts =
+          data.map((e) => SubJobSparePart.fromJson(e)).toList();
+
+      subJobSparePart.assignAll(spareparts);
+    } else {
+      print("Failed to load data: ${response.statusCode}");
+    }
+  } catch (e) {
+    print(e);
   }
 }

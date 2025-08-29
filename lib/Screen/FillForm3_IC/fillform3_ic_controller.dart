@@ -84,6 +84,16 @@ class FillformController3IC extends GetxController {
     await fetchPmTruckById(jobId, product, serialNo, model, customerName);
   }
 
+  bool checkFormCompletion() {
+    if (operationHour.value.text.isEmpty ||
+        operationHour.value.text == '' ||
+        operationHour.value.text == '-') {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   Future<void> saveSignature() async {
     if (signature.currentState != null) {
       try {

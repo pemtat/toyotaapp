@@ -9,13 +9,16 @@ class TextFieldWidget extends StatelessWidget {
   final String? readOnly;
   final TextEditingController textSet;
   final String? addtionalText;
+  final bool? required;
+
   const TextFieldWidget(
       {super.key,
       required this.text,
       required this.textSet,
       this.number,
       this.addtionalText,
-      this.readOnly});
+      this.readOnly,
+      this.required = false});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +34,19 @@ class TextFieldWidget extends StatelessWidget {
               keyboardType: number ?? TextInputType.text,
               controller: textSet,
               decoration: InputDecoration(
-                label: Text(
-                  text,
-                  style: TextStyleList.text11,
+                label: RichText(
+                  text: TextSpan(
+                    text: text,
+                    style: TextStyleList.text11,
+                    children: [
+                      if (required == true)
+                        TextSpan(
+                          text: ' *',
+                          style:
+                              TextStyleList.text11.copyWith(color: Colors.red),
+                        ),
+                    ],
+                  ),
                 ),
                 hintStyle: TextStyleList.text11,
                 filled: true,
@@ -212,13 +225,15 @@ class TextFieldEditWidget extends StatelessWidget {
   final TextInputType? number;
   final String? addtionalText;
   final String? readOnly;
+  final bool? required;
   const TextFieldEditWidget(
       {super.key,
       required this.text,
       required this.textSet,
       this.number,
       this.addtionalText,
-      this.readOnly});
+      this.readOnly,
+      this.required = false});
 
   @override
   Widget build(BuildContext context) {
@@ -233,9 +248,19 @@ class TextFieldEditWidget extends StatelessWidget {
               controller: textSet,
               keyboardType: number ?? TextInputType.text,
               decoration: InputDecoration(
-                label: Text(
-                  text,
-                  style: TextStyleList.text11,
+                label: RichText(
+                  text: TextSpan(
+                    text: text,
+                    style: TextStyleList.text11,
+                    children: [
+                      if (required == true)
+                        TextSpan(
+                          text: ' *',
+                          style:
+                              TextStyleList.text11.copyWith(color: Colors.red),
+                        ),
+                    ],
+                  ),
                 ),
                 hintStyle: TextStyleList.text11,
                 filled: true,

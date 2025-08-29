@@ -72,6 +72,20 @@ class FillformController2 extends GetxController {
     signature.currentState!.clear();
   }
 
+  bool checkFormCompletion() {
+    if (forkLifeInformation.forklifeList.isEmpty) {
+      return false;
+    }
+
+    final operation = forkLifeInformation.forklifeList.first.forkLifeOperation;
+
+    if (operation == 0.0 || operation == 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   Future<void> saveSignature() async {
     if (signature.currentState != null) {
       try {

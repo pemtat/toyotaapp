@@ -235,6 +235,7 @@
   "warning": "Warning",
   "warning_message_1": "Please fill out at least 1 item",
   "warning_message_2": "Please fill in all required information.",
+  "warning_message_3": "Please fill in the truck operating hours.",
   "warning_update": "The app has a new version update. Please update the app to continue using it.",
   "warning_file": "This file format is not supported. Please select a file with the extension .jpg, .jpeg, or .png.",
   "warning_yes": "Close",

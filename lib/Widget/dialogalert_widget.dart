@@ -282,6 +282,42 @@ class AlertDialogNotComplete extends StatelessWidget {
   }
 }
 
+class AlertDialogNotOperationHour extends StatelessWidget {
+  const AlertDialogNotOperationHour({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: white3,
+      title: Center(
+          child: Text(
+        context.tr('warning'),
+        style: TextStyleList.subtitle1,
+      )),
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            context.tr('warning_message_3'),
+            style: TextStyleList.text2,
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: Text(
+            context.tr('warning_yes'),
+            style: TextStyleList.subtext3,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+}
+
 class AlertDialogCustom extends StatelessWidget {
   String message;
   AlertDialogCustom({super.key, required this.message});

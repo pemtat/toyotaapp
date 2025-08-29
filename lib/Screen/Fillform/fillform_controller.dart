@@ -105,7 +105,10 @@ class FillformController extends GetxController {
         repairResultController.maintenanceList.isEmpty ||
         repairResultController.maintenanceList.first.chargingType.isEmpty ||
         repairResultController.maintenanceList.first.hr == 0.0 ||
-        repairResultController.maintenanceList.first.people == 0.0) {
+        repairResultController.maintenanceList.first.people == 0.0 ||
+        operationHour.value.text.isEmpty ||
+        operationHour.value.text == '' ||
+        operationHour.value.text == '-') {
       return false;
     } else {
       return true;

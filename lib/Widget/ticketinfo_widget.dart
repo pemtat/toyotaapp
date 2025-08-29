@@ -22,13 +22,14 @@ class TicketInfo extends StatelessWidget {
   final String companyName;
   final bool? more;
 
-  const TicketInfo(
-      {super.key,
-      required this.ticketId,
-      required this.dateTime,
-      required this.reporter,
-      required this.companyName,
-      this.more});
+  const TicketInfo({
+    super.key,
+    required this.ticketId,
+    required this.dateTime,
+    required this.reporter,
+    required this.companyName,
+    this.more,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -232,6 +233,7 @@ class TicketInfoStatus extends StatelessWidget {
   final String status;
   final String companyName;
   final bool? more;
+  final int projectId;
   const TicketInfoStatus({
     super.key,
     required this.ticketId,
@@ -240,6 +242,7 @@ class TicketInfoStatus extends StatelessWidget {
     required this.status,
     required this.companyName,
     this.more,
+    required this.projectId,
   });
 
   @override
@@ -251,8 +254,12 @@ class TicketInfoStatus extends StatelessWidget {
           children: [
             Row(
               children: [
-                TitleApp(
-                    text: 'Ticket ID: #${ticketId.toString().padLeft(7, '0')}'),
+                projectId == 1
+                    ? TitleApp(
+                        text:
+                            'Ticket ID: #${ticketId.toString().padLeft(7, '0')}')
+                    : TitleApp(
+                        text: 'PM ID: #${ticketId.toString().padLeft(7, '0')}'),
                 5.wH,
                 GestureDetector(
                   onTap: () {

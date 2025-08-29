@@ -22,6 +22,7 @@ import 'package:toyotamobile/Widget/FIllForm2_widget/forkliftinformation_widget.
 import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_view.dart';
 import 'package:toyotamobile/Widget/SparePartRemark_widget/sparepart_remark_widget.dart';
 import 'package:toyotamobile/Widget/checkbox_widget.dart';
+import 'package:toyotamobile/Widget/dialogalert_widget.dart';
 import 'package:toyotamobile/Widget/listcheck_widget.dart';
 import 'package:toyotamobile/Widget/FIllForm2_widget/specicgravity_widget.dart';
 import 'package:toyotamobile/Widget/addeditbox_widget.dart';
@@ -561,11 +562,19 @@ class FillFormView2 extends StatelessWidget {
           decoration: Decoration3(),
           child: EndButton(
               onPressed: () {
-                fillformController2.showSaveDialog(
-                    context,
-                    context.tr('save_message'),
-                    context.tr('no'),
-                    context.tr('yes'));
+                fillformController2.checkFormCompletion() == true
+                    ? fillformController2.showSaveDialog(
+                        context,
+                        context.tr('save_message'),
+                        context.tr('no'),
+                        context.tr('yes'))
+                    : showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const AlertDialogNotOperationHour();
+                        },
+                      );
+                ;
               },
               text: context.tr('save')),
         ),

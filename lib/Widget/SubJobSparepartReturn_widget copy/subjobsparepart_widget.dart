@@ -192,7 +192,8 @@ class SubJobSparePartReturnWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       subJobSparePart.projectId == '1'
-                          ? subJobSparePart.referenceCode != null
+                          ? subJobSparePart.referenceCode != null &&
+                                  subJobSparePart.referenceCode != ''
                               ? Text(
                                   'BB no. : ${subJobSparePart.referenceCode ?? ''}',
                                   style: TextStyleList.subtitle9,
@@ -214,7 +215,9 @@ class SubJobSparePartReturnWidget extends StatelessWidget {
                         )
                     ],
                   ),
-                  if (subJobSparePart.referenceCode != null) 6.kH,
+                  if (subJobSparePart.referenceCode != null &&
+                      subJobSparePart.referenceCode != '')
+                    6.kH,
                   if (subJobSparePart.documentNo != null)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,

@@ -158,8 +158,10 @@ class FillFormView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFieldWidget(
-                          text: context.tr('operation_hour'),
-                          textSet: fillFormController.operationHour.value),
+                        text: context.tr('operation_hour'),
+                        textSet: fillFormController.operationHour.value,
+                        required: true,
+                      ),
                     ),
                     10.wH,
                     Expanded(

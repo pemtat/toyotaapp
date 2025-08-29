@@ -207,13 +207,13 @@ class JobDetailControllerPM extends GetxController {
 
   Future<void> fetchSubJobSparePartIdPM() async {
     try {
-      jobController.subJobSparePart.refresh();
-      subJobSparePart.clear();
-      final filteredSpareParts = jobController.subJobSparePart
-          .where((element) => element.bugId == jobId)
-          .toList();
+      // jobController.subJobSparePart.refresh();
+      // subJobSparePart.clear();
+      // final filteredSpareParts = jobController.subJobSparePart
+      //     .where((element) => element.bugId == jobId)
+      //     .toList();
 
-      subJobSparePart.value = filteredSpareParts;
+      await fetchSparepartById(jobId, jobId, 'pm', subJobSparePart);
       subJobSparePart.refresh();
     } catch (e) {
       print(e);

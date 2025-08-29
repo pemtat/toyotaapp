@@ -327,6 +327,20 @@ class EditFillformController2 extends GetxController {
     // }
   }
 
+  bool checkFormCompletion() {
+    if (forkLifeInformation.forklifeList.isEmpty) {
+      return false;
+    }
+
+    final operation = forkLifeInformation.forklifeList.first.forkLifeOperation;
+
+    if (operation == 0.0 || operation == 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   Future<void> saveReport(BuildContext context) async {
     String? token = await getToken();
     String apiUrl = jobIssueId.value == ''

@@ -157,13 +157,13 @@ class JobDetailController extends GetxController {
 
   Future<void> fetchSubJobSparePartId() async {
     try {
-      jobController.subJobSparePart.refresh();
-      subJobSparePart.clear();
-      final filteredSpareParts = jobController.subJobSparePart
-          .where((element) => element.id == jobId)
-          .toList();
+      // jobController.subJobSparePart.refresh();
+      // subJobSparePart.clear();
+      // final filteredSpareParts = jobController.subJobSparePart
+      //     .where((element) => element.id == jobId)
+      //     .toList();
 
-      subJobSparePart.value = filteredSpareParts;
+      await fetchSparepartById(issueId, jobId, 'ticket', subJobSparePart);
       subJobSparePart.refresh();
     } catch (e) {
       print(e);

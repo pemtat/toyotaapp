@@ -190,6 +190,7 @@ class EditFillFormView extends StatelessWidget {
                             text: context.tr('operation_hour'),
                             textSet: fillFormController.operationHour.value,
                             readOnly: readOnly == null ? null : 'yes',
+                            required: true,
                           ),
                         ),
                         10.wH,

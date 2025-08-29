@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:toyotamobile/Function/stringtodatetime.dart';
+import 'package:toyotamobile/Function/ticketdata.dart';
 import 'package:toyotamobile/Models/home_model.dart';
 import 'package:intl/intl.dart';
 import 'package:toyotamobile/Models/subjobsparepart_model.dart';
@@ -34,18 +35,14 @@ class NotificationController extends GetxController {
   Future<void> fetchNotifySubJobSparePartId(
       String jobId, String bugId, String projectId) async {
     try {
-      jobController.subJobSparePart.refresh();
+      // jobController.subJobSparePart.refresh();
       subJobSparePart.clear();
-      List<SubJobSparePart> filteredSpareParts = [];
+      var filteredSpareParts = <SubJobSparePart>[].obs;
 
       if (projectId == '1') {
-        filteredSpareParts = jobController.subJobSparePart
-            .where((element) => element.id == jobId)
-            .toList();
+        await fetchSparepartById(bugId, jobId, 'ticket', filteredSpareParts);
       } else {
-        filteredSpareParts = jobController.subJobSparePart
-            .where((element) => element.bugId == bugId)
-            .toList();
+        await fetchSparepartById(bugId, jobId, 'pm', filteredSpareParts);
       }
 
       subJobSparePart.value = filteredSpareParts;
